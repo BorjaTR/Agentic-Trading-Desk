@@ -1,0 +1,198 @@
+# POSX P8 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P8_V1.md 53205114) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 b5fcc859 section 4 CARRY wording (00:00 = D-1's 24:00 row; the open window P7 at 23:56 to 23:59), kernel named against 9.4; values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): the 5 s grid (BUILD_ITEMS_V4 9d424de3 line P8; ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4): output.grid 5s, lags of 12 and 60 steps, the CARRY tail of 59 points, phase B at 00:00:05 to 00:04:55; P7's readers listed (build_register 5a7144a3 needs a reader input on 5s); values unchanged at the minute ends
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): P7's input marked grid 5s (build_register edition 6 40c8649f takes it, EDGE1 18:13:32Z); the two readers listed 'through P7' removed; values unchanged
+# Edition 5 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 cited as edit 3 0591d181 (the binding edition); wording only, values unchanged
+# Edition 6 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P8 fixes: X3b (00:00:00 to 00:05:00 in phase B, after P7's 00:00:00.000000 row), M7 made certain (P7(12:10:00) pinned at 11), stale 1 when every coin's reason is a stale one (BOOK_HOLE or STALE_VALUE; E7, U4); BED G1: no RAW_DIFFERS; X7: Binance in the name and conclude
+# Edition 7 (METRIC_AUDIT2, 18 Oct 2026): no flag on an empty row (CARD_B1_V7 rule 18 and CARD_C13_V4 rule 7: an empty value carries no flag; REVIEW_LEAD_EDGE1_V1 6.2 for V4 edit 4; METRIC_AUDIT2's own FF found on FLOWX): FIRST_DAY_NO_CARRY dropped, the first year day's reads that need D-1's missing file are empty NO_FILE; values unchanged
+# Edition 7 was signed on BED's REVIEW OK of edition 7, 2026-10-18T19:57:45Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+# Edition 8 (METRIC_AUDIT2, 18 Oct 2026): TREE 20:16:17Z (PB2's Q3): the CARRY's tail holds P7 at the 60 points 23:55:00 to 23:59:55 (u = 00:00:00 with W = 300 s reads P7(23:55:00) of D-1), not 59 from 23:55:05; u = 00:00:00 made in phase B only (X3b); U3 planted from 23:55:00, M8 the 59-point tail. Values unchanged. Unsigned until checked
+# Signed by TREE's FIX CHECK OK of edition 8, 2026-10-18T20:21:08Z.
+kind: build_metric
+id: P8
+producer: POSX
+item: 'instant premium speed (E3.CB2) (BUILD_ITEMS_V4 9d424de3 line P8, every 5 s)'
+tier: BUILD
+name: speed of the Binance market's instant premium, the middle coin's change of P7 over 60 s and over 300 s, bp per minute
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 8
+  signed: true
+  signed_by: 'TREE 2026-10-18T20:21:08Z'
+means: >-
+  How fast the instant premium (P7, book mid against the index) is moving across the market: the middle coin's change over the last
+  60 s (S07) and over the last 300 s (S08), both put on bp per minute. Above 0: perpetuals rising against spot.
+example: >-
+  Three coins changed by +20, -5 and +10 bp over the last 60 s: S07 = +10 bp per minute. A coin at +100 bp now and +80 bp 300 s ago
+  moves 20 x 60 / 300 = 4 bp per minute.
+formula: >-
+  At each 5 s point u of D (00:00:00 to 23:59:55), per coin c and W = 60 s (S07) or 300 s (S08), 12 or 60 grid steps: v_W(c, u) = (P7(c, u) - P7(c, u - W)) x 60 s / W, from the two unrounded P7 values
+  (P7 is written with decimals none, so the written value is the exact one), as CARD_E3_V1 rule 8 (line 94) does for the mark
+  premium. A coin counts when both P7 reads are valued; else it carries the reason of the read at u first, then that of u - W.
+  S0x(u) = the median of v_W over the coins of u's roster that count: the middle one, for an even count the mean of the two middle
+  ones (CARD_E3_V1 rule 9, line 95), float64, decimals none (the draft's 4 decimals dropped, V2 rule 4.2). No coin counted: empty
+  with their common reason, else ALL_COINS_EMPTY. for u = 00:00:00 to 00:04:55 (and to 00:00:55 for W = 60 s)
+  u - W lies in D-1 and those P7 values come from the CARRY's tail X1/carry/POSX/<D-1>.npz (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4): P7 of
+  D-1 at the 60 points 23:55:00 to 23:59:55 (u = 00:00:00 with W = 300 s reads P7(23:55:00); TREE 20:16:17Z). The points 00:00:00 to 00:05:00 (00:01:00 for W = 60 s) are computed in phase B on the grids, after P7's 00:00:00 point has its 00:00:00.000000 row: 00:00:00 reads P7(00:00:00), 00:05:00 reads it as its u - W, and a median over coins does not resume from sums (V4 edit 3 section 4; REVIEW_LEAD_EDGE1_V1 X3b). The raw checks never empty P8 (BED G1).
+source:
+  kind: ours
+  ref: >-
+    CARD_E3_V1 0cf9c43c rules 8 and 9 (lines 94, 95; SETTINGS_E3_V1 1a04e6f1 rows S02, S03, the mark premium's speed) applied to the
+    instant premium P7; BUILD_ITEMS_V3 line 14 names it E3.CB2. No tool computes it (RESEARCH_TOOLS_V1 aad3cc38 section 4.4: P7's row).
+inputs:
+  - kind: addon
+    ref: POSX S06 (P7, instant premium, bp)
+    card: POSX/P7_V1
+    grid: 5s
+    rule_in_force: P7 at the 5 s points u and u - W themselves (as_of = u, as_of = u - W)
+    stale_rule: P7's own empty reasons and stale pass through (index older than 61.0 s gives STALE_VALUE)
+    days: >-
+      D (P7 of D, computed in the same process), and THE CARRY of D-1 (ADDON_ARCHITECTURE_V4 section 4): the coins' P7 at the 60 5 s points
+      23:55:00 to 23:59:55 of D-1 with their reasons, stale and known_at (the tail); the first
+      year day (10 Sep 2025) computes them once from 9 Sep 2025's raw (if missing, those P7 reads are empty NO_FILE, their coins do not count, and no flag is written on an empty row)
+overlaps:
+  - setting: E3 S02
+    kind: other_metric
+    why: 'E3 S02, S03 are the same speed on the mark premium (E3 S01, Binance''s smoothed mark): another quantity; compared in the meaning check'
+per_coin: >-
+  Every coin of u's roster with both P7 reads valued; a thin coin's one-tick jump of P7 (several bp) counts once in the median and
+  moves it only when the coins are few. A coin entering or leaving the roster at the week's start counts from its first valued pair.
+  The coin column of a market row is MARKET, as the year writes market rows (l0b_catalogue_gen_v1 a28e8932 line 49, coin_field market
+  = MARKET).
+time: >-
+  Funding settles and crash minutes move premiums together, so S07 is large there. 00:00:00 to 00:05:00 are made in phase B (X3b);
+  00:00:05 to 00:04:55 read D-1's last P7 values from the CARRY (CARD_E3_V1 rule 12, line 98: a window crossing 00:00 reads its start in D-1).
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S07
+      label: instant_premium_speed_60s_bps_per_min
+      units: bp per minute (market, coin MARKET)
+      value_kind: float
+      decimals: none
+      means: the median over the coins of the 60 s change of P7, bp per minute
+      never: [E3 S02 (the mark premium's speed), a coin's own speed]
+    - name: S08
+      label: instant_premium_speed_300s_bps_per_min
+      units: bp per minute (market, coin MARKET)
+      value_kind: float
+      decimals: none
+      means: the median over the coins of the 300 s change of P7 put on one minute, bp per minute
+      never: [E3 S03 (the mark premium's speed), the raw 300 s change (that is 5 times this value)]
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per day for each name, coin MARKET, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest known_at of P7 at u over the coins counted (CARD_E3_V1 known_at stamp, line 70: for the market the latest
+    over the coins counted, for a speed that of the read at u); empty rows known_at = u; so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week
+    - reason: ALL_COINS_EMPTY
+      when: no coin counted and the coins' reasons differ (CARD_E3_V1 rule 9); stale 1 when every one of them is a stale reason (BOOK_HOLE or STALE_VALUE)
+    - reason: NO_FILE
+      when: no coin counted and every coin's reason is NO_FILE (the common reason passes)
+    - reason: BOOK_HOLE
+      when: no coin counted and every coin's reason is BOOK_HOLE, stale 1
+    - reason: BAD_INPUT
+      when: no coin counted and every coin's reason is BAD_INPUT
+    - reason: NO_VALUE
+      when: no coin counted and every coin's reason is NO_VALUE
+    - reason: STALE_VALUE
+      when: no coin counted and every coin's reason is STALE_VALUE, stale 1
+  stale_rule: stale = 1 only when the value is empty and every coin's reason is a stale one (BOOK_HOLE or STALE_VALUE, P7's stale 1; CARD_E3_V1's market stale stamp, REVIEW_LEAD_EDGE1_V1 P8); else 0
+  max_staleness_s: 61
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 an odd count
+    input: 'v_60 of three coins: +20, -5, +10 bp per minute (P7 pairs (30, 10), (0, 5), (12, 2))'
+    answer: S07 = 10 exactly
+  - case: E2 an even count
+    input: 'v_60 of four coins: +20, -5, +10, +2'
+    answer: S07 = (2 + 10) / 2 = 6 exactly
+  - case: E3 the 300 s window put on one minute
+    input: 'three coins, P7 now and 300 s ago: (100, 80), (40, 50), (5, 0)'
+    answer: v_300 = 4, -2, 1; S08 = 1 exactly (the raw 300 s changes 20, -10, 5 would give 5)
+  - case: E4 a coin with the read at u - W empty
+    input: 'E1''s three coins and a fourth with P7 = 7 at u and P7 at u - 60 s empty STALE_VALUE'
+    answer: the fourth left out; S07 = 10 (three coins counted)
+  - case: E5 unrounded premiums
+    input: 'one coin counted: P7 = 10.00004 at u and 9.99996 at u - 60 s'
+    answer: S07 = 0.00008 (exact fraction 1/12500; from P7 rounded to 4 decimals, 10.0000 both, it would be 0)
+  - case: E6 across midnight
+    input: 'u = 00:02:00 of D; the CARRY holds P7 at the 5 s points 23:55:00 to 23:59:55 of D-1; three coins'
+    answer: S07 from P7(00:02:00) - P7(00:01:00) of D; S08 from P7(00:02:00) of D - P7(23:57:00 of D-1) from the CARRY
+  - case: E8 a 5 s point between minute ends
+    input: 'one coin counted at u = 12:10:05: P7 12 at 12:10:05, 2 at 12:09:05, 7 at 12:05:05'
+    answer: 'S07 = (12 - 2) x 60 / 60 = 10; S08 = (12 - 7) x 60 / 300 = 1 (the minute-end values at 12:10:00 are not repeated)'
+  - case: E7 no coin counted
+    input: every coin's P7 at u empty; reasons NO_FILE and STALE_VALUE mixed; then all STALE_VALUE; then BOOK_HOLE and STALE_VALUE mixed
+    answer: empty ALL_COINS_EMPTY stale 0; then empty STALE_VALUE stale 1; then empty ALL_COINS_EMPTY stale 1; known_at = u
+unit_tests:
+  - test: U1 (E1 to E4)
+    planted: P7 series (S06 rows) of four coins over the 6 minute ends 11:55 to 12:00, the values of E1 to E4
+    expect: 'S07 at 12:00 = 10 (E1, E4), 6 (E2 with the fourth coin valued +2); S08 = 1 (E3); coin MARKET; known_at = the latest counted P7 known_at'
+  - test: U2 (E5)
+    planted: one coin, P7 10.00004 at 12:00 and 9.99996 at 11:59
+    expect: S07 within 1e-9 relative of 0.00008
+  - test: U3 (E6)
+    planted: a CARRY of D-1 with P7 at the 5 s points 23:55:00 to 23:59:55 of three coins and D's P7 at 00:00:00 to 00:05:00; E8's coin at 12:05:05 to 12:10:05 with P7(12:10:00) pinned at 11
+    expect: S07, S08 valued at every point 00:00:00 to 00:05:00, equal to the planted differences' medians; E8's 10 and 1 at 12:10:05
+  - test: U4 (E7)
+    planted: a minute end where every coin's P7 is empty, with mixed, then all STALE_VALUE, then BOOK_HOLE and STALE_VALUE reasons
+    expect: ALL_COINS_EMPTY stale 0; STALE_VALUE stale 1; ALL_COINS_EMPTY stale 1
+  - test: U5 the row stamps
+    planted: U1 to U4
+    expect: two names per 5 s point (17,280 each for a full planted day), coin MARKET, as_of = u, known_at <= as_of, rows sorted name, coin, as_of
+mutants:
+  - mutant: M1 the raw 300 s change, not put on one minute (no x 60 / 300)
+    caught_by: U1 (E3 gives 5 in place of 1)
+  - mutant: M2 the speed from P7 rounded to 4 decimals (E3's precision)
+    caught_by: U2 (0 in place of 0.00008)
+  - mutant: M3 the mean in place of the median
+    caught_by: U1 (E1 gives 8.3333333333 in place of 10)
+  - mutant: M4 the CARRY not read (00:00:05 to 00:04:55 empty)
+    caught_by: U3 (S08 empty at 00:00:05 to 00:04:55)
+  - mutant: M7 the lag counted in minute ends on the 5 s grid (u - 60 s read as 1 step, 5 s)
+    caught_by: U3 (with P7(12:10:00) pinned at 11, E8 gives (12 - 11) = 1 in place of 10)
+  - mutant: M8 the CARRY's tail of 59 points (from 23:55:05; P7(23:55:00) missing)
+    caught_by: U3 (S08 empty at 00:00:00, its only u - W missing)
+  - mutant: M5 an empty read counted as 0
+    caught_by: U1 (E4 counts the fourth coin at 7 - 0 = 7, so S07 = (7 + 10) / 2 = 8.5 in place of 10)
+real_check:
+  points:
+    - point: 2026-03-08, MARKET, the 5 s points 00:00:00 to 00:04:55 and 12:10:00 to 12:10:55
+      why: the CARRY across midnight for both windows, and an ordinary minute at every 5 s point
+    - point: 2025-09-24, MARKET, the 5 s points 00:00:00 to 00:04:55, 07:59:00 to 07:59:55 and 12:10:00 to 12:10:55
+      why: the same on an early year day, and the minute before a settle
+  pass: >-
+    The tester recomputes P7 at u and u - W for every coin (P7's own recompute, from B and the raw ticker through the same reader) and
+    the median with Fraction, never the builder's code: floats within 1e-9 relative (V2 rule 5), empty reasons, stale and known_at equal.
+meaning_check:
+  pass_lines:
+    - 'On 2026-03-08, the sign of S07 agrees with E3 S02 on 70 percent or more of the minute ends where both are valued and |E3 S02| >= 0.5 bp per minute (the mark is smoothed, MEANING_E3_V2.md line 5; level proposed)'
+  report_only:
+    - the coins counted per minute end (the year's S02.coverage is beside, switched off, CARD_E3_V1 line 76; not written here)
+    - the share of minute ends with |S07| over 1 bp per minute, against E3 S02's
+conclude:
+  may:
+    - how fast the Binance perpetual books moved against Binance's spot index over the last 60 s or 300 s, the middle coin, bp per minute
+  never:
+    - the mark premium's speed (E3 S02, S03)
+    - one coin's speed (the median hides the coin)
+    - a funding forecast
+readers: none yet (E3 S02, the mark premium's speed, is read by CHAIN_trend_SHORT_ride_4, SETTINGS_E3_V1 row S02)
+implementation:
+  how: >-
+    PHASE B for 00:00:00 to 00:05:00, phase A for the rest: P7's coin x 17,280 matrix of the day with the CARRY's 60 points of D-1 prepended; two shifted differences (12 and 60 steps), x 60 / W;
+    np.nanmedian per point with a count of valued coins; reasons by masks; no loop over rows or minutes in Python.
+  kernel: 'new: lag_diff_median (shifted differences on the minute grid and a cross-coin median; no ADDON_ARCHITECTURE_V4 9.4 kernel takes a cross-coin median of lagged changes)'
+  memory_mb: 100
+  seconds_share: 2
+data_checks: none

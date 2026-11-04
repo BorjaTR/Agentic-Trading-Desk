@@ -1,0 +1,177 @@
+# V12_V1.yaml: VOLX dials against their own history (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8 section 5
+# rule 3; ADDON_ARCHITECTURE_V4 edit 3 0591d181). S18 to S21 by PRODUCER_VOLX_V1.yaml.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): F1 (the 30 B day files must exist: the first fill stays 10 Oct 2025), F2 (U1's
+# counts, no filler; M3 0.7), F3 (C7 S07's own ratios), A1 to A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the nits (C9 S02 is our rule, NOT_CHECKED until
+# OUR_RULE_C9_V1 lands; no roll_days: the set is fixed for the day), X7, X11.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+kind: build_metric
+id: V12
+producer: VOLX
+item: 'dials against their own history (C7 S08 intention, C9 widths)'
+tier: BUILD
+name: where the market's 2-hour Binance mid-range dial (C7 S07, S18) and the coin's 60, 120 and 240-minute Binance trade-range widths (C9 S01, S08, S15; S19 to S21) sit among their own values of the 30 days before D, as a mid-rank share 0 to 1
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  0.95 on S18 says the market's 2-hour range is wider now than at 95 percent of the minutes of the last 30 days (C7 S08's
+  intention, never built in the year); S19 to S21 say the same of the coin's own 1, 2 and 4-hour range. C9's dials compare a coin
+  with the other coins; these compare it with itself.
+example: >-
+  The coin's 60-minute width at the minute ends of the 30 days before D: four values 0.5, 1.0, 1.5 and 2.0 percent (a toy); a width
+  of 1.5 now: two below, one equal, S19 = (2 + 0.5) / 4 = 0.625.
+formula: >-
+  For each input X (C7 S07 on MARKET; C9 S01, S08, S15 on each roster coin): W = X's valued values at the 43,200 minute ends of the
+  30 days D-30 to D-1 (value_f64 of B), N = their count; with N >= 34,560 (80 percent), at u: x = X at u; S = (count of W below x +
+  0.5 x count of W equal to x) / N, float64 (the mid rank); x empty gives NO_INPUT; N < 34,560, or any of the 30 B day files D-30 to D-1 missing, gives
+  NO_HISTORY. The comparison set
+  is fixed for the day (sorted once at 00:00 of D).
+source:
+  kind: ours
+  ref: >-
+    C7 S08's intention, '2 h dial as a 30-day percentile (not built)' (BASIC_C7_V3 line 20; LAYER_REGISTER_V32 C7 S08 REBUILD);
+    BUILD_ITEMS_V3 row V12 (BUILD_LIST_V5, EDGE2 OR3); the mid rank as V5's. OPEN for the owner: A the mid rank (applied, C7 S08's
+    word 'percentile'), B the robust z of ADDON_ARCHITECTURE_V4 9.4's robust_z (the median and 1.4826 MAD of W), as POSX P3.
+inputs:
+  - kind: year
+    ref: C7 S07 (the 2 h dial, MARKET)
+    card: BASIC_C7_V3 5d9b4211
+    verdict: LIMITS
+    rule_in_force: B's row at the minute end as written
+    stale_rule: an empty row is not in W and gives NO_INPUT at u
+    days: D-30 to D (31 B day files, each checked against its MANIFEST_L0BIN parquet_sha16)
+  - kind: year
+    ref: C9 S01, S08, S15 (the 60, 120, 240-minute trade-range widths in percent of the close; basic, landed; not C9's our-rule dials S02, S09, S16, which are NOT_CHECKED in LAYER_REGISTER_V32)
+    card: BASIC_C9_V1 09f7847c
+    verdict: LIMITS
+    rule_in_force: B's rows at the minute end as written (SHORT_WINDOW rows included, as the year writes them)
+    stale_rule: an empty row is not in W and gives NO_INPUT at u
+    days: D-30 to D
+overlaps:
+  - setting: C9 S02
+    kind: other_metric
+    why: C9 S02 is the coin's width over the median width of the coins (a cross-section, our rule, NOT_CHECKED until OUR_RULE_C9_V1 lands; not an input here); S19 is the width against the coin's own 30 days (a time series). Not a copy.
+per_coin: >-
+  S18 is MARKET's (C7 is the median over the coins). S19 to S21 per roster coin: thin coins with SHORT_WINDOW widths (C13 empty
+  minutes, DASH on 24 Sep 2025) rank low on those minutes; a coin listed late fills after 30 days in B (NO_HISTORY). C9 widths are
+  TRADE ranges (C13 highs and lows with the bounce), C7's dial a MID range (BASIC_C7_V3 line 19, C7 S07: 0.9586 on 8 Mar 2026 and 0.9743 on 24
+  Sep 2025 of the trade range at the median minute).
+time: >-
+  W mixes every hour of 30 days: a night-time width ranks low against the day's (the hour profile is report only). Crash days enter
+  W for 30 days and lower the ranks after them. NO_HISTORY before 10 Oct 2025.
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S18
+      label: c7_dial2h_rank30d
+      units: share 0 to 1 (mid rank), MARKET
+      value_kind: float
+      decimals: none
+      means: the mid rank of C7 S07 at u among its values of the 30 days before D
+    - name: S19
+      label: c9_width60_rank30d
+      units: share 0 to 1 (mid rank)
+      value_kind: float
+      decimals: none
+      means: the mid rank of the coin's C9 S01 at u among its values of the 30 days before D
+    - name: S20
+      label: c9_width120_rank30d
+      units: share 0 to 1 (mid rank)
+      value_kind: float
+      decimals: none
+      means: the same of C9 S08
+    - name: S21
+      label: c9_width240_rank30d
+      units: share 0 to 1 (mid rank)
+      value_kind: float
+      decimals: none
+      means: the same of C9 S15
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D; S18 on MARKET only)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: "known_at = the later of the input's known_at at u and 00:00 of D (the comparison set's), both at or before u; an empty row known_at = u; so known_at <= as_of on every row"
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: any B day file of D-30 to D-1 missing (every coin before 10 Oct 2025), or fewer than 34,560 valued values in the 30 days (a coin listed late, a thin coin)
+    - reason: NO_INPUT
+      when: the input at u is empty (any reason)
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_HISTORY, NO_INPUT
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 30
+  no_history: "fills on 10 Oct 2025 (all 30 B day files D-30 to D-1 exist from D = 10 Oct 2025, D-30 = 10 Sep 2025); NO_HISTORY before; a coin listed late when its 30 days hold 34,560 valued values"
+  fit_rule: "the comparison sets from the 30 days before D only, rebuilt once a day at 00:00 of D"
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the toy
+    input: 'W = 0.5, 1.0, 1.5, 2.0; x = 1.5'
+    answer: 'S19 0.625'
+  - case: E2 the ends
+    input: 'the same W; x = 3.0; x = 0.4'
+    answer: '1.0; 0.0'
+  - case: E3 ties
+    input: 'W = 1.0, 1.0, 2.0; x = 1.0'
+    answer: '0.3333333333333333'
+  - case: E4 the floor
+    input: '34,559 valued values in the 30 days; then 34,560'
+    answer: 'NO_HISTORY; valued'
+  - case: E5 an empty input
+    input: 'C9 S01 empty at u'
+    answer: 'S19 empty NO_INPUT'
+  - case: E6 D itself is not in W
+    input: 'a planted spike of C9 S01 on D at 10:00'
+    answer: 'S19 at 10:01 unchanged by the spike'
+unit_tests:
+  - test: U1 (E1, E2, E3)
+    planted: '30 B days of C9 S01 for one coin: each toy value planted 8,640 times (E1, E2: N = 34,560) or 11,520 times (E3: N = 34,560), every other minute end empty; MARKET C7 S07 the same'
+    expect: 'exactly 0.625; 1.0, 0.0; 0.3333333333333333 (fractions of whole counts)'
+  - test: U2 (E4, E5, E6)
+    planted: 'the floor cases; an empty input; the spike on D'
+    expect: 'NO_HISTORY then valued; NO_INPUT; unchanged'
+  - test: U3 the stamps
+    planted: U1, U2
+    expect: 'S18 on MARKET only; known_at <= u at every row; 1,440 rows per name and coin'
+mutants:
+  - mutant: M1 the strict rank
+    caught_by: 'U1 (E3 gives 0.0)'
+  - mutant: M2 D's own values in W
+    caught_by: 'U2 (E6 moves the rank)'
+  - mutant: M3 an empty value as 0 in W
+    caught_by: 'U1 (E1 gives 30,240 / 43,200 = 0.7: the 8,640 empties below x)'
+real_check:
+  points:
+    - point: 2026-03-08, MARKET (S18) and BTCUSDT, DASHUSDT, 1000PEPEUSDT (S19 to S21), u = 00:00, 12:10, 23:59
+      why: a full window (6 Feb to 7 Mar 2026); a thin coin
+    - point: 2025-10-10, MARKET and BTCUSDT, u = 21:30
+      why: the first valued day and the crash evening (ranks near 1)
+  pass: >-
+    The tester recomputes S18 to S21 and the reasons from this card's words on B's C7 and C9 rows (rawcheck/check_volx.py): floats
+    within 1e-9 relative, words equal. In VOLX's job.
+meaning_check:
+  pass_lines:
+    - "S19 equals scipy.stats.percentileofscore(W, x, kind='mean') / 100 within 1e-12 at every valued BTC minute of 8 Mar 2026 (the tool cross-check)"
+    - "the crash ranks high: MARKET's S18 at 21:30 of 10 Oct 2025 is 0.99 or more"
+  report_only:
+    - the hour-of-day profile of S18 and S19 (the mixing of hours in W)
+    - S19 against C9 S02 (own history against the other coins) per coin
+conclude:
+  may:
+    - "how wide the market's 2-hour mid range (S18) or the coin's 1, 2, 4-hour trade range (S19 to S21) is now against its own 30 days before D"
+  never:
+    - "Hyperliquid's ranges (Binance mids and trades, X7)"
+    - a forecast of the range
+    - "S19 to S21 against other coins (each coin against itself; that is C9's dials)"
+    - "a time-of-day-fair rank (W mixes night and day)"
+readers: none yet (planned in the HEAT and HOW-BIG labels, C6's heat)
+implementation:
+  how: "Once a day: the 30 days of each input as a [coin x 43,200] stack (B by name filter), sorted per coin; at the 1,440 minute ends of D the mid rank by np.searchsorted left and right on the sorted rows (no loop over minutes; the set is fixed for the day, so no sliding window). PHASES: none (B only)."
+  kernel: "none of addon_grid_v2: a sort per coin of the 30-day stack (np.sort) and np.searchsorted (the set is fixed for the day, no window kernel; a card-local numpy step with its brute twin)"
+  memory_mb: 120
+  seconds_share: 0.5
+data_checks: none

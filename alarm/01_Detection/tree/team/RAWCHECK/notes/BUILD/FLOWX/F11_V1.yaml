@@ -1,0 +1,270 @@
+# FLOWX F11 (BED, 18 Oct 2026; the 5 s grid edition of BRIEF_FLOWX_V4_DELTA, twin F11_V1.yaml.pre_BED_20261018T182952Z). Facts from
+# FLOWX_WORK_V0.yaml F11, BRIEF_FLOWX_DRAFTERS and BRIEF_FLOWX_V4_DELTA (they override the hand work; F11 now reads the trades reader,
+# delta item 4), ADDON_ARCHITECTURE_V4 edit 3 (0591d18171f2d21f; V3's rules stand unless V4 changes them). Every worked answer
+# recomputed exactly with fractions.Fraction. Checked with:
+#   cd <VM_HOME>/br2/flowx/kit && python3 -B -m rawcheck.build_register notes/BUILD/FLOWX/F11_V1.yaml --check
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): the example, E1, E3, U1
+# rebuilt to the rule's own answers (TRADES_HOLE at 00:02:55 to 00:04:30, then THIN_FEED by the minute counts to 00:08:55, GAPS=73 at
+# 00:09:00); Y1 the PHASES and the CARRY (counts, thin end, spans; no sum), reader v6 as the seen-state input, NO_RATE_BASE; E9 GAPS=11
+# (NO_FILE points are unseen points) and NO_RATE_BASE; Y6 repeats counted and flagged (E10); X1 (a header-only file, any day's D-1 file:
+# E12), X2 a stampless row (E11), X4 a D-1 file row stamped in D (E13), a bad row (E14); U6, M5 to M8; SHORT_HISTORY dropped, NO_ROSTER
+# added; Y8 roster; the reader's line numbers.
+kind: build_metric
+id: F11
+producer: FLOWX
+item: 'cumulative taker net (B1.CB3)'
+tier: BUILD
+name: Binance cumulative taker net dollars since 00:00 UTC of D (CVD; B1.CB3)
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  The coin's net taker dollars since the day began at 00:00 UTC: the dollars of the trades whose taker bought minus those whose taker
+  sold, every trade received by u, written every 5 s. + = taker buying has led since 00:00; - = taker selling has led.
+example: >-
+  Trades of D (T, arrival, taker side, dollars): buy 500 at 00:00:20.000 (received 00:00:20.006), sell 200 at 00:00:40.000, buy 100 at
+  00:01:10.000, sell 400 at 00:01:50.000, nothing to 00:04:30 (the coin not seen at 00:02:55 to 00:04:30: no trade in the 60 s before u,
+  TRADES_HOLE), buy 80 at 00:04:30.000, sell 20 at 00:04:50.000, then a buy of 10 and a sell of 10 each minute; D-1's minute counts 2
+  each (the base 2): F11 at the minute ends 00:00 to 00:02 = 0 (the anchor), 300, 0; 00:03 and 00:04 empty TRADES_HOLE; 00:05 to 00:08
+  empty THIN_FEED (the empty minutes 00:02 and 00:03 turn thin on, the five good minutes 00:04 to 00:08 end it); 00:09 = 60 flagged
+  GAPS=73. Between minute ends: F11(00:00:20) = 0 (the buy 500 arrives 6 ms after u), F11(00:00:25) = 500, F11(00:00:45) = 300. A buy of
+  50 at T = 00:00:00.000 belongs to D-1: with a buy 80 and a sell 20 later in the first minute, F11(00:01:00) = 60, not 110
+  (RESEARCH_TOOLS_V1 6.2).
+formula: >-
+  For one coin and the 5 s point u (00:00:00, 00:00:05, ..., 23:59:55 of D): F11(u) = the sum over the trades reader's good rows (bad
+  false; a repeated row counted each time, flagged DUPLICATE_ROW: B1 rule 17, Y6) of D's trades file with T in (00:00:00 of D, u] and arr <= u (received by u) of side x dollars, side + when the taker bought and - when
+  the taker sold (the reader's side), dollars = price x quantity of the row (p x q, still dollars for a 1000-coin). The sum is exact, on
+  integers (the price and the quantity in their own steps), and written once as float64, not rounded. The window opens after 00:00:00:
+  a row at T = 00:00:00.000 belongs to D-1, so F11(00:00:00 of D) = 0, the anchor (the empty sum). A row with T <= u received after u is
+  counted from the first 5 s point at or after its arrival (the year's minute windows leave it out: overlaps). A row of D received after
+  23:59:55 of D is in no row of D (the 24:00:00 point is D+1's anchor). A row of D-1's file stamped in D is in no sum (X4). Empty rows (O-FLOWX-4 A, proposed): F11(u) is empty when the coin
+  is not seen at u by B1 rule 9 (at the point only, as B1 S01, S02's 60 s windows and the hand work's F10: the trades file of D, and of
+  D-1 for u before 00:01:00, a trade in [u - 60 s, u] received by u, the last full minute before u not thin, no bad trade row stamped in
+  (u - 60 s, u] and received by u; the alive and thin inputs from reader v6), with its reason. A trade row with no stamp (the reader's t = arr = -1, bad) is passed over: in no window, no BAD_INPUT, no arrival (Y5; the year: prod_B1_v3 efc2bc52 lines 104, 134 to 140). A repeated row (an agg id or a trade id seen before in its file) counts each time, flagged DUPLICATE_ROW (B1 rule 17). THE FILES (X1): empty NO_FILE at every row of D when D's trades file is missing, and at the points whose seen state reads D-1's file (u before 00:01:00) when D-1's file is not held, on any day (prod_B1_v3 line 134); a header-only or 20-byte file is there with no rows (prod_reader_trades_v1 lines 72 to 73: no trade gives TRADES_HOLE, CARD_B3_V4 line 116). While the coin is unseen the sum goes
+  on counting every good row received; every later valued point carries the flag GAPS=<n>, n = the count of 5 s points in (00:00:00, u)
+  at which the coin was not seen.
+  THE 00:00 POINTS (REVIEW_LEAD_EDGE1_V1 X3): when D's file is missing and D-1's is there, phase B writes the 00:00:00 row NO_FILE too (the year reads D's file there); the 00:00:00 point is completed in phase B after D's rows at exactly 00:00:00.000000 are added.
+source:
+  kind: ours
+  ref: >-
+    BASIC_B1_V3 07a6b887 B1.CB3 (the cumulative taker net, CVD, anchored at 00:00 UTC; another anchor such as a session open is the
+    owner's); RESEARCH_TOOLS_V1 aad3cc38 row T2 (BUILD; polars cum_sum) and section 6.2 (the 00:00:00.000 trade belongs to D-1);
+    BRIEF_FLOWX_V4_DELTA item 4 (the sum on the trades reader's rows, received by u, on the 5 s grid of ADDON_ARCHITECTURE_V4 section 4).
+inputs:
+  - kind: reader
+    ref: prod_reader_trades_v1
+    exists: true
+    stream: Tardis binance-futures trades (the year's trades stream)
+    fields: t, arr, side, px, units, bad, dup, line (prod_reader_trades_v1 926b7ff5 lines 10 to 11); prod_reader_trades_v2, when it lands, gives the same rows (tested equal to v1 packs)
+    rule_in_force: every good row of D's file (bad false; repeats counted, Y6) with T in (00:00:00 of D, u] and arr <= u; the coin's seen state at the 5 s point u by B1 rule 9 on the same rows
+    stale_rule: none per row (a trade is an event); stale comes from the seen state at u (B1 rule 22, output.stale_rule)
+    days: >-
+      D. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4; Y1): phase A of D, days in parallel and without the CARRY, makes only the point-local records of D's raw: D's good trade rows with their signed exact dollars at their first counted points, D's minute trade counts, live spans and bad trade rows (reader v6). Phase B, day after day with the CARRY of D-1, makes every value: the seen state at every point (alive from D-1's live spans past 24:00; thin from D-1's counts and thin(D-1, 0)'s end), GAPS, the 00:00:00 point (the anchor 0 with its seen state; NO_FILE when D's file is missing, X3). No value is final in phase A. THE CARRY (X1/carry/FLOWX/<D-1>.npz): no sum (F11's starts at 00:00:00 of D); D-1's 1,440 minute trade counts and thin(D-1, 0)'s end (on, good); D-1's live spans reaching past 24:00; whether D-1's trades file exists (X1: a missing D-1 file gives NO_FILE at every point whose seen state reads it, on any day: prod_B1_v3 line 134). The first year day reads 9 Sep 2025's raw once for the first CARRY (R2); if it is not held, the points whose seen state reads 9 Sep 2025 are empty NO_FILE.
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: "the trades files' two stamp columns, as B1 reads them for its seen state (CARD_B1_V7 line 150: alive and thin through prod_reader_liquidations_v6.py; prod_B1_v3 efc2bc52 line 117): the minute counts (a trade counted in its minute when received by the minute's end) and the live spans (a trade stamped t, received a, makes the coin alive at every moment from max(t, a) to t + 60 s), 8566228f lines 98 to 116"
+    rule_in_force: "B1 rule 9's alive (a trade in [e - 60 s, e] received by e) and thin (R8: the base the median of D-1's 1,440 minute counts; a minute under 1 percent turns it on; while on, 5 minutes in a row at 20 percent or more end it; D's start is thin(D-1, 0)'s end, B1 rule 19)"
+    stale_rule: "B1 rule 22 (TRADES_HOLE, THIN_FEED: stale 1); D-1's trades file missing or a base of 0: thin off, flagged NO_RATE_BASE (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    days: "D-2, D-1 and D (D's base is D-1's counts; D's start is thin(D-1, 0)'s end, whose base is D-2's counts). Measured on 8 Mar 2026 (J16034, log f7a76cb05e789815): BTC 3.24 s, DOGE 1.03 s, CRV 0.10 s a pack. It parses each trades file a second time beside the trades reader (ADDON_ARCHITECTURE_V4 9.3 rule 1): FOR EDGE1, a seen-state kernel on the shared trades pack, tested equal to v6"
+overlaps:
+  - setting: B1 S01, B1 S02
+    kind: other_metric
+    why: >-
+      The year's taker bought and sold dollars of each minute (SETTINGS_B1_V2: (e - 60 s, e] received by e, whole dollars): their sum
+      since 00:00 was this card's first edition. The year's minute windows leave out a row received after its minute end; F11 counts it
+      from the first point after its arrival (E4).
+per_coin: >-
+  Every roster coin of D (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters: knowledge/roster/ starts at
+  ROSTER_20251006, J16034; Y8, X11). Thin coins are often not seen (THIN_FEED), so their F11 is often empty and later points carry
+  GAPS; the sum itself keeps every trade received. 1000-coins: p x q is still dollars. A seen coin with no trade since 00:00 has F11 = 0
+  (a measured 0). A coin with no trades file on D: every row empty NO_FILE. Coins missing on Hyperliquid change nothing (a Binance value).
+time: >-
+  The anchor is 00:00:00 UTC of D (the day's own start; BASIC_B1_V3). Crash days (10 Oct 2025 evening) give large |F11|. Funding settles
+  and quarter hours are ordinary points. A late row (T <= u, received after u) enters at the first 5 s point after its arrival. The last
+  5 s of D (T in (23:59:55, 24:00:00]) and rows received after 23:59:55 are in no row of D. The 00:00 start: the 00:00:00 row is the
+  anchor 0 from the CARRY, whatever D-1 did. The first year day (10 Sep 2025) without 9 Sep 2025's raw: the points 00:00:00 to 00:00:55, whose seen state reads D-1's rows, are empty NO_FILE (X1).
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S11
+      label: bn_cvd_taker_net_usd_day
+      units: USDT (dollars)
+      value_kind: float
+      decimals: none
+      means: the net taker dollars (bought minus sold) of the coin's trades with T in (00:00:00 of D, u], received by u
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per coin per day, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arrival of the rows counted (each <= u), else u (no row counted yet: the anchor, or a seen coin with no trade);
+    an empty row has known_at = as_of. So known_at <= as_of.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters; every coin)
+    - reason: NO_FILE
+      when: "D's trades file is missing (the reader's status NO_FILE), at every row of D; or u is before 00:01:00 and D-1's trades file is not held, on any day (X1); a header-only or 20-byte file is there with no rows (no trade gives TRADES_HOLE, CARD_B3_V4 line 116)"
+    - reason: TRADES_HOLE
+      when: the coin is not seen at the 5 s point u by B1 rule 9 with this reason (the sum goes on; only the row at u is empty)
+    - reason: THIN_FEED
+      when: the coin is not seen at the 5 s point u by B1 rule 9 with this reason (the sum goes on)
+    - reason: BAD_INPUT
+      when: the coin is not seen at the 5 s point u by B1 rule 9 with this reason (a bad row; bad rows are never summed)
+  stale_rule: stale = 1 on the rows empty TRADES_HOLE or THIN_FEED at u (B1 rule 22), else 0
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: GAPS
+      when: >-
+        written GAPS=<n> on a valued row when n >= 1 of the 5 s points in (00:00:00, u) had the coin not seen, by any reason, NO_FILE
+        included (O-FLOWX-4 A; E9); the sum still counts every good row received
+    - flag: NO_RATE_BASE
+      when: "on a valued row when the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0): the coin is read as not thin (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row that counts a repeated row (an agg id or a trade id seen before in its file): it counts each time (B1 rule 17, A1 rule 10)"
+edge_cases:
+  - case: E1 the hand work's five minutes, on rows, at the minute ends
+    input: 'D-2''s and D-1''s minute trade counts 2 each (D''s base 2; D-1 not thin; its last trades to 23:59:59 keep the coin alive at 00:00:05 to 00:00:55); rows of D (T, arr, side, dollars): (00:00:20.000, 00:00:20.006, buy, 500), (00:00:40.000, 00:00:40.005, sell, 200), (00:01:10.000, 00:01:10.004, buy, 100), (00:01:50.000, 00:01:50.008, sell, 400), (00:04:30.000, 00:04:30.003, buy, 80), (00:04:50.000, 00:04:50.009, sell, 20), then each minute from 00:05 to 00:09 a buy of 10 at :15.000 and a sell of 10 at :45.000, each received 5 ms later'
+    answer: 'F11 at 00:00:00, 00:01:00, 00:02:00 = 0, 300, 0; 00:03:00 and 00:04:00 empty TRADES_HOLE, stale 1 (no trade from 00:01:50.000 until 00:04:30.003: unseen at 00:02:55 to 00:04:30, 20 points); 00:05:00 to 00:08:00 empty THIN_FEED, stale 1 (the minutes 00:02 and 00:03 hold no trade, 0 percent: thin on; 00:04 to 00:08 the five good minutes at 20 percent or more: unseen at 00:04:35 to 00:08:55, 53 points); F11(00:09:00) = 60 with GAPS=73; known_at 00:00:00 (u), 00:00:40.005, 00:01:50.008, u on the empty rows, 00:08:45.005 at 00:09:00'
+  - case: E2 a taker buy at exactly 00:00:00.000 (the anchor is exclusive)
+    input: 'rows (00:00:00.000, 00:00:00.004, buy, 50), (00:00:30.000, 00:00:30.007, buy, 80), (00:00:45.000, 00:00:45.003, sell, 20)'
+    answer: 'F11(00:00:00) = 0, F11(00:00:05) = 0 (known_at = u), F11(00:01:00) = 60, not 110'
+  - case: E3 5 s points that are not minute ends
+    input: 'E1''s rows'
+    answer: 'F11(00:00:20) = 0, known_at 00:00:20 (the buy 500 at T 00:00:20.000 arrives 00:00:20.006, after u); F11(00:00:25) = 500, known_at 00:00:20.006; F11(00:00:40) = 500 (the sell 200 not yet received); F11(00:00:45) = 300; F11(00:04:05) empty TRADES_HOLE; F11(00:04:35) empty THIN_FEED; F11(00:09:05) = 60 with GAPS=73'
+  - case: E4 a late row (where the year's minute windows differ)
+    input: 'F11(12:01:00) = 25,000; a buy of 1,000 at T 12:00:59.990 received 12:01:00.020; no other row to 12:01:05'
+    answer: 'F11(12:01:00) = 25,000; F11(12:01:05) = 26,000, known_at 12:01:00.020; the year''s B1 S01 at 12:01 and at 12:02 leave the 1,000 out'
+  - case: E5 a seen coin with no trade
+    input: 'the coin seen all day, no trade on D'
+    answer: 'F11 = 0 (a measured 0, valued) at all 17,280 points, known_at = u'
+  - case: E6 a coin with no trades file
+    input: 'reader status NO_FILE for D'
+    answer: 'every row empty NO_FILE, known_at = as_of'
+  - case: E7 the 00:00 start with the CARRY
+    input: 'D-1''s F11(23:59:55) = 12,345; the CARRY of D-1 with D''s 00:00:00 row (the anchor, the coin seen at 24:00:00 of D-1); D''s first row a buy of 40 at T 00:00:03.000 received 00:00:03.010'
+    answer: 'F11(00:00:00 of D) = 0 (D-1''s sum does not carry); F11(00:00:05) = 40, known_at 00:00:03.010'
+  - case: E8 the last 5 s of D-1
+    input: 'a buy of 70 at T 23:59:58.000 of D-1 received 23:59:58.010'
+    answer: 'in no row: after D-1''s last point 23:59:55 and before D''s anchor (T <= 00:00:00 of D)'
+  - case: E9 the first year day without the CARRY
+    input: 'E7 on 10 Sep 2025, 9 Sep 2025''s raw not held'
+    answer: 'F11(00:00:00) to F11(00:00:55) empty NO_FILE (their seen state reads 9 Sep 2025''s trades, not held; X1, no flag), known_at = u; F11(00:01:00) = 40 as E7, with GAPS=11 (the 11 NO_FILE points 00:00:05 to 00:00:55 are unseen points) and NO_RATE_BASE (no D-1 minute counts: thin off, B1 rule 19)'
+  - case: E10 a repeated trade row (Y6)
+    input: "E7's day with the buy of 40 at 00:00:03.000 twice in the file (the same trade id)"
+    answer: 'counted each time: F11(00:00:05) = 80, flag DUPLICATE_ROW (B1 rule 17), known_at 00:00:03.010'
+  - case: E11 a trade row with no stamp (Y5, X2)
+    input: "E7's day plus a trade row with timestamp and local_timestamp empty (t = arr = -1, bad), a buy of 1,000"
+    answer: 'in no sum and no BAD_INPUT: F11(00:00:05) = 40 as E7'
+  - case: E12 the files (X1)
+    input: "(a) D's trades file header-only (there, no rows), D-1's last trade at 23:59:59.500; (b) on 8 Mar 2026, D-1's trades file not held, D's trades as E7"
+    answer: '(a) not NO_FILE: F11 = 0 valued to 00:00:55 (23:59:59.500 is in [u - 60 s, u]), TRADES_HOLE, stale 1, from 00:01:00; (b) NO_FILE at 00:00:00 to 00:00:55 (any day), then 40 at 00:01:00 with GAPS=11 and NO_RATE_BASE'
+  - case: E13 a row of D-1's file stamped in D (X4)
+    input: "E7's day plus a buy of 30 in D-1's trades file at T 00:00:00.040 of D, received 23:59:59.990 of D-1"
+    answer: 'in no sum (F11 sums D''s file only): F11(00:00:05) = 40 as E7'
+  - case: E14 a bad trade row (BAD_INPUT)
+    input: "the coin seen all day by its trades (a buy of 10 at :15.000 and a sell of 10 at :45.000 each minute, received 5 ms later); a bad trade row stamped 12:00:00.000, received 12:00:00.005"
+    answer: 'F11 empty BAD_INPUT, stale 0, known_at = u, at 12:00:05 to 12:00:55 (the bad row is never summed; the sum goes on); F11(12:01:00) = 0 valued with GAPS=11'
+unit_tests:
+  - test: U1 (E1, E3)
+    planted: 'the E1 rows and minute counts (D-2 and D-1 2 a minute; D-1''s last trades to 23:59:59), the seen state through reader v6''s alive and thin'
+    expect: 'the E1 and E3 values, reasons, stale, flags and known_at at every point 00:00:00 to 00:09:05 (110 points), exactly'
+  - test: U2 (E2)
+    planted: the E2 rows
+    expect: 'F11(00:00:00) = 0, F11(00:00:05) = 0, F11(00:01:00) = 60'
+  - test: U3 (E4, E5, E6)
+    planted: 'the rows of each case (E4 with a planted 25,000 of earlier rows)'
+    expect: 'E4 25,000 then 26,000 at 12:01:05; E5 all 0; E6 all NO_FILE'
+  - test: U4 (E7, E8, E9) the CARRY and the first year day
+    planted: 'the E7 CARRY and rows; the E8 row in D-1''s file; E7 again as 10 Sep 2025 with no D-1'
+    expect: 'with the CARRY 0 at 00:00:00 and 40 at 00:00:05; the E8 row in no value; without: NO_FILE at 00:00:00 to 00:00:55, 40 at 00:01:00 with GAPS=11 and NO_RATE_BASE'
+  - test: U5 the row stamps
+    planted: U1 to U4
+    expect: 'every row as_of = u and known_at <= as_of; value_kind 1 or 0 (empty); 17,280 rows per coin for a full day; stale 1 exactly on the TRADES_HOLE and THIN_FEED rows'
+  - test: UX the anchor (moved from the meaning check, X6)
+    planted: every planted day
+    expect: 'F11(00:00:00) = 0 at every valued coin'
+  - test: U6 (E10 to E14) the rows and the files
+    planted: "the rows of each case through the trades reader's pack and reader v6's arrays"
+    expect: "each answer exactly as written; no flag on an empty row"
+mutants:
+  - mutant: M1 anchor_inclusive (the row at T = 00:00:00.000 counted)
+    caught_by: U2 (F11(00:00:05) = 50 and F11(00:01:00) = 110 against 0 and 60)
+  - mutant: M2 gap_as_zero (the seen state ignored, no flag)
+    caught_by: U1 (F11(00:04:00) = 0 valued against empty TRADES_HOLE; F11(00:09:00) = 60 without GAPS=73)
+  - mutant: M3 no_arrival (received by u ignored)
+    caught_by: U1 (F11(00:00:20) = 500 against 0)
+  - mutant: M4 minute_windows (a row received after its minute end left out, as the year's B1)
+    caught_by: U3 (E4 F11(12:01:05) = 25,000 against 26,000)
+  - mutant: M5 dup_dropped (a repeated row left out)
+    caught_by: 'U6 E10 (40 against 80)'
+  - mutant: M6 stampless_bad (a trade row with no stamp gives BAD_INPUT)
+    caught_by: 'U6 E11 (BAD_INPUT against 40)'
+  - mutant: M7 no_base_as_thin (a missing thin base read as thin on)
+    caught_by: 'U4 E9 (THIN_FEED at 00:01:00 against 40 with NO_RATE_BASE)'
+  - mutant: M8 nofile_no_gap (NO_FILE points not counted in GAPS)
+    caught_by: 'U4 E9 (no GAPS against GAPS=11)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, one thin coin and one more coin the tester names, all 17,280 points
+      why: the year's checked day; trades are the year's stream (held); the thin coin shows GAPS
+    - point: 2026-03-08, BTCUSDT, 12:00:05 to 12:01:00 every 5 s
+      why: 5 s points that are not minute ends (which rows enter by arrival)
+    - point: 2025-09-24, the same three coins, all 17,280 points
+      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991)
+  pass: >-
+    The tester recomputes F11, its empty reasons, GAPS, stale and known_at at every point from this card's words, with Fraction on the
+    trades reader's rows (never the producer's code): floats equal within 1e-9 relative of the Fraction recompute, words and flags
+    equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'At every minute end u of the real-check days with F11 valued at u and u - 60 s, where no row with T in (u - 60 s, u] arrived after u and no row with T <= u - 60 s arrived in (u - 60 s, u]: |F11(u) - F11(u - 60 s) - (B1 S01(u) - B1 S02(u))| <= 1 dollar (the step of a CVD is the minute''s taker net; the year rounds S01 and S02 each to the whole dollar).'
+    - 'On BTCUSDT of the checked days, F11 at 23:55:00 has the sign of the sum of B1 S01 - B1 S02 over the minute ends of D to 23:55 (the same rows less the late ones); a different sign means the late rows carry the day (reported with the count of late rows)'
+  report_only:
+    - 'BASIC_B1_V3 B1.CB3: B1 S03 (the old total_cvd) against a CVD, correlation median 0.092 and 0.076 (J15840, J15846), shown beside F11'
+    - the count of GAPS rows per coin and day
+    - the dollars per coin and day that F11 counts and the year's minute windows leave out (the late rows of the overlap)
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades and aggTrades; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - whether taker buying or taker selling has led this coin since 00:00 UTC of D, in dollars, as received by u
+    - the coin against itself across the points of one day
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - a 5 minute net (that is B1 S03)
+    - a whole-market CVD (F11 is per coin)
+    - 'a count or size of taker orders: the rows are trades (fills) on their taker side, not orders (RULING 3: the name says what the value is)'
+    - the year's B1 S01, S02 summed (late rows differ, the overlap)
+    - the full day's net of trades stamped in D (rows received after 23:59:55 and the last 5 s are in no row)
+readers: none yet
+implementation:
+  how: >-
+    Per coin, vectorised over the day: good rows, signed dollars as exact integers (price and quantity in their own steps); each row's
+    first counted point = the first 5 s point >= max(T, arr); np.bincount of the signed dollars into the 17,280 points, np.cumsum, one
+    float64 conversion; known_at by np.maximum.at per point then np.maximum.accumulate; GAPS by the cumulative count of unseen points;
+    the 00:00:00 row from the CARRY. Dense [coin x 17,280] grids for the writer's column contract (ADDON_ARCHITECTURE_V4 section 2). No loop
+    over rows or points in Python. The trades pack is read once per day for F11, F12, F13, F16.
+  kernel: 'new: entry_cumsum (each row added at the first 5 s point at or after max(T, arrival) and kept to the day''s end: one cumulative sum; no exit, so not addon_grid_v2.per_window)'
+  memory_mb: 300
+  seconds_share: 0.5
+data_checks:
+  - what: 'O-FLOWX-4: A (written here: an unseen point is empty, later points carry GAPS=<n>, the sum keeps every row received) or B (empty from the first unseen point to the day''s end)'
+    who: EDGE1
+  - what: the CARRY of the first year day (are 9 Sep 2025's trades held?), and the look-back of B1 rule 9's seen state into D-1 (what the CARRY must hold for it)
+    who: BED (a read-only runner job; CARD_B1_V7 rule 9)
+  - what: >-
+      the raw check per day (ADDON_ARCHITECTURE_V4 section 6, V3 section 6 standing): the re-read trades against the year's C13 and B1;
+      what the year read at the 12 minutes of 22 to 24 Sep 2025 (J15991; METRIC_AUDIT J15943, J15945) is found before any trades producer
+      runs on 2025 days
+    who: open (the architecture names no seat)

@@ -1,0 +1,224 @@
+# BASIC_C5_V3.yaml: the card of the basic group C5 market breadth (BED, 2026-10-18, BR2 = WP2 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 3 = edition 2 (BASIC_C5_V2.yaml e3f321273b0cc419, kept; the owner's review OK, EDGE1 14:08:23Z) with the owner's copies rule as
+# BASIC_C1_V5 95244119 and BASIC_C3_V2 4cdfefaa: the 6 .quotes_off and 6 .strict_off copies are no rows of their own; they are read as the
+# year's ACCEPTED cross-check (one reading rule with their shares from J15849, one never line). No other change.
+# Edit 2 (before landing): EDGE2's REVIEW C5 V2 (hb/EDGE2.txt 14:15:47Z) 3 edits: one-sidedness = max(S04, 1 - S04 - flat), and the corr
+# 0.9723, 0.9900 is of max(S04, 1 - S04) alone; the c5v, twins2 tool row on ed6; the thick-tick words limited to what 8 Mar 01:20 shows.
+# built_on BASIC_C1_V5 95244119.
+# (V2:)
+# EDITION 2 = edition 1 (BASIC_C5_V1.yaml 846232bfbe7ed070, kept) with EDGE2's REVIEW BR2.C5 (hb/EDGE2.txt 13:24:18Z) done, from
+# meaning_relative ed6 e83ddd28 (jobs 15879 8 Mar, 15880 24 Sep): (1) S04 is the share up, and one-sidedness is max(S04, 1 - S04) less the
+# flat share (corr 0.9723, 0.9900): the never line now says so, and C5.CB2 adds LITTLE; (2) the six .quotes_off twins added (NOT_CHECKED,
+# their distance from J15849 TWINS); (3) S01's gap to klines is either way (measured signed); (4) built_on BASIC_C1_V4 and MEANING_C13_V4;
+# (5) the twins' proofs say they are a recompute from our own C1 rows; S07's twins at all 1,440 minutes (twins2 reads D-1); (6) the
+# close-against-kline split claimed for S01, S04, S08 only. No status of S01 to S08 changed.
+# Made the way BASIC_C8_V2 was (METRIC_REVIEW_METHOD_V1 section 5; the owner's rename rule, 14:1x Berlin). ONE SOURCE OF TRUTH;
+# rawcheck/meaning_register.py checks it. Layer of every setting here: basic (a share, standard deviation, rank correlation or count of C1's
+# returns). S05, S06 (a fixed 0.6 point floor), S09, S10 (the tide, a 60% floor) are our rules and their twins with them: not in this card.
+
+group: C5
+name: market breadth (basic, built on C1)
+summary: >-
+  How the whole roster moved over a window ending at a minute end e, from C1's mid returns: S01 the larger of the shares of coins up and
+  down over 5 min; S02 the population standard deviation across coins of the 15 min returns, as a fraction; S03 the same of the 24 h
+  returns, in points; S04 the share of the coins but BTC up over 15 min; S07 the rank correlation of the coins' 15 min returns now against
+  those 30 min before; S08 S04 now less S04 30 min before; each with .coverage (coins counted). The year also writes .quotes_off and
+  .strict_off copies: its accepted cross-check, not metrics of their own.
+read_as: >-
+  Is the market one-sided, scattered or turning. Every value equals the same rule on Binance's 1 minute kline returns up to our mid against
+  the last trade (our own trade closes give the klines' S01, S04 and S08 within one coin on 99.9 to 100% of minutes, job 15833 decomp). Three names
+  said something else and are renamed: S01 is no breadth (the signed advance-decline: corr -0.016 and 0.002) but the size of the majority;
+  S04, called one-sided, is the share up (corr with the signed breadth 0.997); one-sidedness is max(S04, 1 - S04 - flat), and max(S04, 1 - S04)
+  alone has corr 0.9723 and 0.9900 with it (J15879, J15880 c5v), so S04 near 0 or 1 is one-sided and near 0.5 split; S07, called rotation, is high when
+  the same coins keep leading (its median -0.03 and -0.01: 30 minutes apart the 15 min leaders are no longer the leaders). S02 and S03 are
+  standard deviations across coins: a few wild coins drive them (corr with the interquartile range 0.21 to 0.52, once -0.32).
+
+conclude:
+  may:
+    - "how one-sided the last 5 minutes were (S01), without the side"
+    - "the share of alts up over 15 minutes (S04) and how much it changed in 30 minutes (S08)"
+    - "how scattered the coins' moves are (S02 over 15 minutes, S03 over 24 hours), knowing the tails drive it"
+    - "whether the coins leading now led 30 minutes ago (S07)"
+  never:
+    - "the market's direction from S01: it has none (corr with the signed advance-decline -0.016 and 0.002, J15833 c5name)"
+    - "that the alts were one-sided from a middle S04: S04 is the share up; near 0.5 the alts split, near 0 or 1 they moved one way (one-sidedness = max(S04, 1 - S04 - flat); max(S04, 1 - S04) alone corr 0.9723 and 0.9900, J15879, J15880 c5v)"
+    - "that leadership rotated because S07 is high: high S07 means the same leaders; near 0 is the usual"
+    - "that most coins are far apart because S02 or S03 is large: one or two wild coins move the sd (corr with the interquartile range -0.32 to 0.52, J15833 c5name)"
+    - "a change of S08 smaller than one alt's share (1 / 50 = 0.02) as a move, nor its 6th decimal: the producer rounds twice"
+    - "a copy (.quotes_off, .strict_off) as a metric of its own: it is the year's cross-check of the same metric (a second price feed; every roster coin counted); read the six metrics and their coverages"
+    - "anything from S05, S06, S09, S10 or their twins (our rules: not in this card)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C5_V9.md 7facfdc31d0d369d (rules 1 to 19; producer edition of card V9, the lean fresh process)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C5_V3.tsv 7df86c88da2040dc (10 settings)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml 95244119 (C1 S11, S12, S14: basic, CLEAN; closed with the owner); the decomp's trade closes: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01: raw, LIMITS)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V3.tsv (C5 S01 to S04, S07, S08 basic; S05, S06, S09, S10 our_rule)"
+  producer: testbed/value_audit/code (C5's producer of CARD_C5_V9), reading C1's built part of D
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C5.parquet
+  year_output_columns: "name (40 names: S01 to S10, each with .coverage, .strict_off and .quotes_off; job 15812 schema, both days), coin (MARKET for every row), as_of_us (e), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: team/RAWCHECK/code/rawcheck/ours.py at(D, 'C5', settings, ['MARKET'], moments)
+
+source:
+  vendor: "none new: built on our C1 (Binance book_ticker through Tardis, the mid of the top of book), BASIC_C1_V1"
+  exchange_stream: "book_ticker (Binance USD-M futures through Tardis), through C1's returns; C5 reads no file of its own"
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz (through C1)
+  columns: "C1 S11 (5 min), S12 (15 min, at e and at e - 30 min), S14 (24 h) of every roster coin, percentage points, 6 decimals"
+  fields:
+    counts: "a counted coin is up above 0, down below 0, flat at exactly 0 and counted in every denominator [proof: CARD_C5_V9 rules 2, 3; C5_STAMPS_V1 15 of 15]"
+    s01: "the larger of (up) and (down) over the coins counted, C1 S11 [proof: CARD_C5_V9 rule 4; C5_STAMPS_V1 15 of 15]"
+    sd: "S02 = the population standard deviation of C1 S12 as a fraction (points / 100), 8 decimals; S03 = the same of C1 S14 in points, 6 decimals; a square root rounded exactly from its exact square [proof: CARD_C5_V9 rules 5, 6, 14; C5_STAMPS_V1 15 of 15 each]"
+    s04: "(up) over the coins but BTC counted, C1 S12 [proof: CARD_C5_V9 rule 7; C5_STAMPS_V1 15 of 15]"
+    s07: "the Pearson correlation of the average ranks of C1 S12 at e and at e - 1,800 s over the coins with a value at both; one coin or one rank: empty NO_SPREAD [proof: CARD_C5_V9 rule 9; C5_STAMPS_V1 15 of 15]"
+    s08: "S04 at e less S04 at e - 1,800 s; the card rounds once at the end, the producer rounds each S04 first [proof: CARD_C5_V9 rules 10, 14; C5_STAMPS_V1 14 MATCH + 1 DEFINITION; EDGE1 2026-10-17T22:23:04Z, TREE 22:26:13Z]"
+    twins: ".coverage = the coins counted (S07: at both points); the copy .strict_off = the value only when every roster coin (S04, S08: every alt) has one [proof: CARD_C5_V9 rule 18; C5_STAMPS_V1 15 of 15 each; job 15833 twins]"
+  latency: "known_at = the latest known_at of the C1 values used, at most the minute end; max_staleness 30 s (C1's), CARD_C5_V9 section 2"
+
+reading_rules:
+  - "the year also writes 12 copies of the same metrics as its own cross-check: 6 .quotes_off (the same rule on C1's returns from a second price feed, Tardis quotes) and 6 .strict_off (only when every roster coin, or alt, has a value). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): the .quotes_off shares S01, S04, S08 equal to the metric at 96.88 to 98.61% of minutes on 8 Mar 2026 and 95.14 to 97.57% on 24 Sep 2025 (gap p99 one coin, 0.02); the spreads and the rank correlation S02, S03, S07 at 55.00 to 59.38% and 16.74 to 41.74%, by tiny gaps (p99 0.0000285 to 0.019); corr 0.99968 to 0.999998; the .strict_off equal to the metric at every minute (every coin counted both days) (J15849 TWINS, q_15849, a9bc9402, 0ea4c5c8); not separate metrics"
+  - "every value is read at a minute end e from C1's values at e (S07, S08 also at e - 30 min); at a fire the fire-second settings' windows end at the fire (CARD_C5_V9 rule 17)"
+  - "a flat coin (its mid exactly unchanged over the window) is counted and is neither up nor down: S01 can be under 0.5"
+  - "S02 is a fraction (0.01 = 1 point of return), S03 is in points"
+  - "S04 and S08 leave BTC out; S01, S02, S03, S07 count BTC like any coin"
+  - "read .coverage beside a value: 51 or 52 coins every minute on 8 Mar 2026 and 24 Sep 2025"
+
+values:
+  units: "S01, S04: a share from 0 to 1; S08: a difference of shares, -1 to 1; S02: a fraction (8 decimals); S03: percentage points (6 decimals); S07: -1 to 1; .coverage a count of coins"
+  zero: "S02, S03 0 = every coin moved the same; S07 0 = no relation between the two rankings; S08 0 = the same share up as 30 min before"
+  empty: "NO_ROSTER, NO_FILE, BOOK_HOLE (from C1), ALL_COINS_EMPTY, NO_SPREAD (S07); value_kind 0 with NaN in value_f64; none empty on 8 Mar 2026 or 24 Sep 2025 (job 15812 schema, 15833 empty)"
+  stale: "true when empty because the C1 inputs are empty BOOK_HOLE"
+  flags: "none"
+
+interpret:
+  do:
+    - "read S01 (the larger of the shares up and down) as how one-sided the 5 minutes were, without the side: 1 = every coin one way"
+    - "read S04 as the share of alts up over 15 minutes, S08 as how much that share changed in 30 minutes"
+    - "read S02, S03 as how scattered the coins' moves are, knowing one or two wild coins move them"
+    - "read S07 near 1 as the same coins leading as 30 minutes ago, near -1 as the order reversed, near 0 (the usual) as no relation"
+  dont:
+    - "read S01 by its old name (breadth): it carries no direction (corr with the signed advance-decline -0.016 on 8 Mar, 0.002 on 24 Sep, job 15833 c5name)"
+    - "read S04 by its old name (one-sided): it is the share up (corr with the signed breadth 0.9965 and 0.9986); read one-sidedness as max(S04, 1 - S04 - flat) (J15879, J15880 c5v)"
+    - "read S07 by its old name (rotation): a high value is no rotation"
+    - "read S02 or S03 as a typical coin's distance from the others: corr with the interquartile range 0.52 and 0.38 (S02), -0.32 and 0.21 (S03); sd over iqr 0.96 to 2.41 where a normal spread gives 0.74"
+
+biases:
+  - {what: "our returns are of the mid, Binance's klines of the last trade: a coin's mid can stand still over 5 minutes (flat, neither up nor down) while its last trade moves a tick, or move while the last trade does not", direction: "either way: ours lower at 29.79% (8 Mar) and 21.39% (24 Sep) of minutes, higher at 34.24% and 26.88%, equal at 35.97% and 51.74%; the signed gap median 0, p10 -0.0385 and -0.0196, p90 0.0385 and 0.0196 (J15879, J15880 c5v)", size: "S01 within one coin (0.021) of the kline value on 69.9% (8 Mar) and 86.6% (24 Sep) of minutes, within two coins 87.0% and 96.7%; 8 Mar 01:20: 6 coins (CRV, FIL, ENA, NEAR, RENDER, ADA) flat in ours and down on klines, ours 0.4615, klines 0.5962", proof: "job 15833 c5, mlook 8 Mar C5.S01 01:20, c5name flat coins (median 7.7% and 2.0% of coins flat a minute)"}
+  - {what: "the mid against the last trade in every coin's 15 min return (the ranks of S07, the spread of S02)", direction: "either way", size: "S07 corr 0.961 (8 Mar), 0.992 (24 Sep); S02 corr 0.991 and 0.9997; our closes vs klines S07 corr 0.99988 and 0.99905, S02 0.99998 and 0.99996", proof: "job 15833 c5, decomp"}
+
+external_checks:
+  - {what: "S01 to S04, S07, S08 at every minute end of 8 Mar 2026 and 24 Sep 2025, the same rules on the roster coins' Binance 1 minute kline returns", where: "Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with the mid bias named: job 15833 c5 (corr S01 0.984 / 0.991, S02 0.991 / 0.9997, S03 0.9994 / 1.0000, S04 0.998 / 0.999, S07 0.961 / 0.992, S08 0.998 / 0.999)"}
+  - {what: "the gap split: ours (mid) against our own trade closes (C13 S01), our closes against the klines", where: "our C13 S01 and the klines", status: "EXPLAINED: our closes give the klines' S01, S04, S08 within one coin on 99.9 to 100% of minutes (job 15833 decomp)"}
+  - {what: "the names: breadth (signed), one-sided (the larger share), rotation (its direction), dispersion (sd against the interquartile range)", where: "kline returns", status: "DIFFERED for S01, S04, S07, RENAMED; S02, S03 the sd as named, tail-driven (job 15833 c5name)"}
+  - {what: "the twins: .coverage against the count of our coins with the C1 input; .strict_off against the value", where: "our C1 rows", status: "VERIFIED as a recompute from our own C1 rows, not an outside record: 1,440 of 1,440 minutes both days (job 15833 twins, cover); S07.coverage and .strict_off at all 1,440 minutes with D-1's C1 rows read for 00:00 to 00:29 (J15879, J15880 twins2)"}
+
+tools:
+  - {what: "every value and twin equal to an exact recompute (fractions) from our C1", run: "python3 -B -m rawcheck.basic_c5 --days <D1,D2> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_c5.py f1d923e07406f3d6, tests 14 of 14, mutants 9 of 9; job 15819; C5_STAMPS_V1 1ac967d2327d4431)"}
+  - {what: "every market minute against the same rules on Binance kline returns", run: "python3 -B -m rawcheck.meaning_relative c5 <D>", where: "team/RAWCHECK/code (meaning_relative.py 8ad2306031266355 ed5; runner job: klines on the SCRATCH_DISK)"}
+  - {what: "S04 against one-sidedness via max(S04, 1 - S04); S01 ours less klines signed; S07's twins at every minute with D-1 read", run: "python3 -B -m rawcheck.meaning_relative c5v <D> | twins2 <D>", where: "team/RAWCHECK/code (meaning_relative.py ed6 e83ddd2809493979, tests 45 of 45, mutants 21 of 21; J15879, J15880)"}
+  - {what: "the names tested; the flat coins", run: "python3 -B -m rawcheck.meaning_relative c5name <D>", where: team/RAWCHECK/code}
+  - {what: "the gap split, the twins, the coverage, the empties", run: "python3 -B -m rawcheck.meaning_relative decomp <D> | twins <D> | cover <D> | empty <D>", where: team/RAWCHECK/code}
+  - {what: "one market minute: every coin's input, ours and the kline's", run: "python3 -B -m rawcheck.meaning_relative mlook <D> C5.<S01|S02|S03|S04> <HHMM>", where: team/RAWCHECK/code}
+
+used_by: >-
+  S01 (breadth_5m) by CHAIN_chop_LONG_fade_3, CHAIN_chop_SHORT_ride_2, CHAIN_trend_SHORT_fade_2, CHAIN_trend_SHORT_ride_4; S02 (disp_15m)
+  by the labels REGIME/SCATTERED, REGIME/TOGETHER, WHY-DRIVER/ALT-MOVE, WHY-SCOPE/ALT-ROTATION and CHAIN_trend_SHORT_ride_4; S03
+  (disp_24h) by CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride; S07 (rotation) by CHAIN_chop_LONG_fade_3, CHAIN_chop_SHORT_ride_2,
+  CHAIN_forced_LONG_fade, CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride, CHAIN_quiet_SHORT_fade_3; nobody reads S04, S08 (CARD_C5_V9
+  'Who reads it today'); every setting through the record's fifths
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C5_V9.md
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C5_STAMPS_V1.tsv 1ac967d2327d4431 (job 15819: exact recompute from our C1, 24 Sep, 4 Nov 2025, 8 Mar 2026 x 01:00 04:00 12:10 16:00 22:06; 270 rows, 268 MATCH, 2 DEFINITION)"
+  JOBS: "15812 (first look), 15817 (basic_c5 ed1), 15818 (meaning ed2), 15819 (basic_c5 ed2, the stamps), 15820 (meaning ed3: the signed counts; c5name of 15818 void), 15825 (meaning_relative ed4 246b5c755c580e27, every part both days), 15833 (THE proof run, meaning_relative ed5 8ad2306031266355: tests 44 of 44, mutants 19 of 19, every part both days)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+  EDITION_1: "team/RAWCHECK/notes/BASIC/BASIC_C5_V1.yaml 846232bfbe7ed070; edition 2 = EDGE2's REVIEW BR2.C5 (hb/EDGE2.txt 13:24:18Z) done"
+  JOBS_V2: "15879 (8 Mar: medsplit, c5v, twins2; meaning_relative ed6 e83ddd2809493979, tests 45 of 45, mutants 21 of 21; log cdcc75fa), 15880 (24 Sep; log 93b9b880)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  FAULT: "C5 S08 double rounding: the producer rounds S04(e) and S04(e - 30 min) to 6 decimals before subtracting; CARD_C5_V9 rule 14 rounds once (EDGE1 2026-10-17T22:23:04Z, TREE 22:26:13Z: 1,410 of 1,410 rows on 8 Mar; marked, not fixed, on the owner's list for after the year)"
+
+settings:
+  - {id: C5.S01, name: "larger of the shares up and down, 5 min", renamed_from: "breadth 5 min", layer: basic, side: none, window: "5 min", clock: minute end (fire second at a fire), scope: market, contracts: USDT,
+     aggregate: "max(up, down) over the roster coins with a C1 S11 value", aliases: "breadth_5m (old name, read by 4 chains)",
+     means: "how one-sided the last 5 minutes were, without the side: 1 = every coin one way, 0.5 = split, under 0.5 when coins are flat",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15 (J15819, basic_c5 f1d923e0)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c5: the same rule on kline returns within two coins on 87.0% (8 Mar) and 96.7% (24 Sep), corr 0.984 and 0.991; our closes vs klines within one coin 100.00% and 99.93% (decomp); old name failed: the signed advance-decline corr -0.016, 0.002; its size corr 0.984, 0.991 (c5name)"},
+     open: "flat coins (mid unchanged over 5 min) count in the denominator and in neither share: a median 7.7% (8 Mar) and 2.0% (24 Sep) of coins a minute (mlook 8 Mar 01:20: 6 flat coins, all wide-tick: CRV, FIL, ENA, NEAR, RENDER, ADA; ours 0.4615, klines 0.5962; which coins are flat over the day not measured)"}
+  - {id: C5.S01.coverage, name: "coins counted for S01", layer: basic, side: none, window: "5 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins with a C1 S11 value", aliases: none,
+     means: "how many coins S01's shares read",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15; J15833 twins and cover 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C5_V9 rule 18; J15833 cover: 52 (8 Mar), 51 (24 Sep) every minute; the klines never had more coins"}, open: none}
+  - {id: C5.S02, name: "spread of the 15 min returns across coins (population sd, as a fraction)", layer: basic, side: none, window: "15 min", clock: minute end (fire second at a fire), scope: market, contracts: USDT,
+     aggregate: "population sd of C1 S12 over the roster coins with a value, / 100, 8 decimals", aliases: "disp_15m (old name, read by 4 labels and 1 chain)",
+     means: "how scattered the coins' 15 minute moves are: 0.002 = a standard deviation of 0.2 points",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15 (exact square root, 8 decimals)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c5: the same rule on kline returns corr 0.991 (8 Mar), 0.9997 (24 Sep), gap median 5.5e-5 and 1.6e-5 (0.0055 and 0.0016 points); our closes vs klines corr 0.99998, 0.99996 (decomp); c5name: the sd as named"},
+     open: "a population sd, driven by the tails: corr with the interquartile range 0.52 (8 Mar), 0.38 (24 Sep); sd over iqr 1.14 and 1.49 (a normal spread gives 0.74)"}
+  - {id: C5.S02.coverage, name: "coins counted for S02", layer: basic, side: none, window: "15 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins with a C1 S12 value", aliases: none,
+     means: "how many coins S02 read",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15; J15833 twins and cover 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C5_V9 rule 18; J15833 cover: 52 (8 Mar), 51 (24 Sep)"}, open: none}
+  - {id: C5.S03, name: "spread of the 24 h returns across coins (population sd, points)", layer: basic, side: none, window: "24 h", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "population sd of C1 S14 over the roster coins with a value, 6 decimals", aliases: "disp_24h (old name, read by 2 chains)",
+     means: "how scattered the coins' day moves are: 2 = a standard deviation of 2 points",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c5: the same rule on kline returns corr 0.9994 (8 Mar), 1.0000 (24 Sep), within 0.01 points on 76.9% and 99.5%; our closes vs klines corr 0.99996, 0.99990 (decomp)"},
+     open: "driven by the tails: corr with the interquartile range -0.32 (8 Mar), 0.21 (24 Sep); sd over iqr 0.96 and 2.41"}
+  - {id: C5.S03.coverage, name: "coins counted for S03", layer: basic, side: none, window: "24 h", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins with a C1 S14 value", aliases: none,
+     means: "how many coins S03 read",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15; J15833 twins and cover 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C5_V9 rule 18; J15833 cover: 52 (8 Mar), 51 (24 Sep)"}, open: none}
+  - {id: C5.S04, name: "share of alts up, 15 min", renamed_from: "one sided 15 min", layer: basic, side: none, window: "15 min", clock: minute end (fire second at a fire), scope: market, contracts: USDT,
+     aggregate: "up over the roster coins but BTC with a C1 S12 value", aliases: "one_sided_15m, up_share_15m (old names)",
+     means: "0 to 1: how many of the alts rose over the last 15 minutes",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED, proof: "J15833 c5: the same rule on kline returns within one coin on 85.1% (8 Mar) and 93.5% (24 Sep), within two 95.8% and 98.8%, corr 0.998 and 0.999; our closes vs klines within one coin 99.93% and 100.00% (decomp); old name failed: it is the share up (the signed breadth corr 0.9965 and 0.9986, c5name); one-sidedness is max(S04, 1 - S04 - flat), max(S04, 1 - S04) alone corr 0.9723 and 0.9900; S04 at 0.1 or less at 366 and 306 minutes, at 0.9 or more at 269 and 271, J15879, J15880 c5v)"},
+     open: none}
+  - {id: C5.S04.coverage, name: "alts counted for S04", layer: basic, side: none, window: "15 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins but BTC with a C1 S12 value", aliases: none,
+     means: "how many alts S04 read",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15; J15833 twins and cover 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C5_V9 rules 2, 18; J15833 cover: 51 (8 Mar), 50 (24 Sep)"}, open: none}
+  - {id: C5.S07, name: "rank correlation of the 15 min returns with those 30 min before", renamed_from: "rotation", layer: basic, side: none, window: "15 min at e and at e - 30 min", clock: minute end (fire second at a fire), scope: market, contracts: USDT,
+     aggregate: "Pearson of the average ranks of C1 S12 at e and at e - 1,800 s, the coins at both", aliases: "rotation (old name, read by 6 chains)",
+     means: "-1 to 1: whether the coins leading the last 15 minutes are those that led the 15 minutes ending 30 minutes ago; near 0 (the usual) = no relation",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15 (exact: sign x square root of num^2 / den)"},
+     meaning: {status: DEFINED, proof: "J15833 c5: the same rule on kline returns corr 0.961 (8 Mar), 0.992 (24 Sep), within 0.05 on 64.1% and 94.4%, the gap the mid against the last trade (our closes vs klines corr 0.99988, 0.99905, decomp); c5name: median -0.029 and -0.006, p10 -0.30 and -0.27, p90 0.24 and 0.25; old name failed: rotation reads the other way (a high value is no rotation)"},
+     open: none}
+  - {id: C5.S07.coverage, name: "coins counted for S07 (at both points)", layer: basic, side: none, window: "15 min at e and at e - 30 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins with a C1 S12 value at e and at e - 1,800 s", aliases: none,
+     means: "how many coins S07's ranking pairs read",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15; J15879, J15880 twins2: 1,440 of 1,440 minutes both days, 00:00 to 00:29 with D-1's C1 rows (30 of 30)"},
+     meaning: {status: DEFINED, proof: "CARD_C5_V9 rule 18 (for S07 the coins at both points); a recompute from our own C1 rows (J15833 twins; J15879, J15880 twins2), no outside record"}, open: none}
+  - {id: C5.S08, name: "change of the share of alts up over 30 min", layer: basic, side: none, window: "15 min at e and at e - 30 min", clock: minute end (fire second at a fire), scope: market, contracts: USDT,
+     aggregate: "S04 at e less S04 at e - 1,800 s", aliases: "d_up_share_30m (old name)",
+     derived_from: "C5 S04 at two points",
+     means: "-1 to 1: how much the share of alts up changed in 30 minutes",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 14 MATCH + 1 DEFINITION of 15: 8 Mar 01:00 ours 0.058823, the card's single rounding 0.058824 (the producer rounds each S04 first)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c5: the same rule on kline returns within two coins on 89.4% (8 Mar) and 96.0% (24 Sep), corr 0.998 and 0.999; our closes vs klines within one coin 99.86% and 99.86% (decomp)"},
+     open: "the producer's double rounding: one unit of the 6th decimal off the card's rule where the two shares' thirds do not cancel (CODE, marked not fixed, owner list after the year)"}
+  - {id: C5.S08.coverage, name: "alts counted for S08", layer: basic, side: none, window: "15 min at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins but BTC with a C1 S12 value at e", aliases: none,
+     means: "how many alts S08's share at e read",
+     computation: {status: RELIABLE, proof: "C5_STAMPS_V1 15 of 15; J15833 twins 1,440 of 1,440 minutes equal to the alts at e"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "CARD_C5_V9 rule 18; J15833 twins, a recompute from our own C1 rows (no outside record)"},
+     open: "every alt had a value at every minute of both days, so whether it counts the alts at e or at both points is not seen (51 and 50 every minute)"}
+
+could_build:
+  - {id: C5.CB1, intended: "breadth: the signed advance-decline of the roster over 5 minutes", was_name_of: "C5.S01",
+     formula: "(up - down) / n over the roster coins with a C1 S11 value, -1 to 1",
+     needs: "nothing new: C1 S11 (C5 has it)",
+     adds: "NEW: corr with S01 -0.016 (8 Mar), 0.002 (24 Sep); S01 is its size: corr of S01 with |(up - down) / n| 0.984 and 0.991 (J15833 c5name, on klines)",
+     status: NOT_BUILT}
+  - {id: C5.CB2, intended: "one-sidedness of the alts over 15 minutes: the larger of the shares up and down, BTC out", was_name_of: "C5.S04",
+     formula: "max(up, down) / n over the roster coins but BTC with a C1 S12 value",
+     needs: "nothing new: C1 S12",
+     adds: "LITTLE: it is max(S04, 1 - S04 - flat); max(S04, 1 - S04) alone has corr 0.9723 (8 Mar), 0.9900 (24 Sep), the difference median 0, p90 0.0980 and 0.0400, max 0.2157 and 0.1400 (J15879, J15880 c5v, on klines); against S04 itself corr 0.0389 and 0.0306 only because one-sidedness folds S04 at 0.5",
+     status: NOT_BUILT}
+  - {id: C5.CB3, intended: "rotation: high when the leaders change", was_name_of: "C5.S07",
+     formula: "(1 - S07) / 2, from 0 (the same order) to 1 (the order reversed)",
+     needs: "nothing new: S07",
+     adds: "NOTHING new: a transform of S07 (corr -1 by its formula); only the direction of reading",
+     status: NOT_BUILT}

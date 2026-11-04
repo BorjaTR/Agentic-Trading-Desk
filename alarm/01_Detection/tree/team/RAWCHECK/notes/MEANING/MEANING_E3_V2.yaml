@@ -1,0 +1,144 @@
+# MEANING_E3_V2.yaml: the meaning register of E3 basis, EDITION 2 (EDGE1, 2026-10-18, closed with the owner 15:4x Berlin)
+# = MEANING_E3_V1 (988ac274535612ea, kept) with S01 RENAMED (mark premium over index; E3.CB1 instant basis), EDGE2's facts (jobs 15734 to
+# 15736), conclude (may, never), every limit with its effect on decisions, module sha16s.
+group: E3
+name: basis (raw rows)
+summary: 'How far one coin''s perpetual stands above (premium) or below (discount) its spot index, in basis points of the index (1 bp = 0.01%), at a minute end: 10,000 x (mark - index)
+  / index, both from one Binance markPrice message. Binance''s mark is the median of three prices (index plus a funding-based premium, index plus a 30-second average of mid less index,
+  and the last trade), so this is a robust, partly smoothed premium.'
+read_as: 'The premium Binance itself marks positions at (renamed in edition 2 from basis_bps: mark premium over index). It tracks the instant premium (book mid less index) closely on
+  liquid coins (BTC, ETH: 0.1 to 0.9 bp apart, median) and less on thin ones (CRV, ASTER, DASH: 4.6 to 8.3 bp apart); the sign agrees 91 to 97% of the time. The instant basis is E3.CB1
+  (not built).'
+where:
+  card: testbed/value_audit/registers/CARD_E3_V1.md
+  settings_register: testbed/value_audit/registers/SETTINGS_E3_V1.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_derivative_ticker_V2.md
+  producer: prod_E3 with the derivative_ticker reader (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E3.parquet
+  year_output_columns: name (S01, S01.any_age_off, S02, S03 and twins), coin (or MARKET for S02, S03), as_of_us (e), value_kind (0 = EMPTY, its value_f64 holds NaN), value_f64, value_txt,
+    known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'E3', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: 'derivative_ticker: Binance markPrice stream (mark p and index i in one message, every 1 s)'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz
+  columns: exchange, symbol, timestamp, local_timestamp, funding_timestamp, funding_rate, predicted_funding_rate, open_interest, last_price, index_price, mark_price
+  fields:
+    mark_price: 'Binance p, the mark price: median(index x (1 + last funding rate x time to funding / period), index + 30 s average of (mid - index), last price) [proof: SOURCE_SPEC_derivative_ticker
+      Q-B1; Binance FAQ B3]'
+    index_price: 'Binance i, the price index: a weighted spot price from several exchanges [proof: SOURCE_SPEC_derivative_ticker Q-B1]'
+    one_moment: 'mark and index of one row come from the same markPrice message (one E), so the basis is never a mix of two moments [proof: SOURCE_SPEC_derivative_ticker Q-M1; card section
+      1]'
+  latency: middle 0.066 to 0.072 s, p99 about 1 s (spec F4); older than 61 s is STALE_VALUE (card rule 5)
+  silence: 61.0 s (card rule 5, spec F6)
+reading_rules:
+- 'the basis at tau is read from ONE row: the last good row received by tau carrying both mark and index (card rule 1)'
+- 'older than 61.0 s: empty STALE_VALUE; .any_age_off without that rule (rule 5)'
+- S01 = 10,000 x (mark - index) / index, exact, rounded once to 4 decimals (rule 7)
+- 'reasons, first failing: NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE (rule 6)'
+values:
+  units: basis points of the index (1 bp = 0.01%)
+  zero: mark equal to index
+  empty: NO_ROSTER, NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE; value_kind 0 with NaN in value_f64. Never read empty as 0
+  stale: 1 with STALE_VALUE
+  flags: DUPLICATE_ROW
+interpret:
+  do:
+  - read positive as the perpetual priced above spot (buyers of the perpetual paying up), negative as below
+  - expect a small negative level on these days (median -4 to -7 bp; 5th to 95th percentile -19 to +6 bp)
+  - on thin coins, remember the mark is smoothed and anchored to funding; the instant premium can be several bp away
+  dont:
+  - read it as the last trade against spot; it is Binance's mark premium
+  - compare a basis change of 1 to 2 bp on a thin coin with a real move; that is inside the gap to the instant premium
+biases:
+- what: mark is a median of three prices (smoothed, funding-anchored)
+  direction: either way
+  size: 'vs the instant premium (mid - index): median 1.0 to 2.1 bp apart, within 5 bp 80 to 94%; liquid coins 0.1 to 0.9 bp, thin coins up to 8.3 bp; correlation 0.87 to 0.92; decisions
+    unchanged'
+  proof: job 15788
+- what: moment of reading against Binance's 1m kline close
+  direction: either way
+  size: median 0 to 0.04 bp; within 2 bp 87 to 98%; decisions unchanged
+  proof: job 15788
+- what: Binance's 1m kline basis uses the next second's index
+  direction: theirs
+  size: '10 Oct 2025: the index jumped up to 7% in one second (TIA, INJ, ICP), kline gaps up to 453 bp; 17.7 to 22.2% of the differing minutes not explained; decisions unchanged'
+  proof: EDGE2 jobs 15734 to 15736
+external_checks:
+- what: mark and index per minute
+  where: Binance markPriceKlines and indexPriceKlines 1m from data.binance.vision, held at <SCRATCH_DISK>/realcheck/outside/binance/mark_1m and index_1m
+  status: 'VERIFIED: every coin-minute of 3 days, job 15788'
+- what: the mark price formula
+  where: Binance FAQ B3
+  status: VERIFIED
+tools:
+- what: our raw values equal Tardis
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code
+- what: every coin-minute against Binance's mark/index klines and the instant premium
+  run: python3 -B -m rawcheck.meaning_basis <D>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_basis.py 4cceaf2ba4225bc1, rawcheck raw code 84454de7fac2e458 (RAW_STAMPS_V1)
+  where: team/LAB/code/rawcheck
+used_by: S01 -> S02 basis_vel_60s (read by CHAIN_trend_SHORT_ride_4) and S03 basis_vel_300s (CARD_E3_V1)
+references:
+  B3: https://www.binance.com/en/support/faq/how-to-calculate-mark-price-in-binance-futures-360033525071
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+  K1: https://data.binance.vision (mark and index klines)
+settings:
+- id: E3.S01
+  layer: basic
+  side: none
+  window: row in force, 61 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 10,000 x (mark - index) / index
+  aliases: CUBE.basis_bps
+  means: the perpetual's mark premium over its spot index, bp
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Tardis 9 of 9; J15788: = Binance mark/index klines within 2 bp in 87 to 98% of all coin-minutes, median 0'
+  meaning:
+    status: DEFINED
+    proof: 'Binance FAQ B3; J15788 (gap to the instant premium measured); renamed in edition 2 (the owner 15:4x Berlin): the smoothed mark premium, not the instant basis; EDGE2: Binance''s
+      mark kline close = our raw mark on 146,778 of 146,778 coin-minutes (24 Sep and 10 Oct 2025, job 15736); the kline basis differs because Binance''s index kline close is the NEXT
+      second''s index (82.3 and 77.8% of the differing minutes explained exactly, jobs 15734, 15735)'
+  open: 'on thin coins 4.6 to 8.3 bp from the instant premium (median): a 1 to 2 bp change there is inside that gap; decisions unchanged'
+  name: mark premium over index, bp
+  renamed_from: basis_bps
+- id: E3.S01.any_age_off
+  layer: basic
+  side: none
+  window: row in force, any age
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: as S01
+  aliases: none
+  means: as S01 without the 61 s staleness rule (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: as S01; renamed with S01
+  open: switched off
+  name: mark premium over index, bp (without the 61 s staleness rule, switched off)
+  renamed_from: basis_bps (switched-off twin)
+could_build:
+- id: E3.CB1
+  intended: 'the instant basis: book mid minus spot index, bp'
+  was_name_of: E3.S01, E3.S01.any_age_off
+  formula: (C13 S05 book mid - index in force at e) / index x 10,000
+  needs: 'nothing new: the book mid (C13 S05) and the index (derivative_ticker) are read already'
+  adds: 'different only on thin coins: 4.6 to 8.3 bp from the mark premium at the median (BTC, ETH 0.1 to 0.9 bp), sign agrees 91 to 97% (job 15788)'
+  status: NOT_BUILT
+conclude:
+  may:
+  - the premium Binance marks positions at over the spot index, its sign, and its change against the coin's own history
+  never:
+  - 'E3 as the last trade against spot: it is Binance''s smoothed mark premium'
+  - 'a 1 to 2 bp change on a thin coin as a real move: it is inside the 4.6 to 8.3 bp gap to the instant premium'
+  - 'Binance''s 1-minute kline basis as the same number: its index close is the next second''s index'

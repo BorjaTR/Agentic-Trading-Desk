@@ -1,0 +1,35 @@
+{
+ "id": "SIGNFLIP",
+ "family": "FUNDING_CROWD",
+ "version": "1",
+ "claim": {
+  "one_line": "SIGNFLIP: the coin's live Binance funding estimate (E1.S01, per 8 h) has the opposite sign from the rate paid at the last settle (E1.S09 scaled to 8 h with the coin's interval E1.S04), both at least 0.00005 per 8 h in size: the old payers' pressure ended, the other side now pays, carry traders unwind; FADE the new payers' side",
+  "side_meaning": "+1 = the live estimate is positive (longs now pay: the perp premium went up), -1 = shorts now pay; the lean FADE is in the VARIANTS row",
+  "type": "PREDICT",
+  "footprint_s": 3600,
+  "note": "DESKA04_20261103 (DESK_V0 arm A T04), idea given by the desk, one variant V1; the lines of AD15_PAYFLIP_PF2 (cb716bcc0e4304a3, STOP) written from the idea: a known named copy run as given. E1.S04 menu V2 CAUTION (LAB4 PARTLY) and E1.S09 UNPROVEN (LAB4 NOT_PROVEN), both pickable NO: the idea cannot be built without them; metric_brief_v2 PROVEN for both"
+ },
+ "window": {"first": "20250901", "last": "20260430"},
+ "grid_s": 60,
+ "inputs": {
+  "fe": {"op": "raw", "code": "E1.S01"},
+  "fp": {"op": "raw", "code": "E1.S09"},
+  "iv": {"op": "raw", "code": "E1.S04"},
+  "fpi": {"op": "ratio", "a": "fp", "b": "iv"},
+  "p8": {"op": "mul", "a": "fpi", "b": 8},
+  "afe": {"op": "abs", "of": "fe"},
+  "ap8": {"op": "abs", "of": "p8"},
+  "sfe": {"op": "sign", "of": "fe"}
+ },
+ "conditions": [
+  {"name": "the live funding estimate (E1.S01, per 8 h) has the other sign from the rate paid at the last settle (E1.S09 x 8 / E1.S04, per 8 h): the funding sign flipped", "lhs": "fe", "cmp": "oppsign", "rhs": "p8", "role": "claim"},
+  {"name": "the rate paid at the last settle, per 8 h, was at least 0.00005 in size (half the default 0.0001)", "lhs": "ap8", "cmp": ">=", "rhs": 5e-05, "role": "claim"},
+  {"name": "the live estimate on the other side is at least 0.00005 per 8 h in size (half the default)", "lhs": "afe", "cmp": ">=", "rhs": 5e-05, "role": "claim"}
+ ],
+ "fire": {"onset": true, "refractory_s": 7200, "side": {"input": "sfe", "sign": 1}},
+ "truth": [
+  {"name": "chasers_flushed_60m", "kind": "forced_usd", "start_s": 0, "end_s": 3600, "dir": "opp", "floor_usd": 20000}
+ ],
+ "primary": "chasers_flushed_60m",
+ "base": {}
+}

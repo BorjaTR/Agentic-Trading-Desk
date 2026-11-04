@@ -1,0 +1,206 @@
+# T4_V1.yaml: TIMEX minutes since the last jump (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8; ADDON_ARCHITECTURE_V4
+# edit 3 0591d181; REVIEW_LEAD_EDGE1_V1 8dd9867d section 0 applied from the start).
+# Worked examples recomputed by team/TREE/proposals/verify_retx_timex_examples_tree_v2.py.
+# Edition 2: METRIC_AUDIT2's LEAD REVIEW TIMEX (REVIEW_LEAD_METRIC_AUDIT2_TIMEX_V1 c1b02bfd): the crash-evening pass line and real-check
+# point moved to a valued day (from 15 Oct 2025, the day with the most VOLX S17 flags), NO_JUMP_GAPS (E10, M5), VOLX V11 edition 4 cited.
+# Edition 3: METRIC_AUDIT's CROSSED REVIEW TIMEX ED2 (20:13:44Z (4)) after the signing: the chance rate of a jump flag is VOLX V11's Gumbel level, about 0.01 a coin-day, not 14 a day; NO_JUMP_SEEN is common.
+# Edition 4 (TREE, 18 Oct 2026): METRIC_AUDIT's N2 (hb 22:31:03Z): NO_HISTORY pinned to the reading PB5's build and METRIC_AUDIT's T1 already use: a lookback minute end with no VOLX row, or VOLX S17 empty NO_HISTORY (VOLX's own); every other empty S17 there (NO_RETURN, FEW_OBS, NO_BASE) is a gap (INPUT_GAPS, NO_JUMP_GAPS). E11 added. Values unchanged wherever VOLX opens with its own NO_HISTORY.
+kind: build_metric
+id: T4
+producer: TIMEX
+item: minutes since the last jump
+tier: BUILD
+name: minutes since the coin's last Lee-Mykland jump on its Binance 1-minute mid return (VOLX S17) within the last 7 days, and that jump's sign
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 4
+  signed: true
+  signed_by: 'METRIC_AUDIT 2026-10-18T22:38:04Z'
+means: >-
+  How long ago the coin's mid last jumped (a 1-minute move far beyond its local spread by Lee and Mykland's test, VOLX V11's S17), in
+  whole minutes (S01, 0 when the jump is the minute ending now), and whether it jumped up or down (S02). No jump in 7 days is said as
+  such, never as 0 and never as a cap. Binance USDT-M mids (VOLX's input), not Hyperliquid's.
+example: >-
+  The coin's last jump flag was +1 at 10:03 and none since: at 10:45 S01 = 42 minutes, S02 = +1 (RESEARCH_TOOLS_V1 9.2's planted
+  clock). At 10:03 itself S01 = 0.
+formula: >-
+  At each minute end u of D, per roster coin: J = the minute ends m in [u - 10,080 min, u] (the 7 days up to and including u) where
+  VOLX S17 (V11: -1, 0 or +1) is valued and not 0. Valued only when VOLX S17 is valued at u (else NO_INPUT, S17's state at u unknown).
+  With J not empty, m* = the latest m in J: S01 = (u - m*) / 60 s, a whole number of minutes (0 when m* = u); S02 = S17 at m* (+1 or
+  -1); the flag INPUT_GAPS when VOLX S17 is empty at any minute end in (m*, u) (a jump could hide there). With J empty: S01, S02 empty
+  NO_JUMP_GAPS when VOLX S17 is empty at any minute end of the 7 days (a jump could hide there), else NO_JUMP_SEEN (every minute end
+  valued, none a jump). NO_HISTORY when a minute end of the lookback has no VOLX row (no X1 day: before 8 Oct 2025) or VOLX S17 empty
+  NO_HISTORY, VOLX's own (V1's table not filled: T4 from 15 Oct 2025; a coin listed late); every other empty S17 in the lookback (NO_RETURN, FEW_OBS,
+  NO_BASE) is a gap (INPUT_GAPS, NO_JUMP_GAPS), never NO_HISTORY (edition 4, METRIC_AUDIT N2). The first failing reason: NO_ROSTER, NO_HISTORY, NO_INPUT, NO_JUMP_GAPS, NO_JUMP_SEEN. Exact
+  (whole numbers).
+source:
+  kind: doc
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 section 9.2 (N2 event clocks, its conventions, opinion: an event in the minute ending at e gives
+    since = 0; no event in the lookback L gives null with a seen = false flag, never 0 and never a silent cap; planted: last wave
+    10:03, e = 10:45 gives 42) and the jump test of Lee and Mykland 2008 (RFS 21(6) 2535-2563) as VOLX V11 builds it (S17). The 7-day
+    lookback is ours. VOLX V11 flags at the 1 percent level of the Gumbel maximum of the day's 1,440 statistics (beta =
+    -ln(-ln 0.99) = 4.600149226776579, V11 13942af8 line 33), so a coin-day with no jump flags with probability about 0.01 (METRIC_AUDIT
+    20:13:44Z (4)): NO_JUMP_SEEN is common, a real answer, never 0 and never a cap.
+inputs:
+  - kind: addon
+    ref: VOLX S17 (V11, the Lee-Mykland jump flag) of every roster coin at the minute ends of D-7 to D
+    card: VOLX/V11_V1
+    waits_for: VOLX V11 signed (edition 4 7fc4a7223331f869, METRIC_AUDIT 19:39:46Z, not signed yet) and VOLX built; NOT_CHECKED until then
+    rule_in_force: the sealed X1 VOLX rows at the minute ends as written
+    stale_rule: an empty S17 is not a jump and not a no-jump (INPUT_GAPS after the last jump; NO_INPUT at u; NO_JUMP_GAPS with no jump)
+    days: D-7 to D (the sealed X1 VOLX days; day after day after VOLX)
+  - kind: file
+    ref: the roster file of D's week, knowledge/roster/ROSTER_<monday>.csv
+    rule_in_force: the coins of the week's roster
+    stale_rule: no roster file gives NO_ROSTER for every coin
+    sha16_rule: the roster file's sha16 goes into D's manifest
+    days: D
+overlaps:
+  - setting: A4 S01 to S05
+    kind: other_metric
+    why: >-
+      A4 S01 to S05 are our rules on A1's liquidation waves (LAYER_REGISTER_V32 e249ce94: NOT_CHECKED) and LIQX L4 counts minutes since
+      a wave; T4 counts minutes since a jump of the coin's own mid. Another event.
+per_coin: >-
+  Thin coins: their mids move in steps, so a single step can pass the test (VOLX V11's per_coin): their S01 resets often. BTC and
+  ETH: jumps are rarer. The 1000-coins: scale free. A coin listed late: NO_HISTORY for VOLX's 28 days plus 7.
+time: >-
+  The lookback crosses midnight (it reads VOLX of D-7 to D-1 from the sealed X1 days); funding settles and the US open bring jumps
+  (VOLX V11 divides by V1's curve, which takes most of the quarter-hour bursts out). The first year days: NO_HISTORY until 15 Oct 2025
+  (the pilot of 10 to 12 Sep 2025 shows NO_HISTORY by design).
+output:
+  group_file: X1/day=<D>/TIMEX.parquet
+  names:
+    - name: S01
+      label: binance_minutes_since_jump
+      units: minutes (whole)
+      value_kind: whole
+      decimals: 0
+      means: minutes since the coin's last Lee-Mykland jump flag within the last 7 days (0 when it is the minute ending at u)
+    - name: S02
+      label: binance_last_jump_sign
+      units: +1 up, -1 down
+      value_kind: whole
+      decimals: 0
+      means: the sign of that jump
+  grid: minute
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the later of VOLX S17's known_at at u and at m* (each at or before u); an empty row: known_at = u. So known_at <= as_of on
+    every row.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (every coin)
+    - reason: NO_HISTORY
+      when: a minute end of the 7-day lookback has no VOLX row or VOLX S17 empty NO_HISTORY (VOLX's own; before 15 Oct 2025 for T4; a coin listed late); any other empty S17 there is a gap (NO_JUMP_GAPS)
+    - reason: NO_INPUT
+      when: VOLX S17 empty at u (any reason)
+    - reason: NO_JUMP_GAPS
+      when: no valued non-zero S17 in the 7 days up to u and S17 empty at some minute end of them (never written as 0 or as a cap)
+    - reason: NO_JUMP_SEEN
+      when: every S17 of the 7 days up to u valued and none non-zero (never written as 0 or as a cap)
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 7
+  no_history: "first fills on 15 Oct 2025 (VOLX S17 valued from 8 Oct 2025, D-7 = 8 Oct); NO_HISTORY before; valued on 146 of the 181 year days"
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: INPUT_GAPS
+      when: VOLX S17 is empty at a minute end between the last jump and u (on a valued row only; an empty value carries no flag)
+edge_cases:
+  - case: E1 the research clock (RESEARCH 9.2)
+    input: 'S17 +1 at 10:03, 0 at every minute end after it to 10:45'
+    answer: 'at 10:45 S01 42, S02 +1; at 10:03 S01 0'
+  - case: E2 two jumps
+    input: 'S17 -1 at 09:00 and +1 at 10:03'
+    answer: 'at 10:45 S01 42, S02 +1 (the latest)'
+  - case: E3 across midnight
+    input: 'S17 -1 at 23:58 of D-1, 0 after it'
+    answer: 'at 00:03 of D S01 5, S02 -1'
+  - case: E4 none in 7 days
+    input: 'S17 0 at every minute end of the 7 days'
+    answer: S01, S02 empty NO_JUMP_SEEN
+  - case: E5 the lookback edge
+    input: 'S17 +1 at u - 10,080 min exactly, 0 after; then the same at u - 10,081 min'
+    answer: 'S01 10080 (the edge is in); NO_JUMP_SEEN (one minute too old)'
+  - case: E6 a gap after the jump
+    input: 'E1 with S17 empty at 10:20'
+    answer: 'at 10:45 S01 42, S02 +1, flag INPUT_GAPS'
+  - case: E10 no jump with a gap
+    input: 'S17 0 at every minute end of the 7 days but empty at u - 3 days'
+    answer: S01, S02 empty NO_JUMP_GAPS (not NO_JUMP_SEEN)
+  - case: E7 S17 empty at u
+    input: 'E1 with S17 empty at 10:45'
+    answer: S01, S02 empty NO_INPUT at 10:45
+  - case: E8 the year start
+    input: 'D = 14 Oct 2025'
+    answer: S01, S02 empty NO_HISTORY
+  - case: E11 VOLX opens with NO_RETURN
+    input: 'S17 empty NO_HISTORY (VOLX''s own) to u - 6 days, then empty NO_RETURN for 2 hours, then 0 at every minute end to u'
+    answer: 'S01, S02 empty NO_HISTORY (the lookback holds VOLX''s own NO_HISTORY); with the NO_HISTORY ending before u - 7 days: NO_JUMP_GAPS (NO_RETURN is a gap, not NO_HISTORY)'
+unit_tests:
+  - test: U1 (E1 to E3, E5)
+    planted: 'X1 VOLX S17 rows of 8 planted days for one coin with the flags of each case'
+    expect: '42 and +1 (0 at 10:03); 42 and +1; 5 and -1; 10080, then NO_JUMP_SEEN'
+  - test: U2 (E4, E6 to E8, E10, E11)
+    planted: the rows of each case
+    expect: 'NO_JUMP_SEEN; 42 with INPUT_GAPS; NO_INPUT; NO_HISTORY; NO_JUMP_GAPS; E11 NO_HISTORY, then NO_JUMP_GAPS'
+  - test: U3 the kernel against its brute twin
+    planted: 'random flags (seeded) over 8 days for 5 coins, with empties'
+    expect: 'since_event with the head equals a plain loop back from u at every minute end'
+  - test: U4 the stamps
+    planted: U1 to U3
+    expect: 'as_of = u, known_at <= u; 1,440 rows per name and coin; empty never 0'
+mutants:
+  - mutant: M1 no jump written as 0
+    caught_by: U2 (E4 gives 0)
+  - mutant: M2 the lookback capped silently at 10,080
+    caught_by: U1 (E5's second case gives 10080 in place of NO_JUMP_SEEN)
+  - mutant: M3 only D's minutes looked at (no lookback across midnight)
+    caught_by: 'U1 (E3 gives NO_JUMP_SEEN)'
+  - mutant: M4 an empty S17 read as 0 (no jump) at u
+    caught_by: U2 (E7 gives 42)
+  - mutant: M5 a gap ignored when no jump is found (NO_JUMP_SEEN with gaps)
+    caught_by: U2 (E10 gives NO_JUMP_SEEN)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, ETHUSDT, a thin coin (named by the tester), u = 00:00, 12:10, 23:59
+      why: 00:00 looks back across midnight; liquid and thin coins
+    - point: 2025-10-15, BTCUSDT, u = 00:00
+      why: the first valued day
+    - point: 'the day from 15 Oct 2025 to 9 Mar 2026 with the most VOLX S17 flags over all coins, every coin, at its minute end with the most flags (both named by the tester from the sealed X1 VOLX rows before the job)'
+      why: a jumpy hour on a valued day (T4 is NO_HISTORY until 15 Oct 2025, so not the 10 Oct 2025 crash)
+  pass: >-
+    The tester recomputes S01, S02, the flag and the empties from this card's words on the sealed X1 VOLX S17 rows
+    (rawcheck/check_timex.py): whole numbers and words equal.
+meaning_check:
+  pass_lines:
+    - "on the real check's jumpiest day, at its minute end with the most VOLX S17 flags, the median over coins of S01 is under 60 minutes (most coins jumped within the hour: it can fail)"
+    - "on 2026-03-08 the median over coins and minute ends of S01 is above 30 minutes (jumps are not every minute: it can fail if VOLX V11 flags too often)"
+  report_only:
+    - the share of coin-minutes with NO_JUMP_SEEN, with NO_JUMP_GAPS and with INPUT_GAPS
+    - the distribution of S01 per coin on 2026-03-08
+conclude:
+  may:
+    - how many minutes ago the coin's Binance mid last jumped by Lee and Mykland's test, within 7 days, and in which direction
+  never:
+    - a jump on Hyperliquid's prices
+    - "a 'no jump' where a row is NO_INPUT or NO_JUMP_GAPS or a gap was flagged (VOLX's state was not known there)"
+    - a jump as news or a cause (a statistical flag on the mid)
+readers: "none yet (planned: the lab's after-jump labels)"
+implementation:
+  how: >-
+    One [coin x 8 days x 1,440] stack of VOLX S17 from the sealed X1 days by name; the jump flags (S17 != 0) to since_event over the
+    stack (addon_grid_v2 85c8ece1, step one minute end; the head is the stack's own first days, no CARRY), the sign by a forward fill of
+    the last flag's sign, the gap flag by a cumulative count of empties reset at each jump (NO_JUMP_GAPS by the same count over the 7 days when no jump is found). PHASES (ADDON_ARCHITECTURE_V4 section 4):
+    an add-on on sealed add-on days: every point final in one pass, day after day after VOLX.
+  kernel: 'addon_grid_v2.since_event (85c8ece1) with its brute twin (U3)'
+  memory_mb: 50
+  seconds_share: 0.2
+data_checks:
+  - what: "how often VOLX S17 fires per coin and day once VOLX is built (by chance about 0.01 a coin-day at V11's Gumbel level, more on days with jumps), read-only from X1"
+    who: TREE

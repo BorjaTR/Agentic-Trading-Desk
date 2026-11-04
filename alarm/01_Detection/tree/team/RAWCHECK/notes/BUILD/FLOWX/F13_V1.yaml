@@ -1,0 +1,272 @@
+# FLOWX F13 (BED, 18 Oct 2026; the 5 s grid edition of BRIEF_FLOWX_V4_DELTA, twin F13_V1.yaml.pre_BED_20261018T182952Z). Facts from
+# FLOWX_WORK_V0.yaml F13, BRIEF_FLOWX_DRAFTERS and BRIEF_FLOWX_V4_DELTA (they override the hand work), the coordinator's F13 rule for the
+# 5 s grid (the value at u is the last boundary b with b + 10 s <= u, rows received by u, max_staleness_s 900), ADDON_ARCHITECTURE_V4
+# (0591d18171f2d21f, edit 3; V3's rules stand unless V4 changes them). Every worked number checked exactly with fractions.Fraction.
+# Checked with: cd <VM_HOME>/br2/flowx/kit && python3 -B -m rawcheck.build_register notes/BUILD/FLOWX/F13_V1.yaml --check
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): Y3 the dollars are the
+# reader's units (10^-(pp + qp) dollars); Y1 the PHASES (phase A keeps per-bin partials by arrival, phase B sets every row), reader v6
+# as the seen-state input, NO_RATE_BASE; D's file missing gives NO_FILE at every row of D (E11, X4); PERIOD on valued rows (U5, UX);
+# max_staleness_s 905; the seen-through-the-bin choice named; a bin-23:45 row received at exactly 00:00:00.000000 (E12), a bad row
+# (E13), a stampless row (E14), repeats (E15), a 1000-coin (E16), U6, M5 to M8; the test_condition's measure and level; SHORT_HISTORY
+# dropped, NO_ROSTER added; Y8; trades only.
+kind: build_metric
+id: F13
+producer: FLOWX
+item: 'quarter-hour order imbalance'
+tier: BUILD_TEST
+test_condition: "the test is whether the 10 s imbalance at a quarter-hour boundary says anything about the return to the next boundary on our coins (Kim and Hansen 2026's claim); the measure: the Spearman correlation of S13 at b + 10 s with the return from b + 10 s to the next boundary, over the held days and coins; kept if above 0 with p < 0.05 (proposed measure and level, EDGE1 or the owner sets them); read by no chain until then"
+name: Binance quarter-hour taker imbalance of the first 10 seconds (Kim and Hansen 2026), served every 5 s
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  At the last quarter-hour boundary b whose first 10 seconds are over, the taker dollar imbalance of those 10 seconds: (taker bought -
+  taker sold dollars) / (their sum) over [b, b + 10 s), of the trades received by u. +1 = only taker buying, -1 = only taker selling.
+  Served every 5 s from b + 10 s until the next boundary's bin is over; the boundary is in the flag PERIOD=hh:mm.
+example: >-
+  b = 12:15:00.000: taker buy 5,000 at 12:15:00.200 (received 00.230), sell 2,000 at 03.000 (received 03.050), buy 1,000 at 09.999
+  (received 12:15:10.015), sell 4,000 at 10.000 (out: the bin is left-closed [b, b + 10 s)), buy 700 at 12:14:59.999 (out). At 12:15:10
+  the late buy is not yet received: (5,000 - 2,000) / 7,000 = 3/7 = 0.4285714286; from 12:15:15 it is: net 4,000, gross 8,000, F13 = 1/2 =
+  0.5000000000, served to 12:30:05 (180 points, PERIOD=12:15); from 12:30:10 the boundary 12:30. A bin with a single sell of 3,000 gives -1.
+formula: >-
+  For one coin: the quarter-hour boundaries b = hh:00, hh:15, hh:30, hh:45 (UTC), 96 a day. At the 5 s point u (00:00:00, 00:00:05, ...,
+  23:59:55 of D) the boundary served is b(u) = the last b with b + 10 s <= u, that is floor((u - 10 s) / 15 min) x 15 min: each b is served
+  at the 180 points b + 10 s to b + 15 min + 5 s (the points b' and b' + 5 s of the next boundary b' still serve b). The bin of b at u: the
+  trades reader's good rows (bad false; a repeated row counted each time, flagged DUPLICATE_ROW: B1 rule 17, Y6; a row with no stamp in
+  no bin and no BAD_INPUT: Y5) with b <= T < b + 10 s (left-closed: T = b in, T = b + 10 s out) and arr <= u (received
+  by u). buy = the sum of the dollars of the rows the taker bought (the reader's units: the row's dollars px x am as an integer count of
+  10^-(pp + qp) dollars, prod_reader_trades_v1 926b7ff5 lines 7 to 10, 82; Y3), sell = the sum for the rows the taker sold, both
+  exact integers (the price and quantity in their own steps). value(u) = (buy - sell) / (buy + sell), exact, one float64, not rounded, -1
+  to +1. A row of the bin received late enters at the first 5 s point at or after its arrival while b is served; a row received after
+  b + 15 min + 5 s never enters b's value. Every valued row carries PERIOD=hh:mm of b(u) (an empty row carries no flag: CARD_B1_V7 rule 18). The points 00:00:00 and 00:00:05 of D serve b = 23:45 of
+  D-1 (the CARRY with D's rows of that bin received by u, X4). No value is rewritten. THE SEEN STATE: the coin is seen through
+  [b, b + 10 s] by B1 rule 9 (alive at every moment of it, no thin minute from the one before b to the last full one before b + 10 s, no
+  bad trade row stamped in [b, b + 10 s] and received by u; reader v6's alive and thin). DEPARTS from B1 rule 9 for windows of 60 s or
+  less (seen at e only: CARD_B1_V7 line 161): the value describes the whole bin, so the bin is checked through. THE FILES (X1): NO_FILE
+  at every row of D when D's trades file is missing (the rows 00:00:00 and 00:00:05 too: bin 23:45's rows received after 24:00 are in
+  D's file; prod_B1_v3 line 134); at the rows 00:00:00 and 00:00:05 when D-1's file is not held, on any day; a header-only or 20-byte
+  file is there with no rows (prod_reader_trades_v1 lines 72 to 73: no trade gives TRADES_HOLE, CARD_B3_V4 line 116).
+  THE 00:00 POINTS (REVIEW_LEAD_EDGE1_V1 X3): when D's file is missing and D-1's is there, phase B writes the 00:00:00 row NO_FILE too (the year reads D's file there); the 00:00:00 point is completed in phase B after D's rows at exactly 00:00:00.000000 are added.
+source:
+  kind: paper
+  ref: >-
+    Kim and Hansen 2026: OI_t = OF_t / sum V_k over the first 10-second bin (seconds 0 to 9) of the quarter hour (RESEARCH_TOOLS_V1
+    aad3cc38 section 6.4: BUILD, no tool). Named difference: dollars here; the hand work reads the paper as likely in base quantity (not
+    confirmed). The serving every 5 s is ours (ADDON_ARCHITECTURE_V4 section 4, the 5 s grid).
+inputs:
+  - kind: reader
+    ref: prod_reader_trades_v1
+    exists: true
+    stream: Tardis binance-futures trades (the year's trades stream)
+    fields: t, arr, side, px, units, bad, dup, line (prod_reader_trades_v1 926b7ff5 lines 10 to 11; units at lines 7 to 10, 82)
+    rule_in_force: the good rows (bad false; repeats counted, Y6) with b <= T < b + 10 s and arr <= u, for the boundary b(u) served at the 5 s point u
+    stale_rule: none per row; the bin is seen or not by B1 rule 9 through [b, b + 10 s]
+    days: >-
+      D. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4; Y1): phase A of D, days in parallel and without the CARRY, keeps only per-bin partials of D's raw: per bin of D (and for bin 23:45 of D-1, D's rows of it received after 24:00 of D-1) the buy and sell dollars by first counted point (by arrival), the arrivals, the repeat marks; D's minute trade counts, live spans and bad trade rows (reader v6). Phase B, day after day with the CARRY of D-1, sets every row: the served values, the seen state through each bin (alive from D-1's live spans past 24:00; thin from D-1's counts and thin(D-1, 0)'s end), the rows 00:00:00 and 00:00:05 (bin 23:45 of D-1 from the CARRY plus D's late rows of it; NO_FILE when D's file is missing, X3). No value is final in phase A. THE CARRY (X1/carry/FLOWX/<D-1>.npz): bin 23:45 of D-1 (its buy and sell sums and latest arrival over the rows received by 24:00:00 of D-1, its seen state); D-1's 1,440 minute trade counts and thin(D-1, 0)'s end (on, good); D-1's live spans reaching past 24:00; whether D-1's trades file exists (X1). The first year day reads 9 Sep 2025's raw once for the first CARRY (R2); if it is not held, the rows 00:00:00 and 00:00:05 of 10 Sep 2025 are empty NO_FILE.
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: "the trades files' two stamp columns, as B1 reads them for its seen state (CARD_B1_V7 line 150: alive and thin through prod_reader_liquidations_v6.py; prod_B1_v3 efc2bc52 line 117): the minute counts (a trade counted in its minute when received by the minute's end) and the live spans (a trade stamped t, received a, makes the coin alive at every moment from max(t, a) to t + 60 s), 8566228f lines 98 to 116"
+    rule_in_force: "B1 rule 9's alive (a trade in [e - 60 s, e] received by e) and thin (R8: the base the median of D-1's 1,440 minute counts; a minute under 1 percent turns it on; while on, 5 minutes in a row at 20 percent or more end it; D's start is thin(D-1, 0)'s end, B1 rule 19)"
+    stale_rule: "B1 rule 22 (TRADES_HOLE, THIN_FEED: stale 1); D-1's trades file missing or a base of 0: thin off, flagged NO_RATE_BASE (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    days: "D-2, D-1 and D (D's base is D-1's counts; D's start is thin(D-1, 0)'s end, whose base is D-2's counts). Measured on 8 Mar 2026 (J16034, log f7a76cb05e789815): BTC 3.24 s, DOGE 1.03 s, CRV 0.10 s a pack. It parses each trades file a second time beside the trades reader (ADDON_ARCHITECTURE_V4 9.3 rule 1): FOR EDGE1, a seen-state kernel on the shared trades pack, tested equal to v6"
+overlaps: none
+per_coin: >-
+  Every roster coin of D (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters: knowledge/roster/ starts at
+  ROSTER_20251006, J16034; Y8, X11). BTC has many rows in each 10 s bin; thin coins often have no trade in 10 s (NO_TRADES at all 180
+  points served). 1000-coins: p x q is still dollars (p per 1,000 coins, q in thousands), and the ratio is within the coin, so the price
+  and quantity scales cancel. Coins missing on Hyperliquid change nothing (a Binance value).
+time: >-
+  The quarter hours are the point: 96 bins a day; funding settles (00:00, 08:00, 16:00 UTC) are boundaries too. A served value is 0 s to
+  14 min 55 s old (u - (b + 10 s)), named by PERIOD. The 00:00 start serves 23:45 of D-1 at 00:00:00 and 00:00:05 from the CARRY. The
+  first year day (10 Sep 2025) serves 23:45 of 9 Sep 2025 if held, else its rows 00:00:00 and 00:00:05 are empty NO_FILE (X1; no flag). Crash days (10 Oct 2025 evening) give one-sided bins.
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S13
+      label: bn_qh_first10s_taker_imb
+      units: share of taker dollars, -1 to 1
+      value_kind: float
+      decimals: none
+      means: (taker bought - taker sold dollars) / their sum over [b, b + 10 s) of the last boundary b with b + 10 s <= u, rows received by u (PERIOD)
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per coin per day, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arrival of the rows counted in b(u)'s bin (each <= u); at 00:00:00 of D from the CARRY (the latest arrival of the
+    bin 23:45 of D-1 counted by 24:00:00 of D-1); an empty row has known_at = as_of. So known_at <= as_of.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters; every coin)
+    - reason: NO_FILE
+      when: "D's trades file is missing: every row of D, 00:00:00 and 00:00:05 included (E11); or D-1's file is not held, at the rows 00:00:00 and 00:00:05, on any day (X1); a header-only or 20-byte file is there with no rows (no trade gives TRADES_HOLE, CARD_B3_V4 line 116)"
+    - reason: TRADES_HOLE
+      when: the coin is not seen through [b, b + 10 s] by B1 rule 9 with this reason, at the 180 points that serve b
+    - reason: THIN_FEED
+      when: the coin is not seen through [b, b + 10 s] by B1 rule 9 with this reason, at the 180 points that serve b
+    - reason: BAD_INPUT
+      when: the coin is not seen through [b, b + 10 s] by B1 rule 9 with this reason (a bad row; bad rows are never counted)
+    - reason: NO_TRADES
+      when: the coin is seen through [b, b + 10 s] and no good row with b <= T < b + 10 s is received by u (buy + sell = 0), at the 5 s point u that serves b
+  stale_rule: >-
+    stale = 1 on the rows empty TRADES_HOLE or THIN_FEED (B1 rule 22, as the time-window names), else 0; a served value is not stale: its
+    age u - (b + 10 s) is 0 to 895 s by design
+  max_staleness_s: 905
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: PERIOD
+      when: every valued row (an empty row carries no flag, CARD_B1_V7 rule 18, METRIC_AUDIT2 FF), written PERIOD=hh:mm with the boundary b(u) served (23:45 on the rows 00:00:00 and 00:00:05 of D, the boundary of D-1)
+    - flag: NO_RATE_BASE
+      when: "on a valued row when the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0): the coin is read as not thin (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row that counts a repeated row (an agg id or a trade id seen before in its file): it counts each time (B1 rule 17, A1 rule 10)"
+edge_cases:
+  - case: E1 the hand work's bin, with a row that arrives after the bin
+    input: 'b = 12:15:00.000: buy 5,000 at 00.200 (arr 00.230), sell 2,000 at 03.000 (arr 03.050), buy 1,000 at 09.999 (arr 12:15:10.015), sell 4,000 at 10.000 (arr 10.020), buy 700 at 12:14:59.999 (arr 12:15:00.030)'
+    answer: 'u = 12:15:10: 3,000/7,000 = 3/7 = 0.4285714286, known_at 12:15:03.050; u = 12:15:15 to 12:30:05: net 4,000, gross 8,000: 1/2 = 0.5000000000, known_at 12:15:10.015; PERIOD=12:15 on all 180 points; from 12:30:10 PERIOD=12:30'
+  - case: E2 one side only
+    input: 'a bin with a single sell of 3,000'
+    answer: '-1'
+  - case: E3 a ratio that does not end
+    input: 'a bin with a buy of 1,000 and a sell of 2,000'
+    answer: '(1,000 - 2,000) / 3,000 = -1/3 = -0.3333333333'
+  - case: E4 the bin's edges in T
+    input: 'E1''s rows; a row at T = b exactly'
+    answer: 'T = b: in; T = b + 10 s (the sell 4,000): out; T = b - 1 ms (the buy 700): out'
+  - case: E5 the edge in arrival
+    input: 'E1''s buy 1,000 received at 12:15:15.000 exactly; again at 12:15:15.000001'
+    answer: 'received at u = 12:15:15 exactly: in at 12:15:15, 1/2 = 0.5000000000; 1 us later: 3/7 = 0.4285714286 at 12:15:15, 1/2 from 12:15:20 (known_at 12:15:15.000001); a row of the bin received after 12:30:05 never enters'
+  - case: E6 the boundary b itself and b + 5 s serve the previous boundary
+    input: 'u = 12:15:00, 12:15:05, 12:15:10'
+    answer: '12:15:00 and 12:15:05 serve b = 12:00 (PERIOD=12:00); 12:15:10 serves b = 12:15 (PERIOD=12:15)'
+  - case: E7 the 00:00 start with the CARRY
+    input: 'bin 23:45 of D-1: buy 3,000, sell 1,000, the latest arrival counted 23:45:09.420 of D-1; bin 00:00 of D: buy 1,000 at 00:00:02.000 (arr 00:00:02.010), sell 2,000 at 00:00:06.000 (arr 00:00:06.020)'
+    answer: 'the rows 00:00:00 and 00:00:05 of D: 2,000/4,000 = 1/2 = 0.5000000000, PERIOD=23:45, known_at 23:45:09.420 of D-1; from 00:00:10 to 00:15:05: -1/3 = -0.3333333333, PERIOD=00:00, known_at 00:00:06.020'
+  - case: E8 the first year day without the CARRY
+    input: '10 Sep 2025, 9 Sep 2025''s trades not held; the 00:00 bin of 10 Sep 2025 as E7''s'
+    answer: 'the rows 00:00:00 and 00:00:05 empty NO_FILE (X1; no flag), known_at = as_of; from 00:00:10: -1/3 = -0.3333333333, PERIOD=00:00'
+  - case: E9 seen, no row in the bin
+    input: 'a thin coin seen through [12:15:00, 12:15:10] with no trade in [12:15:00, 12:15:10)'
+    answer: 'empty NO_TRADES at 12:15:10 to 12:30:05 (180 points), no flag, known_at = as_of'
+  - case: E10 not seen through the bin
+    input: 'a coin THIN_FEED by B1 rule 9 through [12:15:00, 12:15:10]'
+    answer: 'empty THIN_FEED, stale 1, at 12:15:10 to 12:30:05, no flag'
+  - case: E11 D's trades file missing (X4)
+    input: "D's trades file missing; D-1's there, its bin 23:45 as E7's"
+    answer: 'every row of D empty NO_FILE, 00:00:00 and 00:00:05 included (bin 23:45''s rows received after 24:00 would be in D''s missing file; prod_B1_v3 line 134), known_at = as_of, no flag'
+  - case: E12 a row of bin 23:45 received at exactly 00:00:00.000000 of D (C4)
+    input: "E7 plus a buy of 1,000 at T 23:45:05.000 of D-1, received 00:00:00.000000 of D (in D's file)"
+    answer: 'received by u = 00:00:00 (arr = u): the rows 00:00:00 and 00:00:05: (4,000 - 1,000) / 5,000 = 3/5 = 0.6000000000, PERIOD=23:45, known_at 00:00:00.000000 of D'
+  - case: E13 a bad trade row in the bin (BAD_INPUT)
+    input: "E1 plus a trade row whose price is not a number (bad), stamped 12:15:05.000, received 12:15:05.010"
+    answer: 'empty BAD_INPUT, stale 0, no flag, known_at = as_of, at 12:15:10 to 12:30:05 (stamped in [b, b + 10 s] and received by u)'
+  - case: E14 a trade row with no stamp (Y5)
+    input: "E1 plus a trade row with timestamp and local_timestamp empty (t = arr = -1, bad), a sell of 9,000"
+    answer: 'in no bin and no BAD_INPUT: 3/7 at 12:15:10, 1/2 from 12:15:15, as E1'
+  - case: E15 a repeated trade row (Y6)
+    input: "E1 with the sell 2,000 twice in the file (the same trade id)"
+    answer: 'counted each time: from 12:15:15 net 6,000 - 4,000 = 2,000, gross 10,000: 1/5 = 0.2000000000, flag DUPLICATE_ROW'
+  - case: E16 a 1000-coin
+    input: "1000PEPEUSDT (p per 1,000 coins, am in thousands): in the bin a buy at p 0.0125, am 400,000 and a sell at p 0.0125, am 200,000"
+    answer: 'dollars 5,000 and 2,500 (the reader''s units): (5,000 - 2,500) / 7,500 = 1/3 = 0.3333333333'
+unit_tests:
+  - test: U1 (E1, E4, E6)
+    planted: 'the E1 rows with their arrivals; the bin 12:00 planted with one sell of 3,000 (arr 12:00:02.000)'
+    expect: 'u = 12:15:00, 12:15:05: -1, PERIOD=12:00, known_at 12:00:02.000; u = 12:15:10: 3/7 = 0.4285714286, known_at 12:15:03.050; u = 12:15:15 to 12:30:05: 1/2 = 0.5000000000, known_at 12:15:10.015; PERIOD=12:15 on those 180 points'
+  - test: U2 (E2, E3)
+    planted: 'the E2 and E3 bins'
+    expect: '-1 and -1/3 = -0.3333333333'
+  - test: U3 (E5)
+    planted: 'E1 with the buy 1,000 received at 12:15:15.000; again at 12:15:15.000001; again at 12:30:06.000'
+    expect: '1/2 from 12:15:15; then 3/7 at 12:15:10 and 12:15:15 and 1/2 from 12:15:20; then 3/7 at all 180 points (received after 12:30:05)'
+  - test: U4 (E7, E8) the CARRY and the first year day
+    planted: 'the E7 bins and CARRY; again as 10 Sep 2025 with no D-1'
+    expect: 'with the CARRY: 1/2 at 00:00:00 and 00:00:05 (PERIOD=23:45, known_at 23:45:09.420 of D-1), -1/3 from 00:00:10; without: NO_FILE (no flag) at 00:00:00 and 00:00:05, -1/3 from 00:00:10'
+  - test: U5 (E9, E10) and the row stamps
+    planted: 'the E9 and E10 coins; U1 to U4'
+    expect: 'NO_TRADES and THIN_FEED (stale 1) at the 180 points; every row as_of = u, known_at <= as_of, PERIOD on every valued row and on no empty row, 17,280 rows per coin for a full day'
+  - test: UX the bounds and PERIOD (moved from the meaning check, X6)
+    planted: U1 to U4's plants
+    expect: '-1 <= S13 <= 1; |S13| = 1 exactly when the bin holds one taker side (E2); the valued rows among the 180 points of a boundary carry its PERIOD; known_at never falls from one point to the next within a boundary'
+  - test: U6 (E11 to E16) the files, the C4 edge, the rows
+    planted: "the rows of each case through the trades reader's packs and reader v6's arrays"
+    expect: "each answer exactly as written; no flag on an empty row"
+mutants:
+  - mutant: M1 bin_closed_right (the bin taken as (b, b + 10 s])
+    caught_by: 'U1 (at 12:15:15 the sell 4,000 at 10.000 is counted: net 0, gross 12,000, 0 against 1/2)'
+  - mutant: M2 serve_at_b (b served from u = b, before its bin is over)
+    caught_by: 'U1 (u = 12:15:05 gives 3/7 with PERIOD=12:15, a partial bin, against -1 with PERIOD=12:00)'
+  - mutant: M3 received_by_b10 (rows received by b + 10 s only)
+    caught_by: 'U1 (the buy 1,000 received 12:15:10.015 dropped: 3/7 = 0.4285714286 at 12:15:15 to 12:30:05 against 1/2 = 0.5000000000)'
+  - mutant: M4 minute_grid (only the minute ends computed, held for 60 s)
+    caught_by: 'U1 (u = 12:15:10 and 12:15:15 give 12:00''s -1 held from 12:15:00 against 3/7 and 1/2)'
+  - mutant: M5 dup_dropped (a repeated row counted once)
+    caught_by: 'U6 E15 (1/2 against 1/5)'
+  - mutant: M6 stampless_bad (a trade row with no stamp gives BAD_INPUT)
+    caught_by: 'U6 E14 (BAD_INPUT against 1/2)'
+  - mutant: M7 d_missing_first_row_only (D's file missing gives NO_FILE at 00:00:00 only)
+    caught_by: 'U6 E11 (00:00:05 valued from the CARRY against NO_FILE)'
+  - mutant: M8 arrival_strict (a row received at exactly u left out)
+    caught_by: 'U6 E12 (1/2 at 00:00:00 against 3/5)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, one thin coin and one more coin the tester names, 4 boundaries the tester names (one at 00:00) and every 5 s point each serves, and the points 00:00:00 and 00:00:05
+      why: the year's checked day; the rows 00:00:00 and 00:00:05 from the CARRY (23:45 of 7 Mar 2026); trades are the year's stream (held)
+    - point: 2026-03-08, BTCUSDT, 12:15:05 to 12:16:00 every 5 s
+      why: 5 s points that are not minute ends (the change of boundary at 12:15:10 and late rows entering)
+    - point: 2025-09-24, the same coins, the boundary 00:00 and 3 more the tester names, every point served, and the points 00:00:00 and 00:00:05
+      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991)
+    - point: 2025-10-10, BTCUSDT and the thin coin, the 4 boundaries nearest the largest A1 liquidation dollars that evening (the tester picks them from A1 before the job)
+      why: the crash, one-sided bins
+  pass: >-
+    The tester recomputes S13, PERIOD, the empty reasons, stale and known_at at every point from this card's words, with Fraction on the
+    trades reader's rows (never the producer's code): floats equal within 1e-9 relative of the Fraction recompute, words and flags
+    equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'On BTCUSDT of the checked days, |S13| = 1 (one taker side only in the 10 s bin) at under half of the 96 boundaries of a day (proposed level, EDGE1 or the owner sets it); above it, the bin is too thin to read an imbalance'
+  report_only:
+    - 'Kim and Hansen 2026''s claim about what follows the bin (the test_condition; the paper''s claim, not ours to restate)'
+    - the share of NO_TRADES bins per coin and day (thin coins)
+    - the share of bins whose value changes after b + 10 s (rows received after the bin)
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - the taker dollar imbalance of the first 10 seconds of the last quarter hour, for this coin, as received by u
+    - the coin against itself across quarter hours and days
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - a 10 s window at every point (it is one bin per quarter hour, served for 15 minutes)
+    - the imbalance of the moment it is served at (the bin ended 0 s to 14 min 55 s before; PERIOD names it)
+    - 'an order imbalance: the bin sums trades (fills) on their taker side, not orders (BUILD_ITEMS_V3''s word order is not the value; RULING 3: the name says what the value is)'
+    - a signal for a chain before its test_condition is met (BUILD_TEST)
+readers: none yet (BUILD_TEST, read by no chain until the test_condition is met)
+implementation:
+  how: >-
+    Per coin, vectorised over the day: good rows stable-sorted on T; dollars = units (10^-(pp + qp) dollars, exact; Y3); each row's bin b by
+    np.searchsorted (side left) of the 96 edges b and b + 10 s; its first counted point = the first 5 s point >= max(arr, b + 10 s), kept
+    only while b is served (<= b + 905 s); buy and sell by np.bincount into the 17,280 points, cumulative sums restarted at each b + 10 s
+    (the 96 serving segments of 180 points tile the day after 00:00:05); known_at by np.maximum.at and a segmented running max; the rows
+    00:00:00 and 00:00:05 from the CARRY. No loop over rows or points in Python. The trades pack is read once per day for F11, F12, F13, F16.
+  kernel: 'new: bin_entries (each row of a bin enters at the first 5 s point at or after max(T, arrival) while its boundary is served: a difference array per bin over its 180 points)'
+  memory_mb: 300
+  seconds_share: 0.5
+data_checks:
+  - what: the CARRY of the first year day (are 9 Sep 2025's trades held, for the bin 23:45 of 9 Sep 2025?)
+    who: BED (a read-only runner job)
+  - what: >-
+      the raw check per day (ADDON_ARCHITECTURE_V4 section 6, V3 section 6 standing): the re-read trades against the year's C13 and B1;
+      what the year read at the 12 minutes of 22 to 24 Sep 2025 (J15991; METRIC_AUDIT J15943, J15945) is found before any trades producer
+      runs on 2025 days
+    who: open (the architecture names no seat)

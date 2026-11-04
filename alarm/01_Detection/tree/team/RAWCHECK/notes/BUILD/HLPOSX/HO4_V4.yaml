@@ -1,0 +1,191 @@
+# HO4_V4.yaml (STRATEGY 2026-10-25T02:53:43Z): merged edition: OX-DATA's proposed successor with QUANT's ADOPTs (A6-A8, A10, market-trade words, tail spans, t_k = max(funding, block time), HLR-03 drop of S03 >= S04 only, HLR-04, HLR-05, HLR-08 at 1e-9 rel + 1e-12 coins, HO3 NO_PREVIOUS, HF3 S11 never) and the REJECTs restored from our signed edition (concrete meaning lines A1, our real_check points A2, T3 from RAW A3, QUANT's tie kept A4, coin map A5, v1 code A9, the HL3 backstop line); REVIEW_OXDATA_HL_V3V4_QUANT 42ae76e7, LAB1 co-sign 02:13:30Z
+kind: build_metric
+id: HO4
+producer: HLPOSX
+item: 'Hyperliquid positions per coin, hourly: concentration and funding (MISSING_INFO_BACKLOG M01, M13)'
+tier: BUILD
+name: Hyperliquid share of open positions held by the 10 largest accounts, the funding rate, and the funding paid by longs at the last hourly snapshot
+status:
+  drafter: STRATEGY
+  reviewer: LAB1 + QUANT
+  edition: 4
+  signed: false
+  signed_by: 'LAB1 2026-10-25T02:55:15Z (by diff vs signed)'
+  changes: 'edition 4 (STRATEGY 2026-10-25T02:53:43Z): merged edition: OX-DATA''s proposed successor with QUANT''s ADOPTs (A6-A8, A10, market-trade words,
+    tail spans, t_k = max(funding, block time), HLR-03 drop of S03 >= S04 only, HLR-04, HLR-05, HLR-08 at 1e-9 rel + 1e-12 coins, HO3 NO_PREVIOUS, HF3 S11
+    never) and the REJECTs restored from our signed edition (concrete meaning lines A1, our real_check points A2, T3 from RAW A3, QUANT''s tie kept A4,
+    coin map A5, v1 code A9, the HL3 backstop line); REVIEW_OXDATA_HL_V3V4_QUANT 42ae76e7, LAB1 co-sign 02:13:30Z'
+means: 'At the last hourly funding known at u: what share of all open position size the 10 largest accounts hold (a few accounts can move the coin), the
+  hourly funding rate Hyperliquid applied, and the dollars longs paid (positive) or received (negative) at it.'
+example: 'SOL, the 10:00 snapshot: gross size 4,000,000 SOL (2,000,000 long + 2,000,000 short); the 10 largest |szi| sum 800,000 SOL: S10 = 0.2. funding_rate
+  0.0000125: S11 = 0.0000125. Longs'' funding_amount rows sum to -45,000 (the node writes what the account received, so paid = -sum): S12 = 45,000 dollars
+  paid by longs.'
+formula: 'For snapshot selection t_k=max(funding_time_us, containing block_time_us); known time=t_k+1s. Age=u-known time;3900s inclusive. This is MODEL_AVAILABLE_AT,
+  not an observed receipt. Snapshot k of coin c: GROSS = sum(|szi|). TOP10 = the 10 rows with the largest |szi| (ties by account address ascending). S10
+  = sum(|szi| in TOP10) / GROSS. S11 = the funding_rate of the snapshot (one value per coin; more than one is named in the raw check and the median is written
+  with flag RATE_SPLIT). S12 = minus the sum of funding_amount over rows with szi > 0 (the sign convention of the node''s funding_amount, positive = received
+  by the account, is verified in the data check before signing). Minute end u: the snapshot in force as in HO1. Missing required funding fields give EMPTY
+  MISSING_FUNDING.'
+source:
+  kind: ours
+  ref: PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 rows P05, P06; Hyperliquid node misc_events Funding deltas
+inputs:
+- kind: reader
+  ref: prod_reader_hl_node_v1
+  exists: true
+  stream: positions table of hl_node_read V1; containing block_time_us is required
+  rule_in_force: Snapshot available at max(funding_time_us, containing block_time_us)+1s, MODEL_AVAILABLE_AT. Use the latest available snapshot; age<=3900s,
+    flag stale after3600s. Snapshot-block fills replay inclusively through u-1s for minute reconstruction.
+  stale_rule: Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.
+  days: D's 24 hour files; the CARRY of D-1 (its last snapshot)
+  data_check: Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof
+  verdict: LIMITS
+  waits_for: Independent release approval; source is available and bounded raw comparisons passed
+  reader_call: hl_node_read.read on the reader of record (rebuild 78fa56c5 once released; OX-DATA A8)
+overlaps:
+- setting: hl_funding_2025 and LAYERS hl_funding_hourly (Hyperliquid funding rates from the API)
+  kind: copy
+  why: the same funding rate from another source; the T3 tie for S11, never merged
+per_coin: 'coin map; fewer than 10 positions: TOP10 = all (S10 = 1); funding is hourly on Hyperliquid for every perp'
+time: Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time
+  plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim. Hourly
+  snapshot held to minute grid.
+output:
+  group_file: X1/day=<D>/HLPOSX.parquet
+  names:
+  - name: S10
+    label: hl_top10_share_of_gross
+    units: share 0 to 1
+    value_kind: float
+    decimals: none
+    means: the share of all open position size held by the 10 largest accounts at the snapshot in force
+    never:
+    - ownership of the coin itself
+  - name: S11
+    label: hl_funding_rate_1h
+    units: rate per hour
+    value_kind: float
+    decimals: none
+    means: the hourly funding rate Hyperliquid applied at the snapshot in force
+    never:
+    - an 8 h rate
+    - a Binance rate
+  - name: S12
+    label: hl_funding_paid_by_longs_usd
+    units: USDC
+    value_kind: float
+    decimals: none
+    means: dollars longs paid (positive) or received (negative) at the snapshot in force
+    never:
+    - a forecast of next hour funding
+  grid: minute
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u
+  known_at_rule: known_at=as_of=u; known_at <= as_of on every row. Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number),
+    across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible,
+    age>3600s is flagged stale. No observed-arrival claim.
+  known_at_kind: MODEL_AVAILABLE_AT
+  empty_reasons:
+  - reason: STALE_SNAPSHOT
+    when: no snapshot known within 3,900 s before u
+  - reason: NO_POSITIONS
+    when: the snapshot holds no position in the coin
+  - reason: NO_HISTORY
+    when: before the first snapshot of 27 Sep 2025
+  - reason: MISSING_FUNDING
+    when: Required funding rate or long-account funding amount is null/nonfinite; never replace with zero.
+  stale_rule: stale = 1 when the snapshot in force is older than 3,600 s
+  max_staleness_s: 3900
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+  - flag: SNAPSHOT_AGE
+    when: always
+  - flag: RATE_SPLIT
+    when: more than one funding_rate in a coin's snapshot
+  quality_companion:
+    codes:
+    - code: X1.HLPOSX.Q01
+      kind: WORD
+      meaning: Categorical JSON flags and pair_quality only
+    - code: X1.HLPOSX.Q02
+      kind: NUMBER
+      meaning: Source age in seconds; unavailable age is EMPTY NO_SOURCE_AGE
+    writer: write_hl_v2.py
+    scope: Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next
+      snapshot, not earlier.
+edge_cases:
+- case: E1 the example
+  input: as in the example
+  answer: S10 0.2, S11 0.0000125, S12 45000
+- case: E2 fewer than 10 positions
+  input: 4 positions
+  answer: S10 1.0
+- case: E3 negative funding (shorts pay)
+  input: funding_rate -0.00001, longs' funding_amount rows sum +3,000
+  answer: S12 -3000
+unit_tests:
+- test: U1 (E1)
+  planted: the example snapshot
+  expect: S10 0.2, S11 0.0000125, S12 45000
+- test: U2 (E2, E3)
+  planted: 4 positions; a negative-funding snapshot
+  expect: S10 1.0; S12 -3000
+- test: U3 (stale)
+  planted: as HO1 U2
+  expect: EMPTY STALE_SNAPSHOT 11:06-11:59
+mutants:
+- mutant: M1 S10 over the long side only
+  caught_by: U1 (0.4)
+- mutant: M2 S12 sign not flipped
+  caught_by: U1 (S12 -45000)
+real_check:
+  points:
+  - point: 2025-10-10, BTC and SOL, all snapshots
+    why: the crash day
+  - point: 2025-10-15, BTC and one thin coin, all snapshots
+    why: an ordinary day
+  - point: 2025-09-28 BTC 10:01 UTC
+    why: ordinary completed conversion window
+  - point: 2025-09-28 BTC 06:09 UTC
+    why: first eligible forced event after warmup, chosen from source only
+  - point: 2025-09-29 ETH 10:01 UTC
+    why: different coin and completed BUILD day, same executable
+  pass: 'QUANT recomputes from this card''s words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read''s converted
+    tables, never the builder''s code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative; tolerance for floats: abs difference
+    <= 1e-9 + 1e-9 x abs(expected) (OX-DATA), counts equal'
+meaning_check:
+  pass_lines:
+  - S11 equals hl_funding_2025 (Oct-Dec 2025) and LAYERS' hl_funding_hourly at the same hour within 1e-9 for BTC, ETH, SOL
+  - S12 has the sign of S11 whenever longs hold positions (longs pay when the rate is positive)
+  - Every valued output obeys its stated formula, units and population; missing data is never zero.
+  - No input whose modeled availability is after u changes a value at u.
+  report_only:
+  - S10 per coin by month
+conclude:
+  may:
+  - how concentrated the coin's positions were and what funding longs paid at the last funding
+  never:
+  - next hour's funding
+  - anything after u
+readers: none yet
+implementation:
+  how: vectorised; per (funding_time, coin) a sort by |szi| then account, head(10); sums; as-of join as HO1
+  kernel: 'new: hl_snapshot_asof'
+  memory_mb: 800
+  seconds_share: 3
+data_checks:
+- what: the funding_amount sign check
+  who: QUANT
+- what: Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points
+  who: OX-DATA separate reference implementation; not independent-person review
+  evidence:
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json
+- what: Independent design/release approval remains unassigned; exact final-version acceptance pending
+  who: Research peer and LAB1 plus outside reviewer
+card: HO4_V3

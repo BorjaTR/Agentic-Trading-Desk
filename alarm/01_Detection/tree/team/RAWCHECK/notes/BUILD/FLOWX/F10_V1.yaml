@@ -1,0 +1,309 @@
+# FLOWX F10 (BED, 18 Oct 2026; the 5 s grid edition of BRIEF_FLOWX_V4_DELTA, twin F10_V1.yaml.pre_BED_20261018T180837Z). Facts from
+# FLOWX_WORK_V0.yaml F10 (and F1, common), BRIEF_FLOWX_DRAFTERS and BRIEF_FLOWX_V4_DELTA (they override the hand work),
+# ADDON_ARCHITECTURE_V4 edit 3 (0591d18171f2d21f; V3's rules stand unless V4 changes them), BUILD_DEFINITION_WORKPACKAGES_V2. Every
+# worked answer recomputed exactly with fractions.Fraction. Checked with:
+#   cd <VM_HOME>/br2/flowx/kit && python3 -B -m rawcheck.build_register notes/BUILD/FLOWX/F10_V1.yaml --check
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): Y1 the PHASES and the
+# CARRY, reader v6 as the seen-state input (Y2), NO_RATE_BASE (E12's 00:01:00 row); Y4 the midnight join in D's phase B (E13: no false
+# flag at 00:00:00); X1 (a header-only file is there: TRADES_HOLE, not NO_FILE; any day's missing D-1 file); Y5, X2 a stampless trade
+# (E18); Y6 repeats (E20); E14 to E20 (an outage, a thin minute, no D-1 trades file, a bad trade row, the files), U5, M6 to M9; Y8
+# roster; SHORT_HISTORY dropped (B3's reasons), NO_ROSTER added (B3 rule 12); B3 S03's block rule in overlaps; known_at by a sliding
+# maximum; E6's known_at; the label (RULING 3); the kernel named as F1's.
+kind: build_metric
+id: F10
+producer: FLOWX
+item: 'aggTrade count, an ORDER PROXY (B3 S03 rebuilt on aggTrades; RULING 3: not a taker order count)'
+tier: REBUILD
+rebuilds: "B3 S03 (its V32 name is not in the kit): the year's rows (our slices, 10 to 16% more than aggTrades: jobs 15780, 15781) counted in the 60 s to each minute end (SETTINGS_B3_V2); here aggTrades counted in the 60 s to each 5 s point"
+name: Binance aggTrade count per minute (B3 S03 rebuilt on aggTrades)
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  How many aggTrades (groups of trades in 100 ms at one price and one taking side) the coin had in the last 60 s, as received by u,
+  written every 5 s. An aggTrade is an ORDER PROXY, not an order: this is not a count of taker orders.
+example: >-
+  Seven aggTrades near the minute to 12:00:00: one at exactly 11:59:00 (out: the window is open at its start), five at 11:59:10, 11:59:20,
+  11:59:30 (one aggTrade of 4 trades), 11:59:40 and 11:59:50 (in), and one at 11:59:59.990 received at 12:00:00.004 (out: not received by
+  12:00:00). F10 at 12:00:00 = 5; at 12:00:05 the late one has been received: F10 = 6.
+formula: >-
+  For one coin and the 5 s point u (00:00:00, 00:00:05, ..., 23:59:55 of D): F10(u) = the count of aggTrades a with T(a) in (u - 60 s, u]
+  (exchange time) and arrival(a) <= u, arrival(a) = the latest local_timestamp of its trades first_trade_id..last_trade_id in the trades
+  reader v2 (O-FLOWX-1 (a), THE rule: EDGE1 17:49:00Z; exchange time with known_at = u is refused). Each aggTrade counts 1, whatever its
+  number of trades, its size or its side; no floor. So a counts at every 5 s point u with max(T, arrival) <= u < T + 60 s: 12 points when
+  received by the first 5 s point at or after T, fewer when later; it is never counted only when no 5 s point lies in
+  [max(T, arrival), T + 60 s), which needs an arrival more than 55 s after T. The window length is B3 S03's (SETTINGS_B3_V2: 60 s). The
+  coin is seen by B1 rule 9 at u (CARD_B1_V7 rule 9: a window of 60 s or less needs the coin seen at u only: the trades file of D, and of D-1 when the window reaches it, a trade in [u - 60 s, u] received by u, the last full minute before u not thin (prod_B1_v3 line 135 with no span), no bad trade row stamped in (u - 60 s, u] and received by u); the alive and thin inputs from reader v6 (inputs). A trade row with no stamp (the reader's t = arr = -1, bad) is passed over: in no window, no BAD_INPUT, no arrival (Y5; the year: prod_B1_v3 efc2bc52 lines 104, 134 to 140); an aggTrade whose trade ids are only such rows has none of its ids present (AGG_NOT_IN_TRADES). A repeated row (an agg id or a trade id seen before in its file) counts each time, flagged DUPLICATE_ROW (B1 rule 17). THE FILES (X1): empty NO_FILE when D's aggTrades or trades file is missing, or when (u - 60 s, u] reaches D-1 and D-1's file is not held, on any day (prod_B1_v3 line 134); a header-only or 20-byte file is there with no rows (prod_reader_trades_v1 lines 72 to 73: no trade gives TRADES_HOLE, CARD_B3_V4 line 116); a seen coin with no aggTrade counted
+  gives a measured 0, never empty. A whole number, not rounded. The 00:00:00 row of D is D-1's 24:00:00 row (THE CARRY, inputs.days).
+  THE 00:00 POINTS (REVIEW_LEAD_EDGE1_V1 X3): when D's file is missing and D-1's is there, phase B writes the 00:00:00 row NO_FILE too (the year reads D's file there); the 00:00:00 point is completed in phase B after D's rows at exactly 00:00:00.000000 are added.
+source:
+  kind: ours
+  ref: >-
+    The year's B3 S03 window (SETTINGS_B3_V2: 60 s, minute end) on aggTrades in place of the year's rows (FLOWX_WORK_V0 F10); the aggTrade
+    row: 'Market trades that fill in 100ms with the same price and the same taking side' (the Binance REST doc, RESEARCH_TOOLS_V1 6, T1);
+    BUILD, no tool. The 5 s grid: ADDON_ARCHITECTURE_V4 section 4 (BUILD_ITEMS_V4; 'the last 60 s ending at u').
+inputs:
+  - kind: reader
+    ref: prod_reader_agg_trades_v1
+    exists: false
+    stream: Binance USD-M aggTrades (data.binance.vision archive)
+    fields: agg id, first_trade_id, last_trade_id, transact_time T (ms) (FLOWX_WORK_V0 common; price, quantity and side are not used here)
+    data_check: >-
+      D4: which days are held (HANDOVER_EDGE1_V103 901368a5 says the Expansion holds aggtrades to 1 Aug 2026; BUILD_LIST_V4 03c7ed28 line
+      42 says 113 coin-days held); the header row and column order; it refuses JUL_UNSEEN and every day from 1 Aug 2026
+    rule_in_force: every aggTrade with T in (u - 60 s, u] and arrival <= u, at the 5 s point u (the arrival from the trades reader v2)
+    stale_rule: none of its own; stale comes from the seen state (B1 rule 22, output.stale_rule)
+    days: >-
+      D. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4; Y1): phase A of D, days in parallel and without the CARRY, makes only the point-local records of D's raw: D's aggTrades (T, agg id) with the arrivals of those whose trades are all in D's trades file, D's minute trade counts, live spans and bad trade rows (reader v6, the trades reader), and the arrivals in D's trades file of the trade ids below D's first aggTrade's first_trade_id (D-1's last aggTrades, Y4). Phase B, day after day with the CARRY of D-1, makes every value: the join of D-1's last aggTrades with their arrivals in D's trades file (the aggTrades file is cut by exchange time, the trades file by arrival: Y4; AGG_NOT_IN_TRADES is decided only here; the reverse join for an aggTrade of D whose trades arrived before 24:00, from the CARRY's trades), the seen state at every point (alive from D-1's live spans past 24:00; thin from D-1's counts and thin(D-1, 0)'s end), the window sums with D-1's part, the 00:00:00 point (D's rows at exactly 00:00:00.000000 added; NO_FILE when D's file is missing, X3). No value is final in phase A. THE CARRY (X1/carry/FLOWX/<D-1>.npz): D-1's aggTrades with T in D-1's last 60 s (T, agg id, and the arrival where D-1's trades file holds all their trades), counted at D's points 00:00:05 to 00:00:55 by their arrivals; D-1's 1,440 minute trade counts and thin(D-1, 0)'s end (on, good); D-1's live spans reaching past 24:00; D-1's trades near 24:00 by trade id with their arrivals; whether D-1's aggTrades and trades files exist (X1: a missing D-1 file gives NO_FILE on every window that reaches it, on any day: prod_B1_v3 line 134). The first year day reads 9 Sep 2025's raw once for the first CARRY (R2); if it is not held, the rows whose window reaches 9 Sep 2025 are empty NO_FILE.
+  - kind: reader
+    ref: prod_reader_trades_v2
+    exists: false
+    stream: Tardis binance-futures trades (the year's trades stream)
+    data_check: >-
+      an edition of prod_reader_trades_v1 (926b7ff5) that also keeps the trade id, tested equal to v1 packs (ADDON_ARCHITECTURE_V4
+      sections 6 and 10, V3 section 6 standing); it gives each aggTrade its arrival (O-FLOWX-1 (a), THE rule: EDGE1 17:49:00Z)
+    rule_in_force: >-
+      arrival(a) = the latest local_timestamp of the trades first_trade_id..last_trade_id of a (O-FLOWX-1 (a)); the coin's seen state at
+      the 5 s point u by B1 rule 9 on the same rows
+    stale_rule: B1 rule 22 (TRADES_HOLE or THIN_FEED give stale = 1)
+    days: >-
+      D (the arrivals of D's aggTrades by trade id: the aggTrades file is cut by exchange time and the trades file by arrival (X4), so an aggTrade of D can be received after 24:00 and then sits in the CARRY for D+1); D-1's last aggTrades take their arrivals from D's trades file in D's phase B (Y4: the PHASES above); D-1's trades near 24:00 by id in the CARRY for an aggTrade of D whose trades arrived before 24:00. A row with no stamp is passed over (Y5), a repeated row counted each time (Y6).
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: "the trades files' two stamp columns, as B1 reads them for its seen state (CARD_B1_V7 line 150: alive and thin through prod_reader_liquidations_v6.py; prod_B1_v3 efc2bc52 line 117): the minute counts (a trade counted in its minute when received by the minute's end) and the live spans (a trade stamped t, received a, makes the coin alive at every moment from max(t, a) to t + 60 s), 8566228f lines 98 to 116"
+    rule_in_force: "B1 rule 9's alive (a trade in [e - 60 s, e] received by e) and thin (R8: the base the median of D-1's 1,440 minute counts; a minute under 1 percent turns it on; while on, 5 minutes in a row at 20 percent or more end it; D's start is thin(D-1, 0)'s end, B1 rule 19)"
+    stale_rule: "B1 rule 22 (TRADES_HOLE, THIN_FEED: stale 1); D-1's trades file missing or a base of 0: thin off, flagged NO_RATE_BASE (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    days: "D-2, D-1 and D (D's base is D-1's counts; D's start is thin(D-1, 0)'s end, whose base is D-2's counts). Measured on 8 Mar 2026 (J16034, log f7a76cb05e789815): BTC 3.24 s, DOGE 1.03 s, CRV 0.10 s a pack. It parses each trades file a second time beside the trades reader (ADDON_ARCHITECTURE_V4 9.3 rule 1): FOR EDGE1, a seen-state kernel on the shared trades pack, tested equal to v6"
+overlaps:
+  - setting: B3 S03
+    kind: other_metric
+    why: >-
+      The same idea (taker events per 60 s) on another row: B3 S03 counts the year's own rows (our slices, 10 to 16% more than aggTrades:
+      jobs 15780, 15781) at minute ends; F10 counts aggTrades every 5 s. B3 S03 counts a block once any of its rows is in (CARD_B3_V4
+      line 109); F10 counts an aggTrade only once all of its trades are received (its arrival is the latest of them).
+per_coin: >-
+  Every roster coin of D (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters: knowledge/roster/ starts at ROSTER_20251006, J16034; Y8, X11), seen by B1 rule 9 at u. Thin coins often 0 (a measured 0 when seen). 1000-coins:
+  an aggTrade counts 1 whatever its size. No floor, so a coin entering the roster is valued from its first seen point (no history).
+time: >-
+  Every 5 s; between minute ends the count moves when an aggTrade is received or leaves the window (T = u - 60 s). Funding settles and
+  quarter hours are ordinary points for the formula; crash days (10 Oct 2025 evening) give many aggTrades and more late arrivals
+  (counted from the first point after their arrival). The 00:00 start: the 00:00:00 row is D-1's 24:00:00 row; the points 00:00:05 to
+  00:00:55 add D-1's part from the CARRY. The first year day reads 9 Sep 2025's aggTrades once if held, else its rows 00:00:00 to 00:00:55 are empty NO_FILE (X1), as on any day whose D-1 files are not held. The reader refuses JUL_UNSEEN and every day from 1 Aug 2026.
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S10
+      label: bn_agg_trade_count_1m
+      units: count of aggTrades
+      value_kind: whole
+      decimals: none
+      means: the number of aggTrades with T in (u - 60 s, u], received by u, at the 5 s point u
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per coin per day, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arrival of the aggTrades counted at the 5 s point u (each <= u, since received by u), else u (none counted: a
+    measured 0, or an empty row), so known_at <= as_of on every row, empty rows too
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters; every coin; CARD_B3_V4 rule 12)
+    - reason: NO_FILE
+      when: "D's aggTrades or trades file of the coin is missing, or (u - 60 s, u] reaches D-1 and D-1's file is not held, on any day (X1; prod_B1_v3 line 134); a header-only or 20-byte file is there with no rows (prod_reader_trades_v1 lines 72 to 73; no trade gives TRADES_HOLE, CARD_B3_V4 line 116)"
+    - reason: TRADES_HOLE
+      when: B1 rule 9 (CARD_B1_V7) gives TRADES_HOLE for the coin at the 5 s point u on the trades reader's rows
+    - reason: THIN_FEED
+      when: B1 rule 9 gives THIN_FEED for the coin at the 5 s point u (the year's rule, applied as the year applies it)
+    - reason: BAD_INPUT
+      when: >-
+        B1 rule 9 gives BAD_INPUT for the coin at the 5 s point u (a bad row in the window). When several reasons hold, the first in
+        this list (the year's B1 order)
+  stale_rule: stale = 1 on a row empty for TRADES_HOLE or THIN_FEED (B1 rule 22); else 0
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: AGG_IDS_MISSING
+      when: >-
+        on a valued row: AGG_IDS_MISSING=<n> when the row counts an aggTrade with some of its trade ids missing in the trades reader's rows (its
+        arrival is then the latest of those present: O-FLOWX-1 (a)); n = the missing trade ids of the aggTrades counted
+    - flag: AGG_NOT_IN_TRADES
+      when: >-
+        on a valued row whose window holds by T an aggTrade with none of its trade ids in the trades reader's rows while the coin is seen: that
+        aggTrade has no arrival and is not counted (a raw-check case)
+    - flag: NO_RATE_BASE
+      when: "on a valued row when the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0): the coin is read as not thin (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row that counts a repeated row (an agg id or a trade id seen before in its file): it counts each time (B1 rule 17, A1 rule 10)"
+edge_cases:
+  - case: E1 the hand work's seven aggTrades
+    input: >-
+      (T, arrival, trade ids): (11:59:00.000, 11:59:00.005, 101), (11:59:10.000, 11:59:10.005, 102), (11:59:20.000, 11:59:20.005, 103),
+      (11:59:30.000, 11:59:30.005, 104 to 107), (11:59:40.000, 11:59:40.005, 108), (11:59:50.000, 11:59:50.005, 109), (11:59:59.990,
+      12:00:00.004, 110)
+    answer: 'F10(12:00:00) = 5, known_at 11:59:50.005; the aggTrade of 4 trades counts 1'
+  - case: E2 a 5 s point that is not a minute end, rows entering and leaving
+    input: E1's rows at 12:00:05 and 12:00:10
+    answer: >-
+      F10(12:00:05) = 6 (the aggTrade at 11:59:59.990 received at 12:00:00.004 enters), known_at 12:00:00.004; at 12:00:10 the one at
+      11:59:10.000 leaves (T = u - 60 s): F10(12:00:10) = 5, known_at 12:00:00.004. The 11:59:10.000 row (received 5 ms after T) counts at
+      the 11 points 11:59:15 to 12:00:05
+  - case: E3 seen with no aggTrade
+    input: the coin seen at u; no aggTrade in (u - 60 s, u]
+    answer: 'F10 = 0 (a measured 0), known_at = u'
+  - case: E4 unseen
+    input: B1 rule 9 gives THIN_FEED at u
+    answer: 'F10 empty THIN_FEED, stale 1, known_at = u'
+  - case: E5 the window's two ends
+    input: 'an aggTrade at T 11:59:00.000 (= u - 60 s) and one at T 12:00:00.000 received 12:00:00.000; u = 12:00:00'
+    answer: 'F10(12:00:00) = 1 (the one at T = u, received by u); the one at u - 60 s left the window at 12:00:00'
+  - case: E6 received after a minute end
+    input: E1's aggTrade at 11:59:59.990 received 12:00:00.004
+    answer: 'out of F10(12:00:00) (not received); counted at the 11 points 12:00:05 to 12:00:55; out from 12:01:00 (T before (12:00:00, 12:01:00]): F10(12:00:55) = 1 (known_at 12:00:00.004), F10(12:01:00) = 0 on E1''s rows (known_at = u)'
+  - case: E7 an aggTrade whose trades arrive on both sides of a minute end
+    input: 'an aggTrade at T 11:59:59.900, trades 501 to 503 with local_timestamps 11:59:59.950, 11:59:59.990, 12:00:00.010'
+    answer: 'arrival 12:00:00.010: F10(12:00:00) = 0; F10(12:00:05) to F10(12:00:55) = 1, known_at 12:00:00.010; F10(12:01:00) = 0'
+  - case: E8 some trade ids missing in our trades
+    input: 'an aggTrade at T 11:59:30.000, ids 601 to 604; our trades hold 601, 602, 604 at 11:59:30.004, 11:59:30.006, 11:59:30.005'
+    answer: 'arrival 11:59:30.006; counted at 11:59:35 to 12:00:25: F10(12:00:00) = 1, flag AGG_IDS_MISSING=1'
+  - case: E9 none of its trade ids in our trades
+    input: 'an aggTrade at T 11:59:40.000, ids 701 to 702, neither in our trades; the coin seen'
+    answer: 'not counted: F10(12:00:00) = 0, flag AGG_NOT_IN_TRADES on the rows 11:59:40 to 12:00:35'
+  - case: E10 the 00:00 start with the CARRY
+    input: >-
+      F1's E15 rows (T, arrival): CARRY of D-1 (23:57:00.000, .005), (23:58:00.000, .005), (23:59:59.998, 00:00:00.003 of D),
+      (23:59:59.999, 00:00:00.002 of D), (23:54:30.000, .005), (23:59:30.000, 23:59:30.005); D (00:00:00.000, 00:00:00.004),
+      (00:00:30.000, 00:00:30.005), (00:03:00.000, 00:03:00.005)
+    answer: >-
+      F10(00:00:00) = 1 (23:59:30.000; D-1's 24:00:00 row), known_at 23:59:30.005 of D-1; F10(00:00:05) = D-1's part 3 (23:59:30.000,
+      23:59:59.998, 23:59:59.999) + D's part 1 (00:00:00.000) = 4, known_at 00:00:00.004; F10(00:00:30) = 3 (23:59:30.000 leaves,
+      00:00:30.000 not yet received); F10(00:00:55) = 4, known_at 00:00:30.005; F10(00:01:00) = 1; F10(00:03:00) = 0 (00:03:00.000 not
+      yet received), known_at = u; F10(00:03:05) = 1, known_at 00:03:00.005; F10(00:04:00) = 0
+  - case: E11 an aggTrade of D stamped 00:00:00.000 and received by 00:00:00.000
+    input: 'E10 plus an aggTrade at T 00:00:00.000 of D received 00:00:00.000 (planted)'
+    answer: 'D''s part added to the carried row in D''s phase B (F1''s E16): F10(00:00:00) = 1 + 1 = 2, known_at 00:00:00.000'
+  - case: E12 the first year day without the CARRY
+    input: 'E10 without the CARRY and without 9 Sep 2025''s raw'
+    answer: 'the rows 00:00:00 to 00:00:55 empty NO_FILE (X1: the window needs 9 Sep 2025''s raw, not held; no flag on an empty row), known_at = u; F10(00:01:00) = 1 as in E10, with the flag NO_RATE_BASE (no D-1 minute counts: thin off, B1 rule 19)'
+  - case: E13 no false flag on the 00:00:00 row (Y4)
+    input: "E10: D-1's aggTrades at 23:59:59.998 and 23:59:59.999 have their trades only in D's trades file (received 00:00:00.003 and 00:00:00.002 of D)"
+    answer: 'F10(00:00:00) = 1 (D-1''s 24:00:00 row, made in D''s phase B): the two are not received by 00:00:00 and carry no AGG_NOT_IN_TRADES (their trade ids are present, in D''s file); counted from 00:00:05'
+  - case: E14 an outage (TRADES_HOLE)
+    input: "the coin's trades and aggTrades every second, received at once, until 11:58:00.000; none after"
+    answer: '11:59:00: F10 = 0, a measured 0 (seen: the 11:58:00.000 trade is exactly 60 s before u), known_at = u; 11:59:05: empty TRADES_HOLE, stale 1, known_at = u'
+  - case: E15 a thin minute (THIN_FEED)
+    input: "D-1's minute counts 1,000 each (D's base 1,000); D's minute 10:00 to 10:01 holds 4 trades (0.4 percent), every other minute 1,000 evenly spread, with aggTrades every 10 s"
+    answer: 'THIN_FEED, stale 1, at 10:01:00 to 10:05:55 (the last full minute before u is thin: minutes 10:00 to 10:04, 10:05 the fifth at 20 percent or more); valued at 10:00:55 and from 10:06:00'
+  - case: E16 no trades file on D-1 (NO_RATE_BASE, B3 E51)
+    input: "D-1's trades file missing (its aggTrades file there, none in its last 60 s); D's trades every second from 00:00:00.500, received at once"
+    answer: 'NO_FILE at 00:00:00 to 00:00:55 (the windows reach D-1''s missing trades file: prod_B1_v3 line 134, any day); valued from 00:01:00 with the flag NO_RATE_BASE (no base: thin off, B1 rule 19)'
+  - case: E17 a bad trade row (BAD_INPUT)
+    input: "E1 plus a trade row whose price is not a number (bad), stamped 11:59:45.000, received 11:59:45.005"
+    answer: 'F10 empty BAD_INPUT, stale 0, known_at = u, at 11:59:50 to 12:00:40 (stamped in (u - 60 s, u] and received by u); valued at 11:59:45 and from 12:00:45'
+  - case: E18 a trade row with no stamp (Y5, X2)
+    input: "E1 plus a trade row with timestamp and local_timestamp empty (t = arr = -1, bad), id 900, and an aggTrade at T 11:59:45.000 whose only trade id is 900"
+    answer: 'F10(12:00:00) = 5 as E1 (the stampless row is in no window and gives no BAD_INPUT); the aggTrade has no arrival and is not counted: flag AGG_NOT_IN_TRADES on the rows 11:59:45 to 12:00:40'
+  - case: E19 the files (X1)
+    input: "(a) D's trades file header-only (there, no rows), D-1's last trade at 23:59:59.500; (b) on 8 Mar 2026, D-1's aggTrades file missing, D-1's trades there"
+    answer: '(a) not NO_FILE: valued to 00:00:55 (23:59:59.500 is in [u - 60 s, u]), TRADES_HOLE, stale 1, from 00:01:00; (b) NO_FILE at 00:00:00 to 00:00:55 of D (any day, X1), valued from 00:01:00'
+  - case: E20 a repeated aggTrade (Y6)
+    input: "E1 with the aggTrade at 11:59:20.000 twice in the file (the same agg id)"
+    answer: 'counted each time: F10(12:00:00) = 6, flag DUPLICATE_ROW (B1 rule 17)'
+unit_tests:
+  - test: U1 (E1, E2, E6)
+    planted: E1's seven aggTrades, the coin seen
+    expect: >-
+      F10(12:00:00) = 5 known_at 11:59:50.005; F10(12:00:05) = 6 and F10(12:00:10) = 5 known_at 12:00:00.004; F10(12:00:55) = 1;
+      F10(12:01:00) = 0 known_at 12:01:00; stale 0
+  - test: U2 (E10, E11, E12) the 00:00 start
+    planted: E10's CARRY and D rows; E11's extra row; again without the CARRY and without 9 Sep 2025's raw
+    expect: >-
+      with: F10 00:00:00 = 1, 00:00:05 = 4, 00:00:30 = 3, 00:00:55 = 4, 00:01:00 = 1, 00:03:00 = 0, 00:03:05 = 1 and E10's known_at; E11:
+      00:00:00 = 2; without: NO_FILE on 00:00:00 to 00:00:55, 00:01:00 = 1 with NO_RATE_BASE
+  - test: U3 (E3, E4, E5, E7, E8, E9)
+    planted: the rows of each case, each alone
+    expect: 'E3 0; E4 empty THIN_FEED stale 1; E5 1; E7 0 then 1 from 12:00:05 to 12:00:55; E8 1 with AGG_IDS_MISSING=1; E9 0 with AGG_NOT_IN_TRADES'
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: >-
+      every row as_of = u (a 5 s point) and known_at <= as_of (empty rows known_at = u); every value a whole number (value_kind whole),
+      empty rows NaN; rows sorted name, coin, as_of; 17,280 rows per coin for a full day; the rows with as_of a whole minute are the 1,440
+      minute ends
+  - test: U5 (E13 to E20) the seen state, the files, the rows
+    planted: "per case the minute counts and live spans of D-2, D-1 and D (reader v6's arrays), the trade rows and aggTrades written"
+    expect: "each answer exactly as written; NO_RATE_BASE on E16's valued rows only; no flag on an empty row"
+mutants:
+  - mutant: M1 window_closed_start (T = u - 60 s counted)
+    caught_by: U1 (F10(12:00:00) = 6 against 5)
+  - mutant: M2 no_arrival (received by u ignored)
+    caught_by: U1 (F10(12:00:00) = 6 against 5)
+  - mutant: M3 trade_count (last_trade_id - first_trade_id + 1 summed, the trades in place of the aggTrades)
+    caught_by: U1 (F10(12:00:00) = 8 against 5)
+  - mutant: M4 carry_ignored (D's rows only on a day that has a CARRY, no flag)
+    caught_by: U2 (F10(00:00:00) = 0 against 1; F10(00:00:05) = 1 against 4)
+  - mutant: M5 minute_grid (only the minute ends computed, held for 60 s)
+    caught_by: U1 (F10(12:00:05) = 5 against 6)
+  - mutant: M6 stampless_bad (a trade row with no stamp gives BAD_INPUT)
+    caught_by: 'U5 E18 (BAD_INPUT against 5)'
+  - mutant: M7 no_base_as_thin (a missing thin base read as thin on)
+    caught_by: 'U5 E16 (THIN_FEED from 00:01:00 against values with NO_RATE_BASE)'
+  - mutant: M8 thin_minute_late (the minute before the last full one read for thin)
+    caught_by: 'U5 E15 (valued at 10:01:00 against THIN_FEED)'
+  - mutant: M9 repeats_once (a repeated aggTrade counted once)
+    caught_by: 'U5 E20 (5 against 6)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT and one thin coin (the tester names it), 3 minute ends the tester names and the points 00:00:00 to 00:01:00 every 5 s
+      why: >-
+        a year's checked day, if aggTrades are held there (D4), else the first held days the tester names; big against thin (many
+        aggTrades against many measured 0); the 00:00 start from the CARRY of 7 Mar 2026
+    - point: 2026-03-08, BTCUSDT and the same thin coin, 12:00:05 to 12:01:00 every 5 s
+      why: 5 s points that are not minute ends (late aggTrades enter after their arrival; rows leave at T = u - 60 s)
+    - point: 2025-09-24, BTCUSDT and the same thin coin, the same minute ends
+      why: >-
+        the year's other checked day (if held, D4, else the first held day the tester names); no floor, so valued there; near the 12
+        minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991; ADDON_ARCHITECTURE_V4 section 6,
+        V3 section 6 standing): aggTrades there may be AGG_NOT_IN_TRADES
+  pass: >-
+    With F1's job: the tester recomputes F10, its empty reasons, stale, known_at and flags at every point named from this card's words,
+    from the readers' rows (never the producer's code): whole values, words, flags and known_at equal.
+meaning_check:
+  pass_lines:
+    - 'F10 is under B3 S03 at more than half of the valued BTCUSDT minute ends of the checked days (proposed level, EDGE1 or the owner sets it); jobs 15780, 15781: our same-millisecond slices run 10 to 16 percent above Binance''s aggTrades; if not, the aggTrade grouping is not what the rebuild claims'
+  report_only:
+    - 'B3.CB1''s claim on the same coin-minutes (the minute ends): ours (B3 S03) 10 to 16% above F10, order_off 8 to 43% below (jobs 15780, 15781)'
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades and aggTrades; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - how many aggTrades of this coin were stamped in (u - 60 s, u] and received by u, every 5 s
+    - the coin's aggTrade activity against itself across points and days
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - 'the number of taker orders: one order across k prices is k aggTrades; an aggTrade is the trades of 100 ms at one price and one taking side, an ORDER PROXY (RULING 3)'
+    - the number of trades (an aggTrade holds first_trade_id..last_trade_id, one trade or more)
+    - a size or dollar measure (each aggTrade counts 1)
+    - the year's B3 S03 (another row, the minute grid)
+readers: none yet
+implementation:
+  how: >-
+    In F1's pass over the sorted aggTrades and their arrivals: each aggTrade adds +1 at the first 5 s point u >= max(T, arrival) and -1 at
+    the first point u >= T + 60 s (searchsorted on the 17,280 points; nothing when the first is not before the second), both by bincount,
+    then one cumulative sum, int64; D-1's part from the CARRY added at 00:00:05 to 00:00:55. known_at by a sliding maximum of the
+    arrivals over the same intervals (the latest arrival among the rows whose interval holds u), not by a cumulative sum. Vectorised over the day and all coins, no
+    loop over rows or points in Python.
+  kernel: 'new: window_stamped (EDGE1''s planned name, REVIEW_LEAD_EDGE1_V1 line 69; a row''s first point = the first 5 s point at or after max(T, arrival), its last = the last point before T + W; a difference array over the points and one cumulative sum); addon_grid_v2.per_window (85c8ece1 line 169) windows on arrival alone, so it is not this rule, only its cross-check where every arrival equals T'
+  memory_mb: 400
+  seconds_share: 1
+data_checks:
+  - what: F1's data checks on the readers (D4 held days, trade id agreement) and on the 00:00:00 row (D's aggTrades at T = 00:00:00.000, E11); the floor's is not F10's
+    who: as F1 (the sources seat, BED, EDGE1)

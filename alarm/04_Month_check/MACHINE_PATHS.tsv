@@ -1,0 +1,3 @@
+# 04_Month_check MACHINE_PATHS (H2, 30 Oct 2026): every machine path in the files of MANIFEST.tsv. None: nothing is copied here since the kit moved to
+# Alarm/Agentic (30 Oct). The MONTH job's and decide_forward_v1.py's machine paths are in ../Agentic/MACHINE_PATHS.tsv; the chain's in ../03_Grading/MACHINE_PATHS.tsv.
+file	line	path	kind	what	settings_key	status

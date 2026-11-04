@@ -1,0 +1,213 @@
+# BASIC_C4_V2.yaml: the card of the basic group C4 realized volatility (book mid), EDITION 2 (EDGE2, 2026-10-18; BR1 = WP1 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 2 = BASIC_C4_V1 c6bcf48df8c8e9c6 (landed, LAYER_REGISTER_V17, kept) with the owner's ruling (16:0x Berlin, EDGE1 14:03:25Z: 'okay, let's count them
+# as C4 metrics. we should use the per minute ones then'): the six .step60_off rows are C4 metrics, the per-minute ones to use, their computation
+# recomputed from the Tardis rows (C4S60_STAMPS_V1, jobs 15892 to 15894); the 6 .quotes_off and 3 .plain_off are copies, the year's accepted cross-check
+# (BASIC_C1_V5 95244119 wording), no rows; BED's note 1 (13:55:13Z: S03 'only ours 52') in S03's open.
+# Edit 1 (EDGE2, 18 Oct 2026, before landing): BED's REVIEW BR1.C4 V2 (hb/BED.txt 14:35:06Z): E1 S02.step60_off, S05.step60_off DEFINED_WITH_OPEN with
+# the 100 coin-minutes of 8 Mar at 0 (J15864 c4split, CRV by BED's J15902), S02.step60_off and S05.step60_off in the never line on a per-minute 0;
+# E2 BED's note 1 in the S03.step60_off and S05.step60_off opens; E4 'the base 0: NO_MOVE' in the S05.step60_off, S10.step60_off aggregates.
+# E3 is a test: tests/test_basic_c4s60.py ed. 2 bd4023bf (a step in the window's first return; BED's M5 planted in the test: 8 of 8); basic_c4s60 unchanged.
+# (V1:) the card of the basic group C4 realized volatility (book mid), EDITION 1 (EDGE2, 2026-10-18; BR1 = WP1 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# Made as BASIC_C3_V1 and BASIC_C7_V1 (METRIC_REVIEW_METHOD_V1 section 5; the rename rule of 14:1x Berlin; conclude of 15:0x Berlin; twins as BASIC_C1_V3 c53defd7).
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 6223b1ad3de7bb1b checks it and writes .md, .flat.jsonl, .agent.jsonl.
+# Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (C4 S01 to S05, S10 basic, computation RELIABLE by
+# C3C4_STAMPS_V1, meaning NOT_TESTED before this card). Not in this card: S06 to S09 (ER, layer formula) and S11 (raw, REBUILD: DVOL has no reader).
+# Every number below is from the BR1 final proof run on meaning_ranges edition 8 74f75c8f87434926: J15864 (8 Mar 2026) and J15865 (24 Sep 2025).
+
+group: C4
+name: realized volatility (basic, built on the book mid)
+summary: >-
+  Per coin, how much its book mid ((best bid + best ask) / 2, Tardis book_ticker) moved over a window ending at e, from the mid at every whole
+  second: rv = 100 x the root of the sum of the squared 1 s log returns, over 5 minutes (S01), 1 hour (S02) and 24 hours (S03), in percent; and
+  two pace ratios per second of these sums, 5 min against 1 h (S04) and 1 h against 24 h (S05): 1 = the short window moved at the long window's
+  pace. S10 is BTC's 30 min against its 6 h, the same way. THE PER-MINUTE METRICS (the year's .step60_off, the ones to use, the owner 18 Oct
+  2026): the same six from the mid at whole MINUTES (1-minute log returns: 5, 60, 1,440 of them), as many returns as Binance's 1-minute candles.
+  The year also writes copies of the six on Tardis quotes (.quotes_off) and the plain quotient of the two rvs (.plain_off, S04, S05, S10): its
+  cross-check, not metrics of their own.
+read_as: >-
+  The size of the MID's moves at 1 s steps. Against the rv of the same coin's Binance 1-minute kline closes (its trades) at every coin-minute of
+  8 Mar 2026 and 24 Sep 2025 (J15864, J15865): S01, S02, S03 are 0.9001 to 1.0114 of it at the median coin-minute, so 'rv' holds; S02 and S03
+  rank coin-minutes as it does (Spearman 0.93959 to 0.98353), S01 less (0.81439, 0.78852), because 300 one-second returns and 5 one-minute
+  returns are different samples of the same move: our own per-minute .step60_off ranks as the klines do (Spearman 0.95386, 0.98434) and ours against our 60 s
+  twin is 0.80876, 0.78304. The ratios are not 'rv5 over rv60': S04 = 3.4641 x S01 / S02 and S05 = 4.8990 x S02 / S03 at every coin-minute
+  (the roots of 12 and 24, by the per-second rule): RENAMED to pace ratios; the plain quotient is built beside (.plain_off, C4.CB1). The pace
+  ratios rank coin-minutes far from the kline pace ratios (S04 0.65744, 0.52938), again the step: our per-minute .step60_off against the klines 0.93919, 0.97316.
+
+conclude:
+  may:
+    - "how much a coin's quoted mid moved over the last 5 minutes, 1 hour or 24 hours from its 1-minute returns (S01.step60_off, S02.step60_off, S03.step60_off, the ones to use): 0.9864 to 0.9978 of the trade-close rv at the median coin-minute, ranking coin-minutes as it does (Spearman 0.95386 to 0.99729 on rows above 0; J15864, J15865 c4split)"
+    - "whether the last 5 minutes, the last hour or BTC's last 30 minutes moved faster per second than the longer window, from 1-minute returns (S04, S05, S10 .step60_off): 0.9987 to 1.0024 of the kline pace ratio at the median, Spearman 0.93919 to 0.99999 (J15864, J15865 c4split)"
+    - "how much a coin's quoted mid moved over the last 5 minutes, 1 hour or 24 hours (S01, S02, S03), in percent: 0.9001 to 1.0114 of the rv of its 1-minute trade closes at the median coin-minute (J15864, J15865)"
+    - "that one coin-hour or coin-day moved more than another (S02, S03 rank coin-minutes as the trade-close rv does: Spearman 0.93959 to 0.98353, rows with both above 0; with the zeros 0.93681 to 0.98353)"
+    - "whether the last 5 minutes (S04), the last hour (S05) or BTC's last 30 minutes (S10) moved faster or slower per second than the longer window: above 1 faster, below 1 slower, 1 the same pace"
+  never:
+    - "S04, S05 or S10 as rv5 / rv60, rv60 / rv24h or rv30 / rv6h: they are per second, the plain quotient times the root of 12, 24 and 12 (J15864, J15865 c4name); the plain quotient is .plain_off"
+    - "that S01 ranks coin-minutes as a 1-minute trade rv would: Spearman 0.81439 (8 Mar 2026), 0.78852 (24 Sep 2025); 300 one-second returns against 5 one-minute ones (J15864, J15865 c4split)"
+    - "S04 as the pace ratio a 1-minute trade rv would give: Spearman 0.65744 and 0.52938 against the kline pace ratio (the same step: our per-minute .step60_off 0.93919, 0.97316)"
+    - "that a coin did not trade when its S01 or S02 is 0: the mid can stand still while trades close at the bid and the ask in turn (8 Mar 2026: S01 0 with the kline rv above 0 at 986 coin-minutes, S02 at 90, J15864)"
+    - "a copy (.quotes_off, .plain_off) as a metric of its own: it is the year's cross-check of the same metric; read the twelve metrics"
+    - "that a per-minute rv or pace ratio of 0 (S01.step60_off, S02.step60_off, S04.step60_off, S05.step60_off) means no trading: the mid stood still at the minute ends while the trade closes moved, at 1,417 (S01.step60_off), 1,333 (S04.step60_off) and 100 (S02.step60_off, S05.step60_off: CRV, the 61 minute ends of the hour) coin-minutes of 8 Mar 2026 (J15864 c4split; CRV by BED's J15902)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C4_V3.md 8bd8accbba78d1f8 (rules 1 to 17, O1 to O10)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C4_V1.tsv f8878fc4c602285b (11 settings)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05 book mid: raw, LIMITS; closed with the owner, LAYER_REGISTER_V7)"
+  layer_list: "team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C4 S01 to S05, S10 basic); LAYER_REGISTER_V14 4170fe2d27aa7e31"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C4_v1.py 9540eb256ac9d200 (PRODUCER_EDITIONS row 9218, SETTINGS_C4_V1 f8878fc4c602285b; driver work_CLK/drivers/drive_l0b_C4_v1f1_day.py 7e3d38c20319b895, CARD_C4_V3 part V3)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C4.parquet
+  year_output_columns: "name (34 names: S01 to S11 and their twins, J15864, J15865 c4schema), coin (every roster coin for S01 to S05; BTC for S06 to S11), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY, NaN in value_f64; 1, 2 a value in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_ranges.py c4ours(D, names) (minute ends; value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures, through our raw C13 S05 (the book mid, MEANING_C13_V4)"
+  exchange_stream: "bookTicker as Tardis records it (book_ticker), read through prod_reader_book_ticker_v2; the quotes stream beside (.quotes_off) through prod_reader_quotes_v2"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz of D and D-1 (D-2 only when no row of D-1 is in force at a window's first moment, CARD_C4_V3 rule 5); the week's roster (the year roster root)"
+  columns: "exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price, bid_price, bid_amount"
+  fields:
+    mid: "the mid of the top in force at each whole second e, e - 1 s, ..., e - W (the last good row stamped at or before the second and received by it), exact; known when stamped at most 30 s before, else TOP_HOLE [proof: CARD_C4_V3 rules 1 to 4; C3C4_STAMPS_V1]"
+    rv: "r_k = ln(mid(e - (k - 1) s) / mid(e - k s)), k = 1 to W; Q_W = the sum of r_k squared (math.fsum); rv = 100 sqrt(Q_W), rounded once to 6 decimals, half up [proof: CARD_C4_V3 rule 6, O1, O10; C3C4_STAMPS_V1 9 of 9]"
+    pace: "S04 = sqrt((Q_300 / 300) / (Q_3600 / 3600)), S05 = sqrt((Q_3600 / 3600) / (Q_86400 / 86400)), S10 = sqrt((Q_1800 / 1800) / (Q_21600 / 21600)) from the unrounded sums; the base sum 0: NO_MOVE [proof: CARD_C4_V3 rules 7, 9, O3; J15864, J15865 c4name: 3.4641 and 4.8990 x the plain quotient]"
+  latency: "known_at = the latest arrival among the rows in force at the window's samples (the base's window for a ratio), at most e; max_staleness 30 s (CARD_C4_V3 rule 13)"
+  silence: "a top unknown at some sample of the window (a silence over 30 s): TOP_HOLE, stale; 8 Mar 2026 and 24 Sep 2025: 0 empty mains except S04 NO_MOVE at 90 coin-minutes of 8 Mar (S02 = 0); the quotes twins of S03, S05 TOP_HOLE at 572 coin-minutes of 24 Sep (J15864, J15865 c4schema)"
+
+reading_rules:
+  - "rv is of the BOOK MID at whole seconds (1 s log returns), not of trades: 300, 3,600 and 86,400 returns for S01, S02, S03 (O1)"
+  - "S04, S05, S10 are PACE ratios per second: 1 = the same pace; the plain quotient S01 / S02 is S04 / 3.4641 (.plain_off)"
+  - "a ratio with a base sum 0 is empty NO_MOVE, never 0 or 1; a 0 over a base above 0 is 0"
+  - "the per-minute metrics S01.step60_off to S05.step60_off and S10.step60_off are C4 metrics (the owner 18 Oct 2026, the ones to use): rule 6 on the samples e, e - 60 s, ..., e - W (W / 60 returns), the ratios of rules 7 and 9 from those sums (CARD_C4_V3 rule 16); their '_off' is the year's name, not a switch"
+  - "the year also writes 9 copies as its own cross-check: 6 .quotes_off (the same metric from a second price feed, Tardis quotes) and 3 .plain_off (S04, S05, S10 without the per-second rule, so the metric / 3.4641, 4.8990, 3.4641 at every coin-minute, J15864, J15865 c4name; C4.CB1). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): the quotes copies equal to the metric to 6 decimals at 0 to 46.65% of rows (8 Mar 2026) and 0 to 25.10% (24 Sep 2025), corr 0.9975 to 0.999996, gap p99 0.021 to 0.082, S03 and S05 copies empty at 572 coin-minutes of 24 Sep (J15849 TWINS, J15865 c4schema); not separate metrics"
+  - "at a fire the window ends at the fire second (CARD_C4_V3 rule 14); the year holds the 1,440 minute ends"
+
+values:
+  units: "S01, S02, S03: percent (100 x the root of a sum of squared log returns); S04, S05, S10: a ratio of paces per second, no unit"
+  zero: "rv 0 = the mid did not move at any whole second of the window (the trades may still have closed at the bid and the ask in turn); S04 0 = the last 5 minutes did not move while the hour did"
+  empty: "NO_ROSTER, NO_FILE, TOP_HOLE, NO_MOVE; value_kind 0 with NaN in value_f64. Never read empty as 0"
+  stale: "1 when empty TOP_HOLE"
+  flags: "BAD_ROW:<coin> when a bad row in the window was skipped (CARD_C4_V3 rule 12)"
+
+interpret:
+  do:
+    - "read S02 and S03 as the coin's hourly and daily mid volatility: they rank coin-minutes as the trade-close rv does (Spearman 0.93959 to 0.98353)"
+    - "compare a coin with its own scale (CARD_C4_V3 part 1: S01's middle minute from 0.021 for TRX to 0.477 for NEAR on 17 Sep)"
+    - "read S04, S05, S10 around 1: above 1 the short window is faster per second than the long one"
+  dont:
+    - "read S04 as S01 / S02 (it is 3.4641 times that)"
+    - "read S01's or S04's rank among coin-minutes as a 1-minute trade rv's (Spearman 0.81 and 0.66 on 8 Mar 2026)"
+    - "read a 0 as no trading on a wide-tick coin"
+    - "read empty as 0"
+
+biases:
+  - {what: "1 s returns against 60 s returns of the same mid", direction: "either way per coin-minute: ours against our per-minute .step60_off median 1.0565 (S01, 8 Mar) to 0.9043 (S03, 24 Sep)", size: "ranks apart at 5 minutes: Spearman ours vs our per-minute .step60_off S01 0.80876, 0.78304; S04 0.69560, 0.54021; S05 0.90577, 0.86163; S10 0.88325, 0.90481", proof: "J15864, J15865 c4split (the year's .step60_off twin)"}
+  - {what: "mid against trade closes at the same 60 s steps", direction: "small: our per-minute .step60_off is 0.9864 to 1.0024 of the kline rv at the median", size: "Spearman 0.95386 (S01, 8 Mar) to 0.99999 (S10, 24 Sep); with the zeros S01 0.88542 on 8 Mar: our 60 s mid unchanged at 1,417 coin-minutes where the trade closes moved", proof: "J15864, J15865 c4split"}
+  - {what: "the trade closes bounce between bid and ask while the mid stands", direction: "the kline rv above ours at a still mid", size: "8 Mar 2026: S01 0 with the kline rv above 0 at 986 coin-minutes, S02 at 90; 24 Sep: S01 at 32", proof: "J15864, J15865 c4day (the zeros line)"}
+
+external_checks:
+  - {what: "every coin's C4 recomputed from the Tardis rows (exact mids, fsum) at 3 coins x 3 days", where: "Tardis book_ticker", status: "VERIFIED: C3C4_STAMPS_V1 49763f82cfbafc95 (S01 to S05 9 of 9 each, S10 3 of 3; code 0c95abe6544714a1, basic_c3c4.py e43169989347ee69)"}
+  - {what: "the per-minute metrics (.step60_off) recomputed from the Tardis rows at 60 s samples, BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06", where: "Tardis book_ticker (basic_c3c4.path, the standing tops)", status: "VERIFIED: C4S60_STAMPS_V1 73f47d0b9978d4bb: 96 of 96 MATCH (S01 to S05 .step60_off 18 of 18 each, S10.step60_off 6 of 6; jobs 15892 eac529c8, 15893 eb474bfa, 15894 cd23fdb0; basic_c4s60 ed1 582aecaef9669f17, tests 89a5da2a 6 of 6, code 09af77cdb67fedd5)"}
+  - {what: "S01, S02, S03 against the rv of 5, 60, 1,440 one-minute log returns of the kline closes; S04, S05, S10 against the same pace ratios of the kline sums; every roster coin (S10 BTC), every minute end of 8 Mar 2026 and 24 Sep 2025", where: "Binance 1m klines (data.binance.vision), <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with named gaps (J15864, J15865 c4day; the gap split by the .step60_off twin in c4split)"}
+  - {what: "the names: S04 'rv5_over_rv60' against S01 / S02, S05 against S02 / S03, S04, S05, S10 against their .plain_off twins", where: "the year output", status: "S04, S05 DIFFER from their names by 3.4641 and 4.8990 at every coin-minute: RENAMED; S10's name volx says no quotient (J15864, J15865 c4name)"}
+  - {what: "every twin against its main", where: "the year output", status: "MEASURED: meaning_twins ed3 74d02bc2, J15849 TWINS_20260308.tsv a9bc9402dcda74b9, TWINS_20250924.tsv 0ea4c5c8804a3576 (equal share, gaps, corr per twin)"}
+
+tools:
+  - {what: "every coin's C4 recomputed from the Tardis rows", run: "python3 -B -m rawcheck --days <D> --coins <C,..> --at <HHMM> --part c3c4 --out <dir>", where: "team/RAWCHECK/code (basic_c3c4.py e43169989347ee69)"}
+  - {what: "the per-minute metrics recomputed from the Tardis rows", run: "python3 -B -m rawcheck.basic_c4s60 --days <D> --coins <C,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_c4s60.py 582aecaef9669f17)"}
+  - {what: "C4 against the kline closes at every coin-minute; the names; the gap split by the per-minute .step60_off", run: "python3 -B -m rawcheck.meaning_ranges c4schema <D> | c4day <D> | c4name <D> | c4split <D>", where: "team/RAWCHECK/code (meaning_ranges.py 74f75c8f87434926 edition 8, tests f9d9b6b8d8631856 33 of 33)"}
+
+used_by: "S10 (volx) by CHAIN_forced_SHORT_ride (fifth 4 -> SKIP; 1 -> SKIP) and CHAIN_quiet_SHORT_ride_2 (4+5 -> SKIP), both on volx's fifths; nobody reads S01 to S05 (CARD_C4_V3 'Who reads it today')"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C4_V3.md 8bd8accbba78d1f8
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C3C4_STAMPS_V1.tsv 49763f82cfbafc95 (C4 S01 to S05: 9 of 9 each, S10 3 of 3; BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026); C4S60_STAMPS_V1.tsv 73f47d0b9978d4bb (the per-minute metrics: 96 of 96, jobs 15892 to 15894)"
+  RULING: "the owner 18 Oct 2026 16:0x Berlin (EDGE1 14:03:25Z): 'okay, let's count them as C4 metrics. we should use the per minute ones then'"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  JOBS: "15864 (8 Mar 2026: c4schema, c4day, c4name, c4split; log dada7db501d67353), 15865 (24 Sep 2025; log cc50d0e18367cd21); meaning_ranges ed. 8 74f75c8f87434926. Earlier runs 15853, 15854 (ed. 6) and 15856, 15857 (ed. 7) are void for S01, S04 (kline rv NaN and float noise, owned 13:35Z); their other numbers equal"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T13:26:16Z, posted before the code ran"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+settings:
+  - {id: C4.S01, name: "5 min realized volatility of 1 s mid log returns, pct", layer: basic, side: none, window: "300 s (301 whole-second samples, 300 returns)", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "100 x sqrt(sum of squared 1 s log returns of the mid)", aliases: "R.rv5_pct",
+     means: "how much the coin's quoted mid moved in the last 5 minutes, in percent; 0 = it did not move at any second",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1 49763f82: 9 of 9 (BTC, AVAX, ENA x 3 days)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4day: ratio ours / kline rv (5 one-minute returns) median 1.0114 (8 Mar), 0.9813 (24 Sep): 'rv' holds (pass line 0.9 to 1.1); Spearman 0.81439, 0.78852 (rows both above 0; with the zeros 0.75859, 0.78731), under the 0.9 pass line; c4split: our .step60_off vs klines 0.95386, 0.98434, ours vs our .step60_off 0.80876, 0.78304"},
+     open: "ranks coin-minutes apart from a 1-minute trade rv because it samples the move at 1 s, not 60 s (CARD_C4_V3 O1, by design); which ranks better for a reader is not tested; 0 with the kline rv above 0 at 986 coin-minutes of 8 Mar (the closes bounce while the mid stands)",
+     never: ["S01's rank as a 1-minute trade rv's rank"]}
+  - {id: C4.S02, name: "1 h realized volatility of 1 s mid log returns, pct", layer: basic, side: none, window: "3,600 s (3,600 returns)", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "100 x sqrt(sum of squared 1 s log returns of the mid)", aliases: "R.rv60_pct",
+     means: "how much the coin's quoted mid moved in the last hour, in percent",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1 49763f82: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4day: ratio 0.9486, 0.9209; Spearman 0.94334, 0.93959 (with the zeros 0.93681, 0.93959); ours below in 63.86%, 72.01%; c4split: our .step60_off vs klines 0.96192, 0.99550"},
+     open: "below the trade-close rv at most coin-minutes (63.86%, 72.01%); 0 at 90 coin-minutes of 8 Mar with the kline rv above 0 (a mid still for an hour)"}
+  - {id: C4.S03, name: "24 h realized volatility of 1 s mid log returns, pct", layer: basic, side: none, window: "86,400 s (86,400 returns)", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "100 x sqrt(sum of squared 1 s log returns of the mid)", aliases: "R.rv24h_pct",
+     means: "how much the coin's quoted mid moved in the last 24 hours, in percent",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1 49763f82: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4day: ratio 0.9188, 0.9001; Spearman 0.98353, 0.96897 (no zeros); ours below in 75.60%, 83.98%; c4split: ours vs our .step60_off ratio 0.9339, 0.9043, our .step60_off vs klines 0.9864, 0.9961"},
+     open: "0.9001 of the trade-close rv at the median coin-minute of 24 Sep, at the edge of the 0.9 pass line; the shortfall is the step (ours is 0.9043 of our own per-minute S03.step60_off), not mid against trades; 'only ours 52' (51 on 24 Sep) in J15864, J15865 c4day is one coin-minute per coin with no kline rv: by meaning_ranges.kvol the 1,440 kline returns ending at 00:00 of D need the close of 00:00 of D-1, the last kline of D-2's file, which it does not read (BED's note 1, 13:55:13Z)"}
+  - {id: C4.S04, name: "5 min over 1 h rv pace ratio per second", renamed_from: "rv5_over_rv60", layer: basic, side: none, window: "300 s over its base 3,600 s", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "sqrt((Q_300 / 300) / (Q_3600 / 3600)); the base 0: NO_MOVE", aliases: "R.rv5_over_rv60 (the old name, still written by the year)",
+     means: "the last 5 minutes' pace of the mid per second over the last hour's: 1 = the same pace, above 1 faster",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1 49763f82: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4name: S04 = 3.4641 x S01 / S02 at 73,754 and 73,403 coin-minutes (p10 = p90 = 3.4641), so not the quotient its name says: RENAMED; c4day against the kline pace ratio: median 1.0616, 1.0602, Spearman 0.65744, 0.52938 (with the zeros 0.64264, 0.52955); c4split: our .step60_off vs klines 0.93919, 0.97316, ours vs our .step60_off 0.69560, 0.54021"},
+     open: "ranks coin-minutes far from the 1-minute trade pace ratio (Spearman 0.66, 0.53): its 5-minute sum is 300 one-second returns; NO_MOVE at 90 coin-minutes of 8 Mar",
+     never: ["S04 as rv5 / rv60 (it is 3.4641 times that)"]}
+  - {id: C4.S05, name: "1 h over 24 h rv pace ratio per second", renamed_from: "rv60_over_rv24h", layer: basic, side: none, window: "3,600 s over its base 86,400 s", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "sqrt((Q_3600 / 3600) / (Q_86400 / 86400)); the base 0: NO_MOVE", aliases: "R.rv60_over_rv24h (the old name, still written by the year)",
+     means: "the last hour's pace of the mid per second over the last 24 hours': 1 = the same pace",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1 49763f82: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4name: S05 = 4.8990 x S02 / S03 at 74,790 and 73,440 coin-minutes: RENAMED; c4day against the kline pace ratio: median 1.0223, 1.0078, Spearman 0.87951, 0.85734 (with the zeros 0.87855, 0.85734); c4split: our .step60_off vs klines 0.97389, 0.99281, ours vs our .step60_off 0.90577, 0.86163"},
+     open: "Spearman 0.88, 0.86 against the trade pace ratio, under the 0.9 pass line: the step (our per-minute .step60_off 0.97, 0.99)",
+     never: ["S05 as rv60 / rv24h (it is 4.8990 times that)"]}
+  - {id: C4.S10, name: "BTC 30 min over 6 h rv pace ratio per second", layer: basic, side: none, window: "1,800 s over its base 21,600 s", clock: "fire second (the year: every minute end)", scope: BTC, contracts: USDT,
+     aggregate: "sqrt((Q_1800 / 1800) / (Q_21600 / 21600)); the base 0: NO_MOVE", aliases: "volx",
+     means: "BTC's last 30 minutes' pace of the mid per second over its last 6 hours': 1 = the same pace",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1 49763f82: 3 of 3 (BTC x 3 days)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4day against the kline pace ratio sqrt((Q30 / 30) / (Q360 / 360)): median 0.9877, 1.0170, Spearman 0.88261 (8 Mar, under the 0.9 pass line), 0.90489; c4split: our .step60_off vs klines 0.99998, 0.99999, ours vs our .step60_off 0.88325, 0.90481; c4name: 3.4641 x .plain_off at 1,440 of 1,440"},
+     open: "its readers cut it into fifths (rank): against the 1-minute trade pace ratio it ranks at 0.88 (8 Mar), so a fifth may differ from the trade one at the edges; the step, not mid against trades (0.99998)"}
+  - {id: C4.S01.step60_off, name: "5 min realized volatility of 1-minute mid log returns, pct (a per-minute C4 metric)", layer: basic, side: none, window: "300 s (6 samples, 5 returns)", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "100 x sqrt(sum of squared 60 s log returns of the mid)", aliases: none,
+     means: "how much the coin's quoted mid moved over the last 5 minutes from its 1-minute returns (5 of them), in percent; the per-minute one to use (the owner)",
+     computation: {status: RELIABLE, proof: "C4S60_STAMPS_V1 73f47d0b: 18 of 18 (BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06; jobs 15892 to 15894; basic_c4s60 582aecae, from the Tardis rows)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4split against the kline rv of 5 one-minute closes: ratio 0.9958, 0.9978, Spearman 0.95386, 0.98434 (rows both above 0); with the zeros 0.88542, 0.98233"},
+     open: "8 Mar: our mid unchanged at the six minute ends at 1,417 coin-minutes where the trade closes moved (the bounce at a still mid; with them Spearman 0.88542)",
+     never: ["a 0 as no trading (1,417 coin-minutes of 8 Mar: the mid stood still at the six minute ends, the trade closes moved)"]}
+  - {id: C4.S02.step60_off, name: "1 h realized volatility of 1-minute mid log returns, pct (a per-minute C4 metric)", layer: basic, side: none, window: "3,600 s (60 returns)", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "100 x sqrt(sum of squared 60 s log returns of the mid)", aliases: none,
+     means: "how much the coin's quoted mid moved over the last hour from its 1-minute returns (60), in percent; the per-minute one to use",
+     computation: {status: RELIABLE, proof: "C4S60_STAMPS_V1 73f47d0b: 18 of 18 (BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06; jobs 15892 to 15894; basic_c4s60 582aecae, from the Tardis rows)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4split against the kline rv of 60 closes: ratio 0.9884, 0.9946, Spearman 0.96192, 0.99550 (with the zeros 0.95455, 0.99550)"},
+     open: "0 at 100 coin-minutes of 8 Mar with the kline rv above 0 (J15864 c4split 'ours 0, outside above 0: 100'; CRV by BED's J15902: the mid the same at the 61 minute ends of the hour while the trade closes moved); with them Spearman 0.95455",
+     never: ["a 0 as no trading (100 coin-minutes of 8 Mar, CRV: the mid stood still at the 61 minute ends of the hour, the trade closes moved)"]}
+  - {id: C4.S03.step60_off, name: "24 h realized volatility of 1-minute mid log returns, pct (a per-minute C4 metric)", layer: basic, side: none, window: "86,400 s (1,440 returns)", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "100 x sqrt(sum of squared 60 s log returns of the mid)", aliases: none,
+     means: "how much the coin's quoted mid moved over the last 24 hours from its 1-minute returns (1,440), in percent; the per-minute one to use",
+     computation: {status: RELIABLE, proof: "C4S60_STAMPS_V1 73f47d0b: 18 of 18 (BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06; jobs 15892 to 15894; basic_c4s60 582aecae, from the Tardis rows)"},
+     meaning: {status: DEFINED, proof: "J15864, J15865 c4split against the kline rv of 1,440 closes: ratio 0.9864, 0.9961, Spearman 0.97329, 0.99729 (no zeros)"},
+     open: "none named on the two days beyond the median gap to the trade-close version (J15864, J15865 c4split); 'only ours 52' (51 on 24 Sep) in J15864, J15865 c4split is one coin-minute per coin with no kline rv, a gap of the check: by meaning_ranges.kvol the 1,440 kline returns ending at 00:00 of D need the close of 00:00 of D-1, the last kline of D-2's file, which it does not read (BED's note 1, 13:55:13Z)"}
+  - {id: C4.S04.step60_off, name: "5 min over 1 h rv pace ratio per second on 1-minute returns (a per-minute C4 metric)", layer: basic, side: none, window: "300 s over 3,600 s", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "sqrt((Q60_300 / 300) / (Q60_3600 / 3600)) on 60 s returns; the base 0: NO_MOVE", aliases: none,
+     means: "the last 5 minutes' pace per second over the last hour's, from 1-minute returns: 1 = the same pace",
+     computation: {status: RELIABLE, proof: "C4S60_STAMPS_V1 73f47d0b: 18 of 18 (BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06; jobs 15892 to 15894; basic_c4s60 582aecae, from the Tardis rows)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4split against the kline pace ratio: median 1.0004, 1.0001, Spearman 0.93919, 0.97316 (with the zeros 0.91334, 0.97254)"},
+     open: "NO_MOVE at 100 coin-minutes of 8 Mar (the hour's mid did not move at the minute ends); the bounce at a still mid (1,333 coin-minutes of 8 Mar ours 0, the kline ratio above 0)",
+     never: ["a 0 as a calm market: the mid stood still at the minute ends of the last 5 minutes (1,333 coin-minutes of 8 Mar)"]}
+  - {id: C4.S05.step60_off, name: "1 h over 24 h rv pace ratio per second on 1-minute returns (a per-minute C4 metric)", layer: basic, side: none, window: "3,600 s over 86,400 s", clock: "fire second (the year: every minute end)", scope: coin, contracts: USDT,
+     aggregate: "sqrt((Q60_3600 / 3600) / (Q60_86400 / 86400)) on 60 s returns; the base 0: NO_MOVE", aliases: none,
+     means: "the last hour's pace per second over the last 24 hours', from 1-minute returns",
+     computation: {status: RELIABLE, proof: "C4S60_STAMPS_V1 73f47d0b: 18 of 18 (BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06; jobs 15892 to 15894; basic_c4s60 582aecae, from the Tardis rows)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c4split against the kline pace ratio: median 1.0024, 0.9987, Spearman 0.97389, 0.99281 (with the zeros 0.97267, 0.99281)"},
+     open: "0 at 100 coin-minutes of 8 Mar with the kline pace ratio above 0 (J15864 c4split 'ours 0, outside above 0: 100'; CRV by BED's J15902: the mid the same at the 61 minute ends of the hour while the trade closes moved); with them Spearman 0.97267; 'only ours 52' (51 on 24 Sep) in J15864, J15865 c4split, a gap of the check: the base's 1,440 kline returns ending at 00:00 of D need the close of 00:00 of D-1, the last kline of D-2's file, which meaning_ranges.kvol does not read (BED's note 1, 13:55:13Z)",
+     never: ["a 0 as a calm market: the mid stood still at the 61 minute ends of the hour (100 coin-minutes of 8 Mar, CRV)"]}
+  - {id: C4.S10.step60_off, name: "BTC 30 min over 6 h rv pace ratio per second on 1-minute returns (a per-minute C4 metric)", layer: basic, side: none, window: "1,800 s over 21,600 s", clock: "fire second (the year: every minute end)", scope: BTC, contracts: USDT,
+     aggregate: "sqrt((Q60_1800 / 1800) / (Q60_21600 / 21600)) on 60 s returns; the base 0: NO_MOVE", aliases: none,
+     means: "BTC's last 30 minutes' pace per second over its last 6 hours', from 1-minute returns",
+     computation: {status: RELIABLE, proof: "C4S60_STAMPS_V1 73f47d0b: 6 of 6 (BTC, AVAX, ENA: BTC x 24 Sep, 4 Nov 2025, 8 Mar 2026 x 12:10, 22:06; jobs 15892 to 15894; basic_c4s60 582aecae, from the Tardis rows)"},
+     meaning: {status: DEFINED, proof: "J15864, J15865 c4split against the kline pace ratio: median 1.0003, 0.9999, Spearman 0.99998, 0.99999"},
+     open: "none named on the two days beyond the median gap to the trade-close version (J15864, J15865 c4split)"}
+could_build:
+  - {id: C4.CB1, intended: "the plain quotient of two realized volatilities, what the names rv5_over_rv60 and rv60_over_rv24h say", was_name_of: "C4.S04, C4.S05",
+     formula: "rv 5 min / rv 1 h = sqrt(Q_300 / Q_3600); rv 1 h / rv 24 h = sqrt(Q_3600 / Q_86400) (and for BTC sqrt(Q_1800 / Q_21600), S10.plain_off); the base 0: NO_MOVE",
+     needs: "the sums of squared 1 s mid returns the year already makes (C4 S01 to S03)",
+     adds: "nothing new in rank (a constant multiple of S04, S05: 3.4641 and 4.8990, J15864, J15865 c4name); it gives the quotient its old name promised, for a reader that compares it with a plain rv ratio",
+     status: BUILT}

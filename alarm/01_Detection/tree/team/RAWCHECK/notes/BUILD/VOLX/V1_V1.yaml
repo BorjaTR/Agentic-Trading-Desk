@@ -1,0 +1,217 @@
+# V1_V1.yaml: VOLX minute-of-week activity curve (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8). The content of
+# my .md draft (V1_V1.md 560a943d, 17:31Z) moved into the template's keys; S numbers by PRODUCER_VOLX_V1.yaml; floats (decimals none);
+# the pooled twins of the draft are now the tester's (meaning_check), not written. Examples: team/METRIC_AUDIT/verify_volx_examples_v1.py V1.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): A1 (ADDON_ARCHITECTURE_V4 edit 3 0591d181, the kernels of addon_grid_v2),
+# A2 (NO_ROSTER), A3 (the order of the reasons), N1 (the 29th day), N2 (U2's filler 12.5), N3 (U4, M4 with numbers), N4 (MARKET's sum).
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the winter open 14:30 UTC, the 8 Mar
+# 2026 Sunday (00:00 reads Saturday's slot 8,639), 2026-03-09 00:00 and 2026-02-10 14:31 points, the clock changes (OPEN), X7 Binance,
+# X3 D's table at 00:00, X11 the roster file.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+# Edition 5: BED's fix check (REVIEW_LEAD_BED_VOLX_V1 fe399b4d): the nit, 19 Jan 2026 is a US market holiday (no cash open at
+# 14:31); the point kept for the new coin's first days.
+kind: build_metric
+id: V1
+producer: VOLX
+item: 'minute-of-week activity curve'
+tier: BUILD_FIRST
+name: how busy (S01, Binance USDT-M taker dollars) and how moving (S02, the Binance mid) this minute of the UTC week usually is for the coin, against its own typical minute, over the 28 days before D
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 5
+  signed: false
+means: >-
+  S01 = 3 says this minute of the week usually carries three times the coin's typical taker dollars; S02 the same for the size of
+  the minute's mid move. The curve every later VOLX item divides by (V11), so a funding settle or the US open is not mistaken for news.
+example: >-
+  BTC, the minute 14:30 to 14:31 UTC on a winter Tuesday (the US cash open, 9:30 New York; 13:30 UTC in US summer time): its taker dollars in that minute were 40, 52, 61 and 48 million
+  on the four Tuesdays of the 28 days before D; the median is 50 million; the median of all 40,320 minutes is 12.5 million; S01 = 4
+  at every Tuesday 14:31 minute end of D. The same coin at Sunday 04:01 reads about 0.3: a quiet slot.
+formula: >-
+  tau(u) = 1440 x weekday + 60 x hour + minute of the minute's START, u - 60 s, in UTC, Monday = 0 (Python datetime.weekday();
+  polars dt.weekday() is 1 to 7 with Monday 1), so the minute end 00:00 of a Monday is Sunday's slot 10,079. The window W(D) = the
+  40,320 minute ends of the 28 days D-28 to D-1 (u = 00:00 to 23:59 of each, the year's grid); each slot tau holds the 4 minute ends
+  of W(D) with that tau. a(c, u) = B1 S01 + B1 S02 of coin c at u (value_f64, float64); MARKET: B1 S10 + B1 S11. r(c, u) =
+  abs(math.log(C13 S05(c, u) / C13 S05(c, u - 60 s))), both mids valued and u - 60 s inside W(D) (the
+  minute end 00:00 of D-28 is not an observation of S02). S01(c, tau) = median of the valued a in the slot / median of all valued a of W(D); S02 the same on r. Medians as
+  statistics.median (the mean of the two middle values for an even count), in float64; the quotient once, float64. An empty input
+  row (any reason) is not an observation, never 0. The table is computed once at 00:00 of D and served at every minute end u of D
+  by tau(u).
+source:
+  kind: paper
+  ref: >-
+    Andersen and Bollerslev 1997, J. Empirical Finance 4(2-3) 115-158 (the intraday pattern, fitted there by a flexible Fourier
+    form on the log of normalised absolute returns); ours is the trailing nonparametric slot median of RESEARCH_TOOLS_V1 aad3cc38
+    row V1 and section 5.1. No tool: statsmodels.tsa.seasonal.MSTL 0.15.0 decomposes the whole sample (it looks ahead) and R
+    highfrequency spotVol(method detPer) is GPL and fits inside one session (RESEARCH_TOOLS_V1 row V1): BUILD.
+inputs:
+  - kind: year
+    ref: B1 S01, S02 (coin), S10, S11 (MARKET)
+    card: MEANING_B1_V4 633a0e1ac7698361
+    verdict: LIMITS
+    rule_in_force: B's row at the minute end as written (taker buy, sell dollars of the 60 s ending at u)
+    stale_rule: an empty row of B (THIN_FEED and every other reason) is not an observation
+    days: D-28 to D-1 (28 B day files, each checked against its MANIFEST_L0BIN parquet_sha16); nothing of D
+  - kind: year
+    ref: C13 S05
+    card: MEANING_C13_V4 fe5df65ba7680fc8
+    verdict: LIMITS
+    rule_in_force: B's row at the minute end as written (the mid in force, 30 s at most)
+    stale_rule: an empty row of B is not an observation; r needs both mids valued
+    days: D-28 to D-1 (28 B day files, the same as B1's)
+overlaps: none
+per_coin: >-
+  Each coin its own curve and its own median (the 1000-coins and thin coins included: their dollars are their own scale). S02 on a
+  coin whose mid rarely moves in a minute (a big price step against the price): the overall median of r may be 0, then every slot
+  is empty NO_BASE. A coin with fewer than 28 days in B before D (LIT, listed the week of 22 Dec 2025: WARMUP_YEAR_V2 section 4 item
+  6b) is empty NO_HISTORY until 28 days after its first day in B (its 29th day). MARKET is B1 S10 + S11, the sum over the roster
+  coins seen that minute (MEANING_B1_V4), not all of Binance.
+time: >-
+  The 00:00 Monday minute end is Sunday's slot; funding settles (00:00, 08:00, 16:00 for 8 h coins, every 4 h or 1 h for others),
+  quarter hours, the US cash open (13:30 UTC in US summer time, 14:30 UTC from 2 Nov 2025 to 7 Mar 2026) and weekends are what the curve is for: no smoothing across them. A crash day enters as one
+  observation of 4 and moves a median little (E3). No CARRY: the table reads B of the 28 days before D only. The first year day
+  10 Sep 2025: NO_HISTORY until 8 Oct 2025. The clock changes of 26 Oct (Europe) and 2 Nov
+  2025 (US) put two open hours in one 28-day window (OPEN for the owner: A this note, applied; B slots in New York time).
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S01
+      label: act_curve_mow
+      units: ratio, 0 or more (1 = the coin's typical minute)
+      value_kind: float
+      decimals: none
+      means: the slot median of the coin's (MARKET's) taker dollars over its overall median, 28 days before D
+    - name: S02
+      label: move_curve_mow
+      units: ratio, 0 or more (1 = the coin's typical minute)
+      value_kind: float
+      decimals: none
+      means: the slot median of the coin's absolute 1-minute mid log return over its overall median, 28 days before D
+      never: ['S02 on MARKET (not written: there is no MARKET mid)']
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = 00:00 of D on every row, valued or empty (the table is fitted from the 28 days before D; every input row of W(D) is
+    known by 00:00 of D), so known_at <= as_of on every row
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: fewer than 28 days of the coin in B before D (every coin before 8 Oct 2025; a new listing)
+    - reason: FEW_OBS
+      when: fewer than 3 valued observations in the slot
+    - reason: NO_BASE
+      when: no valued minute in W(D), or the overall median is 0
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_HISTORY, NO_BASE, FEW_OBS
+  stale_rule: never stale (a table fixed at 00:00 of D; its age is known_at's)
+  max_staleness_s: 86400
+  window_days: 28
+  no_history: >-
+    the window first fills on 8 Oct 2025 (D-28 = 10 Sep 2025, the first year day); every row before is empty NO_HISTORY; a coin
+    listed later fills 28 days after its first day in B (its 29th day)
+  fit_rule: the slot table from B of the 28 days before D only, refit once a day at 00:00 of D; nothing of day D enters it
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the slot of a minute end
+    input: 'u = 2025-09-15 13:46 UTC (a Monday)'
+    answer: 'tau = 825 (the minute 13:45 to 13:46)'
+  - case: E2 the Monday 00:00 minute end
+    input: 'u = 2026-03-09 00:00 UTC (a Monday)'
+    answer: 'tau = 10079 (Sunday 23:59 to 00:00)'
+  - case: E3 a crash minute in the slot
+    input: 'slot observations 10, 20, 30, 1000; overall median 50'
+    answer: 'S01 = 25 / 50 = 0.5 (the mean would give 265 / 50 = 5.3)'
+  - case: E4 an empty observation
+    input: 'slot observations 10, empty, 30, 50; overall median 50'
+    answer: 'S01 = 30 / 50 = 0.6 (3 observations)'
+  - case: E5 two observations
+    input: 'slot observations 10, empty, empty, 50'
+    answer: S01 empty FEW_OBS
+  - case: E6 a mid that never moves
+    input: 'every r of the coin 0 in W(D)'
+    answer: 'S02 empty NO_BASE at every slot; S01 unaffected'
+  - case: E7 the year start
+    input: 'D = 2025-10-07; D = 2025-10-08'
+    answer: 'empty NO_HISTORY (27 days from 10 Sep 2025); the first valued day (D-28 = 10 Sep 2025)'
+  - case: E8 one return
+    input: 'C13 S05 100 at u - 60 s and 101 at u; then C13 S05 empty at u - 60 s'
+    answer: 'r = 0.009950330853168092; then u is not an observation of S02'
+  - case: E9 the research toy (arithmetic only, floor 2 planted)
+    input: 'three slots, two weeks: r week 1 0.1, 0.2, 0.6; week 2 0.3, 0.2, 0.4'
+    answer: 'slot medians 0.2, 0.2, 0.5; overall median 0.25; curve 0.8, 0.8, 2.0'
+  - case: E10 the example
+    input: 'slot 40, 52, 61, 48 (millions); overall median 12.5'
+    answer: S01 = 4.0
+unit_tests:
+  - test: U1 (E1, E2)
+    planted: 'every minute end of a planted week (10,080) and 2025-09-15 13:46, 2026-03-09 00:00'
+    expect: 'tau against datetime.weekday() of u - 60 s at every row; 825; 10079'
+  - test: U2 (E3, E4, E5, E10)
+    planted: '28 planted B1 days, 2 coins and MARKET, every minute end; the slot values of each case at named slots, every other minute 50 (12.5 for the E10 coin, its overall median)'
+    expect: 'S01 0.5, 0.6, FEW_OBS, 4.0 at those slots (overall medians as planted) within 1e-9 relative'
+  - test: U3 (E6, E8)
+    planted: '28 planted C13 S05 days: a coin with a constant mid; a coin with the E8 pair and an empty mid'
+    expect: 'S02 NO_BASE at every slot of the first; r = 0.009950330853168092 and the empty pair skipped in the second'
+  - test: U4 (E7) the window
+    planted: 'D = 2025-10-07 and 2025-10-08 with B days from 2025-09-10; then each day k of D-28 to D-1 planted at the value k at every minute (D-28 = 1, ..., D-1 = 28) and D at 29'
+    expect: 'NO_HISTORY; valued; the slots of D-28''s weekday (days 1, 8, 15, 22) give 11.5 / 14.5 = 0.7931034482758621, D''s 29 unused'
+  - test: U5 the stamps
+    planted: U2 to U4
+    expect: 'every row as_of = u, known_at = 00:00 of D; 1,440 rows per name and coin; MARKET only on S01; empty never 0'
+mutants:
+  - mutant: M1 the slot of the minute END
+    caught_by: 'U1 (E2 gives tau 0 of Monday, not 10079)'
+  - mutant: M2 Monday = 1 (polars dt.weekday)
+    caught_by: 'U1 (E1 gives 2265)'
+  - mutant: M3 the mean for the median
+    caught_by: 'U2 (E3 gives 5.3)'
+  - mutant: M4 D itself in the window
+    caught_by: 'U4 (the window D-27 to D gives those slots 18.5 / 15.5 = 1.1935483870967742)'
+  - mutant: M5 a floor of 2 observations
+    caught_by: 'U2 (E5 gives 30 / 50 = 0.6)'
+  - mutant: M6 an empty row read as 0
+    caught_by: 'U2 (E4 gives 20 / 50 = 0.4)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 1000PEPEUSDT, a thin coin (named by the tester from B1 before the job), MARKET; u = 00:00, 08:01, 14:15, 23:59
+      why: "00:00 reads Saturday's last slot 8,639 (8 Mar 2026 is a Sunday), a funding settle minute, a quarter hour, the day's end (window 8 Feb to 7 Mar 2026)"
+    - point: 2026-03-09, BTCUSDT and MARKET, u = 00:00
+      why: "a Monday's 00:00, Sunday's slot 10,079"
+    - point: 2026-02-10, BTCUSDT and MARKET, u = 14:31
+      why: the US cash open in winter time (a Tuesday)
+    - point: 2025-10-08, BTCUSDT and MARKET, the same minute ends
+      why: the first valued day (window 10 Sep to 7 Oct 2025)
+    - point: 2026-01-19, LITUSDT, 14:31
+      why: a coin listed the week of 22 Dec 2025 on its first days (NO_HISTORY or valued by its days in B); 19 Jan 2026 is a US market holiday (Martin Luther King Jr. Day), so no cash open in that minute
+  pass: >-
+    The tester recomputes S01, S02 and the empty reasons from this card's words on B's rows (rawcheck/check_volx.py, never the
+    producer's code), medians on Fractions of the doubles: floats within 1e-9 relative, words equal. One small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "BTC's S01 at the weekday 14:31 minute ends (the winter open) above 1 and at Saturday 04:01 below 1 on 8 Mar 2026's table (window 8 Feb to 7 Mar 2026, all US winter time)"
+    - "the curve repeats: the Pearson correlation of BTC's 10,080 S01 values fitted on two disjoint 28-day windows (D = 8 Feb and 8 Mar 2026) is 0.5 or more; below it the 4-observation slot is mostly noise and the tester's pooled curve (the slot with 2 neighbours each side, 20 observations) is reported with its own correlation"
+    - "S01 and S02 rank the slots alike: Spearman 0.5 or more for BTC on 8 Mar 2026 (a curve of activity that moves apart from the curve of moves is reported)"
+  report_only:
+    - the day-of-week means of S01, the five largest slots of each coin
+    - the share of slots FEW_OBS and NO_BASE per coin
+conclude:
+  may:
+    - how busy, and how moving, this minute of the week usually is for the coin against its own typical minute, over the 28 days before D
+    - a feature divided by S02 at its slot, to compare minutes across the week (V11 does so)
+  never:
+    - "Hyperliquid's activity or moves (Binance taker dollars and the Binance mid; the owner trades on Hyperliquid, X7)"
+    - a forecast of this minute's activity on D (it is the 28 days before D)
+    - a comparison of S01 across coins as sizes (each coin over its own median)
+    - S01 or S02 at a slot of 4 observations as precise (a median of 4)
+readers: V11 (Lee-Mykland, returns divided by S02 at their slot); none outside VOLX yet
+implementation:
+  how: >-
+    Once a day: the 28 B day files' B1 and C13 S05 columns for all coins in one polars frame, tau as an integer column, group_by
+    (coin, tau) median and the coin's overall median; then a gather of the table by tau(u) at the 1,440 minute ends of D. No loop
+    over rows or minutes. PHASES: none (B only, B holds every day; the table is fixed at 00:00 of D and D's table serves 00:00).
+  kernel: 'addon_grid_v2.roll_days (not yet in addon_grid_v2: mine to add with its brute twin, ADDON_ARCHITECTURE_V4 edit 3 section 9.4; the stack of the 28 days before D, a median per minute-of-week slot), served by tau'
+  memory_mb: 400
+  seconds_share: 3
+data_checks: none

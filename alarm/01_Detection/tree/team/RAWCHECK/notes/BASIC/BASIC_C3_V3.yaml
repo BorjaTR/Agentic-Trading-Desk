@@ -1,0 +1,203 @@
+# BASIC_C3_V3.yaml: the card of the basic group C3 price range (book mid), EDITION 3 (EDGE2, 2026-10-18; BG3 of EDGE1's basic gaps, 15:36:49Z).
+# EDITION 3 = BASIC_C3_V2 4cdfefaa6b498dfc (landed, kept) with S04, S06 (the 30 s mid range) tested for meaning against Binance aggTrades of
+# 24 Sep 2025, the 8 coins held: meaning_c3s30 ed1 945c7004 J15990 (pass lines hb/EDGE2.txt 15:41Z, posted before it ran), ed2 5cde4b84 J15992
+# (c3s30look, the largest gaps both ways); and BED's note (hb/BED.txt 14:12:21Z): the copies' gap p99 'up to 0.42 (S06 3.28 bps)'. No other change.
+# (V2:) BASIC_C3_V2.yaml: the card of the basic group C3 price range (book mid), EDITION 2 (EDGE2, 2026-10-18; BR1 = WP1 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 2 = BASIC_C3_V1 f4d97b72edd5095f (landed, LAYER_REGISTER_V18 b2d8bb81, kept) with the owner's copies rule (16:0x Berlin, EDGE1 13:57:25Z; as BASIC_C1_V5
+# 95244119): the 10 .quotes_off copies are no rows of their own; they are read as the year's ACCEPTED cross-check (reading_rules, never). No other change.
+# (V1:) the card of the basic group C3 price range (book mid), EDITION 1 (EDGE2, 2026-10-18; BR1 = WP1 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# Made as BASIC_C8_V3 1a1d8a67 and BASIC_C7_V1 639222fb (METRIC_REVIEW_METHOD_V1 section 5; the rename rule of 14:1x Berlin; conclude of 15:0x Berlin).
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 6223b1ad3de7bb1b checks it and writes .md, .flat.jsonl, .agent.jsonl.
+# Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (C3 S01 to S10 computation RELIABLE by C3C4_STAMPS_V1,
+# meaning not tested before this card). Layer of S01 to S10: basic (ranges, a difference, ratios and a place of a proven raw value).
+# Edit 3 (EDGE2, 18 Oct 2026, before landing): BED's review notes 1 and 2 (hb/BED.txt 13:23:54Z: the zeros' scope and counts; the 0 ms flicker) and
+# EDGE1's twin rule (13:29:58Z: each twin row cites J15849 TWINS). Every number is from the BR1 final proof run on meaning_ranges ed. 8 74f75c8f
+# (J15864 8 Mar, J15865 24 Sep, J15869 whys), equal line for line to J15835 to J15839 (a script, 13:44Z); only the zero lines are new.
+
+group: C3
+name: price range (basic, built on the book mid)
+summary: >-
+  Per coin, how wide its book mid ((best bid + best ask) / 2, Tardis book_ticker) swung over a window ending at e: the highest less the lowest
+  mid among every top that stood in [e - W, e] (every top, not only whole seconds), set against the mid at e: S01 60 s and S02 300 s in
+  percent, S05 120 s and S04 30 s as a fraction, S06 30 s in basis points; S03 the change of S01 from the minute before; S07 the 60 s range over
+  the 300 s range; S08 the 300 s range over the mean range of its five minutes; S09 the mean range of the last 60 minutes over the mid at e, in
+  percent; S10 the place of the mid at e in its 8 h range (0 low, 1 high). S04 and S06 are written every 30 s, the others at each minute end.
+  The year also writes the same ten on Tardis quotes (.quotes_off): copies, its accepted cross-check, not metrics of their own.
+read_as: >-
+  The coin's QUOTED MID range. Against the same quantity on Binance's own 1-minute klines (its trades) at every coin-minute of 8 Mar 2026 and
+  24 Sep 2025 (J15864, J15865): the ranges S01, S02, S05 are 0.9483 to 0.9985 of the kline ranges at the median coin-minute and rank
+  alike the coin-minutes where both ranges are above 0 (Spearman 0.92903 to 0.98805); with the zeros in, 0.80898 to 0.98804 (8 Mar: S01 0 while
+  the trades span a range at 6,160 of 74,880 coin-minutes); S10 equals the kline place within 0.004699 at the median; S03's sign agrees in 92.74% and
+  94.50%. On a quiet day the wide-tick coins split mid and trades apart: CRV's mid stood still for an hour while its trades bounced one 0.43%
+  tick every minute (8 Mar 02:59 to 03:58, J15864 c3look), so a trade-based range measures the bid-ask bounce there. That breaks the ratios and the
+  60-minute mean on 8 Mar: Spearman against klines S07 0.85196, S08 0.77257, S09 0.81029 (24 Sep: 0.94352, 0.93714, 0.97401). S08 and S09
+  carried 'atr' in their old names; they are built on 1-minute MID ranges (S09 is 0.8905 of the textbook trade ATR on 8 Mar): RENAMED, the
+  trade ATR to could_build (C3.CB1). S04 is S06 / 10,000 at every 30 s step (one value in two units). S04 and S06 rank 30 s windows as the
+  30 s trade range of Binance's aggTrades does (24 Sep 2025, 8 coins: Spearman 0.97322, per coin 0.82744 to 0.99755) at about its size (ours over
+  it 0.9999 at the median, J15990): wider where the quotes moved without trades (SEI 02:36:00, 10.3538 against 3.4507 bps), narrower where a
+  sweep printed below the standing top (ASTER 05:29:00, 108.5984 against 159.6285 bps; J15992 c3s30look).
+
+conclude:
+  may:
+    - "how far a coin's quoted mid swung over the last 60 s, 120 s or 300 s (S01, S05, S02) against its mid now, ranking as its trade range does the coin-minutes where both ranges are above 0 (Spearman 0.92903 to 0.98805; with the zeros 0.80898 to 0.98804, J15864, J15865)"
+    - "where the mid sits in its 8 h range (S10: within 0.004699 (8 Mar) and 0.002221 (24 Sep) of the kline place at the median coin-minute)"
+    - "how far a coin's quoted mid swung in the last 30 s (S04 a fraction, S06 bps of the mid now), ranking 30 s windows as the trade range of the same 30 s does (Spearman 0.97322, 24 Sep 2025, 8 coins with aggTrades, J15990)"
+    - "S03's sign: the last minute swung wider (plus) or narrower than the minute before (the kline version's sign in 92.74% and 94.50% of coin-minutes)"
+  never:
+    - "that a coin did not trade when its mid range is 0: a wide-tick coin's mid can stand still for an hour while its trades bounce one tick every minute (CRV 8 Mar 2026 02:59 to 03:58, J15864 c3look)"
+    - "S08 or S09 as the textbook ATR of trades: they are built on mid ranges (renamed; the trade ATR is C3.CB1)"
+    - "S07 or S08 to two decimals on a wide-tick coin on a quiet day: its ranges are 0 to 2 ticks, so the ratios take a few values (ARB 8 Mar 2026 05:44: S07 0, S08 5 against 1 and 1 on klines, J15864 c3look)"
+    - "that a coin did not trade in the last 30 s when S04 or S06 is 0: S06 was 0 while the trades moved at 309 of 23,032 coin-steps (24 Sep 2025, 8 coins; SEI 178, ADA 53; J15990)"
+    - "S06 as the deepest price traded in the 30 s: a sweep prints below the standing top (ASTER 24 Sep 2025 05:28:37: trades down to 2.0377, the lowest standing mid 2.0483; J15992)"
+    - "a copy (.quotes_off) as a metric of its own: it is the year's cross-check of the same metric on a second feed; read the ten metrics"
+    - "how long the mid stood at its high or low from S01: a top that stood 0 ms counts (J15869 why FIL 8 Mar 06:09: the low stood 0.0 ms)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C3_V7.md 0e1e447a8d56ae34 (rules 1 to 16, O1 to O6)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C3_V2.tsv a11c2b7b70ee6296 (10 settings, step_s)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05 book mid: raw, LIMITS; closed with the owner, LAYER_REGISTER_V7)"
+  layer_list: "team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C3 S01 to S10 basic); LAYER_REGISTER_V14 4170fe2d27aa7e31"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C3_v5.py a0f73ce8efa78969 (PRODUCER_EDITIONS: driver drive_l0b_C3_v5_day.py 719c7de67bff4e2a; VOLAT_FOR the year roster root)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C3.parquet
+  year_output_columns: "name (S01 to S10 and their .quotes_off: 20 names, J15864, J15865 c3schema), coin (every roster coin; no MARKET), as_of_us (S04, S06 every 30 s: 2,880 a coin-day; the others 1,440), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_ranges.py c3ours(D, names) (minute ends) or ours.at(D, 'C3', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures, through our raw C13 S05 (the book mid, MEANING_C13_V4)"
+  exchange_stream: "bookTicker as Tardis records it (book_ticker); C3 reads the rows itself: every top that stands in the window"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz of D, D-1 (a window starting before 00:00, an 8 h or 1 h window) and D-2 only as C1's rule 2 fallback; the week's roster (the year roster root)"
+  columns: "exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price, bid_price, bid_amount"
+  fields:
+    range: "the highest less the lowest mid among the top standing at s = e - W and every top that comes to stand in (s, e]; known when the top is known at every moment of [s, e] (stamped at most 30 s before), else BOOK_HOLE [proof: CARD_C3_V7 rules 1 to 4; basic_c3c4.c3_range (e43169989347ee69); C3C4_STAMPS_V1]"
+    scale: "S01, S02: 100 x range / mid at e; S04, S05: range / mid at e; S06: 10,000 x range / mid at e [proof: CARD_C3_V7 rule 5, O6]"
+    s03: "S01 at e less S01 at e - 60 s, each rounded (rule 10), exact [proof: CARD_C3_V7 rule 6]"
+    s07_s08: "S07 = range 60 s / range 300 s; S08 = range 300 s / mean of the ranges of its five minutes, each closed at both ends; a divisor 0: NO_SPREAD [proof: CARD_C3_V7 rules 7, 8, O3]"
+    s09: "100 x the mean of the ranges of the 60 minutes ending at e (each closed) / mid at e [proof: CARD_C3_V7 rule 8, O3]"
+    s10: "(mid at e - 8 h low) / (8 h high - 8 h low); range 0: NO_SPREAD [proof: CARD_C3_V7 rule 9, O4]"
+  latency: "known_at = the latest arrival of the rows that stand in the windows used; at most e; max_staleness 30 s (CARD_C3_V7 part 2)"
+  silence: "a top unknown at some moment of the window (a silence over 30 s): BOOK_HOLE, stale; 8 Mar 2026 and 24 Sep 2025: 0 empty except NO_SPREAD for S07, S08 (1,068 and 27 coin-minutes: the 300 s range or the five-minute mean 0, J15864, J15865 c3schema)"
+
+reading_rules:
+  - "a range is of the BOOK MID over every top that stood (not of trades, not only whole seconds), against the mid at e (O6)"
+  - "a ratio or a place with a divisor 0 is empty NO_SPREAD, never 0 or 1"
+  - "the year also writes 10 copies of the same metrics as its own cross-check: .quotes_off, the same range from a second price feed (Tardis quotes). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): the ranges S01, S02, S04, S05, S06 equal to the metric at 83.20 to 91.28% of rows on 8 Mar 2026 and 79.08 to 87.10% on 24 Sep 2025, the change, ratios and place S03, S07, S08, S10 at 53.95 to 81.04% and 52.75 to 76.03%, S09 (a mean of 60 minutes) at 11.38% and 7.61%; corr 0.9891 to 0.9999, otherwise a small gap from the two feeds disagreeing (gap p99 up to 0.42 in the setting's unit, S06 3.28 bps; S07, S08 empty in the copy at 34 and 3 coin-minutes where the metric has a value; J15849 TWINS); not separate metrics"
+  - "S04 and S06 are the same 30 s range, a fraction and basis points (S04 x 10,000 = S06 at 100% of minute ends, J15864, J15865 c3name); both are written every 30 s"
+  - "at a fire a minute-end setting gives the last full minute; a fire-second setting the window ending at the fire (CARD_C3_V7 rule 13)"
+
+values:
+  units: "S01, S02, S09: percent of the mid at e; S03: percent points; S04, S05: a fraction of the mid at e; S06: basis points; S07, S08: ratios; S10: 0 to 1"
+  zero: "a range 0 = the mid did not move in the window (the trades may still have bounced across the spread); S10 0 = the mid at e is the 8 h low"
+  empty: "NO_ROSTER, NO_FILE, BOOK_HOLE, NO_SPREAD; value_kind 0 with NaN in value_f64. Never read empty as 0"
+  stale: "1 when empty BOOK_HOLE"
+  flags: "none (a bad row never stands, CARD_C3_V7 part 2)"
+
+interpret:
+  do:
+    - "read S01, S02, S05 as the coin's quoted swing over the window: close to its trade swing on a busy day (ratio 0.9893 to 0.9985 on 24 Sep at the median)"
+    - "read S10 as the 8 h place of the mid: it matches the kline place (Spearman 0.99681 and 0.99957)"
+  dont:
+    - "read a 0 range as no activity on a wide-tick coin (CRV, FIL, ENA, ARB, WLFI on 8 Mar 2026: the worst median gaps, J15864 c3worst)"
+    - "read S08 or S09 as a trade ATR (renamed)"
+    - "trust S07, S08 between coins whose ranges are a few ticks"
+    - "read empty as 0"
+
+biases:
+  - {what: "the mid does not cross the spread; trades do", direction: "a mid range smaller than the trade range, by the bid-ask bounce", size: "S01 below the kline range in 76.84% (8 Mar) and 67.90% (24 Sep) of coin-minutes; the worst S01 rows a quarter of the kline range (ONDO, FIL, ENA, NEAR 8 Mar, J15864 c3worst)", proof: "J15864, J15865 c3day; J15869 why FIL 06:09 (one tick of the mid, four of the trades: the top at the ask, the bottom at the bid)"}
+  - {what: "wide-tick coins on a quiet day: the mid stands still while trades bounce one tick each minute", direction: "S09, S07, S08 apart from their kline versions", size: "CRV 8 Mar 03:58: S09 0.007199 against the kline mean range 0.440115 (one tick every minute; ours one tick in 60 minutes / 60); ARB 05:44: S08 5 against 1, S07 0 against 1", proof: "J15864 c3worst (the 12 worst S09 rows all CRV; S07, S08 all ARB); J15864 c3look CRV 03:58, ARB 05:44"}
+
+external_checks:
+  - {what: "every coin's range recomputed from the Tardis rows (exact) at 3 coins x 3 days", where: "Tardis book_ticker", status: "VERIFIED: C3C4_STAMPS_V1 (9 of 9 rows a setting, basic_c3c4 e43169989347ee69)"}
+  - {what: "S01, S02, S05, S09 against the kline range of the same minutes over the last close; S03 against the change of the 1-minute kline range; S07, S08, S10 against the same ratios and place of kline ranges; every roster coin, every minute end of 8 Mar 2026 and 24 Sep 2025", where: "Binance 1m klines (data.binance.vision), <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with named gaps (J15864, J15865 c3day; J15864 c3worst, c3look; J15869 why)"}
+  - {what: "the names: S09 'atr60' against the textbook ATR (the mean true range with the previous close) and the mean range; S04 against S06 / 10,000", where: "the klines; the year output", status: "S09 DIFFERS (0.8905 of the trade ATR on 8 Mar, 0.9664 on 24 Sep; Spearman 0.80595, 0.97238): RENAMED; S04 = S06 / 10,000 at 100% (J15864, J15865 c3name)"}
+  - {what: "every .quotes_off twin against its main", where: "the year output", status: "MEASURED: meaning_twins ed3 74d02bc2, J15849 TWINS_20260308.tsv a9bc9402dcda74b9, TWINS_20250924.tsv 0ea4c5c8804a3576 (equal share, gaps, corr per twin)"}
+  - {what: "S06 (and S04 = S06 / 10,000) at every 30 s step of 24 Sep 2025 against the 30 s trade range of Binance aggTrades ((e - 30 s, e] by transact_time, bps of the last trade at or before e)", where: "Binance aggTrades (data.binance.vision, EDGE2's fetch; the path AGG of meaning_flowbasic: <ARCHIVE_DISK>/scratch_EDGE2/realcheck/outside/binance/aggTrades), the 8 roster coins held: ADA, ASTER, HYPE, INJ, LDO, ONDO, PEPE, SEI", status: "VERIFIED with named gaps (J15990, J15992): Spearman 0.97322 at 22,664 coin-steps both above 0 (with the zeros 0.97349), per coin median 0.98287, min 0.82744 (SEI); ours over the trades median 0.9999, p10 0.7501, p90 1.0999; S04 x 10,000 = S06 at 23,040 of 23,040"}
+
+tools:
+  - {what: "every coin's C3 recomputed from the Tardis rows", run: "python3 -B -m rawcheck --days <D> --coins <C,..> --at <HHMM> --part c3c4 --out <dir>", where: "team/RAWCHECK/code (basic_c3c4.py e43169989347ee69)"}
+  - {what: "C3 against the klines at every coin-minute; the names", run: "python3 -B -m rawcheck.meaning_ranges c3day <D> | c3name <D> | c3schema <D>", where: "team/RAWCHECK/code (meaning_ranges.py 74f75c8f87434926 edition 8, tests f9d9b6b8d8631856 33 of 33, ran J15864, J15865; editions 4 9b63515105faa76a and 5 3d7c79aa34e8a2dd ran J15835 to J15839 with the same numbers)"}
+  - {what: "the worst coin-minutes with the coin; one coin's 60 minutes beside its klines", run: "python3 -B -m rawcheck.meaning_ranges c3worst <D> <S0x> [N] | c3look <D> <COIN> <HHMM> | why <D> <COIN> <HHMM> 60", where: team/RAWCHECK/code}
+  - {what: "S04, S06 against the 30 s trade range of aggTrades; one coin-step (its trades, our mid's high and low with their stand times)", run: "python3 -B -m rawcheck.meaning_c3s30 c3s30 <D> | c3s30look <D> <COIN> <HHMMSS>", where: "team/RAWCHECK/code (meaning_c3s30.py ed1 945c7004c96fc0fc for J15990, ed2 5cde4b84849abc66 for J15992 (c3s30look adds our mid's high and low; c3s30 unchanged), tests 2ab12b3c7240c477: 8 cases, 2 mutants, 10 of 10)"}
+
+used_by: "nobody yet (CARD_C3_V7 'Who reads it today': the brief found no reader for any of the ten)"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C3_V7.md 0e1e447a8d56ae34
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C3C4_STAMPS_V1.tsv (C3 S01 to S10: 9 of 9 each; BTC, AVAX, ENA x 24 Sep, 4 Nov 2025, 8 Mar 2026)"
+  JOBS: "THE PROOF RUN: 15864 (8 Mar: c3schema, c3day, c3name, c3worst S09, S08, S07, S01, c3look CRV 03:58, ARB 05:44, FIL 06:09; log dada7db501d67353), 15865 (24 Sep; log cc50d0e18367cd21), 15869 (why FIL 06:09, ARB 05:44; log dafef1722410ba17), meaning_ranges ed. 8; the same numbers first in 15835, 15836, 15838, 15839 (the outside folder listed in 15839); edition 3: 15990 (c3s30 24 Sep; log 504f0346ab906690), 15992 (c3s30look SEI 02:36:00, 13:56:00, ASTER 05:29:00, 04:29:00, ADA 12:00:00; log a4efad168cc27561)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T13:04Z, posted before the code ran; S04, S06: hb/EDGE2.txt 2026-10-18T15:41Z, before J15990"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+settings:
+  - {id: C3.S01, name: "60 s mid range pct of the mid at e", layer: basic, side: none, window: "60 s ([e - 60 s, e], every top that stood)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "100 x (highest - lowest mid) / mid at e", aliases: "CUBE.range_60s",
+     means: "how far the coin's quoted mid swung in the last minute, in percent of the mid now; 0 = the mid did not move",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9 (BTC, AVAX, ENA x 3 days)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c3day: on the coin-minutes with both ranges above 0 (68,653 of 74,880; 72,076 of 73,440) ratio ours / kline range median 0.9501 (8 Mar), 0.9985 (24 Sep), Spearman 0.92903, 0.97164, ours below in 76.84%, 67.90%; with the zeros (ours 0, the kline above 0: 6,160 and 1,059; ours above 0, the kline 0: 31 and 139; both 0: 36 and 166) Spearman 0.80898, 0.95929; the gap named at one minute (J15869 why FIL 06:09)"},
+     open: "smaller than the trade range when trades bounce across the spread (the top traded at the ask, the bottom at the bid); a quarter of it at the worst rows (8 Mar: ONDO 05:45, FIL 06:09, ENA 06:48, J15864 c3worst); 0 while the trades span a tick on wide-tick coins (CRV 8 Mar, J15864 c3look): 6,160 coin-minutes of 8 Mar; a top that stood 0 ms counts (J15869 why FIL 06:09: the low, line 399081, stood 0.0 ms), how often is not measured (BED's note 2: S01 above 0 but 0 over tops that stood 1 ms or more)"}
+  - {id: C3.S02, name: "300 s mid range pct of the mid at e", layer: basic, side: none, window: "300 s ([e - 300 s, e])", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "100 x (highest - lowest mid) / mid at e", aliases: "CUBE.range_300s",
+     means: "how far the coin's quoted mid swung in the last 5 minutes, in percent of the mid now",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c3day: on the coin-minutes with both above 0 (73,812, 73,413) ratio 0.9601, 0.9893, Spearman 0.97133, 0.98805, ours below in 81.20%, 75.08%; with the zeros (ours 0, the kline above 0: 1,068 and 27) Spearman 0.93053, 0.98804"},
+     open: "as S01: the bid-ask bounce of the trades (CRV 8 Mar 02:59 to 03:02: ours 0.433839 = one tick, klines 0.869565 = two, J15864 c3look)"}
+  - {id: C3.S03, name: "change of the 60 s mid range from the minute before, pct points", layer: basic, side: none, window: "60 s and the 60 s before", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "S01 at e - S01 at e - 60 s", aliases: "CUBE.range_accel",
+     means: "plus = the last minute swung wider than the minute before; minus = narrower",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c3day against the change of the 1-minute kline range: same sign 92.74%, 94.50% (both non-zero); Spearman 0.91359, 0.95653; |gap| median 0.003089, 0.003479 pct points"},
+     open: "inherits S01's gap (the bounce), so its size is not the trade range's change"}
+  - {id: C3.S04, name: "30 s mid range, fraction of the mid at e", layer: basic, side: none, window: "30 s ([e - 30 s, e])", clock: "every 30 s", scope: coin, contracts: USDT,
+     aggregate: "(highest - lowest mid) / mid at e", aliases: "EF.ef_range_30s",
+     derived_from: "C3.S06 / 10,000 (equal at 100% of minute ends, J15864, J15865 c3name)",
+     means: "how far the coin's quoted mid swung in the last 30 s, as a fraction of the mid now",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15990 c3s30: S04 x 10,000 = S06 within 1e-9 at 23,040 of 23,040 coin-steps (every 30 s step of 24 Sep 2025, 8 coins); its meaning is S06's (below)"},
+     open: "as S06: one day and 8 coins (the aggTrades held); 0 while the trades moved at 309 of 23,032 coin-steps"}
+  - {id: C3.S05, name: "120 s mid range, fraction of the mid at e", layer: basic, side: none, window: "120 s ([e - 120 s, e])", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(highest - lowest mid) / mid at e", aliases: "EF.ef_range_120s",
+     means: "how far the coin's quoted mid swung in the last 2 minutes, as a fraction of the mid now",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c3day: on the coin-minutes with both above 0 (72,089, 73,130) ratio 0.9483, 0.9927, Spearman 0.94053, 0.97871, ours below in 79.41%, 71.22%; with the zeros (ours 0, the kline above 0: 2,790 and 283; ours above 0, the kline 0: 1 and 12; both 0: 0 and 15) Spearman 0.86646, 0.97705"},
+     open: "as S01: the bid-ask bounce of the trades"}
+  - {id: C3.S06, name: "30 s mid range, bps of the mid at e", layer: basic, side: none, window: "30 s ([e - 30 s, e])", clock: "every 30 s", scope: coin, contracts: USDT,
+     aggregate: "10,000 x (highest - lowest mid) / mid at e", aliases: "N.mid_range_30s_bps",
+     means: "how far the coin's quoted mid swung in the last 30 s, in basis points of the mid now",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15990 c3s30 against the 30 s trade range of Binance aggTrades ((e - 30 s, e], bps of the last trade), every 30 s step of 24 Sep 2025, the 8 coins held, 23,032 coin-steps with both: Spearman 0.97322 at the 22,664 both above 0 (with the zeros 0.97349); per coin median 0.98287, min 0.82744 (SEI); ours over the trades median 0.9999, p10 0.7501, p90 1.0999, below at 61.77%"},
+     open: "one day, 8 coins; 0 while the trades moved at 309 coin-steps (SEI 178, ADA 53); wider than the trades where the quotes moved without trades (SEI 02:36:00: our mid from 0.28965 to 0.28995, 8 trades at 0.2897 and 0.2898); narrower where a sweep printed below the standing top (ASTER 05:29:00: trades down to 2.0377 at 05:28:37, the lowest standing mid 2.0483) (J15992 c3s30look)"}
+  - {id: C3.S07, name: "60 s mid range over the 300 s mid range", layer: basic, side: none, window: "60 s and 300 s", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "range 60 s / range 300 s (exact ranges); the 300 s range 0: NO_SPREAD", aliases: "R.range60s_over_range300s",
+     means: "near 1: the last minute holds most of the 5-minute swing (the move is now); near 0: the swing is older",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c3day against the same ratio of kline ranges: |gap| median 0.037422, 0.015015; Spearman 0.85196, 0.94352 (8 Mar under the 0.9 pass line: named, J15864, J15869)"},
+     open: "on a quiet day the wide-tick coins' ranges are 0 to 2 ticks, so the ratio takes a few values (ARB 8 Mar 05:44: 0 against 1 on klines, J15864 c3look); NO_SPREAD 1,068 (8 Mar) and 27 (24 Sep) coin-minutes",
+     never: ["S07 as a smooth measure on a wide-tick coin on a quiet day: it jumps between a few values"]}
+  - {id: C3.S08, name: "300 s mid range over the mean 1-minute mid range of its five minutes", renamed_from: "range300s_over_atr300", layer: basic, side: none, window: "300 s and its five minutes", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "range 300 s / mean of the ranges of [e - 300 s, e - 240 s], ..., [e - 60 s, e] (each closed); the mean 0: NO_SPREAD", aliases: "R.range300s_over_atr300 (the old name, still written by the year)",
+     means: "how much wider the 5-minute swing is than its average minute: 1 = every minute swung the whole range, 5 = one minute held it all",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 c3day against the same ratio of kline ranges: |gap| median 0.142857 (8 Mar, over the 0.1 pass line), 0.052047; Spearman 0.77257, 0.93714; named at one minute: ARB 8 Mar 05:44 ours 5, klines 1 (J15864, J15869)"},
+     open: "the 'atr' of its old name is a mean of MID ranges, not the trade ATR (C3.CB1); on a quiet day wide-tick coins take a few values (ARB: one mid tick in one of five minutes = 5, the trades one tick every minute = 1); NO_SPREAD 1,068 and 27 coin-minutes",
+     never: ["S08 as a trade ATR ratio (renamed)"]}
+  - {id: C3.S09, name: "mean 1-minute mid range over the last 60 minutes, pct of the mid at e", renamed_from: "atr60_pct", layer: basic, side: none, window: "60 minutes (60 closed 1-minute windows)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "100 x mean of the ranges of the 60 minutes ending at e (each closed) / mid at e", aliases: "S.atr60_pct (the old name, still written by the year)",
+     means: "the typical 1-minute swing of the coin's quoted mid over the last hour, in percent",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865: against the kline mean range ratio 0.9044, 0.9746, Spearman 0.81029, 0.97401 (with the zeros, ours 0 at 90 coin-minutes of 8 Mar: 0.80386, 0.97401); against the textbook trade ATR 0.8905, 0.9664 (under the 0.9 pass line on 8 Mar: RENAMED), Spearman 0.80595, 0.97238; the kline mean range is 0.9890, 0.9930 of the kline ATR (c3name)"},
+     open: "smaller than the trade ATR by the bid-ask bounce, far smaller on wide-tick coins on a quiet day (CRV 8 Mar 03:58: 0.007199 against 0.440115, the 12 worst rows all CRV, J15864, J15869)",
+     never: ["S09 as the trade ATR (renamed; C3.CB1)"]}
+  - {id: C3.S10, name: "place of the mid in its 8 h range", layer: basic, side: none, window: "8 h ([e - 8 h, e])", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(mid at e - 8 h low) / (8 h high - 8 h low); range 0: NO_SPREAD", aliases: "EF.ef_range_pos",
+     means: "1 = the mid now is at its 8 h high, 0 = at its low, 0.5 in the middle",
+     computation: {status: RELIABLE, proof: "C3C4_STAMPS_V1: 9 of 9"},
+     meaning: {status: DEFINED, proof: "J15864, J15865 c3day against (close - 480-minute low) / (480-minute high - low) on klines: |gap| median 0.004699, 0.002221, p90 0.024242, 0.011265; Spearman 0.99681, 0.99957"},
+     open: none}
+
+could_build:
+  - {id: C3.CB1, intended: "the average true range of the coin's TRADES (what the names atr60_pct and range300s_over_atr300 say)", was_name_of: "C3.S08, C3.S09",
+     formula: "true range of a minute = max(trade high, previous minute's close) - min(trade low, previous close); S09' = 100 x the mean true range of the 60 minutes ending at e / the last trade price; S08' = the 300 s trade range / the mean true range of its five minutes",
+     needs: "the trade candle of each minute: C13 S01 close, S02 high, S03 low (raw, LIMITS, MEANING_C13_V4)",
+     adds: "on a busy day little (S09 is 0.9664 of the kline ATR at the median coin-minute of 24 Sep, Spearman 0.97238); on a quiet day for wide-tick coins it measures the bid-ask bounce (CRV 8 Mar 03:58: 0.440115 against our 0.007199), J15836, J15839",
+     status: NOT_BUILT}

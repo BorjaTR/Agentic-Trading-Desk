@@ -1,0 +1,254 @@
+{
+  "kind": "build_metric",
+  "id": "HL4",
+  "producer": "HLLIQX",
+  "item": "Hyperliquid liquidations with the liquidated account, size and side (MISSING_INFO_BACKLOG M02)",
+  "tier": "BUILD",
+  "name": "Liquidation concentration by account and side",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 1,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "Liquidation concentration by account and side",
+  "example": "same account two100 pieces => top share1,HHI1; two accounts one100 piece each => top share0.5,HHI0.5; no liquidation => EMPTY NO_LIQUIDATION",
+  "formula": "For each side over block times (u-61s,u-1s], sum liquidation dollars by liquidated account. S07/S08=max(account USD)/total USD for long/short. S09/S10=sum((account USD/total USD)^2) for long/short. Aggregate pieces before calculating concentration.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 row F01; Hyperliquid node fills (node_fills_by_block), liquidation object {liquidatedUser, markPx, method}"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "fills table of hl_node_read V1 (columns as in PRODUCER_HLLIQX_V1)",
+      "rule_in_force": "rows with block time in (u - 6 s, u - 1 s]; the liquidated account's own rows only",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's 24 hour files",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    }
+  ],
+  "overlaps": [
+    {
+      "setting": "existing family outputs",
+      "kind": "other_metric",
+      "why": "Distinct question; see PROPOSED_METRICS.tsv"
+    }
+  ],
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "Use block times (u-61s,u-1s]. Any intersection with a missing-hour or actual manifest-tail span gives HOLE. D-1 history is required at the boundary; no carry of completed values.",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLLIQX/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S07",
+        "label": "hl_liq_long_top_account_share_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "Liquidation concentration by account and side; For each side over block times (u-61s,u-1s], sum liquidation dollars by liquidated account. S07/S08=max(account USD)/total USD for long/short. S09/S10=sum((account USD/total USD)^2) for long/short. Aggregate pieces before calculating concentration.",
+        "never": [
+          "proof of predictive value",
+          "all-venue totals"
+        ]
+      },
+      {
+        "name": "S08",
+        "label": "hl_liq_short_top_account_share_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "Liquidation concentration by account and side; For each side over block times (u-61s,u-1s], sum liquidation dollars by liquidated account. S07/S08=max(account USD)/total USD for long/short. S09/S10=sum((account USD/total USD)^2) for long/short. Aggregate pieces before calculating concentration.",
+        "never": [
+          "proof of predictive value",
+          "all-venue totals"
+        ]
+      },
+      {
+        "name": "S09",
+        "label": "hl_liq_long_account_hhi_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "Liquidation concentration by account and side; For each side over block times (u-61s,u-1s], sum liquidation dollars by liquidated account. S07/S08=max(account USD)/total USD for long/short. S09/S10=sum((account USD/total USD)^2) for long/short. Aggregate pieces before calculating concentration.",
+        "never": [
+          "proof of predictive value",
+          "all-venue totals"
+        ]
+      },
+      {
+        "name": "S10",
+        "label": "hl_liq_short_account_hhi_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "Liquidation concentration by account and side; For each side over block times (u-61s,u-1s], sum liquidation dollars by liquidated account. S07/S08=max(account USD)/total USD for long/short. S09/S10=sum((account USD/total USD)^2) for long/short. Aggregate pieces before calculating concentration.",
+        "never": [
+          "proof of predictive value",
+          "all-venue totals"
+        ]
+      }
+    ],
+    "grid": "5s",
+    "cadence": "every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per day; D 00:00:00 is the old D-1 24:00:00, values unchanged",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at = u, so known_at <= as_of on every row (empty rows too): the row at u uses only rows with block time <= u - 1 s (MODEL_AVAILABLE_AT, a stated 1 s publication delay)",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "Required history/coverage absent"
+      },
+      {
+        "reason": "NO_LIQUIDATION",
+        "when": "Zero side liquidation dollars; HOLE if any required source interval missing."
+      },
+      {
+        "reason": "MISSING_INPUT",
+        "when": "Required raw identity field absent"
+      }
+    ],
+    "stale_rule": "No carry of these rolling readings.",
+    "max_staleness_s": 60,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": "none",
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLLIQX.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1",
+      "input": "same account two100 pieces",
+      "answer": "top share1,HHI1"
+    },
+    {
+      "case": "E2",
+      "input": "two accounts one100 piece each",
+      "answer": "top share0.5,HHI0.5"
+    },
+    {
+      "case": "E3",
+      "input": "no liquidation",
+      "answer": "EMPTY NO_LIQUIDATION"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1",
+      "planted": "same account two100 pieces",
+      "expect": "top share1,HHI1"
+    },
+    {
+      "test": "U2",
+      "planted": "two accounts one100 piece each",
+      "expect": "top share0.5,HHI0.5"
+    },
+    {
+      "test": "U3",
+      "planted": "no liquidation",
+      "expect": "EMPTY NO_LIQUIDATION"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "Ignore missing source/zero denominator",
+      "caught_by": "U3 and source-hole regression"
+    },
+    {
+      "mutant": "Change population or fail to split flips",
+      "caught_by": "U1,U2 and tests/test_successors_v2.py"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-09-28 BTC10:00",
+          "why": "ordinary window"
+        },
+        {
+          "point": "2025-10-01 SOL10:00",
+          "why": "second BUILD window; active event coverage must be demonstrated separately"
+        }
+      ],
+      "pass": "Independent card arithmetic and raw records; floats1e-9 relative; exact metadata"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "the share of minutes with any liquidation per coin and month",
+      "HL vs Binance forced dollars ratio on crash days"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "Liquidation concentration by account and side"
+    ],
+    "never": [
+      "anything after u",
+      "predictive value from arithmetic agreement"
+    ]
+  },
+  "readers": "none yet (alarm context and profile after adoption)",
+  "implementation": {
+    "how": "NumPy binning of liquidated-account rows; rolling60s tid and method aggregates; account shares/HHIs by side and exact two-account opposite-side counterparty pairing. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_bin_sum (the 5 s bin on node fills)",
+    "memory_mb": 600,
+    "seconds_share": 2,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HL4_V1"
+}

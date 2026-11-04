@@ -1,0 +1,19 @@
+# FORCED-TRADE MAP V1 (CLAUDE1_20261028, 2026-10-29T07:17:39Z from the clock). TEST, NOT REVIEWED. The source of ideas for IDEA_TO_ALARM_V2.
+One row per trader who MUST trade or is LATE. Evidence: desk register team/RESEARCH/alarms/ALARMS_V1.tsv (offer = cost-paying moves per fire
+vs matched random on development months; side = what the desk read about direction), our 13-version month table (PROCESS_V6 section 2),
+and the metric cards (METRICS_V1.tsv). Status words are the registry's meaning_status. Update a row after every graded loop.
+
+| # | who must trade or is late | why they cannot wait | when | metric that shows it (status) | price pushed | ends when | evidence so far |
+|---|---|---|---|---|---|---|---|
+| 1 | liquidated traders on the coin | the exchange closes them at market | margin breach | A1.S05/S06, A1.S08/S09 (DEFINED) | with the move | the prints stop | N1 passes 6 of 8 months; desk A01 1.52x, A02 1.72-1.88x but side coin flip at 1-3 costs |
+| 2 | crowded leveraged traders not yet liquidated | margin will breach as price keeps going | BTC moves hard against a crowded alt | E1.S01 funding (DEFINED), E2.S04 OI change (DEFINED_WITH_OPEN), A1.S08 (DEFINED), C1.S16 (DEFINED) | with BTC | their liquidations print | none measured; desk M6 (peer spillover) OUT |
+| 3 | stop orders beyond a high or low | resting orders trigger mechanically | price crosses the level | price, prior_max, prior_min (engine ops); C11 day distances | through the level | seconds after the cross | desk N8: half of closes beyond the day high fall back within 3 bins; P12 (held) 1.17x weak; P11 NOT KEPT (measurement) |
+| 4 | funding payers | closing before the settle avoids the payment | 5-30 min before a settle | E1.S01, E1.S02 (DEFINED), Z3.S01 (DEFINED_WITH_OPEN) | against the paying side | the settle | desk N10F (clock only) NOT KEPT; size unmeasured |
+| 5 | market makers left with inventory | risk limits make them unload | after a one-sided taker burst | B1 taker flow (N2, N5 settings), D3 depth | back toward before the burst | inventory cleared | our N2 passes on average (+11.6/+9.1), N5 fails lean (+4.6); desk N5 1.68x |
+| 6 | perp-spot arbitrageurs | a premium out of line is free money | premium extreme | E3.S01 mark premium, X1.POSX.S06 instant premium | the premium closes | premium back to normal | our PPS2 passes 6 of 8; desk X6 (last vs mark) 1.57x side move, X1 (HL mark vs Binance) 1.99x side move |
+| 7 | traders reacting to news | they learn late | after a news burst | Z2.S02 (DEFINED, read 15-30 min late; lag30 twin NOT_CHECKED) | with the news | hours | none measured (stocks: drift after news, reversal without) |
+| 8 | alt quoters after BTC moves | they reprice with a lag | BTC moves first | C2.S01, COIN_C3.S06 (DEFINED_WITH_OPEN) | with BTC | the gap closes | AGAINST: C2.S01 card: only 3-8 pct of the gap closes in 15 min; desk N7 NOT KEPT |
+| 9 | everyone repricing in a market-wide move | not forced: new risk level | 21+ coins move together | C2.S06 breadth (DEFINED_WITH_OPEN), A2.S05/S06 (DEFINED_WITH_OPEN) | with the market | unknown | our M and N1 do not fade there at 1h (+0.1, -3.0); desk A08 2.04x, side unread |
+| 10 | late small-fill chasers | they buy the top after the move | late in a pump | B1.S05 small-fill net taker (to read) | with the move, then back | chasers exhausted | our LU passes 6 of 8 (lone pumps fade) |
+| 11 | scheduled flows (US open, macro prints, expiries) | the clock forces them | 13:30 UTC, print times, Friday 08:00 | Z1 calendar (DEFINED_WITH_OPEN), hour_block op | unknown | minutes | desk N10U 1.48x (activity), N10M, N11 NOT KEPT |
+| 12 | volatility-driven traders | risk targets cut size when volatility jumps | volatility far above its forecast | P6 HAR reading (desk), C4.S03 RV | with the move | volatility settles | desk P6 1.73x, side unread |

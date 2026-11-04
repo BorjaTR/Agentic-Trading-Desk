@@ -1,0 +1,4 @@
+window	first_day_utc	last_day_utc	use	source
+BUILD	20250901	20260228	find, fit and confirm (walk-forward: fit 20250901-20251231, confirm 20260101-20260228)	the owner 2026-10-23 11:18Z; STRATEGY 11:18:48Z
+CHECK	20260301	20260531	one look per frozen card version through open; regime-change test (up-trend)	the owner 11:18Z; LAB1 11:16:37Z (no law.py lock)
+BLIND	20260601	open_ended	proof only; a month opens only when LAB1 names it in law.py PROOF_OPEN; every new day joins	law.py; the owner 11:16Z

@@ -1,0 +1,14 @@
+{
+ "version": "COSTS_SETTINGS_V1",
+ "by": "BUILD2 for LAYERS (T04, README 069a8e993ea449cb sec 1 item 4)",
+ "fee_side_pct": 0.045,
+ "gap_leg_pct": 0.072,
+ "size_usd": 10000,
+ "stress": [1.5, 2],
+ "priced_on": "binance",
+ "table_v1": {"path": "team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V1.tsv", "sha16": "ff157578098a2f47"},
+ "table_v4": {"path": "team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V4.tsv", "sha16": "7c393e6b5e8505f7"},
+ "record": {"path": "team/LAYERS/tools/costs_v2/receipts/COSTS_OF_RECORD_V1.tsv"},
+ "funding_store": "<DATA_ROOT>/hl_funding_hourly",
+ "approximation": "funding is charged on the ENTRY notional, not on the hourly mark value (STRATEGY M3); books from Binance Oct-Dec 2025 x one HL day"
+}

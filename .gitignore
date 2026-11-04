@@ -1,0 +1,6 @@
+out/
+data/
+__pycache__/
+*.pre_*
+.DS_Store
+settings/desk.env

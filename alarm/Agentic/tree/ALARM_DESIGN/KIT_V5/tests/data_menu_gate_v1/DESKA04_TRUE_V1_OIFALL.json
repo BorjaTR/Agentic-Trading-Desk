@@ -1,0 +1,30 @@
+{
+ "from": "DESKA04_20261103 ideas/SIGNFLIP/TRUE_V1_OIFALL.json, only its label, mirror and activity (the paths left out)",
+ "label": {
+  "kind": "metric_test",
+  "code": "E2.S01",
+  "when": "window",
+  "start_s": 0,
+  "end_s": 3600,
+  "test": "falling",
+  "change": "pct",
+  "thr": 0.5,
+  "max_age_s": 120
+ },
+ "mirror": {
+  "kind": "metric_test",
+  "code": "E2.S01",
+  "when": "window",
+  "start_s": 0,
+  "end_s": 3600,
+  "test": "rising",
+  "change": "pct",
+  "thr": 0.5,
+  "max_age_s": 120
+ },
+ "activity": {
+  "code": "E2.S01",
+  "mode": "change",
+  "max_age_s": 120
+ }
+}

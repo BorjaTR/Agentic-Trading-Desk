@@ -1,0 +1,138 @@
+{
+ "tool": "idea_time_v2",
+ "file": "Agentic/tree/ALARM_DESIGN/KIT_V6/tools/idea_time_v2.py",
+ "file_sha16": "46d1f9bbf2c91137",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "after a run or a round: where an agent's time went (not a step of the alarm loop)",
+ "question": "How long did each idea take from claim to job, job to read, claim to decision, and how much of the time had no job running?",
+ "usage_from_code": "python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V6/tools/idea_time_v2.py --settings <settings file> <RUN> [<RUN> ...] [--launch SEAT=YYYY-MM-DDTHH:MM:SSZ ...] [--now YYYY-MM-DDTHH:MM:SSZ]",
+ "settings_keys": [
+  "RESEARCH_ROOT",
+  "BOARD"
+ ],
+ "code_options": [
+  "--launch",
+  "--now",
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  2
+ ],
+ "commands": [
+  {
+   "name": "report",
+   "does": "prints, per run, a line, one table row per idea, and one line for the seat",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "one or more run tags",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "--launch",
+     "required": false,
+     "meaning": "SEAT=YYYY-MM-DDTHH:MM:SSZ: the seat's launch time (default: its START board line)",
+     "example": "AD1=2026-10-29T14:41:26Z"
+    },
+    {
+     "name": "--now",
+     "required": false,
+     "meaning": "YYYY-MM-DDTHH:MM:SSZ: the end for a seat with no DONE line (default: the clock)",
+     "example": "2026-10-29T18:00:00Z"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V6/tools/idea_time_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029",
+   "writes": "nothing (read-only: prints a table)",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "no RUN (prints its usage), no --settings, a settings file the reader refuses (RESEARCH_ROOT and BOARD must be set)"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "--now",
+      "2026-10-29T14:00:00Z"
+     ],
+     "exit": 0,
+     "prints": "== AD1_20261029"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "Where an agent's time"
+  },
+  {
+   "args": [
+    "AD1_20261029"
+   ],
+   "exit": 2,
+   "prints": "--settings <file> IS REQUIRED"
+  }
+ ],
+ "rules": [
+  "from files only (board stamps, registers, receipts, claim files), never from what an agent says",
+  "a missing stamp prints -"
+ ],
+ "outputs": [
+  {
+   "file": "printed: run line",
+   "where": "stdout, first line per run",
+   "columns": [
+    "run",
+    "launch",
+    "START",
+    "DONE"
+   ]
+  },
+  {
+   "file": "printed: idea table",
+   "where": "stdout: a header and one row per idea",
+   "columns": [
+    "idea",
+    "claimed",
+    "claim_to_first_job",
+    "count_run",
+    "grade_queued_after_count_end",
+    "grade_run",
+    "read_lag_after_grade",
+    "entry_run",
+    "decided_after_entry_end",
+    "claim_to_first_decision",
+    "states"
+   ]
+  },
+  {
+   "file": "printed: seat line",
+   "where": "stdout, last line per run",
+   "columns": [
+    "seat",
+    "launch_to_first_claim",
+    "no_job_running",
+    "one_job_running",
+    "two_or_more_running",
+    "minutes_observed",
+    "first_own_pass"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/idea_time_v2_COLUMNS.tsv",
+ "reads": [],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

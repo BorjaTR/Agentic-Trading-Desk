@@ -1,0 +1,74 @@
+# 05_Profile: copied files to delete before the commit (the owner, 30 Oct 12:33 Berlin, option a: released editions only in GitHub)
+path	why
+tools/alarm_profile_v2/alarm_profile_v2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/alarm_profile_v2_1.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/episode_blocks.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/EPI_CATALOG_V1.tsv	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/mk_v2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/mk_v2_1.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/test_alarm_profile_v2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/test_alarm_profile_v2_1.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/mutants_alarm_profile_v2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/mutants_alarm_profile_v2_1.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/README.md	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/ARCHITECTURE.md	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/SCOPE.md	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/REQUIREMENTS.md	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/BASELINE.tsv	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/RELEASE_profile_V2_0.json	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/RELEASE_profile_V2_1.json	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/alarm_profile_v2_2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/mk_v2_2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/test_alarm_profile_v2_2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/mutants_alarm_profile_v2_2.py	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile_v2/RELEASE_profile_V2_2.json	TEST edition (alarm_profile editions 2, 2.1, 2.2), not released; stays in the dev tree
+tools/alarm_profile/alarm_profile.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/episode_blocks.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/episode_twin.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/test_alarm_profile.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/mutants_alarm_profile.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/test_epi_output_proofs.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/test_proof_plan_v1.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/proof_alarm_profile.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/profile_split.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/draw_eye_run.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/eye_charts_v1.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/score_eye_run.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/README.md	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/DESIGN_GENERIC_V1.md	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/CTX_INPUTS_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/EPI_CATALOG_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/EPI_OUTPUT_PROOFS_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/PROFILES_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/PROOFS_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/PROOF_RESULTS_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_1.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_2.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_3.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_4.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_5.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_6.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_7.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_profile/RELEASE_profile_V1_8.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarms/a01_onset_v2.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarms/a02_climax_v3.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/alarm_context.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/CTX_CATALOG_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/context_blocks.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/COIN_TYPES_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/README.md	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/test_alarm_context.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/test_ctx_output_proofs.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/test_p09_v1.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_1.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_2.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_3.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_4.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_5.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_6.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/RELEASE_context_V1_7.json	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarms/alarm_view_v1.py	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+QUANT/receipts/COSTS_PER_COIN_V4.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)
+tools/alarm_context/CTX_OUTPUT_PROOFS_V1.tsv	moved under tree/ (the part layout of 30 Oct 12:45: tool doc folders at the top, copies under tree/)

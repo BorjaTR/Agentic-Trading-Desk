@@ -1,0 +1,270 @@
+# K5_V1.yaml: BOOKX order flow imbalance as Cont, Kukanov and Stoikov define it (D1.CB1) (TREE, 18 Oct 2026;
+# BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8). Worked examples recomputed with exact fractions by team/TREE/proposals/verify_bookx_examples_tree_v3.py.
+# On the owner's 5 s grid (BUILD_ITEMS_V4 9d424de3, ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4, WORKPACKAGES_V2 edit 2 rule 4.11): every 5 s point of D,
+# minute ends included; K5 has no fit.
+# Edition 2: METRIC_AUDIT's REVIEW BOOKX 18:20:25Z (F1 to F5 and the nits) and ADDON_ARCHITECTURE_V4 edit 3 0591d181 (the phases, section 4 line 35; the
+# row at exactly 00:00:00.000000, line 37; the fit table, section 5; the kernels of addon_grid_v2 85c8ece1, section 9.4).
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 2): the event as CARD_D1_V4 rule 2 (no separate seed),
+# X1 (D1 rule 8), X2 (D1 rule 1), the seen rule needing EDGE1's seen_all kernel, known_at of a window with no event (rule 10), a
+# repeated row counted (rule 11), NO_LEVELS by rule 18, arrivals planted, the midnight and outage cases, Hyperliquid's never line;
+# the divisor stays OPEN for EDGE1 from the paper's text. Values unchanged.
+# Edition 4: METRIC_AUDIT2's FIX CHECK BOOKX (REVIEW_LEAD_METRIC_AUDIT2_BOOKX_V1 3414cef5): EDGE1's divisor answer (19:24:54Z), 'the row before' for the old
+# seed, E11's arrivals, the missing file of D planted (E15, M9). Values unchanged.
+kind: build_metric
+id: K5
+producer: BOOKX
+item: order flow imbalance as the paper defines it (D1.CB1)
+tier: BUILD
+name: order flow imbalance at the top of Binance's book over 10 s and 60 s in contracts (Cont, Kukanov and Stoikov 2014), and over the window's mean top depth
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 4
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T19:45:33Z'
+means: >-
+  The net coins added to the best bid minus those added to the best ask over the window's book updates, in contracts, as the paper
+  defines it (S03 over 10 s, S05 over 60 s), and that net over the window's mean top depth (S04, S06): plus is buying pressure on the
+  book. The year's D1 is the same events in dollars over gross dollars (renamed 'order flow share at the top', FORMULA_D1_V1).
+example: >-
+  The top goes from 100 x 5 / 102 x 4 (the row before the window) to 100 x 7 / 102 x 4 (2 coins join the bid: +2), to 100 x 7 /
+  102 x 1 (3 coins leave the ask: +3), to 101 x 2 / 102 x 1 (a better bid counts its 2 coins, +2; the 7 left at 100 are not
+  subtracted because the bid price rose), to 100 x 7 / 102 x 1 (a worse bid subtracts the 2 coins of the old best: -2). OFI = +5
+  coins (S03 or S05 if the four rows fall in the window). The top held 11, 8, 3 and 8 coins (bid plus ask) after those rows: 30 in
+  all, 3.75 a side on average, so S04 = 5 / 3.75 = 1.333333333333.
+formula: >-
+  Rows are the coin's bookTicker rows in file order (D-1's from the CARRY first); a row with no stamp (why 2, t = arr = -1) takes the
+  stamp and the arrival of the row before it, and the first row read with no stamp is in no window (CARD_D1_V4 dfdc22a7 rule 1). An
+  event n is a row read with the row before it in file order (n - 1; D-1's last row before D's first); its stamp is row n's and it is
+  received at the later arrival of the two rows (rule 2); e_n =
+  1{Pb_n >= Pb_n-1} qb_n - 1{Pb_n <= Pb_n-1} qb_n-1 - 1{Pa_n <= Pa_n-1} qa_n + 1{Pa_n >= Pa_n-1} qa_n-1, in contracts (the
+  reader's amounts at 10^qp). The window of u is (u - W, u] with W = 10 s (S03, S04) or 60 s (S05, S06): its events are those
+  stamped after u - W and up to u and received by u (rule 3); a repeated row (the reader's dup) is an event of flow 0 and counts in
+  N, flagged DUPLICATE_ROW (rule 11). A window that starts before 00:00 of D takes D-1's part from the CARRY's tail: D-1's events of
+  its last 60 s (t, arr, e_n, qb + qa) and its last row read (D's first event pairs D's first row with it); a row of D stamped and received at exactly
+  00:00:00.000000 is an event of the 00:00:00 point (E10; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4 lines 35, 37). OFI_W = the sum of e_n over the window's events. D_W = the sum over the window's events of (qb_n + qa_n)
+  / (2 N), N the number of events (the event mean of the top depth, a side). S03 = OFI_10s, S04 = OFI_10s / D_10s, S05 = OFI_60s,
+  S06 = OFI_60s / D_60s; the divisor is the event count (EDGE1 19:24:54Z): the paper's AD_i (Cont, Kukanov and Stoikov 2014) writes
+  1 / (2 (N - 1)) over N terms, read as a typo (one event divides by 0); its literal form is a difference from ours within 1 / (N - 1). The book is seen at a moment when a row read (good or bad) is stamped in its last 30 s and received by it; the value needs the
+  book seen at every moment of [u - W, u], else BOOK_HOLE (rule 6; EDGE1's seen_all kernel). BAD_INPUT when an event of the window has
+  a bad row, as row n or as the row before it (rule 7). Files (rule 8): D's file is always needed, D-1's (its CARRY) when u - W - 30 s
+  is before 00:00:00 of D; a needed file missing or only a .part makes the value NO_FILE; a file with only its header or an empty gzip
+  is there and has no rows. Rule 18 (CARD_D1_V4's edition 4 header): a window that holds a row with no level on one side (a bid or
+  ask price 0) is NO_LEVELS; a window with no event gives S03, S05 = 0 only when the row in force before it is good with both sides
+  (else that row's reason, BAD_INPUT or NO_LEVELS), and S04, S06 empty NO_EVENTS. The first failing reason: NO_FILE, BOOK_HOLE,
+  BAD_INPUT, NO_LEVELS, NO_EVENTS (rules 9, 18). Exact (Fraction), written as float64.
+source:
+  kind: paper
+  ref: >-
+    Cont, Kukanov and Stoikov 2014, 'The price impact of order book events', J. Financial Econometrics 12(1), 47-88 (arXiv
+    1011.6402): e_n and the average depth AD; RESEARCH_TOOLS_V1 aad3cc38 section 7.3 (O3a). Tool as oracle in the meaning check:
+    screamer 3.6.0 (MIT, 2026-10-17) ContOFI() on (bid, ask, bid_size, ask_size): the same e_n per update (NaN on the first), no
+    window. Ours adds the window sum, the row before (CARD_D1_V4 rule 2), the depth normalisation (the event-count divisor, EDGE1
+    19:24:54Z; the paper's literal 2 (N - 1) gives 1.0 in the example) and the empties.
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures), pack book_ticker_v2 (188dc357); the same rows as the year's D1
+    rule_in_force: "CARD_D1_V4 rules 1 to 3: the events (a row with the row before it in file order) stamped in (u - W, u] and received by u, at the later arrival of their two rows"
+    stale_rule: no row stamped in the last 30 s received at some moment of [u - W, u] gives BOOK_HOLE, stale 1
+    days: "D's raw for the points 00:00:05 to 24:00:00 (24:00:00 and the tail written to X1/carry/BOOKX/<D>.npz: the events of the last 60 s, the last row read, the rows not in force at 24:00 with max(t, arr) > 24:00; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the 00:00:00 point of D is D-1's 24:00 point; the points whose window or seen test reaches before 00:00 (00:00:05 to 00:01:25 for W = 60 s, to 00:00:35 for W = 10 s) take D-1's part from that CARRY: the window's events (the tail), the last row read, its stamps and the latest moment the book was not seen"
+overlaps:
+  - setting: D1 S04 x D1 S09
+    kind: copy
+    why: >-
+      D1 S04 is the net over the gross dollars of the same events over 60 s, rounded once to 6 decimals half up (a tie away from 0;
+      0.000000 when the gross is 0), and D1 S09 their gross rounded once to the whole dollar half up (FORMULA_D1_V1 794d4d52, its
+      rule lines 47 and 49): the events of S05 priced as D1 (b, a at each side's own prices), net X and gross G exact (Fraction), give
+      round(X / G, 6) = D1 S04 and round(G, 0) = D1 S09 exactly, by those roundings: the raw check of PRODUCER_BOOKX_V1 on the same
+      rows, not a twin (contracts and depth make K5 another quantity).
+per_coin: >-
+  S03, S05 are coins: the 1000-coins count in thousands (MEANING_D2D3_V2 line 33); never compare S03, S05 across coins; S04, S06 are
+  unitless and comparable. BTC's top changes many times a second (windows of thousands of rows); thin coins have few rows and a jumpy
+  S04. Funding coins and coins missing on Hyperliquid change nothing.
+time: >-
+  Bursts at the funding settles and the quarter hours (reported, not judged); the 00:00:00 point is D-1's 24:00 point and the windows reaching before 00:00 add D-1's part from the CARRY;
+  a feed outage gives BOOK_HOLE for the windows it touches.
+output:
+  group_file: X1/day=<D>/BOOKX.parquet
+  names:
+    - name: S03
+      label: ofi_cks_10s_contracts
+      units: contracts (coins; thousands of coins for a 1000-coin)
+      value_kind: float
+      decimals: none
+      means: the paper's order flow imbalance at the top over (u - 10 s, u]
+      never: [S03 compared across coins]
+    - name: S04
+      label: ofi_cks_10s_over_depth
+      units: unitless
+      value_kind: float
+      decimals: none
+      means: S03 over the mean top depth (a side) of the same window's events
+    - name: S05
+      label: ofi_cks_60s_contracts
+      units: contracts (coins; thousands of coins for a 1000-coin)
+      value_kind: float
+      decimals: none
+      means: the paper's order flow imbalance at the top over (u - 60 s, u]
+      never: [S05 compared across coins]
+    - name: S06
+      label: ofi_cks_60s_over_depth
+      units: unitless
+      value_kind: float
+      decimals: none
+      means: S05 over the mean top depth (a side) of the same window's events
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arrival of the window's events (each the later arrival of its two rows, <= u by the rule), else u for a
+    window with no event (CARD_D1_V4 rule 10); an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "a needed file missing or only a .part (CARD_D1_V4 rule 8): D's file at every point (00:00:00 too: phase B sets it NO_FILE); D-1's CARRY where u - W - 30 s is before 00:00 of D (00:00:05 to 00:01:25 for W = 60 s, to 00:00:35 for W = 10 s). A header-only file or an empty gzip is there and has no rows"
+    - reason: BOOK_HOLE
+      when: no row stamped in the last 30 s was received at some moment of [u - W, u]
+    - reason: BAD_INPUT
+      when: an event of the window has a bad row (any reader why), as row n or as the row before it (CARD_D1_V4 rule 7); a window with no event whose row in force is bad
+    - reason: NO_LEVELS
+      when: the window holds a row with no level on one side (bid or ask price 0), or has no event and its row in force is one-sided (CARD_D1_V4 rule 18)
+    - reason: NO_EVENTS
+      when: S04, S06 when the window has no event (S03, S05 are then 0)
+  stale_rule: stale = 1 exactly when the value is empty BOOK_HOLE
+  max_staleness_s: 30
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: DUPLICATE_ROW
+      when: "a repeated row (the reader's dup) is an event of the window (CARD_D1_V4 rule 11, the year's DUPLICATE_ROW:<coin>); an empty value carries no flag"
+edge_cases:
+  - case: E1 the paper's steps
+    input: 'the row before 100x5 / 102x4 stamped u - 11 s received u - 10.99 s; in the window 100x7 / 102x4, 100x7 / 102x1, 101x2 / 102x1, 100x7 / 102x1 stamped u - 8, u - 6, u - 4, u - 2 s, each received 0.01 s after its stamp'
+    answer: 'e = +2, +3, +2, -2; S03 5.0; D 3.75; S04 1.333333333333'
+  - case: E2 the open divisor
+    input: the same
+    answer: "with the paper's 2 (N - 1): D 5.0 and a ratio 1.0 (not built)"
+  - case: E3 the dollar form
+    input: the same
+    answer: '506.0 (D1''s numerator: the raw check)'
+  - case: E4 no event in the window
+    input: 'the last row stamped u - 12 s (good), nothing after it'
+    answer: 'S03 0.0; S04 empty NO_EVENTS'
+  - case: E5 a bad row inside
+    input: 'E1 with its third row crossed (why 6)'
+    answer: S03, S04 empty BAD_INPUT
+  - case: E6 the row at the edge
+    input: 'a row stamped exactly u - 10 s'
+    answer: not an event of the window (stamped after u - W only); it is the row before the window's first event
+  - case: E7 a silence
+    input: 'rows every second, each received 0.01 s after its stamp, but none stamped between u - 50 s and u - 15 s'
+    answer: 'S05, S06 empty BOOK_HOLE (at u - 15 s the last row was 35 s old); S03, S04 valued'
+  - case: E8 a row arriving after u
+    input: 'a row stamped u - 0.2 s received u + 0.1 s'
+    answer: not an event at u
+  - case: E9 00:00
+    input: "u = 00:00:30 of D, W = 60 s: the window (23:59:30, 00:00:30]; the CARRY holds D-1's part (OFI 3, depth sum 8, 2 events over (23:59:30, 24:00]) and the row before (rule 2); D's part OFI 2, depth sum 4, 1 event"
+    answer: 'S05 = 5 (3 + 2); D_60s = 12 / (2 x 3) = 2; S06 = 2.5; known_at the last arrival among the rows used'
+  - case: E10 the row at exactly 00:00:00.000000
+    input: "u = 00:00:00 of D, W = 10 s: the CARRY's tail holds D-1's events in (23:59:50, 24:00) (OFI 3, depth sum 8, 2 events); D's first row, stamped and received at 00:00:00.000000, is an event with e_n = 2 and qb + qa = 4"
+    answer: 'S03 = 5; D_10s = 12 / (2 x 3) = 2; S04 = 2.5 (phase B adds the row; D-1''s run alone gives S03 3, S04 1.5)'
+  - case: E11 an outage (the owner's ask)
+    input: 'rows every second to 11:59:59 and from 12:10:00, none between, each received at its stamp'
+    answer: 'S05, S06 empty BOOK_HOLE at 12:00:30 to 12:10:55, valued from 12:11:00; S03, S04 empty 12:00:30 to 12:10:05, valued from 12:10:10'
+  - case: E12 a row with no stamp
+    input: 'E1 with its third row carrying no stamp (why 2, t = arr = -1)'
+    answer: 'it takes the second row''s stamp and arrival and is bad: S03, S04 empty BAD_INPUT'
+  - case: E13 a repeated row
+    input: 'E1 with its second row repeated (dup)'
+    answer: 'an event of flow 0, counted in N = 5: S03 5.0, D_10s = (30 + 11) / 10 = 4.1, S04 1.219512195122, flag DUPLICATE_ROW'
+  - case: E15 D's file missing (X1, X3a)
+    input: "no book_ticker file of D (or only a .part); the CARRY holds D-1's tail"
+    answer: 'every point of D, 00:00:00 included, S03 to S06 empty NO_FILE, not stale'
+  - case: E14 a header-only file of D
+    input: "u = 12:00; D's file holds only its header"
+    answer: S03 to S06 empty BOOK_HOLE, stale 1 (not NO_FILE)
+unit_tests:
+  - test: U1 (E1, E2, E3)
+    planted: 'a book_ticker pack with pp 0, qp 0: the five rows of E1, the first stamped u - 11 s, the others in (u - 10 s, u]'
+    expect: 'S03 5.0, S04 1.333333333333; the dollar form 506.0'
+  - test: U2 (E4, E5, E6)
+    planted: the rows of each case
+    expect: '0.0 and NO_EVENTS; BAD_INPUT; the edge row not counted'
+  - test: U3 (E7, E8, E9)
+    planted: 'the silence; the late row; a CARRY file with D-1''s rows'
+    expect: 'S05, S06 BOOK_HOLE stale 1 and S03, S04 valued; the late row ignored; the CARRY rows used'
+  - test: U4 (E10) the 00:00:00 point
+    planted: "the CARRY's tail of E10 and D's row at 00:00:00.000000"
+    expect: 'S03 5.0, S04 2.5'
+  - test: U5 (E11 to E14) the outage, the rows, the files
+    planted: the rows of each case
+    expect: 'BOOK_HOLE as written then valued; BAD_INPUT; S03 5.0, S04 1.219512195122 with DUPLICATE_ROW; BOOK_HOLE stale 1; E15 NO_FILE at every point, 00:00:00 included'
+mutants:
+  - mutant: M1 the window closed on the left (the row at u - W counted as an event)
+    caught_by: U2 (E6 counts it)
+  - mutant: M6 the 00:00:00 point from D-1's run alone
+    caught_by: 'U4 (E10 gives S03 3.0, S04 1.5)'
+  - mutant: M7 seen at u only (not every moment of the window)
+    caught_by: U5 (E11 values S05 at 12:10:30)
+  - mutant: M9 the 00:00:00 point valued from the CARRY's tail when D's file is missing
+    caught_by: U5 (E15 gives D-1's part at 00:00:00)
+  - mutant: M8 a repeated row left out of N
+    caught_by: 'U5 (E13 gives D_10s 30 / 8 = 3.75, S04 1.333333333333)'
+  - mutant: M2 the first event without its row before (CARD_D1_V4 rule 2)
+    caught_by: U1 (S03 3.0 against 5.0)
+  - mutant: M3 dollars in place of contracts
+    caught_by: U1 (S03 506.0)
+  - mutant: M4 the paper's 2 (N - 1) divisor
+    caught_by: U1 (S04 1.0)
+  - mutant: M5 the ask terms' signs flipped
+    caught_by: U1 (S03 -1.0 from the ask row of E1)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 00:00:00, 00:00:30, 00:01:25 and its busiest minute (the tester names it from D1 S09 before the job)
+      why: the CARRY's row before; thousands of events
+    - point: 2026-03-08, the thinnest coin, a minute with no row in 10 s
+      why: NO_EVENTS
+    - point: 2026-03-08, 1000PEPEUSDT, 12:10
+      why: a 1000-coin
+    - point: 2026-03-08, every coin, all 1,440 minute ends
+      why: the copy check against D1 S04 x D1 S09 (overlaps)
+  pass: >-
+    The tester recomputes S03 to S06 and the empties from this card's words through the reader with Fraction
+    (rawcheck/check_bookx.py, never the producer's code): floats within 1e-9 relative, words equal; the copy check within D1's
+    rounding at every minute end.
+meaning_check:
+  pass_lines:
+    - "at every minute end of 2026-03-08, the 60 s events of S05 priced as D1 give, from the exact net X and gross G, round(X / G, 6) half up (a tie away from 0) = D1 S04 and round(G, 0) half up = D1 S09 (the copy; equal, no tolerance)"
+    - "on the same rows, our e_n equals screamer's ContOFI per update (exact, the first event aside)"
+  report_only:
+    - "the paper's linear price impact: the slope and R2 of the next 10 s mid change on S04 per coin on 2026-03-08, against D1 S02's R2 on the same minutes"
+    - S04 and S06 spread per coin
+conclude:
+  may:
+    - the net resting coins added to the bid against the ask at the top over the last 10 s or 60 s (S03, S05), and that net against the top depth (S04, S06)
+    - S04, S06 across coins and against D1's dollar share
+  never:
+    - S03, S05 across coins (contracts)
+    - trade flow (it is resting book changes; B1 is the trades)
+    - the whole book (the top only; K6 is the multi-level form)
+    - "Hyperliquid's order flow (this is Binance's book only; the owner trades on Hyperliquid)"
+readers: none yet
+implementation:
+  how: >-
+    Per coin, vectorised over the day: np.diff of the price and amount arrays gives e_n by the indicator form for every row; cumulative
+    sums of e_n and of (qb + qa); two np.searchsorted per window for the edges (the stamps of the rows received by u); exact integers
+    at the reader's scales; the sums by grid blocks, never a whole-day cumulative sum (ADDON_ARCHITECTURE_V4 edit 3 0591d181 9.3 rule 5). The book_ticker
+    pack is read once per coin per day and shared with COST K1, BOOKX K4, K7. PHASES (section 4): a point is final in phase A from 00:01:30 (W = 60
+    s; 00:00:40 for 10 s) once its window no longer holds D's first row (whose event pairs it with D-1's last row read); the others
+    in phase B (the CARRY's tail, E9, E10).
+  kernel: 'new: window_stamped (the events stamped in (u - W, u] and received by u, by grid blocks, each event with its row before, rule 2): addon_grid_v2 85c8ece1 per_window sums by arrival only (TREE to EDGE1 17:56:47Z)'
+  memory_mb: 400
+  seconds_share: 5
+data_checks:
+  - what: the copy check against D1 on 2026-03-08 and 2025-09-24 (that the year's D1 events are these rows)
+    who: the tester
+  - what: "the divisor: the event count (EDGE1 19:24:54Z, from the paper's text: done)"
+    who: EDGE1

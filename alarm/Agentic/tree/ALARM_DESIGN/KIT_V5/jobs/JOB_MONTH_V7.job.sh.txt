@@ -1,0 +1,47 @@
+# JOB @@JOBNUM@@_@@SEAT@@_MONTH_@@IDEA@@ -- @@RUNTAG@@ (ALARM_DESIGN KIT_V5 JOB_MONTH_V7, template @@TPLSHA@@; chain v2_2_2 in 26 coin parts: v2_2_1 with the clean aw1 grader idea_to_grade_aw1_rel1, its relative pins I2G_PINS_AW1_REL1.json and detect_aw1_rel1, SCOUT K12; JOB_MONTH_V6 with only its chain changed, CLEAN_RELEASE_V1: every code file from the Alarm folder @@ALARM@@, every machine path from the settings file, the feed gate FEED_GATE included): forward months of @@IDEA@@, variants @@ITEMS_LIST@@ (decided PASS or NEEDS MORE MONTHS on Sep-Dec in grade job @@FROMJOB@@; Jan-Apr forecasts sealed in FORECASTS): the 10 Sep 2025-30 Apr 2026 grade (alarm_grade_chain_v2_2_1_to20260430: v2_2 with its paths changed; v2_1 with the detection in 26 coin parts), the per-fire file, month_read_v3 for 2601-2604 against the sealed ranges, and conditions_v1 (descriptive, activity from the variant's own random moments, cut months 2509-2512). PREREG @@PREREG_REL@@ @@PREREG_SHA@@. TEST, NOT REVIEWED. Never deletes. Stops when SCRATCH_DISK has under 60 GB free. The quiet window was removed by the owner 30 Oct 2026 23:32 Berlin ("All jobs can be queued. Please do not stop queueing jobs").
+# WRITES @@SCRATCH@@/work_@@RUNTAG@@/@@JOBNUM@@_MONTH_@@IDEA@@/ and @@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_MONTH_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# DRIVE: SCRATCH_DISK
+set -u
+AL=@@ALARM@@; F=$AL/01_Detection/tree; R=$F/team/RESEARCH; AP=$R/tools/alarm_process; MP=$AL/03_Grading/tree/tools/month_parts; PY=@@PYTHON@@
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+RD=@@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@; T=$AL/Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools; J=@@JOBNUM@@_MONTH_@@IDEA@@
+W=@@SCRATCH@@/work_@@RUNTAG@@/$J; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+mkdir -p $W $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
+isdone(){ awk -F'\t' '$1=="done" && $2=="0" {f=1} END {exit !f}' $W/STATUS_$1.tsv 2>/dev/null; }
+ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4; ck $AP/alarm_card_v1_3_1.py 3c496708f9d44651
+ck $T/perfire_v1_1_to20260430.py 4e77b228d71bdae4; ck $T/test_perfire_v1.py 12996df3af189030
+ck $T/month_read_v3.py b3480cfd670b28f4; ck $T/conditions_v1.py 2f4aaebe1f259278; ck $T/split_v1.py e481ca008c72d6f5
+ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@
+for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; done; for i in "${!FCFILES[@]}"; do ck $RD/${FCFILES[$i]} ${FCSHAS[$i]}; done
+f=$(fmb); st start 0 0 "SCRATCH_DISK free ${f} MB"
+cd $AL
+for i in "${!VS[@]}"; do V=${VS[$i]}; D=$RD/${DEFS[$i]}; L=${LEANS[$i]}
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then st disk_$V 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; st end 7 0 "disk"; exit 7; fi
+  t0=$(date +%s); AL=$AL PY=$PY LAB_DAYS=@@LAB_DAYS@@ FEED_GATE=@@FEED_GATE@@ PARTS=26 LEAN=$L bash $MP/alarm_grade_chain_v2_2_2_to20260430.sh $V $D $W < /dev/null > $W/$V.out 2>&1; r=$?
+  st grade_$V $r $(( $(date +%s)-t0 )) "chain v2_2_2 Sep-Apr in 26 coin parts, lean $L"
+  for h in A B C D E F G H I J K L M N O P Q R S T U V W X Y Z; do [ -f $W/det_${V}_v1_$h/DETECT_RUN.json ] && $PY -c "import json,sys,hashlib;m=json.load(open(sys.argv[1]));mm=m.get('memory',{});hs=lambda o:hashlib.sha256(json.dumps(o,sort_keys=True).encode()).hexdigest()[:16];print(sys.argv[2],m.get('status'),mm.get('worker_peak_rss_bytes'),mm.get('parent_peak_rss_bytes'),hs(m.get('sources')),hs(m.get('code_sha16')),len(m.get('sources') or {}),sep=chr(9))" $W/det_${V}_v1_$h/DETECT_RUN.json $h >> $DV/DETECT_MEM_$V.tsv; [ -f $W/det_${V}_v1_$h.log ] && tail -n 2 $W/det_${V}_v1_$h.log | sed "s/^/$h /" >> $DV/DETECT_LOG_$V.txt; done
+  if isdone $V; then
+    t0=$(date +%s); $PY -B $T/perfire_v1_1_to20260430.py $W $V < /dev/null > $W/perfire_$V.log 2>&1; r=$?; st perfire_$V $r $(( $(date +%s)-t0 )) ""
+    $PY -B $T/test_perfire_v1.py $W $V $L < /dev/null > $W/perfire_test_$V.log 2>&1; r=$?; st perfire_test_$V $r 0 "$(tail -n 1 $W/perfire_test_$V.log | tr '\t' ' ' | cut -c1-200)"
+    for M in 2601 2602 2603 2604; do RG=$(rng $V $M)
+      $PY -B $T/month_read_v3.py $W $V $M $L 15m,1h $RG < /dev/null > $W/MONTH_READ_${V}_$M.txt 2>&1; r=$?; st month_${V}_$M $r 0 "$(grep -i 'verdict' $W/MONTH_READ_${V}_$M.txt | tail -n 1 | tr '\t' ' ' | cut -c1-200)"
+    done
+    if [ -f $W/PERFIRE_$V.tsv ]; then for HZ in 15m 1h; do
+      $PY -B $T/conditions_v1.py $W/PERFIRE_$V.tsv $W/PERFIRE_$V.tsv $L $HZ 2509,2510,2511,2512 < /dev/null > $W/CONDITIONS_${V}_$HZ.txt 2>&1; r=$?; st conditions_${V}_$HZ $r 0 "descriptive"
+    done; fi
+  fi
+  for x in CARD_$V.txt SUM_$V.tsv STATUS_$V.tsv INPUTS_$V.txt MENU_${V}_om.txt $V.out perfire_$V.log perfire_test_$V.log MONTH_READ_${V}_2601.txt MONTH_READ_${V}_2602.txt MONTH_READ_${V}_2603.txt MONTH_READ_${V}_2604.txt CONDITIONS_${V}_15m.txt CONDITIONS_${V}_1h.txt ${V}_FIRES_V1_LIST.tsv; do [ -f $W/$x ] && cp -n $W/$x $DV/; done
+done
+du -sm $W | awk '{print "du_mb_W\t"$1}' > $DV/DISK.tsv; printf 'free_mb_end\t%s\n' "$(fmb)" >> $DV/DISK.tsv
+(cd $DV && shasum -a 256 *.tsv *.txt 2>/dev/null | grep -v ' SHA16.txt$') > $DV/SHA16.txt
+st end 0 0 "SCRATCH_DISK free $(fmb) MB; W $(du -sm $W | cut -f1) MB"
+exit 0

@@ -1,0 +1,184 @@
+{
+ "tool": "where_v3",
+ "file": "01_Detection/tree/team/LAB3/LAB1/tools/where_v2/where_v3.py",
+ "file_sha16": "8ece3f15e1c16d31",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "step 2 METRICS of AGENTS.md: find the code by words, then read each hit with metric_brief_v2",
+ "question": "Which metric or value code says what my idea needs, and where is its card?",
+ "usage_from_code": "python3 -B where_v3.py <code, name or words> [--kind metric|code] [--n 5] [--safe] [--settings <settings file>]",
+ "settings_keys": [],
+ "code_options": [
+  "--check",
+  "--kind",
+  "--n",
+  "--safe",
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  1,
+  2
+ ],
+ "commands": [
+  {
+   "name": "find",
+   "does": "searches the metric tables of this Alarm folder for a code, a name or words of a meaning and prints the best hits, one per code",
+   "args": [
+    {
+     "name": "--settings",
+     "required": false,
+     "meaning": "optional: this machine's settings file, checked by _tools/settings_v1.py (the tool reads no data with it); a missing or refused file is refused, exit 2",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "<code, name or words>",
+     "required": true,
+     "meaning": "a code (A1.S08), a name or words of its meaning; one argument, quoted when it has spaces",
+     "example": "\"long liquidations\""
+    },
+    {
+     "name": "--kind",
+     "required": false,
+     "meaning": "metric: METRICS_V1 (the LAB.* readings too), the HL candidates and the rows of the register METRICS_V2 that both lack; code: the value catalogues CTX, EPI, STAMP, FEED and LIVELAYER; none: both",
+     "example": "metric"
+    },
+    {
+     "name": "--n",
+     "required": false,
+     "meaning": "hits to print, 5 by default; it prints no word when more exist, so ask for more (R7 F15)",
+     "example": "50"
+    },
+    {
+     "name": "--safe",
+     "required": false,
+     "meaning": "as where_v2: leaves out register rows (this edition has none)",
+     "example": "--safe"
+    },
+    {
+     "name": "--check",
+     "required": false,
+     "meaning": "refused here, exit 2: the team map check stays in where_v2, in the dev tree",
+     "example": "--check"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/01_Detection/tree/team/LAB3/LAB1/tools/where_v2/where_v3.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env \"long liquidations\" --kind metric --n 50",
+   "writes": "nothing: it prints its hits (read only)",
+   "refuses": [
+    {
+     "exit": 1,
+     "when": "NOT FOUND: no table holds the words; the line names the tables searched"
+    },
+    {
+     "exit": 2,
+     "when": "REFUSED: no words (it prints its usage), --check, a settings file that is missing or refused, a metric table missing from this Alarm folder"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "A4.S04",
+      "--kind",
+      "metric",
+      "--n",
+      "1"
+     ],
+     "exit": 0,
+     "prints": "[metric] A4.S04"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "zzqxnothingq",
+      "--kind",
+      "metric"
+     ],
+     "exit": 1,
+     "prints": "NOT FOUND: \"zzqxnothingq\""
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "where_v3.py: find a metric"
+  },
+  {
+   "args": [
+    "--check"
+   ],
+   "exit": 2,
+   "prints": "REFUSED --check is where_v2"
+  }
+ ],
+ "rules": [
+  "read only: it reads the metric tables inside this Alarm folder and prints; it reads no market data",
+  "a hit is a pointer, not a reading: read every code with metric_brief_v2.py before it goes in a rule",
+  "it prints only --n hits (5 by default) and says nothing when more exist: ask for --n 50 (R7 F15)",
+  "a metric the register METRICS_V2 marks DROPPED says DROPPED after its code, and DROPPED rows may come first (R7 F07); a card not in this Alarm folder says GONE TODAY",
+  "it prints no gate status: CAUTION and STOP come from metric_brief_v2, and the COUNT job gate reads tables neither tool reads (DEF_TEMPLATE_V4.md, The metric gate)"
+ ],
+ "outputs": [
+  {
+   "file": "printed: one hit (three lines)",
+   "where": "printed (stdout)",
+   "columns": [
+    "kind",
+    "code",
+    "owner",
+    "table",
+    "card",
+    "what",
+    "read_as"
+   ]
+  },
+  {
+   "file": "printed: NOT FOUND line",
+   "where": "printed (stdout)",
+   "columns": [
+    "query",
+    "tables"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/where_v3_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "01_Detection/tree/team/LAB3/METRICS_V1.tsv",
+   "sha16": "85b14987d2059cd6"
+  },
+  {
+   "path": "01_Detection/tree/team/LAB3/METRICS_HL_CANDIDATE_V2.tsv",
+   "sha16": "0b30c11afc0a4482"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv",
+   "sha16": "f413906feb40c0b4"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv",
+   "sha16": "d133fea9c7935857"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_stamp/STAMP_CATALOG_V1.tsv",
+   "sha16": "2d8568c4895bccc4"
+  },
+  {
+   "path": "01_Detection/tree/team/FEED/CATALOG_V1.tsv",
+   "sha16": "ad89cf52814abe2b"
+  },
+  {
+   "path": "01_Detection/tree/team/LIVELAYER/CATALOG_V1.tsv",
+   "sha16": "63bc84aae007e8b8"
+  },
+  {
+   "path": "01_Detection/tree/team/LAB3/METRICS_V2.tsv",
+   "sha16": "9f24433b1b768afa"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py: {SETTINGS} its settings file; the metric tables are this Alarm folder's own"
+}

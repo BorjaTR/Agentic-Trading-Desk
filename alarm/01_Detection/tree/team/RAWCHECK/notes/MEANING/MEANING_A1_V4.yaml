@@ -1,0 +1,462 @@
+# MEANING_A1_V4.yaml: the meaning register of A1 liquidations, EDITION 4 (= edition 3 cb7e3b727252c3de + conclude, the owner 15:0x Berlin; + the bad-row limit). Edition 3 header follows:
+# EDITION 3 (EDGE1, 2026-10-18, closed with the owner 14:5x Berlin).
+# = MEANING_A1_V2 (39e18ecfdeb3d662, kept) with: the 8 edge cases "not yet seen" now seen (job 15811); how to read its size (its
+# percentage against the coin's own 14 days: the owner, "we use this liquidation is in the top 1% for this coin over the past 14 days");
+# every known limit written with its effect on decisions (none: the same in the history the percentage reads, and in live); EDGE2's
+# Coinalyze and late-print facts (jobs 15739, 15740); the module sha16s in tools; S07 moved to BASIC_A1_V1 (BED, BR4 = WP4).
+# The rule that closed it (WORKING_SESSION_V12 part 3): a card closes when its values equal their source, what the number means is known
+# with the direction of its error, and the lab has its reading rules; every other detail is a written limit.
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py (edition 4) writes .flat.jsonl, .agent.jsonl and .md from it.
+group: A1
+name: liq_dollars
+summary: US dollars of liquidations Binance published for one coin (or the 52 roster coins) in a window ending at e, valued at each order's limit price. Long = longs forced out (forced
+  selling); short = shorts forced out (forced buying).
+read_as: 'AT LEAST. Binance publishes only the last liquidation per coin per second; a busy second loses the rest. Never the full amount. Read its SIZE as its percentage against the
+  coin''s own last 14 days (the percentages, pct_rule_v2, which replaced the fifths): top 1% = among the coin''s biggest minutes of the last 14 days. Never a fixed dollar line. Every
+  limit below is the same in that history (and in live, which reads the same Binance feed), so the rank, and the decisions read from it, should not change (REASONING, not measured; the
+  percentages of every metric over rolling windows are checked later, at the our-rules level: the owner 14:5x Berlin).'
+where:
+  card: testbed/value_audit/registers/CARD_A1_V5.md
+  settings_register: testbed/value_audit/registers/SETTINGS_A1_V4.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_liquidations_V3.md
+  producer: prod_A1_v3.py with prod_reader_liquidations_v6.py and prod_reader_trades_v1.py (testbed/value_audit/code/L0_v4*/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A1.parquet
+  year_output_columns: name (the setting, e.g. S08 or S12.coverage), coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, else text), value_f64, value_txt,
+    known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'A1', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: Binance forceOrder, the liquidation order snapshot stream
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/liquidations_<COIN>USDT_<YYYY-MM-DD>.csv.gz, and ..._<COIN>USDC_... when the coin has a USDC contract
+  also_reads: trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz, only to decide whether the coin is seen (rule 5)
+  columns: exchange, symbol, timestamp, local_timestamp, id, side, price, amount
+  fields:
+    row: 'one liquidation order, FILLED; at most one per coin per second, the last in that second [proof: Binance docs B1; SOURCE_SPEC F2]'
+    side: 'sell = a long was liquidated; buy = a short was liquidated [proof: Tardis docs T1; SOURCE_SPEC: 0 rows of any other side in BTC''s year]'
+    amount: 'the quantity that FILLED (Binance z), all of it, over the order''s 1 to 3 ms of fills [proof: jobs 15775, 15776, 6 of 6 equal the same-side fills]'
+    price: 'the order''s LIMIT price (Binance p, the worst allowed), not the fill price (ap) [proof: job 15775, 6 of 6 beyond every fill; card source line]'
+    timestamp: 'exchange time of the order''s last fill, microseconds; a big order starts 1 to 2 ms before [proof: job 15776]'
+    local_timestamp: 'when Tardis received the row, microseconds [proof: Tardis docs T1; SOURCE_SPEC columns]'
+  latency: 'OPEN, decisions unchanged: SOURCE_SPEC F4 measured median 1.01 s, p99 2.8 s, max 5.1 s after the stamp (BTC year); job 15775 saw 6 to 20 ms on the 6 largest of 8 Mar; not
+    measured on one whole day'
+  silence: 'normal: the median day''s longest silence is 39 min, the longest 1 h 47 min (SOURCE_SPEC F3); silence cannot tell quiet from dead, so outages are read from trades'
+reading_rules:
+- 'window: rows stamped after e - W and up to e, and received by e (card rule 1); no look-ahead'
+- 'dollars: price x amount per row, summed exactly, rounded once to the whole dollar, half up (rule 2)'
+- 'side: sell rows to the long settings, buy rows to the short settings (rule 3)'
+- 'seen: the coin''s USDT file exists for every day the window touches, it has a USDT trade in [e - 60 s, e] received by e, it is not thin, and it has no bad row (rule 5)'
+- 'contracts: USDT and USDC summed; a USDC file expected and missing leaves USDT alone, flagged USDC_MISSING (rule 6)'
+- 'market: the sum over the roster coins seen, with coverage = how many were seen (rules 8, 14); the roster is the week''s 52 coins'
+- a row received after its minute ended counts in no earlier window (rule 11)
+- a window crossing 00:00 reads the files of D-1 (rule 13)
+values:
+  units: US dollars, whole
+  zero: the coin was seen and no liquidation of that side was published
+  empty: the coin was not seen; empty_reason says why (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT, ALL_COINS_EMPTY). Never read empty as 0
+  stale: '1 when the coin''s trades went quiet or thin, or the whole liquidation stream has been silent over 960 s at e (rule 16): then a 0 may be a dead feed'
+  flags: USDC_MISSING, DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT
+interpret:
+  do:
+  - read a value as "at least this much was force-closed"
+  - read its size as its percentage against the coin's own rolling 14 days, never as dollars against another coin
+  - trust per-order sizes; treat a burst minute's total as a floor
+  - check stale and empty_reason before reading a 0
+  dont:
+  - read it as the full amount liquidated
+  - use one dollar threshold for every coin
+  - read empty as 0
+  - read the market total as all of Binance; it is the 52 roster coins, and 63.5 to 68.9% of its long dollars are BTC and ETH (card)
+biases:
+- what: one row per coin per second
+  direction: LOW
+  size: unknown; larger in bursts; decisions unchanged (reasoning, see read_as)
+  proof: Binance docs B1
+- what: limit price, long liquidations
+  direction: LOW
+  size: 0.5 to 1.7% of the dollars (6 cases, 8 Mar); decisions unchanged (reasoning, see read_as)
+  proof: job 15775
+- what: limit price, short liquidations
+  direction: HIGH (expected)
+  size: NOT_TESTED; decisions unchanged (reasoning, see read_as)
+  proof: reasoning only
+- what: rows received after their minute
+  direction: LOW
+  size: 0.16 to 0.83% of long dollars a day; decisions unchanged (reasoning, see read_as)
+  proof: card, limits
+- what: prints received after a 5 s or 30 s window ended are lost to that window (rules 1, 11)
+  direction: LOW
+  size: 'BTC 10 Oct 2025: S01 day total 225.16 M against S08 226.79 M (0.7% less); cause not proven (EDGE2''s opinion); decisions unchanged (reasoning, see read_as)'
+  proof: EDGE2 jobs 15739, 15740 (HANDOVER_EDGE2_V5 section C)
+- what: 'thin feed: a coin trading under 1% of its usual minute is empty THIN_FEED until 5 minutes in a row at 20% (card rule 5, R8)'
+  direction: EMPTY, never a wrong number
+  size: 'DASH 24 Sep 2025: 85 minute ends empty while it traded; 89 THIN_FEED coin-minutes that day, none on 8 Mar 2026; decisions unchanged: an empty minute is skipped'
+  proof: job 15811 (meaning_a1_open, meaning_a1_cover)
+- what: daily totals against Coinalyze
+  direction: ours HIGHER on crash days
+  size: '179 days, median gap 1.5% (S08) and 1.9% (S09); every coin-day off by over 50% has ours larger; 10 Oct 2025 about 2.8 x; who is right is not known; decisions unchanged: it concerns
+    Coinalyze''s record, not our reading of Binance''s'
+  proof: EDGE2 jobs 15739, 15740
+- what: a bad row (side not buy or sell; price or amount missing, not a number, or not above 0; no stamp) takes its coin out, BAD_INPUT (rule 4)
+  direction: EMPTY, never a wrong number
+  size: not checked against an outside record; no BAD_INPUT row on 24 Sep 2025 or 8 Mar 2026 (job 15811); decisions unchanged (reasoning, see read_as)
+  proof: card rule 4; job 15811 (empties by reason)
+external_checks:
+- what: the definition of a row (one per second, fields p, ap, q, z, T)
+  where: Binance docs B1
+  status: VERIFIED
+- what: side, price and amount columns
+  where: Tardis docs T1
+  status: VERIFIED
+- what: a single liquidation's amount and price
+  where: the same-side fills in Tardis trades (rawcheck/meaning_liq.py); Binance aggTrades at data.binance.vision for an outside copy
+  status: 'VERIFIED on Tardis trades (6 cases, jobs 15775, 15776); aggTrades NOT_RUN, not needed: the same-side fills prove amount and price'
+- what: daily totals per coin (tests Tardis's recording, not ours)
+  where: 'Coinalyze liquidation history API (key: <DEV>/edge1_cloudkit/secrets/coinalyze.key, never printed)'
+  status: 'RUN (EDGE2 jobs 15739, 15740): median gap 1.5 to 1.9%, ours larger on crash days (see biases); decisions unchanged'
+tools:
+- what: our values equal Tardis
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code (rawcheck code 84454de7fac2e458 in RAW_STAMPS_V1; job 15756)
+- what: price and amount against the fills
+  run: python3 -B -m rawcheck.meaning_liq <D> <C,..> <per_coin> [timeline]
+  where: team/LAB/code (meaning_liq.py 17d4ff2816c001b5; jobs 15775, 15776)
+- what: zero vs empty, market totals
+  run: python3 -B -m rawcheck.meaning_a1_cover <D> <C,..>
+  where: team/LAB/code (meaning_a1_cover.py b23309a5f6236f12; jobs 15777, 15811)
+- what: empties by reason, the strict and coverage cases on real data
+  run: python3 -B -m rawcheck.meaning_a1_open <D>
+  where: team/LAB/code (meaning_a1_open.py 18af5499c8943d27; job 15811)
+used_by: 'labels FUEL, WHY-DRIVER, HOW-FRESH, PATH-FUEL (S12, S13); trend chain CHAIN_trend_SHORT_fade_2 (S12); built on it: A2 liq_breadth, A4 liq_wave, A5 liq_vs_flow, A7 oi_since_wave
+  (card)'
+references:
+  B1: https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/All-Market-Liquidation-Order-Streams
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types.md
+  J15811: team/BED/seats/EDGE1/receipts/q_15811/run.log (the open edge cases seen on real data)
+  EDGE2_C: team/EDGE2/HANDOVER_EDGE2_V5.md section C (jobs 15739 to 15741)
+settings:
+- id: A1.S01
+  layer: raw
+  side: long
+  window: 5 s
+  clock: every 5 s
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: EF.ef_liq_long_5s
+  means: long liquidations published in the last 5 s
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: prints received after the 5 s window ended may be lost (BTC 10 Oct 2025 day total 0.7% under the 60 s total, EDGE2 job 15739; cause not proven); decisions unchanged
+- id: A1.S02
+  layer: raw
+  side: short
+  window: 5 s
+  clock: every 5 s
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: EF.ef_liq_short_5s
+  means: short liquidations published in the last 5 s
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: prints received after the 5 s window ended may be lost (BTC 10 Oct 2025 day total 0.7% under the 60 s total, EDGE2 job 15739; cause not proven); short price bias not tested;
+    decisions unchanged
+- id: A1.S03
+  layer: raw
+  side: long
+  window: 30 s
+  clock: every 30 s
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: EF.ef_liq_long_30s
+  means: long liquidations published in the last 30 s
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: prints received after the 30 s window ended may be lost (BTC 10 Oct 2025 day total 0.7% under the 60 s total, EDGE2 job 15739; cause not proven); decisions unchanged
+- id: A1.S04
+  layer: raw
+  side: short
+  window: 30 s
+  clock: every 30 s
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: EF.ef_liq_short_30s
+  means: short liquidations published in the last 30 s
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: prints received after the 30 s window ended may be lost (BTC 10 Oct 2025 day total 0.7% under the 60 s total, EDGE2 job 15739; cause not proven); short price bias not tested;
+    decisions unchanged
+- id: A1.S05
+  layer: raw
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: EF.ef_liq_long_60s
+  means: long liquidations published in the last 60 s, read at a fire second
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: none
+- id: A1.S06
+  layer: raw
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: EF.ef_liq_short_60s
+  means: short liquidations published in the last 60 s, read at a fire second
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: short price bias not tested; decisions unchanged
+- id: A1.S08
+  layer: raw
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: m9_long_liq_usd, coin.m9_long_liq_usd, CUBE.liq_long_60s
+  means: long liquidations published in the minute just ended
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: fields jobs 15775-15776; zero vs empty on 4 coin-days, job 15777
+  open: none
+- id: A1.S09
+  layer: raw
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT+USDC
+  aggregate: sum
+  aliases: m9_short_liq_usd, coin.m9_short_liq_usd, CUBE.liq_short_60s
+  means: short liquidations published in the minute just ended
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: fields jobs 15775-15776; docs B1, T1
+  open: short price bias not tested; decisions unchanged
+- id: A1.S10
+  layer: raw
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDC only
+  aggregate: sum
+  aliases: m9_long_liq_usdc_usd
+  means: long liquidations on the coin's USDC contract only, the minute just ended; empty NO_FILE when the coin has no USDC contract
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: 'fields jobs 15775-15776; docs B1, T1; seen: 23 coins with no USDC contract empty NO_FILE at every minute, 24 Sep 2025 and 8 Mar 2026 (J15811)'
+  open: none
+  never:
+  - 'that a coin had no USDC liquidations when its value is empty: 23 roster coins have no USDC contract and are empty NO_FILE all day (job 15811)'
+- id: A1.S11
+  layer: raw
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDC only
+  aggregate: sum
+  aliases: m9_short_liq_usdc_usd
+  means: short liquidations on the coin's USDC contract only, the minute just ended; empty NO_FILE when the coin has no USDC contract
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: 'fields jobs 15775-15776; docs B1, T1; seen: 23 coins with no USDC contract empty NO_FILE at every minute, 24 Sep 2025 and 8 Mar 2026 (J15811)'
+  open: short price bias not tested; decisions unchanged
+  never:
+  - 'that a coin had no USDC liquidations when its value is empty: 23 roster coins have no USDC contract and are empty NO_FILE all day (job 15811)'
+- id: A1.S12
+  layer: raw
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: sum over the roster coins seen
+  aliases: long_liq_60s, m9_mkt_long_liq_usd, m5_liq_long_usd, m10_mkt_long_liq_usd
+  means: long liquidations published in the minute just ended, summed over the 52 roster coins seen
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8; sum of our 52 coins, job 15777
+  meaning:
+    status: DEFINED
+    proof: 'job 15777 (all coins seen); a minute with an empty coin seen: 24 Sep 2025 03:09 to 03:11, DASH empty THIN_FEED, coverage 50 of 51, S12 = the coins'' sum within rule 2''s
+      single rounding (2,674 against 2,673) (J15811)'
+  open: none
+- id: A1.S13
+  layer: raw
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: sum over the roster coins seen
+  aliases: short_liq_60s, m9_mkt_short_liq_usd, m5_liq_short_usd, m10_mkt_short_liq_usd
+  means: short liquidations published in the minute just ended, summed over the 52 roster coins seen
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8; sum of our 52 coins, job 15777
+  meaning:
+    status: DEFINED
+    proof: 'job 15777 (all coins seen); a minute with an empty coin seen: 24 Sep 2025 03:09 to 03:11, DASH empty THIN_FEED, coverage 50 of 51, S12 = the coins'' sum within rule 2''s
+      single rounding (2,674 against 2,673) (J15811)'
+  open: short price bias not tested; decisions unchanged
+- id: A1.S12.coverage
+  layer: basic
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: count
+  aliases: none
+  means: how many of the roster coins were seen at e for S12 (the coins S12 sums)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8 (coins with trades that minute); job 15777
+  meaning:
+    status: DEFINED
+    proof: 'job 15777: 52 = 52 non-empty; fewer than the roster seen: 49 to 50 of 51 at the 104 strict-empty minutes of 24 Sep 2025 (J15811)'
+  open: none
+- id: A1.S13.coverage
+  layer: basic
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: count
+  aliases: none
+  means: how many of the roster coins were seen at e for S13
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8; job 15777
+  meaning:
+    status: DEFINED
+    proof: 'job 15777: 52 = 52 non-empty; fewer than the roster seen: 49 to 50 of 51 at the 104 strict-empty minutes of 24 Sep 2025 (J15811)'
+  open: none
+- id: A1.S12.strict_off
+  layer: raw
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: sum; empty unless every roster coin is seen
+  aliases: none
+  means: 'as S12, but empty unless all 52 roster coins are seen (switched off: no reader uses it)'
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8
+  meaning:
+    status: DEFINED
+    proof: card section 2; empty at 104 minutes of 24 Sep 2025 (THIN_FEED 88, TRADES_HOLE 15, ALL_COINS_EMPTY 1), at none of 8 Mar 2026 (J15811)
+  open: none
+- id: A1.S13.strict_off
+  layer: raw
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: sum; empty unless every roster coin is seen
+  aliases: none
+  means: as S13, but empty unless all 52 roster coins are seen (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8
+  meaning:
+    status: DEFINED
+    proof: card section 2; empty at 104 minutes of 24 Sep 2025 (THIN_FEED 88, TRADES_HOLE 15, ALL_COINS_EMPTY 1), at none of 8 Mar 2026 (J15811)
+  open: none
+- id: A1.S12.arrival_off
+  layer: raw
+  side: long
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: sum, rows taken by arrival time (local_timestamp) in the window
+  aliases: none
+  means: as S12, but a row counts in the minute Tardis received it, not the minute it was stamped (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8
+  meaning:
+    status: DEFINED
+    proof: card section 2
+  open: switched off; no outside record of windows by arrival time; computation RELIABLE (RAW_STAMPS)
+- id: A1.S13.arrival_off
+  layer: raw
+  side: short
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT+USDC
+  aggregate: sum, rows taken by arrival time (local_timestamp) in the window
+  aliases: none
+  means: as S13, but a row counts in the minute Tardis received it (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8
+  meaning:
+    status: DEFINED
+    proof: card section 2
+  open: switched off; no outside record of windows by arrival time; computation RELIABLE (RAW_STAMPS)
+conclude:
+  may:
+  - 'forced selling (long side) or forced buying (short side) was published for this coin in this window: at least this many dollars'
+  - how big it was against this coin's own last 14 days (its percentage over a rolling window; the percentages are checked later)
+  - when and on which coins liquidations clustered; the market total over the roster coins seen (coverage says how many)
+  never:
+  - 'the total amount liquidated on Binance: Binance publishes one print per coin per second and a busy second loses the rest'
+  - 'that nothing was liquidated when the value is EMPTY: empty = the coin could not be seen (no file, trades gap, thin feed, bad row); only 0 means seen and none'
+  - 'that coin A had more liquidations than coin B by comparing dollars across coins: read each against its own history'
+  - an exact dollar amount inside a burst or crash second
+  - 'that the market total is all of Binance: it is the roster coins seen, and BTC and ETH are 63.5 to 68.9% of its long dollars'
+  - 'that a 5 s or 30 s value holds every print of its window: prints received after the window ended may be lost'

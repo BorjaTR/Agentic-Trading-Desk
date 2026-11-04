@@ -1,0 +1,202 @@
+# POSX P12 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P12_V1.md 2954826b) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 b5fcc859 section 4 CARRY wording (00:00 = D-1's 24:00 row; the row in force at 24:00, rows known after 24:00, R's open window), flag FIRST_DAY_NO_CARRY, kernel in_force (9.4); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 in_force with bad_ends=True (an empty field gives NO_VALUE, the card's own rule); values unchanged
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 cited as edit 3 0591d181 (the binding edition); wording only, values unchanged
+# Edition 5 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P12 fixes: no RAW_DIFFERS from the producer's check (c) (it names and refuses the seal, BED G1), E7 and U3's NO_FILE at all 1,440 minute ends settled by X3a (D's file missing gives NO_FILE at 00:00 too); nit NO_ROSTER (the roster file); BED G2 levels proposed
+# Edition 6 (METRIC_AUDIT2, 18 Oct 2026): no flag on an empty row (CARD_B1_V7 rule 18 and CARD_C13_V4 rule 7: an empty value carries no flag; REVIEW_LEAD_EDGE1_V1 6.2 for V4 edit 4; METRIC_AUDIT2's own FF found on FLOWX): FIRST_DAY_NO_CARRY dropped, the first year day's reads that need D-1's missing file are empty NO_FILE; values unchanged
+# Signed by BED's REVIEW OK of edition 6, 2026-10-18T19:57:45Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+# Edition 7 (METRIC_AUDIT2, 18 Oct 2026): THE OWNER RULES P12 (EDGE1 20:47:25Z, option 1 of 3): R reads sum_toptrader_long_short_ratio as the top traders' POSITION ratio (count_ = accounts), by the columns' names, NOT proven by data (the archive ends 31 Jul 2026, Binance REST keeps 30 days, and nothing is fetched from 1 Aug 2026 on): data check 2 replaced by the ruling (test_condition, formula, source, inputs, U4, M2, meaning check, data checks, conclude); the REST part of data check 1 cannot run either (its archive part kept); known_at stays create_time + 600 s; values unchanged
+kind: build_metric
+id: P12
+producer: POSX
+item: 'top-trader long/short ratio (after a timestamp check) (BUILD_ITEMS_V3 3dbb747a line P12)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when the timestamp test passes (the archive's sum_open_interest at a row created T matches E2 S02 at T + 300 s, MEANING_E2_V2.yaml 5a309fc5 line 146), the positions column is sum_toptrader_long_short_ratio by the owner's ruling (EDGE1 20:47:25Z; not proven by data), and P12 differs from the global ratio's 1 h change at more than 1 percent of valued coin-minutes on 2026-03-08 (the meaning check's pass lines 1 and 2; levels proposed, EDGE1 or the owner sets them). DROP when the timestamp test fails or top traders add nothing.
+name: one-hour change of Binance's top-trader long/short position ratio (5-minute metrics, known 10 minutes after create_time)
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 7
+  signed: false
+means: >-
+  How the long/short position ratio of Binance's top 20 percent of traders by margin balance changed over the last hour, as we
+  could know it at the minute end: above 0, the big accounts tilted toward longs.
+example: >-
+  The ratio on the row created 9:55 (known 10:05) was 1.20 and on the row created 10:55 (known 11:05) is 1.50: at 11:05 P12 =
+  1.50 - 1.20 = +0.30. At 11:04 the 10:55 row is not yet known, so P12 compares the rows created 10:50 and 9:50.
+formula: >-
+  A metrics row is known at known_at = create_time + 600 s (HANDOVER_EDGE1_V103 901368a5 line 80, the D6 rule; ties: latest known_at
+  <= t, line 82); as create_time is the period's start or end, this is never before RESEARCH_TOOLS_V1 4.7's safe rule (e >= ts + 5
+  min). A row belongs to the day of its create_time, never of its file name (line 89). R(t) = the top-trader POSITIONS ratio (Long
+  Position % / Short Position %) on the coin's latest row with known_at <= t (the archive column sum_toptrader_long_short_ratio, read as positions by the owner's ruling, EDGE1 20:47:25Z, by the columns' names; NOT proven by data; count_toptrader_long_short_ratio is the accounts ratio, not read).
+  P12(u) = R(u) - R(u - 3,600 s): the two ratios read as float64 from the archive's text, one subtraction; equal texts give 0
+  exactly; decimals none (the draft's 12-decimal rounding dropped, V2 rule 4.2). A read at t touches the coin's file of
+  the day of t and the CARRY of D-1 (the row in force at 24:00 of D-1 and the rows of D-1's file known after 24:00; as CARD_E1_V9 rule 2, line 282, for a missing file). u = 00:00 of D is D-1's 24:00 row, computed by POSX of D-1 and handed in X1/carry/POSX/<D-1>.npz (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the lagged read R(u - 3,600 s) for u = 00:01 to 00:59 comes from the CARRY's open window (R of D-1 at 23:01 to 23:59 with reasons and stale). Each read is
+  empty, in this order: NO_FILE (a touched file missing: D's file missing empties every minute end of D), BAD_INPUT (a file not readable whole), NO_VALUE (no row known by t, or the field empty or not a
+  number), STALE_VALUE (the row's known_at more than 900 s before t; exactly 900 s is valued). P12 takes the u read's reason first,
+  then the u - 3,600 s read's.
+source:
+  kind: doc
+  ref: >-
+    Binance USD-M endpoint docs, top_trader_long_short_ratio_positions: 'the proportion of net long and net short positions to total
+    open positions of the top 20% users with the highest margin balance', Long Position % / Short Position % (RESEARCH_TOOLS_V1
+    aad3cc38 section 4.7, line 77; row P7 line 56: USE TOOL + OUR WRAPPER, the availability time, the column mapping, the 1 h change).
+    Archive data.binance.vision data/futures/um/daily/metrics columns count_toptrader_long_short_ratio and
+    sum_toptrader_long_short_ratio; which is accounts and which positions is undocumented (binance-public-data issue 211). The owner ruled sum_ = positions, count_ = accounts, by the names (EDGE1 20:47:25Z, option 1 of 3): not proven by data, as the archive ends 31 Jul 2026, Binance REST keeps 30 days, and nothing is fetched from 1 Aug 2026 on.
+inputs:
+  - kind: reader
+    ref: prod_reader_binance_metrics_v1
+    exists: false
+    data_check: >-
+      the new reader over Expansion volat_archive/metrics_um (5 minute rows, 2022 to 31 Jul 2026, HANDOVER_EDGE1_V103 line 41):
+      columns create_time, symbol, count_toptrader_long_short_ratio, sum_toptrader_long_short_ratio, count_long_short_ratio;
+      the timestamp test and the coverage (data checks 1 and 3 below; the column mapping is the owner's ruling, not a data check, EDGE1 20:47:25Z)
+    stream: Binance metrics_um daily files per symbol (1000x symbols by their Binance names, 1000PEPEUSDT)
+    rule_in_force: the latest row of the coin with known_at = create_time + 600 s <= t
+    stale_rule: STALE_VALUE when that row's known_at is more than 900 s before t (at u, and at u - 3,600 s for the lagged read)
+    days: >-
+      D (u = 00:01 to 24:00 from D's file) and THE CARRY of D-1 (ADDON_ARCHITECTURE_V4 section 4, X1/carry/POSX/<D-1>.npz): D-1's
+      24:00 rows (D's 00:00 rows of S13), the row in force at 24:00 of D-1, every row of D-1's file known after 24:00 (created from
+      23:50 of D-1, and a 2025 file's row created 00:00 of D: a 2025 daily file runs 00:05 to the next 00:00, HANDOVER_EDGE1_V103 line
+      89), and the open window R of D-1 at 23:01 to 23:59 for the lag; D's file rows known after 24:00 of D go to D's CARRY. Day file
+      D = the CARRY's 00:00 rows + D's rows 00:01 to 23:59. The first year day (10 Sep 2025) reads 9 Sep 2025's file once (if it is missing, the reads that need it are empty NO_FILE by the year's file rule, and no flag is written on an empty row: CARD_B1_V7 rule 18, REVIEW_LEAD_EDGE1_V1 6.2).
+overlaps: none
+per_coin: >-
+  Every roster coin with a metrics file; a coin listed recently or absent from the archive is empty NO_FILE. The 1000x contracts by
+  their Binance symbols (1000PEPEUSDT): a ratio has no size unit. A coin with few top traders can show large swings in the ratio
+  (a ratio of two percentages, not bounded above).
+time: >-
+  One row every 5 minutes, known 10 minutes after create_time: P12 repeats over 5 minute ends and changes only when a new row becomes
+  known. 00:00 of D is D-1's 24:00 row; 00:01 to 00:59 read R at 23:01 to 23:59 of D-1 from the CARRY's open window. A gap in the archive leaves P12 valued for 15 minutes
+  after the last row became known, then STALE_VALUE. Funding settles and crashes are ordinary minutes for the formula.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S13
+      label: top_trader_pos_ratio_chg_1h
+      units: change of a ratio (long position percent over short position percent) over 60 minutes
+      value_kind: float
+      decimals: none
+      means: the one-hour change of Binance's top-trader long/short position ratio, rows known 10 minutes after create_time
+      never: [all traders' ratio, the accounts ratio (a count of accounts), known at its create_time]
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the later of the two rows' known_at (create_time + 600 s, each <= its read moment <= u); an empty row known_at = u;
+    so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (knowledge/roster/ROSTER_<monday>.csv), every coin (REVIEW_LEAD_EDGE1_V1 X11)
+    - reason: NO_FILE
+      when: a touched file missing or only .part (the coin's metrics file of D, then every minute end of D is empty, 00:00 included even when D-1's file is there, phase B setting the carried point, X3a; the CARRY of D-1 for a read that needs it)
+    - reason: BAD_INPUT
+      when: a file read not readable whole
+    - reason: NO_VALUE
+      when: no row of the coin known by the read moment in the files read, or the positions field empty or not a number
+    - reason: STALE_VALUE
+      when: the row in force at u, or at u - 3,600 s, became known more than 900 s before that moment; stale 1
+  stale_rule: stale = 1 when the written reason is STALE_VALUE (either read)
+  max_staleness_s: 900
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the change at a new row
+    input: 'rows every 5 minutes; created 9:55 R 1.20 (known 10:05), created 10:55 R 1.50 (known 11:05); u = 11:05'
+    answer: P12 = 1.50 - 1.20 = 0.30 (Fraction 3/10), known_at 11:05
+  - case: E2 one minute before
+    input: 'as E1, u = 11:04; created 10:50 R 1.45 (known 11:00), created 9:50 R 1.10 (known 10:00)'
+    answer: P12 = 1.45 - 1.10 = 0.35, known_at 11:00 (the 10:55 row not yet known)
+  - case: E3 a gap, valued at exactly 900 s
+    input: 'no row created after 10:40 (R 1.40, known 10:50); created 9:55 R 1.20; u = 11:05'
+    answer: P12 = 1.40 - 1.20 = 0.20 (age 900 s, not over the level), known_at 10:50
+  - case: E4 the gap at 901 s and more
+    input: as E3, u = 11:06
+    answer: P12 empty STALE_VALUE, stale 1, known_at 11:06 (age 960 s)
+  - case: E5 the lag into D-1
+    input: 'u = 00:30 of D; created 00:20 of D R 2.00 (known 00:30); the CARRY''s open window holds R at 23:30 of D-1 = 1.60 (the row created 23:20, known 23:30)'
+    answer: P12 = 2.00 - 1.60 = 0.40
+  - case: E6 a row created at 00:00 of D in D-1's file
+    input: 'a 2025 day; D-1''s file holds the row created 00:00 of D (R 1.30, known 00:10); u = 00:10'
+    answer: R(00:10) = 1.30 from the CARRY (a row of D-1's file known after 24:00; it belongs to D by its create_time)
+  - case: E7 no file
+    input: no metrics file for the coin and D
+    answer: P12 empty NO_FILE at all 1,440 minute ends of D (D's file is touched first by every read at a moment of D)
+  - case: E8 equal ratios
+    input: R(u) and R(u - 3,600 s) both text 1.2345
+    answer: P12 = 0 exactly
+unit_tests:
+  - test: U1 (E1, E2, E8)
+    planted: a metrics file of two coins, rows every 5 minutes, R 1.30 on every row except those named in E1, E2 (and 1.2345 on every row of the second coin), through the new reader in a sandbox
+    expect: P12 0.30 at 11:05 (known_at 11:05), 0.35 at 11:04 (known_at 11:00), 0 at every minute end for the second coin
+  - test: U2 (E3, E4)
+    planted: the same file with no row created after 10:40 for one coin
+    expect: 0.20 at 11:05 (known_at 10:50); empty STALE_VALUE stale 1 at 11:06
+  - test: U3 (E5, E6, E7)
+    planted: a CARRY of D-1 (R at 23:01 to 23:59 of D-1, the row in force at 24:00, and the rows of D-1's file known after 24:00, among them the row created 00:00 of D) and D's file; a third coin with no file of D
+    expect: 0.40 at 00:30; R(00:10) = 1.30; the third coin NO_FILE at all 1,440 minute ends
+  - test: U4 the column mapping
+    planted: a file whose count_toptrader and sum_toptrader columns differ at every row
+    expect: P12 from sum_toptrader_long_short_ratio only (the owner's ruling, EDGE1 20:47:25Z)
+  - test: U5 the row stamps
+    planted: U1 to U3
+    expect: every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day
+mutants:
+  - mutant: M1 create_time used as known (no 600 s wait)
+    caught_by: U1 (at 11:04 the rows created 11:00 and 10:00 are used, 1.30 - 1.30 = 0 in place of 0.35)
+  - mutant: M2 the accounts column (count_toptrader_long_short_ratio) in place of sum_toptrader_long_short_ratio
+    caught_by: U4 (the other column's values)
+  - mutant: M3 the change over 55 or 65 minutes
+    caught_by: U1 (at 11:05 the row created 10:00 or 9:50 in place of 9:55, 0.20 or 0.40 in place of 0.30)
+  - mutant: M4 a gap carried forever (no 900 s level)
+    caught_by: U2 (0.20 at 11:06 in place of STALE_VALUE)
+  - mutant: M5 the row's day from its file name
+    caught_by: U3 (R(00:10) empty or from another row)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 00:05, 00:59, 12:10 and one minute after a gap (the tester picks it from the raw file before the job)
+      why: the CARRY at the day start and in the lag, an ordinary minute, the 900 s level
+    - point: 2025-09-24, all coins, minute ends 00:00, 00:10, 12:10
+      why: a 2025 file (00:05 to the next 00:00) and the create_time day rule
+  pass: >-
+    After the timestamp test (data check 1, its archive part: sum_open_interest against E2 S02). The tester recomputes R and P12 from the raw metrics files with Fraction, never the
+    builder's code: floats within 1e-9 relative (V2 rule 5), empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'On 2026-03-08, P12 against the one-hour change of the global ratio (count_long_short_ratio) on the same rows: if equal within 1e-9 at more than 99 percent of valued coin-minutes, top traders add nothing (the card is renamed or dropped; proposed level, EDGE1 or the owner sets it)'
+    - 'The timestamp test: the archive''s sum_open_interest at a row created T matches our E2 S02 best at T + 300 s (MEANING_E2_V2.yaml 5a309fc5 line 146, the ruled alignment); the ratio columns'' REST test cannot run (the archive ends 31 Jul 2026, Binance REST keeps 30 days, and nothing is fetched from 1 Aug 2026 on): the owner''s ruling on the column stands in its place (EDGE1 20:47:25Z)'
+  report_only:
+    - the share of minute ends where P12 repeats the minute before (about 4 of 5 by the 5 minute rows)
+    - the next hour's price change after |P12| over 0.2 (no claim)
+conclude:
+  may:
+    - how Binance's top 20 percent of traders by margin balance moved their long/short position balance over the last hour, as known at u (the archive's sum_toptrader column read as positions by the owner's ruling, not proven by data)
+  never:
+    - all traders' ratio (that is count_long_short_ratio)
+    - a count of accounts (that is the accounts ratio)
+    - a value known at its create_time (known 10 minutes later)
+    - a direction of the price
+    - that the column mapping (sum_ = positions) is proven by data
+readers: none yet
+implementation:
+  how: >-
+    Per coin and day, the reader's 288 rows plus the CARRY; known_at = create_time + 600 s; an as-of join to the 1,440 minute ends
+    (np.searchsorted of u and of u - 3,600 s into known_at), the 900 s level as a mask; vectorised over all coins, no loop over rows
+    or minutes in Python; the reader pass is shared with P13.
+  kernel: 'addon_grid_v2.in_force(t = arr = known_at = create_time + 600 s, value, good, u, cap 900 s, bad_ends=True) (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 68; ADDON_ARCHITECTURE_V4 9.4): bad_ends keeps this card''s rule that a row with an empty or non-numeric field gives NO_VALUE (not the row before); at u and at u - 3,600 s; shared with P13'
+  memory_mb: 80
+  seconds_share: 1
+data_checks:
+  - what: >-
+      the timestamp test: archive rows against Binance REST values of the last 30 days, create_time as the period's start or end for
+      the top-trader ratio (RESEARCH_TOOLS_V1 4.7: docs say end for the global ratio and OI stats, start for taker volume; the
+      top-trader pages unreadable); the 600 s known-at rule kept either way. The REST comparison cannot run (the archive ends 31 Jul 2026, Binance REST keeps 30 days, and nothing is fetched from 1 Aug 2026 on), so this check is its archive-only part (sum_open_interest against E2 S02, the meaning check); the values are safe either way by the 600 s rule
+    who: the builder, a read-only runner job
+  - what: 'the column mapping is NOT checked by data: the owner ruled sum_toptrader_long_short_ratio = positions, count_toptrader_long_short_ratio = accounts, by the columns'' names (EDGE1 20:47:25Z, option 1 of 3); the archive ends 31 Jul 2026, Binance REST keeps 30 days, and nothing is fetched from 1 Aug 2026 on'
+    who: the owner (ruled 18 Oct 2026); the card says so
+  - what: 'coverage: metrics files per coin and day for 10 Sep 2025 to 9 Mar 2026 on the Expansion, and the file day layout in 2026 (HANDOVER_EDGE1_V103 line 89 names 2025)'
+    who: the builder, a read-only runner job

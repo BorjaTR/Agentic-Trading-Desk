@@ -1,0 +1,142 @@
+# FORMULA_C11_V1.yaml: the card of C11 S03, S04, the distances to the day's high and low in units of a true range (formula), EDITION 1
+# (METRIC_AUDIT, 2026-10-18, FR2 = FP2 of FORMULA_REVIEW_WORKPACKAGES_V3 e5c20e81; made as BASIC_C1_V5 95244119). C11 S01, S02, S05 to S08 are basic
+# (BASIC_C11_V1, EDGE2). Computation J15927 to J15929 (formula_c11atr ed1 eb85eeed), meaning J15955 (meaning_formula2 ed1 d6c62af3).
+group: C11
+name: distance to the day's high and low in day-mean minute true ranges (formula, built on C13)
+summary: 'How far a coin''s close at a minute end is below the day''s high (S03) and above the day''s low (S04), counted in units of the day''s mean
+  minute true range so far: the mean, over the day''s minutes from 00:00 to e, of each minute''s true range (from the lower of its low and the previous
+  close to the higher of its high and the previous close). Exact, rounded once to 12 decimals; empty NO_RANGE when the day had no range at all.'
+read_as: 'How many typical minutes of travel the close is from today''s edge. Computed right (equal to the card''s rule at 44,352 coin-minutes, 88,704 values, on 3
+  days, J15927 to J15929) and the same number as the rule on Binance''s own klines (Pearson 1.0000, J15955). But the unit is NOT the ATR its old
+  name says (Wilder''s 14 period average true range, TA-Lib ATR): against the distance in ATR(14) Spearman 0.87 to 0.95; the day''s mean true range
+  is 0.62 to 1.57 times ATR(14) (p10 to p90 of the coin-minutes, J15955): renamed; the ATR(14) distance is a could_build.'
+conclude:
+  may:
+  - 'how far the close is from today''s high (S03) or low (S04), in units of today''s mean 1 minute true range so far (= the rule on Binance klines, Pearson 1.0000, J15955)'
+  - 'that 0 means the close is at the day''s high (S03) or low (S04)'
+  - that the value is exactly the card's rule on our C13 closes, highs and lows (88,704 of 88,704 values: 44,352 coin-minutes x 2 settings on 3 days, J15927 to J15929)
+  never:
+  - 'that S03, S04 are in ATR (Wilder 14): the day mean true range is 0.62 to 1.57 times ATR(14) (p10 to p90, J15955); renamed'
+  - 'values early in the UTC day as comparable to late ones: at 00:00 the unit is one minute''s true range, at 23:59 the mean of 1,440 (CARD_C11_V4 O1, O3; case N4)'
+  - 'an EMPTY value as 0: NO_RANGE (no range all day) and C13''s own empties (TRADES_HOLE, THIN_FEED, NO_FILE) are empty'
+  - 'a cross-coin comparison as a price distance: the unit is each coin''s own minute range'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C11_V4.md (d9b8ee9000c5ab14, rules 1 to 3, 5, 9; OPEN O1 A; cases E401, E403, E405, N2, N4, N6)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C11_V1.tsv (4b2ee29e0bbdeb1b; S03, S04 unit atr, 'the day''s mean true range (OPEN O1 A)')
+  built_on_register: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S01 close, S02 high, S03 low, raw, LIMITS)
+  layer_list: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V19.tsv (b38bf075fb0c2a65; C11 S03, S04 formula, NOT_CHECKED)
+  producer: testbed/value_audit/code/prod_C11_v5.py (9a3a013dd3f910bd), reading C13's built parts
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C11.parquet
+  year_output_columns: name (S01 to S08; the year writes no twin of S03, S04, INVENTORY_L0 J15730), coin, as_of_us (e), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'C11', settings, coins, moments)
+source:
+  vendor: 'none new: built on our raw C13 S01 to S03 (the minute candles of the Tardis trades rows), MEANING_C13_V4'
+  exchange_stream: trades (Binance USDT-margined futures, through Tardis), as C13 reads them
+  files: the year's C13 rows of D-1 and D (<DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C13.parquet)
+  columns: C13 S01 close, S02 high, S03 low at every minute end
+  fields:
+    day_minutes: 'C13''s valued minute ends of D from 00:00 to e; a minute C13 has empty is not read (nor counted); a high or low missing beside a close
+      is read as the close [proof: CARD_C11_V4 rule 1; basic_c11.minutes (EDGE2); test T7]'
+    true_range: 'max(high, pc) - min(low, pc), pc = the close of the day''s previous minute read; for the day''s first minute the prior day''s last minute
+      read; with none the minute''s own high - low [proof: CARD_C11_V4 rule 5; cases E403, N4, N6; tests T2, T4, T5]'
+    unit: 'the MEAN true range of the day''s minutes so far (OPEN O1 A: no period; not Wilder''s 14) [proof: CARD_C11_V4 rule 5, O1; J15955 atr]'
+    distance: 'S03 = (day high - close) / unit, S04 = (close - day low) / unit; exact, 12 decimals half up; unit 0: NO_RANGE [proof: CARD_C11_V4 rules 3, 5, 9; E401]'
+  latency: as C13 (the minute's trades received by e); known_at = the latest known_at of the day's minutes read
+  silence: 'C13''s empties pass through (TRADES_HOLE, THIN_FEED, NO_FILE, BAD_INPUT): S03, S04 empty at 106 of 73,440 coin-minutes of 24 Sep 2025, 0 of 74,880 of 8 Mar 2026 (INVENTORY_L0 J15730)'
+reading_rules:
+- 'S03 = (day high - close) / (the mean 1 minute true range of the day so far); S04 = (close - day low) / the same; the day = C13''s minute ends 00:00 to e (rule 1, O3)'
+- 'the unit grows from one minute''s true range at 00:00 to the mean of 1,440 at 23:59: it is the day''s own pace, not a fixed period (O1 A)'
+- 'NO_RANGE: the day had no range at all (every true range 0), never 0 or infinite'
+- 'no twin of S03, S04 is written in the year (J15730)'
+values:
+  units: 'day-mean 1 minute true ranges (a count of typical minutes of travel), 0 or more'
+  zero: the close is at the day's high (S03) or low (S04)
+  empty: NO_RANGE and C13's reasons (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT); value_kind 0. Never read empty as 0
+  stale: as C13's (TRADES_HOLE, THIN_FEED)
+  flags: C13's (DUPLICATE_ROW, NO_RATE_BASE)
+interpret:
+  do:
+  - read S03, S04 as how many typical minutes of today's travel the close is from the edge
+  - compare a coin with itself at the same time of day
+  dont:
+  - read them as ATR(14) multiples (the unit is 0.62 to 1.57 times ATR(14), J15955)
+  - compare a value at 00:05 with one at 20:00 as the same unit
+biases:
+- what: the day-mean true range against Wilder's ATR(14)
+  direction: either way (median 0.929 on 8 Mar 2026, 1.155 on 24 Sep 2025)
+  size: 'the day mean TR over ATR(14): p10 0.622, median 0.929, p90 1.212 (8 Mar); p10 0.781, median 1.155, p90 1.569 (24 Sep)'
+  proof: J15955 atr, every coin-minute of 2 days
+- what: our C13 trade candles against Binance klines (the same rule on both)
+  direction: either way
+  size: '|gap| median 0.0000, p90 0.0015 to 0.0039 units; Pearson 0.9999 to 1.0000'
+  proof: J15955 atr (a)
+external_checks:
+- what: S03, S04 against the same rule on Binance 1 minute klines (day high, low, the day mean kline true range), every coin-minute of 2 days
+  where: Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'AGREES: Pearson 1.0000 (8 Mar), 0.9999 to 1.0000 (24 Sep), per coin Spearman median 1.0000 (J15955)'
+- what: the name test, against the distance in Wilder's ATR(14) on the same klines (the textbook formula; talib is not in the analyst venv, J15914)
+  where: the same klines
+  status: 'DIFFERS: S03 Pearson 0.8571, 0.8820, Spearman 0.9044, 0.9478; S04 Pearson 0.9067, 0.8373, Spearman 0.9347, 0.8714 (8 Mar, 24 Sep; J15955): renamed'
+tools:
+- what: S03, S04 recomputed exactly from the year's C13 rows at every 5 minute end
+  run: python3 -B -m rawcheck.formula_c11atr --days <D,..> --out <dir>
+  where: 'team/LAB/code (formula_c11atr.py eb85eeedd113d465, tests 370bd1f6cb076693 10 of 10, 3 of 3 mutants caught; runner job: the year store)'
+- what: against the same rule on klines and against Wilder ATR(14), every coin-minute
+  run: python3 -B -m rawcheck.meaning_formula2 atr <D>
+  where: 'team/LAB/code (meaning_formula2.py d6c62af37d1152b8, tests 58d259adcd643c8d 11 of 11; runner job: the SCRATCH_DISK klines, the year store)'
+used_by: 'nobody yet (CARD_C11_V4 part 1: no reader in the census, E1 labels, word families or METRIC_UNITS)'
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C11_V4.md
+  PAPER: 'J. Welles Wilder, New Concepts in Technical Trading Systems (1978): the average true range, the true range smoothed over 14 periods,
+    ATR_t = (13 ATR_t-1 + TR_t) / 14; TA-Lib ATR seeds it with the mean of the first 14 true ranges'
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+settings:
+- id: C11.S03
+  layer: formula
+  side: none
+  window: the day so far (00:00 UTC to e)
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (day high - close) / the mean 1 minute true range of the day so far, 12 decimals
+  aliases: S.dist_dayhigh_atr
+  means: how many of today's typical minutes of travel the close is below the day's high
+  name: distance to the day high in day-mean minute true ranges
+  renamed_from: distance to day high in ATR (S.dist_dayhigh_atr)
+  computation:
+    status: RELIABLE
+    proof: 'J15927, J15928, J15929 formula_c11atr eb85eeed: 14,976 (8 Mar 2026), 14,688 (24 Sep 2025), 14,688 (4 Nov 2025) of the same, every roster coin x 288 minute ends, 12 decimals (team/RAWCHECK/notes/RAWCHECK/C11ATR_STAMPS_V1.tsv 2fe72793cfc987fc: 44,352 of 44,352 a name, J15970)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15955 atr: = the rule on Binance klines, Pearson 1.0000, |gap| median 0.0000, p90 0.0024 (8 Mar), 0.0015 (24 Sep); against Wilder ATR(14) Spearman 0.9044, 0.9478:
+      renamed (the unit is the day''s mean true range, 0.62 to 1.57 times ATR(14))'
+  open: 'the unit is the day''s own mean, one minute at 00:00 and 1,440 at 23:59 (O1 A): early values move on few minutes'
+- id: C11.S04
+  layer: formula
+  side: none
+  window: the day so far (00:00 UTC to e)
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (close - day low) / the mean 1 minute true range of the day so far, 12 decimals
+  aliases: S.dist_daylow_atr
+  means: how many of today's typical minutes of travel the close is above the day's low
+  name: distance to the day low in day-mean minute true ranges
+  renamed_from: distance to day low in ATR (S.dist_daylow_atr)
+  computation:
+    status: RELIABLE
+    proof: 'J15927, J15928, J15929: 14,976, 14,688, 14,688 of the same (team/RAWCHECK/notes/RAWCHECK/C11ATR_STAMPS_V1.tsv 2fe72793cfc987fc: 44,352 of 44,352 a name, J15970)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15955 atr: = the rule on klines, Pearson 1.0000, 0.9999, |gap| median 0.0000, p90 0.0015, 0.0039; against Wilder ATR(14) Spearman 0.9347, 0.8714: renamed'
+  open: 'as S03: the unit is the day''s own mean true range so far'
+could_build:
+- id: C11.CB1
+  intended: 'a distance in ATR: the close''s distance to the day high and low in Wilder''s average true range (14 periods), as the old names say'
+  was_name_of: C11.S03, C11.S04
+  formula: '(day high - close) / ATR14, (close - day low) / ATR14; ATR14 = Wilder''s smoothing of the 1 minute true range: the first value the mean of
+    14 true ranges, then ATR_t = (13 ATR_t-1 + TR_t) / 14 (TA-Lib ATR)'
+  needs: C13 S01 to S03 of D-1 and D (in the year output); talib or the textbook formula (meaning_formula2.wilder)
+  adds: 'measured: Spearman 0.87 to 0.95 with ours; the unit differs by 0.62 to 1.57 times (p10 to p90, J15955): a recent-pace unit where ours is the day''s'
+  status: NOT_BUILT

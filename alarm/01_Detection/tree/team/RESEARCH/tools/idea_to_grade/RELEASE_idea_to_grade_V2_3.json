@@ -1,0 +1,123 @@
+{
+ "by": "i2g_grader for STRATEGY/LEAD",
+ "files": {
+  "team/BED/scripts/e_fill/fill_v2.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "8d166ddc23fee167"
+  },
+  "team/BED/scripts/e_ladder/ladder_v2.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "14c929a03c6c973e"
+  },
+  "team/BED/scripts/e_ladder/ladder_v6.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "ab45f22b9b9af87c"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/alarm_stamp_projection_v1.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "049ceb37cb3b6947"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/draw_prepared_v1.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "5ab85ba9e777f38f"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/heat_offer_projection_v1.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "6bef437137369208"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/prepared_activity_v1.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "aba7ea04de649037"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/opportunity_compare_v1/compare.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "594a7bc354a323b1"
+  },
+  "team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/performance/fast_compare.py": {
+   "role": "executed by every run; no nested release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "eec15093614540d5"
+  },
+  "team/RESEARCH/tools/idea_to_grade/ARCHITECTURE.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "1837348a94c9b269"
+  },
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json": {
+   "role": "idea_to_grade own file",
+   "sha16": "f10ea935ff8ecc8d"
+  },
+  "team/RESEARCH/tools/idea_to_grade/INTERFACE_V1.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "22a6e6a7a9ce8fbc"
+  },
+  "team/RESEARCH/tools/idea_to_grade/README.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "04af97d4ac4d187a"
+  },
+  "team/RESEARCH/tools/idea_to_grade/check_outside3_equality.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "886ddbe2e1ff5a8d"
+  },
+  "team/RESEARCH/tools/idea_to_grade/check_run.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "aba751a6df85ede7"
+  },
+  "team/RESEARCH/tools/idea_to_grade/detect.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "23f9cec148975cea"
+  },
+  "team/RESEARCH/tools/idea_to_grade/fixture_outside_view.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "1f7f8d93e1ef6db0"
+  },
+  "team/RESEARCH/tools/idea_to_grade/i2g_engine.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "22a029e9b74311a0"
+  },
+  "team/RESEARCH/tools/idea_to_grade/i2g_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "6d8203b709ff6eb3"
+  },
+  "team/RESEARCH/tools/idea_to_grade/idea_to_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "43215be173cb148d"
+  },
+  "team/RESEARCH/tools/idea_to_grade/release_pins.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "0964d46242653bd5"
+  },
+  "team/RESEARCH/tools/idea_to_grade/release_record.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "44b5595acfae898c"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_detect.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "ef3b5e9a5d1c189e"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_detect_a53.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "6a5a8de498792d7e"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_idea_to_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "17f5d11535d818ff"
+  }
+ },
+ "format": "labcore.release",
+ "release": "idea_to_grade_V2_3",
+ "releases": {
+  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_8.json": "6a6d42afaad10a47",
+  "team/RESEARCH/tools/alarm_match/RELEASE_alarm_match_V3_7.json": "533d6151062688f5",
+  "team/RESEARCH/tools/event_profile/RELEASE_event_profile_V2_CANDIDATE.json": "962739090c090d5f",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "3cd411844dd24562"
+ },
+ "run_time_pins": {
+  "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json",
+  "files": 39,
+  "sha16": "f10ea935ff8ecc8d"
+ },
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tool": "idea_to_grade"
+}

@@ -1,0 +1,11 @@
+{
+ "schema": "ROSTER_WEEK_ALIASES_V1",
+ "about": "Weeks of the roster of record (knowledge/roster ROSTER_<monday>.csv, ROSTER_RULE_V1) that use another week's file, as the roster's own receipts declare. Read by labcore.selection (V2_7 candidate). Data, not a date limit: a requested range is the caller's; lab3/law.py is the only seal.",
+ "aliases": {
+  "20250929": {
+   "uses": "20251006",
+   "source": "knowledge/roster/ROSTER_20251006.csv.receipt.json (field alias)",
+   "quote": "the week of 29 Sep 2025 uses this roster"
+  }
+ }
+}

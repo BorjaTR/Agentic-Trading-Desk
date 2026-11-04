@@ -1,0 +1,652 @@
+# BASIC_C1_V5.yaml: the card of the basic group C1 price returns, EDITION 5, CLOSED (EDGE1, 2026-10-18, with the owner 15:5x Berlin: "So it computes
+# what it should and means what it should. Period. Closed.") = BASIC_C1_V4 (cf8ea425f4816f2c, kept) with the 28 copies (.quotes_off, .strict_off) read as
+# the year's accepted cross-check (the owner: "those are copies to check that they match ... differ sometimes ... we should just accept it").
+group: C1
+name: price returns (basic, built on the book mid)
+summary: 'How far a price moved over a window W ending at e, in percent (S08, S09 in basis points, S25 as a fraction): (mid(e) / mid(e - W) - 1), the mid being Binance''s own top of
+  book (best bid + best ask) / 2. Per coin (S01 to S14, S25), for BTC whatever the coin (S15 to S21) and for the market as the median coin (S22 to S24); windows 5 s to 24 h, and since
+  00:00 UTC (S07, S21).'
+read_as: 'The coin''s price change over the window, measured on the mid, not on the last trade. It tells the same story as Binance''s own candles: 0.01 to 0.3 bp apart at the median,
+  the same sign in 99.6 to 100% of coin-minutes. Where they differ (up to 44 bp) the mid is the steadier number: on a coin whose price step is wide (CRV: tick 0.001 at a price of 0.23
+  = 43 bp) the last trade jumps between bid and ask while the mid stands still. A short return (5 s, 10 s) of exactly 0 means the top of the book did not move: 19 to 99% of the time
+  depending on the coin''s tick.'
+where:
+  card: testbed/value_audit/registers/CARD_C1_V11.md (16 rules; the year's copy in code/L0_y52f12/value_audit/registers)
+  settings_register: testbed/value_audit/registers/SETTINGS_C1_V3.tsv (25 settings)
+  built_on_register: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bookTicker mid and S05.quotes_off the quotes mid, raw, RELIABLE)
+  layer_list: team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C1, 25 basic settings)
+  producer: testbed/value_audit/code/prod_C1_v2.py (edition 7 rules) through prod_reader_book_ticker_v2.py
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C1.parquet
+  year_output_columns: name (S01 to S25 and twins), coin (or MARKET for S22 to S24; BTC rows for S15 to S21), as_of_us (e), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us
+    (the later arrival of the two book rows), stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'C1', settings, coins, moments)
+source:
+  vendor: 'none new: built on our raw C13 S05 (the mid of Binance''s bookTicker through Tardis), MEANING_C13_V3'
+  exchange_stream: book_ticker (Binance's own top of book, every change of the best bid or ask), quotes beside switched off
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz (D, and D-1 for windows starting before 00:00)
+  columns: the reader's best bid price and amount, best ask price and amount, timestamp, local_timestamp
+  fields:
+    mid: '(best bid + best ask) / 2 of the book row standing at the moment: the last good row stamped at or before it and received by it [proof: CARD_C1_V11 rules 1, 2; MEANING_C13_V3
+      S05]'
+    known: 'a mid is known when its row was stamped at most 30 s before the moment; otherwise BOOK_HOLE, never carried across a feed hole [proof: CARD_C1_V11 rule 4]'
+    return: '(mid(e) / mid(e - W) - 1) x 100 percent, x 10,000 bp (S08, S09), x 1 fraction (S25); exact, rounded once [proof: CARD_C1_V11 rules 6, 8, 16]'
+    day_window: 'S07 and S21 start at 00:00:00 UTC of e''s day; S14 at e - 86,400 s [proof: CARD_C1_V11 rule 3]'
+    market: 'S22 to S24: the median of the roster coins'' exact returns, coverage beside [proof: CARD_C1_V11 rule 9]'
+  latency: known_at = the later arrival of the two book rows; the newest row is 0.09 to 0.17 s old at the median, p99 2.0 to 2.7 s, at a minute end (J15800, J15801)
+  silence: a book row older than 30 s at s or e makes the value empty BOOK_HOLE (rule 4); none on 24 Sep 2025 or 8 Mar 2026 for S01, S02, S08, S09 (J15800, J15801)
+reading_rules:
+- the mid at a moment = the book row standing then, at most 30 s old (rules 1, 2, 4)
+- return over W ending at e = mid(e) / mid(e - W) - 1; both mids known, else empty with the first reason of NO_FILE, BOOK_HOLE (rules 5, 6, 7)
+- 'fire-second settings (S01 to S07, S15, S22 to S25): at a fire the window ends at the fire second; minute-end settings give the last full minute (rule 12)'
+- 'market: median of the roster coins with a value, never a mean (rule 9)'
+- 'S22.coverage, S23.coverage, S24.coverage count the roster coins the middle coin of S22, S23, S24 is picked from. The year also writes 28 copies of the same metrics as its own cross-check:
+  25 .quotes_off (the same change from a second price feed, Tardis quotes) and 3 .strict_off (S22 to S24 only when every roster coin has a value). ACCEPTED as a cross-check (the owner
+  18 Oct 2026): equal to the metric at 92 to 98% of rows, otherwise a small gap from the two feeds disagreeing (J15849; BTC 8 Mar 07:08: the second feed 10 usd higher a minute before,
+  -0.0157% against -0.0007%, J15878); not separate metrics. The year writes no .fire_second_off or .engine_off twin.'
+values:
+  units: percent (S01 to S07, S10 to S24), basis points (S08, S09), fraction (S25)
+  zero: 'the top of the book stood still over the window (5 s: 19 to 99% of the time per coin, by tick size)'
+  empty: NO_ROSTER, NO_FILE, BOOK_HOLE, ALL_COINS_EMPTY (market); value_kind 0 with NaN in value_f64. Never read empty as 0
+  stale: 1 with BOOK_HOLE
+  flags: the reader's (DUPLICATE_ROW, BAD_INPUT)
+interpret:
+  do:
+  - read the sign as direction and the size as the move of the mid over the window
+  - compare across coins with the market median (S22 to S24) or BTC's (S15 to S21)
+  - on a wide-tick coin read a short return in whole ticks (CRV moves in 43 bp steps of the price, half of that for the mid)
+  dont:
+  - read a short return of 0 as 'nothing happened in trading'; trades can print inside an unchanged top
+  - compare a coin's 5 s or 10 s return across coins without its tick (rank correlation 0.835 between zero share and step size)
+  - expect it to equal a candle return from the last trade; the gap is the trade bouncing between bid and ask (p90 2 to 6 bp, up to 44 bp on CRV)
+biases:
+- what: mid against last trade
+  direction: either way
+  size: median 0.01 to 0.3 bp; p90 2.3 to 6.9 bp; p99 5 to 43 bp (CRV); BTC at most 1.8 bp
+  proof: J15800 (8 Mar 2026), J15801 (24 Sep 2025), every coin-minute
+- what: tick size on short windows
+  direction: toward exact 0
+  size: 'S01 exactly 0: 37.6% (24 Sep 2025), 59.4% (8 Mar 2026); per coin 1% (ASTER) to 99% (CRV)'
+  proof: J15800, J15801 short and tick
+external_checks:
+- what: coin returns 60 s to 24 h and since 00:00 (S03 to S07, S10 to S14), every roster coin at every minute end of 2 days
+  where: Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'VERIFIED: J15800, J15801, J15802'
+- what: BTC returns S15 to S21
+  where: the same klines, BTCUSDT
+  status: 'VERIFIED: gap at most 1.8 bp, same sign 100% (J15801, J15802)'
+- what: market medians S22 to S24
+  where: the median of the roster coins' kline returns
+  status: 'VERIFIED: gap median 0.5 to 0.6 bp, max 7.3 bp, same sign 99.9 to 100% (J15800)'
+- what: CRV's 44 bp gap
+  where: our trade candle and mid (C13) against the kline close, 22:20 to 22:26 on 8 Mar 2026
+  status: 'EXPLAINED: the kline close is a trade at bid or ask, 21.7 bp each side of a still mid (J15801 look)'
+- what: every one of the 31 twins against its main, every row of 2 days
+  where: the year rows (meaning_twins 74d02bc2)
+  status: 'MEASURED: J15849 (TWINS_<D>.tsv): quotes twins equal 92 to 99%, corr 0.99 or more; strict twins equal 100% (coverage full); coverage the full roster'
+- what: 26 twins and 20 mains recomputed from the year's own C13 mids (bookTicker and quotes)
+  where: our C13 rows (meaning_twins_c1 50f8b07b)
+  status: 'VERIFIED: J15855: 100% within 6 decimals both days; S01, S02, S08, S09, S14 .quotes_off not recomputed (start mid not at a minute end)'
+tools:
+- what: every raw mid and setting value equal to a recompute from Tardis
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part basic --out <dir>
+  where: team/LAB/code
+- what: every coin-minute against Binance kline returns (coin, BTC)
+  run: python3 -B -m rawcheck.meaning_returns day <D>
+  where: 'team/LAB/code (meaning_returns.py cc6cc87b19630c7f; runner job: klines on the SCRATCH_DISK)'
+- what: market medians against the median kline return
+  run: python3 -B -m rawcheck.meaning_returns market <D>
+  where: team/LAB/code
+- what: 'short returns: empties, zeros, row ages; zeros against tick size'
+  run: python3 -B -m rawcheck.meaning_returns short <D> | tick <D>
+  where: team/LAB/code
+- what: 'one coin around one minute: trade candle, mid, kline close'
+  run: python3 -B -m rawcheck.meaning_returns look <D> <COIN> <HHMM>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_returns.py cc6cc87b19630c7f (jobs 15800 to 15802); basic.py 4f95e153c4809eda (BASIC_STAMPS_V1)
+  where: team/LAB/code/rawcheck
+- what: every twin against its main (equal share, gaps, correlation; strict and coverage checks)
+  run: python3 -B -m rawcheck.meaning_twins <D> C1 --out <dir>
+  where: 'team/LAB/code (meaning_twins.py 74d02bc20e18f69c, tests 0a18ceaa8e8be3da; runner job: the year store)'
+- what: C1 mains and twins recomputed from the year's C13 mids
+  run: python3 -B -m rawcheck.meaning_twins_c1 <D> --out <dir>
+  where: team/LAB/code (meaning_twins_c1.py 50f8b07b82d95fb2, tests 6e673c76cafca539; runner job)
+used_by: C2 and C5 (their own cards; C5 reads S11 and S14 per coin); labels BTC/*, WHY-SCOPE/BTC-LED, HOW-FRESH/DONE, WHY-DRIVER/TREND-*, PATH-BTC/*, EXTREME/*, FLOW/FORCED, CONTEXT-HOURS/*
+  and the forced, chop, quiet and trend chains (S16 to S21, through their fifths); WORDS family 33 ALARM-KIND (S25 >= 0.0025 is BURST); nobody yet for S01 to S15, S22 to S24 (CARD_C1_V11
+  'Who reads it')
+references:
+  CARD: testbed/value_audit/registers/CARD_C1_V11.md
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: team/LAB/notes/RAWCHECK/BASIC_STAMPS_V1.tsv (recompute from Tardis, code fbf260741d5f88d3 and 22fecada45b52147)
+settings:
+- id: C1.S01
+  layer: basic
+  side: none
+  window: 5 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid(e) / mid(e - 5 s) - 1, percent
+  aliases: EF.ef_ret_5s
+  means: the coin's mid move over the last 5 s; 0 when the top did not move
+  computation:
+    status: RELIABLE
+    proof: STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: rule 6; J15800, J15801 short and tick (zeros follow the tick, rank corr 0.835)
+  open: 'no outside 5 s record (klines are 1 minute); a 0 is the tick, not stillness of trading; a 0 is common on wide-tick coins (CRV 99%): may matter for those coins'' percentages
+    (opinion), checked at the percentages level'
+- id: C1.S02
+  layer: basic
+  side: none
+  window: 30 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 30 s, percent
+  aliases: EF.ef_ret_30s
+  means: the coin's mid move over the last 30 s
+  computation:
+    status: RELIABLE
+    proof: STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'rule 6; J15800, J15801 short (exactly 0: 12.8 to 27.5%)'
+  open: 'no outside 30 s record; a 0 is common on wide-tick coins (CRV 99%): may matter for those coins'' percentages (opinion), checked at the percentages level'
+- id: C1.S03
+  layer: basic
+  side: none
+  window: 120 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 120 s, percent
+  aliases: EF.ef_ret_120s
+  means: the coin's mid move over the last 2 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 74,776 and 73,338 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15802 against kline returns, 2 days
+  open: none
+- id: C1.S04
+  layer: basic
+  side: none
+  window: 900 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 15 min, percent
+  aliases: EF.ef_ret_15m
+  means: the coin's mid move over the last 15 minutes (at a minute end the same as S12)
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 74,100 and 72,675 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15802
+  open: none
+- id: C1.S05
+  layer: basic
+  side: none
+  window: 1800 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 30 min, percent
+  aliases: EF.ef_ret_30m
+  means: the coin's mid move over the last 30 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 73,320 and 71,910 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15802
+  open: none
+- id: C1.S06
+  layer: basic
+  side: none
+  window: 3600 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 1 h, percent
+  aliases: EF.ef_ret_60m
+  means: the coin's mid move over the last hour (at a minute end the same as S13)
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 71,760 and 70,380 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15802
+  open: none
+- id: C1.S07
+  layer: basic
+  side: none
+  window: since 00:00 UTC
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid(e) / mid(00:00) - 1, percent
+  aliases: EF.ef_day_chg
+  means: the coin's move since the UTC day began
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 74,880 and 73,440 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15800, J15801 against klines since the 00:00 close
+  open: none
+- id: C1.S08
+  layer: basic
+  side: none
+  window: 10 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 10 s, basis points
+  aliases: N.mid_slope_10s_bps
+  means: the coin's mid move over the last 10 s, in bp (named a slope; it is a return)
+  computation:
+    status: RELIABLE
+    proof: STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'rule 6; J15800, J15801 short (exactly 0: 25 to 46%); renamed in edition 2 (the owner 15:5x Berlin): it is a return over the window, not a slope'
+  open: 'no outside 10 s record; old name says slope; a 0 is common on wide-tick coins (CRV 99%): may matter for those coins'' percentages (opinion), checked at the percentages level'
+  name: mid return over 10 s, bp
+  renamed_from: mid slope 10 s (N.mid_slope_10s_bps)
+- id: C1.S09
+  layer: basic
+  side: none
+  window: 30 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 30 s, basis points
+  aliases: N.mid_slope_30s_bps
+  means: the coin's mid move over the last 30 s, in bp (S02 in another unit at a minute end)
+  computation:
+    status: RELIABLE
+    proof: STAMPS 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'rule 6; J15800, J15801 short; renamed in edition 2 (the owner 15:5x Berlin): it is a return over the window, not a slope'
+  open: 'no outside 30 s record; old name says slope; a 0 is common on wide-tick coins (CRV 99%): may matter for those coins'' percentages (opinion), checked at the percentages level'
+  name: mid return over 30 s, bp
+  renamed_from: mid slope 30 s (N.mid_slope_30s_bps)
+- id: C1.S10
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 60 s, percent
+  aliases: CUBE.ret_60s
+  means: the coin's mid move over the last minute
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15800 gap to klines median 0.01 bp; J15855: = the return of our C13 S05 mids at 74,828 and 73,389 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800, J15801: same sign 99.6 to 99.8%, corr 0.91 to 0.99'
+  open: none
+- id: C1.S11
+  layer: basic
+  side: none
+  window: 300 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 5 min, percent
+  aliases: CUBE.ret_300s
+  means: the coin's mid move over the last 5 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 74,620 and 73,185 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800, J15801: same sign 99.8 to 99.9%'
+  open: none
+- id: C1.S12
+  layer: basic
+  side: none
+  window: 900 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 15 min, percent
+  aliases: F.own_ret15_pct
+  means: the coin's mid move over the last 15 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 74,100 and 72,675 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800, J15801: same sign 99.9 to 100%'
+  open: none
+- id: C1.S13
+  layer: basic
+  side: none
+  window: 3600 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 1 h, percent
+  aliases: F.own_ret60_pct
+  means: the coin's mid move over the last hour
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15855: = the return of our C13 S05 mids at 71,760 and 70,380 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800, J15801: corr 0.998 to 0.9998'
+  open: none
+- id: C1.S14
+  layer: basic
+  side: none
+  window: 86400 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 24 h, percent
+  aliases: none
+  means: 'the coin''s mid move over the last 24 hours (no metric of its own: C5 reads it)'
+  computation:
+    status: RELIABLE
+    proof: STAMPS 9 of 9
+  meaning:
+    status: DEFINED
+    proof: 'J15800, J15801: corr 0.9996 to 1.0000'
+  open: none
+- id: C1.S15
+  layer: basic
+  side: none
+  window: 60 s
+  clock: fire second
+  scope: BTC
+  contracts: USDT
+  aggregate: BTCUSDT mid return over 60 s, percent
+  aliases: EF.ef_btc_lead60
+  means: BTC's mid move over the last minute, whatever the coin (named a lead; it is BTC's own return)
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,439 and 1,439 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15802 against BTCUSDT klines; renamed in edition 2 (the owner 15:5x Berlin): it is a return over the window, not a lead'
+  open: none
+  name: BTC's own mid return over 60 s, whatever the coin
+  renamed_from: BTC lead 60 s (EF.ef_btc_lead60)
+- id: C1.S16
+  layer: basic
+  side: none
+  window: 900 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: BTC mid return over 15 min
+  aliases: btc_15m
+  means: BTC's move over 15 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,425 and 1,425 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800, J15801: gap at most 1.8 bp, same sign 100%'
+  open: none
+- id: C1.S17
+  layer: basic
+  side: none
+  window: 1800 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: BTC mid return over 30 min
+  aliases: btc_30m
+  means: BTC's move over 30 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,410 and 1,410 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15800, J15801
+  open: none
+- id: C1.S18
+  layer: basic
+  side: none
+  window: 3600 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: BTC mid return over 1 h
+  aliases: btc_1h
+  means: BTC's move over 1 hour
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,380 and 1,380 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15800, J15801
+  open: none
+- id: C1.S19
+  layer: basic
+  side: none
+  window: 10800 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: BTC mid return over 3 h
+  aliases: btc_3h
+  means: BTC's move over 3 hours
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,260 and 1,260 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15800, J15801
+  open: none
+- id: C1.S20
+  layer: basic
+  side: none
+  window: 21600 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: BTC mid return over 6 h
+  aliases: btc_6h
+  means: BTC's move over 6 hours
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,080 and 1,080 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15800, J15801
+  open: none
+- id: C1.S21
+  layer: basic
+  side: none
+  window: since 00:00 UTC
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: BTC mid(e) / mid(00:00) - 1
+  aliases: btc_day
+  means: BTC's move since the UTC day began
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,440 and 1,440 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: J15800, J15801
+  open: none
+- id: C1.S22
+  layer: basic
+  side: none
+  window: 300 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: median of the roster coins' 5 min returns
+  aliases: EF.ef_drift_5m
+  means: how the typical coin moved over 5 minutes (named drift; it is the median return)
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3 (code 22fecada); J15855: = the return of our C13 S05 mids at 1,435 and 1,435 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800: gap to the median kline return median 0.49 bp, same sign 100%; renamed in edition 2 (the owner 15:5x Berlin): it is a return over the window, not a trend'
+  open: none
+  name: market median mid return over 5 minutes
+  renamed_from: drift 5 min (EF.ef_drift_5m)
+- id: C1.S23
+  layer: basic
+  side: none
+  window: 900 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: median of the roster coins' 15 min returns
+  aliases: EF.ef_drift_15m
+  means: how the typical coin moved over 15 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,425 and 1,425 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800: median gap 0.59 bp; renamed in edition 2 (the owner 15:5x Berlin): it is a return over the window, not a trend'
+  open: none
+  name: market median mid return over 15 minutes
+  renamed_from: drift 15 min (EF.ef_drift_15m)
+- id: C1.S24
+  layer: basic
+  side: none
+  window: 1800 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: median of the roster coins' 30 min returns
+  aliases: EF.ef_drift_30m
+  means: how the typical coin moved over 30 minutes
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 3 of 3; J15855: = the return of our C13 S05 mids at 1,410 and 1,410 values (every coin-minute but the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: 'J15800: median gap 0.58 bp, same sign 99.9%; renamed in edition 2 (the owner 15:5x Berlin): it is a return over the window, not a trend'
+  open: none
+  name: market median mid return over 30 minutes
+  renamed_from: drift 30 min (EF.ef_drift_30m)
+- id: C1.S25
+  layer: basic
+  side: none
+  window: 60 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: mid return over 60 s, fraction
+  aliases: g_ret_60s
+  means: S10 as a fraction (0.0025 = 0.25 percent); WORDS calls it BURST at 0.0025 or more either way
+  computation:
+    status: RELIABLE
+    proof: 'STAMPS 9 of 9; J15801 same: S25 x 100 = S10 at 74,880 of 74,880 coin-minutes; J15855: = the return of our C13 S05 mids at 74,828 and 73,389 values (every coin-minute but
+      the first window), 6 decimals'
+  meaning:
+    status: DEFINED
+    proof: as S10 (J15800, J15801)
+  open: none
+- id: C1.S22.coverage
+  layer: basic
+  side: none
+  window: 300 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: count of the roster coins with a 300 s return (both mids known)
+  aliases: none
+  means: how many roster coins the market median S22 is taken over
+  name: S22 coins counted
+  computation:
+    status: RELIABLE
+    proof: 'J15855 meaning_twins_c1 50f8b07b: the count of roster coins with both bookTicker mids at 1,435 of 1,435 (8 Mar 2026) and 1,435 of 1,435 (24 Sep 2025) values within the year''s
+      6 decimals (max gap 0, 0); never empty where both mids exist; the first 5, 5 minutes (start before 00:00) not compared'
+  meaning:
+    status: DEFINED
+    proof: 'J15849: min, median, max 52, 52, 52 of a roster of 52 (8 Mar); 51, 51, 51 of 51 (24 Sep): every roster coin at every minute'
+  open: none
+- id: C1.S23.coverage
+  layer: basic
+  side: none
+  window: 900 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: count of the roster coins with a 900 s return (both mids known)
+  aliases: none
+  means: how many roster coins the market median S23 is taken over
+  name: S23 coins counted
+  computation:
+    status: RELIABLE
+    proof: 'J15855 meaning_twins_c1 50f8b07b: the count of roster coins with both bookTicker mids at 1,425 of 1,425 (8 Mar 2026) and 1,425 of 1,425 (24 Sep 2025) values within the year''s
+      6 decimals (max gap 0, 0); never empty where both mids exist; the first 15, 15 minutes (start before 00:00) not compared'
+  meaning:
+    status: DEFINED
+    proof: 'J15849: min, median, max 52, 52, 52 of a roster of 52 (8 Mar); 51, 51, 51 of 51 (24 Sep): every roster coin at every minute'
+  open: none
+- id: C1.S24.coverage
+  layer: basic
+  side: none
+  window: 1800 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: count of the roster coins with a 1800 s return (both mids known)
+  aliases: none
+  means: how many roster coins the market median S24 is taken over
+  name: S24 coins counted
+  computation:
+    status: RELIABLE
+    proof: 'J15855 meaning_twins_c1 50f8b07b: the count of roster coins with both bookTicker mids at 1,410 of 1,410 (8 Mar 2026) and 1,410 of 1,410 (24 Sep 2025) values within the year''s
+      6 decimals (max gap 0, 0); never empty where both mids exist; the first 30, 30 minutes (start before 00:00) not compared'
+  meaning:
+    status: DEFINED
+    proof: 'J15849: min, median, max 52, 52, 52 of a roster of 52 (8 Mar); 51, 51, 51 of 51 (24 Sep): every roster coin at every minute'
+  open: none
+could_build:
+- id: C1.CB1
+  intended: 'a mid slope: how steeply the mid moved inside the window'
+  was_name_of: C1.S08, C1.S09
+  formula: the least-squares slope of the mid against time over the last 10 s or 30 s, bp per second
+  needs: the mid at every book update in the window (book_ticker, read already)
+  adds: 'unknown until built (opinion: it depends less on the two end points than a return)'
+  status: NOT_BUILT
+- id: C1.CB2
+  intended: 'a BTC lead: whether BTC''s move leads the coin''s move'
+  was_name_of: C1.S15
+  formula: the correlation of BTC's 60 s return at t - k with the coin's at t, k = 1 to 5 minutes, over a rolling window
+  needs: C1 S10 of every coin and BTC (in the year output)
+  adds: 'NEW information: nothing computes a lead today'
+  status: NOT_BUILT
+- id: C1.CB3
+  intended: 'a market drift: the market''s trend over the window, not its end-to-end return'
+  was_name_of: C1.S22, C1.S23, C1.S24
+  formula: the least-squares slope of the roster's median mid path over the window
+  needs: the median of the roster mids at every second of the window
+  adds: unknown until built
+  status: NOT_BUILT
+conclude:
+  may:
+  - 'how far the coin''s mid moved over the window (S03 to S14 agree with Binance candles: median gap 0.01 to 0.21 bp, same sign 99.6 to 100%)'
+  - BTC's own move over the window, whatever the coin (S15 to S21)
+  - how the typical coin moved (S22 to S24, the median)
+  - that a C1 setting with a minute-end window is exactly the return of our C13 mids (J15855, every coin-minute of 2 days)
+  never:
+  - 'a 0 short return (5 s to 30 s) as ''nothing traded'': the top of the book stood still; trades can print inside an unchanged top'
+  - 'short returns compared across coins without their tick: a wide-tick coin is 0 most of the time (CRV 99%)'
+  - 'that S08 and S09 are slopes, that S15 says BTC leads the coin, or that S22 to S24 are a trend: they are returns (renamed)'
+  - 'that a candle''s last-trade return equals ours: the gap is the last trade bouncing between bid and ask (p90 2 to 6 bp, up to 44 bp on CRV)'
+  - a return from an EMPTY value, or 0
+  - 'a copy (.quotes_off, .strict_off) as a metric of its own: it is the year''s cross-check of the same metric; read the 25 metrics and the 3 coin counts'

@@ -1,0 +1,136 @@
+# BUILD2 23 Oct 14:3xZ (OX-DATA P04, STRATEGY-141737): walls read nothing (A6 WITHDRAWN, P04-01); impact_10k_vs_usual + X1.COST.S10/S11 and its two exhausted shares added (P04-03); cost_bp_retro / cost_tier_retro (A09-02): 129 values
+# CTX_INPUTS_V1 (QUANT 22 Oct 2026, by hand from tools/alarm_context/context_blocks.py 67e934d9): what each of the 125 context values reads, so
+# the profile can show the evidence behind it. inputs: lab codes the block reads for this column (a test checks each appears in that block's
+# source), PRICE (the lab's 3 s PRICE bins), LIST (the alarm list itself), TABLE:costs / TABLE:types (the tool's tables). upstream: lab codes
+# behind the alarm list's own size S (A02: its peak 15 s forced sum from A1.S01 / A1.S02), checked for status but not against the block source.
+value	level	block	inputs	upstream	note
+hour_utc	EVENT	identity	LIST
+weekday	EVENT	identity	LIST
+forced_shorts	EVENT	identity	LIST
+burst_log_usd	EVENT	burst	LIST	A1.S01,A1.S02	the list's S (A02: peak 15 s forced USD)
+burst_rel_prior	EVENT	burst	LIST	A1.S01,A1.S02	the list's S against the coin's earlier S
+forced_log_usd_1m	EVENT	burst	A1.S08,A1.S09
+forced_log_usd_5m	EVENT	burst	A1.S08,A1.S09
+forced_log_usd_15m	EVENT	burst	A1.S08,A1.S09
+forced_log_usd_60m	EVENT	burst	A1.S08,A1.S09
+other_log_usd_15m	EVENT	burst	A1.S08,A1.S09
+forced_share_15m	EVENT	burst	A1.S08,A1.S09
+forced_over_taker_15m	EVENT	burst	A1.S08,A1.S09,B1.S01,B1.S02
+fires_coin_1h	EVENT	history	LIST
+fires_coin_4h	EVENT	history	LIST
+fires_coin_24h	EVENT	history	LIST
+fires_coin_7d	EVENT	history	LIST
+min_since_prev_fire	EVENT	history	LIST
+fires_other_5m	EVENT	history	LIST
+fires_other_60m	EVENT	history	LIST
+fires_coin_since	EVENT	history	LIST
+fires_other_since	EVENT	history	LIST
+move_5m	EVENT	move	PRICE
+move_15m	EVENT	move	PRICE
+move_60m	EVENT	move	PRICE
+move_240m	EVENT	move	PRICE
+sudden_share	EVENT	move	PRICE
+beyond_dc240	EVENT	structure	NAUTILUS.S79,NAUTILUS.S81,PRICE
+beyond_dc1440	EVENT	structure	NAUTILUS.S82,NAUTILUS.S84,PRICE
+vwap_dist	EVENT	structure	NAUTILUS.S09,PRICE
+boll1440_pos	EVENT	structure	NAUTILUS.S73,NAUTILUS.S74,PRICE
+boll240_pos	EVENT	structure	NAUTILUS.S70,NAUTILUS.S71,PRICE
+to_day_extreme	EVENT	structure	C11.S01,C11.S02
+min_since_swing	EVENT	structure	NAUTILUS.S62,NAUTILUS.S63
+wall_ahead_log_1pct	EVENT	walls	
+wall_ahead_log_2pct	EVENT	walls	
+wall_ahead_log_3pct	EVENT	walls	
+wall_behind_log_1pct	EVENT	walls	
+wall_behind_log_2pct	EVENT	walls	
+wall_behind_log_3pct	EVENT	walls	
+btc_move_15m	MARKET	btc	C1.S16
+btc_move_1h	MARKET	btc	C1.S18
+btc_move_3h	MARKET	btc	C1.S19
+btc_move_6h	MARKET	btc	C1.S20
+btc_pos_6h	MARKET	btc	C6.S05
+btc_straight_3h	MARKET	btc	C4.S09
+btc_move_24h	MARKET	btc_trend	C1.S14
+btc_move_7d	MARKET	btc_trend	C1.S14
+btc_straight_24h	MARKET	btc_trend	C1.S18
+btc_vol_regime	MARKET	btc_trend	C1.S18
+basket_move_15m	MARKET	basket	C2.S02
+basket_move_1h	MARKET	basket	C2.S03
+alts_vs_btc_1h	MARKET	basket	C2.S08
+alts_with_push_15m	MARKET	breadth	C5.S04
+one_sided_5m	MARKET	breadth	C5.S01
+coins_strong_with_push_1h	MARKET	breadth	C5.S05,C5.S06
+coins_strong_against_push_1h	MARKET	breadth	C5.S05,C5.S06
+mkt_wave_age_min	MARKET	liq_wave	A4.S04,A4.S05
+mkt_forced_share_1m	MARKET	liq_wave	A5.S09
+mkt_forced_per_taker_1m	MARKET	liq_wave	A5.S03,A5.S04
+mkt_spread_bp	MARKET	liquidity	D2.S04
+mkt_spread_vs_24h	MARKET	liquidity	D2.S05,D2.S04
+mkt_depth_vs_24h	MARKET	liquidity	D3.S17
+weekend	MARKET	time	LIST
+decision_hour_utc	MARKET	time	LIST
+coin_move_15m	COIN	move	C1.S12
+coin_move_1h	COIN	move	C1.S13
+coin_vs_basket_15m	COIN	move	C2.S04
+coin_vs_basket_1h	COIN	move	C2.S05
+coin_with_market_15m	COIN	move	C2.S06
+range_pos_1h	COIN	range	C9.S03
+range_pos_4h	COIN	range	C9.S17
+range_width_1h	COIN	range	C9.S01
+range_width_4h	COIN	range	C9.S15
+broke_yday_range	COIN	range	C11.S08
+leg_vs_usual_025	COIN	leg	C10.S10
+leg_vs_usual_05	COIN	leg	C10.S24
+leg_vs_usual_1	COIN	leg	C10.S38
+leg_giveback_05	COIN	leg	C10.S18
+coin_vol_5m	COIN	vol	C4.S01
+coin_vol_1h	COIN	vol	C4.S02
+pace_5m_vs_1h	COIN	vol	C4.S04.step60_off
+pace_1h_vs_24h	COIN	vol	C4.S05
+funding_forced_pays_bp	COIN	derivs	E1.S01
+oi_chg_10m	COIN	derivs	E2.S04
+oi_chg_1h	COIN	derivs	E2.S02
+oi_chg_24h	COIN	derivs	E2.S02
+basis_push_bp	COIN	derivs	E3.S01
+cost_bp	COIN	cost	TABLE:costs		today's cost table applied to the past
+cost_tier	COIN	cost	TABLE:costs		today's cost table applied to the past
+cost_bp_retro	COIN	cost	TABLE:costs		RETROSPECTIVE: today's cost table applied to the past (A09-02)
+cost_tier_retro	COIN	cost	TABLE:costs		RETROSPECTIVE: today's cost table applied to the past (A09-02)
+coin_move_24h	COIN	trend	C1.S14
+coin_move_7d	COIN	trend	C1.S14
+coin_straight_24h	COIN	trend	C1.S13
+coin_vol_regime	COIN	trend	C1.S13
+days_since_bigger_alarm	COIN	flush_history	LIST	A1.S01,A1.S02	compares the list's S
+alarms_all_24h	COIN	flush_history	LIST
+coin_class	COIN	type	TABLE:types		a hand list the owner may edit
+liq_oi_forced_bp_60s	EVENT	forcing_now	X1.LIQX.S03,X1.LIQX.S04
+liq_seconds_share_60s	EVENT	forcing_now	X1.LIQX.S01
+oi_moved_since_wave	EVENT	forcing_now	A7.S01,A7.S03
+coins_liquidating_1m	EVENT	forcing_now	A2.S05,A2.S06
+coins_liquidating_z	EVENT	forcing_now	A2.S03,A2.S04
+fills_one_sided	EVENT	who_trades	B2.S02
+volume_one_sided	EVENT	who_trades	X1.FLOWX.S12
+whale_net_5m_usd	EVENT	who_trades	X1.FLOWX.S01
+book_flow_top_60s	EVENT	book_now	D1.S04
+book_flow_10lv_60s	EVENT	book_now	D4.S04
+book_imbalance_30bp	EVENT	book_now	D3.S05
+depth_vs_median_coin	EVENT	book_now	D3.S15
+spread_vs_usual	EVENT	book_now	X1.COST.S01,X1.COST.S02
+impact_10k_vs_usual	EVENT	book_now	X1.COST.S04,X1.COST.S05,X1.COST.S06,X1.COST.S08,X1.COST.S10,X1.COST.S11
+impact_10k_buy_exhausted_share	EVENT	book_now	X1.COST.S10
+impact_10k_sell_exhausted_share	EVENT	book_now	X1.COST.S11
+min_to_funding	EVENT	book_now	Z3.S01
+typical_range_15m	MARKET	heat_news	C7.S04
+market_hot_rank_30d	MARKET	heat_news	X1.VOLX.S18
+btc_implied_minus_real	MARKET	heat_news	X1.VOLX.S09
+market_funding_dev	MARKET	heat_news	E1.S07
+market_whales_with_push	MARKET	heat_news	X1.FLOWX.S04
+crypto_news_rows	MARKET	heat_news	Z2.S02
+btc_beta_3d	COIN	behaviour	X1.RETX.S01
+idio_move_60m	COIN	behaviour	X1.RETX.S04
+quote_rate	COIN	behaviour	C12.S02
+range_rank_1h_30d	COIN	behaviour	X1.VOLX.S19
+jump_flag	COIN	behaviour	X1.VOLX.S17
+funding_z_30d	COIN	positioning	X1.POSX.S03
+oi_vs_30d	COIN	positioning	X1.POSX.S12
+top_traders_ls_chg_1h	COIN	positioning	X1.POSX.S13
+taker_buy_sell_5m	COIN	positioning	X1.POSX.S14

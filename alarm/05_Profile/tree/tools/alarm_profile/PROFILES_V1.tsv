@@ -1,0 +1,127 @@
+# PROFILES_V1 (QUANT 22 Oct 2026; the owner 13:08 Berlin: "different profiles from all the metrics depending on how we want to group them"). A profile is
+# only a named list: tool EPI (this tool) or CTX (tools/alarm_context), the value, and why it belongs. Nothing is computed again; ALL (every value) is built in.
+profile	group	tool	value	why
+LIQUIDATION	size	EPI	forced_usd_log	how many dollars were forcibly closed
+LIQUIDATION	size	EPI	peak15_usd_log	how many dollars were forcibly closed
+LIQUIDATION	size	EPI	peak60_usd_log	how many dollars were forcibly closed
+LIQUIDATION	size_for_this_coin	EPI	size_vs_bar	the same dollars against this coin's own normal
+LIQUIDATION	size_for_this_coin	EPI	size_vs_week	the same dollars against this coin's own normal
+LIQUIDATION	size_for_this_coin	EPI	burst_vs_oi_bp	the same dollars against this coin's own normal
+LIQUIDATION	size_for_this_coin	EPI	growth	the same dollars against this coin's own normal
+LIQUIDATION	size_for_this_coin	CTX	burst_rel_prior	the context tool's own size comparisons
+LIQUIDATION	size_for_this_coin	CTX	liq_oi_forced_bp_60s	the context tool's own size comparisons
+LIQUIDATION	timing	EPI	burst_s	how the burst unfolded in time
+LIQUIDATION	timing	EPI	onset_to_alarm_s	how the burst unfolded in time
+LIQUIDATION	timing	EPI	peak_s	how the burst unfolded in time
+LIQUIDATION	timing	EPI	peak_to_alarm_s	how the burst unfolded in time
+LIQUIDATION	shape	EPI	n_flushes	one flush or several, steady or one block, already running before
+LIQUIDATION	shape	EPI	active_share	one flush or several, steady or one block, already running before
+LIQUIDATION	shape	EPI	top5s_share	one flush or several, steady or one block, already running before
+LIQUIDATION	shape	EPI	pre_forced_usd_log	one flush or several, steady or one block, already running before
+LIQUIDATION	other_side	EPI	other_usd_log	was the other side forced too
+LIQUIDATION	other_side	EPI	other_share	was the other side forced too
+LIQUIDATION	other_side	CTX	forced_share_15m	forced against all flow in the last 15 min
+LIQUIDATION	other_side	CTX	forced_over_taker_15m	forced against all flow in the last 15 min
+LIQUIDATION	other_exchange	EPI	hl_forced_usd_log	the same burst on Hyperliquid, where every liquidation is recorded
+LIQUIDATION	other_exchange	EPI	hl_other_usd_log	the same burst on Hyperliquid, where every liquidation is recorded
+LIQUIDATION	other_exchange	EPI	hl_lead_s	the same burst on Hyperliquid, where every liquidation is recorded
+LIQUIDATION	positions	EPI	oi_chg_burst_pct	did positions really close during the burst
+LIQUIDATION	positions	CTX	oi_moved_since_wave	open interest since the market wave began
+LIQUIDATION	breadth	CTX	coins_liquidating_1m	this coin alone or a market-wide wave
+LIQUIDATION	breadth	CTX	coins_liquidating_z	this coin alone or a market-wide wave
+LIQUIDATION	breadth	CTX	mkt_wave_age_min	this coin alone or a market-wide wave
+LIQUIDATION	breadth	CTX	mkt_forced_share_1m	this coin alone or a market-wide wave
+LIQUIDATION	breadth	CTX	fires_other_5m	this coin alone or a market-wide wave
+LIQUIDATION	breadth	CTX	fires_other_60m	this coin alone or a market-wide wave
+LIQUIDATION	history	CTX	fires_coin_1h	has this coin been flushed lately
+LIQUIDATION	history	CTX	fires_coin_24h	has this coin been flushed lately
+LIQUIDATION	history	CTX	min_since_prev_fire	has this coin been flushed lately
+LIQUIDATION	history	CTX	days_since_bigger_alarm	has this coin been flushed lately
+MOVE	run	EPI	normal_move_pct	where the move really started and how far it went
+MOVE	run	EPI	run_pct	where the move really started and how far it went
+MOVE	run	EPI	run_norm	where the move really started and how far it went
+MOVE	run	EPI	run_age_min	where the move really started and how far it went
+MOVE	run	EPI	run_capped	where the move really started and how far it went
+MOVE	split	EPI	pre_move_pct	how much came before the liquidations, during them, and was given back
+MOVE	split	EPI	burst_move_pct	how much came before the liquidations, during them, and was given back
+MOVE	split	EPI	forced_share	how much came before the liquidations, during them, and was given back
+MOVE	split	EPI	giveback_pct	how much came before the liquidations, during them, and was given back
+MOVE	split	EPI	giveback_share	how much came before the liquidations, during them, and was given back
+MOVE	speed	EPI	burst_speed_pct_min	how fast, before and during the liquidations
+MOVE	speed	EPI	pre_speed_pct_min	how fast, before and during the liquidations
+MOVE	speed	EPI	speed_ratio	how fast, before and during the liquidations
+MOVE	speed	EPI	burst_speed_vs_normal	how fast, before and during the liquidations
+MOVE	speed	EPI	max_move_60s_pct	how fast, before and during the liquidations
+MOVE	recent	CTX	move_5m	fixed-window moves to the alarm
+MOVE	recent	CTX	move_15m	fixed-window moves to the alarm
+MOVE	recent	CTX	move_60m	fixed-window moves to the alarm
+MOVE	recent	CTX	move_240m	fixed-window moves to the alarm
+MOVE	recent	CTX	sudden_share	fixed-window moves to the alarm
+MOVE	structure	CTX	beyond_dc240	where the price sits against its recent range
+MOVE	structure	CTX	beyond_dc1440	where the price sits against its recent range
+MOVE	structure	CTX	to_day_extreme	where the price sits against its recent range
+MOVE	structure	CTX	vwap_dist	where the price sits against its recent range
+MOVE	structure	CTX	range_pos_4h	where the price sits against its recent range
+POSITIONS	burst	EPI	oi_chg_burst_pct	what open positions did in the burst
+POSITIONS	burst	EPI	burst_vs_oi_bp	what open positions did in the burst
+POSITIONS	open_interest	CTX	oi_chg_10m	open interest build-up before the alarm
+POSITIONS	open_interest	CTX	oi_chg_1h	open interest build-up before the alarm
+POSITIONS	open_interest	CTX	oi_chg_24h	open interest build-up before the alarm
+POSITIONS	open_interest	CTX	oi_vs_30d	open interest build-up before the alarm
+POSITIONS	funding	CTX	funding_forced_pays_bp	who was paying to hold the crowded side
+POSITIONS	funding	CTX	funding_z_30d	who was paying to hold the crowded side
+POSITIONS	funding	CTX	market_funding_dev	who was paying to hold the crowded side
+POSITIONS	funding	CTX	basis_push_bp	who was paying to hold the crowded side
+POSITIONS	traders	CTX	top_traders_ls_chg_1h	what big accounts and takers were doing
+POSITIONS	traders	CTX	taker_buy_sell_5m	what big accounts and takers were doing
+FLOW_BOOK	flow	CTX	forced_over_taker_15m	who was trading at the alarm
+FLOW_BOOK	flow	CTX	fills_one_sided	who was trading at the alarm
+FLOW_BOOK	flow	CTX	volume_one_sided	who was trading at the alarm
+FLOW_BOOK	flow	CTX	whale_net_5m_usd	who was trading at the alarm
+FLOW_BOOK	book	CTX	book_flow_top_60s	how the book looked at the alarm
+FLOW_BOOK	book	CTX	book_flow_10lv_60s	how the book looked at the alarm
+FLOW_BOOK	book	CTX	book_imbalance_30bp	how the book looked at the alarm
+FLOW_BOOK	book	CTX	depth_vs_median_coin	how the book looked at the alarm
+FLOW_BOOK	book	CTX	spread_vs_usual	how the book looked at the alarm
+FLOW_BOOK	book	CTX	impact_10k_vs_usual	how the book looked at the alarm
+FLOW_BOOK	walls	CTX	wall_ahead_log_1pct	liquidation levels further on and behind
+FLOW_BOOK	walls	CTX	wall_ahead_log_2pct	liquidation levels further on and behind
+FLOW_BOOK	walls	CTX	wall_behind_log_1pct	liquidation levels further on and behind
+FLOW_BOOK	walls	CTX	wall_behind_log_2pct	liquidation levels further on and behind
+MARKET_TIME	btc	CTX	btc_move_15m	what BTC was doing
+MARKET_TIME	btc	CTX	btc_move_1h	what BTC was doing
+MARKET_TIME	btc	CTX	btc_move_6h	what BTC was doing
+MARKET_TIME	btc	CTX	btc_move_24h	what BTC was doing
+MARKET_TIME	btc	CTX	btc_vol_regime	what BTC was doing
+MARKET_TIME	market	CTX	basket_move_15m	what the other coins were doing
+MARKET_TIME	market	CTX	basket_move_1h	what the other coins were doing
+MARKET_TIME	market	CTX	alts_vs_btc_1h	what the other coins were doing
+MARKET_TIME	market	CTX	alts_with_push_15m	what the other coins were doing
+MARKET_TIME	market	CTX	one_sided_5m	what the other coins were doing
+MARKET_TIME	market	CTX	coins_strong_with_push_1h	what the other coins were doing
+MARKET_TIME	market	CTX	coins_strong_against_push_1h	what the other coins were doing
+MARKET_TIME	liquidity	CTX	mkt_spread_vs_24h	how calm or hot the market was
+MARKET_TIME	liquidity	CTX	mkt_depth_vs_24h	how calm or hot the market was
+MARKET_TIME	liquidity	CTX	typical_range_15m	how calm or hot the market was
+MARKET_TIME	liquidity	CTX	market_hot_rank_30d	how calm or hot the market was
+MARKET_TIME	clock	CTX	hour_utc	the time of day and week, the next funding
+MARKET_TIME	clock	CTX	weekday	the time of day and week, the next funding
+MARKET_TIME	clock	CTX	weekend	the time of day and week, the next funding
+MARKET_TIME	clock	CTX	min_to_funding	the time of day and week, the next funding
+COIN	kind	CTX	coin_class	what coin it is and what it costs to trade
+COIN	kind	CTX	cost_bp	what coin it is and what it costs to trade
+COIN	kind	CTX	cost_tier	what coin it is and what it costs to trade
+COIN	volatility	EPI	normal_move_pct	its normal 15 min move
+COIN	volatility	CTX	coin_vol_5m	how much it was moving
+COIN	volatility	CTX	coin_vol_1h	how much it was moving
+COIN	volatility	CTX	pace_5m_vs_1h	how much it was moving
+COIN	volatility	CTX	pace_1h_vs_24h	how much it was moving
+COIN	volatility	CTX	coin_vol_regime	how much it was moving
+COIN	volatility	CTX	range_width_1h	how much it was moving
+COIN	volatility	CTX	range_width_4h	how much it was moving
+COIN	trend	CTX	coin_move_24h	its own trend and its link to BTC
+COIN	trend	CTX	coin_move_7d	its own trend and its link to BTC
+COIN	trend	CTX	coin_straight_24h	its own trend and its link to BTC
+COIN	trend	CTX	coin_vs_basket_1h	its own trend and its link to BTC
+COIN	trend	CTX	idio_move_60m	its own trend and its link to BTC
+COIN	trend	CTX	btc_beta_3d	its own trend and its link to BTC

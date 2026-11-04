@@ -1,0 +1,27 @@
+# 05_Profile: every absolute or machine path in the files of MANIFEST.tsv (released editions only; grep of each listed file, 30 Oct 2026). status: ARG (taken as an argument: fine), BUILT_IN (a new edition must read it from settings), TEXT (only in a document, a release record or a comment)
+file	line	path	kind	what	settings_key	status
+tree/QUANT/receipts/COSTS_PER_COIN_V4.tsv	1	<VM_SESSION>/mnt/dev/TradingPlatform_repo/volat-agent/forensics/team/RESEARCH/KNOWLEDGE/R7_COST_TABLE_V2.tsv	DOC	the table header names the files it was built from (provenance)		TEXT
+tree/QUANT/receipts/COSTS_PER_COIN_V4.tsv	1	<VM_SESSION>/mnt/dev/TradingPlatform_repo/volat-agent/forensics/team/RESEARCH/SCOUT/receipts/hl_snap_20261020T150629Z/HL_RT_SUMMARY.tsv	DOC	the table header names the files it was built from (provenance)		TEXT
+tree/tools/alarm_context/README.md	50	<DATA_ROOT>/research_days	DATA	QUANT's shared research store (edition 1 writes A02 profiles there; 2.x refuse it, so the constant stays)	RESEARCH_STORE	TEXT
+tree/tools/alarm_context/RELEASE_context_V1.json	48	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_1.json	53	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_2.json	56	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_3.json	107,109	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_4.json	107,109	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_5.json	107,109	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_6.json	107,109	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/RELEASE_context_V1_7.json	107,109	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_context/alarm_context.py	8,29	<DATA_ROOT>/research_days	DATA	QUANT's shared research store (edition 1 writes A02 profiles there; 2.x refuse it, so the constant stays)	RESEARCH_STORE	BUILT_IN
+tree/tools/alarm_profile/README.md	131	<DATA_ROOT>/research_days	DATA	QUANT's shared research store (edition 1 writes A02 profiles there; 2.x refuse it, so the constant stays)	RESEARCH_STORE	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1.json	42	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_1.json	47	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_2.json	48	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_3.json	46	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_4.json	121,123	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_5.json	119,121	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_6.json	119,121	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_7.json	119,121	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/RELEASE_profile_V1_8.json	119,121	<PYTHON>	PYTHON	the interpreter a release or job was run with	PYTHON	TEXT
+tree/tools/alarm_profile/alarm_profile.py	27	<DATA_ROOT>/research_days	DATA	QUANT's shared research store (edition 1 writes A02 profiles there; 2.x refuse it, so the constant stays)	RESEARCH_STORE	BUILT_IN
+tree/tools/alarm_profile/alarm_profile.py	38	<SCRATCH>/work_SCOUT/hl_fills_npz_dev	DATA	Hyperliquid fills, read by the hyperliquid block (A02 subjects only)	HL_FILLS	BUILT_IN
+tree/tools/alarm_profile/test_proof_plan_v1.py	4	<LAB_REPO>/forensics/team/RESEARCH/tools/alarm_profile	DOC	a path written in a test or its docstring, never opened		TEXT

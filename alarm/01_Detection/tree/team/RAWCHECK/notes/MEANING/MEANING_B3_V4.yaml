@@ -1,0 +1,226 @@
+# MEANING_B3_V4.yaml: the meaning register of B3 trade counts, EDITION 4 (EDGE1, 2026-10-18, closed with the owner 15:3x Berlin)
+# = MEANING_B3_V3 (85d9e70f23ef3257, kept) with S03 and its twin RENAMED (slices, not orders), B3.CB1 (Binance aggregated trades) in
+# could_build, conclude (may, never), every limit with its effect on decisions, module sha16s.
+group: B3
+name: trade_count
+summary: 'How busy a coin''s tape is: the number of trades in the 60 s ending at e (S01 at the fire second, S02 at the minute end), the number of same-millisecond trade blocks (S03,
+  named aggregated trades), and the mean dollars traded a minute over the last 30 minutes (S04).'
+read_as: 'S01, S02: Binance''s trade count as we could know it at e (equal to the kline count in 97.8 to 99.3% of coin-minutes). S04: the coin''s 30-minute volume base, equal to Binance''s
+  within 0.03% in the typical differing minute. S03 is renamed in edition 4: it counts same-millisecond, same-price slices (10 to 16% above Binance''s aggregated trades), not taker orders;
+  the real count is B3.CB1 (not built).'
+where:
+  card: testbed/value_audit/registers/CARD_B3_V4.md
+  settings_register: testbed/value_audit/registers/SETTINGS_B3_V2.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_trades_V1.md
+  producer: prod_B3 with prod_reader_trades_v1.py (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/B3.parquet
+  year_output_columns: name (S01 to S04, S03.order_off, S04.seen_at_e_off), coin, as_of_us (e), value_kind, value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'B3', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: 'Binance trade channel: one row = one trade (not aggTrade); off-book trades (insurance fund, ADL) left out'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz
+  columns: exchange, symbol, timestamp, local_timestamp, id, side, price, amount
+  fields:
+    row: 'one trade; our row set equals Binance''s own trade count [proof: SOURCE_SPEC_trades Q-N2, Q-N3; job 15778: kline trade count = our rows in 5 of 5 minutes]'
+    side: 'the TAKER''s side: buy = the taker bought, sell = the taker sold (Binance m flag: buyer is maker -> sell) [proof: Tardis docs T1; SOURCE_SPEC_trades Q-N2; job 15780: 100%
+      agreement with Binance aggTrades is_buyer_maker on 6,549 rows]'
+    price: 'trade price, USDT, exact [proof: SOURCE_SPEC_trades Q-N2]'
+    amount: 'trade quantity in the coin (a 1000-prefixed symbol counts in thousands) [proof: SOURCE_SPEC_trades Q-N2 (q)]'
+    timestamp: 'Binance trade time T, microseconds; the file is in id order (0 rows going back, job 15780) [proof: SOURCE_SPEC_trades Q-N2; job 15780]'
+    local_timestamp: 'arrival at Tardis [proof: Tardis docs T1; SOURCE_SPEC_trades F3]'
+    dollars: 'price x amount of a row, exact [proof: card rule 2; SOURCE_SPEC_trades]'
+  latency: middle 3 ms, p99 37 to 190 ms, max 6.6 s; 1,000 to 6,142 rows a day arrive after their minute (SOURCE_SPEC_trades F3, F4)
+  silence: no coin silent over 81 s on normal days; 600 s or more is an outage (28 Jul) (SOURCE_SPEC_trades F5)
+reading_rules:
+- 'window: rows stamped after e - W and up to e, received by e (card rule 1); W = 60 s for S01 to S03, 1,800 s for S04'
+- 'S01, S02: the number of rows; a repeated row counts each time, flagged (rule 2)'
+- 'S03: rows in stamp then file order cut into blocks of consecutive rows with the same stamp, side and price; the number of blocks with a row in the window (rule 3)'
+- 'S03.order_off: the same with blocks of the same stamp and side at any price'
+- 'S04: the dollars of the window''s rows, exact, divided by 30, rounded once to the whole dollar half up; a quiet minute counts 0 (rule 4)'
+- S04 empty unless the coin was seen at every moment of the 30 minutes (rule 6); S04.seen_at_e_off empty only when not seen at e
+- 'seen: as A1 rule 5 (rule 5)'
+values:
+  units: trades (S01, S02), blocks (S03), US dollars a minute (S04)
+  zero: the coin was seen and no trade was counted
+  empty: 'not seen (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT); S04 also when a gap over 60 s or a thin minute sits inside the 30 minutes. Real on 8 Mar: S04 120 values,
+    the rest none (job 15779). Never read empty as 0'
+  stale: 1 with a TRADES_HOLE or THIN_FEED empty
+  flags: DUPLICATE_ROW, NO_RATE_BASE
+interpret:
+  do:
+  - read S02 as Binance's trade count of the minute, known at e
+  - compare a minute's dollars with S04 to see if the coin is busier than its last half hour (one 300,000 dollar minute moves S04 by 10,000)
+  - take Binance's aggTrades file when you need the number of taker orders
+  dont:
+  - read S03 as Binance's aggregated trades or as the number of taker orders; it is 10 to 16% higher
+  - read S03.order_off as taker orders either; it is 8 to 43% lower than Binance's aggTrades (it merges orders of one millisecond)
+  - read empty as 0
+biases:
+- what: late trades left out
+  direction: count LOW
+  size: S02 differs from Binance's kline trades in 0.71 to 2.23% of coin-minutes with a value (median 0.08 to 0.64% of the count); decisions unchanged
+  proof: job 15787
+- what: S03 blocks cut Binance's taker orders
+  direction: HIGH
+  size: 'HYPE 229 vs 208, ASTER 1,718 vs 1,476, BTC 638 vs 571, VVV 198 vs 177 (10 to 16%); never the other way; decisions: wrong if read as taker orders; renamed in edition 4'
+  proof: jobs 15780, 15781
+- what: S03.order_off merges orders of one millisecond
+  direction: LOW
+  size: '159 vs 208, 916 vs 1,476, 324 vs 571, 153 vs 177; decisions: wrong if read as taker orders; renamed in edition 4'
+  proof: job 15780
+- what: 'no rule on trades rebuilds Binance''s groups: Binance groups by the taker ORDER, which the trade feed does not carry'
+  direction: none
+  size: 'consecutive ids with the same side and price: 10 to 14% LOW (merges 12 to 51 a minute); decisions: wrong if read as taker orders; renamed in edition 4'
+  proof: job 15781
+external_checks:
+- what: trades a minute, dollars a minute
+  where: Binance 1m klines (trades, quote_volume) from data.binance.vision, held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'VERIFIED: every coin-minute of 3 days, job 15780'
+- what: taker orders (aggregated trades)
+  where: Binance aggTrades from data.binance.vision, held for 113 coin-days at <ARCHIVE_DISK>/scratch_EDGE2/realcheck/outside/binance/aggTrades
+  status: VERIFIED that S03 differs, jobs 15780, 15781
+tools:
+- what: our raw values equal Tardis and Binance
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code
+- what: every coin-minute against Binance klines
+  run: python3 -B -m rawcheck.meaning_flow day <D>
+  where: team/LAB/code
+- what: blocks against Binance aggTrades
+  run: python3 -B -m rawcheck.meaning_flow blocks <D> <COIN> <HHMM> [--brief]
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_flow.py e8ed447b32f5335e, rawcheck raw code 84454de7fac2e458 (RAW_STAMPS_V1)
+  where: team/LAB/code/rawcheck
+used_by: nobody today (card); S04 is the volume base a minute is compared with; B1 S06 uses S03's blocks
+references:
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+  N1: https://github.com/tardis-dev/tardis-node/blob/master/src/mappers/binance.ts (quoted in SOURCE_SPEC_trades_V1 Q-N2, Q-N3)
+  K1: https://data.binance.vision (klines and aggTrades)
+settings:
+- id: B3.S01
+  layer: raw
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of rows
+  aliases: EF.ef_trades_n_1m
+  means: 'trades in the 60 s ending at e (at a fire: ending at the fire second)'
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9, Binance 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: row set = Binance's (job 15778)
+  open: late-trade differences not explained one by one; decisions unchanged
+- id: B3.S02
+  layer: raw
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of rows
+  aliases: m9_trades_n, CUBE_EXTRA.trades_n_kline_1m
+  means: trades in the minute ending at e
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS 9 of 9 and 9 of 9; job 15787: equal to Binance''s kline trades in 97.77 to 99.29% of coin-minutes with a value'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: row set = Binance's (job 15778)
+  open: late-trade differences not explained one by one; decisions unchanged
+- id: B3.S03
+  layer: our_rule
+  read_by: B1.S06 (its blocks rule, and through it B1.S16, S18, S19); FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of same stamp, side and price blocks
+  aliases: CUBE_EXTRA.aggtrades_n_1m
+  means: blocks of trades with the same millisecond, side and price in the minute (named aggregated trades)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:3x Berlin): jobs 15780, 15781: 10 to 16% above Binance aggTrades; was DIFFERS_FROM_NAME'
+  open: not the number of taker orders (B3.CB1); decisions unchanged once read by its new name
+  name: same-millisecond, same-price slices of taker trades per minute
+  renamed_from: aggregated trades (aggtrades_n_1m)
+- id: B3.S03.order_off
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of same stamp and side blocks
+  aliases: none
+  means: blocks of trades with the same millisecond and side at any price (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4: job 15780: 8 to 43% below Binance aggTrades; was DIFFERS_FROM_NAME'
+  open: not the number of taker orders (B3.CB1); switched off
+  name: same-millisecond, same-side groups of taker trades at any price per minute (switched off)
+  renamed_from: aggregated trades, order rule (switched off)
+- id: B3.S04
+  layer: basic
+  side: none
+  window: 1800 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: dollars / 30
+  aliases: EF.ef_volbase
+  means: mean dollars traded a minute over the last 30 minutes; empty unless seen for all 30
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Tardis 7 of 9 (2 not compared); job 15787: equal to Binance''s 30 kline mean in 96.30 to 99.27%, median difference 0.001 to 0.030%'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: row set = Binance's (job 15778)
+  open: late-trade differences not explained one by one; decisions unchanged
+- id: B3.S04.seen_at_e_off
+  layer: basic
+  side: none
+  window: 1800 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: dollars / 30
+  aliases: none
+  means: as S04 but empty only when not seen at e (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 7 of 9
+  meaning:
+    status: DEFINED
+    proof: card rule 6
+  open: none
+could_build:
+- id: B3.CB1
+  intended: 'Binance''s aggregated trades per minute: the number of taker orders'
+  was_name_of: B3.S03, B3.S03.order_off
+  formula: count of Binance aggTrades rows (one per taker order and price) stamped in the minute, received by e
+  needs: Binance aggTrades files (data.binance.vision), the same source as B1.CB1; no rule on our trades rebuilds the groups (jobs 15780, 15781)
+  adds: a correction of S03 (ours 10 to 16% high, the twin 8 to 43% low), little new information beyond the trade count
+  status: NOT_BUILT
+conclude:
+  may:
+  - 'how many trades printed per coin and minute (S01, S02: Binance''s kline count in 97.8 to 99.3% of coin-minutes)'
+  - the coin's typical dollars a minute over the last 30 minutes (S04)
+  - how active the coin is against its own history
+  never:
+  - the number of taker orders or Binance's aggregated trades from S03 (10 to 16% high) or its switched-off twin (8 to 43% low)
+  - 'that our trade count equals Binance''s in every minute: trades received after the minute end are left out'
+  - a count from an EMPTY value, or 0

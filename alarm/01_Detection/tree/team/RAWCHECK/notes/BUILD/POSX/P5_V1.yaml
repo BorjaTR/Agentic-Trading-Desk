@@ -1,0 +1,188 @@
+# POSX P5 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P5_V1.md 65b2b142) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Changed from the draft: floats, decimals none (float64 subtraction; equal rates give 0 exactly); max_staleness 261.3 s (P2's
+# Hyperliquid level; the draft said 61 s); RAW_DIFFERS passes from P2.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel line against ADDON_ARCHITECTURE_V4 b5fcc859 9.4 (none needed); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P5 fixes: the BUILD_TEST keep conditions are pass lines (levels proposed, BED G2), X8 (the difference exact on the texts, E9, M5), X3b (the 00:00 point in phase B); the identity moved to U5 (X6); nit: a gap trade needs both venues' costs; BED G1: no RAW_DIFFERS (E7, U3)
+# Signed by BED's REVIEW OK of edition 3, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P5
+producer: POSX
+item: 'funding gap Binance against Hyperliquid (BUILD_ITEMS_V3 3dbb747a line P5)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when the meaning check's pass lines 1 and 2 hold (P2's coverage and a gap that exists, levels proposed for EDGE1 or the owner to set); DROP when either fails. The trade reading gets its never line by pass line 3.
+name: funding gap per hour, Binance's rate in force less Hyperliquid's rate in force, same coin, same minute end
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 3
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  How much more the longs pay per hour on Binance than on Hyperliquid for the same coin now, at the two rates in force (negative:
+  Hyperliquid's longs pay more).
+example: >-
+  Binance 0.0000125 per hour (P1, the default 0.0001 per 8 h) and Hyperliquid 0.0000300 per hour (P2): P5 = -0.0000175 per hour.
+formula: >-
+  P5(u) = P1(u) - P2(u), both per hour (P1_V1, P2_V1), computed exactly: E1 S01's text / 8 and Hyperliquid's funding_rate text (the
+  reader's integer x 10^scale) brought to one common scale, the difference taken exactly, then written once as the float64 nearest it
+  (decimals none). A float subtraction of two close rates fails rule 4.5's 1e-9 relative near 0 (REVIEW_LEAD_EDGE1_V1 X8; E9). Equal
+  rates give 0 exactly. Empty: P1's reason and stale first, then P2's (NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE). The 00:00 point is
+  computed in phase B, after P2's 00:00:00 point has its 00:00:00.000000 row (REVIEW_LEAD_EDGE1_V1 X3b).
+source:
+  kind: ours
+  ref: >-
+    Our definition (BUILD_PLAN_V2; BUILD_ITEMS_V3 3dbb747a line P5, from BUILD_PLAN_V2); both rates are per hour (CARD_E1_V9 line 183:
+    Hyperliquid per hour, Binance's S01 per 8 h, P1 = S01 / 8). No tool.
+inputs:
+  - kind: addon
+    ref: POSX S01 (P1, Binance funding per hour) at u
+    card: POSX/P1_V1
+    rule_in_force: P1's row at u (value, reason, stale, known_at)
+    stale_rule: P1's stale and reason pass through (first)
+    days: D
+  - kind: addon
+    ref: POSX S02 (P2, Hyperliquid funding per hour) at u
+    card: POSX/P2_V1
+    rule_in_force: P2's row at u (value, reason, stale, known_at; P2's CARRY of D-1 at the day start is P2's)
+    stale_rule: P2's stale and reason pass through (after P1's)
+    days: D (P2's own CARRY of D-1; P5 has none of its own)
+overlaps: none
+per_coin: >-
+  Coins not listed on Hyperliquid: empty NO_FILE (P2's reason; XMR, ZEC, DASH, ICP on 24 Sep 2025, MEANING_E2_V2.yaml line 34). 1000x
+  coins: P1 of 1000PEPEUSDT against P2 of kPEPE (P2's mapping, reader v1 hl_name lines 81 to 84). 4 h and 1 h Binance coins: P1 is
+  already per hour.
+time: >-
+  Binance settles every 8 h (4 h or 1 h for some coins), Hyperliquid every hour: the gap is of the two rates in force, not of
+  payments. 00:00 of D: P1's own row and P2's 00:00:00 point, in phase B (X3b).
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S05
+      label: funding_gap_bn_less_hl_per_hour
+      units: fraction of the position per hour
+      value_kind: float
+      decimals: none
+      means: Binance funding per hour less Hyperliquid funding per hour, same coin, rates in force at u
+      never:
+        - a payment received
+        - an arbitrage profit
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the later of P1's and P2's known_at at u, valued or empty; both <= u, so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: P1 empty NO_ROSTER (P1 first)
+    - reason: NO_FILE
+      when: P1 empty NO_FILE; or P1 valued and P2 empty NO_FILE (the coin not on Hyperliquid)
+    - reason: BAD_INPUT
+      when: P1 empty BAD_INPUT; or P1 valued and P2 empty BAD_INPUT
+    - reason: NO_VALUE
+      when: P1 empty NO_VALUE; or P1 valued and P2 empty NO_VALUE
+    - reason: STALE_VALUE
+      when: P1 empty STALE_VALUE; or P1 valued and P2 empty STALE_VALUE (stale 1 either way)
+    - reason: NO_INTERVAL
+      when: P1 empty NO_INTERVAL
+    - reason: NO_ROW
+      when: P1 empty NO_ROW
+  stale_rule: stale = 1 when the reason written is STALE_VALUE (from P1 or P2)
+  max_staleness_s: 261.3
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 Hyperliquid higher
+    input: 'P1 0.0000125, P2 0.0000300'
+    answer: 'P5 = -0.0000175 (float64 -1.75e-05)'
+  - case: E2 both at the default
+    input: 'P1 0.0000125 (E1 S01 0.0001), P2 0.0000125 (text 0.0000125)'
+    answer: 'P5 = 0 exactly (float(0.0001) / 8 == float(0.0000125))'
+  - case: E3 a negative Binance rate
+    input: 'P1 -0.0000375, P2 0.0000100'
+    answer: 'P5 = -0.0000475 (the float subtraction gives -4.7499999999999996e-05, within 1e-9 relative)'
+  - case: E4 P1 empty
+    input: 'P1 empty STALE_VALUE stale 1; P2 0.0000125'
+    answer: 'P5 empty STALE_VALUE, stale 1'
+  - case: E5 P2 empty
+    input: 'P1 0.0000125; P2 empty NO_FILE (the coin not on Hyperliquid)'
+    answer: 'P5 empty NO_FILE, stale 0'
+  - case: E6 both empty
+    input: 'P1 empty NO_INTERVAL; P2 empty NO_FILE'
+    answer: 'P5 empty NO_INTERVAL (P1''s reason first), stale 0'
+  - case: E7 the Hyperliquid raw check failed
+    input: 'P1 0.0000125; P2 0.0000130 written as computed; the day named in the manifest, not sealed (PRODUCER_POSX raw_check, BED G1)'
+    answer: 'P5 = -0.0000005 written (float64 -5e-07); P5 is never emptied by a raw check'
+  - case: E9 near zero (X8)
+    input: 'E1 S01 0.0001 (P1 0.0000125); Hyperliquid funding_rate text 0.000012500000001'
+    answer: 'P5 = -1e-15 exactly, written -1e-15; a float subtraction gives -9.999986271989544e-16 (1.37e-6 relative off)'
+  - case: E8 a 1000x coin
+    input: '1000PEPEUSDT: E1 S01 0.0002 (P1 0.000025); kPEPE funding_rate 0.0000125 (P2)'
+    answer: 'P5 = 0.0000125 (float64 1.25e-05)'
+unit_tests:
+  - test: U1 (E1, E2, E3, E8)
+    planted: P1 and P2 rows (through E1 S01 rows and a sandbox Hyperliquid store) for four coins at three minute ends
+    expect: 'P5 -1.75e-05, 0.0 exactly, -4.75e-05 (the float nearest the exact -0.0000475), 1.25e-05'
+  - test: U2 (E4, E5, E6)
+    planted: P1 and P2 rows with the empties of E4, E5, E6
+    expect: 'STALE_VALUE stale 1; NO_FILE stale 0; NO_INTERVAL stale 0'
+  - test: U3 (E7)
+    planted: a day whose Hyperliquid raw check fails (one E2 S05 value changed)
+    expect: 'P5 written as computed at every minute end (E7 -5e-07); no RAW_DIFFERS anywhere'
+  - test: U5 (E9) near zero and the identity (moved from the meaning check, X6)
+    planted: E9's rows; then U1's rows
+    expect: 'E9 P5 == -1e-15 exactly; on U1 P5 == P1 - P2 exactly on every valued row, empty exactly where P1 or P2 is'
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: 'every row as_of = u, known_at = the later of P1''s and P2''s known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day'
+mutants:
+  - mutant: M1 P2 - P1 (the sign)
+    caught_by: U1 (E1 gives 1.75e-05 in place of -1.75e-05)
+  - mutant: M2 P1 per 8 h against P2 per hour (E1 S01 - P2)
+    caught_by: U1 (E1 gives 7e-05 in place of -1.75e-05; E2 gives 8.75e-05 in place of 0)
+  - mutant: M3 P2's reason before P1's when both are empty
+    caught_by: U2 (E6 NO_FILE in place of NO_INTERVAL)
+  - mutant: M4 a coin missing on Hyperliquid read as P2 = 0
+    caught_by: U2 (E5 gives 1.25e-05 in place of empty NO_FILE)
+  - mutant: M5 a float subtraction (X8 dropped)
+    caught_by: U5 (E9 gives -9.999986271989544e-16 in place of -1e-15, 1.37e-6 relative)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 00:01, 12:10
+      why: P1's own row and P2's CARRY at the day start; an ordinary minute
+    - point: 2025-09-24, all coins, minute ends 00:00, 12:10; XMRUSDT, ZECUSDT, DASHUSDT, ICPUSDT at 12:10
+      why: an early year day; the coins with no Hyperliquid file (NO_FILE)
+    - point: 2026-03-08 and 2025-09-24, the 1000x roster coins (1000PEPEUSDT against kPEPE) at 12:10
+      why: the k-name mapping
+  pass: >-
+    The tester recomputes P1 from B's E1 S01 texts and P2 from the raw file through the same reader with Fraction, never the
+    builder's code: floats within 1e-9 relative (V2 rule 4.5), exact 0 where the rates are equal, empty reasons, stale and known_at
+    equal. One small runner job (with P1's and P2's).
+meaning_check:
+  pass_lines:
+    - 'P2 is valued on at least 80 percent of the coin-minutes of the roster coins listed on Hyperliquid on 2026-03-08 and 2025-09-24 (proposed level, EDGE1 or the owner sets it)'
+    - 'P5 is not 0 on at least half of the coin-minutes where it is valued on each day (the gap exists; proposed level, EDGE1 or the owner sets it)'
+    - 'The share of valued coin-minutes of 2026-03-08 with |P5| x 24 over 0.0009 (a day of the gap against the owner''s 9 bp Hyperliquid taker round trip, EDGE1 16:21:06Z) is 1 percent or more; under it, a never line ''P5 as a trade by itself'' is added (proposed level)'
+  report_only:
+    - the correlation of P1 and P2 per coin over each day
+    - the sign of P5 by coin (which venue's longs pay more)
+conclude:
+  may:
+    - which venue's longs pay more per hour now for this coin, and by how much, at the two rates in force
+  never:
+    - a payment received (each rate moves until its venue's settle; the settles differ)
+    - an arbitrage profit or a trade by itself (a gap trade needs both venues' costs, Binance's and Hyperliquid's fees and spreads, and the settle times; the rates move until their settles)
+    - a gap for a coin not on Hyperliquid (NO_FILE is not 0)
+readers: none yet
+implementation:
+  how: >-
+    One subtraction per coin-minute on P1's and P2's columns (already in memory in the producer), reasons by the order above; no
+    loop over rows or minutes in Python.
+  kernel: 'new: col_map (one subtraction on the producer''s own grids; no ADDON_ARCHITECTURE_V4 9.4 kernel is needed; shared with P1)'
+  memory_mb: 20
+  seconds_share: 0.1
+data_checks:
+  - what: 'P2''s Hyperliquid reader edition (P2_V1 data check 1)'
+    who: the builder, with LAYERS

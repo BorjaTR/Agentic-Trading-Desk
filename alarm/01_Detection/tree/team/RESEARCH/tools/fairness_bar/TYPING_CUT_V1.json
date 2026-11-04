@@ -1,0 +1,8 @@
+{
+ "cut_utc": "20261023T202934Z",
+ "ledger": "team/RESEARCH/TRIES_LEDGER_V1.tsv",
+ "legacy_ids": 98,
+ "legacy_ids_sha16": "7b3465a8905eb195",
+ "recorded_by": "SCOUT",
+ "why": "OUTSIDE A36-F01, STRATEGY-202600: every untyped TRIES_LEDGER_V1 try stamped before this cut is legacy (name matching); from the cut every try is typed (ledger_add_v6 --type --family)"
+}

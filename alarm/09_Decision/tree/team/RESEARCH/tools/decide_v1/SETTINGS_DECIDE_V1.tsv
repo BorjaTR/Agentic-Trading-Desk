@@ -1,0 +1,14 @@
+setting	what	where it is set	allowed values	default	note
+S01	mode	--mode	research (CANDIDATE and FROZEN lines act) or paper (FROZEN only)	none (required)	DEFAULT lines act in both
+S02	side	rulebook side	FADE (trade -push), FOLLOW (trade +push), UNSET (trade 0, the grader shows both)	UNSET in RULES_DEFAULT_V1	a non-DEFAULT side needs evidence (file, sha16, cell) and a mechanism
+S03	skip lines	rulebook skip_rules	at most 3 active lines; each: id, field (ctx./prof./pmm.), states, reasons, skip_if (a proper subset of states), status, mechanism, evidence	none	states and reasons are copied from the field's library; a word that is neither refuses the run
+S04	off days	SAFETY_V1.json off_days	YYYYMMDD list	empty (the owner's)	SKIP OFF_STATE
+S05	off states	SAFETY_V1.json off_states	id, field, states, reasons, off_if	empty (the owner's)	SKIP OFF_STATE
+S06	entry	rulebook entry	UNSET or tool:id from LAB_TOOLS_V1.json (idea_to_grade_V3_1:TT, RT, RR)	UNSET (no default)	the id must appear quoted in the release's code
+S07	exit	rulebook exit	UNSET or tool:id from LAB_TOOLS_V1.json (8 idea_to_grade exits)	UNSET (no default)	same check as S06
+S08	size	rulebook size	a positive number	1	recorded, not used for money here
+S09	lab tools	--lab-tools	LAB_TOOLS_V1.json: per tool its release file, release sha16 and ids	LAB_TOOLS_V1.json	every release and its code files re-hashed at each run
+S10	fires	--universe --alarm-id --first --last --research-window [--coins]	a frozen universe file, a registry id, days inside the window, a coin list or ALL	none (required)	days are UTC days of the fire second
+S11	cards	--ctx-cards --prof-cards (comma list) --pmm-cards	the frozen card files of context V4.1, profile V5.1, pre-move V1.2	none (required)	a fire twice in one library refuses
+S12	root	--root	the forensics root	none (required)	evidence and release paths are relative to it
+S13	kill limits	SAFETY_V1.json kill_limits	numbers or null	all null (the owner's)	recorded only: paper and live controls, not enforced here

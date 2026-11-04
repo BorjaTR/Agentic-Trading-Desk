@@ -1,0 +1,204 @@
+# R4_V1.yaml: RETX cross-coin residual reversal after taker-driven moves, a BUILD_TEST (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2
+# edit 2 ac90daf8; ADDON_ARCHITECTURE_V4 edit 3 0591d181; REVIEW_LEAD_EDGE1_V1 8dd9867d section 0 applied from the start).
+# Worked examples recomputed with exact fractions by team/TREE/proposals/verify_retx_timex_examples_tree_v2.py.
+# Edition 2: METRIC_AUDIT2's LEAD REVIEW RETX (REVIEW_LEAD_METRIC_AUDIT2_RETX_V1 27ebac9c): M1 caught by a pinned plant (U1), the
+# 15-minute purge at each half's end, S09's first minute on 10 Sep 2025 settled by B's 00:00 row (data check).
+kind: build_metric
+id: R4
+producer: RETX
+item: cross-coin residual reversal after taker-driven moves
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when both halves agree: on the year days 13 Sep 2025 to 9 Mar 2026 (R2 valued from 13 Sep), split into the build half 13 Sep
+  to 25 Dec 2025 and the check half 26 Dec 2025 to 9 Mar 2026, at every minute end u with at least 10 coins whose S08 is valued and
+  whose target u + 15 min lies in the same half (the last 15 minute ends of each half, 23:45 to 23:59 of 25 Dec 2025 and of 9 Mar
+  2026, are left out: a 15-minute purge),
+  IC(u) = Spearman's rho (average ranks for ties) across those coins between S08(u) and the net next residual f(u) = S03(u + 15 min)
+  - sign(S08(u)) x c(u), c(u) = 2 x COST K1 S01 at u / 100 (the round-trip half spread, bps to percent); the IC series of a half has a
+  mean above 0 with a Newey-West t of 3.0 or more (Bartlett weights, L = 14 lags, the overlapping 15-minute targets; RESEARCH_TOOLS_V1
+  8.2) on the build half, and a mean above 0 on the check half. DROP otherwise: S08 and S09 removed from RETX (BUILD_ITEMS_V4
+  BUILD_TEST). The levels 0.3 (theta), 10 coins, t 3.0 and L 14 are proposed (EDGE1 or the owner sets them). Decided by
+  rawcheck/test_r4_ic.py on B and X1 rows, one read-only runner job; never on JUL_UNSEEN, FINAL_BLOCK or days from 1 Aug 2026.
+name: minus the coin's last 15 minute residual return (R2's S03) when the move was driven by takers in the same direction (Binance taker buy and sell dollars), the signal of a residual reversal, and the 15 minute taker share itself
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 2
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T20:01:54Z'
+means: >-
+  The bet that a coin's own move (beyond BTC) over the last 15 minutes partly reverts when aggressive takers pushed it: S08 = minus
+  S03 when Binance takers bought (sold) clearly more than they sold (bought) over those 15 minutes in the direction of the move,
+  else empty; S09 the 15 minute taker share (plus: takers bought more). A test item: kept only if the reversal shows, net of cost, on
+  both halves of the year (test_condition). Binance USDT-M trades and mids, not Hyperliquid's.
+example: >-
+  Over the last 15 minutes takers bought 700,000 and sold 300,000 dollars of a coin: S09 = 400,000 / 1,000,000 = 0.4, past the 0.3
+  level, and the coin's residual rose (S03 = +0.03 percent, the same sign): S08 = -0.03, a bet on the move fading. Had the residual
+  fallen (S03 = -0.03) while takers bought, the move was not taker-driven: S08 empty NOT_TAKER_DRIVEN.
+formula: >-
+  At each minute end u of D, per roster coin c: B15 = the sum of B1 S01 (taker buy dollars of (m - 60 s, m], whole, half up; CARD_B1_V7
+  rules 1 to 3) and S15 = the sum of B1 S02 (taker sell dollars) over the 15 minute ends m = u - 14 min to u (their windows tile (u -
+  15 min, u]); all 30 values must be valued, else NO_INPUT. S09 = (B15 - S15) / (B15 + S15), exact (Fraction on the whole dollars),
+  written as float64; NO_TRADES when B15 + S15 = 0. S08 = -S03(c, u) (R2's 15 minute residual, percent) when |S09| > 0.3 and sign(S09)
+  = sign(S03) (a taker-driven move); NOT_TAKER_DRIVEN when |S09| <= 0.3, or the signs differ, or S03 = 0; S03's reason passes through
+  when S03 is empty. The first failing reason: NO_ROSTER, NO_INPUT, NO_TRADES (S09 and S08), then for S08: S03's reason (NO_HISTORY,
+  FEW_VALUES, FIT_SINGULAR, NO_INPUT), NOT_TAKER_DRIVEN. float64 for S08 (the negation of S03).
+source:
+  kind: ours
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 row R2 (the residual reversal IC, BUILD AS A TEST) and section 8.2: the taker condition |net taker
+    share| > theta with the same sign as the past residual, s = -resid15_past, f = resid15_next less cost, Spearman with average
+    ranks, Newey-West with L >= 14 (planted: past residuals A 0.8, B -0.3, C 0.1, D -0.6 and next -0.2, 0.1, 0.3, 0.4 give rho 0.8; ties
+    0.948683; IC series 0.2, 0.4, 0.0, 0.2 gives t 4.0; buy 700k, sell 300k gives share 0.4 at theta 0.3). scipy 1.18.1 spearmanr and
+    statsmodels 0.15.0 HAC are the test's oracles; alphalens-reloaded reference only (its filter_zscore looks ahead, per its docs).
+inputs:
+  - kind: year
+    ref: B1 S01, S02 (taker buy and sell dollars of the 60 s window ending at each minute end, whole dollars)
+    card: MEANING_B1_V4 (LAYER_REGISTER_V32 e249ce94 B1 S01, S02 LIMITS)
+    verdict: LIMITS
+    rule_in_force: "B's B1 rows at the 15 minute ends u - 14 min to u as written (CARD_B1_V7 rule 1: the trades stamped in the window and received by its end)"
+    stale_rule: an empty B1 value of the 15 gives NO_INPUT; never filled
+    days: D-1 and D (the windows at 00:00 to 00:13 reach D-1; B holds it, no CARRY)
+  - kind: addon
+    ref: RETX S03 (R2) at u, from the same pass
+    card: RETX/R2_V1
+    rule_in_force: R2's value at the same minute end
+    stale_rule: R2's empty reason passes through to S08
+    days: D
+overlaps:
+  - setting: B1 S03
+    kind: other_metric
+    why: >-
+      B1 S03 is the net taker dollars of 300 s (BASIC_B1_V3); S09 is the net over the gross of 15 minutes (a share, from B1 S01, S02):
+      another window and a scale-free form.
+per_coin: >-
+  Thin coins: few trades, a share of plus or minus 1 from one trade (opinion: the test's 10-coin floor keeps them in the cross-section
+  only when traded). The 1000-coins: dollars, unchanged. BTCUSDT: its S03 is 0 by R2, so S08 is NOT_TAKER_DRIVEN; it stays out of the
+  test's cross-section in effect.
+time: >-
+  The 15 minute windows at 00:00 to 00:13 read D-1's B1 rows from B. Funding settles and quarter hours bring taker bursts (counted as
+  any minute). The first year days: S08 NO_HISTORY with R2 on 10 to 12 Sep 2025; S09 valued from 10 Sep 2025 00:14, or 00:15 when
+  B's B1 S01, S02 at 00:00 of 10 Sep are empty (their window (23:59, 00:00] needs 9 Sep's trades, CARD_B1_V7's file rule; data check);
+  the pilot shows S09, and S08's reason.
+output:
+  group_file: X1/day=<D>/RETX.parquet
+  names:
+    - name: S08
+      label: binance_taker_reversal_signal_15m
+      units: percent points (minus the 15 minute residual)
+      value_kind: float
+      decimals: none
+      means: minus R2's S03 when the 15 minute taker share is past 0.3 in the same direction, else empty
+      never: ['S08 as an expected return before the test_condition keeps it']
+    - name: S09
+      label: binance_taker_share_15m
+      units: a share from -1 to 1 (plus, takers bought more)
+      value_kind: float
+      decimals: none
+      means: the net over the gross taker dollars of the last 15 minutes
+  grid: minute
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    S09: the latest known_at of the 30 B1 values read (each at or before its m <= u); S08: the later of S09's and R2's; an empty row:
+    known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (every coin)
+    - reason: NO_INPUT
+      when: a B1 S01 or S02 of the 15 minute ends empty (S09, S08); for S08 also R2's NO_INPUT
+    - reason: NO_TRADES
+      when: B15 + S15 = 0 (S09, S08)
+    - reason: NO_HISTORY
+      when: S08 when R2's S03 is NO_HISTORY (10 to 12 Sep 2025)
+    - reason: FEW_VALUES
+      when: S08 when R2's S03 is FEW_VALUES
+    - reason: FIT_SINGULAR
+      when: S08 when R2's S03 is FIT_SINGULAR
+    - reason: NOT_TAKER_DRIVEN
+      when: S08 when |S09| <= 0.3, or sign(S09) differs from sign(S03), or S03 = 0
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 3
+  no_history: "S08 first fills on 13 Sep 2025 with R2; NO_HISTORY on 10 to 12 Sep 2025; S09 has no window of days (valued from 10 Sep 2025 00:14, or 00:15 when B's B1 rows at 00:00 of 10 Sep are empty: the data check; the windows before reach 9 Sep, not in B: NO_INPUT)"
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the research taker numbers (RESEARCH 8.2)
+    input: 'B15 700,000, S15 300,000; S03 +0.03'
+    answer: 'S09 0.4; S08 -0.03'
+  - case: E2 against the takers
+    input: 'the same with S03 -0.03'
+    answer: S09 0.4; S08 empty NOT_TAKER_DRIVEN
+  - case: E3 the level
+    input: 'B15 650,000, S15 350,000 (S09 0.3 exactly), S03 +0.03'
+    answer: 'S09 0.3; S08 empty NOT_TAKER_DRIVEN (> 0.3 strict)'
+  - case: E4 no trades
+    input: 'every B1 S01, S02 of the 15 minutes 0'
+    answer: S09, S08 empty NO_TRADES
+  - case: E5 a minute missing
+    input: 'B1 S02 empty at u - 7 min'
+    answer: S09, S08 empty NO_INPUT
+  - case: E6 the IC (RESEARCH 8.2, for test_condition)
+    input: 's = (-0.8, 0.3, -0.1, 0.6), f = (-0.2, 0.1, 0.3, 0.4); ties s = (1, 1, 2, 3) with f ranks 1 to 4; IC series 0.2, 0.4, 0.0, 0.2 with L = 1'
+    answer: 'rho 0.8; rho 0.948683298051; mean 0.2, gamma0 0.02, gamma1 -0.01, LRV 0.01, t 4.0'
+unit_tests:
+  - test: U1 (E1 to E5)
+    planted: 'B1 S01, S02 rows of the 15 minute ends with the case sums and R2''s S03: for E1 the 700,000 of buys all at the minute end u - 14 min and the 300,000 of sells all at u, 0 at the other 13 (pinned); the other cases spread over the minutes'
+    expect: 'S09 0.4 and S08 -0.03; NOT_TAKER_DRIVEN; S09 0.3 and NOT_TAKER_DRIVEN; NO_TRADES; NO_INPUT'
+  - test: U2 (E6) the test's statistics (rawcheck/test_r4_ic.py)
+    planted: the vectors and the IC series of E6
+    expect: 'rho 0.8 and 0.948683298051 (scipy spearmanr agrees); t 4.0 (statsmodels HAC with use_correction False agrees)'
+  - test: U3 the stamps
+    planted: U1
+    expect: 'as_of = u, known_at <= u; 1,440 rows per name and coin; empty never 0'
+mutants:
+  - mutant: M1 the share over one 60 s window (B1 S01, S02 at u only)
+    caught_by: 'U1 (E1''s pinned plant: B1 at u alone gives S09 (0 - 300,000) / 300,000 = -1 and S08 NOT_TAKER_DRIVEN, in place of 0.4 and -0.03)'
+  - mutant: M2 >= at the level
+    caught_by: U1 (E3 gives S08 -0.03)
+  - mutant: M3 the sign condition dropped
+    caught_by: 'U1 (E2 gives S08 0.03)'
+  - mutant: M4 the Newey-West weights without the Bartlett taper
+    caught_by: 'U2 (E6 gives LRV 0.0, a t that does not exist)'
+real_check:
+  points:
+    - point: 2026-03-08, ETHUSDT, SOLUSDT, 1000PEPEUSDT, u = 00:05, 12:10, 23:59
+      why: 00:05 reads D-1's B1 rows; liquid and a 1000-coin
+    - point: 2025-10-10, every coin, u = 21:30
+      why: the crash evening (many taker-driven moves)
+    - point: 2025-09-10, ETHUSDT, u = 00:13, 00:14 and 00:15
+      why: the first year day (NO_INPUT, then S09 valued at 00:14 or 00:15 by B's 00:00 row)
+  pass: >-
+    The tester recomputes S08, S09 and the empties from this card's words on B's B1 rows and the recomputed S03 (rawcheck/check_retx.py),
+    with Fraction: floats within 1e-9 relative, words equal.
+meaning_check:
+  pass_lines:
+    - "the test_condition itself, run once on the two halves (KEEP or DROP: it can fail)"
+    - "S09 agrees in sign with B1 S03's 300 s net at the same minute end at 80 percent or more of the coin-minutes of 2026-03-08 where both are valued and |S09| > 0.3 (the 15 minutes' last 5 carry the push: it can fail)"
+  report_only:
+    - the share of coin-minutes with S08 valued per day
+    - the IC series' mean and t per month
+conclude:
+  may:
+    - whether the coin's last 15 minutes beyond BTC were pushed by takers in the same direction (S08 valued) and how lopsided the takers were (S09)
+  never:
+    - a return forecast before test_condition is KEEP
+    - Hyperliquid's takers or mids
+    - the whole market's flow (one coin's Binance trades)
+readers: "none yet (planned: the test bed if KEEP, the lab's mean-reversion labels)"
+implementation:
+  how: >-
+    The 15 minute sums of B1 S01, S02 by a sliding window of 15 on the [coin x (1,440 + 14)] grids (D-1's last 14 minute ends first;
+    sliding_window_view, ADDON 9.3 rule 5), exact on whole dollars (int64), the share as a Fraction then float; S08 from R2's S03 by
+    masks. The test (test_condition) is a separate read-only job on the produced X1 rows and COST K1. PHASES (ADDON_ARCHITECTURE_V4
+    section 4): year inputs only, every point final in one pass, days in parallel, no CARRY.
+  kernel: 'addon_grid_v2 85c8ece1 roll_points (how sum, n 15, the head = D-1''s last 14 minute ends) on int64 dollars'
+  memory_mb: 50
+  seconds_share: 0.3
+data_checks:
+  - what: "how often |S09| > 0.3 per coin and day (the level 0.3 is research 8.2's opinion), read-only from B before the test"
+    who: TREE
+  - what: "B's B1 S01, S02 rows at 00:00 of 10 Sep 2025 (valued, or empty because 9 Sep's trades file is not in the year), read-only from B before the job: it fixes S09's first valued minute (00:14 or 00:15)"
+    who: TREE

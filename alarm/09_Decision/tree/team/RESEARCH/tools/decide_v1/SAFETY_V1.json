@@ -1,0 +1,16 @@
+{
+ "schema": "DECIDE_SAFETY_V1",
+ "status": "EMPTY_PLACEHOLDER",
+ "set_by": null,
+ "note": "the owner sets the off days, the off states and the kill limits. Until then nothing is switched off and no limit exists. Kill limits are paper and live controls; decide_v1 records them and does not enforce them.",
+ "off_days": [],
+ "off_states": [],
+ "kill_limits": {
+  "max_open_per_coin": null,
+  "max_open_total": null,
+  "daily_loss_stop_per_alarm": null,
+  "daily_loss_stop_book": null,
+  "drift_bands": null,
+  "data_stop_s": null
+ }
+}

@@ -1,0 +1,136 @@
+# T5_V1.yaml: TIMEX seconds into the quarter hour (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8; ADDON_ARCHITECTURE_V4
+# edit 3 0591d181; BUILD_ITEMS_V4 9d424de3: every 5 s; REVIEW_LEAD_EDGE1_V1 8dd9867d section 0 applied from the start).
+# Worked examples recomputed by team/TREE/proposals/verify_retx_timex_examples_tree_v1.py.
+kind: build_metric
+id: T5
+producer: TIMEX
+item: seconds into the quarter hour
+tier: BUILD
+name: the seconds since the last UTC quarter hour (:00, :15, :30, :45) at every 5 s point, the clock of the quarter-hour bursts
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 1
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T20:01:54Z'
+means: >-
+  Where the point sits in its quarter hour: 0 at :00:00, :15:00, :30:00 and :45:00 UTC, then 5, 10, ..., 895 seconds. Crypto books and
+  trades burst at the quarter hours (bots, funding, index fixings: RESEARCH_TOOLS_V1 6.4); this clock lets a reader condition on it.
+  The same for every coin: one MARKET row per point.
+example: >-
+  At 2025-12-10 19:07:00 UTC the quarter hour began at 19:00:00: S03 = 420; at 19:15:00 a new one: S03 = 0; at 19:22:00, 420 again;
+  at 23:59:55, 895.
+formula: >-
+  At each 5 s point u of D (u = 00:00:00 to 23:59:55 UTC, 17,280 points): S03 = epoch_seconds(u) mod 900, with epoch_seconds the
+  whole seconds since 1970-01-01 00:00:00 UTC (u // 1,000,000 on the microsecond stamps). A day is 96 x 900 s, so this equals the
+  seconds since 00:00 of D mod 900. Whole numbers 0 to 895 in steps of 5. Never empty (the clock always gives a value).
+source:
+  kind: doc
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 section 9.2 (N2 event clocks: 'Seconds into the quarter hour = epoch_seconds(e) mod 900 (a day is 96 x
+    900 s ...); at minute ends the values are 0, 60, ..., 840'; planted: e = 2025-12-10 19:07:00, 68,820 mod 900 = 420; e = 19:15:00,
+    69,300 = 77 x 900 gives 0) and section 6.4 (the quarter-hour imbalance). No tool needed.
+inputs:
+  - kind: clock
+    ref: the point u itself (UTC microseconds of the 5 s grid)
+    rule_in_force: u
+    stale_rule: never stale
+    days: D
+overlaps:
+  - setting: CALX (EDGE1's calendar group)
+    kind: other_metric
+    why: >-
+      CALX's clocks count to and from named events (CARD_Z1_V2 rules 3, 4: the next and last event); S03 is the plain wall clock of the
+      quarter hour, no event list. Another quantity.
+per_coin: >-
+  None: one MARKET row per point (the clock is the same for every coin).
+time: >-
+  UTC only: the quarter hours of Berlin or New York are the same instants (their offsets are whole hours or half hours, multiples of
+  900 s: opinion checked for UTC+1, +2, -4, -5). No leap seconds in epoch time. The pilot shows S03 on 10 to 12 Sep 2025 (no window).
+output:
+  group_file: X1/day=<D>/TIMEX.parquet
+  names:
+    - name: S03
+      label: seconds_into_quarter_hour
+      units: seconds (whole, 0 to 895)
+      value_kind: whole
+      decimals: 0
+      means: epoch_seconds(u) mod 900 at the 5 s point u (MARKET)
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 MARKET rows per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: known_at = u (the clock is known at its point); so known_at <= as_of on every row
+  empty_reasons:
+    - reason: NO_CLOCK
+      when: never in a built day (listed for the format; a point outside the day's grid is not written)
+  stale_rule: never stale
+  max_staleness_s: 0
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the research clock (RESEARCH 9.2)
+    input: 'u = 2025-12-10 19:07:00 UTC (68,820 s after 00:00)'
+    answer: S03 420
+  - case: E2 the quarter hour itself
+    input: 'u = 2025-12-10 19:15:00 (69,300 = 77 x 900)'
+    answer: S03 0
+  - case: E3 the second quarter of the hour
+    input: 'u = 2025-12-10 19:22:00'
+    answer: S03 420 (an hour clock would say 1,320)
+  - case: E4 the last point of the day
+    input: 'u = 23:59:55'
+    answer: S03 895
+  - case: E5 a point between minute ends
+    input: 'u = 12:07:35'
+    answer: S03 455
+  - case: E6 midnight
+    input: 'u = 00:00:00 of D'
+    answer: S03 0
+unit_tests:
+  - test: U1 (E1 to E3)
+    planted: the points of 2025-12-10
+    expect: '420, 0, 420'
+  - test: U2 (E4 to E6) and every point
+    planted: the points of 2025-12-10 and of 2026-03-08
+    expect: '895, 455, 0; at every point S03 = (u - 00:00 of D in seconds) mod 900 (the brute twin by datetime), 96 resets a day, 17,280 MARKET rows'
+  - test: U3 the stamps
+    planted: U1, U2
+    expect: 'as_of = known_at = u; whole numbers 0 to 895 in steps of 5 only'
+mutants:
+  - mutant: M1 seconds into the hour (mod 3,600)
+    caught_by: 'U1 (E3 gives 1320)'
+  - mutant: M2 milliseconds mod 900 (the unit lost)
+    caught_by: 'U1 (E1 gives the epoch milliseconds mod 900 = 600, not 420)'
+  - mutant: M3 the minute only (u mod 900 rounded down to the minute)
+    caught_by: 'U2 (E5 gives 420, not 455)'
+real_check:
+  points:
+    - point: 2026-03-08, MARKET, every point
+      why: the 17,280 points of a day against the brute twin
+    - point: 2025-09-10, MARKET, u = 00:00:00, 00:14:55, 00:15:00
+      why: the first year day, a quarter-hour edge
+  pass: >-
+    The tester recomputes S03 from this card's words with datetime (rawcheck/check_timex.py): whole numbers equal at every point.
+meaning_check:
+  pass_lines:
+    - "the quarter-hour burst (RESEARCH_TOOLS_V1 6.4): on 2026-03-08 the median over coins of |C1 S01| (the 5 s Binance mid return) at the points with S03 = 0 or 5 is above its median at S03 = 450 or 455 (it can fail: then the clock is kept as a plain clock and the burst reported absent)"
+  report_only:
+    - the median |C1 S01| per S03 value (the quarter-hour profile) on 2026-03-08
+conclude:
+  may:
+    - how many seconds the point is into its UTC quarter hour
+  never:
+    - a burst at the quarter hour on its own (S03 is the clock; the burst is the pass line's question)
+    - a coin's value (one MARKET clock)
+readers: "none yet (planned: the lab's quarter-hour conditioning, FLOWX's quarter-hour imbalance F13)"
+implementation:
+  how: >-
+    One int64 array of the 17,280 points of D: (u // 1,000,000) mod 900. PHASES (ADDON_ARCHITECTURE_V4 section 4): point-local,
+    final in phase A; no input, no CARRY.
+  kernel: "new: quarter_clock (ADDON_ARCHITECTURE_V4 section 9.4 names it for T5's drafter, with its brute twin by datetime, U1)"
+  memory_mb: 5
+  seconds_share: 0.01
+data_checks: none

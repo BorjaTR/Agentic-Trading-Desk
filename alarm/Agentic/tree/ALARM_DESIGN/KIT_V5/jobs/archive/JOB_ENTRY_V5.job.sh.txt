@@ -1,0 +1,50 @@
+# JOB @@JOBNUM@@_@@SEAT@@_ENTRY_@@IDEA@@ -- @@RUNTAG@@ (ALARM_DESIGN KIT_V5 JOB_ENTRY_V5, template @@TPLSHA@@): STRATEGY's own entry check on @@IDEA@@, variants @@ITEMS_LIST@@, fire lists from grade job @@FROMJOB@@: S0 = the team grader store on 10 Sep-31 Dec 2025 (run_alarm_store_v10_3_noladder.sh, no ED3.2 exit ladder; a scratch registry row, the team registry never edited), then S2 = markout_v1_1 at waits 0, 60, 300 s, halves at 1 Nov. PREREG @@PREREG_REL@@ @@PREREG_SHA@@. TEST, NOT REVIEWED. Never deletes. Stops before the quiet window and when SCRATCH_DISK has under 60 GB free.
+# WRITES <SCRATCH>/work_@@RUNTAG@@/@@JOBNUM@@_ENTRY_@@IDEA@@/, the store's own places work_ALARMLIB/i2g_v3_2/ and work_TOOLTRIAL/chain/ (no ladder store), and team/RESEARCH/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_ENTRY_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# DRIVE: SCRATCH_DISK
+set -u
+F=<LAB_REPO>/forensics; R=$F/team/RESEARCH; PY=<PYTHON>
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+RD=$R/ALARM_DESIGN/runs/@@RUNTAG@@; RDREL=team/RESEARCH/ALARM_DESIGN/runs/@@RUNTAG@@; X=$R/tools/markout; CH=$R/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/run_alarm_store_v10_3_noladder.sh
+J=@@JOBNUM@@_ENTRY_@@IDEA@@; W=<SCRATCH>/work_@@RUNTAG@@/$J; DV=$RD/receipts/$J; FAM=@@IDEA@@; CARDREL=$RDREL/ideas/@@IDEA@@/ALARM_CARD.md
+@@ITEMS_BLOCK@@
+mkdir -p $W $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m <SCRATCH_DISK> | awk 'NR==2{print $4}'; }
+ck $CH 887dc80bbf72f655; ck $X/markout_v1_1.py 3239e4685080894e; ck $X/test_markout_v1_1.py 5ff4d0940bc1646c; ck $X/test_markout_v1.py dd91de15f8e5e824
+ck $X/settings/SETTINGS_V1.json 495b6e45b8fa7a81; ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@; [ -f $F/$CARDREL ] || { st pin 3 0 "NO CARD $CARDREL"; st end 3 0 "pins"; exit 3; }
+for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; ck ${SRCS[$i]} ${SRCSHAS[$i]}; done
+h=$((10#$(date -u +%H%M))); if [ $h -ge 2320 ] || [ $h -lt 15 ]; then st quiet 0 0 "QUIET WINDOW NEAR: not started"; st end 0 0 "not started"; exit 0; fi
+f=$(fmb); st start 0 0 "SCRATCH_DISK free ${f} MB"
+cd $X || { st cd 2 0 "no markout folder"; st end 2 0 "cd"; exit 2; }
+$PY -B test_markout_v1_1.py $W/units < /dev/null > $W/units.log 2>&1; c=$?; st markout_units $c 0 "$(tail -n 1 $W/units.log | tr '\t' ' ' | cut -c1-200)"; cp -n $W/units.log $DV/
+[ $c -eq 0 ] || { st end 6 0 "markout units failed"; exit 6; }
+for i in "${!VS[@]}"; do V=${VS[$i]}; AID=ALM_@@SEAT@@_${V}_SD; K=$W/$V; mkdir -p $K $DV/$V
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then st disk_$V 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; st end 7 0 "disk"; exit 7; fi
+  EV=$K/EVENTS_${V}_20250910_20251231.tsv
+  awk -F'\t' 'NR==1 || ($2 >= 1757462400 && $2 < 1767225600)' ${SRCS[$i]} > $EV; EVSHA=$(shasum -a 256 $EV | cut -c1-16)
+  st events_$V 0 0 "$(( $(wc -l < $EV) - 1 )) fires Sep 10-Dec 31, sha16 $EVSHA"
+  cd <DEV>
+  t0=$(date +%s); bash $CH $AID 20250910 20251231 $EV $EVSHA $RDREL/${DEFS[$i]} $CARDREL $FAM < /dev/null > $K/store.log 2>&1; r=$?
+  CD=$(ls -dt <SCRATCH>/work_TOOLTRIAL/chain/${AID}_20250910_20251231_* 2>/dev/null | head -1)
+  [ -n "$CD" ] && cp -n $CD/STATUS.tsv $K/STORE_STATUS.tsv 2>/dev/null
+  RUNDIR=$(awk -F'\t' '$1=="grader_store" && $2=="0" {print $4}' $K/STORE_STATUS.tsv 2>/dev/null | tail -1)
+  st store_$V $r $(( $(date +%s)-t0 )) "chain $CD run ${RUNDIR:-none}"
+  cd $X
+  if [ -n "$RUNDIR" ] && [ -f $RUNDIR/RUN.json ]; then
+    t0=$(date +%s); $PY -B markout_v1_1.py run --run $RUNDIR --settings settings/SETTINGS_V1.json --out $K/MARKOUT --waits 0,60,300 --workers 2 < /dev/null > $K/markout.log 2>&1; c=$?
+    st markout_$V $c $(( $(date +%s)-t0 )) "$(tail -n 1 $K/markout.log | tr '\t' ' ' | cut -c1-200)"
+    printf '%s\tchain\t%s\nrun\t%s\n' $V "$CD" "$RUNDIR" > $DV/$V/STORE_PLACES.tsv
+    du -sm "$CD" "$RUNDIR" 2>/dev/null | awk '{print "du_mb\t"$1"\t"$2}' >> $DV/$V/STORE_PLACES.tsv
+  else st markout_$V 5 0 "no grader run (see STORE_STATUS.tsv)"; fi
+  (cd $K && for x in STORE_STATUS.tsv store.log markout.log MARKOUT/GATES.json MARKOUT/CURVE.tsv MARKOUT/HALVES_W0.tsv MARKOUT/HALVES_W60.tsv MARKOUT/HALVES_W300.tsv MARKOUT/TABLE_W0.tsv MARKOUT/RECEIPT.json; do [ -f $x ] && { mkdir -p $DV/$V/$(dirname $x); cp -n $x $DV/$V/$x; }; done)
+done
+du -sm $W | awk '{print "du_mb_W\t"$1}' > $DV/DISK.tsv; printf 'free_mb_end\t%s\n' "$(fmb)" >> $DV/DISK.tsv
+(cd $DV && shasum -a 256 */STORE_STATUS.tsv */MARKOUT/*.tsv */MARKOUT/*.json 2>/dev/null) > $DV/SHA16.txt
+st end 0 0 "SCRATCH_DISK free $(fmb) MB; W $(du -sm $W | cut -f1) MB"
+exit 0

@@ -1,0 +1,4 @@
+# loop_find.py also reads these (relative to the repo folder): the general lessons and the reworded kit learnings (V1.1)
+loop/LESSONS_GENERAL_V1.tsv
+loop/KIT_LEARNINGS_V5.tsv
+loop/KIT_LEARNINGS_V6.tsv

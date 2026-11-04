@@ -1,0 +1,103 @@
+# OUR_RULE_D2_V1.yaml: the card of D2's OUR RULE S05 spread_z (the median coin's spread against its last 24 h), EDITION 1 (BED, 2026-10-18;
+# OR4 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1 15:54:31Z; reviewer EDGE2). Made as OUR_RULE_C9_V1 66c345c9 (EDGE2); ONE SOURCE
+# OF TRUTH; rawcheck/meaning_register.py edition 5 checks it. Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv
+# 3ada04c1de934f65 (D2 S05 our_rule, NOT_CHECKED before this card). The smart check (section 1): the input cited by what it is, planted
+# tests and mutants first, ONE small job (J16001: the computation at 9 named minute ends of 2 days), the meaning on the year's own rows
+# (J16003), the readers to TREE's RR1. Pass lines: hb/BED.txt 2026-10-18T16:15:55Z 'BED PASS LINES OR4.BOOK', posted before J16001 ran.
+
+# Edit 1 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.D2 OK with 4 nits, hb/EDGE2.txt 16:42:50Z): (1) the one-step share is of the
+# coins' spreads (BASIC_D2_V1 line 26), not the median coin's; (2) the MAD at the z-3 minutes (0.7931%, 1.3196% on 3 and 50 minutes) beside
+# the day's (0.7054%, 1.4340%); (3) 'the first empty': none on these days; (4) the pass lines' and RR1 line's stamps written out. No verdict
+# changed.
+group: D2
+name: top of the book, our rule S05 (the median coin's spread as a robust z against its last 24 hours)
+summary: >-
+  At a minute end e: z = (x - med) / (1.4826 x MAD), x = the exact D2 S04 at e (the median roster coin's spread, bps), the history = the
+  exact S04 at every minute end after e - 24 h and before e that has a value, med its median, MAD the median of the distances to med; 4
+  decimals, half up, never -0. Empty with x's reason, THIN_HISTORY under 720 values, FLAT_HISTORY when MAD is 0 (CARD_D2_V3 rule 12).
+read_as: >-
+  The formula is the standard robust (modified) z, and the year writes it exactly (18 of 18 named minute ends, RULE_D2_STAMPS_V1, J16001).
+  But its input barely moves: the coins' spreads are one price step at 98.94% and 97.03% of coin-minutes (BASIC_D2_V1), so the MAD of the
+  median spread is 0.7054% (24 Sep 2025) and 1.4340% (8 Mar 2026) of its median over the day (0.7931% and 1.3196% at the 3 and 50 minutes
+  with z 3 to 3.5), and at those minutes the median spread is only 3.575% and 6.373% over its 24 h median (J16003). S05 is 3 or more at 21.94% and 6.74% of minutes, 1 or more at 23.96% and 42.29%: a 3 is common, not a 3-sigma
+  event. This is what keeps D5's latch on (OUR_RULE_D5_V1). On a one-step book the median spread in bps is that coin's step over its price,
+  so a few percent can come from the price level or from another coin becoming the median, not from a wider book (not separated here).
+
+conclude:
+  may:
+    - "how far the median coin's spread now sits from its own last 24 hours, in robust units (S05: the year's value equals our exact recompute at 18 of 18 named minute ends of 8 Mar 2026 and 24 Sep 2025; RULE_D2_STAMPS_V1, J16001)"
+    - "a large S05 at a real widening: 70.8287 at 22:04 of 8 Mar 2026 (the median spread 4.7511 bps), 167.7976 at 13:44 of 24 Sep 2025 (2.0578 bps against about 0.82) (J16001)"
+  never:
+    - "S05 of 3 or more as a rare wide spread: 21.94% (24 Sep 2025) and 6.74% (8 Mar 2026) of minutes; at z 3 to 3.5 (3 and 50 minutes) the median spread is only 3.575% and 6.373% over its 24 h median, the MAD 0.7931% and 1.3196% of the median there (0.7054% and 1.4340% over the day) (J16003)"
+    - "S05 as the book getting wider: the coins' spreads are one price step at 97 to 99% of coin-minutes (BASIC_D2_V1), so a few percent in bps can be the step over a lower price or another median coin"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D2_V3.md 80f0a6d271bf5610 (rule 12, O5 to O7; edge cases E36 to E42)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_D2_V1.tsv 64d5823a95e5e801 (S05 spread_z, 4 decimals)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml 06e2cdad28528acf (D2 S04, the median roster coin's spread in bps: basic, computation RELIABLE, LIMITS: one price step at 97 to 99% of coin-minutes); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65 (D2 S05 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_D2_v2.py c497655d54510ff0 (CARD_D2_V3 edition 3), driver work_CLK/drivers/drive_l0b_D2_v2_day.py eb03cb25d0e0e0cc"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D2.parquet
+  year_output_columns: "name (S05 with S05.coverage and the quotes copy of S05), coin (MARKET for S05), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 4 a value), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'D2', ['S05']) (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, binance-futures bookTicker, through D2 S04 (BASIC_D2_V1)"
+  exchange_stream: "bookTicker as Tardis records it, read by D2; S05 reads D2 S04's minute values, never a stream"
+  files: "the year's D2 output of D-1 and D (D2.parquet); for the check, BED's book base MARKET.parquet D2 S04_exact (int_recompute_book B3: the exact median spread as a fraction, a second recompute from the Tardis rows)"
+  columns: "D2 S04 at every minute end of D-1 and D, value_kind, value_f64, value_txt, empty_reason"
+  fields:
+    z: "z = (x - med) / (1.4826 x MAD) from the exact S04 at e and the exact S04 at the minute ends after e - 24 h and before e; rounded once to 4 decimals, half up, a tie away from 0, never -0 [proof: CARD_D2_V3 rule 12; planted E36 to E42, B1 (the start after e - 24 h excluded), R1 (a tie at the 4th decimal) in tests/test_rule_book.py; RULE_D2_STAMPS_V1]"
+    empty: "x's reason when x is empty; THIN_HISTORY under 720 values (719 at 12:00 with D-1 missing, 720 at 12:01: E40, E41); FLAT_HISTORY when MAD is 0 (E36) [proof: tests/test_rule_book.py D2 E36, E40 to E42]"
+  latency: "known_at = the latest arrival of the rows in force of the coins counted (CARD_D2_V3 rule 13); not checked here"
+  silence: "x empty: S05 empty with x's reason (BOOK_HOLE, stale); none on 8 Mar 2026 and 24 Sep 2025 (J16001: empty 0)"
+
+reading_rules:
+  - "S05 compares the median coin's spread with its own last 24 hours: a cross-time z of one number, not of every coin"
+  - "the MAD of a one-step spread is about 1% of the median, so 1.4826 x MAD is about 1 to 2% of the spread: S05 counts percents of a step"
+  - "the year also writes S05.coverage (the coins in S04's median at e) and S05.quotes_off (the same rule on the quotes stream's S04): not checked in this card (the owner's copies rule, BASIC_C1_V5)"
+
+values:
+  units: "a robust z, no unit (positive = the median spread wider than its 24 h median)"
+  zero: "0.0000: the median spread equals its 24 h median (24 Sep 2025 03:00, J16001)"
+  empty: "BOOK_HOLE, NO_FILE, BAD_INPUT, ALL_COINS_EMPTY (S04's reasons), THIN_HISTORY, FLAT_HISTORY, NO_ROSTER; value_kind 0. Never read empty as 0"
+  stale: "true when empty BOOK_HOLE (CARD_D2_V3 rule 13)"
+  flags: "S04's (BAD_INPUT:<coin>)"
+
+interpret:
+  do:
+    - "read S05 with S04 beside it: the bps of the median spread say whether a z is a real widening (4.7511, 2.0578 bps) or a few percent of one step"
+  dont:
+    - "read S05 of 3 or more as a rare event (21.94% and 6.74% of minutes)"
+
+biases:
+  - {what: "a one-step input with a tiny MAD", direction: "S05 large on small moves of the median spread", size: "at z 3 to 3.5 the median spread +3.575% and +6.373% (3 and 50 minutes), the MAD 0.7931% and 1.3196% of the median there, 0.7054% and 1.4340% over the day; S05 >= 3 at 21.94%, 6.74% of minutes (24 Sep 2025, 8 Mar 2026)", proof: "J16003 book"}
+
+external_checks:
+  - {what: "S05 recomputed exactly at 9 named minute ends a day (the largest, the smallest, at 3 from above and below, nearest 0, the first empty (none on these days), 00:00, 00:01, 00:05 whose history reaches into D-1, 23:59 with none) of 8 Mar 2026 and 24 Sep 2025, from BED's book base exact S04 of D-1 and D", where: "BED's book base (int_recompute_book B3, exact, from the Tardis rows; a recompute)", status: "VERIFIED: RULE_D2_STAMPS_V1 f1ad4b5c326e3a7a: 18 of 18 MATCH (J16001 log 64667d98ea8d4bbf, rule_book ed1 3d92d58bd3a0a0c7, tests 4e7edbe9053e12b5 80 of 80: 62 cases, 18 mutants)"}
+  - {what: "how often S05 reaches 3 and 1, the move of the input at z 3, the MAD over the median", where: "the year's own D2 S04, S05 rows of 23, 24 Sep 2025 and 7, 8 Mar 2026", status: "MEASURED: J16003 book (meaning_rule_or4 ed1 9ca04a65083e956d, tests b12c0c3953d92952 12 of 12; log 98a99d46fb98baf6)"}
+  - {what: "an outside record", where: "none: our rule on our median spread; S04 is checked against the Tardis rows in BASIC_D2_V1", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "S05, S17 at named minute ends, the D5 latch replayed, the walls", run: "python3 -B -m rawcheck.rule_book --days <D,..> --out <dir>", where: "team/RAWCHECK/code (rule_book.py 3d92d58bd3a0a0c7; basic_book's text-exact reader and rounding imported)"}
+  - {what: "how often the book rules fire on one day", run: "python3 -B -m rawcheck.meaning_rule_or4 book <D>", where: "team/RAWCHECK/code (meaning_rule_or4.py 9ca04a65083e956d)"}
+
+used_by: "CHAIN_quiet_LONG_fade_4 (condition 3: spread_z in fifth 1, a tight spread, -> SKIP; the fifth from baseline, min_count 100) and D5 liquidity_latch (set at S05 3 or more, calm under 1: OUR_RULE_D5_V1) (CARD_D2_V3 'Who reads it today'). To TREE's RR1 (hb/BED.txt 16:29:05Z): S05 >= 3 at 21.94% and 6.74% of minutes holds D5's latch on"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D2_V3.md 80f0a6d271bf5610
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml 06e2cdad28528acf (S04, the input)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_D2_STAMPS_V1.tsv f1ad4b5c326e3a7a (J16001)"
+  JOBS: "16001 (tests, rule_book on 8 Mar 2026 and 24 Sep 2025; log 64667d98ea8d4bbf), 16003 (meaning_rule_or4 book, both days; log 98a99d46fb98baf6)"
+  PASS_LINES: "hb/BED.txt 2026-10-18T16:15:55Z 'BED PASS LINES OR4.BOOK', posted before J16001 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): a rename only where the formula differs from the standard one its name calls up; spread_z is the standard robust z of the spread: no rename"
+
+settings:
+  - {id: D2.S05, name: "median coin's spread as a robust z against its last 24 h", layer: our_rule, side: none, window: "the minute ends after e - 24 h and before e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "(x - med) / (1.4826 x MAD) of the exact D2 S04, the history at the minute ends after e - 24 h and before e with a value; 4 decimals; THIN_HISTORY under 720 values, FLAT_HISTORY at MAD 0", aliases: "spread_z",
+     derived_from: "D2 S04 (BASIC_D2_V1) at e and at the minute ends of the last 24 h",
+     means: "how many robust units the median coin's spread sits above (below) its last 24 hours",
+     computation: {status: RELIABLE, proof: "RULE_D2_STAMPS_V1 f1ad4b5c: 18 of 18 (9 named minute ends x 8 Mar 2026, 24 Sep 2025, history from the book base exact S04 of D-1 and D; J16001, rule_book 3d92d58b)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16003 book: >= 3 at 0.2194 and 0.0674 of minutes, >= 1 at 0.2396 and 0.4229 (24 Sep 2025, 8 Mar 2026); at z 3 to 3.5 (3 and 50 minutes) the median spread +3.575% and +6.373% from its 24 h median, the MAD 0.7931% and 1.3196% there (0.7054% and 1.4340% over the day); the standard robust z (no rename)"},
+     open: "a one-step input: z 3 is a few percent of one price step; how much of S05 is the price level or the median coin changing, not a wider book, is not measured; two days",
+     never: ["S05 of 3 or more as a rare wide spread (21.94% and 6.74% of minutes)", "S05 as the book getting wider without S04's bps beside it"]}

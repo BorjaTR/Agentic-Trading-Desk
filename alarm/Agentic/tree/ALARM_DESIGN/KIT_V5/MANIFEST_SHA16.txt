@@ -1,0 +1,51 @@
+# MANIFEST_SHA16 of ALARM_DESIGN KIT_V5 (SCOUT, 2026-10-29T14:18:33Z from the clock). TEST, NOT REVIEWED. Twins (.pre_*) are not listed.
+# Updated 2026-10-30T00:23:54Z by SCOUT: the MONTH template calls team/RESEARCH/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh (c24bd949b32c8e24, 26 coin parts; per-part memory, data and code sha16 in DETECT_MEM_<V>.tsv, the fire list kept); smoke v4 job 20264083 ok 1 rc 0 (S1 Sep-Dec EXACT; S2 26 parts under the cap, max 1780858880 bytes, one data and code version, Sep-Dec EXACT); review 1 delta PASS, review 2 final PASS 00:24Z, review 1B PASS 23:58Z; old manifest 3087f5a0237f62f0 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261030T002354Z.
+# Updated 2026-10-29T21:11:42Z by SCOUT: forward-only route (the owner 29 Oct 22:02 Berlin): queue_job_v4.py MONTH --forward-only, new tools/decide_forward_v1.py, audit A6 recomputes FORWARD rows; 59 tests pass; old manifest 79cea10ea93c3c38 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T2112Z.
+# Updated 2026-10-29T20:56:16Z by SCOUT: audit A6 recomputes a NO ENTRY row with --entry-too-big (AD8 audit 20:51Z); old manifest b63cceb7d563f27d kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T2058Z.
+# Updated 2026-10-29T20:35:08Z by SCOUT: decide_v1.py --entry-too-big writes NO ENTRY for an R1 variant whose ENTRY can never fit the run budget, so its GRADE job can be cleaned (AD8 20263926, V6-41; 56 tests pass); old manifest 153084bd3e9170cb kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T2040Z.
+# Updated 2026-10-29T19:38:35Z by SCOUT: a run holds at most 10,000 MB of uncleaned scratch from round 3 19:40Z (AD9 ENTRY held out by the 8,000 budget, 19:29Z); old manifest f463889217a19ae0 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T1941Z.
+# Updated 2026-10-29T17:25:47Z by SCOUT: a run holds at most 8,000 MB of uncleaned scratch from round 2 (queue_job_v4 and audit A17); old manifest 42d52f02185950ff kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T172536Z.
+# Updated 2026-10-29T17:13:20Z by SCOUT: CLEAN takes a failed job without decisions for its failed variants (AD3 17:08Z); old manifest 946cf8498a4cee73 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T171155Z.
+# Updated 2026-10-29T17:08:16Z by SCOUT: --behind waits behind your own job, never in an empty queue (AD2 17:02Z); old manifest 95936c6649dbbea9 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T170631Z.
+# Updated 2026-10-29T16:28:55Z by SCOUT: a variant whose job failed may be queued again under its name (queue_job_v4); old manifest 8bc1f5baaf6bf367 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T162837Z.
+# Updated 2026-10-29T15:44:03Z by SCOUT (agents' findings): ENTRY size from measured receipts, audit A2 skips CLEAN labels, board twins unique within a second; old manifest a374a0ce57b01b92 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T154331Z.
+bd43b8e5a135a791  README.md
+34364145b6756c88  PROCESS_V7.md
+12dadd2bc1004a54  LEARNINGS_V5.tsv
+9ad6753ac27a7f26  LAUNCH_PROMPT_V5.md
+6a30c3d0a1f24172  LAUNCH_PROMPTS_29OCT.md
+15bdefeab9f306b6  IDEA_TO_ALARM_V4.md
+2ce8599de0cb4200  QUICK_CHECK_EXAMPLES_V2.md
+5e5868eed744eb88  METRIC_MENU_V1.tsv
+163a6dc2e76797ab  METRIC_FAMILIES_V1.md
+84949bf3c749d985  FORCED_TRADE_MAP_V1.md
+b297240b3a33072b  skills/alarm-design-v5/SKILL.md
+22548c37d2d2c679  templates/IDEA_CARD_V5.md
+17847a7cc615df2f  templates/ALARM_CARD_V4.md
+16b6224e4eab5551  templates/PREREG_V5.md
+6b1fd677bc5d11ae  templates/FORECAST_V5.md
+ac4bfd7a1c3deaba  templates/FINDINGS_V5.md
+49081735b39b8a42  templates/REPORT_V5.md
+66e9ae3038160241  jobs/JOB_COUNT_V5.job.sh.txt
+4a28c8ba3a23347a  jobs/JOB_GRADE_V5.job.sh.txt
+c36ac948e53ea3b1  jobs/JOB_ENTRY_V5.job.sh.txt
+4835bdfb4a20f665  jobs/JOB_MONTH_V5.job.sh.txt
+a6c3c57bd394159e  jobs/JOB_CLEAN_V5.job.sh.txt
+dc19a63f01c4e8fe  tools/queue_job_v4.py
+7a127fe63e199eec  tools/decide_v1.py
+ea7b62eb1437170d  tools/board_line_v1.py
+7e533d36e0dd9132  tools/audit_run_v2.py
+90e6dab92f49dee1  tools/clean_scratch_v1.py
+3f1e3fb46430a5c5  runs/TEMPLATE_V3/README_RUN.md
+d3e98152ed88f391  runs/TEMPLATE_V3/registers/VARIANTS.tsv
+208551bd24ae7c68  runs/TEMPLATE_V3/registers/FORECASTS.tsv
+29af262f4df04b54  runs/TEMPLATE_V3/registers/RUNS.tsv
+3b313e09b7e02221  runs/TEMPLATE_V3/registers/DECISIONS.tsv
+812dffbf0b838831  runs/TEMPLATE_V3/registers/POSTMORTEMS.tsv
+4023f5ac8f792e2e  runs/TEMPLATE_V3/registers/LEARNINGS_PROPOSED.tsv
+e10901b9b6648570  runs/TEMPLATE_V3/registers/PROBLEMS.tsv
+cc2024d6d2b6dc55  runs/TEMPLATE_V3/registers/TOOLS_BUILT.tsv
+52897128a1751f40  tests/test_kit5_tools.py
+b6a8776317127542  tests/sim_env.py
+482bfe42036382f5  tests/mutants_v1.py
+bee5a79a5546b7cd  tools/decide_forward_v1.py

@@ -1,0 +1,238 @@
+# 01_Detection: files to delete before the commit (SCOUT deletes them). Why: the owner, 30 Oct 12:33 Berlin, option a (released editions only in GitHub), and the part layout of 30 Oct (tool doc folders at the top, byte copies under tree/)
+path	why
+team/LAB3/METRICS_HL_ADD_V1.tsv	not needed by a released tool here: an extra metric table that only the grade chain (a TEST edition) passes to detect through METRIC_TRAPS or CATALOGS; detect and its tests read the default tables (METRICS_V1, METRIC_TRAPS_V3, CTX and EPI catalogs)
+team/LAB3/METRICS_V1.tsv	moved under tree/ (now tree/team/LAB3/METRICS_V1.tsv, same bytes)
+team/LAB3/LAB4/proposals/metric_traps/METRIC_TRAPS_V3.tsv	moved under tree/ (now tree/team/LAB3/LAB4/proposals/metric_traps/METRIC_TRAPS_V3.tsv, same bytes)
+team/LAB3/code/lab3/__init__.py	moved under tree/ (now tree/team/LAB3/code/lab3/__init__.py, same bytes)
+team/LAB3/code/lab3/__main__.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/asof.py	moved under tree/ (now tree/team/LAB3/code/lab3/asof.py, same bytes)
+team/LAB3/code/lab3/bands.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/binfmt.py	moved under tree/ (now tree/team/LAB3/code/lab3/binfmt.py, same bytes)
+team/LAB3/code/lab3/bins.py	moved under tree/ (now tree/team/LAB3/code/lab3/bins.py, same bytes)
+team/LAB3/code/lab3/build_day.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/catalog.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/clock_encode_v2.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/days.py	moved under tree/ (now tree/team/LAB3/code/lab3/days.py, same bytes)
+team/LAB3/code/lab3/fastdecode.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/lab_readings.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/labgroups.py	moved under tree/ (now tree/team/LAB3/code/lab3/labgroups.py, same bytes)
+team/LAB3/code/lab3/law.py	moved under tree/ (now tree/team/LAB3/code/lab3/law.py, same bytes)
+team/LAB3/code/lab3/parts.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/reader.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/rows.py	moved under tree/ (now tree/team/LAB3/code/lab3/rows.py, same bytes)
+team/LAB3/code/lab3/tables.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/tb.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/verify_day.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/LAB3/code/lab3/write.py	moved under tree/ (now tree/team/LAB3/code/lab3/write.py, same bytes)
+team/LAB3/code/lab3/write_v2.py	lab3 module no tool or test of this part imports (not in I2G_PINS_V2.json, the release pins of detect.py: only __init__, asof, binfmt, bins, days, labgroups, law, rows, write are run); copied under the withdrawn self-contained rule; the 9 pinned files stay here (found by the tools' relative layout)
+team/OUTSIDE/CODE2/fresh_grading_t2_v1/BN_OI_CONTRACTION_1PCT_10M_T2_V1.json	moved under tree/ (now tree/team/OUTSIDE/CODE2/fresh_grading_t2_v1/BN_OI_CONTRACTION_1PCT_10M_T2_V1.json, same bytes)
+team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json	moved under tree/ (now tree/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json, same bytes)
+team/RESEARCH/ALARM_DESIGN/KIT_V2/templates/DEF_TEMPLATE_V2.json	TEST edition, not released: a KIT_V2 template (the alarm kit has no release); the definition format is in alarm_design/README.md section 2
+team/RESEARCH/ALARM_DESIGN/KIT_V5/PROCESS_V7.md	TEST edition, not released: a KIT_V5 document (its first line: PROPOSED for the owner. TEST, NOT REVIEWED)
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/ideas/LOOP2/defs/LP2_DAYPOKE_DEF_V2.json	not needed by a released tool here: an example definition from the CLAUDE1 run (run data, PROCESS_V7 section 6); the tests start from BN_OI_CONTRACTION_1PCT_10M_T2_V1.json
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc_defs_v1_to20251231.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_daypoke.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_lib.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_o1.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_o1_missing.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_unforced.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_unforced_missing.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/hc3_wave.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc3_v1/unforced_count.py	TEST edition, not released: CLAUDE1 run tool (hand checks), status BUILT in runs/CLAUDE1_20261028/registers/TOOLS_BUILT.tsv; no RELEASE
+team/RESEARCH/LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv	not needed by a released tool here: an extra metric table that only the grade chain (a TEST edition) passes to detect through METRIC_TRAPS or CATALOGS; detect and its tests read the default tables (METRICS_V1, METRIC_TRAPS_V3, CTX and EPI catalogs)
+team/RESEARCH/LEAD/loop2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv	not needed by a released tool here: an extra metric table that only the grade chain (a TEST edition) passes to detect through METRIC_TRAPS or CATALOGS; detect and its tests read the default tables (METRICS_V1, METRIC_TRAPS_V3, CTX and EPI catalogs)
+team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief.py	moved under tree/ (now tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief.py, same bytes)
+team/RESEARCH/alarms/A01_FORCED_ONSET_SPEC_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/A02_FORCED_CLIMAX_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/A03_MARKET_FORCED_WAVE_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/A08_BREADTH_SHOCK_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/A08_BREADTH_SHOCK_CARD_V2.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/A08_MARKET_SHOCK_CARD_V3.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/A18_FORCING_DONE_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/ALARMS_V1.tsv	alarm list index: no released tool here reads it
+team/RESEARCH/alarms/B6_PRICE_PER_DOLLAR_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/B7_WIDE_AND_PRESSED_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/B7_WIDE_AND_PRESSED_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/B8_ROLL_SPREAD_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/B8_ROLL_SPREAD_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/C1_CLOCK_MARKS_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/K0_BUSY_NOW_CONTROL_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/K0_BUSY_NOW_CONTROL_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/M1_BETA_BREAK_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/M2_DISPERSION_SPIKE_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/M3_COUPLING_JUMP_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/M4_SECTOR_SURGE_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/M5_BREADTH_THRUST_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N10_SCHEDULED_MOMENTS_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N11_US_CLOCK_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N1_BUSY_BURST_CARD_V1.md	card V1 of N1, replaced by N1_BUSY_BURST_CARD_V2.md (the card the landed n1_busy_burst_v2.py implements)
+team/RESEARCH/alarms/N1_BUSY_BURST_CARD_V2.md	moved under tree/ (now tree/team/RESEARCH/alarms/N1_BUSY_BURST_CARD_V2.md, same bytes)
+team/RESEARCH/alarms/N6_COIN_ALONE_CARD_V2.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N6_COIN_ALONE_CARD_V3.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N6_COIN_BREAKS_FROM_MARKET_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N7_BTC_FIRST_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N8_DAY_EXTREME_BREAK_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N8_DAY_EXTREME_BREAK_CARD_V2.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/N8_DAY_EXTREME_BREAK_CARD_V3.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/O1_OI_FLUSH_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/O1_OI_FLUSH_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/O5_DELEVERAGE_BOTH_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/O5_DELEVERAGE_BOTH_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/ONSET_RULE_QUANT_V1.txt	moved under tree/ (now tree/team/RESEARCH/alarms/ONSET_RULE_QUANT_V1.txt, same bytes)
+team/RESEARCH/alarms/P11_SWING_SWEEP_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P2_COMPRESSION_RELEASE_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P3_JUMP_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P3_JUMP_CARD_V2.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P4_JUMP_CLUSTER_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P5_CO_JUMP_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P6_VOL_SURPRISE_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P7_VOL_OF_VOL_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/P9_ROUND_LEVEL_CARD_V1.md	TEST edition, not released: card of an alarm whose finder is not LANDED in tools/alarms/BASELINE.tsv
+team/RESEARCH/alarms/Q16_VWAP_PRESSURE_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/Q16_VWAP_PRESSURE_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/Q1_OFI_BURST_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/Q1_OFI_BURST_CARD_V1.md, same bytes)
+team/RESEARCH/alarms/Q4_BASIS_JUMP_CARD_V1.md	moved under tree/ (now tree/team/RESEARCH/alarms/Q4_BASIS_JUMP_CARD_V1.md, same bytes)
+team/RESEARCH/tools/alarm_check/alarm_bench_v1.py	not needed by any released tool: imported only by a02_grid_read_v2.py and a08_shock_v1.py (TEST editions, dropped)
+team/RESEARCH/tools/alarm_check/cuhalf_money_summary_v1.py	not needed by any released tool: imported only by a02_grid_read_v2.py and a08_shock_v1.py (TEST editions, dropped)
+team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv	moved under tree/ (now tree/team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv, same bytes)
+team/RESEARCH/tools/alarm_design/README.md	moved under tree/ (now tree/team/RESEARCH/tools/alarm_design/README.md, same bytes)
+team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_8_1.json	moved under tree/ (now tree/team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_8_1.json, same bytes)
+team/RESEARCH/tools/alarm_design/alarm_design_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarm_design/alarm_design_v2.py, same bytes)
+team/RESEARCH/tools/alarm_design/test_alarm_design_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarm_design/test_alarm_design_v2.py, same bytes)
+team/RESEARCH/tools/alarm_design/test_onset_knownness.py	moved under tree/ (now tree/team/RESEARCH/tools/alarm_design/test_onset_knownness.py, same bytes)
+team/RESEARCH/tools/alarm_process/AW1_SPEC_V1.json	TEST edition, not released: aw1 window edition of detect.py (STRATEGY 28 Oct, "TEST, NOT REVIEWED" in alarm_grade_chain_v2_1 and RELEASE_event_outcomes_AW1.json status); no RELEASE of detect_aw1
+team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv	TEST edition, not released: aw1 window edition of detect.py (STRATEGY 28 Oct, "TEST, NOT REVIEWED" in alarm_grade_chain_v2_1 and RELEASE_event_outcomes_AW1.json status); no RELEASE of detect_aw1
+team/RESEARCH/tools/alarm_process/detect_aw1.py	TEST edition, not released: aw1 window edition of detect.py (STRATEGY 28 Oct, "TEST, NOT REVIEWED" in alarm_grade_chain_v2_1 and RELEASE_event_outcomes_AW1.json status); no RELEASE of detect_aw1
+team/RESEARCH/tools/alarm_process/test_alarm_window_aw1.py	TEST edition, not released: aw1 window edition of detect.py (STRATEGY 28 Oct, "TEST, NOT REVIEWED" in alarm_grade_chain_v2_1 and RELEASE_event_outcomes_AW1.json status); no RELEASE of detect_aw1
+team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv	moved under tree/ (now tree/team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv, same bytes)
+team/RESEARCH/tools/alarms/ALARM_CHECKS_V1.tsv	TEST edition, not released: the alarm check runner and its table have no BASELINE.tsv row (not landed)
+team/RESEARCH/tools/alarms/BASELINE.tsv	moved under tree/ (now tree/team/RESEARCH/tools/alarms/BASELINE.tsv, same bytes)
+team/RESEARCH/tools/alarms/LANDING_A01_A02_V1.md	TEST edition, not released: landing note of A01/A02 (a01_onset_v2, a02_climax_v3: DRAFT in BASELINE.tsv)
+team/RESEARCH/tools/alarms/README.md	moved under tree/ (now tree/team/RESEARCH/tools/alarms/README.md, same bytes)
+team/RESEARCH/tools/alarms/a01_onset_v1.py	TEST edition, not released: finder a01_onset_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a01_onset_v2.py	TEST edition, not released: finder a01_onset_v2 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a01_onset_v3.py	TEST edition, not released: finder a01_onset_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a02_climax_v3.py	TEST edition, not released: finder a02_climax_v3 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a02_grid_read_v2.py	TEST edition, not released: finder a02_grid_read_v2 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a02_grid_v1.py	TEST edition, not released: finder a02_grid_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a03_inwave_v1.py	TEST edition, not released: finder a03_inwave_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a03_wave_v1.py	TEST edition, not released: finder a03_wave_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a08_market_v2.py	TEST edition, not released: finder a08_market_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a08_market_v3.py	TEST edition, not released: finder a08_market_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a08_shock_v1.py	TEST edition, not released: finder a08_shock_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/a18_done_v1.py	TEST edition, not released: finder a18_done_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/alarm_checks_v1.py	TEST edition, not released: the alarm check runner and its table have no BASELINE.tsv row (not landed)
+team/RESEARCH/tools/alarms/alarm_view_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/alarm_view_v1.py, same bytes)
+team/RESEARCH/tools/alarms/b6_lambda_v1.py	TEST edition, not released: finder b6_lambda_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/b7_wide_pressed_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/b7_wide_pressed_v1.py, same bytes)
+team/RESEARCH/tools/alarms/b8_roll_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/b8_roll_v1.py, same bytes)
+team/RESEARCH/tools/alarms/c1_clock_v1.py	TEST edition, not released: finder c1_clock_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/k0_busy_now_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/k0_busy_now_v1.py, same bytes)
+team/RESEARCH/tools/alarms/m1_beta_v1.py	TEST edition, not released: finder m1_beta_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/m2_dispersion_v1.py	TEST edition, not released: finder m2_dispersion_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/m3_coupling_v1.py	TEST edition, not released: finder m3_coupling_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/m4_sector_v1.py	TEST edition, not released: finder m4_sector_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/m5_thrust_v1.py	TEST edition, not released: finder m5_thrust_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n10_scheduled_v1.py	TEST edition, not released: finder n10_scheduled_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n11_us_clock_v1.py	TEST edition, not released: finder n11_us_clock_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n1_busy_burst_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/n1_busy_burst_v2.py, same bytes)
+team/RESEARCH/tools/alarms/n6_alone_v2.py	TEST edition, not released: finder n6_alone_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n6_alone_v3.py	TEST edition, not released: finder n6_alone_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n6_coin_break_v1.py	TEST edition, not released: finder n6_coin_break_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n7_btc_first_v1.py	TEST edition, not released: finder n7_btc_first_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n8_day_break_v1.py	TEST edition, not released: finder n8_day_break_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n8_day_break_v2.py	TEST edition, not released: finder n8_day_break_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/n8_day_break_v3.py	TEST edition, not released: finder n8_day_break_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/o1_flush_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/o1_flush_v2.py, same bytes)
+team/RESEARCH/tools/alarms/o5_both_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/o5_both_v1.py, same bytes)
+team/RESEARCH/tools/alarms/o5_both_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/o5_both_v2.py, same bytes)
+team/RESEARCH/tools/alarms/onset_band_v4.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/onset_band_v4.py, same bytes)
+team/RESEARCH/tools/alarms/onset_band_v6.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/onset_band_v6.py, same bytes)
+team/RESEARCH/tools/alarms/p11_swing_v1.py	TEST edition, not released: finder p11_swing_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p2_release_v1.py	TEST edition, not released: finder p2_release_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p3_jump_v1.py	TEST edition, not released: finder p3_jump_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p3_jump_v2.py	TEST edition, not released: finder p3_jump_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p4_cluster_v1.py	TEST edition, not released: finder p4_cluster_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p5_cojump_v1.py	TEST edition, not released: finder p5_cojump_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p6_vol_v1.py	TEST edition, not released: finder p6_vol_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p7_vov_v1.py	TEST edition, not released: finder p7_vov_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/p9_round_v1.py	TEST edition, not released: finder p9_round_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/q16_vwap_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/q16_vwap_v1.py, same bytes)
+team/RESEARCH/tools/alarms/ref_fires_a01a02_v1.py	TEST edition, not released: finder ref_fires_a01a02_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a01_onset_v1.py	TEST edition, not released: finder a01_onset_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a01_onset_v2.py	TEST edition, not released: finder a01_onset_v2 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a01_onset_v3.py	TEST edition, not released: finder a01_onset_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a02_climax_v3.py	TEST edition, not released: finder a02_climax_v3 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a02_grid_read_v2.py	TEST edition, not released: finder a02_grid_read_v2 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a02_grid_v1.py	TEST edition, not released: finder a02_grid_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a03_inwave_v1.py	TEST edition, not released: finder a03_inwave_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a03_wave_v1.py	TEST edition, not released: finder a03_wave_v1 is DRAFT in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a08_market_v2.py	TEST edition, not released: finder a08_market_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a08_market_v3.py	TEST edition, not released: finder a08_market_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a08_shock_v1.py	TEST edition, not released: finder a08_shock_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_a18_done_v1.py	TEST edition, not released: finder a18_done_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_alarm_checks_v1.py	TEST edition, not released: the alarm check runner and its table have no BASELINE.tsv row (not landed)
+team/RESEARCH/tools/alarms/test_alarm_view_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_alarm_view_v1.py, same bytes)
+team/RESEARCH/tools/alarms/test_b6_lambda_v1.py	TEST edition, not released: finder b6_lambda_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_b7_wide_pressed_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_b7_wide_pressed_v1.py, same bytes)
+team/RESEARCH/tools/alarms/test_b8_roll_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_b8_roll_v1.py, same bytes)
+team/RESEARCH/tools/alarms/test_c1_clock_v1.py	TEST edition, not released: finder c1_clock_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_k0_busy_now_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_k0_busy_now_v1.py, same bytes)
+team/RESEARCH/tools/alarms/test_m1_beta_v1.py	TEST edition, not released: finder m1_beta_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_m2_dispersion_v1.py	TEST edition, not released: finder m2_dispersion_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_m3_coupling_v1.py	TEST edition, not released: finder m3_coupling_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_m4_sector_v1.py	TEST edition, not released: finder m4_sector_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_m5_thrust_v1.py	TEST edition, not released: finder m5_thrust_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n10_scheduled_v1.py	TEST edition, not released: finder n10_scheduled_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n11_us_clock_v1.py	TEST edition, not released: finder n11_us_clock_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n1_busy_burst_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_n1_busy_burst_v2.py, same bytes)
+team/RESEARCH/tools/alarms/test_n6_alone_v2.py	TEST edition, not released: finder n6_alone_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n6_alone_v3.py	TEST edition, not released: finder n6_alone_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n6_coin_break_v1.py	TEST edition, not released: finder n6_coin_break_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n7_btc_first_v1.py	TEST edition, not released: finder n7_btc_first_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n8_day_break_v1.py	TEST edition, not released: finder n8_day_break_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n8_day_break_v2.py	TEST edition, not released: finder n8_day_break_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_n8_day_break_v3.py	TEST edition, not released: finder n8_day_break_v3 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_o1_flush_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_o1_flush_v2.py, same bytes)
+team/RESEARCH/tools/alarms/test_o5_both_v2.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_o5_both_v2.py, same bytes)
+team/RESEARCH/tools/alarms/test_onset_band_v4.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_onset_band_v4.py, same bytes)
+team/RESEARCH/tools/alarms/test_onset_band_v6.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_onset_band_v6.py, same bytes)
+team/RESEARCH/tools/alarms/test_p11_swing_v1.py	TEST edition, not released: finder p11_swing_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p2_release_v1.py	TEST edition, not released: finder p2_release_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p3_jump_v1.py	TEST edition, not released: finder p3_jump_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p3_jump_v2.py	TEST edition, not released: finder p3_jump_v2 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p4_cluster_v1.py	TEST edition, not released: finder p4_cluster_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p5_cojump_v1.py	TEST edition, not released: finder p5_cojump_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p6_vol_v1.py	TEST edition, not released: finder p6_vol_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p7_vov_v1.py	TEST edition, not released: finder p7_vov_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_p9_round_v1.py	TEST edition, not released: finder p9_round_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/alarms/test_q16_vwap_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/alarms/test_q16_vwap_v1.py, same bytes)
+team/RESEARCH/tools/alarms/test_ref_fires_a01a02_v1.py	TEST edition, not released: finder ref_fires_a01a02_v1 is not listed in tools/alarms/BASELINE.tsv (only LANDED rows are released)
+team/RESEARCH/tools/event_profile/clock_series.py	moved under tree/ (now tree/team/RESEARCH/tools/event_profile/clock_series.py, same bytes)
+team/RESEARCH/tools/event_profile/event_profile.py	moved under tree/ (now tree/team/RESEARCH/tools/event_profile/event_profile.py, same bytes)
+team/RESEARCH/tools/freeze_judge/WINDOWS_V1.tsv	moved under tree/ (now tree/team/RESEARCH/tools/freeze_judge/WINDOWS_V1.tsv, same bytes)
+team/RESEARCH/tools/idea_to_grade/ARCHITECTURE.md	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/ARCHITECTURE.md, same bytes)
+team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/INTERFACE_V1.md	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/INTERFACE_V1.md, same bytes)
+team/RESEARCH/tools/idea_to_grade/README.md	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/README.md, same bytes)
+team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V1_CANDIDATE.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V1_CANDIDATE.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_1_CANDIDATE.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_1_CANDIDATE.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_2.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_2.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_CANDIDATE.json	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_CANDIDATE.json, same bytes)
+team/RESEARCH/tools/idea_to_grade/detect.py	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/detect.py, same bytes)
+team/RESEARCH/tools/idea_to_grade/idea_to_grade.py	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/idea_to_grade.py, same bytes)
+team/RESEARCH/tools/idea_to_grade/test_detect.py	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/test_detect.py, same bytes)
+team/RESEARCH/tools/idea_to_grade/test_detect_a53.py	moved under tree/ (now tree/team/RESEARCH/tools/idea_to_grade/test_detect_a53.py, same bytes)
+team/RESEARCH/tools/labcore/__init__.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/__init__.py, same bytes)
+team/RESEARCH/tools/labcore/_rows.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/_rows.py, same bytes)
+team/RESEARCH/tools/labcore/briefs.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/briefs.py, same bytes)
+team/RESEARCH/tools/labcore/gates.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/gates.py, same bytes)
+team/RESEARCH/tools/labcore/ids.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/ids.py, same bytes)
+team/RESEARCH/tools/labcore/jobgate.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/jobgate.py, same bytes)
+team/RESEARCH/tools/labcore/lookahead.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/lookahead.py, same bytes)
+team/RESEARCH/tools/labcore/waves.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/waves.py, same bytes)
+team/RESEARCH/tools/labcore/v2_7/__init__.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/v2_7/__init__.py, same bytes)
+team/RESEARCH/tools/labcore/v2_7/quality.py	moved under tree/ (now tree/team/RESEARCH/tools/labcore/v2_7/quality.py, same bytes)
+team/RESEARCH/tools/model_v1/matched_controls_v1.py	moved under tree/ (now tree/team/RESEARCH/tools/model_v1/matched_controls_v1.py, same bytes)
+tree/team/LAB3/METRICS_HL_ADD_V1.tsv	not needed by a released tool here: an extra metric table that only the grade chain (a TEST edition) passes to detect through METRIC_TRAPS or CATALOGS; detect and its tests read the default tables (METRICS_V1, METRIC_TRAPS_V3, CTX and EPI catalogs)
+tree/team/RESEARCH/ALARM_DESIGN/KIT_V2/templates/DEF_TEMPLATE_V2.json	TEST edition, not released: a KIT_V2 template (the alarm kit has no release); the definition format is in alarm_design/README.md section 2
+tree/team/RESEARCH/ALARM_DESIGN/KIT_V5/PROCESS_V7.md	TEST edition, not released: a KIT_V5 document (its first line: PROPOSED for the owner. TEST, NOT REVIEWED)
+tree/team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/ideas/LOOP2/defs/LP2_DAYPOKE_DEF_V2.json	not needed by a released tool here: an example definition from the CLAUDE1 run (run data, PROCESS_V7 section 6); the tests start from BN_OI_CONTRACTION_1PCT_10M_T2_V1.json
+tree/team/RESEARCH/LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv	not needed by a released tool here: an extra metric table that only the grade chain (a TEST edition) passes to detect through METRIC_TRAPS or CATALOGS; detect and its tests read the default tables (METRICS_V1, METRIC_TRAPS_V3, CTX and EPI catalogs)
+tree/team/RESEARCH/LEAD/loop2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv	not needed by a released tool here: an extra metric table that only the grade chain (a TEST edition) passes to detect through METRIC_TRAPS or CATALOGS; detect and its tests read the default tables (METRICS_V1, METRIC_TRAPS_V3, CTX and EPI catalogs)

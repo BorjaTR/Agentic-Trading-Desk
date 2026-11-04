@@ -1,0 +1,278 @@
+# MEANING_E1_V2.yaml: the meaning register of E1 funding, EDITION 2 (EDGE1, 2026-10-18, closed with the owner 15:4x Berlin)
+# = MEANING_E1_V1 (b8e7bad6e613fb57, kept) with S01 RENAMED to say it is an estimate (E1.CB1: the paid rate, built as S09), S03 open until
+# WP5 checks it with Z3, conclude (may, never), every limit with its effect on decisions, module sha16s.
+group: E1
+name: funding (raw rows)
+summary: 'Binance funding for one coin. S01, S02: the funding rate Binance shows NOW for the coming settle (a running estimate that moves until the settle), as a rate per 8 h and as
+  who pays. S03: when the next settle is. S04: the coin''s funding interval in hours. S09, S10: the rate actually PAID at the last settle, and when that settle was.'
+read_as: 'S01 (renamed in edition 2: live funding estimate for the next settle, scaled to 8 h) is an estimate, not a payment: one minute before the settle it equals the rate finally
+  paid in only 16 to 43% of settles (off by about 0.0001 percentage points); an hour before, off by about 0.002 to 0.0035 points. S09 is the paid rate: equal to Binance''s own record
+  in 591 of 591 settles. Positive = longs pay shorts.'
+where:
+  card: testbed/value_audit/registers/CARD_E1_V9.md
+  settings_register: testbed/value_audit/registers/SETTINGS_E1_V3.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_derivative_ticker_V2.md
+  producer: prod_E1_v3.py with the derivative_ticker reader (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E1.parquet
+  year_output_columns: name (S01 to S10 and twins), coin (roster coin, or MARKET for S05 to S08), as_of_us (e), value_kind, value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'E1', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: 'derivative_ticker: a state Tardis builds from Binance''s markPrice stream (mark p, index i, funding rate r, next funding time T; every 1 s here), the 24hrTicker and
+    the open interest REST snapshot'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz
+  columns: exchange, symbol, timestamp, local_timestamp, funding_timestamp, funding_rate, predicted_funding_rate, open_interest, last_price, index_price, mark_price
+  fields:
+    funding_rate: 'Binance r: the rate for the NEXT settle, for the coin''s own interval (0.0001 = 0.01% of the position per interval); it moves until the settle [proof: SOURCE_SPEC_derivative_ticker
+      Q-B1; job 15784: at the last minute end equals the paid rate in 16 to 43% only]'
+    funding_timestamp: 'Binance T, the next funding time, microseconds [proof: SOURCE_SPEC_derivative_ticker Q-B1]'
+    first_rate_after_settle: 'the first funding_rate the feed gives after a settle equals the rate paid at that settle [proof: job 15784, 591 of 591 settles on 3 days against Binance''s
+      fundingRate record]'
+    predicted_funding_rate: 'never set for Binance (empty on every row) [proof: SOURCE_SPEC_derivative_ticker F11]'
+    sign: 'positive rate: longs pay shorts; negative: shorts pay longs; Binance takes no cut [proof: Binance FAQ B2]'
+    rate_formula: 'the paid rate is the period''s average premium index plus a clamped interest term (default 0.01% per 8 h), divided by 8 / N for an N-hour interval [proof: Binance
+      FAQ B2]'
+  latency: middle 0.066 to 0.072 s, p99 about 1 s (SOURCE_SPEC_derivative_ticker F4); a value older than 61 s is STALE_VALUE (card rule 5)
+  silence: 'the stream''s one silence level: 61.0 s on Binance (card rule 5, spec F6)'
+reading_rules:
+- 'a field at tau: the last good row received by tau that carries it, the file of the day, else of the day before (card rule 1)'
+- 'older than 61.0 s: empty STALE_VALUE; reasons first failing NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE (rules 5, 6)'
+- S04 interval = the last step of funding_timestamp, in hours (rule 7)
+- S01 = funding_rate x 8 / interval, rounded once to 10 decimals; a 4 h coin's rate counts twice (rule 8); .own_interval_off = the rate as given; .any_age_off = without the 61 s rule
+- 'S02: above 0 LONGS_PAY, below 0 SHORTS_PAY, 0 NONE (rule 9)'
+- S03 = funding_timestamp in force (rule 10)
+- S10 = the settle the last step of funding_timestamp passed; S09 = the first funding_rate the feed gives after it, within 60 s, for the coin's own interval (rules 19, 20); .in_force_at_settle_off
+  = the rate in force at the settle moment (rule 21)
+values:
+  units: S01 a fraction per 8 h (0.0001 = 0.01%); S09 and .own_interval_off a fraction per the coin's own interval; S04 hours; S03, S10 microseconds since 1970; S02 a word
+  zero: 'S01 = 0: no funding expected (rare); S02 NONE'
+  empty: NO_ROSTER, NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE; S09 also LATE_RATE (no rate within 60 s after the settle). Never read empty as 0
+  stale: 1 with STALE_VALUE
+  flags: DUPLICATE_ROW
+interpret:
+  do:
+  - read S01 as the market's running estimate of the next payment, comparable across coins per 8 h
+  - read S09 as what was really paid at the last settle (S10), for the coin's own interval
+  - read a positive rate as longs paying shorts (crowded long), negative as shorts paying longs
+  - remember the default interest term makes about +0.0001 per 8 h the quiet level, not 0
+  dont:
+  - read S01 as a payment; it changes until the settle (an hour before it is off by about 0.002 to 0.0035 percentage points typically, up to 0.05)
+  - compare S09 across coins with different intervals without scaling to 8 h
+  - use S09.in_force_at_settle_off as the paid rate; it differs from it in 60 to 85% of settles
+biases:
+- what: S01 is an estimate that drifts to the paid rate
+  direction: either way
+  size: 'last minute end before the settle: equal in 16 to 43%, off by median 0.0000006 to 0.0000014; 60 min before: off by median 0.000022 to 0.000035, max 0.0005; decisions unchanged
+    once S01 is read as an estimate'
+  proof: job 15784
+- what: 4 h and 1 h coins scaled to 8 h in S01
+  direction: none
+  size: x 2 for 4 h, x 8 for 1 h; exact (card rule 8); decisions unchanged
+  proof: card rule 8; S04 = Binance interval 591 of 591
+- what: the rate in force at the settle is not the paid rate (Tardis's doc premise)
+  direction: either way
+  size: equal in 15 to 40% of settles, off by median 0.0000006 to 0.000001; decisions unchanged
+  proof: job 15784
+external_checks:
+- what: the rate paid, its time and the interval
+  where: Binance fundingRate files from data.binance.vision, held at <SCRATCH_DISK>/realcheck/outside/binance/fundingRate
+  status: 'VERIFIED: S09, S10, S04 on 591 of 591 settles, 3 days, job 15784'
+- what: the live estimate (S01) at a past moment
+  where: no history of Binance's live estimate is published
+  status: 'NOT_AVAILABLE: Tardis only'
+- what: who pays whom, the formula
+  where: Binance FAQ B2
+  status: VERIFIED
+tools:
+- what: our raw values equal Tardis and Binance
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code
+- what: every settle against Binance's paid rates
+  run: python3 -B -m rawcheck.meaning_funding <D>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_funding.py 9bf5020b65b2a741, rawcheck raw code 84454de7fac2e458 (RAW_STAMPS_V1)
+  where: team/LAB/code/rawcheck
+used_by: S01 -> S05 and S06 (market), S07 funding_z (the POSITIONING labels and 4 chains), S08; S02 -> L.funding_against_side; S03 and S04 -> Z3 (card E1 settings register)
+references:
+  B1: https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Mark-Price-Stream (quoted in SOURCE_SPEC_derivative_ticker_V2 Q-B1)
+  B2: https://www.binance.com/en/support/faq/introduction-to-binance-futures-funding-rates-360033525031
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+settings:
+- id: E1.S01
+  layer: basic
+  side: none
+  window: value in force, 61 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: funding_rate x 8 / interval
+  aliases: EF.ef_funding_bn_8h
+  means: Binance's live funding estimate for the next settle, per 8 h
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: 'spec Q-B1; J15784 (it is an estimate); Binance FAQ B2; renamed in edition 2 (the owner 15:4x Berlin): it is an estimate: one minute before the settle it equals the paid rate
+      in 16 to 43% of settles (J15784)'
+  open: it keeps changing until the settle (an hour before about 0.002 to 0.0035 percentage points off the paid rate, up to 0.05); decisions unchanged once read as an estimate
+  name: live funding estimate for the next settle, scaled to 8 h
+  renamed_from: funding 8h (ef_funding_bn_8h, rate8h)
+- id: E1.S01.any_age_off
+  layer: basic
+  side: none
+  window: value in force, any age
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: as S01
+  aliases: none
+  means: as S01 without the 61 s staleness rule (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: as S01
+  open: none
+  name: as S01 without the 61 s staleness rule (switched off)
+- id: E1.S01.own_interval_off
+  layer: raw
+  side: none
+  window: value in force, 61 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: funding_rate as given
+  aliases: none
+  means: Binance's live funding estimate for the next settle, for the coin's own interval (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: J15784
+  open: none
+- id: E1.S02
+  layer: basic
+  side: none
+  window: value in force
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sign of the live rate
+  aliases: L.funding_against_side
+  means: 'who pays at the coming settle if the estimate holds: LONGS_PAY, SHORTS_PAY or NONE'
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: Binance FAQ B2
+  open: none
+- id: E1.S03
+  layer: raw
+  side: none
+  window: value in force
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: funding_timestamp
+  aliases: none
+  means: the time of the next settle (Binance T), microseconds
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: spec Q-B1
+  open: 'not yet compared with the settle that followed (S10 after it): checked in WP5 with Z3 S01, S02, which are built on it'
+- id: E1.S04
+  layer: basic
+  side: none
+  window: last step of funding_timestamp
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: T1 - T0 in hours
+  aliases: none
+  means: the coin's funding interval in hours (8, 4, 1 ...)
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Binance 9 of 9; J15784: = Binance interval 591 of 591'
+  meaning:
+    status: DEFINED
+    proof: J15784
+  open: none
+- id: E1.S09
+  layer: raw
+  side: none
+  window: first rate within 60 s after the last settle
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: funding_rate as given
+  aliases: none
+  means: the funding rate PAID at the last settle (S10), for the coin's own interval
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Binance 9 of 9; J15784: = Binance paid rate 591 of 591'
+  meaning:
+    status: DEFINED
+    proof: J15784
+  open: none
+- id: E1.S09.in_force_at_settle_off
+  layer: raw
+  side: none
+  window: value in force at the settle
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: funding_rate as given
+  aliases: none
+  means: the live estimate in force at the settle moment (switched off); NOT the paid rate in 60 to 85% of settles
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: J15784
+  open: none
+  never:
+  - 'that it is the paid rate: it differs from S09 in 60 to 85% of settles (J15784)'
+- id: E1.S10
+  layer: raw
+  side: none
+  window: last step of funding_timestamp
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: T0
+  aliases: none
+  means: the time of the last settle, microseconds
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Binance 9 of 9; J15784: = Binance calc_time within 1 s 591 of 591'
+  meaning:
+    status: DEFINED
+    proof: J15784
+  open: none
+could_build:
+- id: E1.CB1
+  intended: the funding rate paid, per 8 h
+  was_name_of: E1.S01
+  formula: S09 x 8 / S04 (the rate paid at the last settle, scaled from the coin's own interval to 8 h)
+  needs: 'nothing new: S09 and S04 are in the year output'
+  adds: the paid rate exists already as S09 for the coin's own interval; only the 8 h scaling is not written
+  status: BUILT
+conclude:
+  may:
+  - the funding Binance currently expects for the next settle, scaled to 8 h, and who would pay if it holds (S01, S02)
+  - 'the rate actually paid at the last settle, when, and every how many hours (S09, S10, S04: equal to Binance on 591 of 591 settles)'
+  - funding against the coin's own history
+  never:
+  - 'S01 as a payment: it is an estimate that changes until the settle'
+  - S09 compared across coins with different intervals without scaling to 8 h (x 2 for 4 h, x 8 for 1 h)
+  - the switched-off 'in force at settle' twin (S09.in_force_at_settle_off) as the paid rate
+  - the minutes to the next settle from S03 before WP5 has checked it against the settles that followed

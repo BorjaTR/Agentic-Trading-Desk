@@ -1,0 +1,139 @@
+# OUR_RULE_A4_V1.yaml: the card of A4 liq_wave's OUR RULES S01 to S06 (the market's liquidation waves: minutes of 100,000 dollars or more in
+# the last 15, their state, the minutes since the last, the age of the running wave on each side, the wave minute now), EDITION 1 (BED,
+# 2026-10-18; OR4 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1 15:54:31Z; reviewer EDGE2). Made as OUR_RULE_C9_V1 66c345c9
+# (EDGE2); ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it. Register of the day: team/RAWCHECK/notes/RAWCHECK/
+# LAYER_REGISTER_V32.tsv (A4 S01 to S06 our_rule, NOT_CHECKED before this card). The smart check (section 1): the inputs cited by what they
+# are, planted tests and mutants first, ONE small job (J16014: S01 to S06 replayed at every minute end of 2 days from the year's own A1 S12,
+# S13), how often they fire, readers to TREE's RR1. Pass lines: hb/BED.txt 2026-10-18T16:52:10Z 'BED PASS LINES OR4.A4', before J16014.
+
+# Edit 1 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.A4 OK with nits 16:59:25Z): (1) the cases planted and not planted listed;
+# (2) the mutant window_16 now widens S01 to S03's window too (rule_a4 ed2 1961b315, tests rerun); (3) A1 S13's register note; (4) the
+# fifths' ties an open line. No verdict changed.
+group: A4
+name: liquidation waves, our rules (the market's minutes of 100,000 dollars or more of one side's liquidations, over the last 15 minutes)
+summary: >-
+  At a minute end m, from A1 S12 (long) and S13 (short), the market's liquidation dollars of each minute: a wave minute holds 100,000 dollars
+  or more; an empty minute is none. S01 the long wave minutes among m - 14 to m; S02 NO_FUEL (0), FLUSH (1 to 3), CASCADE (4 or more); S03
+  m less the last long wave minute of the window, or NO_WAVE; S04 (long), S05 (short) the running wave's age: m less its first minute (a wave
+  minute with none in the 14 before), NO_WAVE without a wave in the window, NO_HISTORY when its first minute is among 00:00 to 00:13 of D-1;
+  S06 1 when m is a long wave minute. m's own A1 value empty: every setting empty with its reason (CARD_A4_V6 rules 1 to 9).
+read_as: >-
+  The year writes all six exactly: 17,280 of 17,280 minute values replayed from its own A1 rows on 8 Mar 2026 and 24 Sep 2025
+  (RULE_A4_STAMPS_V1, J16014). The floor is the whole market's dollars (mostly BTC and ETH, A4's card): a long wave minute came 39 and 51
+  times a day (S06 1 at 2.71% and 3.54% of minutes), a long wave ran (S04 valued) at 17.22% and 26.74% of minutes, a short one at 19.93% and
+  18.82%, CASCADE at 3.12% and 3.82%. S01 is 0 at 82.78% and 73.26% of minutes, so its fifths are mostly the 0 class. S01 counts minutes,
+  not age: the forced SHORT chains' condition 9 reads it as the wave's age (A4's card), S04 is the age itself.
+
+conclude:
+  may:
+    - "how many of the last 15 minutes held 100,000 dollars or more of the market's long liquidations (S01), and its band (S02), the minutes since the last (S03), the age of the running long and short wave (S04, S05), and whether this minute is one (S06) (RULE_A4_STAMPS_V1, J16014)"
+  never:
+    - "S01 as the wave's age (the forced SHORT chains' condition 9 reads it so): it is a count of wave minutes; S04 is the age"
+    - "a wave as rare: a long wave ran at 17.22% and 26.74% of minutes of 8 Mar 2026 and 24 Sep 2025, a short one at 19.93% and 18.82% (J16014)"
+    - "a wave as one coin's: the floor is the whole market's dollars, mostly BTC and ETH (CARD_A4_V6)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A4_V6.md fe39709c22fcb5e7 (rules 1 to 9, 15, O1, O2; edge cases planted N1, N7 to N9, N12 to N14, N17, E2, E3, E5 to E16, E23; not planted E4 (a microsecond inside, A1's window), E17 to E22, E24 (flags, stamps, a full day, fires))
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A4_V2.tsv caf015c66d191626
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6 (A1 S12, S13: the market's long, short liquidation dollars of each minute, USDT and USDC, the coins seen: raw, RELIABLE, CLEAN; S13, the short side's input, carries the register's note 'short price bias not tested', LAYER_REGISTER_V32); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (A4 S01 to S06 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code/prod_A4_v3.py 27ec6ef261b3724b (CARD_A4_V6 edition 6), A1 through code/edition_loader_v1.py"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A4.parquet
+  year_output_columns: "name (S01 to S06 and their coverage and fire-second twins), coin (MARKET: the year writes no coin rows), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; a count, a word for S02), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'A4', ['S01', ..., 'S06'])"
+
+source:
+  vendor: "Tardis.dev, binance-futures liquidations (USDT and USDC) and trades, through A1 S12, S13 (MEANING_A1_V4)"
+  exchange_stream: "forceOrder as Tardis records it, read by A1; A4 reads A1's market minutes"
+  files: "the year's A1 output of D-1 and D (A1.parquet), A4.parquet of D"
+  columns: "A1 S12, S13 (MARKET) at every minute end of D-1 and D, value_kind, value_f64, empty_reason; A4 S01 to S06 of D"
+  fields:
+    wave: "a minute of 100,000 dollars or more (A1's whole dollars); an empty minute is none; m empty: every setting with its reason [proof: CARD_A4_V6 rules 2 to 4; planted N1, N7 to N9, N12, E14 in tests/test_rule_a4.py; mutants floor_gt, empty_counts; RULE_A4_STAMPS_V1]"
+    window: "m - 14 to m: S01 the count, S02 its band (CASCADE at 4), S03 m less the last; S06 m alone [proof: rules 5 to 8; planted E2, E3, E5 to E7, E23, N13, N14; mutants window_16 (rule_a4 ed2 1961b315 widens S01 to S03's window too; ed1 widened the age's only), cascade_3]"
+    age: "a wave minute with none in the 14 before begins a wave; the age = m less the latest beginning; NO_HISTORY when the beginning is among 00:00 to 00:13 of D-1 [proof: rule 9, O2 A; planted E8 to E13, E15, E16, N17; mutants begin_13, no_history_off]"
+  latency: "known_at = the latest of A1's minutes of the span (CARD_A4_V6 rule 11); not checked here"
+  silence: "m's A1 value empty: every setting empty with A1's reason; none on the two days (J16014)"
+
+reading_rules:
+  - "the wave is the market's: one clock for every coin; the floor is in dollars of the whole market"
+  - "S01 counts wave minutes in the last 15; S04, S05 give the running wave's age from its first minute"
+  - "the year writes the coverage and the fire-second twins beside (switched off): not checked in this card"
+
+values:
+  units: "S01 minutes (0 to 15); S02 a word (NO_FUEL, FLUSH, CASCADE); S03, S04, S05 minutes; S06 0 or 1"
+  zero: "S01 0 and S02 NO_FUEL: no wave minute in the last 15; S03, S04, S05 0: a wave minute now (S03), the wave's first minute (S04, S05)"
+  empty: "A1's reasons at m, NO_WAVE, NO_HISTORY; value_kind 0. Never read empty as 0"
+  stale: "as A1's minute at m (CARD_A4_V6 rule 11)"
+  flags: "A1's flags of the span"
+
+interpret:
+  do:
+    - "read S04, S05 for the wave's age and S01 for how many of its minutes were in the last 15"
+  dont:
+    - "read S01's fifths as an age"
+
+biases:
+  - {what: "one market floor of 100,000 dollars", direction: "waves are BTC's and ETH's liquidations most of the time (CARD_A4_V6)", size: "long wave minutes 39 and 51 a day, a wave running at 17.22% and 26.74% of minutes (8 Mar 2026, 24 Sep 2025)", proof: "J16014"}
+
+external_checks:
+  - {what: "S01 to S06 replayed by the card's rules from the year's own A1 S12, S13 at every minute end of 8 Mar 2026 and 24 Sep 2025 (D-1 read for the window and the age)", where: "the year's A1 rows (a replay, our source; A1 S12, S13 RELIABLE by MEANING_A1_V4)", status: "VERIFIED: RULE_A4_STAMPS_V1 c9131bf34bc95a94: 2,880 of 2,880 MATCH each (J16014 log 0c2f66c8308f8143, rule_a4 ed1 da4c011aa3453725, tests 74effd06401e5676 29 of 29: 23 cases, 6 mutants)"}
+  - {what: "how often a wave runs, each band of S02, S06 at 1; the wave minutes of the day", where: "the year's own A4 and A1 rows of the two days", status: "MEASURED: J16014"}
+  - {what: "an outside record", where: "none: our rule on our liquidation minutes; A1 is checked against Binance in MEANING_A1_V4", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "S01 to S06 replayed at every minute end of D", run: "python3 -B -m rawcheck.rule_a4 --days <D,..> --out <dir>", where: "team/RAWCHECK/code (rule_a4.py ed2 1961b315eb980bb1; ed1 da4c011a ran J16014, the same rules)"}
+
+used_by: "S01 by CHAIN_chop_SHORT_fade (condition 1: SKIP at fifth 4 or 5), CHAIN_forced_LONG_fade (condition 5: ENTER at fifth 5), CHAIN_forced_LONG_ride (condition 7: SKIP at fifth 5), CHAIN_forced_SHORT_fade and CHAIN_forced_SHORT_ride (condition 9, 'the wave's age'), the labels FUEL, PATH-FUEL, WHY-DRIVER (CASCADE-DOWN-MILD), HOW-FRESH; S04, S05 by A7 (built on it); S02 to S06 nobody yet (CARD_A4_V6 'Who reads it today'). To TREE's RR1 (hb/BED.txt, the DONE OR4.A4 line): S01 is 0 at 73 to 83% of minutes, and two chains read it as an age"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A4_V6.md fe39709c22fcb5e7
+  BASIC: "none: built on A1's raw minutes (MEANING_A1_V4 4484098a83845fb6)"
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_A4_STAMPS_V1.tsv c9131bf34bc95a94 (J16014)"
+  JOBS: "16014 (tests, rule_a4 on 8 Mar 2026 and 24 Sep 2025; log 0c2f66c8308f8143)"
+  PASS_LINES: "hb/BED.txt 2026-10-18T16:52:10Z 'BED PASS LINES OR4.A4', posted before J16014 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): wave counts, a band and ages call up no standard formula: no rename; S01 read as an age by two chains, in never"
+
+settings:
+  - {id: A4.S01, name: "market long wave minutes (100,000 dollars or more) in the last 15 minutes", layer: our_rule, side: long, window: "the minute ends m - 14 to m", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S12)",
+     aggregate: "the count of minutes m - 14 to m whose A1 S12 is 100,000 or more; 0 to 15", aliases: "wave_min_15m, wave_min_15m_w",
+     derived_from: "A1 S12 (MEANING_A1_V4) at the 15 minute ends",
+     means: "how many of the last 15 minutes had 100,000 dollars or more of the market's long liquidations",
+     computation: {status: RELIABLE, proof: "RULE_A4_STAMPS_V1 c9131bf3: 2,880 of 2,880 (every minute end of 8 Mar 2026 and 24 Sep 2025; J16014, rule_a4 da4c011a)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16014: 0 at 0.8278 and 0.7326 of minutes, 1 at 0.0667 and 0.1549, 4 or more at 0.0312 and 0.0382 (8 Mar 2026, 24 Sep 2025); the count rule 6 says (no rename)"},
+     open: "read as the wave's age by two chains (condition 9); its readers' fifths cut the non-zero minutes only, mostly 1 to 3 (1 is 38.7% of them on 8 Mar 2026): ties; two days",
+     never: ["S01 as the wave's age"]}
+  - {id: A4.S02, name: "market long wave band: NO_FUEL, FLUSH (1 to 3 wave minutes), CASCADE (4 or more)", layer: our_rule, side: long, window: "as S01", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S12)",
+     aggregate: "NO_FUEL at S01 0, FLUSH at 1 to 3, CASCADE at 4 or more", aliases: "fuel, EF.ef_dl_fuel_state, EF.ef_dl_fuel_state_w",
+     derived_from: "A4 S01",
+     means: "the long wave's band over the last 15 minutes",
+     computation: {status: RELIABLE, proof: "RULE_A4_STAMPS_V1 c9131bf3: 2,880 of 2,880 (J16014)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16014: NO_FUEL 0.8278 and 0.7326, FLUSH 0.1410 and 0.2292, CASCADE 0.0312 and 0.0382 of minutes; the bands rule 7 says (no rename)"},
+     open: "read by nobody yet; two days"}
+  - {id: A4.S03, name: "minutes since the last market long wave minute (0 to 14)", layer: our_rule, side: long, window: "as S01", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S12)",
+     aggregate: "m less the last wave minute of m - 14 to m, in minutes; NO_WAVE without one", aliases: "min_since_wave, min_since_wave_w",
+     derived_from: "A1 S12 at the 15 minute ends",
+     means: "how long ago the last minute of 100,000 dollars or more of long liquidations was",
+     computation: {status: RELIABLE, proof: "RULE_A4_STAMPS_V1 c9131bf3: 2,880 of 2,880 (J16014)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16014: a value at 0.1722 and 0.2674 of minutes, NO_WAVE the rest; the minutes rule 8 says (no rename)"},
+     open: "read by nobody yet; two days"}
+  - {id: A4.S04, name: "age of the running market long wave, minutes", layer: our_rule, side: long, window: "back to the wave's first minute", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S12)",
+     aggregate: "m less the latest long wave minute with none in the 14 before; NO_WAVE without a wave in m - 14 to m; NO_HISTORY when that minute is among 00:00 to 00:13 of D-1", aliases: "m5_long_wave_age, coin.m5_long_wave_age, m5_mkt_long_wave_age",
+     derived_from: "A1 S12 at the minute ends of D-1 and D",
+     means: "how many minutes ago the running long liquidation wave began",
+     computation: {status: RELIABLE, proof: "RULE_A4_STAMPS_V1 c9131bf3: 2,880 of 2,880 (J16014)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16014: a value (a wave running) at 0.1722 and 0.2674 of minutes; NO_HISTORY never; the age rule 9 says (no rename)"},
+     open: "read by A7 only; two days"}
+  - {id: A4.S05, name: "age of the running market short wave, minutes", layer: our_rule, side: short, window: "back to the wave's first minute", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S13)",
+     aggregate: "as S04 on A1 S13", aliases: "m5_short_wave_age, coin.m5_short_wave_age, m5_mkt_short_wave_age",
+     derived_from: "A1 S13 at the minute ends of D-1 and D",
+     means: "how many minutes ago the running short liquidation wave (the squeeze) began",
+     computation: {status: RELIABLE, proof: "RULE_A4_STAMPS_V1 c9131bf3: 2,880 of 2,880 (J16014)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16014: a value at 0.1993 and 0.1882 of minutes (29 and 34 short wave minutes); the age rule 9 says (no rename)"},
+     open: "read by A7 only; two days"}
+  - {id: A4.S06, name: "this minute is a market long wave minute (1) or not (0)", layer: our_rule, side: long, window: "the minute ending at m", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S12)",
+     aggregate: "1 when A1 S12 at m is 100,000 or more, else 0", aliases: "wave_now, EF.ef_dl_wave",
+     derived_from: "A1 S12 at m",
+     means: "whether the market liquidated 100,000 dollars or more of longs in this minute",
+     computation: {status: RELIABLE, proof: "RULE_A4_STAMPS_V1 c9131bf3: 2,880 of 2,880 (J16014)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16014: 1 at 0.0271 and 0.0354 of minutes (39 and 51 minutes); the flag rule 5 says (no rename)"},
+     open: "read by nobody yet; two days"}

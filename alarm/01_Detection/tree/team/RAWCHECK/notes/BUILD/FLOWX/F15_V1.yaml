@@ -1,0 +1,315 @@
+# F15 (BED, 18 Oct 2026; the 5 s grid edition of BRIEF_FLOWX_V4_DELTA, twin F15_V1.yaml.pre_BED_20261018T183501Z). Facts from
+# FLOWX_WORK_V0 F15, BRIEF_FLOWX_DRAFTERS and BRIEF_FLOWX_V4_DELTA (item 4: F15 reads the trades and book_ticker readers, 60 bars of
+# 60 s ending at each 5 s point), ADDON_ARCHITECTURE_V4 edit 3 (0591d18171f2d21f; V3's rules stand unless V4 changes them).
+# Every worked answer computed exactly with fractions.Fraction. Checked with:
+#   cd <VM_HOME>/br2/flowx/kit && python3 -B -m rawcheck.build_register notes/BUILD/FLOWX/F15_V1.yaml --check
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 4 (BED, 18 Oct 2026, my own find, board OWN 19:43:55Z): a book row with no stamp is bad (prod_reader_book_ticker_v2, why 2
+# STAMP) and never stands (CARD_C13_V4 rule 12): E13 gives P's value; the mutant M4 reversed.
+# Edition 5 (BED, 18 Oct 2026; METRIC_AUDIT2 19:52:50Z, TREE 19:51:26Z; my OWN 19:53:57ZZ): no flag either (prod_C13_v3 50cb8805 line 142).
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): Y3 the dollars are the
+# reader's units; BOOK_HOLE stale 1 (CARD_C13_V4 rule 11); NO_FILE when a mid needs D-1's missing book file (C13 rules 9, 11: E10's
+# 01:00:05 to 01:59:55); seen at every moment of the window (E14), Y1 the PHASES and the CARRY, reader v6 as the seen-state input,
+# NO_RATE_BASE; Y6 repeats counted (DUPLICATE_ROW); a 1000-coin (E15), a stampless trade (E16); U8, M5 to M8; X1 the empty-file rule;
+# in_force on max(t, arr); SHORT_HISTORY dropped; the titles, U4's rows, the meaning line's exact mid, the conclude words; Y8.
+# The ratio grid at 0 where DV = 0 beside a count grid (roll_points' min_count).
+# Edition 6 fix (BED, 18 Oct 2026, METRIC_AUDIT's KNOWN_DIFF 23:36:17Z): E14's gap moved off P's own buy of 11:20:03 to (11:21:05.500,
+# 11:22:06.500); M7's caught_by names F15's own 30 s cap case (U3 E8), not F14's (U4 E6).
+kind: build_metric
+id: F15
+producer: FLOWX
+item: 'Amihud illiquidity, intraday'
+tier: BUILD
+name: >-
+  Binance Amihud illiquidity, intraday, on the mid: the mean over the 60 bars of 60 s ending at u with volume of the mid's absolute move in
+  bps per $M of the bar's taker dollars
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  How far the mid moves per million dollars traded, averaged over the last hour's one-minute bars that had volume, written every 5 s:
+  high means a thin market (a little trading moves the price a lot).
+example: >-
+  A toy of 4 bars (the card uses 60): mid moves 10, -20, 0, 5 bps and taker dollars 1, 2, 5, 0 $M give the ratios 10, 10, 0 and the
+  zero-volume bar is left out: 20/3 = 6.666666667 bps per $M (counting it as 0 would give 5). The plant P of U2 gives
+  1250825162509/1000900260024 = 1.249700107 bps per $M over 48 bars with volume at 12:00:00, and 75032503/50030004 = 1.499750090 at
+  12:00:05 with one more buy and one more book row (E11).
+formula: >-
+  For one coin and the 5 s point u (00:00:00, 00:00:05, ..., 23:59:55 of D): the 60 bars of 60 s ending at u, bar k = (u - 60k s,
+  u - 60(k-1) s], k = 1 to 60. DV_k = (buy dollars + sell dollars of the trades reader's good rows (bad false; a repeated row counted each time, flagged DUPLICATE_ROW: B1 rule 17, Y6; a row with no stamp in no bar and no BAD_INPUT: Y5) with T in
+  bar k and arr <= u, received by u) / 10^6, dollars = the reader's units (the row's dollars px x am at 10^-(pp + qp), exact; Y3), the sums exact on integers (the price and the quantity in their own
+  steps), turned into float64 once. The mid m(t) = (bid + ask) / 2 of the book_ticker state in force at t by CARD_C13_V4 rules 9, 11, 12 (lines 108 to 111): the last good row in file order stamped at or before t and received by t; a bad row never stands, the good row before it does (flag SKIPPED_BAD_ROW); BOOK_HOLE when no row stands or the row in force was stamped more than 30 s before t (an age of exactly 30 s stands); a row with no stamp is bad (the reader's why 2 STAMP): it never stands and raises no flag (the year's prod_C13_v3 50cb8805 line 142 keeps only rows with t >= 0 and arr >= 0 for the row in force and the skip flag) (prod_reader_book_ticker_v2; addon_grid_v2.in_force with bad_ends False: C13 S05's rule, METRIC_AUDIT2 FB). r_k = 10^4 (m(u - 60(k-1) s) / m(u - 60k s) - 1), the
+  mid's move over bar k in bps (61 mids, at u - 3600 s to u). Over the n bars with DV_k > 0: F15 = (1 / n) sum |r_k| / DV_k, exact,
+  no rounding (float64, decimals none); a bar with DV_k = 0 is left out (never a division by 0, never a 0 counted); a bar with DV_k >
+  0 and r_k = 0 counts as 0. Empty, the first that applies in this order (as F14): (1) NO_FILE, a needed file missing or only .part (X1, on any day: D's trades or book_ticker file at every row of D; D-1's trades file when the window reaches D-1, u = 00:00:00 to 01:00:00; D-1's book_ticker file when a mid of the 61 needs it, no good row of D standing at that time: CARD_C13_V4 rules 9, 11); an EMPTY or header-only file is there with no rows (no trade: TRADES_HOLE, not NO_FILE, CARD_B3_V4 line 116; the mid BOOK_HOLE); (2) none since edition 3; (3) the first
+  in time of: the coin not seen by B1 rule 9 at some moment of [u - 3600 s, u] (seen at every moment through the window, CARD_B1_V7 line 161,
+  CARD_B3_V4 line 117, prod_B1_v3 alive_all: a trade in [e - 60 s, e] received by e at every moment e, no thin minute from the one
+  before the window's start to the last full one before u, no bad trade row stamped in the window and received by u; reader v6's alive
+  and thin; its reason TRADES_HOLE, THIN_FEED or BAD_INPUT) and an empty mid at one of the 61 times (BOOK_HOLE); at one time the seen reason comes first; (4) n = 0 (DV_k = 0 in all
+  60 bars): NO_VOLUME. The count n is written in the flag N.
+  THE 00:00 POINTS (REVIEW_LEAD_EDGE1_V1 X3): when D's file is missing and D-1's is there, phase B writes the 00:00:00 row NO_FILE too (the year reads D's file there); the 00:00:00 point is completed in phase B after D's rows at exactly 00:00:00.000000 are added.
+source:
+  kind: paper
+  ref: >-
+    Amihud 2002 (J. Financial Markets 5(1)): the daily mean of |close return| over dollar volume, x 10^6; screamer AmihudIlliquidity
+    as the oracle in the real check. Named differences: ours is intraday, per 60 s bar ending at each 5 s point (BRIEF_FLOWX_V4_DELTA
+    item 4), on the mid (no bid-ask bounce), in bps per $M (10^10 x |R| / dollars, R the bar's return as a fraction), the mean over
+    the last hour's bars with volume.
+inputs:
+  - kind: reader
+    ref: prod_reader_trades_v1
+    exists: true
+    stream: Tardis binance-futures trades (the year's trades stream)
+    fields: t (T), arr, side, px, units, bad, dup, line (prod_reader_trades_v1 926b7ff5 lines 11 to 13, as the hand work cites); prod_reader_trades_v2, when it lands, gives the same rows (tested equal to v1 packs)
+    rule_in_force: every good row (bad false; repeats counted, Y6) with T in (u - 3600 s, u] and arr <= u, in its bar by T; the coin's seen state by B1 rule 9 on the same rows at every moment of [u - 3600 s, u] (reader v6's alive and thin)
+    stale_rule: none per row (a trade is an event); stale comes from the seen state (B1 rule 22, output.stale_rule)
+    days: >-
+      D. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4; Y1): phase A of D, days in parallel and without the CARRY, makes only the point-local records of D's raw: per phase grid the exact buy and sell dollar sums of D's bars by arrival, D's mids at its 5 s points from D's book rows (the points where no row of D stands marked for phase B), D's minute trade counts, live spans and bad trade rows (reader v6). Phase B, day after day with the CARRY of D-1, makes every value: the seen state at every moment of each window (alive from D-1's live spans; thin from D-1's counts and thin(D-1, 0)'s end), the mids that need D-1's book state, the 60-bar values for u = 00:00:05 to 01:00:00 with D-1's part, the 00:00:00 point (NO_FILE when D's file is missing, X3). No value is final in phase A. THE CARRY (X1/carry/FLOWX/<D-1>.npz): the exact buy and sell dollar sums by arrival of D-1's trades for the 60 s bars of each of the 12 phases in D-1's last 3,600 s (the part of a bar straddling 00:00 included); D-1's mids at its 5 s points of its last 3,600 s with their rows' arr and the book state in force at 24:00 (the mid at 00:00:00 of D and D's first 30 s); D-1's 1,440 minute trade counts and thin(D-1, 0)'s end (on, good); D-1's live spans and bad trade rows of its last 3,600 s; whether D-1's trades and book_ticker files exist (X1). The first year day reads 9 Sep 2025's raw once for the first CARRY (R2); if it is not held, every row that needs it is empty NO_FILE (E10).
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures, book_ticker_<SYMBOL>_<YYYY-MM-DD>.csv.gz, as the K1 format example cites)
+    fields: t, arr, bid_px, ask_px (int64, price x 10^pp), bad, why, dup; meta pp, status, content_sha16 (as the K1 format example cites)
+    rule_in_force: "CARD_C13_V4 rules 9, 11, 12 (lines 108 to 111): the last good row in file order stamped at or before t and received by t; a bad row never stands (the good row before it does, flagged SKIPPED_BAD_ROW); a row with no stamp is bad (the reader's why 2 STAMP): it never stands and raises no flag (the year's prod_C13_v3 50cb8805 line 142 keeps only rows with t >= 0 and arr >= 0 for the row in force and the skip flag)"
+    stale_rule: "the 30 s cap on the stamp's age (CARD_C13_V4 rule 11): older gives an empty mid, BOOK_HOLE"
+    days: >-
+      D; D-1's part (its mids of its last 3,600 s with their rows' arr, the state in force at 24:00, whether its book file exists) in the CARRY above (the PHASES)
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: "the trades files' two stamp columns, as B1 reads them for its seen state (CARD_B1_V7 line 150: alive and thin through prod_reader_liquidations_v6.py; prod_B1_v3 efc2bc52 line 117): the minute counts (a trade counted in its minute when received by the minute's end) and the live spans (a trade stamped t, received a, makes the coin alive at every moment from max(t, a) to t + 60 s), 8566228f lines 98 to 116"
+    rule_in_force: "B1 rule 9's alive (a trade in [e - 60 s, e] received by e) and thin (R8: the base the median of D-1's 1,440 minute counts; a minute under 1 percent turns it on; while on, 5 minutes in a row at 20 percent or more end it; D's start is thin(D-1, 0)'s end, B1 rule 19)"
+    stale_rule: "B1 rule 22 (TRADES_HOLE, THIN_FEED: stale 1); D-1's trades file missing or a base of 0: thin off, flagged NO_RATE_BASE (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    days: "D-2, D-1 and D (D's base is D-1's counts; D's start is thin(D-1, 0)'s end, whose base is D-2's counts). Measured on 8 Mar 2026 (J16034, log f7a76cb05e789815): BTC 3.24 s, DOGE 1.03 s, CRV 0.10 s a pack. It parses each trades file a second time beside the trades reader (ADDON_ARCHITECTURE_V4 9.3 rule 1): FOR EDGE1, a seen-state kernel on the shared trades pack, tested equal to v6"
+overlaps:
+  - setting: C13 S05
+    kind: copy
+    why: >-
+      The year's mid at the minute end (MEANING_C13_V4, LIMITS; the row in force, 30 s at most, the hand work): at a minute end t, m(t)
+      is the same state from the same rule, a cross-check (F14's meaning_check line 2); this card's first edition read it.
+  - setting: B1 S01, B1 S02
+    kind: other_metric
+    why: >-
+      The year's taker buy and sell dollars of each minute (SETTINGS_B1_V2: (e - 60 s, e] received by e, whole dollars): at a minute end
+      u, bar k's DV is their sum at u - 60(k-1) s / 10^6, except the rows received after their minute end but by u (the year leaves them
+      out, the bar counts them) and the year's whole-dollar rounding.
+per_coin: >-
+  Every roster coin of D (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters: knowledge/roster/ starts at
+  ROSTER_20251006, J16034; Y8, X11). Thin coins: many bars with no volume (left out, so n is small),
+  silences in the book (BOOK_HOLE) and points not seen (B1 rule 9), so a thin coin is often empty or NO_VOLUME. 1000-coins: the reader's units are
+  still dollars and the move is in bps, so the 1000 prefix changes nothing. A wide-step coin's one-step mid move is many bps,
+  so |r| takes few values.
+time: >-
+  Every 5 s point has its own 60 bars: the 12 phases of u within the minute are 12 grids of 60 s bars. The 00:00 start: the 00:00:00
+  row is D-1's 24:00:00 row from the CARRY; u = 00:00:05 to 01:00:00 read D-1's part (bar sums and mids) from the CARRY, assembled in
+  phase B. The first year day (10 Sep 2025) reads 9 Sep 2025's raw once if held, else u = 00:00:00 to 01:00:00 are empty NO_FILE (X1). Crash days (10 Oct 2025 evening): large volume and moves. Funding settles (00:00, 08:00, 16:00 UTC) and
+  quarter hours are ordinary points for the formula.
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S15
+      label: bn_amihud_bps_per_musd_60m
+      units: bps of the mid per $M of taker dollars
+      value_kind: float
+      decimals: none
+      means: the mean over the 60 bars of 60 s ending at the 5 s point u with volume of |the mid's move| (bps) over the bar's taker dollars ($M)
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per coin per day, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arr of the rows used (the trades counted, each arr <= u, and the book rows of the 61 mids, each arr <= its
+    time <= u); an empty row has known_at = as_of = u. So known_at <= as_of on every row, empty rows too.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "a needed file is missing (formula step 1, on any day): D's trades or book_ticker file at every row of D; D-1's trades file at u = 00:00:00 to 01:00:00; D-1's book_ticker file at a u whose 61 mid times include one with no good row of D standing (CARD_C13_V4 rules 9, 11); an EMPTY or header-only file is there (TRADES_HOLE or BOOK_HOLE, not NO_FILE); X1, no flag on an empty row"
+    - reason: TRADES_HOLE
+      when: the first in time is a moment of the window where the coin is not seen by B1 rule 9 with this reason
+    - reason: THIN_FEED
+      when: the first in time is a moment of the window where the coin is not seen by B1 rule 9 with this reason
+    - reason: BAD_INPUT
+      when: the first in time is a moment of the window where the coin is not seen by B1 rule 9 with this reason (a bad row)
+    - reason: BOOK_HOLE
+      when: the first in time is one of the 61 mid times with no book_ticker state in force (no good row stamped and received by t, or the row in force stamped more than 30 s before t; an EMPTY book file gives it all day)
+    - reason: NO_VOLUME
+      when: nothing above applies and DV_k = 0 in all 60 bars (n = 0)
+  stale_rule: stale = 1 on a row empty TRADES_HOLE or THIN_FEED (B1 rule 22, a time-window name) or BOOK_HOLE (CARD_C13_V4 rule 11 line 110 and line 78, the book state is stale); else 0
+  max_staleness_s: 30
+  window_days: 0
+  no_history: >-
+    the 60 bars reach at most D-1's last hour, through the CARRY (no whole day before D); on the first year day without 9 Sep 2025's
+    raw the rows u = 00:00:00 to 01:00:00 are empty NO_FILE (X1; no flag on an empty row); no learn days after it
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: N
+      when: every valued F15 row, N=<n> with n the bars with DV_k > 0 used (1 to 60)
+    - flag: SKIPPED_BAD_ROW
+      when: on a valued row, a bad book row stamped and received by one of the 61 mid times came after the row in force (CARD_C13_V4 rule 12)
+    - flag: NO_RATE_BASE
+      when: "on a valued row when the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0): the coin is read as not thin (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row that counts a repeated row (an agg id or a trade id seen before in its file): it counts each time (B1 rule 17, A1 rule 10)"
+edge_cases:
+  - case: E1 the hand work's toy of 4 bars (the mean kernel alone)
+    input: 'r = 10, -20, 0, 5 (bps); DV = 1, 2, 5, 0 ($M)'
+    answer: 'ratios 10, 10, 0; the 4th bar (DV 0) left out: 20/3 = 6.666666667, N=3'
+  - case: E2 a bar with volume and r 0
+    input: E1's 3rd bar (r 0, DV 5)
+    answer: 'ratio 0, counted (n includes it): part of E1''s 20/3'
+  - case: E3 a bar with r and volume 0
+    input: E1's 4th bar (r 5, DV 0)
+    answer: 'left out: no division by 0 and no 0 counted; E1 stays 20/3'
+  - case: E4 the plant P at the minute end 12:00:00 (every row good, the coin seen throughout)
+    input: >-
+      u = 12:00:00 of D. Book rows (pp 2) every 15 s at :14, :29, :44, :59: the rows 10:59:59 to 11:00:44 at bid 9,999.50 and ask
+      10,000.50 (mid 10,000.00); the rows from hh:mm-1:59 to hh:mm:44 at the mid M(hh:mm) +- 0.50, M for 11:01 to 12:00 the block
+      10,003.00, 10,002.00, 10,002.00, 10,004.00, 10,000.00 twelve times. Trades: for the bar ending hh:mm (11:01 to 12:00) its buy
+      dollars at T hh:mm-1:03.000 and its sell dollars at hh:mm-1:04.000, arr = T + 10 ms, the block (2,000,000, 0), (0, 1,000,000),
+      (no trade), (3,500,000, 500,000), (1,500,000, 500,000) twelve times
+    answer: >-
+      DV block 2, 1, 0, 4, 2; r block 3, -10000/10003, 0, 10000/5001, -10000/2501; ratios 3/2, 10000/10003 = 0.9997000900, (left
+      out), 2500/5001 = 0.4999000200, 5000/2501 = 1.999200320; F15 = 1250825162509/1000900260024 = 1.249700107, N=48; known_at
+      11:59:59.000; stale 0
+  - case: E5 no volume at all
+    input: P with no trade at all
+    answer: 'empty NO_VOLUME; known_at = u; stale 0 (F14 on the same rows: ZERO_FLOW_VAR)'
+  - case: E6 an unseen point and a skipped bad book row
+    input: 'P with the coin planted not seen (TRADES_HOLE) at the 5 s point 11:20:00 and a bad book row (CROSSED) at arr 11:49:59.500 (m(11:50:00) from the good row before it, flagged SKIPPED_BAD_ROW: CARD_C13_V4 rule 12)'
+    answer: 'empty TRADES_HOLE (the first in time); stale 1; known_at = u; with the bad book row alone: the good row before it stands, F15 = 1.249700107, flag SKIPPED_BAD_ROW'
+  - case: E7 the sign of the flow does not matter
+    input: P with every trade's taker side swapped
+    answer: 'F15 = 1250825162509/1000900260024 = 1.249700107, unchanged (|r| and DV unchanged)'
+  - case: E8 the 30 s cap
+    input: 'P with the last book row before 12:00:00 stamped and received 11:59:30.000 (age 30 s), then stamped and received 11:59:29.999 (age 30.001 s), its mid M(12:00)'
+    answer: 'age 30 s: in force, F15 = 1.249700107; age 30.001 s: empty BOOK_HOLE, stale 1'
+  - case: E9 the 00:00 start with the CARRY
+    input: 'P placed with its first mid at 23:00:00 of D-1 and its bars ending 23:01 to 24:00 of D-1; again placed with its first mid at 23:30:00 of D-1 and its bars ending 23:31 of D-1 to 00:30 of D'
+    answer: 'F15(00:00:00 of D) = D-1''s 24:00:00 row = 1.249700107, N=48; F15(00:30:00 of D) = 1.249700107, N=48 (D-1''s part from the CARRY, assembled in phase B)'
+  - case: E10 the first year day without the CARRY
+    input: 'D = 10 Sep 2025, 9 Sep 2025 not held; P placed with its first mid at 01:00:00 (book rows from 00:59:59) and its bars ending 01:01 to 02:00, the coin planted seen'
+    answer: 'u = 00:00:00 to 01:59:55: empty NO_FILE (to 01:00:00 the window reaches D-1''s trades file; from 01:00:05 a mid of the 61 needs D-1''s book_ticker file, no good row of D standing before 00:59:59: CARD_C13_V4 rules 9, 11; not held, no flag), known_at = u, stale 0; u = 02:00:00: F15 = 1.249700107'
+  - case: E11 a 5 s point that is not a minute end (12:00:05, which rows enter and leave)
+    input: 'P plus a buy of 1,000,000 at T 12:00:02.000 (arr 12:00:02.010) and a book row at arr 12:00:01.000, bid 10,005.50, ask 10,006.50; u = 12:00:05'
+    answer: >-
+      the trades of the bar ending 11:01 (T 11:00:03, 11:00:04) leave; bar k >= 2 holds P's bar k - 1's trades; bar 1 holds the new
+      buy, DV = 1; r_1 = 10^4 (10006 / 10004 - 1) = 5000/2501 = 1.999200320 and r_k = P's r_k for k >= 2: F15 = 75032503/50030004 =
+      1.499750090, N=48; known_at 12:00:02.010; stale 0
+  - case: E12 known_at is the latest arrival used
+    input: P with the book row of m(12:00:00) at arr 11:59:59.800 in place of 11:59:59.000
+    answer: 'known_at = 11:59:59.800 (<= as_of 12:00:00); F15 = 1.249700107'
+  - case: E13 a book row with no stamp, mid-day (X2)
+    input: 'P with a book row with no stamp (t = arr = -1; bid 10,004.50, ask 10,005.50, mid 10,005.00) next in the file after P''s row of 11:58:59 (REVIEW_LEAD_EDGE1_V1 X2, prod_reader_book_ticker_v2 lines 18, 135)'
+    answer: 'the row is bad (why 2 STAMP) and never stands (CARD_C13_V4 rule 12; the year''s prod_C13_v3 line 142 keeps only rows with t >= 0 and arr >= 0, so P''s row of 11:58:59 stands: F15 = 1250825162509/1000900260024 = 1.249700107, N=48, no flag (read as good it would give 422362345498939/333800236718004 = 1.265314697)'
+  - case: E14 seen at every moment, not at the 5 s points only
+    input: "P with the coin's seen state from background trades (a buy and a sell of the same size every second, received at once, net 0 dollars; D-1's minute counts 60 each) except none in (11:21:05.500, 11:22:06.500) (P's own trades at hh:mm-1:03 and hh:mm-1:04 lie outside it: the bar ending 11:23 has no trade, the last P trade before is the sell at 11:21:04.000)"
+    answer: 'F15(12:00:00) empty TRADES_HOLE, stale 1, known_at = u (the moments in (11:22:05.000, 11:22:07.000) have no trade in the 60 s before them: the last is the background trade of 11:21:05.000, the next 11:22:07.000; every 5 s point is seen, so a check at the 5 s points only would give 1.249700107)'
+  - case: E15 a 1000-coin
+    input: "P on 1000PEPEUSDT (p per 1,000 coins, am in thousands: the reader's units still dollars; the mid's move in bps)"
+    answer: 'F15 = 1.249700107 as E2 (the 1000 prefix changes nothing)'
+  - case: E16 a trade row with no stamp (Y5, X2)
+    input: "P plus a trade row with timestamp and local_timestamp empty (t = arr = -1, bad), a buy of 5,000,000"
+    answer: 'in no bar and no BAD_INPUT: F15 = 1.249700107 as E2, no flag'
+unit_tests:
+  - test: U1 (E1, E2, E3) the mean kernel
+    planted: the 4 bars of E1 handed to the kernel
+    expect: '20/3 (6.666666667 within 1e-9 relative), N=3'
+  - test: U2 (E4) the plant P end to end, with C13 S01 planted beside
+    planted: 'the trades and book_ticker packs of E4, the seen state planted seen throughout; a year C13 S01 (the close) column planted beside at the mid + 1.00 at every minute end, which F15 must not read'
+    expect: 'F15 = 1250825162509/1000900260024 = 1.249700107 at u = 12:00:00; N=48; known_at 11:59:59.000; stale 0'
+  - test: U3 (E5, E6, E8) no volume, empty inputs and the 30 s cap
+    planted: the E5, E6 and E8 variants of P
+    expect: 'E5 NO_VOLUME stale 0; E6 TRADES_HOLE stale 1, then 1.249700107 with SKIPPED_BAD_ROW (the bad row alone); E8 1.249700107 then BOOK_HOLE; known_at = u on every empty row; no flag N on empty rows'
+  - test: U4 (E7) swapped sides
+    planted: P with every taker side swapped
+    expect: F15 = 1.249700107 (equal to U2 within 1e-9 relative)
+  - test: U5 (E9, E10) the CARRY and the first year day
+    planted: 'P across 00:00 with D-1''s part as a CARRY file (E9); P on 10 Sep 2025 with no 9 Sep 2025 rows (E10)'
+    expect: 'E9 1.249700107 at 00:00:00 and at 00:30:00 of D; E10 NO_FILE at 00:00:00 to 01:59:55, 1.249700107 at 02:00:00'
+  - test: U6 (E11) the point 12:00:05
+    planted: the E11 rows
+    expect: 'F15(12:00:05) = 75032503/50030004 = 1.499750090, N=48 (and 1.249700107 at 12:00:00 on the same rows); known_at 12:00:02.010'
+  - test: U7 (E12) the row stamps
+    planted: U2 to U6 and the E12 variant of P
+    expect: 'E12 known_at 11:59:59.800; every row as_of = u and known_at <= as_of; 17,280 rows per coin for a full day; value_kind 1 or 0 (empty)'
+  - test: UX2 (E13) a row with no stamp
+    planted: E13's book rows
+    expect: 'F15 = 1.249700107 within 1e-9 relative of 1250825162509/1000900260024, N=48, no flag'
+  - test: U8 (E14, E15, E16) the seen state, a 1000-coin, a stampless trade
+    planted: "the rows of each case through the readers' packs and reader v6's arrays"
+    expect: "each answer exactly as written"
+mutants:
+  - mutant: M1 zero_volume_in (a zero-volume bar counted as a ratio 0, or divided by 0)
+    caught_by: 'U2 (counted as 0: 1250825162509/1251125325030 = 0.9997600860 against 1.249700107, N=60); U1 (5 against 20/3; the division by 0 gives inf)'
+  - mutant: M2 close_not_mid (the year's C13 S01, the close, in place of the mid m(t) at the bar edges)
+    caught_by: 'U2 (closes = mids + 1.00: 625600182517375/500650295053503 = 1.249575180 against 1.249700107, a move of 1.0e-4 relative)'
+  - mutant: M3 bad_ends (a bad book row ends the state, addon_grid_v2.in_force bad_ends True)
+    caught_by: U3 (E6's bad row alone gives BOOK_HOLE in place of 1.249700107)
+  - mutant: M4 no_stamp_good (a book row with no stamp read as good, standing at the row before's stamp)
+    caught_by: UX2 (1.265314697 in place of 1.249700107; the row dropped gives the same value and no flag, as the year)
+  - mutant: M5 seen_at_5s_points (the seen state checked at the 5 s points only)
+    caught_by: 'U8 E14 (1.249700107 against TRADES_HOLE)'
+  - mutant: M6 stampless_bad (a trade row with no stamp gives BAD_INPUT)
+    caught_by: 'U8 E16 (BAD_INPUT against 1.249700107)'
+  - mutant: M7 book_hole_stale0 (BOOK_HOLE written stale 0)
+    caught_by: 'U3 E8 (stale 0 at age 30.001 s against 1)'
+  - mutant: M8 d1_book_not_needed (a mid that needs D-1's missing book file read as BOOK_HOLE)
+    caught_by: 'the CARRY test, E10 (BOOK_HOLE at 01:00:05 against NO_FILE)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT and one thin coin (the tester names it), the 5 s points 00:00:00, 00:00:05, 12:00:00 and 23:59:55
+      why: >-
+        the year's checked day; 00:00:00 is 7 Mar 2026's 24:00:00 row and 00:00:05 reads the CARRY (the window across 00:00); the
+        trades and book_ticker streams are the year's (held on year days), so D4 (aggTrades held) does not bind this card
+    - point: 2026-03-08, BTCUSDT, 12:00:05 to 12:01:00 every 5 s
+      why: 5 s points that are not minute ends (which rows enter and leave the 60 bars)
+    - point: 2025-09-24, BTCUSDT and the thin coin, the 5 s points 00:00:00, 00:00:05, 12:00:00 and 23:59:55
+      why: >-
+        the year's checked day, a second day; the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's
+        B1 has (ADDON_ARCHITECTURE_V4 section 6, V3 section 6 standing) are found before the job
+    - point: 2025-10-10 evening, BTCUSDT and the thin coin, 3 minute ends the tester picks before the job
+      why: the crash (large volume and moves)
+  pass: >-
+    The tester recomputes F15, N, its empty reasons, flags, stale and known_at at every point from this card's words with Fraction on
+    the readers' rows (never the producer's code): floats within 1e-9 relative of the Fraction recompute (V2 4.5), words and flags
+    equal; screamer AmihudIlliquidity on the same bars beside (the tool against ours). With F14's job.
+meaning_check:
+  pass_lines:
+    - >-
+      On 2026-03-08 and 2025-09-24: F15 of the thin coin above BTC's at more than half of the 5 s points where both are valued (the hand
+      work: 'higher on thin coins than on BTC at most minutes'); if not, reported and the name reviewed.
+  report_only:
+    - the share of 5 s points valued, NO_VOLUME, BOOK_HOLE and empty, and the spread of N, per coin, on the checked days
+    - F15 against F14 per coin (two price impacts, one on net flow, one on volume)
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades and book_ticker; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - how many bps this coin's mid moved per $M traded, on average over the last hour's 60 s bars with volume
+    - a coin against itself across hours and days
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - a spread
+    - a cost of a given size
+    - 'an illiquidity per order: DV is the taker trades'' dollars (fills), not orders (RULING 3, the name says what the value is)'
+readers: none yet
+implementation:
+  how: >-
+    Per coin, vectorised over the day, with F14 (the same bar sums and mids): DV and r per bar on each of the 12 phase grids; the
+    ratio |r| / DV where DV > 0 and the count by a mask (never a division by 0); the ratio grid holds 0 where DV = 0 beside a 0/1 count grid, NaN only for an empty mid (roll_points' sum has min_count = n by default: one NaN bar would empty the window); roll_points' rolling sums of the ratios and of the
+    counted bars over 60 bars on each phase grid; the 12 phase grids interleaved into the 17,280 points; D-1's part from the CARRY in
+    phase B for u = 00:00:05 to 01:00:00. Dense [coin x 17,280] grids for the writer (ADDON_ARCHITECTURE_V4 section 2). No loop over
+    rows or points in Python (a loop over the 12 phases).
+  kernel: 'addon_grid_v2.roll_points (85c8ece1 line 186, how sum, n = 60: the ratios and the counted bars) on the 12 phase grids'
+  memory_mb: 600
+  seconds_share: 1
+data_checks:
+  - what: the CARRY of the first year day (are 9 Sep 2025's trades and book_ticker files held?)
+    who: BED (a read-only runner job, with F14's)
+  - what: "answered (edition 6): B1 rule 9's seen state at every moment of the window (prod_B1_v3 alive_all), its look-back into D-1 in the CARRY (D-1's live spans, bad rows, counts and thin end: the PHASES), its words TRADES_HOLE, THIN_FEED, BAD_INPUT"
+    who: BED, checked by METRIC_AUDIT2 at review

@@ -1,0 +1,252 @@
+{
+  "kind": "build_metric",
+  "id": "HL1",
+  "producer": "HLLIQX",
+  "item": "Hyperliquid liquidations with the liquidated account, size and side (MISSING_INFO_BACKLOG M02)",
+  "tier": "BUILD",
+  "name": "Hyperliquid dollars force-closed on longs and on shorts in the last 5 s",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 3,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "How many dollars of long positions (forced sells) and of short positions (forced buys) Hyperliquid liquidated in the last 5 s known at u, every piece counted once, nothing capped.",
+  "example": "SOL, 10 Oct 2025, u = 21:15:05. Liquidated-account rows with block time in (21:14:59, 21:15:04]: account X sold 100 SOL at 180 (side A, a long force-closed) in two pieces of 60 and 40 (tids 7, 8), account Y bought 20 SOL at 181 (side B, a short force-closed, tid 9). S01 = 60 x 180 + 40 x 180 = 18,000 dollars; S02 = 20 x 181 = 3,620 dollars.",
+  "formula": "For coin c and point u (5 s grid of D): R = the fills rows of c with is_liquidated_account = true and block_time_us in (u - 6 s, u - 1 s]. S01 = sum(px x sz) over R with side = A (longs force-closed). S02 = sum(px x sz) over R with side = B (shorts force-closed). An empty R in a complete hour gives 0. Prices and sizes from the decimal text parsed once to float64; no rounding.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 row F01; Hyperliquid node fills (node_fills_by_block), liquidation object {liquidatedUser, markPx, method}"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "fills table of hl_node_read V1 (columns as in PRODUCER_HLLIQX_V1)",
+      "rule_in_force": "rows with block time in (u - 6 s, u - 1 s]; the liquidated account's own rows only",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's 24 hour files",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    }
+  ],
+  "overlaps": [
+    {
+      "setting": "A1 S05, S06 (Binance forced USD by side, at least one print per coin per second)",
+      "kind": "other_metric",
+      "why": "the same forced flow on another venue with a capped feed; a cross-check, never merged"
+    }
+  ],
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "Crash days 10-11 Oct 2025: thousands of pieces a minute, the same rule; a HOLE hour H is EMPTY HOLE on the 721 points u in (H:00:00, H+1:00:05] whose window touches it; HOLE points do not move with the grid (a HOLE hour 23 of D-1 reaches D 00:00:00 and 00:00:05); a day whose manifest says tail_complete false is EMPTY HOLE on every point whose window touches (own_last_block_time_us, D+1 00:00:00), the span stated by the reader, a manifest without the field refused (LAB1 08:15Z); 00:00: no carry of values; the rows at 00:00:00 and 00:00:05 read D-1's last 6 s (the CARRY of D-1), EMPTY HOLE if D-1 is not built.",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLLIQX/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S01",
+        "label": "hl_liq_long_usd_5s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of LONG positions force-closed (forced sells) in the 5 s known at u",
+        "never": [
+          "all forced selling on all venues",
+          "a count of accounts",
+          "a Binance number"
+        ]
+      },
+      {
+        "name": "S02",
+        "label": "hl_liq_short_usd_5s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of SHORT positions force-closed (forced buys) in the 5 s known at u",
+        "never": [
+          "all forced buying on all venues",
+          "a Binance number"
+        ]
+      }
+    ],
+    "grid": "5s",
+    "cadence": "every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per day; D 00:00:00 is the old D-1 24:00:00, values unchanged",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at = u, so known_at <= as_of on every row (empty rows too): the row at u uses only rows with block time <= u - 1 s (MODEL_AVAILABLE_AT, a stated 1 s publication delay)",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "the bin's hour is HOLE in the manifest"
+      },
+      {
+        "reason": "NO_HISTORY",
+        "when": "points before 1 Sep 2025 00:00:06"
+      }
+    ],
+    "stale_rule": "none (stale = 0 always; sums of events)",
+    "max_staleness_s": 5,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": "none",
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLLIQX.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1 one liquidation in two pieces plus a short liquidation (the example)",
+      "input": "as in the example",
+      "answer": "S01 18000, S02 3620"
+    },
+    {
+      "case": "E2 the counterparty row carries the liquidation object too",
+      "input": "the maker who bought X's 60 SOL has a row with liq_user = X, is_liquidated_account false",
+      "answer": "not counted; S01 unchanged"
+    },
+    {
+      "case": "E3 a quiet complete hour",
+      "input": "no liquidation rows in the bin, the hour complete",
+      "answer": "S01 0, S02 0"
+    },
+    {
+      "case": "E4 a HOLE hour",
+      "input": "manifest marks the hour HOLE",
+      "answer": "S01, S02 EMPTY HOLE"
+    },
+    {
+      "case": "E6 both rows of one trade are liquidated accounts (two accounts liquidated against each other)",
+      "input": "X sells 10 SOL at 180 and Y buys it, both rows with is_liquidated_account true",
+      "answer": "S01 1800 (X's row) and S02 1800 (Y's row), each counted once"
+    },
+    {
+      "case": "E5 a piece at u - 0.5 s",
+      "input": "block time u - 0.5 s",
+      "answer": "counted at u + 5 s, not at u"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1 (E1)",
+      "planted": "the example's three liquidated-account rows plus their counterparty rows",
+      "expect": "S01 18000, S02 3620"
+    },
+    {
+      "test": "U2 (E2, E3)",
+      "planted": "only counterparty rows with liq_user set; a second coin with no rows",
+      "expect": "0, 0 on both coins"
+    },
+    {
+      "test": "U3 (E4, E5)",
+      "planted": "HOLE hour 14; a piece at u - 0.5 s in hour 10",
+      "expect": "EMPTY HOLE in hour 14; the piece only in the next row"
+    },
+    {
+      "test": "U6 (the contract grid and the tail, LAB1 08:11Z)",
+      "planted": "liquidation rows at D-1 23:59:55 and D 00:00:02; then the same with D-1's manifest tail_complete false and own_last_block_time_us = D-1 23:59:50",
+      "expect": "the row at D 00:00:00 equals the old grid's D-1 24:00:00 row exactly; with the tail cut, the rows at D 00:00:00 and 00:00:05 are EMPTY HOLE (windows touching (23:59:50, 24:00:00)), never 0"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "M1 count rows with any liq_user (both sides)",
+      "caught_by": "U2 (the counterparty rows give a non-zero S01)"
+    },
+    {
+      "mutant": "M2 swap the side mapping (B as longs)",
+      "caught_by": "U1 (S01 3620, S02 18000)"
+    },
+    {
+      "mutant": "M3 HOLE written as 0",
+      "caught_by": "U3"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-10-10, BTC, ETH, SOL, 21:00 to 21:59",
+          "why": "the crash hour, the largest liquidation flow of the BUILD window"
+        },
+        {
+          "point": "2025-10-15, BTC and one thin roster coin, 10:00 to 10:59",
+          "why": "an ordinary hour, mostly zeros"
+        }
+      ],
+      "pass": "QUANT recomputes from this card's words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read's converted tables, never the builder's code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "the share of minutes with any liquidation per coin and month",
+      "HL vs Binance forced dollars ratio on crash days"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "how much was force-closed on Hyperliquid, by side, just before u"
+    ],
+    "never": [
+      "forced flow on other venues",
+      "anything after u",
+      "who will be liquidated next"
+    ]
+  },
+  "readers": "none yet (alarm context and profile after adoption)",
+  "implementation": {
+    "how": "NumPy binning of liquidated-account rows; rolling60s tid and method aggregates; account shares/HHIs by side and exact two-account opposite-side counterparty pairing. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_bin_sum (the 5 s bin on node fills)",
+    "memory_mb": 600,
+    "seconds_share": 3,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HL1_V3"
+}

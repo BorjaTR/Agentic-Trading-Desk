@@ -1,0 +1,133 @@
+{
+ "by": "BUILD1 (labcore V2_3 cycle, STRATEGY-190912a; owner as in RELEASE_profile_V1_3.json)",
+ "changed": [
+  "team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv"
+ ],
+ "files": {
+  "team/LAB3/code/lab3/__init__.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "e3b0c44298fc1c14"
+  },
+  "team/LAB3/code/lab3/asof.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "d511d6af57eb9d3a"
+  },
+  "team/LAB3/code/lab3/binfmt.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "ebc5f60e969069e9"
+  },
+  "team/LAB3/code/lab3/bins.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "23bf4d116e47c415"
+  },
+  "team/LAB3/code/lab3/days.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "eb8236dbe13d67cc"
+  },
+  "team/LAB3/code/lab3/labgroups.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "6d59a8d98274ef2f"
+  },
+  "team/LAB3/code/lab3/law.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "04a2f0fe82a62c0e"
+  },
+  "team/LAB3/code/lab3/rows.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "747414c711bbd499"
+  },
+  "team/LAB3/code/lab3/write.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "a0a15f9580f9fa72"
+  },
+  "team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv": {
+   "file_sha16_at_cut": "c00703002e751d06",
+   "role": "what each context value reads (proof display)",
+   "schema_sha16": "8b96d57ed7d7c08b",
+   "value_columns": [
+    "value",
+    "level",
+    "block",
+    "inputs",
+    "upstream"
+   ],
+   "value_sha16": "04ce6c8c99c89ad0"
+  },
+  "team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv": {
+   "file_sha16_at_cut": "d133fea9c7935857",
+   "role": "the catalogue (generated from episode_blocks docstrings)",
+   "schema_sha16": "1cc2b66193910365",
+   "value_columns": [
+    "code",
+    "store",
+    "clock",
+    "exact_k",
+    "scope",
+    "unit",
+    "level",
+    "block"
+   ],
+   "value_sha16": "d6fa32b77d52f061"
+  },
+  "team/RESEARCH/tools/alarm_profile/PROFILES_V1.tsv": {
+   "file_sha16_at_cut": "74a3d03a9e0e7253",
+   "role": "named groupings over EPI and CTX values",
+   "schema_sha16": "8a64fd2f76c96e98",
+   "value_columns": [
+    "profile",
+    "group",
+    "tool",
+    "value"
+   ],
+   "value_sha16": "7f2337881851478c"
+  },
+  "team/RESEARCH/tools/alarm_profile/PROOFS_V1.tsv": {
+   "role": "the proof plan (FROZEN_1 proof_plan_sha16, V2_3 C3)",
+   "schema_sha16": "51b5ad369a5a5b4d",
+   "sha16": "caf20c2bf5b5ef96"
+  },
+  "team/RESEARCH/tools/alarm_profile/README.md": {
+   "role": "design note and contract",
+   "sha16": "168d4894a421aaeb"
+  },
+  "team/RESEARCH/tools/alarm_profile/alarm_profile.py": {
+   "role": "tool module",
+   "sha16": "9eb6732a281bf46f"
+  },
+  "team/RESEARCH/tools/alarm_profile/episode_blocks.py": {
+   "role": "tool module",
+   "sha16": "150dc80c8e681efe"
+  },
+  "team/RESEARCH/tools/alarm_profile/test_alarm_profile.py": {
+   "role": "test",
+   "sha16": "5e22427c38f8c76c"
+  },
+  "team/RESEARCH/tools/alarms/a01_onset_v2.py": {
+   "role": "A01 onset definition episode_blocks uses (V2_3 C1 binding)",
+   "sha16": "ffe90db285aa85c5"
+  },
+  "team/RESEARCH/tools/alarms/a02_climax_v3.py": {
+   "role": "A02 climax definition episode_blocks uses (V2_3 C1 binding)",
+   "sha16": "ded5b36195f4b1b5"
+  }
+ },
+ "landing": "P04 + A09 + P09 (+ P03 context, P05 profile)",
+ "release": "V1_4",
+ "releases": {
+  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_3.json": "0502a07143f81678"
+ },
+ "replaces": "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_3.json",
+ "rule": "FROZEN until both outside approvals and STRATEGY sign-off; any change to a listed file is a new release (V1_1, V2)",
+ "run_with": "<PYTHON>",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tests_result": "landing suites 19:25-19:29Z (analyst venv, taskpolicy -b): labcore 78 + R5 (V2_2 refuses on closure, expected; R5 moved to V2_3 after the cut), context 26+8s, profile 28+4s, match 15, cause 68, fairness 38, bucket_proof 51, exit 51+1s + outside 37, alarm_design 59, freeze_judge v1 34+1s v2 70 chain 8, reading_value v2+v3 7",
+ "text_changes": [],
+ "tool": "alarm_profile",
+ "unbind_removed": {
+  "team/RESEARCH/tools/alarms/alarm_view_v1.py": "declared but used by no tool in this graph: declaration removed (V2_3 C1)"
+ },
+ "written_utc": "2026-10-23T19:29:40Z"
+}

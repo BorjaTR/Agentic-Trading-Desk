@@ -1,0 +1,240 @@
+{
+  "kind": "build_metric",
+  "id": "HF1",
+  "producer": "HLFLOWX",
+  "item": "Hyperliquid taker flow and fills by account size (MISSING_INFO_BACKLOG M03)",
+  "tier": "BUILD",
+  "name": "Hyperliquid dollars bought and sold by takers in the last 5 s",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 3,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "How many dollars traders bought and sold aggressively (crossing the spread, the taker side of each trade) on Hyperliquid in the last 5 s known at u.",
+  "example": "BTC, u = 10:00:05. Taker rows with block time in (09:59:59, 10:00:04]: a taker bought 0.5 BTC at 112,000 (side B) and a taker sold 0.2 BTC at 111,990 (side A). S01 = 56,000; S02 = 22,398.",
+  "formula": "For coin c and point u: T = the fills rows of c with taker = true and block_time_us in (u - 6 s, u - 1 s]. S01 = sum(px x sz) over T with side = B. S02 = sum(px x sz) over T with side = A. An empty T in complete hours gives 0. Decimal text parsed once to float64.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 row F05; Hyperliquid node fills (the crossed field)"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "fills table of hl_node_read V1 (columns as in PRODUCER_HLFLOWX_V1)",
+      "rule_in_force": "taker rows with block time in (u - 6 s, u - 1 s]",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's 24 hour files; the CARRY of D-1 (its last 6 s) for the rows at 00:00:00 and 00:00:05",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    }
+  ],
+  "overlaps": [
+    {
+      "setting": "B1 S09 (Binance taker push) and FLOWX",
+      "kind": "other_metric",
+      "why": "taker flow on Binance; a cross-check of direction on the same minutes, never merged"
+    }
+  ],
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "a HOLE hour H gives EMPTY HOLE on the 721 points u in (H:00:00, H+1:00:05]; crash days (the same rule); the rows at 00:00:00 and 00:00:05 read D-1's last 6 s (EMPTY HOLE if D-1 is not built); HOLE points do not move with the grid (a HOLE hour 23 of D-1 reaches D 00:00:00 and 00:00:05); a day whose manifest says tail_complete false is EMPTY HOLE on every point whose window touches (own_last_block_time_us, D+1 00:00:00), the span stated by the reader, a manifest without the field refused (LAB1 08:15Z)",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLFLOWX/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S01",
+        "label": "hl_taker_buy_usd_5s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars bought by takers in the 5 s known at u",
+        "never": [
+          "all buying (makers buy too)",
+          "a Binance number"
+        ]
+      },
+      {
+        "name": "S02",
+        "label": "hl_taker_sell_usd_5s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars sold by takers in the 5 s known at u",
+        "never": [
+          "all selling",
+          "a Binance number"
+        ]
+      }
+    ],
+    "grid": "5s",
+    "cadence": "every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per day; D 00:00:00 is the old D-1 24:00:00, values unchanged",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at = u, so known_at <= as_of on every row (empty rows too): rows with block time <= u - 1 s only (MODEL_AVAILABLE_AT, 1 s delay)",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "the bin's hour is HOLE"
+      },
+      {
+        "reason": "NO_HISTORY",
+        "when": "points before 1 Sep 2025 00:00:06"
+      }
+    ],
+    "stale_rule": "none (stale = 0 always)",
+    "max_staleness_s": 5,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": "none",
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLFLOWX.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        },
+        {
+          "code": "X1.HLFLOWX.Q03",
+          "kind": "WHOLE",
+          "meaning": "Unmapped direction count in the producer window; unknown coverage remains EMPTY"
+        },
+        {
+          "code": "X1.HLFLOWX.Q04",
+          "kind": "WHOLE",
+          "meaning": "Direction disagreement count in the producer window; unknown coverage remains EMPTY"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1 the example",
+      "input": "a taker buy and a taker sell",
+      "answer": "S01 56000, S02 22398"
+    },
+    {
+      "case": "E2 the maker rows of the same trades",
+      "input": "the maker rows (taker false)",
+      "answer": "not counted"
+    },
+    {
+      "case": "E3 quiet complete hour",
+      "input": "no rows",
+      "answer": "S01 0, S02 0"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1 (E1, E2)",
+      "planted": "the example's two trades with both rows each",
+      "expect": "S01 56000, S02 22398"
+    },
+    {
+      "test": "U2 (E3)",
+      "planted": "no rows in hour 10",
+      "expect": "0, 0"
+    },
+    {
+      "test": "U3 (HOLE)",
+      "planted": "HOLE hour 14",
+      "expect": "EMPTY HOLE"
+    },
+    {
+      "test": "U6 (the contract grid and the tail, LAB1 08:11Z)",
+      "planted": "taker rows at D-1 23:59:55 and D 00:00:02; then the same with D-1's manifest tail_complete false and own_last_block_time_us = D-1 23:59:50",
+      "expect": "the row at D 00:00:00 equals the old grid's D-1 24:00:00 row exactly; with the tail cut, the rows at D 00:00:00 and 00:00:05 are EMPTY HOLE (windows touching (23:59:50, 24:00:00)), never 0"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "M1 count maker rows too",
+      "caught_by": "U1 (S01 78398, S02 78398)"
+    },
+    {
+      "mutant": "M2 side read from the maker's row",
+      "caught_by": "U1 (S01 and S02 swapped)"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-10-10, BTC and SOL, 21:00 to 21:59",
+          "why": "the crash hour"
+        },
+        {
+          "point": "2025-10-15, BTC and one thin coin, 10:00 to 10:59",
+          "why": "an ordinary hour"
+        }
+      ],
+      "pass": "QUANT recomputes from this card's words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read's converted tables, never the builder's code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "the share of minutes with S01 - S02 of the same sign as Binance B1 S09"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "which side traded aggressively on Hyperliquid just before u"
+    ],
+    "never": [
+      "where the price goes after u",
+      "anything about other venues"
+    ]
+  },
+  "readers": "none yet",
+  "implementation": {
+    "how": "NumPy bins and rolling windows; taker rows and account transitions from signed start/end positions; unique identifiers counted over the whole declared window. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_bin_sum",
+    "memory_mb": 1200,
+    "seconds_share": 5,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HF1_V3"
+}

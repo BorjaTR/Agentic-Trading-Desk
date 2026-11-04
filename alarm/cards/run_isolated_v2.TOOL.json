@@ -1,0 +1,146 @@
+{
+ "tool": "run_isolated_v2",
+ "file": "_tools/run_isolated_v2.py",
+ "file_sha16": "f303fbab88cecfb3",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "a release proof, not a loop step: the RUN proof of CLEAN_RELEASE_V1 section 1 (a real run imports and opens code only from the release)",
+ "question": "Did this run of a release script import code only from the Alarm folder and open, under the forbidden folder, only data under the settings keys?",
+ "usage_from_code": "python3 -B _tools/run_isolated_v2.py --settings <settings file> [--forbid <dir>]... <script.py> [args...]",
+ "settings_keys": [
+  "LAB_DAYS",
+  "RESEARCH_STORE",
+  "HL_FILLS",
+  "SCRATCH",
+  "RESEARCH_ROOT",
+  "BOARD",
+  "RUNNER_QUEUES",
+  "FEED_GATE",
+  "FORBID"
+ ],
+ "code_options": [
+  "--forbid",
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  2,
+  3
+ ],
+ "commands": [
+  {
+   "name": "run",
+   "does": "runs one script of this Alarm folder as __main__ with its arguments, then prints RUN ISOLATION OK or FAILED",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "--forbid",
+     "required": false,
+     "meaning": "a folder no code may come from (repeatable); default: the settings' FORBID (folders split on :)",
+     "example": "/path/to/the/dev/tree"
+    },
+    {
+     "name": "script.py",
+     "required": true,
+     "meaning": "a script inside this Alarm folder",
+     "example": "<INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py"
+    },
+    {
+     "name": "args",
+     "required": false,
+     "meaning": "the script's own arguments",
+     "example": "--settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 GIVENB GB1 --grade 20263709_GRADE_GIVENB"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/_tools/run_isolated_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 GIVENB GB1 --grade 20263709_GRADE_GIVENB",
+   "writes": "nothing itself; the script writes what it writes",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "refused: no settings file or a bad one, no forbidden folder (neither --forbid nor FORBID), a script outside this Alarm folder; no script (prints the usage)"
+    },
+    {
+     "exit": 3,
+     "when": "RUN ISOLATION FAILED: a module from outside, a file under the forbidden folder that is no data of the settings (or is code), or a past edition (archive/) opened or imported"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "--forbid",
+      "{WORLD}/forbidden",
+      "{ALARM}/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py",
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "FLOWX",
+      "V1",
+      "--grade",
+      "20263700_GRADE_FLOWX"
+     ],
+     "exit": 0,
+     "prints": "RUN ISOLATION OK"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "python3 -B _tools/run_isolated_v2.py"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "{ALARM}/_tools/settings_v1.py",
+    "get",
+    "{SETTINGS}",
+    "RESEARCH_ROOT"
+   ],
+   "exit": 2,
+   "prints": "NO FORBIDDEN FOLDER"
+  }
+ ],
+ "rules": [
+  "otherwise the exit code is the script's own",
+  "the interpreter's own files do not count"
+ ],
+ "outputs": [
+  {
+   "file": "printed: OK line",
+   "where": "stdout, last line, when the run is isolated",
+   "columns": [
+    "alarm",
+    "data_files",
+    "forbidden",
+    "script_exit"
+   ]
+  },
+  {
+   "file": "printed: FAILED line",
+   "where": "stdout, last line, when it is not",
+   "columns": [
+    "outside_modules",
+    "forbidden",
+    "bad_files",
+    "archive_files"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/run_isolated_v2_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "_tools/settings_v1.py",
+   "sha16": "6b25623d1943524e"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

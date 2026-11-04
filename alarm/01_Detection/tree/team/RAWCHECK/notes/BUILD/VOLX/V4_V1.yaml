@@ -1,0 +1,176 @@
+# V4_V1.yaml: VOLX the Deribit DVOL reader and BTC's DVOL at the minute end (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2
+# edit 2 ac90daf8; ADDON_ARCHITECTURE_V4 edit 3 0591d181). S07 by PRODUCER_VOLX_V1.yaml. The file facts: job 16028 (log q_16028/run.log fd082700267d4c41).
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): N1 (U1 plants 8 Mar's 24 candles; E5's 60.78), N2 (M2, M3 at U1's points),
+# N3 (10 to 28 Sep 2025 NO_FILE), N4 (the age to 3,540 s; searchsorted side right), N5 (E8 the 00:00:00 candle), A1, A3; the
+# coverage of job 16029 (log q_16029/run.log 1385fbd3): BTC held every day 29 Sep 2025 to 9 Mar 2026, 24 hours each; ETH none.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the cap at exactly 7,200 s (v2 in_force's fresh_stamp is age
+# <= cap: cap 7,199,999,999 us), X1 (an empty file has no candles), FIRST_DAY_NO_CARRY dropped (an empty row carries no flag).
+kind: build_metric
+id: V4
+producer: VOLX
+item: 'Deribit DVOL reader (input)'
+tier: BUILD
+name: Deribit's BTC implied volatility index (DVOL), the close of its last hourly candle usable at the minute end, in annualised percent
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 3
+  signed: false
+means: >-
+  What BTC options priced for the next 30 days' volatility, as Deribit's DVOL index (annualised percent), from its last closed hourly
+  candle: 58.52 means the options market expected about 58.5 percent a year, about 3.1 percent a day (58.52 / sqrt(365)).
+example: >-
+  On 8 Mar 2026 the BTC file's first candle (timestamp 00:00) closes at 58.52 and the next (01:00) at 58.55: S07 is 58.52 from the
+  minute end 01:01 to 02:00 and 58.55 from 02:01 (J16028 log, rows first0, first1).
+formula: >-
+  The candles: the reader's rows of deribit_dvol_BTC_<day>.csv.gz (exchange, symbol, timestamp, local_timestamp, open, high, low,
+  close; one row an hour, timestamp in microseconds at the hour: J16028). A candle with timestamp ts is read as the hour [ts, ts + 1
+  h) (timestamp = the candle's START: the safe reading, data check 2) and is usable from ts + 1 h + 60 s (the close plus a
+  publication lag L = 60 s, opinion: RESEARCH_TOOLS_V1 5.3). At u: the usable candle with the largest ts; S07 = its close as a
+  float64 (the file's decimal text, 2 decimals). known_at = ts + 1 h + 60 s, MODELLED: the files hold no arrival (local_timestamp is
+  the pull time 30 Sep 2026 14:34:24 UTC on every row, J16028). Its age u - known_at is 0 to 3,540 s on the minute grid when no candle is missing;
+  stale = 1 from 3,600 s (the next candle is missing, the older one is carried); from 7,200 s empty NO_CANDLE. A close that is not a
+  number above 0 makes its candle BAD_INPUT, skipped. BTCUSDT's row only.
+source:
+  kind: doc
+  ref: >-
+    Deribit DVOL methodology (insights.deribit.com, 2021, updated 2023: a 30-day forward annualised implied volatility, a
+    time-weighted interpolation of the two expiries around 30 days; RESEARCH_TOOLS_V1 aad3cc38 row V3 and section 5.3); the Tardis
+    files CARD_C4_V3 8bd8accb rule 10 names (tardis/deribit/deribit_dvol_BTC_<day>.csv.gz, no source spec, no proven reader: C4 S11
+    empty NO_READER); their format read by job 16028.
+inputs:
+  - kind: reader
+    ref: prod_reader_deribit_dvol_v1
+    exists: false
+    stream: deribit_dvol (tardis/deribit/deribit_dvol_<CUR>_<YYYY-MM-DD>.csv.gz beside the Binance store, by exact path; BTC only, no ETH file held)
+    data_check: >-
+      SOURCE_SPEC_deribit_dvol_V1 and the reader with its tests (one reader per stream, AR1 F2): the header and the hourly steps (J16028:
+      24 rows a day, steps 3,600 s, 00:00 to 23:00); timestamp = the candle's start (data check 2); local_timestamp a pull time, never
+      an arrival; the coverage (J16029, exact-path probes of 10 Sep 2025 to 9 Mar 2026: BTC held on 162 days, every day from 29 Sep
+      2025, 24 hours each, none off the hour grid; none of 10 to 28 Sep 2025, RESEARCH_TOOLS_V1 5.3's 456 hours; ETH on 0 days)
+    rule_in_force: the usable candle with the largest timestamp (ts + 1 h + 60 s <= u)
+    stale_rule: stale = 1 when u - known_at >= 3,600 s; empty NO_CANDLE from 7,200 s
+    days: "D's file (candles 00:00 to 22:00 usable 01:01 to 24:00 of D; the 24:00 row is D+1's 00:00 row) and the CARRY of D-1 (X1/carry/VOLX/<D-1>.npz: D's 00:00 row and D-1's 23:00 candle, usable 00:01 to 01:00 of D; ADDON_ARCHITECTURE_V4 section 4)"
+overlaps:
+  - setting: C4 S11
+    kind: other_metric
+    why: >-
+      C4 S11 was to be this index (CARD_C4_V3 rule 10) and is empty NO_READER at every minute of the year; S07 is its build. Never
+      cite C4 S10's old name volx for it (WORKPACKAGES_V2 section 5 rule 4).
+per_coin: >-
+  BTCUSDT only: a market-wide input for the other coins (RESEARCH_TOOLS_V1 5.3). ETH has a DVOL at Deribit, but no deribit_dvol_ETH
+  file is held at its exact path on any of the 5 days probed (J16028): a data check.
+time: >-
+  An hourly source on the minute grid: one value an hour, served at its 60 minute ends from xx:01 (the candle's end plus L). The
+  00:00 row of D is D-1's 24:00 row (the 22:00 candle of D-1); 00:01 to 01:00 of D use D-1's 23:00 candle from the CARRY. Crash hours
+  (10 Oct 2025 evening) arrive one hour late by construction. The first held day (29 Sep 2025; J16029: held every day to 9 Mar 2026, 24 hours each): no candle before 01:01.
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S07
+      label: dvol_btc_close
+      units: annualised implied volatility, percent (index points)
+      value_kind: float
+      decimals: none
+      means: the close of Deribit's BTC DVOL hourly candle usable at u
+      max_staleness_s: 7200
+  cadence: minute end (1,440 rows per day, BTCUSDT only, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = ts + 1 h + 60 s of the candle used (modelled; at or before u by the usable rule); an empty row known_at = u; so known_at <= as_of on every row
+  empty_reasons:
+    - reason: NO_FILE
+      when: "D's file is missing and the CARRY's candle is 7,200 s old or more (checked before NO_CANDLE); every minute of 10 to 28 Sep 2025 (no file held, J16029); a header-only or empty file is there and has no candles (NO_CANDLE)"
+    - reason: NO_CANDLE
+      when: no usable candle with u - known_at under 7,200 s (two candles missing, or the first held day before 01:01)
+  empty_order: the first that applies, in this order, NO_FILE, NO_CANDLE
+  stale_rule: stale = 1 when 3,600 s <= u - known_at < 7,200 s (a missing candle, the older close carried)
+  max_staleness_s: 7200
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: BAD_INPUT
+      when: a candle of the hours used was skipped because its close is not a number above 0
+edge_cases:
+  - case: E1 the serve times
+    input: "8 Mar 2026's file (J16028): ts 00:00 close 58.52, ts 01:00 close 58.55, ts 02:00 close 59.64"
+    answer: 'u = 01:01 to 02:00 gives 58.52 (known_at 01:01, age 0 to 3,540 s); u = 02:01 gives 58.55; u = 03:01 gives 59.64'
+  - case: E2 the research times (L = 60 s)
+    input: 'u = 14:00 and u = 14:01'
+    answer: 'the candle of 12:00 (usable from 13:01); the candle of 13:00 (usable from 14:01)'
+  - case: E3 a missing candle
+    input: 'the 13:00 candle absent'
+    answer: 'u = 14:01 to 15:00 carry the 12:00 close, stale 1 (age 3,600 to 7,140 s); u = 15:01 the 14:00 close, stale 0'
+  - case: E4 two missing candles
+    input: 'the 13:00 and 14:00 candles absent'
+    answer: 'u = 15:01 to 16:00 give empty NO_CANDLE (age 7,200 s and more); u = 16:01 the 15:00 close'
+  - case: E5 the day start
+    input: "u = 00:00 and 00:01 of 9 Mar 2026"
+    answer: "00:00 is 8 Mar's 24:00 row, the 22:00 candle's close 60.78 (J16028 last1); 00:01 to 01:00 the 23:00 candle's close 60.45 (J16028 last2) from the CARRY"
+  - case: E8 a candle stamped at exactly 00:00:00 of D
+    input: "D's file's first candle, ts 00:00:00.000000 of D"
+    answer: "not usable at u = 00:00 (usable from 01:01): the 00:00 point is D-1's 22:00 candle; D's raw adds nothing at 00:00 (ADDON_ARCHITECTURE_V4 edit 3 line 37's case, planted)"
+  - case: E6 no file of D
+    input: "D's file missing, the CARRY's 23:00 candle of D-1 (known_at 00:01)"
+    answer: 'u = 00:01 to 01:00 valued; 01:01 to 02:00 stale 1; from 02:01 empty NO_FILE'
+  - case: E7 a bad close
+    input: 'the 12:00 candle close 0'
+    answer: 'skipped: u = 13:01 to 14:00 carry the 11:00 close, stale 1, flag BAD_INPUT'
+unit_tests:
+  - test: U1 (E1, E2, E5, E8)
+    planted: "a planted folder with deribit_dvol_BTC files of 8 and 9 Mar 2026 holding J16028's header and 8 Mar's 24 candles (E1, E2, E5; local_timestamp the pull time); the CARRY of 8 Mar; E8's candle"
+    expect: 'S07 and known_at at u = 01:01, 02:00, 02:01, 03:01, 14:00, 14:01 and 9 Mar 00:00 (60.78), 00:01 (60.45) as written; E8 unused at 00:00'
+  - test: U2 (E3, E4, E6, E7)
+    planted: the files with the candles of each case removed or bad; no file of D
+    expect: 'the values, stale flags, NO_CANDLE, NO_FILE and BAD_INPUT as written'
+  - test: U3 the stamps
+    planted: U1, U2
+    expect: 'BTCUSDT rows only, 1,440 a day; known_at <= as_of at every row; known_at never the file local_timestamp'
+mutants:
+  - mutant: M1 known_at from local_timestamp (the pull time)
+    caught_by: 'U3 (known_at 30 Sep 2026 after as_of)'
+  - mutant: M2 timestamp read as the candle's end (usable from ts + 60 s)
+    caught_by: 'U1 (u = 01:01 gives 58.55, not 58.52)'
+  - mutant: M3 no publication lag (usable from ts + 1 h)
+    caught_by: 'U1 (u = 02:00 gives 58.55, not 58.52)'
+  - mutant: M4 carried without limit
+    caught_by: 'U2 (E4 gives the 12:00 close at 15:01)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, u = 00:00, 00:01, 01:01, 02:00, 02:01, 23:59
+      why: the CARRY rows, the serve edges, the day's end (the file's 24 candles, J16028)
+    - point: 2025-10-15, BTCUSDT, u = 01:01 and 12:00
+      why: a second held day (J16028 first0 close 44.97)
+    - point: 2025-09-29, BTCUSDT, u = 00:30 and 01:01
+      why: the first held day (no CARRY from 28 Sep 2025, then the first candle)
+  pass: >-
+    The tester recomputes S07, known_at, stale and the reasons from this card's words and the files' text (rawcheck/check_volx.py, its
+    own csv read, never the reader's code): floats equal to the file's decimal text as a double, words equal. In VOLX's one small
+    read-only runner job.
+meaning_check:
+  pass_lines:
+    - "the largest one-hour rise of S07 between 1 and 31 Oct 2025 falls between 20:00 of 10 Oct and 02:00 of 11 Oct 2025 UTC (the crash evening, A1's largest liquidation minutes); else the hour found is reported with the timestamp reading questioned"
+    - "S07 at u and V6's S10 (BTC's 30-day realised volatility) have a Spearman correlation of 0.5 or more over the daily 12:00 values of 10 Oct 2025 to 9 Mar 2026"
+  report_only:
+    - the held days and the missing candles per month (the coverage probe)
+conclude:
+  may:
+    - "the options market's annualised 30-day volatility expectation for BTC as of the last closed hour (up to 59 minutes old by design)"
+    - S07 / sqrt(365) as the expected daily move in percent
+  never:
+    - "a recorded arrival: known_at is the candle's end plus 60 s, modelled (the files hold a pull time of 30 Sep 2026)"
+    - ETH's or any other coin's implied volatility
+    - a minute-level implied volatility (an hourly candle)
+    - "C4 S10's old name volx (WORKPACKAGES_V2 section 5 rule 4)"
+readers: V5 (its percentile), V6 (the gap to realised volatility); none outside VOLX yet
+implementation:
+  how: "The reader returns the day's candles as arrays (ts, close, bad); the usable candle at the 1,440 minute ends by np.searchsorted(ts, u - 3,660 s, side='right') - 1 over the valued candles (BAD ones dropped first); age and stale as array operations; BTC's row only. PHASES: 00:00 to 01:00 read the CARRY's candles (phase B, with D's raw for the 00:00 point, E8); 01:01 to 24:00 final in phase A."
+  kernel: addon_grid_v2.in_force (on the candles' modelled arrival ts + 3,660 s, with its age, cap 7,199,999,999 us; its fresh_stamp is age <= cap, so the card's NO_CANDLE from 7,200 s needs one microsecond less; E4 plants the age of exactly 7,200 s)
+  memory_mb: 5
+  seconds_share: 0.01
+data_checks:
+  - what: "timestamp = the candle's start: Deribit's public/get_volatility_index_data with resolution 60 for 3 named hours of 8 Mar 2026 against the file's hourly open and close (a network fetch: the sources seat)"
+    who: the sources seat (EDGE1 names it)
+  - what: SOURCE_SPEC_deribit_dvol_V1 and the reader prod_reader_deribit_dvol_v1 with its tests
+    who: the reader's builder (EDGE1 names it)

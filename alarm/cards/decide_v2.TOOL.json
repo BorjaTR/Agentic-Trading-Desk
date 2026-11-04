@@ -1,0 +1,192 @@
+{
+ "tool": "decide_v2",
+ "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py",
+ "file_sha16": "05bd59978373c69c",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "step 7 DECIDE of ALARM_PIPELINE_V1 section 1, after the GRADE job (and the ENTRY job for a variant whose hand-off R1 passed)",
+ "question": "What is the label of one graded variant (PASS, NEEDS MORE MONTHS, STOP, INSUFFICIENT, INVALID or NO ENTRY), with CLEAR beside it?",
+ "usage_from_code": "python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py --settings <settings file> <RUN> <IDEA> <V> --grade <GRADE JOB> [--entry <ENTRY JOB> | --entry-too-big] [--write]",
+ "settings_keys": [
+  "RESEARCH_ROOT"
+ ],
+ "code_options": [
+  "--entry",
+  "--entry-too-big",
+  "--grade",
+  "--settings",
+  "--write"
+ ],
+ "code_exits": [
+  0,
+  2
+ ],
+ "commands": [
+  {
+   "name": "decide",
+   "does": "prints the decision of one variant from its job receipts; with --write it appends one DECISIONS row",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "the run tag",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "IDEA",
+     "required": true,
+     "meaning": "the idea",
+     "example": "FORCEDBREAK"
+    },
+    {
+     "name": "V",
+     "required": true,
+     "meaning": "the variant, as in VARIANTS",
+     "example": "FB5"
+    },
+    {
+     "name": "--grade",
+     "required": true,
+     "meaning": "the GRADE job of the idea (its receipts name)",
+     "example": "20263757_GRADE_FORCEDBREAK"
+    },
+    {
+     "name": "--entry",
+     "required": false,
+     "meaning": "the ENTRY job; needed when the hand-off R1 passed",
+     "example": "20263767_ENTRY_FORCEDBREAK"
+    },
+    {
+     "name": "--entry-too-big",
+     "required": false,
+     "meaning": "R1 passed but the ENTRY job would declare more than the run disk budget: records NO ENTRY (refused when the ENTRY fits)",
+     "example": "--entry-too-big"
+    },
+    {
+     "name": "--write",
+     "required": false,
+     "meaning": "append the DECISIONS row (refused when the same decision is already the latest one)",
+     "example": "--write"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 FORCEDBREAK FB5 --grade 20263757_GRADE_FORCEDBREAK --entry 20263767_ENTRY_FORCEDBREAK",
+   "writes": "nothing without --write; with --write one row of RUN/registers/DECISIONS.tsv (through reg_append_v1.py)",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: <reason> on stderr: bad usage or names; no --settings; the variant not in VARIANTS; --grade not a GRADE job of the idea; no receipts or no end line; the variant not graded in that job; a variant with R1 and no --entry (or --entry-too-big when its ENTRY fits); --entry not an ENTRY job of the idea or without the variant; read_stratentry_v1.py or reg_append_v1.py changed; the same decision already written"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "FLOWX",
+      "V1",
+      "--grade",
+      "20263700_GRADE_FLOWX"
+     ],
+     "exit": 0,
+     "prints": "DECISION FLOWX V1: STOP"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "FLOWX",
+      "V2",
+      "--grade",
+      "20263700_GRADE_FLOWX",
+      "--entry",
+      "20263710_ENTRY_FLOWX"
+     ],
+     "exit": 0,
+     "prints": "DECISION FLOWX V2: PASS"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "FLOWX",
+      "V2",
+      "--grade",
+      "20263700_GRADE_FLOWX"
+     ],
+     "exit": 2,
+     "prints": "HAS R1: run its ENTRY job first"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "USAGE decide_v2.py"
+  }
+ ],
+ "rules": [
+  "reads text receipts under RESEARCH_ROOT only (no market data, no scratch); writes one DECISIONS row with --write, nothing else",
+  "CLEAR sits beside the label and never changes it",
+  "run it without --write first; write once per decision"
+ ],
+ "outputs": [
+  {
+   "file": "DECISIONS.tsv",
+   "where": "<RESEARCH_ROOT>/ALARM_DESIGN/runs/<RUN>/registers/DECISIONS.tsv: one row per --write",
+   "columns": [
+    "utc",
+    "idea",
+    "V",
+    "state",
+    "label_rule",
+    "r1",
+    "r2",
+    "months_counted",
+    "months_passing",
+    "waves",
+    "lead_15m",
+    "t_15m",
+    "lead_1h",
+    "t_1h",
+    "gate_handoff",
+    "clear",
+    "clear_at",
+    "price_gate",
+    "tough_15m",
+    "tough_1h",
+    "money_tt",
+    "money_rr",
+    "grade_job",
+    "entry_job",
+    "sources",
+    "note"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/decide_v2_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py",
+   "sha16": "c301c5977ecd6860"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/read_stratentry_v1.py",
+   "sha16": "f3c6dc8c110dd067"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/runs/TEMPLATE_V3/README_RUN.md",
+   "sha16": "3f1e3fb46430a5c5"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

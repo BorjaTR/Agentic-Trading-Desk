@@ -1,0 +1,30 @@
+file	column	meaning	unit	known_at	empty_means	source_line
+TRUE_ROW.tsv	id	the claim		after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	verdict	TRUE, NOT SUPPORTED or UNSURE		after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	fires	fires in the gap	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	waves	waves in the gap	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	gap	fires hit minus matched random	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	lo	interval low	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	hi	interval high	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	diff	claim gap minus mirror gap, same fires	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	diff_lo	its interval low	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	diff_hi	its interval high	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	mirror	the mirror gap on those fires	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	cover	matched over known fires	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	top_known	known fires at or over the coin own 95th activity percentile	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	top_matched	of them matched	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	busy_gap	V1 busy match only, information	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	ex_gap	gap without 10-11 Oct	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	flow_removed_gap	gap with Binance liquidations added back, a lower bound, information; empty when the trigger reads none or the label is not Binance open interest	share	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	claim_known	fires with the claim known	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	mirror_known	fires with the mirror known	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	joint_known	fires with both known	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	matched_both	fires matched on both	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	paired_waves	waves in the difference	count	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	idea	the idea		after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	V	the variant		after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	def_sha16	the sealed definition	sha16	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	perfire_sha16	the PERFIRE read	sha16	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	label_sha16	the label	sha16	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	mirror_sha16	the mirror	sha16	after the run	not applicable	true_gate_v3.py run
+TRUE_ROW.tsv	card_sha16	TRUE_CARD.txt	sha16	after the run	not applicable	true_gate_v3.py run

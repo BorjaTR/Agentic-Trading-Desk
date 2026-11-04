@@ -1,0 +1,166 @@
+{
+ "by": "i2g_grader for STRATEGY/LEAD",
+ "confirmation_run": {
+  "check_run": "<SCRATCH>/work_LEAD/i2g/grade/v2/a02p_small.check_run.json",
+  "input": "A02P_EVENTS_SEPFEB_V3.tsv 6d24c9b74f871ed4, BTC,ETH,SOL, 20250912..20260131",
+  "parents": 1385,
+  "run": "<SCRATCH>/work_LEAD/i2g/grade/v2/a02p_btc_eth_sol_sepjan",
+  "wall_s": 4.203
+ },
+ "files": {
+  "team/BED/scripts/e_fill/fill_v2.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "8d166ddc23fee167"
+  },
+  "team/BED/scripts/e_ladder/ladder_v2.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "14c929a03c6c973e"
+  },
+  "team/BED/scripts/e_ladder/ladder_v6.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "ab45f22b9b9af87c"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/alarm_stamp_projection_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "049ceb37cb3b6947"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/draw_prepared_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "5ab85ba9e777f38f"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/heat_offer_projection_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "6bef437137369208"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/prepared_activity_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "aba7ea04de649037"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/opportunity_compare_v1/compare.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "594a7bc354a323b1"
+  },
+  "team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/performance/fast_compare.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V1.json)",
+   "sha16": "eec15093614540d5"
+  },
+  "team/RESEARCH/tools/idea_to_grade/ARCHITECTURE.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "9c086fdb0b9a70f3"
+  },
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V1.json": {
+   "role": "idea_to_grade own file",
+   "sha16": "cf4e6a93cd6248ed"
+  },
+  "team/RESEARCH/tools/idea_to_grade/INTERFACE_V1.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "22a6e6a7a9ce8fbc"
+  },
+  "team/RESEARCH/tools/idea_to_grade/README.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "7407a255301bdf4d"
+  },
+  "team/RESEARCH/tools/idea_to_grade/check_outside3_equality.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "886ddbe2e1ff5a8d"
+  },
+  "team/RESEARCH/tools/idea_to_grade/check_run.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "aba751a6df85ede7"
+  },
+  "team/RESEARCH/tools/idea_to_grade/detect.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "c536f0bc308ec5c9"
+  },
+  "team/RESEARCH/tools/idea_to_grade/fixture_outside_view.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "1f7f8d93e1ef6db0"
+  },
+  "team/RESEARCH/tools/idea_to_grade/i2g_engine.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "484485b87a1755dc"
+  },
+  "team/RESEARCH/tools/idea_to_grade/i2g_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "6d8203b709ff6eb3"
+  },
+  "team/RESEARCH/tools/idea_to_grade/idea_to_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "2266dc588151ff1e"
+  },
+  "team/RESEARCH/tools/idea_to_grade/release_pins.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "0964d46242653bd5"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_detect.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "d4871c98def3f1ce"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_idea_to_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "c08fbd63bb5b612d"
+  }
+ },
+ "files_sha16": {
+  "ARCHITECTURE.md": "9c086fdb0b9a70f3",
+  "I2G_PINS_V1.json": "cf4e6a93cd6248ed",
+  "INTERFACE_V1.md": "22a6e6a7a9ce8fbc",
+  "README.md": "7407a255301bdf4d",
+  "check_outside3_equality.py": "886ddbe2e1ff5a8d",
+  "check_run.py": "aba751a6df85ede7",
+  "detect.py": "c536f0bc308ec5c9",
+  "fixture_outside_view.py": "1f7f8d93e1ef6db0",
+  "i2g_engine.py": "484485b87a1755dc",
+  "i2g_grade.py": "6d8203b709ff6eb3",
+  "idea_to_grade.py": "2266dc588151ff1e",
+  "release_pins.py": "0964d46242653bd5",
+  "test_idea_to_grade.py": "c08fbd63bb5b612d"
+ },
+ "format": "labcore.release (files {path: {sha16}} relative to the forensics folder, releases {path: sha16}, runtime)",
+ "numerical_path": "unchanged from V1 (same kernels, same order); three-coin equality re-run on V2: <SCRATCH>/work_LEAD/i2g/grade/v2/fx3_v2.equality.txt ALL EQUAL",
+ "pins": {
+  "file": "I2G_PINS_V1.json",
+  "files": 39,
+  "frozen_by_LEAD": {
+   "clock_series.py": "5b5a331ccd81c605",
+   "detect.py": "c536f0bc308ec5c9",
+   "event_profile.py": "4529a73210691370"
+  },
+  "sha16": "cf4e6a93cd6248ed"
+ },
+ "previous_record_format": "RELEASE_idea_to_grade_V2_CANDIDATE.json.pre_LEAD_20261025T134500Z (0d22f2f8d4369d6b, not labcore format)",
+ "release": "idea_to_grade_V2_CANDIDATE",
+ "releases": {
+  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_6.json": "2379f904369c0250",
+  "team/RESEARCH/tools/alarm_match/RELEASE_alarm_match_V3_6.json": "77dc35bec287ab4d",
+  "team/RESEARCH/tools/event_profile/RELEASE_event_profile_V2_CANDIDATE.json": "9435b78d1e883b7c",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_6.json": "1485fb4a4c44e599"
+ },
+ "replaces": "RELEASE_idea_to_grade_V1_CANDIDATE.json (a7a7e4a2c7f934b9)",
+ "run_time_pins": {
+  "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V1.json",
+  "files": 39,
+  "rule": "every Python file a run executes (run process, each worker, the detector code list) is checked against this file at admission and per worker and re-hashed before publication; labcore.release.check binds the release identity",
+  "sha16": "cf4e6a93cd6248ed"
+ },
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "status": "CANDIDATE_DIFF_RECHECK_PENDING",
+ "tests": "test_idea_to_grade.py (see the hand-back for the count); failing-before receipt <SCRATCH>/work_LEAD/i2g/grade/before/FAILING_BEFORE.txt",
+ "tool": "idea_to_grade",
+ "v1_evidence": "RELEASE_idea_to_grade_V1_CANDIDATE.json (52-coin acceptance 29.07 s; i2g_check re-time 22.06 s; trials)",
+ "v2_changes": [
+  "input refusals before staging, exit 2 REFUSED <CODE>, no traceback (OUTPUT_EXISTS, DETECT_RUN_*, EVENT_LIST_INVALID, BAD_DAY, DEFINITION_WINDOW_MALFORMED, DETECT_<code>)",
+  "verify_run/read_run: shared load_complete + refuse added/missing files + RUN.json body digest (body_sha16)",
+  "PRICE: only lab3 NotBuilt means no prices; a missing frame inside a part raises",
+  "pins: every executed forensics file (run process, every worker, the detector code list) in I2G_PINS_V1.json, checked at admission and per worker, re-hashed before commit",
+  "workers exit when the run process dies (parent-death watchdog)",
+  "known_at_us: OBSERVATIONS, PARENTS, UNAVAILABLE",
+  "detect.run(research_window=) passed; detector reads outside the window refused",
+  "deterministic grading run_key",
+  "README: fill wording, refusal table, clocks"
+ ],
+ "written_utc": "2026-10-25T13:45Z"
+}

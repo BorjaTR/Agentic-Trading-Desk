@@ -1,0 +1,158 @@
+{
+ "tool": "metric_brief_v2",
+ "file": "01_Detection/tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief_v2.py",
+ "file_sha16": "0ca9f04bd2181f04",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "step 2 METRICS of AGENTS.md: read every code before it goes in a rule",
+ "question": "How is this code read: its meaning, unit, scope, step, window, status, what empty means and what it must never be read as?",
+ "usage_from_code": "python3 -B metric_brief_v2.py C2.S04 A1.S01 ...      exact codes",
+ "settings_keys": [],
+ "code_options": [
+  "--family",
+  "--grep",
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  2
+ ],
+ "commands": [
+  {
+   "name": "brief",
+   "does": "prints the brief of each code named (or of every code matching --grep or of a --family) from the four tables of this Alarm folder",
+   "args": [
+    {
+     "name": "--settings",
+     "required": false,
+     "meaning": "optional: this machine's settings file, checked by _tools/settings_v1.py (the tool reads no data with it); a missing or refused file is refused, exit 2",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "exact codes",
+     "required": false,
+     "meaning": "one or more exact codes, e.g. A1.S08 E2.S04",
+     "example": "A1.S08 E2.S04"
+    },
+    {
+     "name": "--grep",
+     "required": false,
+     "meaning": "every code whose code, name or meaning holds these words (long: funding prints about 800 lines)",
+     "example": "\"wave age\""
+    },
+    {
+     "name": "--family",
+     "required": false,
+     "meaning": "every code of one family, e.g. A4",
+     "example": "E2"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/01_Detection/tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env A1.S08 E2.S04",
+   "writes": "nothing: it prints the briefs (read only)",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: a settings file that is missing or refused, a table missing from this Alarm folder, a run outside an Alarm folder; an unknown option prints the usage"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "A1.S08"
+     ],
+     "exit": 0,
+     "prints": "== A1.S08"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "NOPE.S99"
+     ],
+     "exit": 0,
+     "prints": "NOT FOUND in METRICS_V1"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "--family",
+      "Z2"
+     ],
+     "exit": 0,
+     "prints": "== Z2.S01"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [
+    "--bogus"
+   ],
+   "exit": 2,
+   "prints": "usage: metric_brief_v2.py"
+  },
+  {
+   "args": [
+    "--settings",
+    "{WORLD}/no_such_settings.env",
+    "A1.S08"
+   ],
+   "exit": 2,
+   "prints": "REFUSED NO SETTINGS FILE"
+  }
+ ],
+ "rules": [
+  "read only: four tables inside this Alarm folder (METRICS_V1, METRIC_TRAPS_V3, the CTX and EPI catalogues); no market data",
+  "a STOP, RULE or CAUTION line under the code, or a status that is not PROVEN, is the detector gate word: STOP, CAUTION and UNPROVEN codes are refused in a rule",
+  "it does not read the tables the COUNT job gate adds (the owner-cleared Hyperliquid rows of LEAD/loop2/defs): a code it calls NOT FOUND may still pass the COUNT gate, X1.HLFLOWX.S08 and S09 do (DEF_TEMPLATE_V4.md, The metric gate; R7 F35)",
+  "an unknown code prints a NOT FOUND line with exit 0: read the output, not only the exit",
+  "its LAST DAY is the card's, not where the data ends: read the data's end from a COUNT by month (playbook, What fails)"
+ ],
+ "outputs": [
+  {
+   "file": "printed: a brief (a header line, then LABEL: value lines)",
+   "where": "printed (stdout)",
+   "columns": [
+    "card_name",
+    "flag",
+    "STATUS",
+    "MEANS",
+    "UNIT",
+    "SCOPE",
+    "STEP",
+    "WINDOW",
+    "MAY USE",
+    "FIRST DAY",
+    "LAST DAY",
+    "CARD",
+    "EMPTY MEANS",
+    "NEVER READ AS",
+    "READ IT AS",
+    "NOT FOUND"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/metric_brief_v2_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "01_Detection/tree/team/LAB3/METRICS_V1.tsv",
+   "sha16": "85b14987d2059cd6"
+  },
+  {
+   "path": "01_Detection/tree/team/LAB3/LAB4/proposals/metric_traps/METRIC_TRAPS_V3.tsv",
+   "sha16": "f71f02f3a8af3e76"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv",
+   "sha16": "f413906feb40c0b4"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv",
+   "sha16": "d133fea9c7935857"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py: {SETTINGS} its settings file, {WORLD} the planted folder; the tables are this Alarm folder's own"
+}

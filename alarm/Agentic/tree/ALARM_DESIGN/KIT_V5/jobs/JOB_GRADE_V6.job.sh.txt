@@ -1,0 +1,52 @@
+# JOB @@JOBNUM@@_@@SEAT@@_GRADE_@@IDEA@@ -- @@RUNTAG@@ (ALARM_DESIGN KIT_V5 JOB_GRADE_V6, template @@TPLSHA@@): 10 Sep-31 Dec 2025 grade of @@IDEA@@, variants @@ITEMS_LIST@@, against 3 matched random moments per fire (alarm_grade_chain_v2_0_1_to20251231), the per-fire file, then the hand-off test (lead_null_v1_1_to20251231, 10,000 day-block flips); every code file from the Alarm folder @@ALARM@@, every machine path from the settings file (JOB_GRADE_V5 with its paths changed, CLEAN_RELEASE_V1). PREREG @@PREREG_REL@@ @@PREREG_SHA@@. TEST, NOT REVIEWED. Never deletes. Stops when SCRATCH_DISK has under 60 GB free. The quiet window was removed by the owner 30 Oct 2026 23:32 Berlin ("All jobs can be queued. Please do not stop queueing jobs").
+# WRITES @@SCRATCH@@/work_@@RUNTAG@@/@@JOBNUM@@_GRADE_@@IDEA@@/ and @@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_GRADE_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# DRIVE: SCRATCH_DISK
+set -u
+AL=@@ALARM@@; F=$AL/01_Detection/tree; R=$F/team/RESEARCH; AP=$R/tools/alarm_process; CH=$AL/03_Grading/tree/tools/alarm_process; PY=@@PYTHON@@
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+RD=@@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@; T=$AL/Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools; J=@@JOBNUM@@_GRADE_@@IDEA@@
+W=@@SCRATCH@@/work_@@RUNTAG@@/$J; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+mkdir -p $W $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
+isdone(){ awk -F'\t' '$1=="done" && $2=="0" {f=1} END {exit !f}' $W/STATUS_$1.tsv 2>/dev/null; }
+ck $CH/alarm_grade_chain_v2_0_1_to20251231.sh 43d6ce6aa4be89b5; ck $AP/alarm_card_v1_2_1.py 121304e1471d7e41
+ck $T/perfire_v1_1_to20260430.py 4e77b228d71bdae4; ck $T/test_perfire_v1.py 12996df3af189030; ck $T/lead_null_v1_1_to20251231.py fb3992d00ecfc810
+ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@
+for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; done
+f=$(fmb); st start 0 0 "SCRATCH_DISK free ${f} MB"
+cd $AL
+for i in "${!VS[@]}"; do V=${VS[$i]}; D=$RD/${DEFS[$i]}; L=${LEANS[$i]}
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then st disk_$V 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; st end 7 0 "disk"; exit 7; fi
+  t0=$(date +%s); AL=$AL PY=$PY LAB_DAYS=@@LAB_DAYS@@ LEAN=$L bash $CH/alarm_grade_chain_v2_0_1_to20251231.sh $V $D $W < /dev/null > $W/$V.out 2>&1; r=$?
+  st grade_$V $r $(( $(date +%s)-t0 )) "chain v2_0_1 Sep-Dec, lean $L"
+  if isdone $V; then
+    t0=$(date +%s); $PY -B $T/perfire_v1_1_to20260430.py $W $V < /dev/null > $W/perfire_$V.log 2>&1; r=$?; st perfire_$V $r $(( $(date +%s)-t0 )) ""
+    t0=$(date +%s); $PY -B $T/test_perfire_v1.py $W $V $L < /dev/null > $W/perfire_test_$V.log 2>&1; r=$?; st perfire_test_$V $r $(( $(date +%s)-t0 )) "$(tail -n 1 $W/perfire_test_$V.log | tr '\t' ' ' | cut -c1-200)"
+    n=$(( $(grep -c . $W/${V}_FIRES_V1_LIST.tsv) - 1 )); s=$(shasum -a 256 $W/${V}_FIRES_V1_LIST.tsv | cut -c1-16)
+    printf '%s\t%s\t%s\t%s\n' $V $n $s $W/${V}_FIRES_V1_LIST.tsv >> $DV/FIRES.tsv
+  fi
+  for x in CARD_$V.txt SUM_$V.tsv STATUS_$V.tsv INPUTS_$V.txt MENU_${V}_om.txt $V.out perfire_$V.log perfire_test_$V.log; do [ -f $W/$x ] && cp -n $W/$x $DV/; done
+done
+MF=$W/HANDOFF_MANIFEST.tsv; printf 'V\tlean\tW\tsubj_alarm\tsubj_rnd\n' > $MF
+for i in "${!VS[@]}"; do V=${VS[$i]}; isdone $V && printf '%s\t%s\t%s\tIDEA2%sMENU\tIDEA2%sRNDMENU\n' $V ${LEANS[$i]} $W $V $V >> $MF; done
+n=$(( $(wc -l < $MF) - 1 ))
+if [ $n -gt 0 ]; then
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then st disk_handoff 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; st end 7 0 "disk"; exit 7; fi
+  t0=$(date +%s); nice -n 10 $PY -B $T/lead_null_v1_1_to20251231.py --manifest $MF --out $W/HANDOFF --flips 10000 < /dev/null > $W/lead_null.out 2>&1; r=$?
+  st handoff $r $(( $(date +%s)-t0 )) "$n variants"
+  mkdir -p $DV/HANDOFF/REAL_SEALED
+  for x in $W/HANDOFF/*.tsv $W/HANDOFF/*.json $MF $W/lead_null.out; do [ -f $x ] && cp -n $x $DV/HANDOFF/; done
+  for x in $W/HANDOFF/REAL_SEALED/*.tsv; do [ -f $x ] && cp -n $x $DV/HANDOFF/REAL_SEALED/; done
+else st handoff 5 0 "no variant finished its grade"; fi
+du -sm $W | awk '{print "du_mb_W\t"$1}' > $DV/DISK.tsv; printf 'free_mb_end\t%s\n' "$(fmb)" >> $DV/DISK.tsv
+(cd $DV && shasum -a 256 *.tsv *.txt HANDOFF/*.tsv HANDOFF/REAL_SEALED/*.tsv 2>/dev/null | grep -v ' SHA16.txt$') > $DV/SHA16.txt
+st end 0 0 "SCRATCH_DISK free $(fmb) MB; W $(du -sm $W | cut -f1) MB"
+exit 0

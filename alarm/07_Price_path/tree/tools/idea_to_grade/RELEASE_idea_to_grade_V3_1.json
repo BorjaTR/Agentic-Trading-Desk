@@ -1,0 +1,69 @@
+{
+ "by": "ALARMLIB",
+ "files": {
+  "team/RESEARCH/LIBRARY/UNIVERSE_ALARMS_V1.tsv": "13c4722a5f5ab86b",
+  "team/RESEARCH/LIBRARY/alarm_library/ALARM_REGISTRY_V1.tsv": "31f0d8ac17d599da",
+  "team/RESEARCH/LIBRARY/alarm_library/alarm_core_v1_2.py": "c052d1b6d33e310d",
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_1.json": "08a0c72015d4ca6e",
+  "team/RESEARCH/tools/idea_to_grade/README_V3.md": "0a910cf1e48394fd",
+  "team/RESEARCH/tools/idea_to_grade/alarm_contract_v1.py": "65c37dbff4cb3ef4",
+  "team/RESEARCH/tools/idea_to_grade/full_population_v3_1.sh": "ab05ff9ed78b9f27",
+  "team/RESEARCH/tools/idea_to_grade/i2g_engine_v3.py": "69e17ed9e2350a66",
+  "team/RESEARCH/tools/idea_to_grade/i2g_grade3.py": "618b6c1829b86310",
+  "team/RESEARCH/tools/idea_to_grade/i2g_rules_v1.py": "29cd896d5436693a",
+  "team/RESEARCH/tools/idea_to_grade/i2g_universe_v1.py": "bafe15d96fd41ae0",
+  "team/RESEARCH/tools/idea_to_grade/idea_to_grade_v3.py": "e8e751917a208fd4",
+  "team/RESEARCH/tools/idea_to_grade/mutants_i2g_v3.py": "8e51b53f4e5181e9",
+  "team/RESEARCH/tools/idea_to_grade/release_pins_v3.py": "d468565d04d9fa01",
+  "team/RESEARCH/tools/idea_to_grade/test_i2g_v3.py": "874f628c269d6186",
+  "team/RESEARCH/tools/idea_to_grade/test_i2g_v3_real.py": "13adf272fce06a17"
+ },
+ "full_population": {
+  "alarm": "ALM_M_V1",
+  "budget": "7200 s, 16 GiB",
+  "coins": 52,
+  "days": "20250901..20251231",
+  "events_sha16": "4398647f907dc922",
+  "largest_worker_rss_gb": 1.78,
+  "parents": 10764,
+  "run": "<SCRATCH>/work_ALARMLIB/i2g_v3_1/full_ALM_M_V1_20261025T214327Z/run",
+  "run_class": "TEST (scratch ledger)",
+  "status": "COMPLETE, verified",
+  "tree_peak_gb_sampled": 4.37,
+  "wall_s": 381.9,
+  "workers": 2
+ },
+ "logs": "team/RESEARCH/tools/idea_to_grade/V3_1_LOGS/",
+ "open_not_blocking": [
+  "D3 full-population run of a second alarm",
+  "J2 operator other than the builder runs from README_V3.md",
+  "a GRADED run needs a PREREG row in the real TRIES_LEDGER_V1 (ledger_add_v6.py)",
+  "optional: relative-only tough tolerance for NO_COST coins"
+ ],
+ "pins": {
+  "all_pins_match_disk": true,
+  "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_1.json",
+  "files": 45,
+  "sha16": "08a0c72015d4ca6e"
+ },
+ "release": "idea_to_grade_V3_1",
+ "review": {
+  "file": "team/OUTSIDE/DATA/REVIEW_IDEA_TO_GRADE_V3_1_INDEP.md",
+  "sha16": "2f77b7d4afed00d5",
+  "verdict": "CODE OK (all 6 fixes and both follow-ups verified; G1 and G2 pass); paperwork done here"
+ },
+ "supersedes": "RELEASE_idea_to_grade_V3_CANDIDATE.json 2ab7a07b180067c8 (NOT READY, REVIEW_IDEA_TO_GRADE_V3_INDEP.md)",
+ "tests": {
+  "alarm_core_v1_2": "tests_alarm_core_v1_1.py OK",
+  "mutants": "40/40 killed",
+  "pure_on_v2": "FAILED as expected (V3 rules absent)",
+  "pure_on_v3_candidate": "tests 12-21 fail (fail before)",
+  "pure_v3_1": "25/25 OK",
+  "real": "13/13 passed (independent reviewer, Mac, 14.9 s)"
+ },
+ "v2_release_unchanged": {
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json": "7be3186f7957dde7",
+  "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json": "7b001bf565d45378"
+ },
+ "written_utc": "2026-10-25T21:52:11Z"
+}

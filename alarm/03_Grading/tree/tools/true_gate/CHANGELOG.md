@@ -1,0 +1,3 @@
+- ALARM_V1_20_2: check prints the label and mirror digests for the card; audit_run_v4 binds them.
+- ALARM_V1_20_1: GPT's five must-fix: detector and variant required, mirror the exact opposite, coverage on paired fires, both event dates, TRUE_ROW binds and audit_run_v4 reads it.
+- ALARM_V1_20: first release. From playground V3 with only paths and pins changed, plus check, the months guard, busy tables built when a claim names none, TRUE_ROW.tsv.

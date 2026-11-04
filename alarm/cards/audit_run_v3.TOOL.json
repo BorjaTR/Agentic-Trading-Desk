@@ -1,0 +1,125 @@
+{
+ "tool": "audit_run_v3",
+ "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v3.py",
+ "file_sha16": "83fb97d062c8bddd",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "every step: the scorecard of one KIT_V5 run (its guards A1-A17), run before handing a run over",
+ "question": "Does my run follow the kit rules (registers, claims, sealed files, budget, sourced decisions, pickup, disk, board, cleaning)?",
+ "usage_from_code": "python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v3.py --settings <settings file> <RUN> [--write]",
+ "settings_keys": [
+  "RESEARCH_ROOT",
+  "BOARD",
+  "RUNNER_QUEUES"
+ ],
+ "code_options": [
+  "--settings",
+  "--write"
+ ],
+ "code_exits": [
+  0,
+  1
+ ],
+ "commands": [
+  {
+   "name": "audit",
+   "does": "prints the run's scorecard (A1-A17, each PASS, WARN or FAIL), COUNTS and SCORE; with --write also writes RUN/audit/AUDIT_<stamp>.txt",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "the run tag",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "--write",
+     "required": false,
+     "meaning": "also write RUN/audit/AUDIT_<stamp>.txt (a new file)",
+     "example": "--write"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v3.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029",
+   "writes": "nothing without --write; with --write RUN/audit/AUDIT_<stamp>.txt",
+   "refuses": [
+    {
+     "exit": 1,
+     "when": "USAGE ... or REFUSED: ... or NO RUN FOLDER ...: bad usage, no --settings, a settings file the reader refuses (RESEARCH_ROOT and BOARD must be set), no run folder. A run with FAIL checks still exits 0: read the SCORE line"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029"
+     ],
+     "exit": 0,
+     "prints": "SCORE "
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 1,
+   "prints": "USAGE audit_run_v3.py"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "AD9_20261029"
+   ],
+   "exit": 1,
+   "prints": "NO RUN FOLDER"
+  }
+ ],
+ "rules": [
+  "reads registers, receipts, the run's files and its board; writes only RUN/audit/AUDIT_<stamp>.txt with --write",
+  "A6 computes each decision again with decide_v2.py and decide_forward_v2.py from the same release folder",
+  "the exit code is 0 whatever the checks say: read the SCORE line"
+ ],
+ "outputs": [
+  {
+   "file": "AUDIT_<stamp>.txt (check lines)",
+   "where": "printed, and RUN/audit/AUDIT_<stamp>.txt with --write: one line per check A1-A17, then its failures or warnings",
+   "columns": [
+    "check",
+    "name",
+    "status",
+    "count"
+   ]
+  },
+  {
+   "file": "AUDIT_<stamp>.txt (SCORE line)",
+   "where": "printed, and RUN/audit/AUDIT_<stamp>.txt with --write: the last line",
+   "columns": [
+    "pass",
+    "warn",
+    "fail"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/audit_run_v3_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py",
+   "sha16": "05bd59978373c69c"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_forward_v2.py",
+   "sha16": "dfc073289b10a31e"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/runs/TEMPLATE_V3/README_RUN.md",
+   "sha16": "3f1e3fb46430a5c5"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

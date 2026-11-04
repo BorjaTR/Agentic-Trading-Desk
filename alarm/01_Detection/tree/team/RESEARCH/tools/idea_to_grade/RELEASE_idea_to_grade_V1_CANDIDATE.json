@@ -1,0 +1,126 @@
+{
+ "acceptance": {
+  "checks": {
+   "check_run": "<SCRATCH>/work_LEAD/i2g/grade/accept/oi52_full_v1.check_run.json",
+   "slice_vs_outside3": "<SCRATCH>/work_LEAD/i2g/grade/accept/oi52_full_v1.slice_check.txt"
+  },
+  "command": "idea_to_grade.py --idea .../BN_OI_CONTRACTION_1PCT_10M_T2_V1.json --roster .../ROSTER_BUILD.json --coins ALL --first 20250912 --last 20260228 --research-window 20250901:20260228 --workers 8",
+  "counts": {
+   "census": {
+    "COMPARISON_UNAVAILABLE": 1160,
+    "MATCHED": 12718,
+    "NO_COVARIATE": 32,
+    "NO_ELIGIBLE": 367,
+    "PARENT_OUT_OF_SPLIT": 12
+   },
+   "cohorts": 190,
+   "eligible_edges": 96600,
+   "months": [
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202601",
+    "202602"
+   ],
+   "observations": 221778,
+   "parents": 14289,
+   "profiles": 1330,
+   "raw_edges": 121607
+  },
+  "external_wall_s": 29.07,
+  "internal_wall_s": 28.879,
+  "run": "<SCRATCH>/work_LEAD/i2g/grade/accept/oi52_full_v1",
+  "timing_s": {
+   "admission": 0.147,
+   "aggregate": 2.782,
+   "detect": 0.669,
+   "grade": 9.738,
+   "match_measure": 15.06,
+   "plan": 0.023,
+   "publish_write": 0.429,
+   "wall_to_commit": 28.879
+  },
+  "tree_peak_sampled_bytes": 9554444288
+ },
+ "by": "i2g_grader for STRATEGY/LEAD",
+ "diagnostic_background_qos": {
+  "background": "<SCRATCH>/work_LEAD/i2g/grade/runs/oi52_oct_bg",
+  "background_s": 54.56,
+  "normal": "<SCRATCH>/work_LEAD/i2g/grade/runs/oi52_oct_b",
+  "normal_s": 5.103
+ },
+ "equality_outside3": {
+  "checker": "check_outside3_equality.py",
+  "runs": [
+   "<SCRATCH>/work_LEAD/i2g/grade/runs/fx3_c",
+   "<SCRATCH>/work_LEAD/i2g/grade/runs/fx3_chunk37"
+  ],
+  "verdict": "ALL EQUAL"
+ },
+ "files_sha16": {
+  "ARCHITECTURE.md": "9c086fdb0b9a70f3",
+  "INTERFACE_V1.md": "7ab56b3fbbba5806",
+  "README.md": "ad117f4160202142",
+  "check_outside3_equality.py": "886ddbe2e1ff5a8d",
+  "check_run.py": "aba751a6df85ede7",
+  "detect.py": "770e0afa0221276f",
+  "fixture_outside_view.py": "08cf023ed71401d5",
+  "i2g_engine.py": "0b540339ea2ac089",
+  "i2g_grade.py": "364efc8b6a52c4c5",
+  "idea_to_grade.py": "8fe1a57ea9238421",
+  "test_idea_to_grade.py": "6cfb4638b2d8f150"
+ },
+ "imported_kernels_sha16": {
+  "<LAB_REPO>/forensics/team/BED/scripts/e_fill/fill_v2.py": "8d166ddc23fee167",
+  "<LAB_REPO>/forensics/team/BED/scripts/e_ladder/ladder_v6.py": "ab45f22b9b9af87c",
+  "<LAB_REPO>/forensics/team/LAB3/code/lab3/bins.py": "23bf4d116e47c415",
+  "<LAB_REPO>/forensics/team/LAB3/code/lab3/days.py": "eb8236dbe13d67cc",
+  "<LAB_REPO>/forensics/team/LAB3/code/lab3/law.py": "f777c329396b6190",
+  "<LAB_REPO>/forensics/team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/alarm_stamp_projection_v1.py": "049ceb37cb3b6947",
+  "<LAB_REPO>/forensics/team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/draw_prepared_v1.py": "5ab85ba9e777f38f",
+  "<LAB_REPO>/forensics/team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/heat_offer_projection_v1.py": "6bef437137369208",
+  "<LAB_REPO>/forensics/team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/prepared_activity_v1.py": "aba7ea04de649037",
+  "<LAB_REPO>/forensics/team/OUTSIDE/COORD/development/DEV1/opportunity_compare_v1/compare.py": "594a7bc354a323b1",
+  "<LAB_REPO>/forensics/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/performance/fast_compare.py": "eec15093614540d5",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/alarm_context/alarm_context.py": "38bdf42a6bdae4cb",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/alarm_match/draw_v3.py": "91279359fb4a0815",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/alarm_stamp/alarm_stamp.py": "5dfc98dd92bbecf4",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/entry_card/heat_offer_v2.py": "c14e05a3975186be",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/event_decisions/run_manifest_candidate.py": "e98ab93b6d37eb7a",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/idea_to_grade/detect.py": "770e0afa0221276f",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/idea_to_grade/i2g_engine.py": "0b540339ea2ac089",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/idea_to_grade/idea_to_grade.py": "8fe1a57ea9238421",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/labcore/gates.py": "aae13278ad4f4209",
+  "<LAB_REPO>/forensics/team/RESEARCH/tools/labcore/waves.py": "f61b22c588ee6b9a"
+ },
+ "runtime": {
+  "memory_limit_gib": 16,
+  "priority": "normal, nice 10",
+  "threads": 1,
+  "workers": 8
+ },
+ "status": "CANDIDATE_INDEPENDENT_REVIEW_PENDING",
+ "tests": "test_idea_to_grade.py 14 passed",
+ "tool": "idea_to_grade",
+ "trials": [
+  {
+   "idea": "A02P list V3 6d24c9b74f871ed4",
+   "run": "<SCRATCH>/work_LEAD/i2g/grade/runs/trial_a02p_all_sepfeb_w7"
+  },
+  {
+   "idea": "BOOK C12.S02 30 s",
+   "run": "<SCRATCH>/work_LEAD/i2g/grade/runs/trial_book_privacy_nov"
+  },
+  {
+   "idea": "FUNDING E1.S01 60 s",
+   "run": "<SCRATCH>/work_LEAD/i2g/grade/runs/trial_funding_set7_decjan"
+  },
+  {
+   "idea": "FLOW B1.S09 5 s",
+   "run": "<SCRATCH>/work_LEAD/i2g/grade/runs/trial_flow_eth_2d"
+  }
+ ],
+ "version": "I2G_V1",
+ "written_utc": "2026-10-25T12:40Z"
+}

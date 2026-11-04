@@ -1,0 +1,227 @@
+# V3_V1.yaml: VOLX HAR next-hour volatility forecast (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8).
+# S05, S06 by PRODUCER_VOLX_V1.yaml. Examples: team/METRIC_AUDIT/verify_volx_examples_v1.py V3.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): F1 (M7 replaced: it moved a value by 2.8e-9 only, rule 4.5 asks 1e-6), N1
+# (D-7 to D), N2 (ddof 0, rcond None), N3 (the departures), N4 (roll_points; the fit table of ADDON_ARCHITECTURE_V4 edit 3 0591d181
+# section 5, EDGE1 18:15:44Z), N5 (E10's two prints), A2, A3. Plain HAR and HARQ kept, V3 inside VOLX (EDGE1 18:15:44Z).
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the nits (NO_HISTORY against FEW_ROWS for a new coin;
+# E3's and E10's seeds), X3 (D's fit at 00:00), X7 Binance, X11.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+kind: build_metric
+id: V3
+producer: VOLX
+item: 'HAR next-hour volatility forecast'
+tier: BUILD
+name: forecast of the coin's realised variance of the Binance USDT-M mid over the current clock hour, made at the hour's start from the hours before it, by Corsi's HAR (S05) and the HARQ form (S06)
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  At 10:37 the value says how much the coin's mid is expected to move between 10:00 and 11:00, as a variance (100 x sqrt is the
+  percent move), from the last hour, the last day and the last week of hourly variance, with weights fitted on the 28 days before D.
+  S06 trusts the last hour less when that hour's variance was itself noisy (HARQ).
+example: >-
+  With weights 0.1, 0.4, 0.3, 0.2 (constant, last hour, last day, last week) and hourly variances 1, 2, 3, 4, 5, 6 (a toy with a day
+  of 3 hours and a week of 6): last hour 6, day mean 5, week mean 3.5, forecast 0.1 + 2.4 + 1.5 + 0.7 = 4.7. On BTC a quiet hour
+  near 1e-5 (a 0.3 percent move) after a busy week forecasts more than 1e-5.
+formula: >-
+  RV(h), RQ(h) of the clock hour h (start h): RV = the sum of VOLX S03 at the 12 minute ends h + 5 min, h + 10 min, ..., h + 60 min
+  (the 12 windows tile the hour: V2_V1); RQ = (240 / 3) x the sum of S04 at the same 12 rows (240 returns of 15 s an hour); both
+  valued only when all 12 rows are valued. At a minute end u of D: H0 = u truncated to the hour (10:37 gives 10:00; 11:00 gives
+  11:00); the target hour is [H0, H0 + 1 h). x_h = RV(H0 - 1 h); x_d = the mean of the valued RV of the 24 hours H0 - 24 h to H0 - 1
+  h (at least 20 valued); x_w = the same over the 168 hours H0 - 168 h to H0 - 1 h (at least 150 valued); q = sqrt(RQ(H0 - 1 h)).
+  S05 = b0 + b_h x_h + b_d x_d + b_w x_w. S06 = c0 + (c_h + c_q q) x_h + c_d x_d + c_w x_w (not demeaned: demeaning q changes the
+  coefficients, not the forecast, E10). THE FIT, per coin, once at 00:00 of D: the rows are the 672 target hours T whose end is at
+  or before 23:00 of D-1 (T from 23:00 of D-29 to 22:00 of D-1; the hour 23:00 to 24:00 of D-1 is left out because its last S03 row
+  is D's u = 00:00), each with its target RV(T) and its regressors at H0 = T; a row enters when the target and every regressor are
+  valued; at least 600 rows; ordinary least squares by numpy.linalg.lstsq(..., rcond=None) on the regressor columns divided by their
+  standard deviations (numpy std, ddof 0; the constant column as is), the coefficients rescaled, the rank from lstsq's result; a regressor column
+  with standard deviation 0, or a rank below 4 (S05) or 5 (S06), is SINGULAR. THE FILTER
+  (Bollerslev, Patton and Quaedvlieg 2016): a forecast outside [min, max] of the fit's 600 or more targets is replaced by their mean,
+  flag INSANE. float64 throughout, not rounded. One forecast per coin and target hour, served at its 60 minute ends.
+source:
+  kind: paper
+  ref: >-
+    Corsi 2009, J. Financial Econometrics 7(2) 174-196 (HAR-RV); Bollerslev, Patton and Quaedvlieg 2016, J. Econometrics 192(1) 1-18
+    (HARQ, RQ = (M / 3) x the sum of r^4, the insanity filter); RESEARCH_TOOLS_V1 aad3cc38 row V2 and section 5.2 (our 24/7 hourly
+    form; statsmodels RollingOLS 0.15.0 BSD-3 row t includes row t, so the shift is ours; arch 8.0.0 NCSA HARX(lags=[1, 24, 168]) gives
+    Corsi's overlapping means but fits a whole sample, has no HARQ term and no filter: the tester's cross-check, real_check). DEPARTS
+    from RESEARCH_TOOLS_V1 5.2: 240 returns of 15 s an hour (not 12 of 5 minutes, so RQ = (240 / 3) x the sum of r^4) and one OLS a
+    day on the 672 hours before D (not a RollingOLS).
+inputs:
+  - kind: addon
+    ref: VOLX S03, S04 (V2) of D-36 to D-1 (the fit) and of D-7 to D (the regressors at every u of D)
+    card: VOLX/V2_V1
+    rule_in_force: the S03, S04 rows at the 12 minute ends of each clock hour as written (sealed X1 files of earlier days; D's rows of this run)
+    stale_rule: an empty S03 or S04 row makes its hour not valued (never 0, never scaled)
+    days: D-36 to D (the X1 VOLX files of D-36 to D-1 sealed before D runs; the hour 23:00 to 24:00 of a day closes with the next day's u = 00:00 row)
+overlaps: none
+per_coin: >-
+  Each coin its own fit. Thin coins and coins with TOP_HOLE minutes lose whole hours (one empty S03 of 12 empties the hour): more
+  FEW_HOURS and FEW_ROWS (counted in meaning_check). The 1000-coins: a variance of log returns, no unit issue. A coin listed late
+  (LIT, December 2025) fills after 36 days of VOLX. No roster file for D's week: NO_ROSTER (every coin).
+time: >-
+  The forecast is fixed for the clock hour: at 10:00 and at 10:59 the same value (it never uses the minutes of the hour it forecasts).
+  Funding settles and the US open are inside the hours (no seasonal term: OPEN, V1's curve as a divisor, meaning_check). Crash hours
+  enter the fit as rows; the filter guards a forecast outside the fit's range. The 00:00 hour of D uses D's own u = 00:00 S03 row
+  (the window (23:55, 24:00] of D-1). The first year days: NO_HISTORY until 16 Oct 2025.
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S05
+      label: har_rv_hour_forecast
+      units: log return squared over the clock hour (a variance)
+      value_kind: float
+      decimals: none
+      means: Corsi's HAR forecast, made at H0, of the realised variance of the clock hour [H0, H0 + 1 h) that u lies in
+    - name: S06
+      label: harq_rv_hour_forecast
+      units: log return squared over the clock hour (a variance)
+      value_kind: float
+      decimals: none
+      means: the same with the HARQ term (the last hour's weight falls as its quarticity rises)
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the latest known_at among the S03, S04 rows read for the regressors (minute ends at or before H0, so at or before u)
+    and the fit's (at or before 00:00 of D); an empty row known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: any of the X1 VOLX files of D-36 to D-1 missing (every coin before 16 Oct 2025); a coin listed later has the files and is FEW_ROWS until 600 of its fit rows are valued
+    - reason: FEW_ROWS
+      when: fewer than 600 of the 672 fit rows valued (the whole day of the coin)
+    - reason: SINGULAR
+      when: the fit's design has rank below 4 (S05) or 5 (S06) (the whole day; a mid that never moves)
+    - reason: NO_RV
+      when: RV(H0 - 1 h) not valued (S06 also when RQ(H0 - 1 h) is not)
+    - reason: FEW_HOURS
+      when: fewer than 20 of the 24 or 150 of the 168 hours before H0 valued
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_HISTORY, FEW_ROWS, SINGULAR, NO_RV, FEW_HOURS
+  stale_rule: never stale (an empty is a reason, a value is the hour's forecast)
+  max_staleness_s: 3600
+  window_days: 36
+  no_history: >-
+    the fit first fills on 16 Oct 2025 (regressor hours from 23:00 of 10 Sep 2025, the first year day, target hours from 23:00 of 17
+    Sep to 22:00 of 15 Oct 2025); every row before is empty NO_HISTORY; a coin listed later fills 36 days after its first VOLX day
+  fit_rule: "the coefficients from VOLX S03, S04 of the 36 days before D only (target hours ending at or before 23:00 of D-1), refit once a day at 00:00 of D, written to X1/fit/VOLX/<D>.parquet (B's schema; names the coefficient labels b0, b_h, b_d, b_w, c0, c_h, c_q, c_d, c_w and the row count; as_of 00:00 of D; known_at the end of the fit window, 23:00 of D-1; ADDON_ARCHITECTURE_V4 edit 3 section 5), its sha16 in D's manifest and seal"
+  fifths: none
+  flags:
+    - flag: INSANE
+      when: "the raw forecast was outside [min, max] of the fit's targets and was replaced by their mean"
+edge_cases:
+  - case: E1 the regressors (the research toy)
+    input: 'lags 1, 3, 6 on hourly RV 1, 2, 3, 4, 5, 6; weights 0.1, 0.4, 0.3, 0.2'
+    answer: 'x_h 6, x_d 5, x_w 3.5; forecast 4.7'
+  - case: E2 the hourly sum
+    input: '12 S03 rows of 1e-6 in the hour; then one of them empty'
+    answer: 'RV(h) = 1.2e-05; then RV(h) not valued'
+  - case: E3 the fit recovers planted weights
+    input: '672 rows of planted regressors from a positive series (numpy default_rng(20261018).lognormal(mean ln 2e-5, sigma 0.6), 840 hours), targets = 1e-6 + 0.4 x_h + 0.3 x_d + 0.2 x_w'
+    answer: '(1e-6, 0.4, 0.3, 0.2) within 1e-10 relative (2.2e-13 in the verify script)'
+  - case: E4 the filter
+    input: "fit targets min 1e-6, max 9e-4, mean 5e-5; raw forecasts -2e-6, 1e-3, 3e-5"
+    answer: '5e-05 INSANE, 5e-05 INSANE, 3e-05'
+  - case: E5 the quarticity
+    input: 'an hour whose 240 returns are 0.01, -0.02, 0.01 and 237 zeros'
+    answer: 'RV 0.0006000000000000001, sum r^4 1.8e-07, RQ 1.44e-05, sqrt(RQ) x RV 2.2768399153212334e-06'
+  - case: E6 serving inside the hour
+    input: 'u = 10:37 and u = 11:00'
+    answer: 'target [10:00, 11:00), x_h = RV(09:00 to 10:00); target [11:00, 12:00), x_h = RV(10:00 to 11:00) whose last S03 is u = 11:00'
+  - case: E7 the day start
+    input: 'u = 00:00 of D'
+    answer: "target [00:00, 01:00) of D; x_h = RV(23:00 to 24:00 of D-1), its last S03 D's row at u = 00:00"
+  - case: E8 a short day mean
+    input: 'the 24 hours before H0 with RV 1, 2, ..., 24 and the 4th and 11th not valued; then 19 of 24 valued'
+    answer: 'x_d = 12.954545454545455 (the mean of 22); then FEW_HOURS'
+  - case: E9 the year start
+    input: 'D = 2025-10-15; D = 2025-10-16'
+    answer: 'NO_HISTORY (D-36 is 9 Sep 2025); valued, the fit targets 23:00 of 17 Sep to 22:00 of 15 Oct 2025'
+  - case: E10 HARQ with q demeaned
+    input: 'the E3 regressors with a planted q column (the same generator, lognormal mean ln 2e-5, sigma 0.5); fit with q and with q minus its fit mean; forecast at x = (3e-5, 2.5e-5, 2.2e-5), q = sqrt(4e-5)'
+    answer: 'the same forecast within 1e-12 relative (2.392177703869379e-05 and 2.3921777038693738e-05 in the verify script, 2.1e-15 relative; the coefficients differ)'
+  - case: E11 a dead coin
+    input: 'RV(h) = 2e-5 at all 840 hours'
+    answer: 'S05, S06 empty SINGULAR (x_h, x_d, x_w equal the constant column times 2e-5)'
+  - case: E12 a short fit
+    input: '599 fit rows valued'
+    answer: 'S05, S06 empty FEW_ROWS for the whole day'
+unit_tests:
+  - test: U1 (E1, E6, E7, E8) the regressors and serving
+    planted: '8 days of planted S03, S04 rows for one coin (D-7 to D), hourly RV 1e-6 x the hour index'
+    expect: 'x_h, x_d, x_w at u = 10:37, 11:00, 00:00 as the hours planted; E8 12.954545454545455 and FEW_HOURS'
+  - test: U2 (E2, E5) the hourly sums
+    planted: 'one hour of 12 S03 rows of 1e-6; one empty; the E5 returns as S03, S04 rows'
+    expect: '1.2e-05; not valued; RQ 1.44e-05, sqrt(RQ) x RV 2.2768399153212334e-06'
+  - test: U3 (E3, E10, E11) the fit kernel
+    planted: 'the E3 (X, y); with a q column, raw and demeaned; the constant series'
+    expect: 'the weights within 1e-10 relative; the same forecast within 1e-12; SINGULAR'
+  - test: U4 (E4) the filter
+    planted: 'a fit with those target bounds and the three raw forecasts'
+    expect: '5e-05 INSANE, 5e-05 INSANE, 3e-05'
+  - test: U5 (E9, E12) the window
+    planted: 'X1 VOLX days from 2025-09-10; D = 2025-10-15 and 2025-10-16; a day with 599 rows; a spike on D''s u = 00:00 S03 row'
+    expect: 'NO_HISTORY; valued; FEW_ROWS; the spike changes no coefficient of D'
+  - test: U6 the stamps
+    planted: U1 to U5
+    expect: 'every row as_of = u, known_at <= u; the value constant over the 60 minute ends of an hour; 1,440 rows per name and coin; empty never 0'
+mutants:
+  - mutant: M1 the target hour in its own regressors (RollingOLS without the shift)
+    caught_by: 'U1 (x_h at 10:37 is RV(10:00 to 11:00))'
+  - mutant: M2 the hour 23:00 to 24:00 of D-1 in the fit (D's u = 00:00 row read)
+    caught_by: U5 (the spike on D's 00:00 row moves the coefficients)
+  - mutant: M3 x_d over the hours H0 - 25 h to H0 - 2 h
+    caught_by: U1 (x_d differs at every u)
+  - mutant: M4 a missing hour as 0
+    caught_by: 'U2 (11 of 12 gives 1.1e-05, not empty)'
+  - mutant: M5 no filter
+    caught_by: 'U4 (-2e-06)'
+  - mutant: M6 all 60 S03 rows of the hour summed (overlapping windows)
+    caught_by: 'U2 (RV(h) 6e-05, five times)'
+  - mutant: M7 x_w over 167 hours (H0 - 167 h to H0 - 1 h)
+    caught_by: 'U1 (x_w rises by 5e-07 at every u: about 4e-3 relative at an hour index near 200)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, ETHUSDT, 1000PEPEUSDT and a thin coin (named by the tester), u = 00:00, 00:01, 10:37, 23:59
+      why: the day-start hour from D's 00:00 row, a plain hour, the last hour; the fit over 8 Feb to 7 Mar 2026
+    - point: 2025-10-16, BTCUSDT, u = 00:00 and 12:00
+      why: the first valued day (regressors from 23:00 of 10 Sep 2025)
+    - point: 2025-10-15, BTCUSDT, u = 12:00
+      why: NO_HISTORY the day before
+  pass: >-
+    The tester recomputes S05, S06 and the empty reasons from this card's words on the X1 VOLX S03, S04 rows (rawcheck/check_volx.py,
+    never the producer's code), the normal equations solved in Fractions of the doubles: floats within 1e-9 relative, words equal;
+    and, where all 840 hours are valued, arch 8.0.0 HARX(y = the 840 hourly RV, lags = [1, 24, 168]) gives b0, b_h, b_d, b_w within
+    1e-6 relative (the tool cross-check). One small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "out of sample, every coin, the target hours of 16 Oct 2025 to 9 Mar 2026: S05's mean QLIKE (Patton 2011, J. Econometrics 160(1) 246-256; L = RV / F - ln(RV / F) - 1) is below the naive forecast's (F = x_h) for at least 40 of the 52 coins, and below x_d's for at least 30"
+    - "the Mincer-Zarnowitz regression of RV(target) on S05 for BTC over the same hours: slope within 0.7 to 1.3"
+  report_only:
+    - S06 against S05 (QLIKE, per coin); the share of INSANE, FEW_HOURS, NO_RV per coin
+    - "the coefficients' path over the days per coin; S05 on RV divided by V1's curve (the tester's seasonal twin, OPEN for the owner: A plain, applied; B seasonal)"
+conclude:
+  may:
+    - "a forecast, made at the start of the clock hour u lies in, of that hour's realised variance (15 s grid), from the hours before it"
+    - the coin's expected hourly variance against its last hour (x_h), to read the forecast's direction
+  never:
+    - "Hyperliquid's variance (the Binance USDT-M mid, X7)"
+    - a forecast updated within the hour (at 10:59 it is the 10:00 forecast of 10:00 to 11:00, the hour's 59 minutes unused)
+    - the next 60 minutes from u
+    - 'a percent volatility (it is a variance; 100 x sqrt(S05) is the percent move of the hour)'
+    - the hour's realised value
+readers: "none yet (planned: the lab's volatility-scaled sizes and the HOW-BIG labels)"
+implementation:
+  how: >-
+    Per coin: the X1 S03, S04 of D-36 to D as one array of 5-minute rows, reshaped to (hours, 12) with a valid mask; RV, RQ by row
+    sums; x_d, x_w by roll_points over the hourly series (sliding windows of 24 and 168 hours with their valid counts; never a
+    whole-span cumulative sum, ADDON_ARCHITECTURE_V4 9.3 rule 5); the fit one 672 x 4 (and x 5) lstsq per coin per day (the column
+    scaling is a precision guard, U3); the forecasts per hour broadcast to its 60 minute ends; the coefficients to X1/fit/VOLX/<D>.parquet.
+    PHASES: none of its own (it reads sealed X1 days and D's S03, S04 of this run, after V2's phase B in the day job; D's fit serves 00:00).
+  kernel: 'new: addon_grid_v2.har_hourly with its brute twin (hourly sums of 5-minute rows, trailing means by roll_points, a small least squares per coin per day)'
+  memory_mb: 50
+  seconds_share: 1
+data_checks: none

@@ -1,0 +1,227 @@
+{
+  "kind": "build_metric",
+  "id": "HF4",
+  "producer": "HLFLOWX",
+  "item": "Hyperliquid taker flow and fills by account size (MISSING_INFO_BACKLOG M03)",
+  "tier": "BUILD",
+  "name": "Hyperliquid trades of at least1million dollars and distinct active accounts over60s",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 3,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "Over the last 60 s known at u: how many single trades were over 1 million dollars, and how many different accounts traded the coin.",
+  "example": "BTC, u = 10:01:05, trades in (10:00:04, 10:01:04]: one trade of 12 BTC at 112,000 = 1.344 million (tid 5) and 40 small trades between 25 accounts (both sides). S12 = 1; S13 = 25 (plus the two accounts of tid 5 if not among them).",
+  "formula": "For coin c and point u: R = all perp fills rows of c with block_time_us in (u - 61 s, u - 1 s]. Trade dollars = px x sz of the taker row of each tid (one per trade). S12 = the number of tids with trade dollars >= 1,000,000. S13 = the number of distinct account in R (both sides). Empty window in complete hours: 0, 0.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 rows F09, F10; Hyperliquid node fills"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "fills table of hl_node_read V1 (columns as in PRODUCER_HLFLOWX_V1)",
+      "rule_in_force": "perp rows with block time in (u - 61 s, u - 1 s]",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's 24 hour files; the CARRY of D-1 (its last 61 s)",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    }
+  ],
+  "overlaps": "none",
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "HOLE hours touching the window; crash days; the first minute of D from the CARRY of D-1",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLFLOWX/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S12",
+        "label": "hl_trades_ge1m_60s",
+        "units": "count",
+        "value_kind": "whole",
+        "decimals": "none",
+        "means": "single trades of at least 1 million dollars in the last 60 s",
+        "never": [
+          "orders (a large order can fill as several trades)"
+        ]
+      },
+      {
+        "name": "S13",
+        "label": "hl_active_accounts_60s",
+        "units": "count",
+        "value_kind": "whole",
+        "decimals": "none",
+        "means": "different accounts that traded the coin in the last 60 s",
+        "never": [
+          "different people (one person can hold many accounts)"
+        ]
+      }
+    ],
+    "grid": "5s",
+    "cadence": "every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per day; D 00:00:00 is the old D-1 24:00:00, values unchanged",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at = u, so known_at <= as_of on every row (empty rows too): rows with block time <= u - 1 s only (MODEL_AVAILABLE_AT, 1 s delay)",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "any hour touching the window is HOLE"
+      },
+      {
+        "reason": "NO_HISTORY",
+        "when": "points before 1 Sep 2025 00:01:01"
+      }
+    ],
+    "stale_rule": "none (stale = 0 always)",
+    "max_staleness_s": 60,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": "none",
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLFLOWX.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        },
+        {
+          "code": "X1.HLFLOWX.Q03",
+          "kind": "WHOLE",
+          "meaning": "Unmapped direction count in the producer window; unknown coverage remains EMPTY"
+        },
+        {
+          "code": "X1.HLFLOWX.Q04",
+          "kind": "WHOLE",
+          "meaning": "Direction disagreement count in the producer window; unknown coverage remains EMPTY"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1 one big trade among small ones",
+      "input": "as in the example",
+      "answer": "S12 1, S13 25 or 27"
+    },
+    {
+      "case": "E2 a trade at exactly 1,000,000.00",
+      "input": "px x sz = 1,000,000.00",
+      "answer": "counted (>=)"
+    },
+    {
+      "case": "E3 one account trading twice",
+      "input": "the same account in two trades",
+      "answer": "counted once in S13"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1 (E1)",
+      "planted": "the example rows with both sides",
+      "expect": "S12 1, S13 the planted distinct accounts"
+    },
+    {
+      "test": "U2 (E2, E3)",
+      "planted": "a trade at exactly 1,000,000; an account in two trades",
+      "expect": "S12 1; S13 counts that account once"
+    },
+    {
+      "test": "U3 (HOLE and empty)",
+      "planted": "no rows in hour 10; HOLE hour 14",
+      "expect": "0, 0 in hour 10; EMPTY HOLE in hour 14"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "M1 count rows instead of trades for S12",
+      "caught_by": "U1 (S12 2)"
+    },
+    {
+      "mutant": "M2 strict > 1,000,000",
+      "caught_by": "U2 (S12 0)"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-10-10, BTC, 21:00 to 21:59",
+          "why": "the crash hour, many large trades"
+        },
+        {
+          "point": "2025-10-15, BTC and one thin coin, 10:00 to 10:59",
+          "why": "an ordinary hour"
+        }
+      ],
+      "pass": "QUANT recomputes from this card's words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read's converted tables, never the builder's code), so a conversion error cannot hide (owner 09:24Z); counts equal"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "S13 by hour of day per coin"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "whether large single trades or a crowd of accounts traded in the last minute"
+    ],
+    "never": [
+      "anything after u",
+      "the number of people"
+    ]
+  },
+  "readers": "none yet",
+  "implementation": {
+    "how": "NumPy bins and rolling windows; taker rows and account transitions from signed start/end positions; unique identifiers counted over the whole declared window. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_rolling_nunique_60s",
+    "memory_mb": 2000,
+    "seconds_share": 7,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HF4_V3"
+}

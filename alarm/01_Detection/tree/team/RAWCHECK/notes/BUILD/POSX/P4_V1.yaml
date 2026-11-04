@@ -1,0 +1,173 @@
+# POSX P4 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P4_V1.md 44e3a3a5) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Changed from the draft: floats, decimals none; ties on floats stated (float(S01) / 8 maps equal texts to equal floats and
+# different texts to different floats); OPEN O1 kept as a data check for EDGE1.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel name of ADDON_ARCHITECTURE_V4 b5fcc859 9.4 (rank_coins); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 (rank_coins); values unchanged
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P4 nits: Binance in conclude; the fourth coin (U1 planted n = 4 under E1's three-coin answers: each case now planted alone); the scipy cross-check moved to U5 (X6); BED G2 level proposed
+# Signed by BED's REVIEW OK of edition 4, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P4
+producer: POSX
+item: 'funding cross-coin rank (BUILD_ITEMS_V3 3dbb747a line P4)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when the meaning check's pass line holds on 2026-03-08 and 2025-09-24 (level proposed, EDGE1 or the owner sets it). DROP when the rank mostly says 'at the default' (ties dominate), or rank P3 in its place if EDGE1 picks OPEN O1 B.
+name: where the coin's Binance funding per hour ranks among the roster coins at the minute end, 0 the lowest to 1 the highest, ties averaged
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 4
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  Where the coin's funding per hour stands among the roster coins now: 0 the lowest (shorts paid most), 1 the highest (longs pay
+  most); coins with the same rate share their average rank.
+example: >-
+  Three coins at 0.00002, -0.00001 and 0.000005 per hour read 1, 0 and 0.5; two coins at the default 0.0000125 and one at 0.00002
+  read 0.25, 0.25 and 1.
+formula: >-
+  At the minute end u: the n roster coins with P1(u) valued (P1_V1). r = the coin's average rank of P1 among them (1 the lowest;
+  coins with equal P1 take the mean of the ranks they span). P4(u) = (r - 1) / (n - 1), float64, decimals none. Equal P1 floats are
+  equal rates: P1 = float(E1 S01) / 8 is exact scaling, so equal S01 texts give equal floats and different texts different floats.
+  Empty: the coin's own P1 empty gives P1's reason and stale (the coin is not among the n); n < 2 gives FEW_VALUES. OPEN O1 (the
+  reviewer and EDGE1): A, APPLIED: the rank of P1; B: the rank of P3 (RESEARCH_TOOLS_V1 line 62 ranks z; P3 is NO_SPREAD for many
+  coins, so B ranks a subset).
+source:
+  kind: doc
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 section 4.2 (line 62): rank at e = (r - 1) / (n - 1) with average ranks for ties, n = coins with a
+    value, n = 1 gives empty; planted ties [1, 1, 3] give 0.25, 0.25, 1.0. Cross-check: scipy.stats.rankdata(method='average')
+    (scipy 1.18.1, BSD, RESEARCH_TOOLS_V1 line 251).
+inputs:
+  - kind: addon
+    ref: POSX S01 (P1, Binance funding per hour) of every roster coin at u
+    card: POSX/P1_V1
+    rule_in_force: P1's rows at u (value, reason, stale, known_at) of all roster coins
+    stale_rule: a coin with P1 empty (any reason, STALE_VALUE included) is left out of the n and keeps its own reason
+    days: D
+overlaps: none
+per_coin: >-
+  Coins at Binance's default share one rank (ties are common: RESEARCH_TOOLS_V1 line 51); the value moves when any coin's rate
+  moves, not only this coin's. 4 h and 1 h coins are compared per hour through P1 (a 4 h coin at 0.00005 per 4 h ties with an 8 h
+  coin at 0.0001 per 8 h). The roster changes weekly: n follows D's roster and the coins valued at u.
+time: >-
+  The ranks move most at settles (00:00, 08:00, 16:00 UTC for 8 h coins, every 4 h for 4 h coins) when rates jump. 00:00 of D is
+  P1's own row; no history is read.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S04
+      label: funding_bn_rank_xcoin
+      units: share 0 to 1
+      value_kind: float
+      decimals: none
+      means: the coin's average rank of Binance funding per hour among the roster coins valued at u, scaled (r - 1) / (n - 1)
+      never:
+        - a rank of the paid rate
+        - a rank against the coin's own history (that is P3)
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the latest P1 known_at over the n valued coins at u when valued; the coin's own P1 known_at when empty; all <= u, so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: the coin's P1 empty NO_ROSTER (passes through)
+    - reason: NO_FILE
+      when: the coin's P1 empty NO_FILE (passes through)
+    - reason: BAD_INPUT
+      when: the coin's P1 empty BAD_INPUT (passes through)
+    - reason: NO_VALUE
+      when: the coin's P1 empty NO_VALUE (passes through)
+    - reason: STALE_VALUE
+      when: the coin's P1 empty STALE_VALUE (passes through, stale 1)
+    - reason: NO_INTERVAL
+      when: the coin's P1 empty NO_INTERVAL (passes through)
+    - reason: NO_ROW
+      when: the coin's P1 empty NO_ROW (passes through)
+    - reason: FEW_VALUES
+      when: the coin's P1 valued and n < 2 (it is the only valued coin at u)
+  stale_rule: stale = the coin's own P1 stale at u (1 only with STALE_VALUE)
+  max_staleness_s: 61
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 three distinct rates
+    input: 'P1 = A 0.00002, B -0.00001, C 0.000005'
+    answer: 'ranks B 1, C 2, A 3; n 3; P4 A 1, B 0, C 0.5'
+  - case: E2 ties (RESEARCH_TOOLS_V1 line 62)
+    input: 'P1 = [1, 1, 3] x 1e-6'
+    answer: 'average ranks 1.5, 1.5, 3; P4 0.25, 0.25, 1'
+  - case: E3 all coins equal
+    input: 'n coins all at 0.0000125'
+    answer: 'every rank (n + 1) / 2; P4 = 0.5 each'
+  - case: E4 one coin valued
+    input: 'n = 1 (every other roster coin empty)'
+    answer: 'the valued coin empty FEW_VALUES; the others with their own reasons'
+  - case: E5 an empty coin
+    input: 'P1 = A 0.00002, B empty STALE_VALUE stale 1, C 0.000005, D -0.00001'
+    answer: 'n 3; P4 A 1, C 0.5, D 0; B empty STALE_VALUE stale 1 (never counted as 0)'
+  - case: E6 a 4 h coin against 8 h coins
+    input: 'E1 S01: X (4 h, rate 0.00005 per 4 h) 0.0001; Y (8 h) 0.0001; Z (8 h) 0.00016'
+    answer: 'P1 X 0.0000125, Y 0.0000125, Z 0.00002; P4 X 0.25, Y 0.25, Z 1'
+unit_tests:
+  - test: U1 (E1, E2, E3)
+    planted: each case's coins alone at its own minute end (E1 three coins, E2 three coins, E3 four equal coins), so no fourth coin moves E1 or E2
+    expect: 'E1 1, 0, 0.5; E2 0.25, 0.25, 1; E3 0.5 for each of the 4'
+  - test: U2 (E4, E5)
+    planted: P1 rows of four coins at two minute ends, one minute with only one coin valued
+    expect: 'E5 answers; at the one-valued minute that coin FEW_VALUES and the others their own reasons'
+  - test: U3 (E6)
+    planted: E1 S01 rows of X, Y, Z and the producer's P1 from them
+    expect: 'P4 X 0.25, Y 0.25, Z 1'
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: 'every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day'
+  - test: U5 the cross-check (moved from the meaning check, REVIEW_LEAD_EDGE1_V1 X6)
+    planted: U1 to U3's P1 values
+    expect: scipy.stats.rankdata(method='average') gives the same (r - 1) / (n - 1) at every planted minute end (equal to 1e-12)
+mutants:
+  - mutant: M1 ties broken by order (ordinal ranks)
+    caught_by: U1 (E2 gives 0, 0.5, 1 in place of 0.25, 0.25, 1)
+  - mutant: M2 r / n in place of (r - 1) / (n - 1)
+    caught_by: U1 (E1 gives 1, 0.3333, 0.6667 in place of 1, 0, 0.5)
+  - mutant: M3 an empty coin counted as 0
+    caught_by: U2 (E5 ranks B among 4 and moves C to 0.6667)
+  - mutant: M4 the rank of the rate for the coin's own interval (S01's .own_interval_off)
+    caught_by: U3 (X at 0.00005 ranks below Y, P4 X 0, Y 0.5)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 07:59, 08:00, 12:10, 23:59
+      why: a settle (rates jump at 08:00), the minute before it, ordinary minutes
+    - point: 2025-09-24, all coins, minute ends 00:00, 07:59, 08:00, 12:10, 23:59
+      why: the same on an early year day
+    - point: 2026-03-08, the minute end with the most coins tied (the tester picks it from E1 before the job)
+      why: ties
+  pass: >-
+    The tester ranks from B's E1 S01 texts / 8 with Fraction, never the builder's code: floats within 1e-9 relative (V2 rule 4.5),
+    empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'At most half of the valued coin-minutes of each checked day sit in a tie of 5 or more coins (proposed level, EDGE1 or the owner sets it); over it the rank mostly says at the default and the card drops (or ranks P3, OPEN O1 B)'
+  report_only:
+    - the day-to-day rank correlation of the same coin
+conclude:
+  may:
+    - where the coin's Binance funding per hour stands among the roster coins now (high = longs pay more on Binance than on most coins)
+  never:
+    - a rank of the paid rate
+    - a rank against the coin's own history (that is P3)
+    - a distance between coins (a rank keeps only the order)
+readers: none yet
+implementation:
+  how: >-
+    One average rank per minute end over the coins valued (polars rank('average') over D's P1 rows grouped by as_of), then (r - 1) /
+    (n - 1); no loop over rows or minutes in Python.
+  kernel: 'addon_grid_v2.rank_coins(grid, method=average) (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 235; ADDON_ARCHITECTURE_V4 9.4; NaN stays NaN), then (r - 1) / (n - 1) over the valued coins'
+  memory_mb: 50
+  seconds_share: 0.5
+data_checks:
+  - what: 'OPEN O1: rank P1 (applied) or rank P3 (RESEARCH_TOOLS_V1 line 62 ranks z)'
+    who: EDGE1 and the reviewer BED

@@ -1,0 +1,277 @@
+{
+ "name": "OUTCOMES_FIRSTLOOK_V1",
+ "about": "SCOUT 30 Oct 2026 (the owner 08:30 Berlin: ALARM FIRST LOOK; 08:4x: 'which came first' = offer +4c vs heat 4c, whichever level is touched first). Entry, directions, cost, money, units and exits copied unchanged from STRATEGY's OUTCOMES_PATHLONG_V1.json (bb52c2bf18cb7938). Labels at the windows 1, 2, 3, 5, 10, 15, 20, 30, 60, 90, 120, 180 min: best and worst excursion (pct of price, both directions), and offer_before_heat with offer 4c and heat 4c (c = the cost of record + gap, the tool's unit c): +1 offer first, -1 heat first, 0 neither, with its seconds; reach 4c within 180 min (seconds to the first touch; the other direction's reach is this direction's heat); the return at 15, 60 and 180 min (money beside, never a rule). TEST, NOT REVIEWED.",
+ "entry": {
+  "delay_s": 6,
+  "why": "the factory's entry: taker at the first 3 s bar ending at or after F + 6 s (+ one bar), within 60 s",
+  "gap_s": 60,
+  "gap_why": "LABEL_EWSD_V2's gap (label_ewsd_v2.path_first_gap): a stretch longer than 60 s without a valid bar is a data hole"
+ },
+ "directions": [
+  "FADE",
+  "FOLLOW"
+ ],
+ "cost": {
+  "table": "team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V1.tsv",
+  "sha16": "ff157578098a2f47",
+  "gap_pct": 0.032,
+  "fallback": "unknown",
+  "why": "comparison only: median gap instead of the p75 worst-timing gap"
+ },
+ "money": {
+  "cost_settings": {
+   "path": "team/LAYERS/tools/costs_v2/settings/COSTS_SETTINGS_V1.json",
+   "sha16": "d1fd6b14c80717f8"
+  },
+  "size_usd": 10000,
+  "why": "the factory's money of record (factory_v2.costs_of / trade_cost, costs V3_5), the size the cost settings price"
+ },
+ "units": {
+  "nm": "EPI:A02N.normal_move_pct"
+ },
+ "units_note": "nm = the coin's normal 15 min move (median absolute 15-minute log move over 24 h ending 1 h before the alarm, log-pct), stored only in EPI.A02N (A02 family). An event without its EPI.A02N row is EMPTY (NO_UNIT:<why>), never a default.",
+ "exits": {
+  "path": "team/RESEARCH/tools/exit_engine/EXITS_V1.tsv",
+  "sha16": "db575a2fcb179798"
+ },
+ "labels": [
+  {
+   "name": "BEST_1M",
+   "kind": "best",
+   "horizon_min": 1
+  },
+  {
+   "name": "WORST_1M",
+   "kind": "worst",
+   "horizon_min": 1
+  },
+  {
+   "name": "OBH4_1M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 1
+  },
+  {
+   "name": "BEST_2M",
+   "kind": "best",
+   "horizon_min": 2
+  },
+  {
+   "name": "WORST_2M",
+   "kind": "worst",
+   "horizon_min": 2
+  },
+  {
+   "name": "OBH4_2M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 2
+  },
+  {
+   "name": "BEST_3M",
+   "kind": "best",
+   "horizon_min": 3
+  },
+  {
+   "name": "WORST_3M",
+   "kind": "worst",
+   "horizon_min": 3
+  },
+  {
+   "name": "OBH4_3M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 3
+  },
+  {
+   "name": "BEST_5M",
+   "kind": "best",
+   "horizon_min": 5
+  },
+  {
+   "name": "WORST_5M",
+   "kind": "worst",
+   "horizon_min": 5
+  },
+  {
+   "name": "OBH4_5M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 5
+  },
+  {
+   "name": "BEST_10M",
+   "kind": "best",
+   "horizon_min": 10
+  },
+  {
+   "name": "WORST_10M",
+   "kind": "worst",
+   "horizon_min": 10
+  },
+  {
+   "name": "OBH4_10M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 10
+  },
+  {
+   "name": "BEST_15M",
+   "kind": "best",
+   "horizon_min": 15
+  },
+  {
+   "name": "WORST_15M",
+   "kind": "worst",
+   "horizon_min": 15
+  },
+  {
+   "name": "OBH4_15M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 15
+  },
+  {
+   "name": "BEST_20M",
+   "kind": "best",
+   "horizon_min": 20
+  },
+  {
+   "name": "WORST_20M",
+   "kind": "worst",
+   "horizon_min": 20
+  },
+  {
+   "name": "OBH4_20M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 20
+  },
+  {
+   "name": "BEST_30M",
+   "kind": "best",
+   "horizon_min": 30
+  },
+  {
+   "name": "WORST_30M",
+   "kind": "worst",
+   "horizon_min": 30
+  },
+  {
+   "name": "OBH4_30M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 30
+  },
+  {
+   "name": "BEST_60M",
+   "kind": "best",
+   "horizon_min": 60
+  },
+  {
+   "name": "WORST_60M",
+   "kind": "worst",
+   "horizon_min": 60
+  },
+  {
+   "name": "OBH4_60M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 60
+  },
+  {
+   "name": "BEST_90M",
+   "kind": "best",
+   "horizon_min": 90
+  },
+  {
+   "name": "WORST_90M",
+   "kind": "worst",
+   "horizon_min": 90
+  },
+  {
+   "name": "OBH4_90M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 90
+  },
+  {
+   "name": "BEST_120M",
+   "kind": "best",
+   "horizon_min": 120
+  },
+  {
+   "name": "WORST_120M",
+   "kind": "worst",
+   "horizon_min": 120
+  },
+  {
+   "name": "OBH4_120M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 120
+  },
+  {
+   "name": "BEST_180M",
+   "kind": "best",
+   "horizon_min": 180
+  },
+  {
+   "name": "WORST_180M",
+   "kind": "worst",
+   "horizon_min": 180
+  },
+  {
+   "name": "OBH4_180M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 4,
+   "unit": "c",
+   "horizon_min": 180
+  },
+  {
+   "name": "REACH4_180M",
+   "kind": "reach",
+   "target": 4,
+   "unit": "c",
+   "horizon_min": 180
+  },
+  {
+   "name": "RET_15M",
+   "kind": "return",
+   "horizon_min": 15
+  },
+  {
+   "name": "RET_60M",
+   "kind": "return",
+   "horizon_min": 60
+  },
+  {
+   "name": "RET_180M",
+   "kind": "return",
+   "horizon_min": 180
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+# judge_parity_v1.py: ALARM_V1_21_16 vs alarm/
+judge	file	verdict	release_sha16	repo_sha16	note
+decide_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v5.py	SAME_AFTER_SCRUB_AND_PINS	7ce12d2845ad746b	b8f41087b550dc5f	e9bf788561a7b3e3>794937671765c475 7e1bb2a7a30ac0ea>05bd59978373c69c 8c345946c673530a>7a127fe63e199eec efe30de7fdfd2c59>f3c6dc8c110dd067; named
+decide_v6	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v6.py	SAME_AFTER_SCRUB_AND_PINS	ccf7598a2f7c41aa	b86f3c79bc3ca46b	7ce12d2845ad746b>b8f41087b550dc5f 7ce12d2845ad746b>b8f41087b550dc5f; named
+audit_run_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v5.py	IDENTICAL	6ffbec4ce1035b0b	6ffbec4ce1035b0b	named
+true_gate_v3	03_Grading/tree/tools/true_gate/true_gate_v3.py	SAME_AFTER_SCRUB	73ebe96b6068ddef	d8d7fc77b9abf87a	named
+menu_gate_v1	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/menu_gate_v1.py	IDENTICAL	12712fb2f04beca8	12712fb2f04beca8	named
+tried_search_v1	08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py	IDENTICAL	03ba1ace716fcf0d	03ba1ace716fcf0d	named
+wave_gap_v1	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/wave_gap_v1.py	IDENTICAL	460795ae1b843e89	460795ae1b843e89	named
+waves	01_Detection/tree/team/RESEARCH/tools/labcore/waves.py	IDENTICAL	f61b22c588ee6b9a	f61b22c588ee6b9a	named
+waves	06_First_look/tree/tools/labcore/waves.py	IDENTICAL	f61b22c588ee6b9a	f61b22c588ee6b9a	named
+waves	07_Price_path/tree/team/RESEARCH/tools/labcore/waves.py	IDENTICAL	f61b22c588ee6b9a	f61b22c588ee6b9a	named
+waves	07_Price_path/tree/tools/labcore/waves.py	IDENTICAL	f61b22c588ee6b9a	f61b22c588ee6b9a	named
+gates	01_Detection/tree/team/RESEARCH/tools/labcore/gates.py	IDENTICAL	aae13278ad4f4209	aae13278ad4f4209	named
+gates	07_Price_path/tree/team/RESEARCH/tools/labcore/gates.py	IDENTICAL	aae13278ad4f4209	aae13278ad4f4209	named
+gates	07_Price_path/tree/tools/labcore/gates.py	IDENTICAL	aae13278ad4f4209	aae13278ad4f4209	named
+jobgate	01_Detection/tree/team/RESEARCH/tools/labcore/jobgate.py	SAME_AFTER_SCRUB	afdd139291f92c29	16f894eda2f57f07	named
+jobgate	07_Price_path/tree/team/RESEARCH/tools/labcore/jobgate.py	SAME_AFTER_SCRUB	afdd139291f92c29	16f894eda2f57f07	named
+jobgate	07_Price_path/tree/tools/labcore/jobgate.py	SAME_AFTER_SCRUB	afdd139291f92c29	16f894eda2f57f07	named
+law	01_Detection/tree/team/LAB3/code/lab3/law.py	SAME_AFTER_SCRUB	c54e24bdd9b0debe	f777c329396b6190	named
+law	07_Price_path/tree/team/LAB3/code/lab3/law.py	SAME_AFTER_SCRUB	c54e24bdd9b0debe	f777c329396b6190	named
+law	_vendor/LAB3_code/lab3/law.py	SAME_AFTER_SCRUB	c54e24bdd9b0debe	f777c329396b6190	named
+decide_v5	Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/read_stratentry_v1.py	SAME_AFTER_SCRUB	efe30de7fdfd2c59	f3c6dc8c110dd067	loaded by decide_v5.py
+decide_v5	Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py	IDENTICAL	c301c5977ecd6860	c301c5977ecd6860	loaded by decide_v5.py
+decide_v5	_tools/settings_v1.py	SAME_AFTER_SCRUB	6b621c60739b5c65	6b25623d1943524e	loaded by decide_v5.py
+audit_run_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v3.py	SAME_AFTER_SCRUB_AND_PINS	364cfdbf36d8c35b	83fb97d062c8bddd	0593141fa5f9e166>7e533d36e0dd9132; loaded by audit_run_v5.py
+audit_run_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v14.py	SAME_AFTER_SCRUB_AND_PINS	11c797f6e92b0505	036e05f9d5efe5dc	7530e9ee597c5bb1>49577e1c3e1eb2f3 0946b0293f0988d6>539f84200ef05b2b d2280f28fa64b123>4f20ae8781f2b63e 8cc89b4231a69ef7>2a26d62a2a9182f3 5b898499861c8837>0eefae716395bfcf dfe1f98f99de52b7>484e5018b6553aec 36d7d68131f73b11>fb4365c36a9d8dd3 623f1afcc75b2e3a>f31eab7792ff9729 af8c29430ea0656a>ca084b3c633b4079 9e7dcf5e90b58fd2>540e4529fc8fa7b1 3ade457def4ad27d>194d43d24d50090c 4574e4f9e5fcb05d>90b2b9f26fe95416 55ad02cf0356bcc7>2342951a9408476b 5df7b7ef3885cc1f>8cb52d9572ffe7af a81637b03976354c>50771fa016261e23 4b441e2aa3038907>cf27e2598dc6aba7 aeb205f094a85a18>9acb9c0c2b241320 e1de0983b75182cf>b1058e32203cef96 85d724650ef8cb86>c58415878271057e 99e2e10f6b47454c>fdc51e1f114f4906 f85006e464a3ea3d>395f8aaf5a1f432c; loaded by audit_run_v5.py
+true_gate_v3	03_Grading/tree/tools/true_gate/true_gate_v2.py	IDENTICAL	08323a3835d4d265	08323a3835d4d265	loaded by true_gate_v3.py
+menu_gate_v1	03_Grading/tree/tools/true_gate/true_gate_v1.py	IDENTICAL	9cef10e960700d6b	9cef10e960700d6b	loaded by menu_gate_v1.py
+tried_search_v1	08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/novelty_v4.py	SAME_AFTER_SCRUB_AND_PINS	d19410d2b42dc2dc	24a4cabe2b5197e7	480946f870fdba40>4f8b9d4888ca5c79; loaded by tried_search_v1.py
+audit_run_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_forward_v2.py	SAME_AFTER_SCRUB_AND_PINS	5657867f78670fe3	dfc073289b10a31e	b6c153cf4b304bf9>bee5a79a5546b7cd; loaded by audit_run_v3.py
+audit_run_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v2.py	SAME_AFTER_SCRUB_AND_PINS	7e1bb2a7a30ac0ea	05bd59978373c69c	8c345946c673530a>7a127fe63e199eec efe30de7fdfd2c59>f3c6dc8c110dd067; loaded by audit_run_v3.py
+audit_run_v5	Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v5.py	SAME_AFTER_SCRUB_AND_PINS	55ad02cf0356bcc7	2342951a9408476b	4b441e2aa3038907>cf27e2598dc6aba7 020c3e8192c0fe36>57b5c18ed82061f6 a2f614a3d717820a>604cbe0b9254a8b1 dd8cfceb81f3e9bf>66d2e78a3a3b37bf 658a3063f420a052>53ce6f3a5cc3512b cc89cab3eace6982>67a51907a5a930e3; loaded by decide_v2.py

@@ -1,0 +1,120 @@
+{
+ "tool": "run_isolated_v1",
+ "file": "_tools/run_isolated_v1.py",
+ "file_sha16": "46299b7b0e3fa810",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "a release proof, not a loop step: the isolation check run_all_tests_v1.py runs every test through (current: run_all_tests_v1 uses it)",
+ "question": "Did this run import code only from the Alarm folder and the interpreter, and open no file under a forbidden folder?",
+ "usage_from_code": "python3 -B run_isolated_v1.py [--forbid <dir>]... <script.py> [args...]",
+ "settings_keys": [],
+ "code_options": [
+  "--forbid"
+ ],
+ "code_exits": [
+  0,
+  1,
+  3
+ ],
+ "commands": [
+  {
+   "name": "run",
+   "does": "runs one script of this Alarm folder as __main__ with its arguments, then prints ISOLATION OK or FAILED",
+   "args": [
+    {
+     "name": "--forbid",
+     "required": false,
+     "meaning": "a folder no file may be opened under (repeatable); without it, the defaults written in the code (the dev trees, when they exist)",
+     "example": "/path/to/the/dev/tree"
+    },
+    {
+     "name": "script.py",
+     "required": true,
+     "meaning": "a script inside this Alarm folder (a test or a tool)",
+     "example": "<INSTALL>/_tools/tests/test_settings_v1.py"
+    },
+    {
+     "name": "args",
+     "required": false,
+     "meaning": "the script's own arguments",
+     "example": "AD1_20261029"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/_tools/run_isolated_v1.py --forbid /path/to/the/dev/tree <INSTALL>/_tools/tests/test_settings_v1.py",
+   "writes": "nothing itself; the script writes what it writes",
+   "refuses": [
+    {
+     "exit": 1,
+     "when": "no script (prints its usage) or a script outside this Alarm folder (NOT IN THIS ALARM FOLDER)"
+    },
+    {
+     "exit": 3,
+     "when": "ISOLATION FAILED: a module from outside, or a file opened under a forbidden folder"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--forbid",
+      "{WORLD}/forbidden",
+      "{ALARM}/_tools/settings_v1.py",
+      "get",
+      "{SETTINGS}",
+      "RESEARCH_ROOT"
+     ],
+     "exit": 0,
+     "prints": "ISOLATION OK"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 1,
+   "prints": "python3 -B run_isolated_v1.py"
+  },
+  {
+   "args": [
+    "--forbid",
+    "{WORLD}/forbidden",
+    "{WORLD}/part_clean/tool.py"
+   ],
+   "exit": 1,
+   "prints": "NOT IN THIS ALARM FOLDER"
+  }
+ ],
+ "rules": [
+  "otherwise the exit code is the script's own",
+  "it reads no settings file: pass --forbid (run_all_tests_v1 passes the settings' FORBID); for a real run use run_isolated_v2",
+  "its default forbidden folders are written in its code (MACHINE_PATHS_KNOWN.tsv lists them as KNOWN)"
+ ],
+ "outputs": [
+  {
+   "file": "printed: OK line",
+   "where": "stdout, last line, when the run is isolated",
+   "columns": [
+    "modules",
+    "alarm",
+    "forbidden",
+    "script_exit"
+   ]
+  },
+  {
+   "file": "printed: FAILED line",
+   "where": "stdout, last line, when it is not",
+   "columns": [
+    "outside_modules",
+    "forbidden",
+    "opened_files"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/run_isolated_v1_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "_tools/run_all_tests_v1.py",
+   "sha16": "eddfa06bdbaff7cd"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

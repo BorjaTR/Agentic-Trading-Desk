@@ -1,0 +1,69 @@
+{
+ "by": "BUILD1 (recut for STRATEGY-161519; owner as in RELEASE_profile_V1.json)",
+ "changed": [
+  "team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv",
+  "team/RESEARCH/tools/alarm_profile/episode_blocks.py"
+ ],
+ "files": {
+  "team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv": {
+   "role": "what each context value reads (proof display)",
+   "schema_sha16": "8b96d57ed7d7c08b",
+   "sha16": "5a28534acbe33636"
+  },
+  "team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv": {
+   "role": "the catalogue (generated from episode_blocks docstrings)",
+   "schema_sha16": "1cc2b66193910365",
+   "sha16": "d133fea9c7935857"
+  },
+  "team/RESEARCH/tools/alarm_profile/PROFILES_V1.tsv": {
+   "role": "named groupings over EPI and CTX values",
+   "schema_sha16": "8a64fd2f76c96e98",
+   "sha16": "74a3d03a9e0e7253"
+  },
+  "team/RESEARCH/tools/alarm_profile/README.md": {
+   "role": "design note and contract",
+   "sha16": "015ad7428ed0c451"
+  },
+  "team/RESEARCH/tools/alarm_profile/alarm_profile.py": {
+   "role": "tool module",
+   "sha16": "cbabbb22de7a62ac"
+  },
+  "team/RESEARCH/tools/alarm_profile/episode_blocks.py": {
+   "role": "tool module",
+   "sha16": "150dc80c8e681efe"
+  },
+  "team/RESEARCH/tools/alarm_profile/test_alarm_profile.py": {
+   "role": "test",
+   "sha16": "5e22427c38f8c76c"
+  }
+ },
+ "landing": "P04 + A09 + P09 (+ P03 context, P05 profile)",
+ "release": "V1_1",
+ "releases": {
+  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_1.json": "9083e7c449131f46"
+ },
+ "replaces": "RELEASE_profile_V1.json 4b27b2fa5f00e77d",
+ "rule": "FROZEN until both outside approvals and STRATEGY sign-off; any change to a listed file is a new release (V1_1, V2)",
+ "run_with": "<PYTHON>",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tests_result": "analyst venv: test_alarm_profile 37 passed, 4 skipped (BUILD1 rerun 16:2xZ)",
+ "tool": "alarm_profile",
+ "unpinned_other_tools": {
+  "team/LAB3/code/lab3/__init__.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/asof.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/binfmt.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/bins.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/days.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/labgroups.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/law.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/rows.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/write.py": "another tool: pinned by its own release once it has one",
+  "team/RESEARCH/tools/alarms/a01_onset_v2.py": "another tool: pinned by its own release once it has one",
+  "team/RESEARCH/tools/alarms/a02_climax_v3.py": "another tool: pinned by its own release once it has one",
+  "team/RESEARCH/tools/alarms/alarm_view_v1.py": "another tool: pinned by its own release once it has one"
+ },
+ "written_utc": "2026-10-23T16:18:45Z"
+}

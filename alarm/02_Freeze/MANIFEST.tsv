@@ -1,0 +1,3 @@
+# 02_Freeze: the files copied from the dev tree. None: no tool of this part is released (README, "In development"); the owner, 30 Oct 12:33 Berlin, option a: released editions only. Sync: cd Alarm && python3 -B _tools/sync_from_dev_v1.py <dev forensics root> 02_Freeze
+repo_path	dev_path	role
+README.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/02_Freeze/README.md	replaces the part page

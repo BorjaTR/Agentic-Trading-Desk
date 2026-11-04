@@ -1,0 +1,206 @@
+# FORMULA_B2_V1.yaml: the card of B2, the one-sided share of the last 1,000 fills (named VPIN in the year), EDITION 1 (METRIC_AUDIT, 2026-10-18,
+# FR2 = FP2 of FORMULA_REVIEW_WORKPACKAGES_V4 330187e5, the smart check of section 0c; made as BASIC_C1_V5 95244119). Computation J15917, J15971,
+# J15956, J15957 (formula_b2 ed1 d4810857, ed2 73028f9b), the gaps named J15943, J15945; meaning: planted P3 (tests 51cc73ea) and J15955
+# (meaning_formula2 ed1 d6c62af3, run before the smart-check ruling); twins J15849 (meaning_twins 74d02bc2).
+group: B2
+name: one-sided share of the last 1,000 fills (the year's VPIN, formula on the Tardis trades)
+summary: 'For a coin at a moment e: its last 1,000 trades (fills) stamped by e and received by e, cut in order into 20 runs of 50; in each run the
+  taker-buy dollars B and the taker-sell dollars S; the value = sum |B - S| / sum (B + S), rounded once to 4 decimals (S01 at the fire second, S02 at
+  the minute end; at a minute end they are the same). S03 = the share of the roster coins whose exact S02 is 0.60 or more (one_sided_flow), with the
+  coins counted beside (S03.coverage).'
+read_as: 'How one-sided the last 1,000 FILLS were, dollar weighted, in runs of 50 fills: 0 = every run balanced, 1 = every run all one side; no side.
+  It is computed right (the card''s rule on the Tardis trades: 266,727 of 266,727 comparable values of 3 days, 1,113 not comparable and named, J15971, J15956, J15957) but it is
+  NOT the VPIN of Easley, Lopez de Prado and O''Hara (2012): the paper pours trades into equal-VOLUME buckets (a day''s volume over 50) and classifies
+  them in bulk; on the same planted fills the two differ by the bucket alone (1 against 0.9, test P3), and on Binance klines the paper''s VPIN ranks the
+  coin-minutes unlike ours (Spearman 0.03, 0.06) at another level (median 0.25, 0.18 against 0.67, 0.66; at or over 0.60: 0% against 72 to 74%, J15955).
+  Renamed; the paper''s VPIN is a could_build. A taker order fills many rows on one side, so most runs are one-sided (CARD_B2_V5 part 1).'
+conclude:
+  may:
+  - 'how one-sided, in dollars, the coin''s last 1,000 fills were, in runs of 50 fills (S01, S02: the card''s rule exactly, 0 MISS on 3 days)'
+  - 'how many roster coins have that share at 0.60 or more (S03), over the coins counted (S03.coverage)'
+  - 'that a busy coin''s value covers seconds and a thin coin''s minutes (1,000 fills: about 45 s of BTC, about 18 minutes of ATOM, CARD_B2_V5 part 1)'
+  never:
+  - 'that S01, S02 are VPIN (Easley, Lopez de Prado, O''Hara 2012) or a probability of informed trading: other buckets, another horizon, another level (renamed; J15955)'
+  - 'S02 at or over 0.60 as rare or toxic: it is the normal state, 72 to 74% of coin-minutes (J15955); S03 near 0.75 is a normal minute (S03 renamed: not a VPIN floor)'
+  - 'a side from S01, S02: buying and selling give the same value (the side is B1''s taker flow)'
+  - 'values of two coins as the same time span: the window is a count of fills, not a time'
+  - 'a .mean_off twin as the same metric: it is the mean of the 20 run shares, another formula (Pearson 0.84, 0.85 with the main, equal at 0.05%, J15849); the owner rules it'
+  - 'an EMPTY value as 0 (TRADES_HOLE, THIN_FEED, SHORT_HISTORY, NO_FILE, BAD_INPUT)'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_B2_V5.md (2cf525c8b8f1e195, rules 1 to 15, cases E1 to E212)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_B2_V1.tsv (f4c509715e960810; S01, S02 1,000 trades, 20 buckets; S03 share 0.60)
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml and MEANING_C13_V4.yaml (the Tardis trades rows: side, price, amount, stamps; raw)'
+  layer_list: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V19.tsv (b38bf075fb0c2a65; B2 S01 to S03 formula, NOT_CHECKED)
+  producer: testbed/value_audit/code/prod_B2_v1.py through prod_reader_trades_v1.py (the trades packs) and prod_reader_liquidations_v6.py (alive, thin)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/B2.parquet
+  year_output_columns: name (S01, S02, S03, S01.mean_off, S02.mean_off, S01.seen_at_e_off, S02.seen_at_e_off, S03.coverage), coin (or MARKET), as_of_us (e),
+    value_kind (0 = EMPTY, 1 a float, 2 an int), value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/formula_b2.py year() (value_kind 0 empty, 3 a word, else value_f64)
+source:
+  vendor: Tardis.dev binance-futures trades (Binance USDT-margined futures, the trade channel)
+  exchange_stream: trades (one row per fill of a taker order; off-book trades left out, SOURCE_SPEC_trades_V1 Q-N3)
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<SYM>_<YYYY-MM-DD>.csv.gz (D and D-1)
+  columns: timestamp, local_timestamp, id, side, price, amount
+  fields:
+    window: 'the last 1,000 rows of D-1 and D stamped at or before e and received by e, in order of stamp, file, line [proof: CARD_B2_V5 rule 1; tests T2, T16, T24]'
+    runs: '20 runs of 50 in that order; B, S = the buy, sell dollars (price x amount exact, integers at the file''s scale) [proof: CARD_B2_V5 rule 2; T23]'
+    value: 'sum |B - S| / sum (B + S), 4 decimals half up; S03 the share at or over 0.60, exact before rounding [proof: CARD_B2_V5 rules 3, 9; T3, T6, T7, T17, T18]'
+    empty: 'NO_FILE, SHORT_HISTORY, TRADES_HOLE (no trade in some 60 s of the window''s span), THIN_FEED, BAD_INPUT, in that order [proof: CARD_B2_V5 rules 5 to 7; T9 to T15]'
+  latency: known_at = the latest arrival of the 1,000 rows (rule 15); the newest fill is received a few ms after its stamp (median 0.003 to 0.004 s, J15943)
+  silence: 'S01, S02 empty at 65 of 74,880 coin-minutes of 8 Mar 2026 (TRADES_HOLE), 849 of 73,440 of 24 Sep 2025 (INVENTORY_L0 J15730)'
+reading_rules:
+- 'S02 at e = sum over the 20 runs of |B - S| / sum of (B + S), the runs being the last 1,000 fills received by e cut into 20 of 50 (rules 1 to 3); S01 the same at the fire second'
+- 'S03 = the share of the roster coins with an S02 whose exact value is 0.60 or more; S03.coverage = the coins with an S02 (rule 9)'
+- 'the window is a count of fills: 1,000 fills are about 45 s of BTC and about 18 minutes of ATOM (CARD_B2_V5 part 1)'
+- 'COPIES: .seen_at_e_off is the same metric empty only when the coin is not seen at e (the main needs the whole span seen): ACCEPTED as the year''s
+  cross-check (the owner 18 Oct): equal at 100% where both have a value; the twin alone has a value at 65 (8 Mar 2026) and 744 (24 Sep 2025) coin-minutes (J15849)'
+- 'BESIDE, ANOTHER METRIC (EDGE1 15:12:54Z, the owner rules): .mean_off is the mean of the 20 run shares |B - S| / (B + S): recomputed exactly (J15971, J15956,
+  J15957), Pearson 0.8386, 0.8489 with the main, |gap| median 0.044 to 0.051, equal at 0.05% (J15849); no meaning work on it until the owner rules'
+- 'INPUT LIMIT: our Tardis copy of the trades lacks a few seconds of fills the year''s input holds (gaps in Binance''s sequential trade ids: TRX 24 Sep 2025
+  08:02:56 to 08:02:59, FIL 4 Nov 2025 12:01:01 to 03; the year''s B1 dollars of that minute higher, J15943, J15945): those coin-minutes (79 on 24 Sep, 31 on
+  4 Nov) are not comparable, never a miss; which copy the year read is open (EDGE1 15:21:29Z)'
+values:
+  units: 'a share in [0, 1] (S01 to S03, written without trailing zeros: 1, 0.5, 0.6667); a count of coins (S03.coverage)'
+  zero: every run of 50 fills balanced in dollars
+  empty: NO_ROSTER, NO_FILE, SHORT_HISTORY, TRADES_HOLE, THIN_FEED, BAD_INPUT, ALL_COINS_EMPTY (S03); value_kind 0. Never read empty as 0
+  stale: 1 with TRADES_HOLE or THIN_FEED
+  flags: DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT:<coin> (S03)
+interpret:
+  do:
+  - read S02 as how one-sided the coin's last 1,000 fills were, against its own usual level
+  - read S03 against its own day (median 0.75 on 8 Mar 2026, 0.73 on 24 Sep 2025, J15955)
+  dont:
+  - read 0.60 as a toxic or rare level (72 to 74% of coin-minutes are over it)
+  - compare two coins' values as the same time span
+biases:
+- what: runs of 50 fills against the paper's equal-volume buckets
+  direction: ours higher (a taker order fills many rows on one side)
+  size: 'median 0.67, 0.66 against the paper''s 0.25, 0.18 on klines; over 0.60: 74.47%, 71.97% against 0.00%; Spearman 0.033, 0.063 (8 Mar 2026, 24 Sep 2025; J15955); 1 against 0.9 on planted fills (P3)'
+  proof: J15955 vpin; tests/test_meaning_formula2.py P3 (51cc73ea)
+external_checks:
+- what: the name test, against the VPIN of Easley, Lopez de Prado, O'Hara (2012) on Binance 1 minute klines (buckets of D-1's volume / 50, n = 50, bulk classification over D-1's sigma)
+  where: Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'DIFFERS: Spearman 0.0333 (8 Mar 2026), 0.0632 (24 Sep 2025); with Binance''s own taker side in the same buckets -0.0868, -0.1202 (J15955): renamed'
+- what: the same planted fills through B2's rule and through equal-volume buckets
+  where: tests/test_meaning_formula2.py P3 (meaning_formula2 d6c62af3)
+  status: 'DIFFERS by the bucket alone: 1 against 0.9'
+- what: the .seen_at_e_off copies and the .mean_off metrics against the mains
+  where: the year rows (meaning_twins 74d02bc2)
+  status: 'J15849: seen_at_e_off equal 100% where both; mean_off Pearson 0.84, 0.85'
+tools:
+- what: every B2 name recomputed from the Tardis trades rows with exact integers, at every 5 minute end, every roster coin
+  run: python3 -B -m rawcheck.formula_b2 --days <D,..> [--no-prev] --out <dir>
+  where: 'team/LAB/code (formula_b2.py ed2 73028f9b1731bfdc, tests fe21058cb569a952 32 of 32, 7 of 7 mutants; runner job: Tardis, the roster, the year store)'
+- what: one coin by hand at one minute end (the window, the 20 runs, the year beside)
+  run: python3 -B -m rawcheck.formula_b2 coin <D> <COIN> <HHMM>
+  where: team/LAB/code
+- what: a gap named at one coin-minute (order and arrival variants, the year's B1 beside our tape, trade id gaps, the shift)
+  run: python3 -B -m rawcheck.formula_b2 why <D> <COIN> <HHMM> [<COIN> <HHMM> ...]
+  where: team/LAB/code
+- what: the paper's VPIN on klines against S02 (run once before the smart-check ruling; the planted P3 is the check now)
+  run: python3 -B -m rawcheck.meaning_formula2 vpin <D>
+  where: 'team/LAB/code (meaning_formula2.py d6c62af37d1152b8, tests 51cc73ea5fff44da 14 of 14)'
+used_by: 'S03 one_sided_flow: CHAIN_chop_LONG_ride (fifth 1 SKIP), CHAIN_forced_SHORT_fade (fifth 4 ENTER), CHAIN_forced_SHORT_ride (fifth 4, 5 SKIP), CHAIN_quiet_SHORT_ride_2;
+  nobody yet for S01, S02 (CARD_B2_V5 part 1)'
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_B2_V5.md
+  PAPER: 'David Easley, Marcos Lopez de Prado, Maureen O''Hara, Flow Toxicity and Liquidity in a High-frequency World, Review of Financial Studies 25(5), 2012:
+    VPIN = sum over n volume buckets of |V_S - V_B| / (n V), equal-volume buckets V, trades classified in bulk from time bars, V_B = V x Z(dP / sigma)'
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+settings:
+- id: B2.S01
+  layer: formula
+  side: none
+  window: the last 1,000 fills
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: sum over 20 runs of 50 fills of |B - S| / sum of (B + S), dollars, 4 decimals
+  aliases: EF.ef_vpin_1000t_20b
+  means: how one-sided, in dollars, the coin's last 1,000 fills were, in runs of 50 (0 balanced, 1 all one side)
+  name: one-sided share of the last 1,000 fills (20 runs of 50), at the fire second
+  renamed_from: VPIN 1,000 trades 20 buckets (EF.ef_vpin_1000t_20b)
+  computation:
+    status: RELIABLE
+    proof: 'formula_b2 ed2 73028f9b: J15971 (8 Mar 2026) 14,976 of 14,976; J15956 (24 Sep 2025) 14,605 equal, 0 MISS (79 INPUT_ID_GAP, 4 THIN_FEED not recomputed); J15957 (4 Nov 2025)
+      14,595 equal, 0 MISS (31 INPUT_ID_GAP, 62 NOT_READ_PREV); at a minute end = S02'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed: not the paper''s VPIN (P3: 1 against 0.9 on the same fills; J15955: Spearman 0.033, 0.063 against the paper''s on klines, median 0.67 against 0.25)'
+  open: 'fills, not taker orders: a taker order fills many rows on one side (CARD_B2_V5 part 1); a count window: its span is seconds to minutes by coin'
+- id: B2.S02
+  layer: formula
+  side: none
+  window: the last 1,000 fills
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sum over 20 runs of 50 fills of |B - S| / sum of (B + S), dollars, 4 decimals
+  aliases: CUBE.vpin
+  means: the same as S01 at the minute end
+  name: one-sided share of the last 1,000 fills (20 runs of 50), at the minute end
+  renamed_from: VPIN (CUBE.vpin)
+  computation:
+    status: RELIABLE
+    proof: 'J15971 14,976 of 14,976; J15956 14,605 equal, 0 MISS; J15957 14,595 equal, 0 MISS (the same not comparable as S01); J15917 (ed1) 14,976 of 14,976'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed: J15955 against the paper''s VPIN on klines: Pearson 0.0270, 0.0037, Spearman 0.0333, 0.0632, per coin Spearman median -0.0415, 0.0040; over 0.60 74.47%, 71.97% against 0.00%'
+  open: 'as S01'
+- id: B2.S03
+  layer: our_rule
+  side: none
+  window: S02 of every roster coin
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: share of the roster coins with an S02 whose exact value is 0.60 or more, 4 decimals
+  aliases: one_sided_flow
+  means: the share of the roster coins whose one-sided fill share (S02) is 0.60 or more; most coins pass that line at a normal minute
+  name: share of roster coins whose S02 (one-sided fill share) is 0.60 or more
+  renamed_from: one-sided flow, the share of roster coins whose VPIN is 0.60 or more (one_sided_flow)
+  computation:
+    status: RELIABLE
+    proof: 'J15971 288 of 288; J15956 286 equal, 2 INPUT_ID_GAP; J15957 279 equal, 1 INPUT_ID_GAP, 8 NOT_READ_PREV (S03 recomputed without the coins the year marks THIN_FEED, ed2)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the smart check (EDGE1 15:48:40Z): a count over the record''s fixed floor 0.60 (CARD_B2_V5 rule 9) of S02, which is not VPIN (renamed): the line is passed by the median
+      coin, S03 median 0.75 (8 Mar 2026), 0.7255 (24 Sep 2025), S03 p90 0.8462, 0.8400 (J15955 vpin), so ''one-sided flow'' is the normal state, not a
+      signal; on the paper''s VPIN no coin passes 0.60 at any minute of either day (0.00%, J15955): renamed (RULING 3: the old name calls up a VPIN floor)'
+  open: 'the chains read its fifths (a rank within its own history), which a fixed 0.60 line does not stop; whether its fifths carry information is the our_rule level''s test'
+  never:
+  - 'a high S03 as a one-sided or toxic market: at a normal minute 3 in 4 coins pass the 0.60 line (median 0.75, 0.73, J15955)'
+- id: B2.S03.coverage
+  layer: basic
+  side: none
+  window: S02 of every roster coin
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of the roster coins with an S02 value
+  aliases: none
+  means: how many roster coins S03's share is taken over
+  name: coins counted for S03
+  computation:
+    status: RELIABLE
+    proof: 'J15971 288 of 288; J15956 288 of 288; J15957 280 equal, 8 NOT_READ_PREV'
+  meaning:
+    status: DEFINED
+    proof: 'J15849: min, median, max 51, 52, 52 of 52 (8 Mar 2026), 49, 50, 51 of 51 (24 Sep 2025)'
+  open: none
+could_build:
+- id: B2.CB1
+  intended: 'VPIN as Easley, Lopez de Prado and O''Hara define it: the volume-synchronized probability of informed trading'
+  was_name_of: B2.S01, B2.S02
+  formula: 'trades or 1 minute bars poured in order into equal-volume buckets of V = the previous day''s volume / 50; each bar''s buy volume V x Z(dP / sigma_dP)
+    (bulk classification) or the exact taker side; VPIN = sum over the last n = 50 full buckets of |V_S - V_B| / (n V)'
+  needs: the Tardis trades or Binance 1m klines of D-1 and D (held); meaning_formula2.paper_vpin is a reference implementation
+  adds: 'measured: another quantity than ours (Spearman 0.03, 0.06 on klines, J15955); whether it informs a decision is an opinion until measured (TREE 15:35:03Z review): a day-scale measure where ours is a fills-scale one'
+  status: NOT_BUILT
+- id: B2.CB2
+  intended: 'one-sided flow as its old name says: the share of roster coins whose VPIN (the paper''s) is 0.60 or more'
+  was_name_of: B2.S03
+  formula: 'the share of the roster coins whose B2.CB1 VPIN is 0.60 or more (or a floor set on the paper''s scale, an our_rule decision)'
+  needs: B2.CB1 for every roster coin
+  adds: 'measured: on the paper''s VPIN no coin passes 0.60 at any minute of 8 Mar 2026 or 24 Sep 2025 (0.00%, J15955): the floor would need the owner''s new number'
+  status: NOT_BUILT

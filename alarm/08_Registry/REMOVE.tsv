@@ -1,0 +1,11 @@
+path	why
+ALARM_DESIGN/REGISTRY/tools/registry_build_v1.py	TEST edition, not released: the registry builder registry_build_v1 and its tests (SCOUT, KIT_V6, "TEST, NOT REVIEWED"; no RELEASE json; not in KIT_V6 MANIFEST_SHA16.txt)
+ALARM_DESIGN/REGISTRY/tools/novelty_v1.py	TEST edition, not released: the novelty check novelty_v1 (SCOUT, KIT_V6, "TEST, NOT REVIEWED"; no RELEASE json; not in KIT_V6 MANIFEST_SHA16.txt)
+ALARM_DESIGN/REGISTRY/tools/scoreboard_v1.py	TEST edition, not released: the scoreboard scoreboard_v1 and its tests (SCOUT, KIT_V6, "TEST, NOT REVIEWED"; no RELEASE json; not in KIT_V6 MANIFEST_SHA16.txt)
+ALARM_DESIGN/REGISTRY/tests/test_registry_novelty_v1.py	TEST edition, not released: the registry builder registry_build_v1 and its tests (SCOUT, KIT_V6, "TEST, NOT REVIEWED"; no RELEASE json; not in KIT_V6 MANIFEST_SHA16.txt)
+ALARM_DESIGN/REGISTRY/tests/test_scoreboard_v1.py	TEST edition, not released: the scoreboard scoreboard_v1 and its tests (SCOUT, KIT_V6, "TEST, NOT REVIEWED"; no RELEASE json; not in KIT_V6 MANIFEST_SHA16.txt)
+ALARM_DESIGN/REGISTRY/README.md	TEST edition, not released: the registry manual (REGISTRY/README.md: "TEST, NOT REVIEWED")
+ALARM_DESIGN/KIT_V6/PROCESS_V8.md	TEST edition, not released: KIT_V6 (its MANIFEST_SHA16.txt and README say TEST, NOT REVIEWED; PROCESS_V8 PROPOSED)
+ALARM_DESIGN/KIT_V6/README.md	TEST edition, not released: KIT_V6 (its MANIFEST_SHA16.txt and README say TEST, NOT REVIEWED; PROCESS_V8 PROPOSED)
+ALARM_DESIGN/KIT_V6/LEARNINGS_V6.tsv	TEST edition, not released: KIT_V6 (its MANIFEST_SHA16.txt and README say TEST, NOT REVIEWED; PROCESS_V8 PROPOSED)
+ALARM_DESIGN/KIT_V6/MANIFEST_SHA16.txt	TEST edition, not released: KIT_V6 (its MANIFEST_SHA16.txt and README say TEST, NOT REVIEWED; PROCESS_V8 PROPOSED)

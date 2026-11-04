@@ -1,0 +1,240 @@
+# MEANING_C13_V4.yaml: the meaning register of C13 minute price, EDITION 4 (EDGE1, 2026-10-18, closed with the owner 15:1x Berlin)
+# = MEANING_C13_V3 (e5fae960c05385cf, kept) + conclude (may, never), every limit with its effect on decisions, the outside mid check of
+# job 15732 for S05, the missing-trades case (jobs 15807, 15808), module sha16s in tools. Checked by meaning_register edition 5.
+group: C13
+name: minute_price
+summary: 'Where one coin''s price is at a minute end e: the last, highest and lowest trade price of the 60 s ending at e (S01 to S03), whether that minute had no trade (S04), and the
+  middle of the best bid and best ask in force at e (S05). Prices in USDT, exact as Binance writes them.'
+read_as: The exchange's minute candle as we could know it AT e. A trade that happened in the minute but reached us after e is left out (no look-ahead), so the close differs from Binance's
+  own close in about 0.25 to 1.13% of coin-minutes, by about 1 basis point.
+where:
+  card: testbed/value_audit/registers/CARD_C13_V4.md
+  settings_register: testbed/value_audit/registers/SETTINGS_C13_V1.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_trades_V1.md; SOURCE_SPEC_book_ticker_V2.md; SOURCE_SPEC_quotes_V2.md
+  producer: prod_C13_v3.py with prod_reader_trades_v1.py, prod_reader_book_ticker_v2.py, prod_reader_quotes_v2.py (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C13.parquet
+  year_output_columns: name (S01 to S05, S05.quotes_off), coin (roster coin), as_of_us (e), value_kind (0 empty, 1 float, 2 int, else text), value_f64, value_txt, known_at_us, stale,
+    empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'C13', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: 'trades: Binance trade channel (one row = one trade, not aggTrade); book_ticker: Binance bookTicker channel (best bid and ask, pushed on every change); quotes (twin
+    only): Tardis''s top of book rebuilt from the depth stream'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz, book_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz, quotes_<COIN>USDT_<YYYY-MM-DD>.csv.gz
+  columns: 'trades: exchange, symbol, timestamp, local_timestamp, id, side, price, amount; book_ticker and quotes: exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price,
+    bid_price, bid_amount'
+  fields:
+    trades.row: 'one trade of Binance''s trade channel; off-book trades (insurance fund, ADL) left out [proof: SOURCE_SPEC_trades Q-N2, Q-N3; job 15778: our row count = Binance''s kline
+      trade count in 5 of 5 minutes, the 0 to 4 ids we lack a minute are also outside Binance''s count]'
+    trades.timestamp: 'Binance''s trade time T, microseconds [proof: SOURCE_SPEC_trades Q-N2 (timestamp from T)]'
+    trades.local_timestamp: 'arrival at Tardis; middle 3 ms after the trade, p99 37 to 190 ms [proof: Tardis docs T1; SOURCE_SPEC_trades F3]'
+    trades.price: 'the trade price as Binance gives it, USDT, exact decimal [proof: SOURCE_SPEC_trades Q-N2 (p)]'
+    trades.id: 'Binance''s trade id t; consecutive except off-book trades [proof: SOURCE_SPEC_trades Q-N2; job 15778]'
+    book_ticker.row: 'one bookTicker message: best bid and ask with their amounts; a state from its stamp to the next row [proof: SOURCE_SPEC_book_ticker Q-B1, Q-T2]'
+    book_ticker.timestamp: 'Binance''s event time E, whole milliseconds; 43 to 51% of rows share the stamp of the row before, file order decides [proof: SOURCE_SPEC_book_ticker Q-N1,
+      facts]'
+    book_ticker.prices: 'best bid and best ask, USDT [proof: Tardis docs T1 (book_ticker)]'
+    quotes.row: 'the top of book Tardis rebuilds from the depth stream; same best prices as book_ticker in 91.85 to 99.97% of seconds [proof: SOURCE_SPEC_book_ticker F9]'
+  latency: 'trades: middle 3 ms, p99 37 to 190 ms, max 6.6 s (SOURCE_SPEC_trades F3); book_ticker: middle 2.2 to 3.5 ms, p99 5.4 to 161.7 ms (SOURCE_SPEC_book_ticker F5)'
+  silence: a trades silence of 600 s or more is an outage (28 Jul); a book silence over 30 s is a feed hole, never a quiet market (SOURCE_SPEC_book_ticker F7)
+reading_rules:
+- 'trades window: rows stamped after e - 60 s and up to e, received by e (card rule 1); Binance''s own minute is [e - 60 s, e) by trade time'
+- prices exact, nothing rounded (rule 2)
+- 'S01 close: the last row: latest stamp, and among rows of one stamp the later line of the file (rule 3)'
+- 'S02 high, S03 low: largest and smallest price in the window (rule 4)'
+- 'S04: 1 when the coin is seen but the window holds no trade; then S01 to S03 carry the last earlier price (rule 5); this can only happen when the coin''s one recent trade sits exactly
+  at e - 60 s'
+- 'seen (A1 rule 5): the trades file exists, a trade in [e - 60 s, e] received by e, not thin; else S01 to S04 empty with the reason (rule 6)'
+- 'S05 mid: (best bid + best ask) / 2, exact, from the last good book_ticker row stamped and received by e; the file of D-1 when no row of D stands yet (rules 9, 10)'
+- 'S05 empty: NO_FILE, or BOOK_HOLE when no row stands or the row in force is more than 30 s old; the top is never carried across a hole (rule 11)'
+- 'coins: the week''s 52 roster coins by their Binance symbols (rule 15)'
+values:
+  units: USDT per coin, exact decimal; a 1000-prefixed symbol (1000PEPE and the like) is the price of 1000 tokens (card rule 15)
+  zero: never a price; S04 is 0 (traded) or 1 (no trade)
+  empty: 'the coin was not seen (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT) or no book stands (BOOK_HOLE). Real: 24 Sep THIN_FEED 89 and TRADES_HOLE 16 values a setting,
+    4 Nov 29 and 7, 8 Mar none (job 15778). Never read empty as a price'
+  stale: 1 with a TRADES_HOLE, THIN_FEED or BOOK_HOLE empty
+  flags: DUPLICATE_ROW, NO_RATE_BASE, SKIPPED_BAD_ROW
+interpret:
+  do:
+  - read S01 as the last price we had at e; it is the exchange's close in about 99% of coin-minutes
+  - expect high >= close >= low always, and S05 between bid and ask, so it can differ from the close
+  - use S05 when you need a price that exists without a trade
+  - compare price moves in basis points; a 1 bp close difference against Binance is the late-trade effect, not a move
+  dont:
+  - read empty as a price or as 0
+  - expect our candle to equal Binance's kline in every minute
+  - read a 1000-prefixed coin's price as one token's price
+  - carry S05 across a BOOK_HOLE yourself
+biases:
+- what: late trades left out (received after e)
+  direction: close differs, either way
+  size: close differs from Binance in 0.25 to 1.13% of coin-minutes with a value (median about 0.75 to 0.96 bp, max 42 bp); high 0.015 to 0.048%, low 0.012 to 0.042%; decisions unchanged
+  proof: 'job 15787 (all coin-minutes with a value, 3 days); cause: job 15774, 120 of 120 sampled differences are late trades'
+- what: 'window edge: a trade stamped exactly at e is ours, Binance puts it in the next minute'
+  direction: either way
+  size: seen in 2 of 120 sampled differing minutes, never decisive alone; decisions unchanged
+  proof: job 15774
+- what: off-book trades (insurance fund, ADL) not in the file
+  direction: none
+  size: 0 to 4 ids a minute; Binance's kline leaves them out too; decisions unchanged
+  proof: job 15778
+- what: mid is the book's middle, not a trade
+  direction: none
+  size: half the spread from either side; decisions unchanged
+  proof: card section 1
+- what: trades missing from the Tardis file
+  direction: the range too small, the close may differ
+  size: 'one case found: PUMP 8 Mar 2026 11:56, 70 of Binance 110 trades (one gap of 40 ids); decisions unchanged'
+  proof: jobs 15807, 15808 (meaning_c13 ids, meaning_candle why)
+external_checks:
+- what: close, high, low, no trade, trade count per minute
+  where: Binance 1m klines from data.binance.vision, held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'VERIFIED: every coin-minute of 3 days, job 15778; 9 of 9, RAW_STAMPS'
+- what: which trades are in the file
+  where: Binance kline trade count against Tardis ids (rawcheck/meaning_c13.py ids)
+  status: VERIFIED 5 of 5 minutes, job 15778
+- what: best bid and ask
+  where: no outside copy held; Tardis quotes (rebuilt from depth) as the second source
+  status: 'VERIFIED on BTC: a mid rebuilt from Binance trades (last bid-side and ask-side trade, 1 s fresh) equals ours at the median, p99 0.57 bp (8 Mar 2026, 1,032 minute ends) and
+    0.72 bp (4 Nov 2025, 1,245), a one-minute shift caught 93 to 94% (EDGE1 job 15732, receipts q_15732); other coins not checked; quotes twin equal 9 of 9 (RAW_STAMPS)'
+tools:
+- what: our values equal Tardis and Binance
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code (rawcheck code 84454de7fac2e458 in RAW_STAMPS_V1; job 15756)
+- what: every coin-minute against Binance klines, per setting
+  run: python3 -B -m rawcheck.meaning_c13 day <D>
+  where: team/LAB/code (meaning_c13.py 4bff6b8342c1ae59; job 15787)
+- what: trade ids against Binance's trade count
+  run: python3 -B -m rawcheck.meaning_c13 ids <D> <COIN> <HHMM,..>
+  where: team/LAB/code (meaning_c13.py; jobs 15778, 15807)
+- what: explain each differing minute (late, boundary)
+  run: python3 -B -m rawcheck.candle_all <D> [n]
+  where: team/LAB/code (candle_all.py 927dbed84e4824ed; job 15774)
+- what: one coin-minute under three windows (ours, any arrival, the kline)
+  run: python3 -B -m rawcheck.meaning_candle why <D> <COIN> <HHMM>
+  where: team/LAB/code (meaning_candle.py d457f779ce3e7118; job 15808)
+used_by: C8 candle (close, high, low, close before), C9 range (60, 120, 240 min), C10 legs (swings), C11 levels (day and prior day highs and lows); the mid for any price without a trade
+  (card)
+references:
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+  N1: https://github.com/tardis-dev/tardis-node/blob/master/src/mappers/binance.ts (quoted in SOURCE_SPEC_trades_V1 Q-N2, Q-N3 and SOURCE_SPEC_book_ticker_V2 Q-N1)
+  K1: https://data.binance.vision (Binance public klines, the outside copy we hold)
+  J15732: team/BED/seats/EDGE1/receipts/q_15732/run.log (outside mid; the number was also used by EDGE2, see WORKING_SESSION 06:04:52Z)
+  J15808: 'team/BED/seats/EDGE1/receipts/q_15808/run.log (C8 review: gaps named at one minute)'
+settings:
+- id: C13.S01
+  layer: raw
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: last trade price
+  aliases: m1_px, m5_px
+  means: the price of the last trade stamped in the minute ending at e and received by e
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Tardis 9 of 9, Binance 9 of 9; job 15787: equal to Binance''s close in 98.87 to 99.75% of coin-minutes with a value'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: trade set = Binance's, job 15778; differences are late trades, job 15774 (120 of 120 sampled)
+  open: 1,276 differing coin-minutes on 3 days, 120 explained one by one (all late); the rest not explained individually; the C8 review named 11 of its 12 largest gaps as late trades
+    and 1 as trades missing from Tardis (job 15808); decisions unchanged
+- id: C13.S02
+  layer: raw
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: highest trade price
+  aliases: m1_hi
+  means: the highest trade price in the minute ending at e (received by e)
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS 9 of 9 and 9 of 9; job 15787: equal to Binance''s high in 99.95 to 99.99%'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: trade set = Binance's, job 15778; late trades, job 15774
+  open: differing minutes not all explained individually; the C8 review named 11 of its 12 largest gaps as late trades and 1 as trades missing from Tardis (job 15808); decisions unchanged
+- id: C13.S03
+  layer: raw
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: lowest trade price
+  aliases: m1_lo
+  means: the lowest trade price in the minute ending at e (received by e)
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS 9 of 9 and 9 of 9; job 15787: equal to Binance''s low in 99.96 to 99.99%'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: trade set = Binance's, job 15778; late trades, job 15774
+  open: differing minutes not all explained individually; the C8 review named 11 of its 12 largest gaps as late trades and 1 as trades missing from Tardis (job 15808); decisions unchanged
+- id: C13.S04
+  layer: raw
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 1 if no trade in the window, else 0
+  aliases: m1_no_trade
+  means: 1 when the coin is seen but no trade landed in the minute (price carried); 0 when it traded
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS 9 of 9 and 9 of 9; job 15778: 0 minutes where Binance had 0 trades and ours 0'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: card rule 5; job 15778
+  open: S04 = 1 never occurred on 3 days (0 of about 221,000 coin-minutes); decisions unchanged
+- id: C13.S05
+  layer: raw
+  side: none
+  window: row in force, 30 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (best bid + best ask) / 2
+  aliases: CUBE.mid, CUBE.tick_mid
+  means: the middle of Binance's best bid and best ask in force at e (bookTicker), empty if the top is older than 30 s
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'SOURCE_SPEC_book_ticker Q-B1, Q-N1; quotes as second source; outside: a mid rebuilt from Binance trades, p99 0.57 and 0.72 bp on BTC (job 15732)'
+  open: outside mid checked on BTC only (job 15732); decisions unchanged
+- id: C13.S05.quotes_off
+  layer: raw
+  side: none
+  window: row in force, 30 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (best bid + best ask) / 2
+  aliases: none
+  means: as S05 but from Tardis's top rebuilt from the depth stream (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: SOURCE_SPEC_quotes_V2; F9 of SOURCE_SPEC_book_ticker (same best prices 91.85 to 99.97% of seconds)
+  open: none
+conclude:
+  may:
+  - 'the coin''s price at the minute end as Binance traded it: our close is Binance''s close in about 99% of coin-minutes'
+  - the minute's range (high minus low) and moves between minutes in basis points
+  - 'S05: a price that exists even in a minute without a trade (the middle of the best bid and ask)'
+  never:
+  - 'that our close equals Binance''s kline close in every minute: trades received after the minute end are left out (about 1 bp, in 0.25 to 1.13% of coin-minutes)'
+  - a real price move from a 1 bp close difference against Binance
+  - a 1000-prefixed coin's price (1000PEPE ...) as one token's price
+  - a price from an EMPTY value, or 0
+  - 'that the mid (S05) is a price you could trade at: it is half the spread from both sides'
+  - 'a price carried across a BOOK_HOLE: S05 is empty there, never carry it yourself'

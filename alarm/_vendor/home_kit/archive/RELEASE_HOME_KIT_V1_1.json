@@ -1,0 +1,19 @@
+{
+ "files": {
+  "ARCHITECTURE.md": "f74ca4358fefb37c",
+  "CHANGELOG.md": "46da248cb9c6ab6f",
+  "README.md": "c8718eeb6cea0ec0",
+  "SCOPE.md": "2170a462d82d9016",
+  "home_v1.py": "d3301ab21712c791",
+  "isolation/sitecustomize.py": "149fea87f9109bef",
+  "path_scan_v1.py": "86096d88af352d8c",
+  "test_home_kit_v1.py": "997d6a7379c90ceb"
+ },
+ "home": "home_kit",
+ "n_files": 8,
+ "name": "HOME_KIT_V1_1",
+ "patches_sha16": null,
+ "plan_sha16": null,
+ "utc": "20261030T130932Z",
+ "vendor_sha16": null
+}

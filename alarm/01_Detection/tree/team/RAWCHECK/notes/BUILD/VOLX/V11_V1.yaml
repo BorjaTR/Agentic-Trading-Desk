@@ -1,0 +1,180 @@
+# V11_V1.yaml: VOLX Lee-Mykland jump flag (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8; ADDON_ARCHITECTURE_V4
+# edit 3 0591d181). S16, S17 by PRODUCER_VOLX_V1.yaml.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): N1 (NO_RETURN named), N2 (sliding windows of the 723 products), A1 to A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the real-check point 2026-02-10 14:31 (8 Mar 2026 is a
+# Sunday, the winter open is 14:30 UTC), the false-alarm line at 1 flag a day, the clock-change flags report only, X7, X11.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+kind: build_metric
+id: V11
+producer: VOLX
+item: 'Lee-Mykland jump flag'
+tier: BUILD
+name: the coin's last 1-minute Binance USDT-M mid return divided by V1's curve and by its local spread of the 723 minutes before (the Lee-Mykland statistic, S16), and the jump flag at the 1 percent level, +1 up, -1 down, 0 none (S17)
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  S17 = +1 says the minute ending at u moved up far more than this coin's usual minute at this time of the week, beyond what about
+  12 hours of local volatility explain: a jump, at a level that flags a no-jump day about once in 100 days. S16 is the size behind it.
+example: >-
+  Deseasonalised 1-minute returns alternating 0.001 and -0.001 for the 724 minutes before u (local spread 0.001), then 0.010 at u:
+  S16 = 10, the statistic (10 - 4.265734385217376) / 0.3286291697457093 = 17.44904634978007 is over 4.600149226776579: S17 = +1. A
+  return of -0.005 gives S16 = -5 and S17 = 0; -0.006 gives S17 = -1 (the flag needs abs(S16) over 5.77747760631933).
+formula: >-
+  r(m) = math.log(C13 S05(m) / C13 S05(m - 60 s)) when both mids are valued; r*(m) = r(m) / VOLX S02 at the slot tau(m) of D's V1
+  table (the same table for D-1's minutes; V1_V1), valued when r(m) and the slot's S02 are. K = 725 (the smallest whole number at or
+  over sqrt(365 x 1,440) = 724.98, Lee and Mykland's rule for 1-minute data on a 365-day year). At u: the products p(j) = abs(r*(j))
+  x abs(r*(j - 60 s)) for the K - 2 = 723 minute ends j = u - 723 min to u - 1 min; sigma^2 = the mean of the valued p(j) (at
+  least 651, 90 percent; with all valued it is the paper's sum / (K - 2)); S16 = L = r*(u) / sigma. With n = 1,440 (one day of
+  minutes), c = sqrt(2 / pi), C_n = sqrt(2 ln n) / c - (ln pi + ln ln n) / (2 c sqrt(2 ln n)) = 4.265734385217376, S_n = 1 / (c
+  sqrt(2 ln n)) = 0.3286291697457093, beta = -ln(-ln 0.99) = 4.600149226776579: S17 = sign(L) when (abs(L) - C_n) / S_n > beta
+  (abs(L) > 5.77747760631933), else 0. float64.
+source:
+  kind: paper
+  ref: >-
+    Lee and Mykland 2008, Review of Financial Studies 21(6) 2535-2563 (the statistic, the local bipower spread over K - 2 products
+    with no pi / 2 factor, the Gumbel threshold, the K rule); RESEARCH_TOOLS_V1 aad3cc38 row V5 and section 5.5 (our K = 725 for
+    1-minute data, opinion; deseasonalised by V1 first, or quarter-hour bursts flag false jumps; the planted K = 4, n = 288 case
+    16.965 and -7.201); R highfrequency intradayJumpTest (GPL) a reference offline only.
+inputs:
+  - kind: year
+    ref: C13 S05
+    card: MEANING_C13_V4 fe5df65ba7680fc8
+    verdict: LIMITS
+    rule_in_force: B's rows at the minute ends as written (the mid in force, 30 s at most)
+    stale_rule: an empty mid makes its two returns not valued; never filled
+    days: "D and D-1 (B holds D-1: the 725 minute ends before 00:00 reach back to 11:55 of D-1); no CARRY"
+  - kind: addon
+    ref: VOLX S02 (V1, D's table, this run)
+    card: VOLX/V1_V1
+    rule_in_force: the table's S02 at each minute's slot tau(m)
+    stale_rule: an empty slot (FEW_OBS, NO_BASE, NO_HISTORY) makes r*(m) not valued
+    days: D (the table of D, fitted from D-28 to D-1)
+overlaps: none
+per_coin: >-
+  Each coin its own curve and spread. Coins whose mid rarely moves in a minute (coarse steps): many zero products, a small sigma,
+  and a single step reads as a jump; V1's S02 is NO_BASE when the coin's median minute move is 0 (then S16, S17 are empty NO_RETURN). Thin
+  coins lose returns to empty mids (FEW_OBS). The 1000-coins: log returns, no unit issue.
+time: >-
+  The local spread looks back about 12 hours, across 00:00 into D-1 (B). V1's curve takes out funding settles, the US open and the
+  quarter hours, so a usual burst is not a jump; a crash minute is. NO_HISTORY until V1's table fills (8 Oct 2025).
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S16
+      label: lee_mykland_stat
+      units: standardised return (no unit), signed
+      value_kind: float
+      decimals: none
+      means: the deseasonalised 1-minute return at u over the local bipower spread of the 723 minutes before
+    - name: S17
+      label: lee_mykland_jump
+      units: '-1, 0 or +1'
+      value_kind: whole
+      decimals: 0
+      means: the sign of S16 when the Lee-Mykland statistic passes the 1 percent Gumbel level for n = 1,440, else 0
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: "known_at = the latest known_at among the C13 S05 rows read and V1's table (00:00 of D), all at or before u; an empty row known_at = u; so known_at <= as_of on every row"
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: V1's table is NO_HISTORY (D before 8 Oct 2025; a new coin)
+    - reason: NO_RETURN
+      when: r*(u) not valued (a mid empty at u or u - 60 s, or u's slot empty in V1)
+    - reason: FEW_OBS
+      when: fewer than 651 of the 723 products valued
+    - reason: NO_BASE
+      when: sigma = 0
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_HISTORY, NO_RETURN, FEW_OBS, NO_BASE
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 28
+  no_history: "V1's table first fills on 8 Oct 2025 (its 28 days from 10 Sep 2025); every row before is NO_HISTORY; the 12-hour look-back reads D-1 from B"
+  fit_rule: "V1's table only, from the 28 days before D (V1_V1's fit rule); the threshold constants are fixed"
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 an up jump
+    input: 'r* = +0.001, -0.001 alternating for the 724 minutes before u; r*(u) = 0.010'
+    answer: 'sigma 0.001; S16 10.0; statistic 17.44904634978007; S17 +1'
+  - case: E2 a large move, no jump
+    input: 'the same, r*(u) = -0.005'
+    answer: 'S16 -5.0; statistic 2.2343287887401857; S17 0'
+  - case: E3 a down jump
+    input: 'the same, r*(u) = -0.006'
+    answer: 'S16 -6.0; statistic 5.277272300948162; S17 -1'
+  - case: E4 at the threshold
+    input: 'the same, r*(u) = 0.0057774 and 0.0057775'
+    answer: 'S17 0 (statistic 4.599913075130667); S17 +1 (4.600217369481887)'
+  - case: E5 the deseasonalising
+    input: 'r(u) = 0.003 at a slot with S02 = 2.0, the rest as E1'
+    answer: 'r*(u) = 0.0015; S16 1.5; S17 0'
+  - case: E6 the research kernel (K = 4, n = 288)
+    input: 'r* = 0.001, -0.001, 0.001, -0.001, 0.010 (RESEARCH_TOOLS_V1 5.5)'
+    answer: 'at the 5th: sigma 0.001, L 10, statistic 16.965428901091084 (jump); at the 4th: L -1, statistic -7.201381461679223 (none)'
+  - case: E7 too few products
+    input: '650 of the 723 products valued'
+    answer: S16, S17 empty FEW_OBS
+  - case: E8 a coin that never moves
+    input: 'every r* in the 723 minutes 0'
+    answer: 'S16, S17 empty NO_BASE'
+unit_tests:
+  - test: U1 (E1 to E5)
+    planted: 'C13 S05 rows of D-1 and D for one coin built from the case''s returns (mids 100 x e^(cumulative sum)), a planted V1 table'
+    expect: 'S16 and S17 of each case; the statistics within 1e-9 relative'
+  - test: U2 (E6) the kernel with K and n as parameters
+    planted: 'the five returns, K = 4, n = 288'
+    expect: '16.965428901091084 and -7.201381461679223'
+  - test: U3 (E7, E8) and the stamps
+    planted: 'the empties and zeros of each case'
+    expect: 'FEW_OBS; NO_BASE; S17 written as whole -1, 0, +1; known_at <= u at every row'
+mutants:
+  - mutant: M1 the pi / 2 factor in sigma (the BNS scale)
+    caught_by: 'U2 (L 7.978845608028655 at the 5th)'
+  - mutant: M2 the return at u inside its own spread (j up to u)
+    caught_by: 'U1 (E1 sigma rises, S16 below 10)'
+  - mutant: M3 no deseasonalising
+    caught_by: 'U1 (E5 gives S16 3.0)'
+  - mutant: M4 the two-sided level read as one-sided (beta at 0.98)
+    caught_by: 'U1 (E4 0.0057774 flags)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 1000PEPEUSDT and a thin coin (named by the tester), u = 00:00, 08:01, 14:15, 23:59
+      why: the look-back into D-1, a funding settle after the curve, a quarter hour, the day's end
+    - point: 2026-02-10, BTCUSDT and ETHUSDT, u = 14:31
+      why: the US cash open in winter time after the curve (a Tuesday)
+    - point: 2025-10-10, BTCUSDT and ETHUSDT, the 10 minute ends with the largest A1 liquidation dollars of the evening
+      why: the crash minutes (flags expected)
+    - point: 2025-10-07, BTCUSDT, u = 12:00
+      why: NO_HISTORY the day before V1 fills
+  pass: >-
+    The tester recomputes S16, S17 and the reasons from this card's words on B's C13 S05 rows and V1's table (rawcheck/check_volx.py,
+    never the producer's code): floats within 1e-9 relative, words and whole values equal. In VOLX's job.
+meaning_check:
+  pass_lines:
+    - "the false-alarm rate: over BTC's minutes of 1 to 28 Feb 2026, S17 is non-zero at 28 minutes or fewer in the 28 days (one a day at most on average; a test at the 1 percent daily level flags about once in 100 calm days)"
+    - "the crash: at least 3 of the 10 crash minutes of 10 Oct 2025 named in real_check carry S17 = -1 for BTC"
+    - "the curve works: the share of non-zero S17 at the funding settle minutes (00:01, 08:01, 16:01) is under 3 times the share at the other minutes for BTC over 1 to 28 Feb 2026 (with no curve it would be higher: reported beside, the tester's twin without V1)"
+  report_only:
+    - the flags around the clock changes of 26 Oct and 2 Nov 2025 (V1's curve mixes two open hours then)
+    - the flags per coin and hour of day; the coins with the most flags against their share of zero returns
+conclude:
+  may:
+    - "the minute ending at u held a jump of the coin's mid (S17 not 0), up or down, at the 1 percent daily level, after the minute-of-week curve"
+  never:
+    - "Hyperliquid's jumps (the Binance USDT-M mid, X7)"
+    - "a jump between minute ends inside the minute (a 1-minute grid)"
+    - "S17 = 0 as calm (a large move under the level is 0)"
+    - "flags on a coarse-step coin as jumps without its step (one step can pass the level)"
+readers: "TIMEX T4 (minutes since the last jump, TREE's card) reads S17; none else yet"
+implementation:
+  how: "Per coin: C13 S05 of D-1 and D as one array of 2,880 minute ends, r and r* by array operations with V1's table gathered by tau, the 723-product mean by roll_points (sliding windows of the products and of their valid counts; never a two-day cumulative sum, ADDON_ARCHITECTURE_V4 9.3 rule 5), S16, S17 by array operations. PHASES: none (B only, B holds D-1; V1's table of D from this run)."
+  kernel: addon_grid_v2.roll_points (sums of 723 products and their count, D-1 from B)
+  memory_mb: 50
+  seconds_share: 0.3
+data_checks: none

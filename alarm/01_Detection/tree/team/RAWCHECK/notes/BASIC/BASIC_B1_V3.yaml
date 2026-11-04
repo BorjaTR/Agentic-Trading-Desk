@@ -1,0 +1,208 @@
+# BASIC_B1_V3.yaml: EDITION 3 = BASIC_B1_V2 d8235f33595b093e (landed, LAYER_REGISTER_V22, kept) with the five counts S15.coverage to
+# S19.coverage (BG2 of EDGE1's basic gaps, hb/EDGE1.txt 15:36:49Z; the owner 17:3x Berlin: finish the gaps): the coins counted by the
+# whale shares S15 to S19 (our rules, not in this card), recomputed from the year's coin rows (B1COV_STAMPS_V1, J15988, basic_b1cov ed1).
+# No other change.
+# (V2:) BASIC_B1_V2.yaml: EDITION 2 = edition 1 (BASIC_B1_V1.yaml b73c2767c9563d02, kept; the owner's review OK, EDGE1 14:10:45Z) with the owner's
+# copies rule as BASIC_C1_V5 95244119: S03.seen_at_e_off and S08.seen_at_e_off are no rows of their own, read as the year's ACCEPTED
+# cross-check (one reading rule, one never line); S12.coverage stays (a count). No other change.
+# Edit 2 (BED, 18 Oct 2026, before landing; EDGE1 14:56:18Z): the could_build id B1.CB2 renumbered B1.CB3 (MEANING_B1_V4's B1.CB2 is the block flow); nothing else.
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR4 (hb/EDGE2.txt 14:31:04Z): (1) S09's open: a row stamped before e and
+# received after e is left out (PEPE 05:36:25, 201 rows), not moved into the next 5 s; (2) read_as: the 13.24% to 15.24% is the share of
+# rows with any stamp gap in three 5 s windows of a burst, max 95 ms (J15875, J15876 b1ids); (3) read_as and a never line: the Tardis hole
+# shown for ARB (J15851) apart from the 29 coins off the kline by over 1% in the minute to 11:56 (J15875 census); (4) the jobs of may lines
+# 1 to 3 and never lines 3 and 5 named; (5) 'a trade gap or a thin minute' in the copies' never line and reading rule.
+# (V1:) BASIC_B1_V1.yaml: the card of B1 taker_flow's basic settings S03, S08, S09, S12 and the twins S03.seen_at_e_off, S08.seen_at_e_off,
+# S12.coverage (BED, 2026-10-18, BR4 = WP4 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8). They leave the raw card MEANING_B1_V4 d3275871 (its
+# 'Read as': 'The basic settings S03, S08, S09, S12, S13, S14 moved to BASIC_B1_V1'); EDGE1 takes them out of it when landing this card.
+# Made the way BASIC_C8_V3 was (METRIC_REVIEW_METHOD_V1 da211e1d section 5; the rename rule; conclude). ONE SOURCE OF TRUTH;
+# rawcheck/meaning_register.py (edition 5 6223b1ad) checks it and writes .md, .flat.jsonl, .agent.jsonl.
+# Layer: basic (a sum, ratio, rate or median of proven raw taker dollars). S13 (a robust z of S12's drift) and S14 (its square), with their
+# .coverage, are our rules (METRIC_REVIEW_METHOD_V1 section 1: a z-score; BED's ruling FOR EDGE1, hb/BED.txt 13:16:39Z): not in this card.
+# S04 to S07 and S15 to S19 (the 25,000 dollar floor) are our rules too (MEANING_B1_V4).
+
+group: B1
+name: taker_flow, the net and the balance of taker dollars (basic, built on B1 S01, S02 raw)
+summary: >-
+  From every Tardis trade row of a coin stamped in the window ending at e and received by e (the taker's side: + buy, - sell): S03 the net
+  taker dollars of the 300 s, S08 the taker buy dollars over the taker sell dollars of the 300 s (4 decimals), S09 the net taker dollars of
+  the last 5 s divided by 5 (a rate a second, every 5 s); S12 the median of S08 over the roster coins with a ratio (the market). Beside:
+  S12.coverage, the coins with a ratio; S15.coverage to S19.coverage, the coins the whale shares S15 to S19 (our rules) are over. The year also writes .seen_at_e_off copies of S03 and S08 (empty only when the coin is not seen at
+  e): its accepted cross-check, not metrics of their own.
+read_as: >-
+  Who took liquidity over the last 5 minutes and how hard, as Binance printed it. Against the same rules on Binance's 1 minute klines
+  (quote_volume and taker_buy_quote of the 5 minutes) S03 is within 0.50 dollars at 98.85% (8 Mar 2026) and 99.19% (24 Sep 2025) of
+  coin-minutes and S08 within 5e-05 at 99.00% and 99.45%; S09 against Binance aggTrades of the same 5 s is within 0.50 dollars a second at
+  97.58% and 94.49% (J15840, J15846). Every large gap is named at one coin-minute: trade rows received after e (our rule leaves them out),
+  rows stamped exactly at e - 300 s (in Binance's minute, not in our window), rows Tardis does not have (shown for ARB in the minute to 11:56
+  of 8 Mar: 73 of our rows against 107 kline trades, J15851 b1look; in that minute 29 coins are off the kline by over 1%, J15875 census),
+  and Tardis stamps up to 95 ms after Binance's trade time, which moves rows across a 5 s edge (in three 5 s windows of a burst, BTC 8 Mar
+  20:52:15 and 20:52:20, ASTER 24 Sep 11:26:00, 13.24% to 15.24% of the rows near the window carry a stamp gap, J15875, J15876 b1ids). S03's old name says CVD (a cumulative volume delta): it is the 300 s net, corr with the net since 00:00 median 0.092
+  and 0.076 over the coins: RENAMED. S08 is a ratio: read its log (median 0.98, p99 6.1 and 4.5, max 185 and 56).
+
+conclude:
+  may:
+    - "whether takers bought (S03 above 0) or sold over the last 5 minutes and by how many dollars, as Binance's klines count it within 0.50 dollars on 98.85% and 99.19% of coin-minutes (J15840, J15846 b1)"
+    - "how lopsided the taker flow was (S08: 2 = twice as many dollars bought as sold; read ln(S08) for a symmetric scale: median -0.0204 and -0.0201, |ln| p90 1.1181 and 0.9540, J15840, J15846 b1name)"
+    - "the taker flow of the last 5 s as a rate a second (S09: within 0.50 dollars a second of Binance aggTrades at 97.58% and 94.49%, J15840, J15846 b1s09), and the median coin's balance (S12: within 5e-05 of the kline median over the same coins at 98.19% and 99.17%, J15851, J15852 b1) over the coins with a ratio (S12.coverage: the coins with an S08 at 1,440 of 1,440 minutes, J15840, J15846 b1twins)"
+  never:
+    - "a cumulative volume delta from S03: it is the last 300 s only (corr with the net since 00:00 median 0.092 and 0.076, J15840, J15846 b1name)"
+    - "that every trade of the window is in it: a row received after e is left out (ETH 8 Mar 2026 22:04: 839 rows, 861,500.80 dollars, J15851 b1look), and Tardis misses rows Binance has (ARB, the minute to 11:56 of 8 Mar 2026: 73 of our rows against 107 kline trades, 33,426.30 buy dollars, J15851 b1look; 29 coins off the kline by over 1% in that minute, J15875 census)"
+    - "S08 as an even scale: above 1 runs to 185.28 (8 Mar) and 56.21 (24 Sep) (J15840, J15846 b1name) while below 1 it cannot pass 0 (a ratio of dollars); S08 = 2 and S08 = 0.5 are the same lopsidedness"
+    - "a 5 s rate (S09) as the exact dollars of those 5 s on Binance: rows move across the 5 s edge by Tardis's stamp (BTC 8 Mar 2026 20:52:15: 2,314,930.59 dollars, J15875 b1ids)"
+    - "a copy (.seen_at_e_off) as a metric of its own: it is the year's cross-check of the same sum, read through a trade gap or a thin minute (equal to the main at 74,860 and 73,091 coin-minutes, J15840, J15846 b1twins, J15849 TWINS; twin-only rows 20 and 244, J15875, J15876); read S03, S08"
+    - "anything from S13, S14 (our rules) or from S04 to S07, S15 to S19 (the whale floor, our rules): not in this card; only the five counts S15.coverage to S19.coverage are (the coins counted, not the shares)"
+    - "a whale share (S15 to S19) as all coins' when its count is under the roster: 8 Mar 2026 down to 51 of 52 (LIT, ICP, XMR TRADES_HOLE), 24 Sep 2025 down to 49 of 51 (DASH, RENDER, XMR) (J15988)"
+
+where:
+  card: testbed/value_audit/registers/CARD_B1_V7.md 4a44d707cd2440fe (rules 1 to 23; edition 7, CLK 6 Oct 2026)
+  settings_register: testbed/value_audit/registers/SETTINGS_B1_V2.tsv b408ba789fbe9674
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml 633a0e1ac7698361 (B1 S01, S02 taker buy and sell dollars: raw, LIMITS; closed with the owner, LAYER_REGISTER_V7)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (B1 S03, S08, S09, S12 basic, computation RELIABLE by B1_STAMPS_V1, meaning MEANING_NEXT before this card)"
+  producer: "testbed/value_audit/code prod_B1_v3.py efc2bc5223eb88e8 (CARD_B1_V7 part 5), reading the Tardis trades itself"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/B1.parquet
+  year_output_columns: "name (35 names: S01 to S19, S03 to S08 .seen_at_e_off, S10 to S19 .coverage; J15840 schema), coin (every roster coin for S01 to S09; MARKET for S10 to S19), as_of_us (S09 every 5 s: 17,280 a coin-day; the others 1,440), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_flowbasic.py ours(D, 'B1', names) or ours.at(D, 'B1', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, binance-futures (Binance USDT-margined perpetuals), through our raw B1 S01, S02"
+  exchange_stream: "trades (one row a fill: the taker's side, price, amount)"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz (D-1 and D)"
+  columns: "exchange, symbol, timestamp, local_timestamp, id, side, price, amount"
+  fields:
+    window: "rows stamped after e - W and up to e, received by e (W 300 s for S03, S08; 5 s for S09); Binance's kline minute is [e - 60 s, e) by trade time [proof: CARD_B1_V7 rule 1; meaning_flowbasic flow_parts tests T7, T9; B1_STAMPS_V1 ce89ec1c]"
+    dollars: "price x amount exact; sums rounded once to the whole dollar, half up; sign + taker buy, - taker sell [proof: CARD_B1_V7 rules 2, 3; B1_STAMPS_V1 154 of 154 for S03, S09]"
+    ratio: "S08 = buy dollars over sell dollars of the 300 s, exact, rounded once to 4 decimals; no sell row: NO_TAKER_SELL [proof: CARD_B1_V7 rule 7; B1_STAMPS_V1 154 of 154]"
+    rate: "S09 = the net dollars of the 5 s over 5, rounded once to the whole dollar [proof: CARD_B1_V7 rule 8; B1_STAMPS_V1 154 of 154]"
+    market: "S12 = the median of the coins' exact S08 (the mean of the two middle ones at an even count), 4 decimals; .coverage the coins with a ratio [proof: CARD_B1_V7 rule 12; B1_STAMPS_V1 3 of 3; J15840, J15846 b1twins: the coverage equals the coins with an S08 at 1,440 of 1,440 minutes both days]"
+    seen: "a window longer than 60 s needs the coin seen through it (a trade in every 60 s, no thin minute), else empty TRADES_HOLE or THIN_FEED; the copy .seen_at_e_off needs it seen at e only [proof: CARD_B1_V7 rule 9; J15875, J15876: the twin-only rows recomputed, 20 of 20 and 244 of 244]"
+  latency: "middle 3 ms, p99 37 to 190 ms, max 6.6 s; 1,000 to 6,142 rows a day arrive after their minute (MEANING_B1_V4, SOURCE_SPEC_trades F3, F4): those rows are left out of every window they belong to"
+
+reading_rules:
+  - "the year also writes copies of S03 to S08 as its own cross-check, .seen_at_e_off (the same sum, empty only when the coin is not seen at e); two belong to this card's settings (S03, S08). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to the metric wherever it has a value (74,860 coin-minutes on 8 Mar 2026, 73,091 on 24 Sep 2025, J15849 TWINS equal 1.0); a value where the metric is empty at 20 and 244 coin-minutes (a trade gap or a thin minute in the 300 s: ICP, LIT, XMR; DASH, RENDER, XMR), those recomputed 20 of 20 and 244 of 244 (J15875, J15876); not separate metrics"
+  - "S03, S08 and S12 at each minute end; S09 every 5 s (17,280 a coin-day)"
+  - "S15.coverage = the roster coins with an S04 value at e; S16.coverage, S18.coverage, S19.coverage = with an S06 value; S17.coverage = with an S07 value; a coin at 0 counts, an empty coin does not (CARD_B1_V7 rules 15, 16)"
+  - "S03, S09 in dollars (S09 a second), + = takers bought more; S08, S12 ratios: 1 = as much bought as sold"
+  - "empty is never 0: TRADES_HOLE, THIN_FEED, NO_TAKER_SELL (S08), NO_FILE, BAD_INPUT"
+
+values:
+  units: "US dollars, whole (S03); dollars a second (S09); a ratio, 4 decimals (S08, S12); a number of coins (S12.coverage, S15.coverage to S19.coverage)"
+  zero: "S03 0 = bought dollars equal sold dollars in the 300 s, or no row; S08 0 = only sells"
+  empty: "S03, S08 20 coin-minutes on 8 Mar (TRADES_HOLE), 349 on 24 Sep (TRADES_HOLE, THIN_FEED); S09 6 and 1,388 (J15840 schema); .seen_at_e_off 0 and 105"
+  stale: "1 with a TRADES_HOLE or THIN_FEED empty (CARD_B1_V7)"
+  flags: "DUPLICATE_ROW, NO_RATE_BASE (CARD_B1_V7)"
+
+interpret:
+  do:
+    - "read S03 as the 5 minute taker imbalance in dollars: ETH 8 Mar 22:04 -99,861,546 (takers sold about 100 million dollars net)"
+    - "read S08 through its log: ln(S08) median -0.020 and -0.020, |ln S08| p90 1.12 and 0.95 (J15840, J15846 b1name)"
+    - "read S12 with S12.coverage: the median of 52 (8 Mar) or 49 to 51 (24 Sep) coins"
+    - "read a whale share S15 to S19 with its count: 51 or 52 coins on 8 Mar 2026, 49 to 51 on 24 Sep 2025 (J15988)"
+  dont:
+    - "read S03 as the day's cumulative delta (renamed)"
+    - "read a large S03 or S09 gap against a kline as a fault of the rule: it is a late, boundary or missing row (named below)"
+
+biases:
+  - {what: "rows received after e are left out (the rule); Binance's kline keeps them", direction: "either way, the late rows' side", size: "ETH 8 Mar 22:04: S03 -99,861,546 against the kline's -100,723,046: 839 rows of the minute to 22:04 arrived up to 42.45 ms after e (-861,500.80); BTC 24 Sep 13:44: 463 rows, 285 ms (-2,765,284.45); PEPE 24 Sep 05:36:25 S09: 201 rows in the last 3.5 ms (197,857.60 dollars)", proof: "J15851, J15852 b1look (meaning_flowbasic ed2 ccffa065)"}
+  - {what: "the window edges: ours (e - W, e], Binance's [e - W, e)", direction: "either way", size: "SUI 24 Sep 12:38: 10 rows stamped 12:33:00.000 exactly (+81,871.01 dollars) are Binance's, not ours", proof: "J15852 b1look SUI 1238"}
+  - {what: "Tardis holes: trades Binance has and the Tardis file does not", direction: "ours short by the missing rows", size: "8 Mar 2026, the minute to 11:56: 29 coins off the kline by over 1% (357,468 dollars); ARB: 73 of our rows against 107 kline trades, 33,426.30 buy dollars missing, none arriving in the 600 s after; so S08 4.80 against 8.23 (11:58) and S12 1.2289 against 1.3374; in all 120 coin-minutes of 74,880 (8 Mar) and 78 of 73,335 (24 Sep) off by over 1%", proof: "J15851 b1look ARB 1158; J15875, J15876 census (B1 S01, S02 against the kline of the minute)"}
+  - {what: "Tardis stamps run after Binance's trade time in a burst", direction: "rows move into the later 5 s window", size: "BTC 8 Mar 20:52:15: 68 rows (2,314,930.59 dollars of buys) stamped 24 to 43 ms after Binance's transact_time 20:52:14.987, so S09 97,791 against 571,158 a second and the next 5 s the other way; 13.24% to 15.24% of the rows near a window differ (max 95 ms)", proof: "J15875 b1ids BTC 205215, 205220; J15876 b1ids ASTER 112600"}
+
+external_checks:
+  - {what: "every coin's S03 and S08 at every minute end of 8 Mar 2026 and 24 Sep 2025 against the same rules on the coin's 5 Binance 1 minute klines (quote_volume, taker_buy_quote); S12 against the kline median over the same coins", where: "Binance 1m klines (data.binance.vision), <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with named gaps: S03 within 0.50 dollars 98.85% and 99.19%, corr 1.00000; S08 within 5e-05 99.00% and 99.45%; S12 98.19% and 99.17% (J15840, J15846, J15851, J15852 b1)"}
+  - {what: "S09 at every 5 s against Binance aggTrades of the same 5 s (8 Mar: 10 coins, 24 Sep: 8 coins held)", where: "aggTrades, EDGE2's fetch: <ARCHIVE_DISK>/scratch_EDGE2/realcheck/outside/binance/aggTrades", status: "VERIFIED with named gaps: within 0.50 dollars a second 97.58% and 94.49%, within 1,000 99.52% and 99.78%, corr 0.99971 and 0.99975 (J15840, J15846 b1s09)"}
+  - {what: "the gaps at one coin-minute, split into late rows, boundary rows and rows Binance has that our rows do not; our rows against aggTrades by trade id", where: "Tardis trades, the klines, aggTrades", status: "EXPLAINED: J15851, J15852 b1look (ETH 22:04, ARB 11:58, BTC 20:52, BTC 13:44, SUI 12:38, PEPE 05:36, ASTER 11:26); J15875, J15876 b1ids"}
+  - {what: "the names: S03 (old name total CVD) against the cumulative net since 00:00; S08's size", where: "the klines", status: "S03 DIFFERS (corr median 0.092, 0.076): RENAMED; S08 as named, skewed (J15840, J15846 b1name)"}
+  - {what: "the twins: S03, S08 .seen_at_e_off against the main where both have a value; the twin-only rows recomputed; S12.coverage against the coins with an S08", where: "our rows; the Tardis trades", status: "VERIFIED: equal at 74,860 and 73,091 coin-minutes (J15840, J15846 b1twins; J15849 TWINS); twin-only 20 of 20 and 244 of 244 by basic_b1.coin_values (J15875, J15876); coverage 1,440 of 1,440 both days"}
+
+  - {what: "S15.coverage to S19.coverage against the count of the roster coins with an S04, S06, S07 value, every minute end of 8 Mar 2026 and 24 Sep 2025", where: "the year's own coin rows (a recompute, our source)", status: "VERIFIED: B1COV_STAMPS_V1 2e9972c92a2152b1: 2,880 of 2,880 each (J15988, basic_b1cov ed1 b7bcbf0a, tests 7580daac 7 of 7 with 3 mutants)"}
+
+tools:
+  - {what: "B1 against the klines, the names, the twins, S09 against aggTrades", run: "python3 -B -m rawcheck.meaning_flowbasic b1 <D> | b1name <D> | b1twins <D> | b1s09 <D>", where: "team/RAWCHECK/code (meaning_flowbasic.py ed4 e9a12b7eb7a2b7f5, tests fd5f617ab0267838 12 of 12, mutants 14 of 14; ed1 5c450648 ran J15840, J15846, ed2 ccffa065 J15851, J15852)"}
+  - {what: "one coin's window from our Tardis rows beside the klines and aggTrades, the gap split; our rows joined to aggTrades by trade id", run: "python3 -B -m rawcheck.meaning_flowbasic b1look <D> <COIN> <HHMM[SS]> <W> | b1ids <D> <COIN> <HHMMSS> <W>", where: team/RAWCHECK/code}
+  - {what: "every coin's B1 recomputed from the Tardis trades", run: "python3 -B -m rawcheck (EDGE1's part b1; basic_b1.py)", where: "team/RAWCHECK/code (B1_STAMPS_V1 ce89ec1c923b9fdd, code 1d7416eea121a2a2)"}
+  - {what: "B1 S15 to S19 .coverage against the year's coin rows", run: "python3 -B -m rawcheck.basic_b1cov --days <D,..> --out <dir>", where: "team/RAWCHECK/code (basic_b1cov.py ed1 b7bcbf0a8d8f2152, tests 7580daacc786fe1d: 7 of 7, 3 mutants; J15988)"}
+
+used_by: >-
+  S12 (taker) by the labels FLOW/FORCED and FLOW/ORGANIC (with S15) and CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride condition 3 (with
+  S14); nobody reads S03, S08, S09 or the twins (CARD_B1_V7 'Who reads it today': nobody yet for S01 to S11); A5 is built on S01, S02
+  (raw), not on these
+
+references:
+  CARD: testbed/value_audit/registers/CARD_B1_V7.md 4a44d707cd2440fe
+  BUILT_ON: team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml 633a0e1ac7698361
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/B1COV_STAMPS_V1.tsv 2e9972c92a2152b1 (J15988: S15 to S19 .coverage, 2,880 of 2,880 each); team/RAWCHECK/notes/RAWCHECK/B1_STAMPS_V1.tsv ce89ec1c923b9fdd (EDGE1: S03, S08, S09 154 of 154 each, S12 3 of 3; 24 Sep, 4 Nov 2025, 8 Mar 2026)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  JOBS: "15840 (8 Mar: schema, b1, b1name, b1twins, b1s09; log 81075f74), 15846 (24 Sep; 368caa97), 15851 (8 Mar b1, b1look ETH, ARB, BTC; 9d93d9e0), 15852 (24 Sep b1, b1look BTC, SUI, PEPE, ASTER; f9203a3e), 15875 (8 Mar b1ids BTC, census, twin-only rows; 7fa71c74), 15876 (24 Sep; 4d158a00), 15988 (S15 to S19 .coverage, basic_b1cov ed1; log 859a2383)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+settings:
+  - {id: B1.S03, name: "net taker dollars of the last 300 s", renamed_from: "total_cvd", layer: basic, side: "both (+ buy, - sell)", window: "300 s ((e - 300 s, e], received by e)", clock: minute end (fire second at a fire), scope: coin, contracts: USDT,
+     aggregate: "sum of + buy - sell dollars, rounded once to the whole dollar", aliases: "EF.ef_total_cvd (the old name, still written by the year)",
+     derived_from: "B1 S01, S02's rows (raw) over 300 s",
+     means: "how many dollars takers bought more than they sold in the last 5 minutes (minus: sold more)",
+     computation: {status: RELIABLE, proof: "B1_STAMPS_V1: 154 of 154 (EDGE1, 3 days x every roster coin)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15840, J15846 b1: the same rule on the 5 klines (taker_buy_quote less quote_volume - taker_buy_quote) within 0.50 dollars at 98.85% (8 Mar) and 99.19% (24 Sep), corr 1.00000, gap over the traded dollars p99 9.39e-05 and 8.97e-05; the large gaps named (J15851, J15852 b1look); b1name: corr with the cumulative net since 00:00 median 0.092 and 0.076 (the old name failed)"},
+     open: "rows received after e and rows stamped e - 300 s are left out, Tardis holes (8 Mar 11:55 to 11:56) undercount; all named at one coin-minute"}
+  - {id: B1.S08, name: "taker buy dollars over taker sell dollars, 300 s", layer: basic, side: "both", window: "300 s ((e - 300 s, e], received by e)", clock: minute end (fire second at a fire), scope: coin, contracts: USDT,
+     aggregate: "buy dollars / sell dollars, exact, rounded once to 4 decimals; no sell: NO_TAKER_SELL", aliases: "none (the coin input of S12)",
+     means: "how many dollars takers bought for each dollar they sold in the last 5 minutes: 1 even, 2 twice as much bought",
+     computation: {status: RELIABLE, proof: "B1_STAMPS_V1: 154 of 154"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15840, J15846 b1: the same ratio on the 5 klines within 5e-05 at 99.00% and 99.45%, corr 0.99994 and 1.00000; ARB 8 Mar 11:56 to 11:58 (4.80 against 8.23) named: the Tardis hole (J15851 b1look); b1name: median 0.9798 and 0.9801, above 1 at 48.7% and 48.3%, p99 6.1064 and 4.4671, max 185.28 and 56.21"},
+     open: "skewed: read ln(S08); Tardis holes and late rows move it as S03",
+     never: ["S08 = 2 as more lopsided than S08 = 0.5: they are the same, mirrored"]}
+  - {id: B1.S09, name: "net taker dollars of the last 5 s, a second", layer: basic, side: "both", window: "5 s ((e - 5 s, e], received by e)", clock: "every 5 s", scope: coin, contracts: USDT,
+     aggregate: "(buy - sell dollars) / 5, rounded once to the whole dollar", aliases: "EF.ef_flow_rate_5s",
+     means: "how hard takers are buying (plus) or selling right now, in dollars a second",
+     computation: {status: RELIABLE, proof: "B1_STAMPS_V1: 154 of 154"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15840, J15846 b1s09: Binance aggTrades of the same 5 s (10 and 8 coins) within 0.50 dollars a second at 97.58% and 94.49%, within 1,000 at 99.52% and 99.78%, same sign 99.90% and 99.89%, corr 0.99971 and 0.99975; the gaps named: late rows (PEPE 24 Sep 05:36:25, ASTER 11:26:35), Tardis stamps after Binance's trade time (BTC 8 Mar 20:52:15, J15875 b1ids)"},
+     open: "5 s is short: a row stamped before e and received after e is left out of this window and of every other (PEPE 24 Sep 05:36:25: 201 rows stamped in the last 3.52 ms before e, 197,857.60 dollars, J15852 b1look); rows Tardis stamps up to 95 ms after Binance's trade time fall into the next 5 s (BTC 8 Mar 20:52:15, J15875 b1ids)"}
+  - {id: B1.S12, name: "median taker buy over sell ratio of the roster coins, 300 s", layer: basic, side: "both", window: "300 s", clock: minute end (fire second at a fire), scope: market, contracts: USDT,
+     aggregate: "median of the coins' exact S08 (the mean of the two middle ones at an even count), rounded once to 4 decimals", aliases: "taker (read by 2 labels and 2 chains)",
+     derived_from: "B1 S08 of the roster coins with a ratio",
+     means: "the typical coin's taker balance in the last 5 minutes: above 1 the median coin's takers bought more",
+     computation: {status: RELIABLE, proof: "B1_STAMPS_V1: 3 of 3"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15851, J15852 b1: the kline median over the same coins (ours with an S08) within 5e-05 at 98.19% (8 Mar) and 99.17% (24 Sep), within 0.01 at 99.65% and 100.00%, corr 0.99995 and 1.00000; over every coin with klines 96.81% and 75.76% (ours leaves out the coins it cannot see)"},
+     open: "the coins it counts are the coins seen (S12.coverage); the largest gaps sit in the 8 Mar 11:56 Tardis hole (11:58: 1.2289 against 1.3374)"}
+  - {id: B1.S12.coverage, name: "roster coins with an S08 ratio (for S12)", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of the roster coins whose S08 has a value at e", aliases: "none (a twin, CARD_B1_V7 rule 12)",
+     means: "how many coins S12's median is over",
+     computation: {status: RELIABLE, proof: "J15840, J15846 b1twins: equal to the coins with an S08 at 1,440 of 1,440 minutes both days (a recompute from our own S08 rows)"},
+     meaning: {status: DEFINED, proof: "it is the count of S08's values: median 52, min 51 (8 Mar); median 51, min 49 (24 Sep) (J15840, J15846 b1twins)"},
+     open: none}
+
+  - {id: B1.S15.coverage, name: "roster coins with an S04 value (for S15 (the whale net share of S04))", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of the roster coins whose S04 has a value at e (a coin at 0 counts)", aliases: "none (a count beside S15, CARD_B1_V7 rules 15, 16)",
+     means: "how many coins S15 is over",
+     computation: {status: RELIABLE, proof: "B1COV_STAMPS_V1 2e9972c9: 2,880 of 2,880 MATCH (every minute end of 8 Mar 2026 and 24 Sep 2025 against the coins with an S04 value in the year's own rows; J15988, basic_b1cov ed1 b7bcbf0a, tests 7 of 7, 3 mutants)"},
+     meaning: {status: DEFINED, proof: "it is the count of S04's values (CARD_B1_V7 rules 15, 16); J15988: 51 to 52 coins on 8 Mar 2026 (20 minutes under 52: LIT, ICP, XMR TRADES_HOLE), 49 to 51 on 24 Sep 2025 (342 minutes under 51: DASH, RENDER, XMR)"},
+     open: none}
+  - {id: B1.S16.coverage, name: "roster coins with an S06 value (for S16 (the share on S06, the last 1,000 trades))", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of the roster coins whose S06 has a value at e (a coin at 0 counts)", aliases: "none (a count beside S16, CARD_B1_V7 rules 15, 16)",
+     means: "how many coins S16 is over",
+     computation: {status: RELIABLE, proof: "B1COV_STAMPS_V1 2e9972c9: 2,880 of 2,880 MATCH (every minute end of 8 Mar 2026 and 24 Sep 2025 against the coins with an S06 value in the year's own rows; J15988, basic_b1cov ed1 b7bcbf0a, tests 7 of 7, 3 mutants)"},
+     meaning: {status: DEFINED, proof: "it is the count of S06's values (CARD_B1_V7 rules 15, 16); J15988: 51 to 52 coins on 8 Mar 2026 (65 minutes under 52), 49 to 51 on 24 Sep 2025 (829 minutes under 51, median 50: DASH TRADES_HOLE 815 coin-minutes)"},
+     open: none}
+  - {id: B1.S17.coverage, name: "roster coins with an S07 value (for S17 (the share on S07, the 600 s change))", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of the roster coins whose S07 has a value at e (a coin at 0 counts)", aliases: "none (a count beside S17, CARD_B1_V7 rules 15, 16)",
+     means: "how many coins S17 is over",
+     computation: {status: RELIABLE, proof: "B1COV_STAMPS_V1 2e9972c9: 2,880 of 2,880 MATCH (every minute end of 8 Mar 2026 and 24 Sep 2025 against the coins with an S07 value in the year's own rows; J15988, basic_b1cov ed1 b7bcbf0a, tests 7 of 7, 3 mutants)"},
+     meaning: {status: DEFINED, proof: "it is the count of S07's values (CARD_B1_V7 rules 15, 16); J15988: 51 to 52 coins on 8 Mar 2026 (40 minutes under 52), 49 to 51 on 24 Sep 2025 (495 minutes under 51)"},
+     open: none}
+  - {id: B1.S18.coverage, name: "roster coins with an S06 value (for S18 (the 10th percentile of S06))", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of the roster coins whose S06 has a value at e (a coin at 0 counts)", aliases: "none (a count beside S18, CARD_B1_V7 rules 15, 16)",
+     means: "how many coins S18 is over",
+     computation: {status: RELIABLE, proof: "B1COV_STAMPS_V1 2e9972c9: 2,880 of 2,880 MATCH (every minute end of 8 Mar 2026 and 24 Sep 2025 against the coins with an S06 value in the year's own rows; J15988, basic_b1cov ed1 b7bcbf0a, tests 7 of 7, 3 mutants)"},
+     meaning: {status: DEFINED, proof: "it is the count of S06's values (CARD_B1_V7 rules 15, 16); J15988: 51 to 52 coins on 8 Mar 2026 (65 minutes under 52), 49 to 51 on 24 Sep 2025 (829 minutes under 51, median 50: DASH TRADES_HOLE 815 coin-minutes)"},
+     open: none}
+  - {id: B1.S19.coverage, name: "roster coins with an S06 value (for S19 (the sold share of S06))", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of the roster coins whose S06 has a value at e (a coin at 0 counts)", aliases: "none (a count beside S19, CARD_B1_V7 rules 15, 16)",
+     means: "how many coins S19 is over",
+     computation: {status: RELIABLE, proof: "B1COV_STAMPS_V1 2e9972c9: 2,880 of 2,880 MATCH (every minute end of 8 Mar 2026 and 24 Sep 2025 against the coins with an S06 value in the year's own rows; J15988, basic_b1cov ed1 b7bcbf0a, tests 7 of 7, 3 mutants)"},
+     meaning: {status: DEFINED, proof: "it is the count of S06's values (CARD_B1_V7 rules 15, 16); J15988: 51 to 52 coins on 8 Mar 2026 (65 minutes under 52), 49 to 51 on 24 Sep 2025 (829 minutes under 51, median 50: DASH TRADES_HOLE 815 coin-minutes)"},
+     open: none}
+could_build:
+  - {id: B1.CB3, intended: "a cumulative volume delta (CVD): the net taker dollars since an anchor, what the old name total_cvd says", was_name_of: "B1.S03",
+     formula: "the sum of B1 S01 - B1 S02 over the minute ends from the anchor (00:00 UTC of D, or the session open) to e",
+     needs: "nothing new: B1 S01, S02 (raw, LIMITS); an anchor the owner names",
+     adds: "NEW: S03 against it corr median 0.092 (8 Mar), 0.076 (24 Sep), p10 0.011 and 0.030, p90 0.151 and 0.143 over the coins (J15840, J15846 b1name, on klines)",
+     status: NOT_BUILT}

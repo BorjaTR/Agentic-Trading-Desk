@@ -1,0 +1,9 @@
+# MACHINE_PATHS_KNOWN.tsv (SCOUT 30 Oct 2026): the Alarm root part's released files kept with a machine path, for
+# _tools/machine_paths_v2.py. A row holds while the file's sha16 is unchanged; any change makes the line CODE again.
+file	line	path	sha16	reason
+_tools/run_isolated_v1.py	22	<DEV>	46299b7b0e3fa810	released 30 Oct (ALARM_V1); a default used only without --forbid; run_all_tests_v1 always passes --forbid from FORBID; by hand, use run_isolated_v2 (FORBID from the settings)
+_tools/run_isolated_v1.py	22	~/mnt/dev	46299b7b0e3fa810	released 30 Oct (ALARM_V1); the same default (the VM view of the dev tree)
+_tools/tests/test_settings_v1.py	58	/Users/	f1a4dcfc9483b77a	released 30 Oct (ALARM_V1); test data: checks that the shipped Mac settings file holds Mac paths
+_tools/tests/test_settings_v1.py	58	/Volumes/	f1a4dcfc9483b77a	released 30 Oct (ALARM_V1); test data (the same check)
+_tools/tests/test_settings_v1.py	115	~/x	f1a4dcfc9483b77a	released 30 Oct (ALARM_V1); test data: a path the settings must refuse
+_tools/tests/test_settings_v1.py	115	$HOME/x	f1a4dcfc9483b77a	released 30 Oct (ALARM_V1); test data: a path the settings must refuse

@@ -1,0 +1,258 @@
+{
+  "kind": "build_metric",
+  "id": "HM3",
+  "producer": "HLPOSM",
+  "item": "Hyperliquid positions of every account per coin at minute resolution (MISSING_INFO_BACKLOG M01, minute edition)",
+  "tier": "BUILD",
+  "name": "Prior exposure of accounts hit by liquidation",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 1,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "Prior exposure of accounts hit by liquidation",
+  "example": "prior quantities40,60; first hit => 0.4; same account hit twice => still0.4; no prior side position => EMPTY NO_POSITIONS",
+  "formula": "Freeze positive long or absolute short coins per account at u-60s. Sum those prior quantities for distinct accounts liquidated on that side in block times (u-61s,u-1s], divided by prior side total. Each account once. This measures prior exposure belonging to hit accounts, not old lots actually closed. First minute without predecessor state is HOLE.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 row C01; Hyperliquid node misc_events Funding deltas + node fills"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "positions and fills tables of hl_node_read V1; containing block_time_us is required",
+      "rule_in_force": "Snapshot available at max(funding_time_us, containing block_time_us)+1s, MODEL_AVAILABLE_AT. Use the latest available snapshot; age<=3900s, flag stale after3600s. Snapshot-block fills replay inclusively through u-1s for minute reconstruction.",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's hour files of both streams; the CARRY of D-1",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    },
+    {
+      "kind": "addon",
+      "ref": "HLPX S01",
+      "card": "HLPX/HP1_V3",
+      "grid": "5s",
+      "stream": "the last Hyperliquid price at u",
+      "rule_in_force": "Latest eligible HLPX grid point at or before the required modeled snapshot/minute clock; empty price stays NO_PRICE.",
+      "stale_rule": "HLPX's own; EMPTY gives EMPTY NO_PRICE on S04",
+      "days": "D",
+      "verdict": "LIMITS",
+      "waits_for": "Candidate dependency has bounded evidence; independent approval pending",
+      "exists": true,
+      "data_check": "Dependency computed by the same candidate workflow; per-code raw comparisons in the bounded evidence. Independent approval pending."
+    }
+  ],
+  "overlaps": [
+    {
+      "setting": "existing family outputs",
+      "kind": "other_metric",
+      "why": "Distinct question; see PROPOSED_METRICS.tsv"
+    }
+  ],
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. First-minute prior-cohort readings are HOLE even when D-1 raw data exists.",
+  "time": "Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim. Replay snapshot-block fills inclusively through u-1s; missing fills since snapshot invalidate rebuilt stock. First-minute HOLE is explicit even with D-1 raw inputs; later points require two consecutive valid reconstructed states.",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLPOSM/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S07",
+        "label": "hl_prior_long_exposure_hit_share_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "Prior exposure of accounts hit by liquidation; Freeze positive long or absolute short coins per account at u-60s. Sum those prior quantities for distinct accounts liquidated on that side in block times (u-61s,u-1s], divided by prior side total. Each account once. This measures prior exposure belonging to hit accounts, not old lots actually closed. First minute without predecessor state is HOLE.",
+        "never": [
+          "proof of predictive value",
+          "all-venue totals"
+        ]
+      },
+      {
+        "name": "S08",
+        "label": "hl_prior_short_exposure_hit_share_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "Prior exposure of accounts hit by liquidation; Freeze positive long or absolute short coins per account at u-60s. Sum those prior quantities for distinct accounts liquidated on that side in block times (u-61s,u-1s], divided by prior side total. Each account once. This measures prior exposure belonging to hit accounts, not old lots actually closed. First minute without predecessor state is HOLE.",
+        "never": [
+          "proof of predictive value",
+          "all-venue totals"
+        ]
+      }
+    ],
+    "grid": "minute",
+    "cadence": "minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at=as_of=u; known_at <= as_of on every row. Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim.",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "Required history/coverage absent"
+      },
+      {
+        "reason": "NO_POSITIONS",
+        "when": "Prior side denominator zero; HOLE for missing predecessor/coverage; MISSING_INPUT if liquidation identity unavailable."
+      },
+      {
+        "reason": "MISSING_INPUT",
+        "when": "Required raw identity field absent"
+      }
+    ],
+    "stale_rule": "No carry of these rolling readings.",
+    "max_staleness_s": 60,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": [
+      {
+        "flag": "SNAPSHOT_AGE",
+        "when": "always"
+      }
+    ],
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLPOSM.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        },
+        {
+          "code": "X1.HLPOSM.Q02",
+          "kind": "NUMBER",
+          "meaning": "Source age in seconds; unavailable age is EMPTY NO_SOURCE_AGE"
+        },
+        {
+          "code": "X1.HLPOSM.Q05",
+          "kind": "WHOLE",
+          "meaning": "Active reconstructed account count; unknown stock remains EMPTY"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1",
+      "input": "prior quantities40,60; first hit",
+      "answer": "0.4"
+    },
+    {
+      "case": "E2",
+      "input": "same account hit twice",
+      "answer": "still0.4"
+    },
+    {
+      "case": "E3",
+      "input": "no prior side position",
+      "answer": "EMPTY NO_POSITIONS"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1",
+      "planted": "prior quantities40,60; first hit",
+      "expect": "0.4"
+    },
+    {
+      "test": "U2",
+      "planted": "same account hit twice",
+      "expect": "still0.4"
+    },
+    {
+      "test": "U3",
+      "planted": "no prior side position",
+      "expect": "EMPTY NO_POSITIONS"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "Ignore missing source/zero denominator",
+      "caught_by": "U3 and source-hole regression"
+    },
+    {
+      "mutant": "Change population or fail to split flips",
+      "caught_by": "U1,U2 and tests/test_successors_v2.py"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-09-28 BTC10:00",
+          "why": "ordinary window"
+        },
+        {
+          "point": "2025-10-01 SOL10:00",
+          "why": "second BUILD window; active event coverage must be demonstrated separately"
+        }
+      ],
+      "pass": "Independent card arithmetic and raw records; floats1e-9 relative; exact metadata"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "the tie mismatch share per coin and day"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "Prior exposure of accounts hit by liquidation"
+    ],
+    "never": [
+      "anything after u",
+      "predictive value from arithmetic agreement"
+    ]
+  },
+  "readers": "none yet",
+  "implementation": {
+    "how": "NumPy account-state replay from global native-PERP snapshots through u-1s; prior-state ratios and fixed cohorts; independent next-snapshot reconciliation refuses unexplained error. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_position_rebuild",
+    "memory_mb": 3000,
+    "seconds_share": 2,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HM3_V1"
+}

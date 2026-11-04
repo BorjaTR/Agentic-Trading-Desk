@@ -1,0 +1,48 @@
+{
+  "id": "BN_OI_CONTRACTION_1PCT_10M_T2_V1",
+  "version": "1",
+  "claim": {
+    "type": "DETECT",
+    "footprint_s": 600,
+    "meaning": "Onset of a Binance coin open-interest contraction exceeding 1 percent over ten minutes. This measures contraction in contract coin quantity, not dollars, long liquidations, deposits or a causal price direction."
+  },
+  "window": {
+    "first": "20250912",
+    "last": "20260228"
+  },
+  "grid_s": 60,
+  "inputs": {
+    "metric": {
+      "op": "raw",
+      "code": "E2.S04"
+    }
+  },
+  "conditions": [
+    {
+      "name": "ten-minute OI contraction greater than one percent",
+      "lhs": "metric",
+      "cmp": "<",
+      "rhs": -1,
+      "role": "claim"
+    }
+  ],
+  "fire": {
+    "onset": true,
+    "refractory_s": 0,
+    "side": {
+      "input": "metric",
+      "sign": 1
+    }
+  },
+  "truth": [
+    {
+      "name": "observed_contraction",
+      "kind": "not_evaluated",
+      "when": "present",
+      "start_s": 0,
+      "end_s": 600
+    }
+  ],
+  "primary": "observed_contraction",
+  "base": {}
+}

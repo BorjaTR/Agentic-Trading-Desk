@@ -1,0 +1,238 @@
+# BASIC_C2_V3.yaml: the card of the basic group C2 relative return (BED, 2026-10-18, BR2 = WP2 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 3 = edition 2 (BASIC_C2_V2.yaml 3ea3c49ef130921b, kept; the owner's review OK, EDGE1 14:08:23Z) with the owner's copies rule as
+# BASIC_C1_V5 95244119 and BASIC_C3_V2 4cdfefaa: the 9 .quotes_off and 4 .strict_off copies are no rows of their own; they are read as the
+# year's ACCEPTED cross-check (one reading rule with their shares from J15849, one never line). No other change.
+# Edit 2 (before landing): EDGE2's REVIEW C2 V2 (hb/EDGE2.txt 14:15:47Z) 4 edits: the median-coin split claimed for S02 to S05 only; CRV's
+# 0.434 points is one whole tick; the medsplit tool row on ed6 and J15882 labelled a one-off look; built_on BASIC_C1_V5 95244119.
+# (V2:)
+# EDITION 2 = edition 1 (BASIC_C2_V1.yaml 876f1b550f2d686e, kept) with EDGE2's REVIEW BR2.C2 (hb/EDGE2.txt 13:24:18Z) done: (1) the share
+# of coin-minutes where our trade closes give the klines' value, per setting and day, and the 83 to 88% of 24 Sep named (the median coin
+# moves when one coin's close differs: meaning_relative ed6 e83ddd28 medsplit, jobs 15879, 15880); (2) the nine .quotes_off twins added
+# (NOT_CHECKED, their distance from J15849 TWINS), the year names listed whole; (3) the .strict_off proofs say they are a recompute from
+# our own C1 rows; (4) S06's open named at one coin-minute (VVV 21:30, XMR 22:54: J15882); (5) built_on BASIC_C1_V4 cf8ea425 and
+# MEANING_C13_V4 b39b9f4e; (6) 'lead or lag' (not tested) now 'beat or trail'; small: the proof run is meaning_relative ed5; S07's closes
+# within one coin 100.00% and 99.97%. No status of S01 to S10 changed.
+# Made the way BASIC_C8_V2 was (METRIC_REVIEW_METHOD_V1 section 5; the owner's rename rule, 14:1x Berlin: a setting that does something other
+# than its name is RENAMED, the old name's intention goes to could_build). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py checks it.
+# Layer of every setting here: basic (a difference, median, share or count of C1's returns). S09 (share near BTC, a fixed 0.5 point floor) is
+# our rule and its twins with it: not in this card.
+
+group: C2
+name: relative return (basic, built on C1)
+summary: >-
+  A coin's move set against BTC or against the middle coin of the roster, in percentage points of return, and shares of coins moving the
+  coin's way or under BTC; every number is a difference, median, share or count of C1's mid returns at the same minute end. S01 BTC's 60 s
+  return less the coin's; S02, S03 the median of the roster coins' 15 and 60 min returns; S04, S05 the coin less that median; S06, S07 the
+  share of the other coins moving the coin's way; S08 the median over the coins but BTC of (coin less BTC), 60 min; S10 the share of them
+  under BTC; each market value with its .coverage (coins counted). The year also writes .quotes_off and .strict_off copies: its accepted
+  cross-check, not metrics of their own.
+read_as: >-
+  Whose move is it. Every value equals the same rule on Binance's 1 minute kline returns up to the difference between our mid and the last
+  trade: our own trade closes give the klines' values exactly on 96.67 to 99.77% of coin-minutes on 8 Mar and 83.61 to 97.12% on 24 Sep,
+  per setting (job 15833 decomp; the 24 Sep shortfall of S02 to S05, the medians and the coin less the median, is the median coin moving
+  when one coin's close differs from the kline's: 24 Sep 13:59, DOGE, J15880 medsplit; S06, S07, S10 not split), and the coins whose tick is
+  wide (CRV 43 bp at 0.23) carry the gaps (per coin gap p90 against tick corr 0.9999 on 8 Mar). Four names said more than the setting does
+  and are renamed: S01 is no catch-up (the coin closes 3 to 5% of the 60 s gap in the next minute on our mids), S02 and S03 are medians,
+  not a basket return (the mean), S04 and S05 subtract the median coin, not beta times the market (a residual). The shares S06, S07, S10
+  and the alt median S08 say what their names say.
+
+conclude:
+  may:
+    - "whether a coin is ahead of or behind BTC (S01) or the median coin (S04, S05) over the window, in points of mid return"
+    - "how the typical coin moved (S02, S03: the median coin, one wild coin does not move it)"
+    - "whether a coin moves with the market or alone (S06, S07), and whether alts beat or trail BTC over the hour (S08, S10)"
+  never:
+    - "that a coin will catch up with BTC because S01 is large: on our mids it closes 4.4% (8 Mar) and 3.1% (24 Sep) of the 60 s gap in the next minute, 8.3% and 7.0% in 15 minutes (J15833 c2name)"
+    - "that S02 or S03 is the return of a basket one could hold: it is the median coin; the mean differs by up to 0.33 points (J15833 c2name)"
+    - "that S04 or S05 is what a coin did beyond its own beta to the market: it subtracts the median coin with a beta of 1; betas run 0.04 to 3.04 (J15833 c2name)"
+    - "a thick-tick coin's direction from S01, S06 or S07 when its move is under its tick: its mid moves in half ticks, its last trade bounces a whole tick (CRV 43 bp at 0.23, J15833 lookc)"
+    - "a copy (.quotes_off, .strict_off) as a metric of its own: it is the year's cross-check of the same metric (a second price feed; every roster coin counted); read the nine metrics and their coverages"
+    - "anything from S09 or its twins (our rule: not in this card)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C2_V9.md 4177e235d1fee76e (rules 1 to 16; producer prod_C2_v7.py 416a7ceb83d2d1fd)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C2_V1.tsv 8648289df127fa30 (10 settings)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml 95244119 (C1 S10, S12, S13, S15, S18: basic, CLEAN; closed with the owner); the decomp's trade closes: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01: raw, LIMITS)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V3.tsv (C2 S01 to S08, S10 basic; S09 our_rule)"
+  producer: testbed/value_audit/code/prod_C2_v7.py (CARD_C2_V9), reading C1's built part of D
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C2.parquet
+  year_output_columns: "name (30 names: S01 to S10; S02, S03, S08, S09, S10 each with .coverage and .strict_off; S01 to S10 each with .quotes_off; job 15812 schema, both days), coin (the roster coin, or MARKET for S02, S03, S08 to S10 and their twins), as_of_us (e), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: team/RAWCHECK/code/rawcheck/ours.py at(D, 'C2', settings, coins, moments)
+
+source:
+  vendor: "none new: built on our C1 (Binance book_ticker through Tardis, the mid of the top of book), BASIC_C1_V4"
+  exchange_stream: "book_ticker (Binance USD-M futures through Tardis), through C1's returns; C2 reads no file of its own"
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz (through C1)
+  columns: "C1 S10 (60 s), S12 (15 min), S13 (60 min) of every roster coin; S15 (BTC 60 s) and S18 (BTC 1 h) of BTC; each in percentage points, 6 decimals"
+  fields:
+    s01: "C1 S15 of BTC less C1 S10 of the coin at the same minute end; plus = BTC ahead of the coin [proof: CARD_C2_V9 rule 2; C2_STAMPS_V1 770 of 770]"
+    basket: "S02, S03 = the median of C1 S12, S13 over the roster coins with a value, BTC counted; an even count: the mean of the two middle ones [proof: CARD_C2_V9 rule 3; C2_STAMPS_V1 15 of 15]"
+    residual: "S04, S05 = the coin's C1 S12, S13 less S02, S03 [proof: CARD_C2_V9 rule 4; C2_STAMPS_V1 770 of 770, 78 one unit of the 6th decimal off through the rounded median, immaterial (the owner 09:56 Berlin)]"
+    same_way: "S06, S07 = over the other roster coins with a value, the share whose C1 value has the coin's sign (both above 0 or both below 0); the coin at exactly 0: empty NO_DIRECTION [proof: CARD_C2_V9 rule 5; C2_STAMPS_V1 770 of 770]"
+    btc_reference: "S08 = the median over the roster coins but BTC of (C1 S13 less BTC's C1 S18); S10 = the share of them with C1 S13 under BTC's (equal is not under) [proof: CARD_C2_V9 rules 6, 7, 9; C2_STAMPS_V1 15 of 15]"
+    twins: ".coverage = the coins counted (the copy .strict_off = the value only when every roster coin has one, else empty) [proof: CARD_C2_V9 rule 14; job 15833 twins 1,440 of 1,440 minutes both days]"
+  latency: "known_at = the latest known_at of the C1 values used, at most the minute end; max_staleness 30 s (C1's), CARD_C2_V9 section 2"
+
+reading_rules:
+  - "the year also writes 13 copies of the same metrics as its own cross-check: 9 .quotes_off (the same rule on C1's returns from a second price feed, Tardis quotes) and 4 .strict_off (S02, S03, S08, S10 only when every roster coin, or alt, has a value). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): the .quotes_off equal to the metric at 91.88 to 99.13% of rows on 8 Mar 2026 and 91.18 to 99.30% on 24 Sep 2025, corr 0.99864 to 0.99999, otherwise a small gap from the two feeds disagreeing (gap p99 0.0071 to 0.0154 points for the returns, one coin 0.02 for the shares; a coin's sign can differ, S06 max 0.84, S07 max 0.92); the .strict_off equal to the metric at every minute (every coin counted at 1,440 of 1,440 minutes both days) (J15849 TWINS, q_15849, a9bc9402, 0ea4c5c8); not separate metrics"
+  - "every value is read at a minute end e from C1's values at e; at a fire the minute-end settings give the last full minute (CARD_C2_V9 rule 13)"
+  - "points are percentage points of return: S01 1.5 = BTC rose 1.5 points more than the coin over the 60 s"
+  - "a share is 0 to 1 of the OTHER coins (S06, S07) or of the coins but BTC (S10), never of all coins"
+  - "S06, S07 are empty NO_DIRECTION when the coin's own return is exactly 0 (its mid did not move): never read empty as 0"
+  - "a market value counts the roster coins with a value: read .coverage beside it (51 or 52 coins every minute on 8 Mar 2026 and 24 Sep 2025)"
+
+values:
+  units: "S01, S02, S03, S04, S05, S08: percentage points of return (6 decimals); S06, S07, S10: a share from 0 to 1 (6 decimals); .coverage a count of coins"
+  zero: "S01 0 = the coin moved as BTC; S04, S05 0 = the coin moved as the median coin; S06, S07 0 = no other coin moved the coin's way; S10 0 = no coin under BTC"
+  empty: "NO_ROSTER, NO_FILE, BOOK_HOLE (from C1), ALL_COINS_EMPTY (market), NO_DIRECTION (S06, S07); value_kind 0 with NaN in value_f64; 8 Mar 2026 S06 3,809 and S07 1,587 empty, 24 Sep 1,606 and 800, all NO_DIRECTION (job 15833 empty); no other setting empty on those days"
+  stale: "true when empty because a C1 input it needs is empty BOOK_HOLE"
+  flags: "none (C1 writes none, no rule of C2 adds one)"
+
+interpret:
+  do:
+    - "read S01 (BTC 60 s less the coin) as how far the coin is behind (plus) or ahead (minus) of BTC over the last minute, nothing more"
+    - "read S02, S03 as the typical coin's move (the median: one wild coin does not move it); read S04, S05 as the coin's move beyond the typical coin's"
+    - "read S06, S07 high as the coin moving with the market, low as moving alone"
+    - "read S08 as the typical alt's 1 h move beyond BTC's, S10 as the share of alts behind BTC"
+  dont:
+    - "read S01 by its old name (catch-up): on our mids the coin closes 4.4% (8 Mar) and 3.1% (24 Sep) of its 60 s gap to BTC in the next minute, 8.3% and 7.0% over 15 minutes (job 15833 c2name); the kline-close version looks larger (16% in a minute on 8 Mar) only because a last trade bouncing bid to ask reverses by itself"
+    - "read S02, S03 as a basket's return (the mean of the coins): the median differs from the mean by 0.018 to 0.061 points at the median, up to 0.33 points (job 15833 c2name)"
+    - "read S04, S05 as a residual (the coin less beta x the market): coin betas on the median run 0.04 to 3.04, p10 0.68 to 0.72, p90 1.23 to 1.41 (job 15833 c2name)"
+    - "compare a thick-tick coin's 1 minute values with Binance klines: its last trade bounces a whole tick (CRV 43 bp) while its mid moves half a tick at a time"
+
+biases:
+  - {what: "our returns are of the mid, Binance's klines of the last trade: on a thick-tick coin the last trade bounces between bid and ask while the mid stands still", direction: "either way, sized by the coin's tick", size: "8 Mar 2026: S01 within 0.01 points of the kline value on 64.9% of coin-minutes (24 Sep 76.9%); per coin gap p90 against the tick in bp corr 0.9999 (8 Mar), 0.9665 (24 Sep); CRV gap p90 0.431 points = its 42.6 bp tick", proof: "job 15833 c2, decomp (8 Mar, 24 Sep); lookc CRV 8 Mar 22:21 to 22:26: mid 0.2305 still, closes 0.230 and 0.231 in turn; lookc FIL 24 Sep 11:55 to 12:00"}
+  - {what: "our trade closes leave out trades received after e; Binance's kline keeps them (C13's open, MEANING_C13_V4)", direction: "either way", size: "our closes vs klines exactly equal, 8 Mar / 24 Sep: S01 96.95% / 97.12%, S04 97.90% / 86.58%, S05 98.04% / 85.29%, S06 99.40% / 87.54%, S07 99.77% / 87.19% of coin-minutes; S02 98.26% / 86.94%, S03 98.40% / 85.62%, S08 96.67% / 83.61%, S10 99.65% / 86.11% of minutes", proof: "job 15833 decomp"}
+  - {what: "a median-relative value moves for every coin when one coin's close moves the median", direction: "either way, the same for all coins of the minute", size: "S04 off (over 5e-07) at 1,573 (8 Mar) and 9,831 (24 Sep) coin-minutes: the median moved with the coin's own close equal at 1,207 and 9,315, the coin's own close at 273 and 424, both 93 and 92; the median moved at 1.74% and 13.06% of minutes; S05 the same (1,124 of 1,471; 10,259 of 10,774). 24 Sep 13:59: 51 of 51 coins off, our median -0.777359 against the kline's -0.770328 (DOGE's 15 min close return -0.794589 against the kline's -0.770328)", proof: "J15879, J15880 medsplit (meaning_relative ed6 e83ddd28)"}
+  - {what: "a coin whose 15 or 60 min mid return is exactly 0 has no direction (empty NO_DIRECTION); on klines the last trade's bounce gives it one, and the other way round", direction: "S06, S07 empty on one side only", size: "8 Mar: S06 ours empty with a kline value 1,722 coin-minutes, ours with a value where the kline return is 0 1,349; 24 Sep 712 and 734", proof: "job 15833 c2, empty"}
+
+external_checks:
+  - {what: "S01, S04 to S07 of every roster coin at every minute end of 8 Mar 2026 and 24 Sep 2025, the same rules on Binance 1 minute kline returns", where: "Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with the tick bias named: job 15833 c2 (corr S01 0.847 / 0.986, S04 0.979 / 0.998, S05 0.993 / 0.9995, S06 0.996 / 0.996, S07 0.998 / 0.998)"}
+  - {what: "S02, S03, S08, S10 at every minute end, the same rules on the roster coins' kline returns", where: "the same klines", status: "VERIFIED: job 15833 c2 (corr S02 0.9994 / 0.9996, S03 0.9996 / 0.9998, S08 0.9985 / 0.9996, S10 0.998 / 0.999)"}
+  - {what: "the gap split in two: ours (mid) against our own trade closes (C13 S01), and our closes against the klines", where: "our C13 S01 and the klines", status: "EXPLAINED: the gap is the mid against the last trade; our closes give the klines' values exactly on 96.67 to 99.77% (8 Mar) and 83.61 to 97.12% (24 Sep) per setting (job 15833 decomp); the 24 Sep shortfall of S02 to S05 is the median coin's close (J15880 medsplit, which splits S04, S05; S02, S03 are the medians themselves); S06, S07, S08, S10 not split"}
+  - {what: "the names: basket (median vs mean), residual (less median vs less beta x median), catch-up (does the coin close the gap in the next 1, 5, 15 min)", where: "kline returns; our mids (C1 S10)", status: "DIFFERED, RENAMED: job 15833 c2name and cb"}
+  - {what: "the twins: .coverage against the count of our coins with the C1 input; .strict_off against the value", where: "our C1 rows", status: "VERIFIED as a recompute from our own C1 rows, not an outside record: 1,440 of 1,440 minutes, both days (job 15833 twins, cover); klines never had more coins (cover); at full coverage .strict_off is the main value, whose outside check is the main's"}
+
+tools:
+  - {what: "every value equal to a recompute from our C1 (exact decimals)", run: "python3 -B -m rawcheck --days <D> --coins BTC --at <HHMM,..> --part c2 --out <dir>", where: "team/RAWCHECK/code (basic_c2.py d509ba03cf9d767d; C2_STAMPS_V1, code 0a58e36d29dae118)"}
+  - {what: "every coin-minute and market minute against the same rules on Binance kline returns", run: "python3 -B -m rawcheck.meaning_relative c2 <D>", where: "team/RAWCHECK/code (meaning_relative.py 8ad2306031266355 ed5; runner job: klines on the SCRATCH_DISK)"}
+  - {what: "S04, S05 on our closes against klines: is a coin-minute off by its own close or by the median coin", run: "python3 -B -m rawcheck.meaning_relative medsplit <D>", where: "team/RAWCHECK/code (meaning_relative.py ed6 e83ddd2809493979, tests 45 of 45, mutants 21 of 21; J15879, J15880)"}
+  - {what: "C2 S06 at one coin-minute: the 15 min returns on our mids, our closes and the klines (J15882)", run: "a one-off look: the job file's inline python (rawcheck.meaning_relative rall, rall_from, closes; meaning_candle klines), not a part of the module", where: "team/BED/seats/BED/receipts/q_15882/run.log"}
+  - {what: "the gap split: ours vs our trade closes vs klines, and the gap per coin against its tick", run: "python3 -B -m rawcheck.meaning_relative decomp <D>", where: team/RAWCHECK/code}
+  - {what: "the names tested", run: "python3 -B -m rawcheck.meaning_relative c2name <D> | cb <D>", where: team/RAWCHECK/code}
+  - {what: "the twins, the coverage, the empties", run: "python3 -B -m rawcheck.meaning_relative twins <D> | cover <D> | empty <D>", where: team/RAWCHECK/code}
+  - {what: "one coin or one market minute: the cause of a gap", run: "python3 -B -m rawcheck.meaning_relative lookc <D> <COIN> <HHMM> | look <D> <COIN> <HHMM> | mlook <D> C2.<S> <HHMM>", where: team/RAWCHECK/code}
+
+used_by: >-
+  S08 (alt_excess_1h) by the labels ALTS/ALTS-LAGGING, ALTS/ALTS-LEADING, WHY-DRIVER/ALT-MOVE, WHY-SCOPE/ALT-ROTATION and the chains
+  CHAIN_forced_LONG_fade, CHAIN_forced_LONG_ride, CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride, CHAIN_quiet_SHORT_ride_2; S10
+  (share_under_btc) by CHAIN_forced_LONG_fade, CHAIN_forced_LONG_ride, CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride; nobody reads S01 to
+  S07 as values of their own; every setting through the record's fifths (CARD_C2_V9 'Who reads it today')
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C2_V9.md
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: team/RAWCHECK/notes/RAWCHECK/C2_STAMPS_V1.tsv (recompute from our C1, 3 days x 5 minute ends x every roster coin, all RELIABLE)
+  JOBS: "15812 (first look, meaning_relative ed1 2fe24a4b), 15818 (ed2 b244353c: decomp, twins, why parts), 15820 (ed3 cd5d7117: the signed counts), 15824 (ed4: cb), 15825 (ed4 246b5c755c580e27, every part both days), 15833 (THE proof run, meaning_relative ed5 8ad2306031266355: tests 44 of 44, mutants 19 of 19, every part both days)"
+  JOBS_V2: "15879 (8 Mar: medsplit; meaning_relative ed6 e83ddd2809493979, tests 45 of 45, mutants 21 of 21; log cdcc75fa), 15880 (24 Sep; log 93b9b880), 15882 (C2 S06 VVV 21:30, XMR 22:54; log aac03113)"
+  EDITION_1: "team/RAWCHECK/notes/BASIC/BASIC_C2_V1.yaml 876f1b550f2d686e; edition 2 = EDGE2's REVIEW BR2.C2 (hb/EDGE2.txt 13:24:18Z) done"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+# STAMPS = C2_STAMPS_V1 (24 Sep 2025, 4 Nov 2025, 8 Mar 2026 x 5 minute ends x every roster coin). J15833 = meaning_relative ed5 8ad23060 on 8 Mar 2026 and 24 Sep 2025.
+settings:
+  - {id: C2.S01, name: "BTC 60 s return less the coin's", renamed_from: "catch-up", layer: basic, side: none, window: "60 s", clock: minute end (fire second at a fire), scope: coin, contracts: USDT,
+     aggregate: "C1 S15 (BTC) less C1 S10 (the coin)", aliases: "EF.ef_ll_catchup (old name, SETTINGS_C2_V1)",
+     means: "how many points BTC's mid rose more than the coin's over the last 60 s: plus = the coin behind BTC; 0 for BTC itself",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 770 of 770 (code 0a58e36d29dae118)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c2: the same rule on kline returns corr 0.847 (8 Mar), 0.986 (24 Sep); decomp: the gap is our mid against the last trade (our closes vs klines exact 96.95%, 97.12%), per coin gap p90 vs tick corr 0.9999, 0.9665; the old name failed: on our mids the coin closes 4.4% and 3.1% of the gap in the next minute (c2name)"},
+     open: "a thick-tick coin's 60 s mid return moves in steps of half a tick or a whole tick and is often exactly 0 (CRV 8 Mar 22:21 to 22:25: 0, the next minute 0.434 points, one whole tick of 0.001 at 0.2305), so its S01 is coarse; the kline version adds the last trade's bounce of a whole tick on top"}
+  - {id: C2.S02, name: "median 15 min return of the roster coins", renamed_from: "basket 15 min return", layer: basic, side: none, window: "15 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median of C1 S12 over the roster coins with a value, BTC counted", aliases: "F.basket_ret15_pct (old name)",
+     means: "the typical (middle) coin's 15 minute return, in points",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED, proof: "J15833 c2: the median of the kline returns corr 0.99944 (8 Mar), 0.99962 (24 Sep), gap median 0.0059 and 0.0034 points, the gap the mid against the last trade of thick-tick coins (mlook 8 Mar 22:52: CRV, FIL, ARB, ENA each about one tick off); our closes vs klines exact 98.26%, 86.94% (decomp); old name failed: the mean (a basket) corr 0.9968, 0.9916, gap median 0.018, 0.028 points (c2name)"},
+     open: none}
+  - {id: C2.S02.coverage, name: "coins counted for S02", layer: basic, side: none, window: "15 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins with a C1 S12 value", aliases: none,
+     means: "how many coins S02's median read",
+     computation: {status: RELIABLE, proof: "J15833 twins and cover: equal to our count of coins with C1 S12 at 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C2_V9 rule 14; J15833 cover: 52 every minute (8 Mar), 51 (24 Sep); the klines never had more coins"}, open: none}
+  - {id: C2.S03, name: "median 60 min return of the roster coins", renamed_from: "basket 60 min return", layer: basic, side: none, window: "60 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median of C1 S13 over the roster coins with a value, BTC counted", aliases: "F.basket_ret60_pct (old name)",
+     means: "the typical (middle) coin's 60 minute return, in points",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED, proof: "J15833 c2: the median of the kline returns corr 0.99964 (8 Mar), 0.99980 (24 Sep), gap median 0.0066 and 0.0036 points (the mid against the last trade, as S02); old name failed: the mean corr 0.9964, 0.9903, gap median 0.028, 0.061 points (c2name)"},
+     open: none}
+  - {id: C2.S03.coverage, name: "coins counted for S03", layer: basic, side: none, window: "60 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins with a C1 S13 value", aliases: none,
+     means: "how many coins S03's median read",
+     computation: {status: RELIABLE, proof: "J15833 twins and cover: 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C2_V9 rule 14; J15833 cover: 52 (8 Mar), 51 (24 Sep) every minute"}, open: none}
+  - {id: C2.S04, name: "15 min return less the median coin's", renamed_from: "residual 15 min", layer: basic, side: none, window: "15 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "C1 S12 of the coin less S02", aliases: "F.resid15_pct (old name)",
+     derived_from: "C1 S12 and C2 S02: S04 = C1 S12 - S02, exact (S02 as written, 6 decimals)",
+     means: "how many points the coin beat (plus) or trailed (minus) the middle coin over 15 minutes",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 770 of 770 (78 one unit of the 6th decimal off through the rounded median, immaterial)"},
+     meaning: {status: DEFINED, proof: "J15833 c2: the same rule on kline returns corr 0.979 (8 Mar), 0.998 (24 Sep), within 0.01 points on 50.3% and 65.4% of coin-minutes, the gap the mid against the last trade (our closes vs klines exact 97.90%, 86.58%, decomp); old name failed: the coin less beta x the median corr 0.947 and 0.950, betas p10 0.69 to 0.72, p90 1.23 to 1.37 (c2name)"},
+     open: none}
+  - {id: C2.S05, name: "60 min return less the median coin's", renamed_from: "residual 60 min", layer: basic, side: none, window: "60 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "C1 S13 of the coin less S03", aliases: "F.resid60_pct (old name)",
+     derived_from: "C1 S13 and C2 S03: S05 = C1 S13 - S03, exact",
+     means: "how many points the coin beat or trailed the middle coin over 60 minutes",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 770 of 770 (78 one unit of the 6th decimal off, immaterial)"},
+     meaning: {status: DEFINED, proof: "J15833 c2: corr 0.993 (8 Mar), 0.9995 (24 Sep), the gap the mid against the last trade (our closes vs klines exact 98.04%, 85.29%, decomp); old name failed: the coin less beta x the median corr 0.955 and 0.930, betas 0.04 to 3.04 (c2name)"},
+     open: none}
+  - {id: C2.S06, never: ["that a coin did not move when S06 is empty: NO_DIRECTION is a mid exactly unchanged over the 15 minutes, its last trade may have moved a tick"], name: "share of the other coins moving the coin's way, 15 min", layer: basic, side: none, window: "15 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "over the other roster coins with a C1 S12 value, the share with the coin's sign", aliases: "F.same_dir_share15 (old name)",
+     means: "0 to 1: how much of the rest of the market moved the same way as the coin over 15 minutes; empty when the coin did not move",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 770 of 770"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c2: the same rule on kline returns within one coin (0.021) on 84.3% (8 Mar) and 93.6% (24 Sep), corr 0.996 both days; our closes vs klines within one coin 99.97% and 99.99% (decomp)"},
+     open: "a coin whose 15 min move is one tick flips sign between mid and last trade: 8 Mar 21:30 VVV mid 5.5665 to 5.5675 (+0.017965), last trade 5.568 to 5.567 (-0.017960), 48 of the other 51 coins up, so 0.941176 ours, 0.039216 on closes and klines; 22:54 XMR the same (mid 336.19 to 336.205, trade 336.21 to 336.19) (J15882); empty NO_DIRECTION on one side only on 3,071 (8 Mar) and 1,446 (24 Sep) coin-minutes"}
+  - {id: C2.S07, name: "share of the other coins moving the coin's way, 60 min", layer: basic, side: none, window: "60 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "over the other roster coins with a C1 S13 value, the share with the coin's sign", aliases: "F.same_dir_share60 (old name)",
+     means: "0 to 1: how much of the rest of the market moved the coin's way over 60 minutes",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 770 of 770"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c2: within one coin on 93.7% (8 Mar) and 97.5% (24 Sep), corr 0.998 both days; our closes vs klines within one coin 100.00% (8 Mar) and 99.97% (24 Sep) (decomp)"},
+     open: "as S06, fewer (the hour's moves are larger than a tick more often); empty NO_DIRECTION on one side only on 1,502 (8 Mar) and 739 (24 Sep)"}
+  - {id: C2.S08, name: "median alt 60 min return less BTC's", layer: basic, side: none, window: "60 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins but BTC of (C1 S13 less BTC's C1 S18)", aliases: "alt_excess_1h (old name, read by 5 labels and 5 chains)",
+     means: "how many points the typical alt beat (plus) or trailed BTC over the hour",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED, proof: "J15833 c2: the same rule on kline returns corr 0.9985 (8 Mar), 0.9996 (24 Sep), gap median 0.0068, 0.0043 points, the mid against the last trade; our closes vs klines exact 96.67%, 83.61% (decomp)"},
+     open: none}
+  - {id: C2.S08.coverage, name: "alts counted for S08", layer: basic, side: none, window: "60 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins but BTC with a C1 S13 value", aliases: none,
+     means: "how many alts S08's median read",
+     computation: {status: RELIABLE, proof: "J15833 twins and cover: 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C2_V9 rules 6, 14; J15833 cover: 51 (8 Mar), 50 (24 Sep) every minute"}, open: none}
+  - {id: C2.S10, name: "share of alts under BTC, 60 min", layer: basic, side: none, window: "60 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "over the roster coins but BTC with a C1 S13 value, the share under BTC's C1 S18 (equal is not under)", aliases: "share_under_btc (old name, read by 4 chains)",
+     means: "0 to 1: how much of the alt market did worse than BTC over the hour",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED, proof: "J15833 c2: the same rule on kline returns within one coin (0.021) on 91.3% (8 Mar) and 96.9% (24 Sep) of minutes, corr 0.998 and 0.999, the gap the alts within a tick of BTC's return; our closes vs klines within one coin 100.00% and 99.86% (decomp)"},
+     open: none}
+  - {id: C2.S10.coverage, name: "alts counted for S10", layer: basic, side: none, window: "60 min", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "count of roster coins but BTC with a C1 S13 value", aliases: none,
+     means: "how many alts S10's share read",
+     computation: {status: RELIABLE, proof: "J15833 twins and cover: 1,440 of 1,440 minutes, both days"},
+     meaning: {status: DEFINED, proof: "CARD_C2_V9 rules 6, 14; J15833 cover: 51 (8 Mar), 50 (24 Sep)"}, open: none}
+
+# COULD BUILD: what the old names intended. Built only when an analysis asks for it; each proven on 1 to 3 days first.
+
+could_build:
+  - {id: C2.CB1, intended: "basket return: the equal-weight mean of the roster coins' 15 and 60 minute returns", was_name_of: "C2.S02, C2.S03",
+     formula: "mean of C1 S12 (S13) over the roster coins with a value, BTC counted; .coverage beside",
+     needs: "nothing new: C1 S12, S13 (C2 has them)",
+     adds: "LITTLE: corr with the median 0.9968 and 0.9964 (8 Mar), 0.9916 and 0.9903 (24 Sep); gap median 0.018 to 0.061 points, max 0.33 (J15833 c2name, on klines); it moves with a few wild coins where the median does not",
+     status: NOT_BUILT}
+  - {id: C2.CB2, intended: "residual: the coin's return less beta times the market's, beta the coin's own sensitivity", was_name_of: "C2.S04, C2.S05",
+     formula: "C1 S12 (S13) of the coin less beta x S02 (S03), beta = cov / var of the coin's and the median's returns over a trailing window that ends before e (no look-ahead; the window a ruling)",
+     needs: "a trailing beta per coin (a new producer setting, or one inside C2); its window",
+     adds: "SOME: corr with S04 0.947 (8 Mar), 0.950 (24 Sep), with S05 0.955 and 0.930; coins with a beta far from 1 differ most (betas 0.04 to 3.04; in-sample day betas, J15833 c2name)",
+     status: NOT_BUILT}
+  - {id: C2.CB3, intended: "catch-up: the part of BTC's move the coin has still to make, scaled by how much the coin usually follows BTC", was_name_of: "C2.S01",
+     formula: "beta x C1 S15 (BTC 60 s) less C1 S10 (the coin), beta of the coin's 60 s mid returns on BTC's over a trailing window",
+     needs: "a trailing beta per coin on 60 s returns",
+     adds: "LITTLE: corr with S01 0.979 (8 Mar), 0.964 (24 Sep); against the coin less beta x BTC over the next minute corr 0.057 and 0.046 (S01 against the coin less BTC 0.044 and 0.031); in-sample day betas, median 1.12 and 1.65 (J15833 cb)",
+     status: NOT_BUILT}

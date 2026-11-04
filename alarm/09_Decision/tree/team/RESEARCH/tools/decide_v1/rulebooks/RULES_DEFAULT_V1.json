@@ -1,0 +1,23 @@
+{
+ "schema": "DECIDE_RULEBOOK_V1",
+ "alarm_id": "*",
+ "version": 1,
+ "note": "any alarm without its own rulebook: take every fire, side, entry and exit unset (the grader shows both sides, every entry type and every exit). This is the take-all baseline.",
+ "side": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "skip_rules": [],
+ "entry": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "exit": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "size": {
+  "value": 1,
+  "status": "DEFAULT"
+ }
+}

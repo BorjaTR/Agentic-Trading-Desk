@@ -1,0 +1,189 @@
+# BASIC_C7_V3.yaml: the card of the basic group C7 market dial, EDITION 3 (EDGE2, 2026-10-18; BR1 = WP1 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 3 = BASIC_C7_V2 2e7cddfd5d102887 (landed, LAYER_REGISTER_V17, kept) with the owner's copies rule (EDGE1 13:57:25Z, 14:12:22Z; as BASIC_C1_V5
+# 95244119; EDGE1's GAP 1, hb/EDGE1.txt 15:25:29Z: 'no reader' is never a reason): the 7 .quotes_off copies are no rows of their own; they are read as
+# the year's ACCEPTED cross-check (reading_rules, never; the external check row stays). No other change.
+# (V2:) BASIC_C7_V2.yaml: the card of the basic group C7 market dial, EDITION 2 (EDGE2, 2026-10-18; BR1 = WP1 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 2 = BASIC_C7_V1 639222fb8c9c7968 (landed, LAYER_REGISTER_V12) with: (1) every meaning proof from the BR1 final proof run on meaning_ranges
+# edition 8 74f75c8f87434926: J15864, J15865 (day, name), J15866, J15867 (spread), J15868, J15869 (mlook, why); its lines equal J15864, J15865 to J15869 why
+# line for line (a script, 13:44Z) but for the spread's run time and why's mids, now exact (BED's note 3); (2) built_on MEANING_C13_V4 b39b9f4e
+# (README rule 3, BED's note 1 of 13:10Z); (3) the 7 .quotes_off rows cite J15849 TWINS (EDGE1's rule, 13:29:58Z). No status of S01 to S08 changed.
+# Made the way BASIC_C8_V2 0331c7b2 was (METRIC_REVIEW_METHOD_V1 section 5, the owner's rename rule of 14:1x Berlin). ONE SOURCE OF TRUTH;
+# rawcheck/meaning_register.py (edition 4) checks it and writes .md, .flat.jsonl and .agent.jsonl. Layer of S01 to S07: basic (a median of
+# high-low ranges of a proven raw value, BASIC_LIST_V2); S08 is REBUILD (BUILD_LIST_V4); (edition 3) the .quotes_off are copies, the accepted cross-check.
+# Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (C7 from BASIC_C7_V1; V1's register of the day was V4 e0cd350b).
+# Checked by meaning_register edition 5 6223b1ad3de7bb1b (conclude: may and never, the owner 15:0x Berlin; BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+
+group: C7
+name: market dial (basic, built on the book mid)
+summary: >-
+  For each coin of the week's roster, the high-low range of its book mid ((best bid + best ask) / 2, Tardis book_ticker) at the whole-second
+  samples e - W, e - W + 1 s, ..., e, in percent of the low; the dial is the median of those ranges over the coins with every sample known
+  (even count: the mean of the two middle ones), rounded once to 6 decimals. W = 60 s, 5, 10, 15, 30 min, 1 h, 2 h (S01 to S07); one value
+  per minute end for the MARKET. S08 (the 2 h dial as a 30-day percentile) is empty NO_HISTORY at every minute. The year also writes the
+  same seven on Tardis quotes (the top rebuilt from the depth stream), .quotes_off: copies, its accepted cross-check, not metrics of their own.
+read_as: >-
+  How wide the typical coin's quoted mid moved over the window, in percent. It tracks the market's trade range closely (Spearman 0.985 to
+  0.998 against the median Binance kline range at every minute end of 8 Mar 2026 and 24 Sep 2025, J15864, J15865) but it is smaller: the median
+  ratio dial / kline range is 0.785 (60 s) to 0.959 (2 h) on 8 Mar and 0.917 to 0.976 on 24 Sep, and the dial is below the kline value in 95
+  to 100% of minutes. The gap has two measured parts (J15866, J15867): a trade happens at the bid or the ask, so a trade range spans the
+  spread a mid range does not (on 8 Mar the kline range is one spread wider than the range of every mid that stood: 1.000 to 1.018 spreads,
+  median of coin-minutes); and the dial samples the mid once a second, so it misses moves inside a second (tick - sampled, median 0 to
+  0.012 pct points). On 24 Sep at 1 to 15 min the spread part is about 0 (see open of S01, S02). The 60 s and 5 min dials are RENAMED to say
+  'mid range at whole-second samples' (ratio below 0.9 on 8 Mar, the pass line of 12:47Z); the trade range their old names promised is in
+  could_build (C7.CB1). Every value is equal to a recompute from the Tardis rows (420 of 420, J15814 to J15816).
+
+conclude:
+  may:
+    - "how calm or wild the market's typical coin was over W, compared with other minutes and days: the dials rank minutes as the median trade range does (Spearman 0.98487 to 0.99811, J15864, J15865)"
+    - "how far the median coin's QUOTED MID moved over W, in percent of its low (S01 to S07)"
+    - "for S06 and S07, roughly the median coin's trade range: the dial is 0.9504 to 0.9756 of it at the median minute (J15864, J15865)"
+  never:
+    - "that the median coin TRADED over a range that wide or that narrow: the trade range is larger, by whole spreads (0.7849 for the 60 s dial on 8 Mar 2026, J15864, J15865; J15869 why)"
+    - "that one coin moved: a dial is the MEDIAN coin; one coin's spike moves it only if it moves the middle"
+    - "that a dial of 0, or a coin's range of 0, means no trading: a still mid with trades bouncing between bid and ask reads 0 (8 of 52 coins at 8 Mar 2026 05:00, J15869 mlook)"
+    - "that nothing happened inside a second: whole-second samples miss tops that stand under a second, even when they traded (ETC 8 Mar 2026 05:00, J15869 why)"
+    - "a reader's trade-range floor (0.3, 0.6, 1.2 pct) on a dial as if the units were the same: the dial is below the trade range in 95.42 to 100% of minutes (J15864, J15865)"
+    - "anything from S08 (empty NO_HISTORY at every minute)"
+    - "a copy (.quotes_off) as a metric of its own: it is the year's cross-check of the same dial on a second feed; read the seven dials"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C7_V4.md d4ec3f8fd2318abe (rules 1 to 12; producer prod_C7_v1.py f30d00345f21806a)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C7_V1.tsv e1cda23230b7fb45 (8 settings)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05 book mid: raw, LIMITS; closed with the owner, LAYER_REGISTER_V7)"
+  layer_list: "team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C7 S01 to S07 basic); LAYER_REGISTER_V14 4170fe2d27aa7e31 (S08 REBUILD)"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C7_v1.py f30d00345f21806a = PRODUCER_EDITIONS row 9221 (driver drivers/work_A1E/speed/clk/drive_l0b_C7_v1f1_day.py 7c57d0e845abe752; the top in force through prod_C4_v1.top, the reader prod_reader_book_ticker_v2.py 188dc357dba91bd1; env VOLAT_FOR=<SCRATCH>/work_ARCH/roots/root_year52r/volat-agent/forensics: the roster root)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C7.parquet
+  year_output_columns: "name (S01 to S07, S01.quotes_off to S07.quotes_off, S08: 15 names, J15813 schema), coin (MARKET only), as_of_us (e), value_kind (0 = EMPTY, NaN in value_f64), value_f64, value_txt, known_at_us, stale, empty_reason ('' with a value), flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_c7.py ours(D, moments) (the 7 dials at the moments) or meaning_ranges.ours(D) (every minute end)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures, through our raw C13 S05 (the book mid, MEANING_C13_V4)"
+  exchange_stream: "bookTicker (Binance's best bid and ask channel), as Tardis records it: book_ticker; C7 reads the Tardis rows itself (the top in force at each whole second), not C13's minute values"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz of D, and of D-1 for a window that starts in D-1 (D-2 only to fill a sample neither has); the week's roster <SCRATCH>/work_ARCH/roots/root_year52r/volat-agent/forensics/knowledge/roster/ROSTER_<monday>.csv"
+  columns: "exchange, symbol, timestamp (Binance's E), local_timestamp (arrival at Tardis), ask_amount, ask_price, bid_price, bid_amount"
+  fields:
+    top_in_force: "at a sample tau: among the good rows of D-1's then D's file in file order, the one with the largest file position whose max(timestamp, local_timestamp) <= tau; known when tau - its timestamp <= 30 s [proof: CARD_C7_V4 rule 1 = CARD_C4 rules 1 to 5; prod_C4_v1._apply; basic_c7 979bd5fb in_force, tests E80, E90, E91]"
+    mid: "(bid_price + ask_price) / 2, exact [proof: prod_C4_v1.top M:r2_mid_exact; MEANING_C13_V4 C13.S05]"
+    coin_range: "(high - low) / low x 100 over the mids of the W + 1 samples; a coin is out NO_FILE (a needed day file missing, checked first) or TOP_HOLE (a sample not known) [proof: CARD_C7_V4 rules 1, 2; prod_C7_v1.coin_ranges; tests E4, E26, E38, E62, E63, E67, E93, E94]"
+    dial: "the median of the coins' ranges (even count: the mean of the two middle ones), exact, rounded once to 6 decimals half away from 0; no coin in: the common reason, else ALL_COINS_EMPTY [proof: CARD_C7_V4 rules 3, 4; prod_C7_v1.market; tests E60, E61, E66, E83]"
+    known_at: "the latest arrival among the rows in force at the samples of the coins counted; e for an empty value [proof: CARD_C7_V4 rule 7; tests E2, E3, E47; stamps 105 of 105 known_at rows (C7_STAMPS_V1)]"
+    flags: "BAD_ROW:<coin> for a counted coin with a bad row stamped in [e - W, e] and received by e [proof: CARD_C7_V4 rule 8; tests E16, E40, E95, E96; stamps 105 of 105 flags rows]"
+  latency: "known_at at most e (rows received by e only); a coin's top must be at most 30 s old at every sample; the year writes one value per minute end (00:00 to 23:59); at a fire the last full minute (CARD_C7_V4 rule 6)"
+  silence: "a coin whose top is unknown at a sample (none, or older than 30 s) is out TOP_HOLE; when every coin is out TOP_HOLE the dial is empty and stale; 8 Mar 2026 and 24 Sep 2025: 0 empty dials (J15813 schema)"
+
+reading_rules:
+  - "a dial is the MEDIAN coin's range: one coin's spike moves it only if it moves the middle (median vs mean of the kline ranges: ratio 0.64 to 0.90, J15864, J15865 name)"
+  - "the range is of the book MID sampled at whole seconds, not of trades: it is below the trade (kline) range in 95 to 100% of minutes (J15864, J15865 day)"
+  - "percent of the LOW (CARD_C7_V4 O2): against the percent of the close the median ratio moves by under 0.01 (J15864, J15865 name)"
+  - "a coin out (NO_FILE, TOP_HOLE) is left out of the median, never counted as 0 (CARD_C7_V4 O6; test E4, mutant B4)"
+  - "at a fire every dial gives the last full minute (CARD_C7_V4 rule 6)"
+  - "the year also writes 7 copies of the same dials as its own cross-check: .quotes_off, the same rules on Tardis quotes (the top rebuilt from the depth stream, CARD_C7_V4 rule 11). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to the dial at 60.56 to 81.53% of minute ends on 8 Mar 2026 and 86.39 to 93.26% on 24 Sep 2025, corr 0.99986 to 0.99999, gap p99 0.004278 to 0.022447 pct points, otherwise the two feeds disagreeing (J15849 TWINS); a copy is no metric of its own: read the seven dials"
+
+values:
+  units: "percent of the coin's low over the window (0.3 = the middle coin's mid moved 0.3% from its low to its high)"
+  zero: "0 = the middle coin's mid did not move at any whole second of the window: a value, not empty"
+  empty: "NO_ROSTER, NO_FILE, TOP_HOLE, ALL_COINS_EMPTY (S01 to S07); NO_HISTORY (S08, every minute); value_kind 0 with NaN in value_f64. Never read empty as 0"
+  stale: "1 when the value is empty because every coin's top went silent (TOP_HOLE)"
+  flags: "BAD_ROW:<coin> for each counted coin with a bad row in the window (0 flagged values on 8 Mar 2026 and 24 Sep 2025, J15813 schema)"
+
+interpret:
+  do:
+    - "read a dial as the typical coin's quoted mid range over W, in percent: the market's calm or wild now at seven horizons"
+    - "compare dials across minutes and days: they rank minutes as the trade range does (Spearman 0.985 to 0.998, J15864, J15865)"
+    - "read S07 (2 h) and S06 (1 h) as close to the trade range: ratio 0.95 to 0.98 at the median"
+  dont:
+    - "read S01 or S02 as the trade high-low range (their old names): on 8 Mar the 60 s dial is 0.785 of the median kline range at the median minute (p10 0.565), the 5 min 0.877 (C7.CB1)"
+    - "set a floor in trade-range units (the readers' 0.3, 0.6, 1.2 pct) against a dial without the ratio: a dial sits below the trade range in 95 to 100% of minutes"
+    - "read the dial as a mean: against the MEAN of the kline ranges the ratio falls to 0.639 to 0.898 (8 Mar) and 0.719 to 0.794 (24 Sep), against the median 0.785 to 0.976 (J15864, J15865 name)"
+    - "read empty as 0"
+
+biases:
+  - {what: "the mid does not cross the spread; trades do (at the bid or the ask)", direction: "the dial too small against the trade range", size: "8 Mar 2026: kline range - tick mid range = 1.000 (60 s) to 1.018 (2 h) spreads at the median coin-minute; the median spread 0.0179 to 0.0187 pct; 24 Sep 2025: 0.001 (60 s), 0.501 (5 min), 0.985 to 1.020 (10 min to 2 h) spreads, median spread 0.0083 pct", proof: "J15866, J15867 spread (5 and 3 moments, every roster coin)"}
+  - {what: "whole-second samples miss a mid that stood less than a second between two samples", direction: "the dial too small against the range of every mid that stood", size: "tick - sampled median 0 at 60 s to 30 min (8 Mar), 0.0121 pct points at 2 h; 24 Sep 0 to 0.0069; tick >= sampled in 100% of coin-minutes", proof: "J15866, J15867 spread; planted K7"}
+  - {what: "where the window's extremes traded: the trade range is the mid range plus half a spread at each end, by side", direction: "either way, in whole spreads", size: "per coin-minute kline - tick in spreads: 24 Sep 03:00 S01: -1 for 7 coins, 0 for 26, +1 for 16; 8 Mar 05:00 S01: -1 for 3, 0 for 16, +1 for 27, +2 for 2, +3 for BTC (J15868, J15869); 8 Mar 05:00: 8 of 52 coins had a still mid (their range 0) while their trades spanned one spread (J15869 mlook)", proof: "J15869 why: +1 FIL, TRX (24 Sep 03:00), CRV (8 Mar 05:00): the top traded at the ask, the bottom at the bid; 0 PEPE (24 Sep), ETC (8 Mar): both at the ask; -1 ENA, OP (24 Sep), UNI (8 Mar): the top sold at the bid, the bottom bought at the ask; BTC (8 Mar): the bottom swept past the bid"}
+
+external_checks:
+  - {what: "every roster coin's range recomputed from the Tardis book_ticker rows (exact fractions), the median and every stamp, against the year", where: "Tardis book_ticker files (Expansion), the year roster root", status: "VERIFIED: 420 of 420 equal (7 dials x value, known_at, flags, stale x 15 moments of 24 Sep, 4 Nov 2025, 8 Mar 2026; J15814 to J15816, C7_STAMPS_V1 5eea0cd207d10261)"}
+  - {what: "S01 to S07 at every minute end of 2 days against the median over the same roster coins of the Binance kline high-low range of the W / 60 minutes", where: "Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with a gap: Spearman 0.98487 to 0.99811 (8 Mar), 0.98962 to 0.99749 (24 Sep); ratio ours / klines median 0.7849 to 0.9586 (8 Mar), 0.9170 to 0.9756 (24 Sep); ours below in 99.17 to 100% (8 Mar), 95.42 to 98.26% (24 Sep) (J15864, J15865 day, name)"}
+  - {what: "every .quotes_off copy against its dial", where: "the year output", status: "MEASURED, copies, the accepted cross-check: meaning_twins ed3 74d02bc2, J15849 TWINS_20260308.tsv a9bc9402dcda74b9, TWINS_20250924.tsv 0ea4c5c8804a3576 (equal 60.56 to 93.26%, corr 0.99986 to 0.99999)"}
+  - {what: "the gap's parts: the spread and the whole-second sampling, per coin and moment", where: "Tardis book_ticker beside the klines", status: "MEASURED and NAMED: J15866, J15867 spread (kline - tick = 1.000 to 1.018 spreads on 8 Mar, 0.001 to 1.020 on 24 Sep, median of coin-minutes); J15868, J15869 mlook (whole-spread steps per coin); J15869 why (9 coin-minutes, every side named)"}
+
+tools:
+  - {what: "every roster coin's dial recomputed from the Tardis rows and compared exactly with the year (value, known_at, flags, stale)", run: "python3 -B -m rawcheck.basic_c7 --days <D> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_c7.py 979bd5fb42f63b10, tests af4ec479f90af8a1; runner job)"}
+  - {what: "one coin by hand: each window's high and low sample with its file line", run: "python3 -B -m rawcheck.basic_c7 coin <D> <COIN> <HHMM>", where: team/RAWCHECK/code}
+  - {what: "the dials against the median kline range at every minute end; the name test (median vs mean, base, closes)", run: "python3 -B -m rawcheck.meaning_ranges day <D> | name <D>", where: "team/RAWCHECK/code (meaning_ranges.py 74f75c8f87434926 edition 8, tests f9d9b6b8d8631856 33 of 33, ran THE PROOF RUN; editions 1 a427064974e5b037 to 3 d534db15528d2f17 ran 15821 to 15830 with the same numbers)"}
+  - {what: "the gap's parts per coin and moment (sampled, tick, kline, spread)", run: "python3 -B -m rawcheck.meaning_ranges spread <D> <HHMM,..>", where: team/RAWCHECK/code}
+  - {what: "one market minute coin by coin; one coin-minute's mid tops beside the kline high and low", run: "python3 -B -m rawcheck.meaning_ranges mlook <D> <S0x> <HHMM> | why <D> <COIN> <HHMM> <W>", where: team/RAWCHECK/code}
+
+used_by: >-
+  S01 (dial_1m) by CHAIN_trend_LONG_fade and CHAIN_trend_LONG_ride; S02 (dial_5m) by WHY-DRIVER/AIR-POCKET; S04 (dial_15m) by
+  CHAIN_forced_SHORT_ride, HOW-BIG (EXTREME, LARGE, NORMAL, SMALL), WHY-DRIVER/CHOP and QUIET-FLAT, and C6's heat (with S07); S05 (dial_30m)
+  and S06 (dial_1h) by CHAIN_forced_SHORT_fade, S06 by CHAIN_forced_LONG_fade, CHAIN_forced_SHORT_ride, CHAIN_quiet_SHORT_ride_2; S07 (dial_2h)
+  by CHAIN_forced_SHORT_ride, CHAIN_quiet_SHORT_fade_3, HEAT/HOT and HEAT/QUIET, C6 heat (BED's C6 S07 reads it); nobody reads S03 or S08
+  (CARD_C7_V4 'Who reads it today')
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C7_V4.md d4ec3f8fd2318abe
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: team/RAWCHECK/notes/RAWCHECK/C7_STAMPS_V1.tsv 5eea0cd207d10261 (J15814 to J15816, 420 of 420 equal)
+  JOBS: "THE PROOF RUN on meaning_ranges ed. 8: 15864 (8 Mar day, name; log dada7db501d67353), 15865 (24 Sep; cc50d0e18367cd21), 15866 (spread 8 Mar; 9721516a0817b4ef), 15867 (spread 24 Sep; e03262b44d71eca1), 15868 (mlook 24 Sep S01, S02 03:00; 5b9dd14f17579510), 15869 (mlook 8 Mar S01 05:00, the 9 whys and FIL, ARB; dafef1722410ba17). Before: 15813 (first look: tests 50 of 50, schema, BTC by hand, 8 Mar 02:10 all coins 28 of 28), 15814 to 15816 (stamps), 15821 (day, name), 15822, 15823 (spread), 15826 to 15828 (mlook), 15829 (why, ed. 2: numbers kept, its words wrong, owned 12:57Z), 15830 (why, ed. 3: every side named)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T12:41:05Z (computation) and 12:47Z (meaning), posted before the code ran"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+settings:
+  - {id: C7.S01, name: "market median 60 s mid range pct (whole-second samples)", renamed_from: "dial_1m: the median coin's 60 s high-low range", layer: basic, side: none, window: "60 s (61 whole-second samples, e - 60 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_1m (the record's name, SETTINGS_C7_V1 old_names), read by its old name",
+     means: "how far the typical coin's quoted mid moved over the last 60 s, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 1 minutes, Spearman 0.98487 (8 Mar), 0.98962 (24 Sep); ratio ours / klines median 0.7849 and 0.9170; ours below in 99.51% and 95.42% of minutes; J15866, J15867 spread: kline - tick 1.000 and 0.001 spreads, tick - sampled 0.00000 and 0.00000 pct points (medians); J15869 why"},
+     open: "the trade range of the same minutes is larger: at the median minute the dial is 0.7849 (8 Mar) and 0.9170 (24 Sep) of it, below 0.9 on 8 Mar (the pass line of 12:47Z: RENAMED; C7.CB1); per coin the gap comes in whole spreads by where the extremes traded (+1 bounce, 0 one-sided, -1 the top sold and the bottom bought, J15869 why); on a quiet minute many coins' mids stand still while their trades span one spread (8 Mar 05:00: 8 of 52, J15869 mlook); whole-second samples miss tops that stand under a second (ETC 8 Mar 05:00, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)", never: ["that the 60 s dial is the minute's candle range of the typical coin: on a quiet day it is mostly whole ticks (8 Mar 2026: 0.7849 of the median kline range at the median minute, p10 0.5648, J15864, J15865)"]}
+  - {id: C7.S02, name: "market median 5 min mid range pct (whole-second samples)", renamed_from: "dial_5m: the median coin's 5 min high-low range", layer: basic, side: none, window: "5 min (301 whole-second samples, e - 300 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_5m (the record's name, SETTINGS_C7_V1 old_names), read by its old name",
+     means: "how far the typical coin's quoted mid moved over the last 5 min, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 5 minutes, Spearman 0.99314 (8 Mar), 0.99456 (24 Sep); ratio ours / klines median 0.8768 and 0.9515; ours below in 99.65% and 97.22% of minutes; J15866, J15867 spread: kline - tick 1.001 and 0.501 spreads, tick - sampled 0.00000 and 0.00000 pct points (medians); J15869 why"},
+     open: "the trade range of the same minutes is larger: at the median minute the dial is 0.8768 (8 Mar) and 0.9515 (24 Sep) of it, below 0.9 on 8 Mar (the pass line of 12:47Z: RENAMED; C7.CB1); per coin the gap comes in whole spreads by where the extremes traded (+1 bounce, 0 one-sided, -1 the top sold and the bottom bought, J15869 why); on a quiet minute many coins' mids stand still while their trades span one spread (8 Mar 05:00: 8 of 52, J15869 mlook); whole-second samples miss tops that stand under a second (ETC 8 Mar 05:00, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)", never: ["that the 5 min dial is the typical coin's 5 min trade range: 0.8768 of it at the median minute of 8 Mar 2026 (J15864, J15865)"]}
+  - {id: C7.S03, name: "market median 10 min mid range pct (whole-second samples)", layer: basic, side: none, window: "10 min (601 whole-second samples, e - 600 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_10m (the record's name, SETTINGS_C7_V1 old_names)",
+     means: "how far the typical coin's quoted mid moved over the last 10 min, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 10 minutes, Spearman 0.99594 (8 Mar), 0.99497 (24 Sep); ratio ours / klines median 0.9063 and 0.9583; ours below in 99.65% and 96.81% of minutes; J15866, J15867 spread: kline - tick 1.002 and 0.985 spreads, tick - sampled 0.00000 and 0.00000 pct points (medians); J15869 why"},
+     open: "smaller than the trade range by 0.9063 (8 Mar) and 0.9583 (24 Sep) at the median minute (ratio within 0.9 to 1.1: the name holds); the gap is the spread at the extremes and the whole-second sampling (J15866, J15867, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)"}
+  - {id: C7.S04, name: "market median 15 min mid range pct (whole-second samples)", layer: basic, side: none, window: "15 min (901 whole-second samples, e - 900 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_15m (the record's name, SETTINGS_C7_V1 old_names), read by its old name",
+     means: "how far the typical coin's quoted mid moved over the last 15 min, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 15 minutes, Spearman 0.99674 (8 Mar), 0.99608 (24 Sep); ratio ours / klines median 0.9217 and 0.9618; ours below in 99.72% and 97.50% of minutes; J15866, J15867 spread: kline - tick 1.002 and 0.988 spreads, tick - sampled 0.00000 and 0.00181 pct points (medians); J15869 why"},
+     open: "smaller than the trade range by 0.9217 (8 Mar) and 0.9618 (24 Sep) at the median minute (ratio within 0.9 to 1.1: the name holds); the gap is the spread at the extremes and the whole-second sampling (J15866, J15867, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)"}
+  - {id: C7.S05, name: "market median 30 min mid range pct (whole-second samples)", layer: basic, side: none, window: "30 min (1801 whole-second samples, e - 1800 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_30m (the record's name, SETTINGS_C7_V1 old_names), read by its old name",
+     means: "how far the typical coin's quoted mid moved over the last 30 min, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 30 minutes, Spearman 0.99765 (8 Mar), 0.99595 (24 Sep); ratio ours / klines median 0.9393 and 0.9697; ours below in 100.00% and 98.06% of minutes; J15866, J15867 spread: kline - tick 1.004 and 1.001 spreads, tick - sampled 0.00000 and 0.00533 pct points (medians); J15869 why"},
+     open: "smaller than the trade range by 0.9393 (8 Mar) and 0.9697 (24 Sep) at the median minute (ratio within 0.9 to 1.1: the name holds); the gap is the spread at the extremes and the whole-second sampling (J15866, J15867, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)"}
+  - {id: C7.S06, name: "market median 1 h mid range pct (whole-second samples)", layer: basic, side: none, window: "1 h (3601 whole-second samples, e - 3600 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_1h (the record's name, SETTINGS_C7_V1 old_names), read by its old name",
+     means: "how far the typical coin's quoted mid moved over the last 1 h, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 60 minutes, Spearman 0.99799 (8 Mar), 0.99749 (24 Sep); ratio ours / klines median 0.9504 and 0.9756; ours below in 99.51% and 98.26% of minutes; J15866, J15867 spread: kline - tick 1.009 and 1.010 spreads, tick - sampled 0.00000 and 0.00690 pct points (medians); J15869 why"},
+     open: "smaller than the trade range by 0.9504 (8 Mar) and 0.9756 (24 Sep) at the median minute (ratio within 0.9 to 1.1: the name holds); the gap is the spread at the extremes and the whole-second sampling (J15866, J15867, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)"}
+  - {id: C7.S07, name: "market median 2 h mid range pct (whole-second samples)", layer: basic, side: none, window: "2 h (7201 whole-second samples, e - 7200 s to e)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "median over the roster coins in of 100 x (highest mid - lowest mid) / lowest mid at the samples; even count: the mean of the two middle ones; rounded once to 6 decimals", aliases: "dial_2h (the record's name, SETTINGS_C7_V1 old_names), read by its old name",
+     means: "how far the typical coin's quoted mid moved over the last 2 h, in percent of its low; 0 = the middle coin's mid did not move at any whole second",
+     computation: {status: RELIABLE, proof: "C7_STAMPS_V1 5eea0cd207d10261: value, known_at, flags, stale 15 of 15 each (J15814 to J15816, basic_c7 979bd5fb42f63b10)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15864, J15865 day: against the median kline range of the same 120 minutes, Spearman 0.99811 (8 Mar), 0.99647 (24 Sep); ratio ours / klines median 0.9586 and 0.9743; ours below in 99.17% and 97.36% of minutes; J15866, J15867 spread: kline - tick 1.018 and 1.020 spreads, tick - sampled 0.01212 and 0.00346 pct points (medians); J15869 why"},
+     open: "smaller than the trade range by 0.9586 (8 Mar) and 0.9743 (24 Sep) at the median minute (ratio within 0.9 to 1.1: the name holds); the gap is the spread at the extremes and the whole-second sampling (J15866, J15867, J15869 why); no midnight moment in the stamps (the day-before rule on planted E7, E93 only)"}
+  - {id: C7.S08, name: "2 h dial as a 30-day percentile (not built)", layer: basic, side: none, window: "30 days of S07", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the place of S07 among its own values of the 30 days before (CARD_C7_V4 rule 9): never computed", aliases: "dial_pct30d (SETTINGS_C7_V1 old_names; no reader)",
+     means: "nothing yet: empty NO_HISTORY at every minute",
+     computation: {status: NOT_CHECKED, proof: "none: no value to check (J15813 schema: 1,440 of 1,440 empty NO_HISTORY on 8 Mar 2026 and 24 Sep 2025)"},
+     meaning: {status: NOT_TESTED, proof: "none"},
+     open: "REBUILD (BUILD_LIST_V4): empty NO_HISTORY at every minute of the year until C7 runs over the 30 days before each day"}
+
+could_build:
+  - {id: C7.CB1, intended: "the median coin's high-low range of its TRADES over the last 60 s and 5 min (what the names dial_1m, dial_5m say)", was_name_of: "C7.S01, C7.S02",
+     formula: "median over the roster coins of 100 x (highest trade price - lowest trade price) / lowest trade price over the trades stamped in (e - W, e] and received by e, W = 60 and 300 s; even count: the mean of the two middle ones",
+     needs: "the trade candle of each of the W / 60 minutes: C13 S02 high and S03 low (raw, LIMITS, MEANING_C13_V4); for 60 s it is C8 S06 (market median range pct of the minute) up to the base (C8: percent of the close; here: of the low; the median ratio moves under 0.01, J15864, J15865 name)",
+     adds: "the same ranking (Spearman 0.98487 and 0.99314 on 8 Mar between the dials and the median kline range, J15864, J15865) at a larger size: the dials are 0.7849 and 0.8768 of it at the median minute of 8 Mar, 0.9170 and 0.9515 on 24 Sep; per coin the difference is whole spreads by where the extremes traded (J15869 why)",
+     status: NOT_BUILT}

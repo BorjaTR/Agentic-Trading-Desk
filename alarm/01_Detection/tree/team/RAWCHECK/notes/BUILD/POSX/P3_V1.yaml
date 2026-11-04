@@ -1,0 +1,210 @@
+# POSX P3 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P3_V1.md 18f60d31) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Changed from the draft: floats, decimals none; the first day that can be valued is 9 Oct 2025 (696 of 720 hours, the floor 684),
+# the window first full on 10 Oct 2025; the year's E1 S07 is not a 1.4826 MAD z (its spread is max(1.4826 MAD, 1.2533 MeanAD),
+# RENAMED: OUR_RULE_E1_V1.yaml line 109), so it is no precedent for the scale; known_at uses the base rows' latest known_at; the real
+# check days are 8 Mar 2026 and 24 Sep 2025 only.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel names of ADDON_ARCHITECTURE_V4 b5fcc859 9.4 (med_mad, robust_z with floor 0); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 (med_mad, spread_mad, robust_z with the spread array); values unchanged
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P3 nits: Binance in conclude, the keep conditions are the pass lines with levels proposed (BED G2), 0.6745 is about 1 / 1.4826, scipy 1.16.3 on the Mac; X5: med, MAD, n in THE FIT TABLE X1/fit/POSX/<D>.parquet; OWN: the keep test named 24 Sep 2025, a day with no base (NO_HISTORY), now 2026-03-08 only
+# Signed by BED's REVIEW OK of edition 4, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P3
+producer: POSX
+item: 'funding z per coin (30 d median, MAD) (BUILD_ITEMS_V3 3dbb747a line P3)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when the meaning check's two pass lines hold on 2026-03-08 (24 Sep 2025 has no base: every coin-minute NO_HISTORY), levels proposed for EDGE1 or the owner to set. DROP, or rename to what it is with a could_build (RULING 3), when the spread is 0 on most coin-minutes (funding at the default) or 'unusual' is not rare.
+name: robust z of the coin's Binance funding per hour against its own 720 clock hours of the 30 days before D, spread 1.4826 MAD
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 4
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  How unusual the coin's Binance funding per hour is now against its own 30 days before D, in robust standard deviations: (now -
+  the base median) / (1.4826 x the base median absolute deviation). Empty when the base has no spread.
+example: >-
+  A base median of 0.000003 and a MAD of 0.000001 per hour; the coin now at 0.000005 per hour: z = 0.000002 / 0.0000014826 =
+  10000 / 7413 = 1.3489815189531904.
+formula: >-
+  base(D) = P1 (= E1 S01 / 8, P1_V1) at the 720 clock-hour minute ends h = 00:00, 01:00, ..., 23:00 of D-30 to D-1, read from B's E1
+  S01 rows (value_f64 / 8), the valued ones only (an empty hour is left out). n = the count of valued base hours. med = the median of
+  the base (the middle value; for an even count the mean of the two middle values); MAD = the median of |x - med| over the same
+  values (same median rule). P3(u) = (P1(u) - med) / (1.4826 x MAD), float64, decimals none. Empty: P1(u) empty gives P1's reason
+  and stale first; then n < 684 (95 percent of 720, the share E1 S07 uses, 479 of 504: CARD_E1_V9 line 126) gives NO_HISTORY; then
+  MAD = 0 gives NO_SPREAD. D's own hours are never in the base; the base is fixed for all of D.
+source:
+  kind: paper
+  ref: >-
+    Iglewicz B. and Hoaglin D. C. (1993), How to Detect and Handle Outliers, ASQC Basic References in Quality Control 16: the
+    modified z-score 0.6745 (x - median) / MAD, about (x - median) / (1.4826 MAD) since 1 / 1.4826 = 0.67449. RESEARCH_TOOLS_V1 aad3cc38 section 4.2 (line 62)
+    defines z with scale 1 and asks to pin the scale; this card pins 1.4826 so that the name z is the standard robust z (RULING 3,
+    EDGE1 15:40:56Z: a formula other than the name's is renamed). Cross-check: scipy.stats.median_abs_deviation(x, scale='normal')
+    (scipy 1.16.3 on the Mac, EDGE1 lead review; RESEARCH_TOOLS_V1 line 251 names 1.18.1; BSD) equals 1.4826 MAD to 1.5e-6 relative (its constant is 1 / 0.6744897502 = 1.4826022185).
+inputs:
+  - kind: addon
+    ref: POSX S01 (P1, Binance funding per hour) at u
+    card: POSX/P1_V1
+    rule_in_force: P1's row at u (its value, reason, stale and known_at)
+    stale_rule: P1's stale and reason pass through
+    days: D
+  - kind: year
+    ref: E1 S01 (Binance funding rate in force, per 8 h) at the clock hours of the base
+    card: CARD_E1_V9 (team/BED/notes, rules 1 to 8) / SETTINGS_E1_V3 row S01 / MEANING_E1_V2
+    verdict: CLEAN
+    rule_in_force: the year's row of E1 S01 at each clock-hour minute end h of D-30 to D-1 (as_of = h)
+    stale_rule: an empty base row (any reason) is left out of the base
+    days: D-30 to D-1 (720 clock hours), read from B; no add-on day is read, so days run in parallel
+overlaps: none
+per_coin: >-
+  A coin at Binance's default most of the month has MAD = 0 (RESEARCH_TOOLS_V1 line 51: 'MAD = 0 is common'): P3 empty NO_SPREAD.
+  A coin added to the roster under 30 days ago, or with many empty hours: n < 684, NO_HISTORY. 4 h and 1 h coins: P1 already puts
+  them per hour, so their base and value are on the same unit. A coin leaving the roster: no rows.
+time: >-
+  The base is fixed for the whole of D (its last hour is 23:00 of D-1); P3 moves with P1 only (it jumps at settles when the rate
+  jumps). 00:00 of D: P1's own row; the base is D-30 to D-1 as at any minute. The first year day is 10 Sep 2025: the window first
+  holds 720 hours on 10 Oct 2025; with the 684 floor the first day that can be valued is 9 Oct 2025 (10 Sep to 8 Oct, 696 hours
+  when all valued); before it NO_HISTORY.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S03
+      label: funding_bn_robust_z_30d
+      units: robust standard deviations (1.4826 MAD), no unit
+      value_kind: float
+      decimals: none
+      means: robust z of the coin's Binance funding per hour against its 720 clock hours of D-30 to D-1
+      never:
+        - a z of the market (that is E1 S07, renamed)
+        - a z against the same day
+        - a tail probability of the normal law
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the later of P1's known_at at u and the latest known_at of the base rows (all of D-1 or before), valued or empty; both <= u, so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: P1 empty NO_ROSTER at u (passes through)
+    - reason: NO_FILE
+      when: P1 empty NO_FILE at u (passes through)
+    - reason: BAD_INPUT
+      when: P1 empty BAD_INPUT at u (passes through)
+    - reason: NO_VALUE
+      when: P1 empty NO_VALUE at u (passes through)
+    - reason: STALE_VALUE
+      when: P1 empty STALE_VALUE at u (passes through, stale 1)
+    - reason: NO_INTERVAL
+      when: P1 empty NO_INTERVAL at u (passes through)
+    - reason: NO_ROW
+      when: P1 empty NO_ROW at u (passes through)
+    - reason: NO_HISTORY
+      when: P1 valued and fewer than 684 of the 720 base hours valued
+    - reason: NO_SPREAD
+      when: P1 valued, n >= 684 and MAD = 0
+  stale_rule: stale = P1's stale at u (1 only with STALE_VALUE)
+  max_staleness_s: 61
+  window_days: 30
+  no_history: >-
+    The window D-30 to D-1 first holds 720 clock hours on 10 Oct 2025 (D-30 = 10 Sep 2025, the year's first day); with the floor of
+    684 valued hours the first day that can be valued is 9 Oct 2025 (696 hours when all valued); every coin-minute before is empty
+    NO_HISTORY (24 Sep 2025: 336 hours, NO_HISTORY at every coin-minute).
+  fit_rule: >-
+    parameters (med, MAD, n) from days before D only (the 720 clock hours of D-30 to D-1); refit once a day, at 00:00 of D; written to
+    THE FIT TABLE X1/fit/POSX/<D>.parquet (B's schema; names P3.med, P3.mad, P3.n per coin; as_of 00:00 of D; known_at the latest
+    known_at of the base rows, before D; its sha16 in D's manifest and seal: ADDON_ARCHITECTURE_V4 edit 3 section 5, REVIEW_LEAD_EDGE1_V1
+    X5); the tester refits from this card's words and compares
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the scale pinned (RESEARCH_TOOLS_V1 line 62)
+    input: 'base [1, 2, 3, 4, 100] x 1e-6 (window shortened to 5 in a test), P1(u) = 5e-6'
+    answer: 'med 3e-6; |x - med| [2, 1, 0, 1, 97] x 1e-6; MAD 1e-6; P3 = 2 / 1.4826 = 10000 / 7413 = 1.3489815189531904 (scale 1 would give 2)'
+  - case: E2 no spread
+    input: 'base [1, 1, 1, 1, 2] x 1e-6, P1(u) = 2e-6'
+    answer: 'med 1e-6; |x - med| [0, 0, 0, 0, 1] x 1e-6; MAD 0; empty NO_SPREAD'
+  - case: E3 an even count
+    input: 'base [1, 2, 3, 4] x 1e-6, P1(u) = 2.5e-6'
+    answer: 'med 2.5e-6; |x - med| [1.5, 0.5, 0.5, 1.5] x 1e-6; MAD 1e-6 (the mean of 0.5 and 1.5); P3 = 0'
+  - case: E4 a negative rate
+    input: 'base [-3, -1, 0, 1, 3] x 1e-6, P1(u) = -0.0000375 (E1 S01 = -0.0003)'
+    answer: 'med 0; |x - med| [3, 1, 0, 1, 3] x 1e-6; MAD 1e-6; P3 = -0.0000375 / 0.0000014826 = -62500 / 2471 = -25.29340348037232'
+  - case: E5 the 95 percent floor
+    input: 'the full 720-hour base with 37 hours empty (683 valued); again with 36 empty (684 valued)'
+    answer: '683: empty NO_HISTORY; 684: valued'
+  - case: E6 D's own hours stay out
+    input: 'E1''s base, plus a planted E1 S01 row at 01:00 of D giving P1 = 100e-6; u = 02:00 of D, P1(u) = 5e-6'
+    answer: 'P3 = 1.3489815189531904 (unchanged: the base is D-30 to D-1 only)'
+  - case: E7 P1 empty
+    input: 'P1(u) empty STALE_VALUE, stale 1; the base full'
+    answer: 'P3 empty STALE_VALUE, stale 1'
+  - case: E8 P1 empty and the base short
+    input: 'P1(u) empty NO_FILE; 600 base hours valued'
+    answer: 'P3 empty NO_FILE (P1''s reason first), stale 0'
+  - case: E9 a day before the window can fill
+    input: '24 Sep 2025 (B from 10 Sep 2025: 14 days, 336 hours)'
+    answer: 'P3 empty NO_HISTORY at every coin-minute where P1 is valued'
+unit_tests:
+  - test: U1 (E1, E2, E3, E4)
+    planted: base rows and P1 rows for four coins, the window length a parameter (5 or 4 values in the test, 720 in the run) and the floor a parameter (all values in the test)
+    expect: 'P3 1.3489815189531904; NO_SPREAD; 0.0; -25.29340348037232 (floats within 1e-9 relative of the Fraction recompute)'
+  - test: U2 (E5, E9)
+    planted: 720 clock-hour base rows of D-30 to D-1 for two coins, 37 and 36 of them empty; a third coin with 336 valued hours
+    expect: 'coin 1 NO_HISTORY, coin 2 valued, coin 3 NO_HISTORY'
+  - test: U3 (E6)
+    planted: E1's base plus a D-hour row at 01:00 of D
+    expect: 'P3 at 02:00 of D = 1.3489815189531904'
+  - test: U4 (E7, E8)
+    planted: P1 empty STALE_VALUE stale 1 with a full base; P1 empty NO_FILE with 600 base hours
+    expect: 'STALE_VALUE stale 1; NO_FILE stale 0'
+  - test: U5 the row stamps
+    planted: U1 to U4
+    expect: 'every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day'
+mutants:
+  - mutant: M1 scale 1 (MAD alone, RESEARCH_TOOLS_V1's first definition)
+    caught_by: U1 (E1 gives 2 in place of 1.3489815189531904)
+  - mutant: M2 the base includes D's own hours up to u
+    caught_by: U3 (the 01:00 row changes med and MAD)
+  - mutant: M3 mean and standard deviation in place of median and MAD
+    caught_by: 'U1 (E1 gives (5 - 22) / 39.0128 = -0.43575 with the population standard deviation, in place of 1.349)'
+  - mutant: M4 MAD = 0 read as an infinite or 0 z
+    caught_by: U1 (E2 gives inf or 0 in place of NO_SPREAD)
+  - mutant: M5 the floor off by one (n <= 684 empty)
+    caught_by: U2 (coin 2 NO_HISTORY in place of valued)
+  - mutant: M6 NO_HISTORY before P1's reason
+    caught_by: U4 (E8 NO_HISTORY in place of NO_FILE)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 12:10, 23:59 (base 6 Feb to 7 Mar 2026)
+      why: the base fixed over the day; values at the start, middle and end
+    - point: 2026-03-08, the coin-minute with the largest |P3| and one NO_SPREAD coin (the tester picks them from E1 before the job)
+      why: the tail and the empty spread
+    - point: 2025-09-24, all coins, minute ends 00:00 and 12:10
+      why: no full base yet (336 hours), NO_HISTORY expected at every coin-minute with P1 valued
+  pass: >-
+    The tester recomputes the base, med, MAD and P3 from B's E1 S01 texts with Fraction, never the builder's code: floats within
+    1e-9 relative (V2 rule 4.5), empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'NO_SPREAD is at most half of the valued-P1 coin-minutes of 2026-03-08 (proposed level, EDGE1 or the owner sets it); over it the name ''z per coin'' reads as mostly empty and the card drops or is renamed'
+    - '|P3| >= 3 holds on at most 2.7 percent of valued P3 on 2026-03-08, ten times the normal law''s 0.27 percent (proposed level, EDGE1 or the owner sets it); over it ''unusual'' is not rare and a never line is added'
+  report_only:
+    - scipy.stats.median_abs_deviation(scale='normal') on the same base against 1.4826 MAD (relative difference 1.5e-6)
+    - the coins most often NO_SPREAD
+conclude:
+  may:
+    - how far the coin's Binance funding per hour sits from its own 30-day median, in robust standard deviations, when the base has a spread
+  never:
+    - a z of the market (that is E1 S07, renamed to the distance from the 504-hour median in floor units, OUR_RULE_E1_V1.yaml line 109)
+    - a z against the same day's hours
+    - a tail probability of the normal law (funding is not normal; the meaning check measures the tails)
+    - a value for a coin whose base has no spread (NO_SPREAD is not 0)
+readers: none yet
+implementation:
+  how: >-
+    The base: B's E1 rows of D-30 to D-1, name S01, the clock-hour minute ends only (about 52 x 720 rows), one median and one MAD
+    per coin and day (polars group_by); then one column expression over D's P1 values; no loop over rows or minutes in Python.
+  kernel: 'addon_grid_v2.med_mad, spread_mad (1.4826 MAD, no floor), robust_z(x, med, spread) (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 lines 257 to 281; ADDON_ARCHITECTURE_V4 9.4): its spread0 mask is the NO_SPREAD empty'
+  memory_mb: 100
+  seconds_share: 1.5
+data_checks: none

@@ -1,0 +1,355 @@
+# EDITION 2 (TREE, 2026-10-18T16:03Z; METRIC_AUDIT RR1 test 15:58:36Z) = FORMULA_D4_V1 c88a3a2f5612956d (kept, landed) with only used_by and two words of S12: the census's 5 chains.
+# FORMULA_D4_V2.yaml: the card of the formula group D4, the order flow at the first 10 levels of the book, EDITION 1 (TREE, 2026-10-18,
+# FR1 = FP1, FORMULA_REVIEW_WORKPACKAGES_V4 330187e5 section 0c, the smart check). Written by team/TREE/proposals/gen_formula_d4_card_tree_v1.py
+# from the job files. Computation J15925, J15980, J15984 (formula_d4 ed3 da50bdd938391f95); step 4 meaning_ofi ef48d2534299c9e8 (tests 77fdbc92983d39d3).
+group: D4
+name: order flow at the first 10 levels of the book (formula, Xu, Gould and Howison, summed with equal weights, in dollars)
+summary: 'The order flow at the first 10 levels of each side of the book of one coin over a window W ending at e: at every level by index,
+  the dollars that came to or left it, signed by the side they help (as D1 at the top), summed over the 10 levels with equal weights and over
+  every change of the book in the window. S01 to S05: the net over the gross, a share from -1 to 1; S06 to S10: the gross in whole dollars;
+  S11: the gross flow''s pace, the last 5 s against the last 60 s; S12: the median roster coin''s 30 s share, with its coverage.
+  Xu, Gould and Howison keep one OFI per level (a vector, in contracts) and weigh the levels by fit; D4 sums them with equal weights.'
+read_as: 'Which side the book of the coin, deeper than its top, is being bought or sold into, and how busy it is. It follows the mid over
+  the same window more closely than D1 (corr 0.53 to 0.63 pooled against D1''s 0.37 to 0.59; J15940 price). S12, the median coin''s share, follows the
+  median coin''s 30 s return (corr 0.7263 and 0.8589, J15984): it is a market flow, not a depth imbalance.'
+conclude:
+  may:
+  - 'whether the first 10 levels of the coin''s book were bought into (plus) or sold into (minus) over the window, as a share of its gross'
+  - 'that the share moved with the mid over the same window (corr 0.53 to 0.63 pooled, 0.62 to 0.76 at the median coin; J15940)'
+  - 'how busy the coin''s book was (S06 to S10) against its own history, and whether that flow sped up in the last 5 s (S11)'
+  - 'whether the typical coin''s book was bought or sold into over the last 30 s (S12), with the coins counted beside'
+  never:
+  - 'S01 to S05 as Xu, Gould and Howison''s multi-level OFI: they sum the levels with equal weights in dollars and divide by the gross; the paper keeps a vector per level (could_build D4.CB1)'
+  - 'S12 as a book (depth) imbalance: it is a flow share over 30 s; the resting bid against ask depth is could_build D4.CB3'
+  - 'S11 as an acceleration: it is a pace ratio, 0 to 12'
+  - 'S06 to S10 as trading: a fill of the best level shifts every level''s index and counts at all 10; churn counts; only the same coin''s history compares'
+  - 'a value from an EMPTY one, or 0'
+  - 'a copy (.seen_at_e_off) as a metric of its own: it is the year''s cross-check of the same metric'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D4_V7.md (96d1e3979d498c77)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_D4_V2.tsv (07ce227809480339)
+  built_on_register: 'raw D3 S01 (the book_snapshot_25 levels, LIMITS: MEANING_D2D3_V2), LAYER_REGISTER_V19 b38bf075 (step 1: cited, not rechecked)'
+  producer: testbed/value_audit/code/L0_y52f11 prod_D4_v4.py 635940bfc8c9d094 (CARD_D4_V7 edition 7)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D4.parquet
+  year_output_columns: name, coin (roster coin, or MARKET for S12), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'D4', settings, coins, moments)
+source:
+  vendor: Tardis.dev, binance-futures (CSV files)
+  exchange_stream: 'book_snapshot_25: the top 25 levels of each side as Tardis rebuilds them from the depth stream, a row each time one of the 50 levels changes (SOURCE_SPEC_book_snapshot_25_V2 Q-B1, Q-C1)'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_snapshot_25_<SYMBOL>_<YYYY-MM-DD>.csv.gz (read by exact path)
+  columns: exchange, symbol, timestamp, local_timestamp, asks[i].price, asks[i].amount, bids[i].price, bids[i].amount for i = 0 to 24
+  fields:
+    levels: 'bids fall from the best bid, asks rise from the best ask; a side with fewer levels leaves its last ones empty [proof: SOURCE_SPEC_book_snapshot_25_V2 Q-B3; raw D3 S01 LIMITS, MEANING_D2D3_V2]'
+    amount: 'the quantity resting at the level''s price, in the coin; its dollars price x amount [proof: SOURCE_SPEC_book_snapshot_25_V2 Q-X2; recomputed exactly, D4_STAMPS_V1]'
+    timestamp: 'the event time of the last depth update applied, microseconds [proof: SOURCE_SPEC_book_snapshot_25_V2 Q-N5, Q-C2]'
+    local_timestamp: 'the arrival, microseconds; the file is in book order [proof: SOURCE_SPEC_book_snapshot_25_V2 Q-B2, F3]'
+  latency: 'an event is known at the later arrival of its two rows; known_at = the latest arrival in the window (S11: its 60 s window; S12: the latest of the coins counted)'
+reading_rules:
+- 'an event = a row with the row before it in file order; at each level m = 0 to 9 by index, b_m and a_m as D1 rule 2 at that level (an empty bid at price 0, an empty ask at an infinite price, 0 dollars); net = the sum of b_m + a_m over the 10 levels, gross = the sum of |b_m| + |a_m| (CARD_D4_V7 rule 2)'
+- 'windows, rounding, BOOK_HOLE with the 15 s gap, BAD_INPUT, NO_FILE (D-1 when e - W - 15 s is before 00:00), NO_LEVELS for a one-sided book (edition 7): as D1 (rules 3 to 9)'
+- 'S11 = 12 x the 5 s gross over the 60 s gross, 4 decimals; NO_FLOW when the 60 s gross is 0 (rule 10)'
+- 'S12 = the median of the roster coins'' exact 30 s shares (the mean of the two middle ones), 6 decimals; ALL_COINS_EMPTY or the coins'' common reason when no coin has a value; flags BAD_INPUT:<coin> and the counted coins'' DUPLICATE_ROW (rule 11)'
+- 'the year also writes 11 copies .seen_at_e_off (the book seen at e only) as its own cross-check: ACCEPTED (the owner''s copies rule): equal to the metric at 100% of rows on both days (J15849 TWINS_20260308 a9bc9402dcda74b9, TWINS_20250924 0ea4c5c8804a3576); not separate metrics'
+values:
+  units: 'S01 to S05, S12: a share from -1 to 1, 6 decimals; S06 to S10: whole dollars; S11: 0 to 12, 4 decimals; S12.coverage: coins'
+  empty: 'NO_ROSTER, NO_FILE, BOOK_HOLE, BAD_INPUT, NO_LEVELS, NO_FLOW (S11), ALL_COINS_EMPTY (S12); value_kind 0; never read empty as 0 (no empty on 8 Mar 2026 and 24 Sep 2025: J15925, J15984 schema)'
+  stale: with BOOK_HOLE (S12 when every coin is BOOK_HOLE)
+  flags: DUPLICATE_ROW:<coin>, BAD_INPUT:<coin> (S12)
+interpret:
+  do:
+  - read S01 to S05 with their gross beside, as D1's share one book deeper
+  - read S12 as the typical coin's flow side over 30 s
+  dont:
+  - read S12 as a depth imbalance
+  - compare grosses across coins
+biases:
+- what: equal weights over 10 levels
+  direction: 'the deeper levels'' churn dilutes the top''s flow towards 0'
+  size: 'CRV 8 Mar 2026 02:10, 60 s: level 1 -5.78e+05 contracts, the 10-level sum -81406, share -0.010195 (J15980 point)'
+  proof: meaning_ofi point (J15980)
+- what: levels by index
+  direction: a fill of the best level shifts every index; the gross counts it at each of the 10 levels
+  size: 'the planted level shift: -10 contracts at each of the 10 levels for one removed best bid (test_meaning_ofi 77fdbc92983d39d3 t_step4_xgh_vs_d4)'
+  proof: CARD_D4_V7 rule 2; the same convention in Xu, Gould and Howison (levels by index)
+external_checks:
+- what: Xu, Gould and Howison's per-level OFI coded apart from the producer, on planted cases and at step 3's points
+  where: rawcheck/meaning_ofi.py xgh() (tests t_step4_xgh_vs_d4) and point (J15980)
+  status: 'SAME FLOWS PER LEVEL, ANOTHER SUM: the sign of the equal sum 10 of 10 points'
+- what: the mid move over the same window (the year's C1), every coin-minute of 8 Mar 2026 and 24 Sep 2025 (year store only)
+  where: rawcheck/meaning_ofi.py price (J15940) and market (J15984)
+  status: 'MOVES WITH IT: corr 0.53 to 0.63 pooled, 0.62 to 0.76 at the median coin; S12 against the median coin''s 30 s return 0.7263, 0.8589'
+tools:
+- what: every coin setting recomputed exactly from the Tardis rows at named points; S12 from the year's S03
+  run: python3 -B -m rawcheck.formula_d4 --days <D> --at auto --coins <C,..> --out <dir>; formula_d4 s12 <D ..>; formula_d4 coin <D> <COIN> <HHMM>; formula_d4 schema <D>
+  where: 'team/LAB/code (formula_d4.py ed3 da50bdd938391f95, tests test_formula_d4.py 3cf4742c429fe10e 16 of 16, 6 of 6 mutants)'
+- what: the paper's form, step 4's points, the price and market relations
+  run: python3 -B -m rawcheck.meaning_ofi point <D> <COIN> <HHMM>; price <D>; market <D>
+  where: 'team/LAB/code (meaning_ofi.py ef48d2534299c9e8, tests test_meaning_ofi.py 77fdbc92983d39d3)'
+used_by: 'S12 (book_imbalance): CHAIN_chop_SHORT_fade, CHAIN_forced_LONG_fade, CHAIN_forced_LONG_ride, CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride by its fifths (AUDIT_STEP11_CENSUS_MARKET_V25.tsv:68; CARD_D4_V7 part 1 names the first 4, CHAIN_forced_SHORT_ride not: RENAMED_READERS_V1); S01 to S11: nobody yet'
+references:
+  K_xgh: 'K. Xu, M. D. Gould, S. D. Howison (2019), Multi-level order-flow imbalance in a limit order book, Market Microstructure and Liquidity 4(3-4)'
+  K_cks2014: 'R. Cont, A. Kukanov, S. Stoikov (2014), The price impact of order book events, Journal of Financial Econometrics 12(1)'
+settings:
+- id: D4.S01
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: '1 s'
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the first 10 levels of each side, equal weights, rounded once to 6 decimals, half up'
+  aliases: EF.ef_mlofi_1s
+  means: 'which side the changes of the first 10 levels of the book helped over the last 1 s, as a share from -1 to 1'
+  name: 'order flow share at 10 levels over 1 s (equal weights, net over gross dollars, -1 to 1)'
+  renamed_from: 'multi-level order flow imbalance over 1 s (EF.ef_mlofi_1s)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): Xu, Gould and Howison''s per-level e_n coded apart on CARD_D4_V7 E34, E37 and a level shift: the same flows per level in contracts, ours in dollars summed over the 10 levels with equal weights (the paper keeps the vector and fits a weight per level); on step 3''s points (BTC, CRV 02:10, 5 windows; J15980 point) the share has the sign of the vector''s equal sum 10 of 10; it moves with the mid over its window (the year''s C1, every coin-minute of 2 days, J15940 price): corr 0.53 to 0.63 pooled (D1: 0.37 to 0.59), 0.62 to 0.76 at the median coin'
+  open: 'equal weights let the deeper levels'' churn dilute the top: CRV 02:10, 60 s: level 1 -5.78e+05 contracts, the 10-level sum -81406, share -0.010195 against D1''s top share -0.138717 (J15980); by index, one fill of the best level moves every level''s index and counts at all 10 (planted level shift); renamed; could_build D4.CB1'
+- id: D4.S02
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: '5 s'
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the first 10 levels of each side, equal weights, rounded once to 6 decimals, half up'
+  aliases: EF.ef_mlofi_5s
+  means: 'which side the changes of the first 10 levels of the book helped over the last 5 s, as a share from -1 to 1'
+  name: 'order flow share at 10 levels over 5 s (equal weights, net over gross dollars, -1 to 1)'
+  renamed_from: 'multi-level order flow imbalance over 5 s (EF.ef_mlofi_5s)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): Xu, Gould and Howison''s per-level e_n coded apart on CARD_D4_V7 E34, E37 and a level shift: the same flows per level in contracts, ours in dollars summed over the 10 levels with equal weights (the paper keeps the vector and fits a weight per level); on step 3''s points (BTC, CRV 02:10, 5 windows; J15980 point) the share has the sign of the vector''s equal sum 10 of 10; it moves with the mid over its window (the year''s C1, every coin-minute of 2 days, J15940 price): corr 0.53 to 0.63 pooled (D1: 0.37 to 0.59), 0.62 to 0.76 at the median coin'
+  open: 'equal weights let the deeper levels'' churn dilute the top: CRV 02:10, 60 s: level 1 -5.78e+05 contracts, the 10-level sum -81406, share -0.010195 against D1''s top share -0.138717 (J15980); by index, one fill of the best level moves every level''s index and counts at all 10 (planted level shift); renamed; could_build D4.CB1'
+- id: D4.S03
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: '30 s'
+  clock: 'fire second (the year steps: every 30 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the first 10 levels of each side, equal weights, rounded once to 6 decimals, half up'
+  aliases: EF.ef_mlofi_30s
+  means: 'which side the changes of the first 10 levels of the book helped over the last 30 s, as a share from -1 to 1'
+  name: 'order flow share at 10 levels over 30 s (equal weights, net over gross dollars, -1 to 1)'
+  renamed_from: 'multi-level order flow imbalance over 30 s (EF.ef_mlofi_30s)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): Xu, Gould and Howison''s per-level e_n coded apart on CARD_D4_V7 E34, E37 and a level shift: the same flows per level in contracts, ours in dollars summed over the 10 levels with equal weights (the paper keeps the vector and fits a weight per level); on step 3''s points (BTC, CRV 02:10, 5 windows; J15980 point) the share has the sign of the vector''s equal sum 10 of 10; it moves with the mid over its window (the year''s C1, every coin-minute of 2 days, J15940 price): corr 0.53 to 0.63 pooled (D1: 0.37 to 0.59), 0.62 to 0.76 at the median coin'
+  open: 'equal weights let the deeper levels'' churn dilute the top: CRV 02:10, 60 s: level 1 -5.78e+05 contracts, the 10-level sum -81406, share -0.010195 against D1''s top share -0.138717 (J15980); by index, one fill of the best level moves every level''s index and counts at all 10 (planted level shift); renamed; could_build D4.CB1'
+- id: D4.S04
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: '60 s'
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the first 10 levels of each side, equal weights, rounded once to 6 decimals, half up'
+  aliases: EF.ef_mlofi_60s
+  means: 'which side the changes of the first 10 levels of the book helped over the last 60 s, as a share from -1 to 1'
+  name: 'order flow share at 10 levels over 60 s (equal weights, net over gross dollars, -1 to 1)'
+  renamed_from: 'multi-level order flow imbalance over 60 s (EF.ef_mlofi_60s)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): Xu, Gould and Howison''s per-level e_n coded apart on CARD_D4_V7 E34, E37 and a level shift: the same flows per level in contracts, ours in dollars summed over the 10 levels with equal weights (the paper keeps the vector and fits a weight per level); on step 3''s points (BTC, CRV 02:10, 5 windows; J15980 point) the share has the sign of the vector''s equal sum 10 of 10; it moves with the mid over its window (the year''s C1, every coin-minute of 2 days, J15940 price): corr 0.53 to 0.63 pooled (D1: 0.37 to 0.59), 0.62 to 0.76 at the median coin'
+  open: 'equal weights let the deeper levels'' churn dilute the top: CRV 02:10, 60 s: level 1 -5.78e+05 contracts, the 10-level sum -81406, share -0.010195 against D1''s top share -0.138717 (J15980); by index, one fill of the best level moves every level''s index and counts at all 10 (planted level shift); renamed; could_build D4.CB1'
+- id: D4.S05
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: '120 s'
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the first 10 levels of each side, equal weights, rounded once to 6 decimals, half up'
+  aliases: EF.ef_mlofi_120s
+  means: 'which side the changes of the first 10 levels of the book helped over the last 120 s, as a share from -1 to 1'
+  name: 'order flow share at 10 levels over 120 s (equal weights, net over gross dollars, -1 to 1)'
+  renamed_from: 'multi-level order flow imbalance over 120 s (EF.ef_mlofi_120s)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): Xu, Gould and Howison''s per-level e_n coded apart on CARD_D4_V7 E34, E37 and a level shift: the same flows per level in contracts, ours in dollars summed over the 10 levels with equal weights (the paper keeps the vector and fits a weight per level); on step 3''s points (BTC, CRV 02:10, 5 windows; J15980 point) the share has the sign of the vector''s equal sum 10 of 10; it moves with the mid over its window (the year''s C1, every coin-minute of 2 days, J15940 price): corr 0.53 to 0.63 pooled (D1: 0.37 to 0.59), 0.62 to 0.76 at the median coin'
+  open: 'equal weights let the deeper levels'' churn dilute the top: CRV 02:10, 60 s: level 1 -5.78e+05 contracts, the 10-level sum -81406, share -0.010195 against D1''s top share -0.138717 (J15980); by index, one fill of the best level moves every level''s index and counts at all 10 (planted level shift); renamed; could_build D4.CB1'
+- id: D4.S06
+  layer: formula
+  side: 'none'
+  window: '1 s'
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the first 10 levels of each side, rounded once to the whole dollar, half up'
+  aliases: EF.ef_mlofi_gross_1s
+  means: 'how many dollars were added to or taken from the first 10 levels of the book over the last 1 s'
+  name: 'gross order flow at 10 levels over 1 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity (|b_m| + |a_m| summed over the 10 levels and the window, CARD_D4_V7 rule 2); recomputed exactly; Spearman with the absolute mid change over the window 0.13 to 0.59 (J15940 price)'
+  open: 'by index, a fill of the best level moves every level and counts 10 times (planted level shift in test_meaning_ofi); quote churn at any of the 10 levels counts; scales with the coin''s price and book: only the same coin''s history compares'
+- id: D4.S07
+  layer: formula
+  side: 'none'
+  window: '5 s'
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the first 10 levels of each side, rounded once to the whole dollar, half up'
+  aliases: EF.ef_mlofi_gross_5s
+  means: 'how many dollars were added to or taken from the first 10 levels of the book over the last 5 s'
+  name: 'gross order flow at 10 levels over 5 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity (|b_m| + |a_m| summed over the 10 levels and the window, CARD_D4_V7 rule 2); recomputed exactly; Spearman with the absolute mid change over the window 0.13 to 0.59 (J15940 price)'
+  open: 'by index, a fill of the best level moves every level and counts 10 times (planted level shift in test_meaning_ofi); quote churn at any of the 10 levels counts; scales with the coin''s price and book: only the same coin''s history compares'
+- id: D4.S08
+  layer: formula
+  side: 'none'
+  window: '30 s'
+  clock: 'fire second (the year steps: every 30 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the first 10 levels of each side, rounded once to the whole dollar, half up'
+  aliases: EF.ef_mlofi_gross_30s
+  means: 'how many dollars were added to or taken from the first 10 levels of the book over the last 30 s'
+  name: 'gross order flow at 10 levels over 30 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity (|b_m| + |a_m| summed over the 10 levels and the window, CARD_D4_V7 rule 2); recomputed exactly; Spearman with the absolute mid change over the window 0.13 to 0.59 (J15940 price)'
+  open: 'by index, a fill of the best level moves every level and counts 10 times (planted level shift in test_meaning_ofi); quote churn at any of the 10 levels counts; scales with the coin''s price and book: only the same coin''s history compares'
+- id: D4.S09
+  layer: formula
+  side: 'none'
+  window: '60 s'
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the first 10 levels of each side, rounded once to the whole dollar, half up'
+  aliases: EF.ef_mlofi_gross_60s
+  means: 'how many dollars were added to or taken from the first 10 levels of the book over the last 60 s'
+  name: 'gross order flow at 10 levels over 60 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity (|b_m| + |a_m| summed over the 10 levels and the window, CARD_D4_V7 rule 2); recomputed exactly; Spearman with the absolute mid change over the window 0.13 to 0.59 (J15940 price)'
+  open: 'by index, a fill of the best level moves every level and counts 10 times (planted level shift in test_meaning_ofi); quote churn at any of the 10 levels counts; scales with the coin''s price and book: only the same coin''s history compares'
+- id: D4.S10
+  layer: formula
+  side: 'none'
+  window: '120 s'
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the first 10 levels of each side, rounded once to the whole dollar, half up'
+  aliases: EF.ef_mlofi_gross_120s
+  means: 'how many dollars were added to or taken from the first 10 levels of the book over the last 120 s'
+  name: 'gross order flow at 10 levels over 120 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity (|b_m| + |a_m| summed over the 10 levels and the window, CARD_D4_V7 rule 2); recomputed exactly; Spearman with the absolute mid change over the window 0.13 to 0.59 (J15940 price)'
+  open: 'by index, a fill of the best level moves every level and counts 10 times (planted level shift in test_meaning_ofi); quote churn at any of the 10 levels counts; scales with the coin''s price and book: only the same coin''s history compares'
+- id: D4.S11
+  layer: formula
+  side: 'none'
+  window: '5 s and 60 s'
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: '12 x the 5 s gross over the 60 s gross (the gross per second of the last 5 s over that of the last 60 s), exact, rounded once to 4 decimals, half up'
+  aliases: EF.ef_flow_accel
+  means: 'how fast the 10-level gross flow ran in the last 5 s against its pace over the last minute: 1 steady, 12 all of the minute in the last 5 s, 0 none'
+  name: 'gross flow pace, the last 5 s against the last 60 s (0 to 12)'
+  renamed_from: 'flow acceleration (EF.ef_flow_accel)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: 20 of 20 MATCH (value, known_at, stale, flags) at BTC (deepest), CRV (wide tick), PEPE (1000-symbol), XMR (thinnest) x 00:03, 02:10, 04:00 and each coin''s busiest and calmest minute in [00:03, 04:00], 8 Mar 2026 (J15980, formula_d4 ed3 da50bdd938391f95, tests 3cf4742c429fe10e 16 of 16, 6 of 6 mutants); BTC 02:10 by hand 11 of 11 (J15925)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'its formula is its meaning: a ratio of two rates of the same gross (CARD_D4_V7 rule 10, cases E40 to E44 in the tests); recomputed exactly at step 3''s points; it is a pace, not an acceleration (no change of a rate is taken): renamed'
+  open: 'bounded 0 to 12; NO_FLOW when nothing moved in the 60 s; inherits the gross of S07, S09 (churn, level shifts); could_build D4.CB2'
+- id: D4.S12
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: '30 s'
+  clock: 'fire second (the year steps: every 30 s)'
+  scope: market
+  contracts: USDT
+  aggregate: 'the median over the roster coins with a value of their exact 30 s 10-level shares (the mean of the two middle ones on an even roster), rounded once to 6 decimals, half up'
+  aliases: book_imbalance
+  means: 'which side the books of the typical coin were bought or sold into over the last 30 s, as the median coin''s 10-level order flow share'
+  name: 'market order flow share at 10 levels over 30 s (the median coin)'
+  renamed_from: 'book imbalance (book_imbalance)'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: from the year''s own S03 of every roster coin at every 30 s step: 20250924 exact 2880 of 2880, one unit 0; 20251104 exact 2880 of 2880, one unit 0; 20260308 exact 2125 of 2880, one unit 755 (one unit only where the 52-coin roster''s two middle values are averaged from 6-decimal inputs; the 51-coin days are exact at every step; J15980, J15984)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the median coin''s share (S03), not a depth imbalance: it follows the median coin''s 30 s mid return (the year''s C1 S02): corr 0.7263 (8 Mar) and 0.8589 (24 Sep), Spearman 0.9173 and 0.9545, the same sign at 0.9989 and 0.9940 of minute ends (J15984 market); corr with BTC''s 30 s return 0.6920, 0.6439'
+  open: '''book imbalance'' in the trade means the resting depth (bid size against ask size), a state; S12 is a flow over 30 s: renamed, could_build D4.CB3; five chains read it by its fifths (AUDIT_STEP11_CENSUS_MARKET_V25.tsv:68; CARD_D4_V7 part 1 names four): their reading rules stand on the flow, not the depth'
+- id: D4.S12.coverage
+  layer: formula
+  side: 'none'
+  window: '30 s'
+  clock: 'fire second (the year steps: every 30 s)'
+  scope: market
+  contracts: USDT
+  aggregate: 'the count of the roster coins with a 30 s value at e (the coins S12 is the median of)'
+  aliases: none
+  means: 'how many coins S12 is the median of'
+  name: 'coins counted for S12'
+  computation:
+    status: RELIABLE
+    proof: 'D4_STAMPS_V1 73a8b94b35821fdc: equal to the count of the year''s S03 values at 8640 of 8640 steps of 3 days (J15980, J15984)'
+  meaning:
+    status: DEFINED
+    proof: 'CARD_D4_V7 rule 11 (coverage beside); 52 at every step of 8 Mar 2026, 51 on 24 Sep 2025 (J15984 market)'
+  open: none
+could_build:
+- id: D4.CB1
+  intended: 'Xu, Gould and Howison''s multi-level order flow imbalance: the vector OFI_1 .. OFI_10 in contracts (each level by index), used with a weight per level fitted on past days'
+  was_name_of: D4.S01, D4.S02, D4.S03, D4.S04, D4.S05
+  formula: 'OFI_m,W = the sum over the window''s events of e_n,m (CKS at level m); a fitted linear combination sum_m w_m OFI_m,W / D_m'
+  needs: the book_snapshot_25 rows (already read by the producer); a fit on past days only
+  adds: 'the top level''s flow kept apart from the deeper levels'' churn (opinion until built and measured)'
+  status: NOT_BUILT
+- id: D4.CB2
+  intended: 'a flow acceleration: the change of the gross flow rate'
+  was_name_of: D4.S11
+  formula: '(gross per second of the last 5 s) - (gross per second of the 5 s before), per second'
+  needs: the 10 s of the gross (already computed)
+  adds: 'unknown until built'
+  status: NOT_BUILT
+- id: D4.CB3
+  intended: 'the book (depth) imbalance: the resting bid against ask depth'
+  was_name_of: D4.S12
+  formula: '(sum of the bid amounts - sum of the ask amounts) / (their total) over the first 10 levels at e, per coin; the median roster coin'
+  needs: the book_snapshot_25 row in force at e (already read)
+  adds: 'the state of the book, which the chains'' words in CARD_D4_V7 part 1 (asks stacked, supply above) describe (opinion until built and measured)'
+  status: NOT_BUILT

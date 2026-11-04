@@ -1,0 +1,143 @@
+{
+ "by": "i2g_grader for STRATEGY/LEAD",
+ "confirmation_run": {
+  "check_run": "<SCRATCH>/work_LEAD/i2g/grade/v21/a02p_small.check_run.json",
+  "parents": 1385,
+  "run": "<SCRATCH>/work_LEAD/i2g/grade/v21/a02p_btc_eth_sol_sepjan",
+  "wall_s": 4.355
+ },
+ "files": {
+  "team/BED/scripts/e_fill/fill_v2.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "8d166ddc23fee167"
+  },
+  "team/BED/scripts/e_ladder/ladder_v2.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "14c929a03c6c973e"
+  },
+  "team/BED/scripts/e_ladder/ladder_v6.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "ab45f22b9b9af87c"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/alarm_stamp_projection_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "049ceb37cb3b6947"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/draw_prepared_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "5ab85ba9e777f38f"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/heat_offer_projection_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "6bef437137369208"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/prepared_activity_v1.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "aba7ea04de649037"
+  },
+  "team/OUTSIDE/COORD/development/DEV1/opportunity_compare_v1/compare.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "594a7bc354a323b1"
+  },
+  "team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/performance/fast_compare.py": {
+   "role": "executed by every run; no passing release covers it (pinned here and in I2G_PINS_V2.json)",
+   "sha16": "eec15093614540d5"
+  },
+  "team/RESEARCH/tools/idea_to_grade/ARCHITECTURE.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "9c086fdb0b9a70f3"
+  },
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json": {
+   "role": "idea_to_grade own file",
+   "sha16": "bd861f509639cd45"
+  },
+  "team/RESEARCH/tools/idea_to_grade/INTERFACE_V1.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "22a6e6a7a9ce8fbc"
+  },
+  "team/RESEARCH/tools/idea_to_grade/README.md": {
+   "role": "idea_to_grade own file",
+   "sha16": "f49a3c0cdd3d09fd"
+  },
+  "team/RESEARCH/tools/idea_to_grade/check_outside3_equality.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "886ddbe2e1ff5a8d"
+  },
+  "team/RESEARCH/tools/idea_to_grade/check_run.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "aba751a6df85ede7"
+  },
+  "team/RESEARCH/tools/idea_to_grade/detect.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "23f9cec148975cea"
+  },
+  "team/RESEARCH/tools/idea_to_grade/fixture_outside_view.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "1f7f8d93e1ef6db0"
+  },
+  "team/RESEARCH/tools/idea_to_grade/i2g_engine.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "2f15d3f8d233def7"
+  },
+  "team/RESEARCH/tools/idea_to_grade/i2g_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "6d8203b709ff6eb3"
+  },
+  "team/RESEARCH/tools/idea_to_grade/idea_to_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "3f3c1f7b3cca45ec"
+  },
+  "team/RESEARCH/tools/idea_to_grade/release_pins.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "0964d46242653bd5"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_detect.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "ef3b5e9a5d1c189e"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_detect_a53.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "6a5a8de498792d7e"
+  },
+  "team/RESEARCH/tools/idea_to_grade/test_idea_to_grade.py": {
+   "role": "idea_to_grade own file",
+   "sha16": "c2f275cc2b70b61a"
+  }
+ },
+ "format": "labcore.release (files {path: {sha16}} relative to the forensics folder, releases {path: sha16}, runtime)",
+ "numerical_path": "unchanged; three-coin equality on V2.1: <SCRATCH>/work_LEAD/i2g/grade/v21/fx3_v21.equality.txt ALL EQUAL; A02P BTC/ETH/SOL Sep-Jan V2 vs V2.1 COHORTS and VALUES byte-identical",
+ "outside_a54_tests": {
+  "V1_by_A54": "9 failed, 2 passed",
+  "V2": "<SCRATCH>/work_LEAD/i2g/grade/a54/BEFORE_V2.txt: 1 failed (F2 cache), 10 passed",
+  "V2_1": "<SCRATCH>/work_LEAD/i2g/grade/a54/AFTER_V21.txt: 11 passed (consumer tests clone a V2.1 run that itself reads cleanly)",
+  "file": "team/OUTSIDE/A54/i2g_review_v1/test_faults.py 2947c9e182f5e625 (copied, paths relocated: <SCRATCH>/work_LEAD/i2g/grade/a54/RELOCATION.diff)"
+ },
+ "release": "idea_to_grade_V2_1_CANDIDATE",
+ "releases": {
+  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_6.json": "2379f904369c0250",
+  "team/RESEARCH/tools/alarm_match/RELEASE_alarm_match_V3_6.json": "77dc35bec287ab4d",
+  "team/RESEARCH/tools/event_profile/RELEASE_event_profile_V2_CANDIDATE.json": "9435b78d1e883b7c",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_6.json": "1485fb4a4c44e599"
+ },
+ "replaces": "RELEASE_idea_to_grade_V2_CANDIDATE.json (74469f7f6c4bb389)",
+ "run_time_pins": {
+  "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json",
+  "files": 39,
+  "rule": "every Python file a run executes (run process, each worker, the detector code list) is checked against this file at admission and per worker and re-hashed before publication",
+  "sha16": "bd861f509639cd45"
+ },
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "status": "CANDIDATE_DIFF_RECHECK_PENDING",
+ "tool": "idea_to_grade",
+ "v1_evidence": "RELEASE_idea_to_grade_V1_CANDIDATE.json (52-coin acceptance 29.07 s; i2g_check re-time 22.06 s; A54 re-time 23.07 s)",
+ "v2_1_changes": [
+  "A54-F2: PRICE index cache revalidated by the sha16 of index.json; a changed part is re-read, never served stale; a run that read two versions of one day or saw a change before publication is refused SOURCE_CHANGED; RUN.json sources lists every PRICE index sha16",
+  "A54-F3: read_run refuses unless the manifest names exactly the required files (RUN_INVENTORY) and counts agree (RUN_INCONSISTENT); run_schema I2G_RUN_V2",
+  "Refused subclasses ValueError (A53 downstream test)",
+  "detect.py final 23f9cec148975cea (i2g_detector, A53 fixes)"
+ ],
+ "written_utc": "2026-10-25T13:58Z"
+}

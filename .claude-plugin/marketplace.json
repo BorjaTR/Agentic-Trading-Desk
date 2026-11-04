@@ -1,0 +1,13 @@
+{
+  "name": "crypto-alarm-desk",
+  "owner": {
+    "name": "Crypto Alarm Desk"
+  },
+  "plugins": [
+    {
+      "name": "crypto-alarm-desk",
+      "source": "./plugin",
+      "description": "Design and test alarms on crypto perpetual futures with a fixed, sealed engine, and learn from every try. Alarms only: no strategy, no money claims."
+    }
+  ]
+}

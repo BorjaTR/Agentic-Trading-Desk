@@ -1,0 +1,57 @@
+# 03_Grading: copied files to delete before the commit (the owner, 30 Oct 2026 12:33 Berlin, option a: released editions only;
+# 30 Oct layout: byte copies under tree/, tool documents in <tool>/). Each path is relative to 03_Grading.
+path	why
+tools/alarm_process/alarm_grade_chain_v2_0_to20251231.sh	TEST edition, not released (header TEST, NOT REVIEWED; TOOLS_REGISTRY status KIT; no RELEASE json); KIT_V5 JOB_GRADE_V5 pins it; stays in the dev tree
+tools/alarm_process/alarm_grade_chain_v2_1_to20260430.sh	TEST edition, not released (header TEST, NOT REVIEWED; TOOLS_REGISTRY KIT); the MONTH job runs v2_2 since 30 Oct 00:23Z; stays in the dev tree
+tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	moved under tree/ (released; tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh)
+tools/month_parts/README.md	moved under tree/ (released; tree/tools/month_parts/README.md)
+tools/month_parts/SCOPE.md	moved under tree/ (released; tree/tools/month_parts/SCOPE.md)
+tools/month_parts/REQUIREMENTS.md	moved under tree/ (released; tree/tools/month_parts/REQUIREMENTS.md)
+tools/month_parts/ARCHITECTURE.md	moved under tree/ (released; tree/tools/month_parts/ARCHITECTURE.md)
+tools/month_parts/BASELINE.tsv	moved under tree/ (released; tree/tools/month_parts/BASELINE.tsv)
+tools/month_parts/tests/test_month_parts_v1.py	moved under tree/ (released; tree/tools/month_parts/tests/test_month_parts_v1.py)
+tools/month_parts/tests/fake_detect.py	moved under tree/ (released; tree/tools/month_parts/tests/fake_detect.py)
+tools/month_parts/tests/smoke_month_parts_v1.sh	moved under tree/ (released; tree/tools/month_parts/tests/smoke_month_parts_v1.sh)
+tools/month_parts/tests/smoke_month_parts_v2.sh	moved under tree/ (released; tree/tools/month_parts/tests/smoke_month_parts_v2.sh)
+tools/month_parts/tests/smoke_month_parts_v3.sh	moved under tree/ (released; tree/tools/month_parts/tests/smoke_month_parts_v3.sh)
+tools/month_parts/tests/smoke_month_parts_v4.sh	moved under tree/ (released; tree/tools/month_parts/tests/smoke_month_parts_v4.sh)
+tools/alarm_process/alarm_card_v1_2.py	TEST edition, not released (TOOLS_REGISTRY KIT; no RELEASE json); chain v2_0 and JOB_GRADE_V5 pin it; stays in the dev tree
+tools/alarm_process/alarm_card_v1_3.py	TEST edition, not released (TOOLS_REGISTRY KIT; no RELEASE json); chain v2_2 and JOB_MONTH_V5 pin it; stays in the dev tree
+tools/alarm_process/detect_aw1.py	TEST edition, not released (aw1 copy, STRATEGY 28 Oct: TEST, NOT REVIEWED); chain v2_2 pins it; stays in the dev tree
+tools/alarm_process/idea_to_grade_aw1.py	TEST edition, not released (aw1 copy, STRATEGY 28 Oct: TEST, NOT REVIEWED); chain v2_2 pins it; stays in the dev tree
+tools/alarm_process/I2G_PINS_AW1.json	TEST edition, not released (the pins of idea_to_grade_aw1.py, TEST); stays in the dev tree
+tools/alarm_process/event_outcomes_aw1.py	TEST edition, not released (its RELEASE_event_outcomes_AW1.json says TEST, NOT REVIEWED); chain v2_2 pins it; stays in the dev tree
+tools/alarm_process/RELEASE_event_outcomes_AW1.json	a release record with status TEST, NOT REVIEWED: not a release; stays in the dev tree
+tools/alarm_process/WINDOWS_ALARM_V1.tsv	TEST edition, not released (the aw1 window table, TOOLS_REGISTRY KIT); stays in the dev tree
+tools/alarm_process/AW1_SPEC_V1.json	TEST edition, not released (the aw1 replacement spec, TOOLS_REGISTRY KIT); stays in the dev tree
+tools/alarm_process/test_alarm_window_aw1.py	TEST edition, not released (the aw1 unit tests; it reads absolute dev paths, so it never ran from the repo); stays in the dev tree
+tools/alarm_process/OUTCOMES_MENU_ALARM_V1.json	TEST edition, not released (the chains' default menu settings, TOOLS_REGISTRY KIT, not in a release); stays in the dev tree
+tools/idea_to_grade/detect.py	released (idea_to_grade V2_3_1) but not needed here: only TEST editions of this part called it; kept in 01_Detection and 07_Price_path
+tools/idea_to_grade/idea_to_grade.py	released (idea_to_grade V2_3_1) but not needed here: only the TEST chain v2_0 called it; kept in 01_Detection and 07_Price_path
+tools/event_outcomes/event_outcomes.py	CANDIDATE, not released (RELEASE_event_outcomes_V3_CANDIDATE.json: CANDIDATE: NOT APPROVED, re-review pending); stays in the dev tree
+tools/event_outcomes/RELEASE_event_outcomes_V3_CANDIDATE.json	a CANDIDATE release record (NOT APPROVED): not a release; stays in the dev tree
+LEAD/loop2/make_random_v3.py	TEST edition, not released (LEAD loop 2; no release record); the chains call it by its dev path; stays in the dev tree
+LEAD/loop2/menu_v2.py	TEST edition, not released (LEAD loop 2; no release record); the chains call it by its dev path; stays in the dev tree
+LEAD/loop2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv	a table the chain passes to its TEST-edition detect step at the dev path (real runs only); not part of a release here
+LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv	a table the chain passes to its TEST-edition detect step at the dev path (real runs only); not part of a release here
+tools/alarm_context/CTX_CATALOG_V1.tsv	a table the chain passes to its TEST-edition detect step at the dev path (real runs only); kept in 01_Detection and 05_Profile
+tools/alarm_profile/EPI_CATALOG_V1.tsv	a table the chain passes to its TEST-edition detect step at the dev path (real runs only); kept in 01_Detection and 05_Profile
+_team/LAB3/METRICS_HL_ADD_V1.tsv	a table the chain passes to its TEST-edition detect step at the dev path (real runs only); not part of a release here
+_team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json	the 52-coin roster the chain reads at its dev path (real runs only); not part of a release here
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/perfire_v1_to20260430.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED); JOB_GRADE_V5 and JOB_MONTH_V5 pin it; stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/test_perfire_v1.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED); JOB_GRADE_V5 and JOB_MONTH_V5 pin it; stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/split_v1.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED); JOB_MONTH_V5 pins it; stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/test_split_v1.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED); stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/README.md	the rule of a folder of TEST editions; stays in the dev tree
+ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt, same bytes)
+ALARM_DESIGN/KIT_V5/PROCESS_V7.md	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md, same bytes)
+ALARM_DESIGN/TOOLS_REGISTRY.tsv	a living register (append-only, STRATEGY), not a release; cited by its dev path in CHANGELOG.md
+tools/alarm_process/alarm_grade_chain_v2_0_to20260228.sh	TEST edition, not released (TOOLS_REGISTRY KIT); copied only as the AW1_SPEC original of the v2_1 chains
+tools/idea_to_grade/I2G_PINS_V2.json	part of the released idea_to_grade V2_3_1, not needed here; kept in 01_Detection
+tools/freeze_judge/WINDOWS_V1.tsv	copied only as an AW1_SPEC original (the aw1 test is a TEST edition); the team window table goes with labcore's release
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	a kit copy now in Alarm/Agentic (the owner, 30 Oct 13:5x Berlin: everything agentic in one folder at the top of Alarm): Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt, same bytes (4a28c8ba3a23347a)
+tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md	a kit copy now in Alarm/Agentic (the owner, 30 Oct 13:5x Berlin: everything agentic in one folder at the top of Alarm): Agentic/tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md, same bytes (34364145b6756c88)
+KIT_V5/README.md	a kit copy now in Alarm/Agentic (the owner, 30 Oct 13:5x Berlin: everything agentic in one folder at the top of Alarm): Agentic/KIT_V5/README.md, same bytes (bd43b8e5a135a791)
+KIT_V5/CHANGELOG.md	a kit copy now in Alarm/Agentic (the owner, 30 Oct 13:5x Berlin: everything agentic in one folder at the top of Alarm): Agentic/KIT_V5/CHANGELOG.md (the same text, written by SCOUT for the repo)
+KIT_V5/SCOPE.md	a kit copy now in Alarm/Agentic (the owner, 30 Oct 13:5x Berlin: everything agentic in one folder at the top of Alarm): its GRADE job text is merged into Agentic/KIT_V5/SCOPE.md
+KIT_V5/ARCHITECTURE.md	a kit copy now in Alarm/Agentic (the owner, 30 Oct 13:5x Berlin: everything agentic in one folder at the top of Alarm): its GRADE job text is merged into Agentic/KIT_V5/ARCHITECTURE.md

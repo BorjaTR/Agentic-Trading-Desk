@@ -1,0 +1,17 @@
+{
+ "by": "BUILD5 make_gm2.py, 31 Oct 2026",
+ "files": {
+  "team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv": {
+   "role": "the alarm kit window table read by event_outcomes_aw1",
+   "schema_sha16": "a89a97ec67af40b0",
+   "sha16": "37decf0075649f69"
+  }
+ },
+ "reason": "G1 D4: RELEASE_event_outcomes_AW1_REL1.json e3f6041e789978a8 with RELEASE_event_outcomes_GM2.json (which pins event_outcomes_gm2.py) in place of event_outcomes_aw1_rel1.py and RELEASE_event_outcomes_V3_REL1.json; the window table the same",
+ "release": "event_outcomes_GM2_MONTH",
+ "releases": {
+  "team/RESEARCH/tools/event_outcomes/RELEASE_event_outcomes_GM2.json": "dd84436ed9669190"
+ },
+ "replaces": "none (AW1_REL1 stays for the chains that run event_outcomes_aw1_rel1.py)",
+ "status": "TEST, NOT REVIEWED (BUILD5 G1 D4; aw1: STRATEGY, ALARM_DESIGN kit)"
+}

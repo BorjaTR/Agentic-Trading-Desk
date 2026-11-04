@@ -1,0 +1,62 @@
+# 03_Grading: the RELEASED files copied from the dev tree, written by hand (the owner, 30 Oct 2026 12:33 Berlin, option a: released editions only).
+# sync: cd Alarm && python3 -B _tools/sync_from_dev_v1.py <dev forensics root> 03_Grading [--check]
+# tree/ holds every byte copy in the dev tree layout below team/RESEARCH; month_parts/ holds the released tool's own documents at the top (byte copies; its CHANGELOG written for the repo is not in this list). The alarm kit (KIT_V5: the GRADE job, PROCESS_V7) is in Alarm/Agentic since 30 Oct.
+repo_path	dev_path	role
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	grade chain v2_2 (SCOUT 29 Oct): v2_1 with the detection in 26 coin parts; released (BASELINE.tsv: review 1 PASS, review 2 final PASS 30 Oct 00:24Z); the KIT_V5 MONTH job runs it
+tree/tools/month_parts/README.md	team/RESEARCH/tools/month_parts/README.md	chain v2_2 manual (in BASELINE.tsv)
+tree/tools/month_parts/SCOPE.md	team/RESEARCH/tools/month_parts/SCOPE.md	chain v2_2 scope (in BASELINE.tsv)
+tree/tools/month_parts/REQUIREMENTS.md	team/RESEARCH/tools/month_parts/REQUIREMENTS.md	chain v2_2 requirements R1-R7 (in BASELINE.tsv)
+tree/tools/month_parts/ARCHITECTURE.md	team/RESEARCH/tools/month_parts/ARCHITECTURE.md	chain v2_2 architecture, memory, limits (in BASELINE.tsv)
+tree/tools/month_parts/BASELINE.tsv	team/RESEARCH/tools/month_parts/BASELINE.tsv	the release record of chain v2_2: each file with sha16, both reviews, test receipts
+tree/tools/month_parts/tests/test_month_parts_v1.py	team/RESEARCH/tools/month_parts/tests/test_month_parts_v1.py	chain v2_2 tests on the chain text with a fake detect; 19 planted bugs (in BASELINE.tsv)
+tree/tools/month_parts/tests/fake_detect.py	team/RESEARCH/tools/month_parts/tests/fake_detect.py	stands in for detect_aw1.py in test_month_parts_v1.py (in BASELINE.tsv)
+tree/tools/month_parts/tests/archive/smoke_month_parts_v1.sh	team/RESEARCH/tools/month_parts/tests/smoke_month_parts_v1.sh	chain v2_2 small run v1: a runner job on lab data, Mac only (in BASELINE.tsv) (past edition, archived)
+tree/tools/month_parts/tests/archive/smoke_month_parts_v2.sh	team/RESEARCH/tools/month_parts/tests/smoke_month_parts_v2.sh	chain v2_2 small run v2: a runner job on lab data, Mac only (in BASELINE.tsv) (past edition, archived)
+tree/tools/month_parts/tests/archive/smoke_month_parts_v3.sh	team/RESEARCH/tools/month_parts/tests/smoke_month_parts_v3.sh	chain v2_2 small run v3: a runner job on lab data, Mac only (in BASELINE.tsv) (past edition, archived)
+tree/tools/month_parts/tests/archive/smoke_month_parts_v4.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/tests/archive/smoke_month_parts_v4.sh	chain v2_2 small run v4, 26 parts on the Mac: a runner job on lab data (in BASELINE.tsv; review 2 final PASS on its receipts) (past edition, archived)
+month_parts/README.md	team/RESEARCH/tools/month_parts/README.md	the tool's own README.md (byte copy shown at the top; also under tree/)
+month_parts/SCOPE.md	team/RESEARCH/tools/month_parts/SCOPE.md	the tool's own SCOPE.md (byte copy shown at the top; also under tree/)
+month_parts/ARCHITECTURE.md	team/RESEARCH/tools/month_parts/ARCHITECTURE.md	the tool's own ARCHITECTURE.md (byte copy shown at the top; also under tree/)
+month_parts/REQUIREMENTS.md	team/RESEARCH/tools/month_parts/REQUIREMENTS.md	the tool's own REQUIREMENTS.md (byte copy shown at the top; also under tree/)
+tree/tools/alarm_process/alarm_grade_chain_v2_0_1_to20251231.sh	team/RESEARCH/tools/alarm_process/alarm_grade_chain_v2_0_1_to20251231.sh	K4 GRADE chain (new) (K4; GRADE and MONTH V6)
+tree/tools/alarm_process/test_chain_v2_0_1.py	team/RESEARCH/tools/alarm_process/test_chain_v2_0_1.py	K4 its test (new) (K4; GRADE and MONTH V6)
+tree/tools/month_parts/alarm_grade_chain_v2_2_1_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_1_to20260430.sh	K4 MONTH chain (new) (K4; GRADE and MONTH V6)
+tree/tools/month_parts/tests/test_month_parts_v1_1.py	team/RESEARCH/tools/month_parts/tests/test_month_parts_v1_1.py	K4 its test (new) (K4; GRADE and MONTH V6)
+tree/tools/alarm_process/alarm_grade_chain_v2_0_2_to20251231.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_2_to20251231.sh	the GRADE chain (JOB_GRADE_V7 runs it) (NEW; K12)
+tree/tools/alarm_process/test_chain_v2_0_2.py	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/test_chain_v2_0_2.py	test (NEW; K12)
+tree/tools/month_parts/alarm_grade_chain_v2_2_2_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_2_to20260430.sh	the MONTH chain (JOB_MONTH_V7 runs it) (NEW; K12)
+tree/tools/month_parts/tests/test_month_parts_v1_2.py	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/tests/test_month_parts_v1_2.py	test (imports test_month_parts_v1_1.py beside it: keep that file) (NEW; K12)
+tree/tools/month_parts/tests/fake_detect_v2.py	team/RESEARCH/tools/month_parts/tests/fake_detect_v2.py	test (the stand-in detector of test_month_parts_v1_2) (NEW; K12)
+MACHINE_PATHS_KNOWN.tsv	team/RESEARCH/tools/alarm_package/parts/03_Grading/MACHINE_PATHS_KNOWN.tsv	the part's kept machine paths, each with its reason (machine_paths_v2 reads it; SCOUT V1_5, team/SCOUT/devpaths)
+tree/tools/alarm_process/alarm_grade_chain_v2_0_3_to20251231.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_3_to20251231.sh	the GRADE chain (JOB_GRADE_V8 runs it): v2_0_2 with Outcomes event_outcomes_rel1.py and RESEARCH_STORE (NEW; K12)
+tree/tools/month_parts/alarm_grade_chain_v2_2_3_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_3_to20260430.sh	the MONTH chain (JOB_MONTH_V8 runs it): v2_2_2 with Outcomes event_outcomes_aw1_rel1.py and RESEARCH_STORE (NEW; K12)
+tree/tools/alarm_process/alarm_grade_chain_v2_0_4_to20251231.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_4_to20251231.sh	GRADE chain v2_0_4 (JOB_GRADE_V9): v2_0_3 with Outcomes in 3 worker processes (run 3) on the alarm and the random list; K16 T5
+tree/tools/month_parts/alarm_grade_chain_v2_2_4_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_4_to20260430.sh	MONTH chain v2_2_4 (JOB_MONTH_V9): v2_2_3 with the detection parts by the chain's rule (2, or 26 up front for a SERIAL_FORCED definition), a part refused with WORKER_RSS_CAP re-split alone (its folder kept, never merged), a coin census before the merge, LC_ALL=C, DETECT_PARTS_<V>.tsv; K16 T6
+tree/tools/alarm_process/alarm_grade_chain_v2_0_5_to20251231.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_5_to20251231.sh	GRADE chain v2_0_5 (JOB_GRADE_V10): v2_0_4 with the alarm and random Outcomes runs at the same time, then menu and card at the same time; outputs byte for byte v2_0_4's
+tree/tools/month_parts/alarm_grade_chain_v2_2_5_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_5_to20260430.sh	MONTH chain v2_2_5 (JOB_MONTH_V10): v2_2_4 with the two Outcomes runs at the same time, then menu and card at the same time; outputs byte for byte v2_2_4's
+tree/tools/alarm_process/alarm_grade_chain_v2_0_6_to20251231.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_6_to20251231.sh	GRADE chain v2_0_6 (JOB_GRADE_V11): v2_0_5 with steps 5-7 in one process (d1_reports_v2)
+tree/tools/month_parts/alarm_grade_chain_v2_2_6_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_6_to20260430.sh	MONTH chain v2_2_6 (JOB_MONTH_V11): v2_2_5 with steps 5-7 in one process (d1_reports_v2)
+tree/tools/alarm_process/d1_mem_v2.py	team/RESEARCH/tools/alarm_package/V2_0_S2_V2/03_Grading/tree/tools/alarm_process/d1_mem_v2.py	the Outcomes rows kept as written and event_outcomes.read answered from them (D1)
+tree/tools/alarm_process/d1_reports_v2.py	team/RESEARCH/tools/alarm_package/V2_0_S2_V2/03_Grading/tree/tools/alarm_process/d1_reports_v2.py	one process from Outcomes to the menu, the card, perfire and the hand-off (D1)
+tree/tools/alarm_process/tests/test_d1_v2.py	team/RESEARCH/tools/alarm_package/V2_0_S2_V2/03_Grading/tree/tools/alarm_process/tests/test_d1_v2.py	D1's tests (M1-M3, C1, J1, J2 every pin = its file, K1) and 11 planted bugs
+tree/tools/alarm_process/alarm_grade_chain_v2_0_7_to20251231.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_7_to20251231.sh	GRADE chain v2_0_7 (JOB_GRADE_V12): v2_0_6 with the gm editions, window GRADE, the store evt1
+tree/tools/month_parts/alarm_grade_chain_v2_2_7_to20260430.sh	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_7_to20260430.sh	MONTH chain v2_2_7 (JOB_MONTH_V12): v2_2_6 with the gm editions, window MONTH, the store evt1
+tree/tools/alarm_process/d1_reports_v3.py	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/d1_reports_v3.py	d1_reports_v2 with Capture(lab3.evt.write_part) and the card given --windows
+tree/tools/alarm_process/test_d1_v3.py	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/03_Grading/tree/tools/alarm_process/test_d1_v3.py	d1_reports_v3 = v2 + evt1 writer + card window (6 tests, 3 planted faults)
+README.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/03_Grading/README.md	replaces the part page
+tree/tools/true_gate/README.md	team/RESEARCH/tools/true_gate/README.md	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/TOOL_CARD.md	team/RESEARCH/tools/true_gate/TOOL_CARD.md	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/CHANGELOG.md	team/RESEARCH/tools/true_gate/CHANGELOG.md	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/CLAIM_TEMPLATE.json	team/RESEARCH/tools/true_gate/CLAIM_TEMPLATE.json	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/SOURCE_FAMILIES_V1.tsv	team/RESEARCH/tools/true_gate/SOURCE_FAMILIES_V1.tsv	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/build_families_v1.py	team/RESEARCH/tools/true_gate/build_families_v1.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/true_gate_v1.py	team/RESEARCH/tools/true_gate/true_gate_v1.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/true_gate_v2.py	team/RESEARCH/tools/true_gate/true_gate_v2.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/true_gate_v3.py	team/RESEARCH/tools/true_gate/true_gate_v3.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/test_true_gate_v1.py	team/RESEARCH/tools/true_gate/tests/test_true_gate_v1.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/mutants_true_gate_v1.py	team/RESEARCH/tools/true_gate/tests/mutants_true_gate_v1.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/test_true_gate_v2.py	team/RESEARCH/tools/true_gate/tests/test_true_gate_v2.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/mutants_true_gate_v2.py	team/RESEARCH/tools/true_gate/tests/mutants_true_gate_v2.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/test_true_gate_v3.py	team/RESEARCH/tools/true_gate/tests/test_true_gate_v3.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/mutants_true_gate_v3.py	team/RESEARCH/tools/true_gate/tests/mutants_true_gate_v3.py	true_gate (NEW; SCOUT, ALARM_V1_20)
+tree/tools/true_gate/tests/test_families_v1.py	team/RESEARCH/tools/true_gate/tests/test_families_v1.py	true_gate (NEW; SCOUT, ALARM_V1_20)

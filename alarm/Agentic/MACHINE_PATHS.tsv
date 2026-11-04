@@ -1,0 +1,88 @@
+# Agentic MACHINE_PATHS (H2, 30 Oct 2026): every machine path in the files of MANIFEST.tsv (each tree/ file scanned for /Users/, /Volumes/, /home/,
+# /mnt/, /sessions/, ~/ and $HOME, plus the paths a line builds from F, R, T, AP, MP, DEV, FR, FV). The top copies KIT_V5/README.md and
+# KIT_V6/README.md, the kit READMEs, MANIFEST_SHA16 files, PROCESS_V8, ROUNDS, IDEA_GUIDE_*, IDEA_TO_ALARM_V4, QUICK_CHECK_EXAMPLES_V2,
+# METRIC_*, FORCED_TRADE_MAP_V1, the templates, the run template, mutants_v1.py, reg_append_v1.py, read_stratentry_v1.py, test_perfire_v1.py,
+# split_v1.py, month_read_v3.py, conditions_v1.py and the 5 fixtures name no absolute machine path.
+# kind DATA, SCRATCH, RUNNER, CODE, PYTHON, DOC. status ARG (an argument: fine), BUILT_IN (a new edition must read it from the settings
+# file or take it from inside Alarm), TEXT (only in a header line, a test text or a document). settings_key: Alarm/settings/SETTINGS_EXAMPLE.env.
+file	line	path	kind	what	settings_key	status
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	2	<SCRATCH>/work_@@RUNTAG@@/@@JOBNUM@@_MONTH_@@IDEA@@/	SCRATCH	the header line the runner reads (what the job writes)	SCRATCH	TEXT
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	8	<LAB_REPO>/forensics	CODE	F; R=$F/team/RESEARCH; AP=$R/tools/alarm_process (card v1_3); MP=$R/tools/month_parts (chain v2_2: in Alarm at 03_Grading/tree/tools/month_parts)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	8	<PYTHON>	PYTHON	PY: the interpreter of the per-fire file, its check, the month reads and conditions	PYTHON	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	10	$R/ALARM_DESIGN/runs/@@RUNTAG@@	DATA	RD: the agent run folder (definitions, PREREG, forecasts, receipts)	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	10	$R/ALARM_DESIGN/runs/CLAUDE1_20261028/tools	CODE	T: perfire_v1_to20260430.py, test_perfire_v1.py, month_read_v3.py, conditions_v1.py, split_v1.py (TEST editions: copied in tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools, but the job runs them at their dev paths)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	11	<SCRATCH>/work_@@RUNTAG@@/$J	SCRATCH	W: the job scratch folder (the chain's 3rd argument)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	11	$RD/receipts/$J	DATA	DV: the receipts copied back to the dev tree	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	18	<SCRATCH_DISK>	SCRATCH	fmb: free MB of the scratch drive (the job stops under 60 GB)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	20-22	$MP/alarm_grade_chain_v2_2_to20260430.sh, $AP/alarm_card_v1_3.py, $T/{perfire_v1_to20260430, test_perfire_v1, month_read_v3, conditions_v1, split_v1}.py	CODE	the pins, checked by sha16 at their dev paths		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	27	<DEV>	CODE	the working folder of the job (every later path is absolute)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	30,34,35,37,40	$MP/alarm_grade_chain_v2_2_to20260430.sh, $T/perfire_v1_to20260430.py, $T/test_perfire_v1.py, $T/month_read_v3.py, $T/conditions_v1.py	CODE	the steps it runs, at their dev paths		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	31-36	<DEV> and <SCRATCH_DISK> on the Mac; $HOME/mnt/dev and $HOME/mnt/SCRATCH_DISK in the VM	CODE	_roots(): the dev tree and the scratch drive, chosen by whether <LAB_REPO_ROOT> exists		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	40-41	$DEV/TradingPlatform/volat-agent/forensics, $DEV/TradingPlatform_repo/volat-agent/forensics	CODE	FV and FR, the two dev forensics roots		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	43,480	$FR/team/RESEARCH/ALARM_DESIGN (runs/<RUN>, runs/IDEAS_CLAIMED, KIT_V5/jobs/JOB_<KIND>_V5.job.sh.txt)	DATA	H: the agent runs and registers; the job templates are read from the dev tree H/KIT_V5/jobs, not from this folder (pinned by TEMPLATE_SHA, line 56)	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	45	$FV/orch1_20260817/runner	RUNNER	RUNNER: the job runner queues Q_V1..Q_V21 (IN, RUN)	RUNNER_QUEUES	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	46	python3 -B $FV/tools/job_alloc.py	CODE	ALLOC: the live job-number allocator (claim)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	47	$WDBR	SCRATCH	WDB: the scratch drive (its free MB; at least 60,000 plus the job WRITES_MB)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	48	$FR/team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py	CODE	REG: the register writer it runs for the RUNS row, pinned c301c5977ecd6860 (a TEST edition; copied in tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools, run at its dev path)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	278	<SCRATCH>/work_%s/%s/	SCRATCH	an ENTRY fire list must lie inside its GRADE job scratch folder (a text check)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/decide_forward_v1.py	18-21	<DEV> on the Mac; $HOME/mnt/dev in the VM	CODE	_roots(): the dev tree		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/decide_forward_v1.py	24-26	$FR/team/RESEARCH/ALARM_DESIGN, .../runs/CLAUDE1_20261028/tools/reg_append_v1.py	DATA	H (the run, its receipts and registers) and REG (the register writer, a TEST edition)	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/decide_v1.py	24-29	<DEV> and <SCRATCH_DISK> on the Mac; $HOME/mnt/dev and $HOME/mnt/SCRATCH_DISK in the VM	CODE	_roots(): the dev tree and the scratch drive		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/decide_v1.py	33-38	$FR/team/RESEARCH/ALARM_DESIGN, .../runs/CLAUDE1_20261028/tools/{reg_append_v1, read_stratentry_v1}.py	DATA	H, REG and RSE (the register writer and the price-path reader, TEST editions)	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v2.py	29-34	<DEV> and <SCRATCH_DISK> on the Mac; $HOME/mnt/dev and $HOME/mnt/SCRATCH_DISK in the VM	CODE	_roots(): the dev tree and the scratch drive		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v2.py	38-40	$FR/team/RESEARCH/ALARM_DESIGN, $FR/hb, $FV/orch1_20260817/runner	DATA	H (runs), HB (the board) and RUNNER (queues)	RESEARCH_ROOT, RUNNER_QUEUES	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/board_line_v1.py	12-17	<DEV> and <SCRATCH_DISK> on the Mac; $HOME/mnt/dev and $HOME/mnt/SCRATCH_DISK in the VM	CODE	_roots()		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/board_line_v1.py	21	$DEV/TradingPlatform_repo/volat-agent/forensics/hb	DATA	HB: the team board folder		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tools/clean_scratch_v1.py	6,130	--wdb <SCRATCH_DISK>	SCRATCH	the scratch drive is an argument (the CLEAN template passes <SCRATCH_DISK>)	SCRATCH	ARG
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt	2	<SCRATCH>/work_@@RUNTAG@@/...	SCRATCH	the header line the runner reads	SCRATCH	TEXT
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt	8	<LAB_REPO>/forensics; <PYTHON>	CODE	F (the dev forensics root: every tool it runs, at its dev path) and PY (the interpreter)	PYTHON	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt	12	<SCRATCH>/work_@@RUNTAG@@/$J	SCRATCH	W: the job scratch folder	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt	20	<SCRATCH_DISK>	SCRATCH	fmb: free MB of the scratch drive	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt	29	<DEV>	CODE	the working folder of the job		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	2	<SCRATCH>/work_@@RUNTAG@@/...	SCRATCH	the header line the runner reads	SCRATCH	TEXT
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	8	<LAB_REPO>/forensics; <PYTHON>	CODE	F (the dev forensics root: every tool it runs, at its dev path) and PY (the interpreter)	PYTHON	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	11	<SCRATCH>/work_@@RUNTAG@@/$J	SCRATCH	W: the job scratch folder	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	18	<SCRATCH_DISK>	SCRATCH	fmb: free MB of the scratch drive	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	32	<DEV>	CODE	the working folder of the job		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	34	<SCRATCH>/work_TOOLTRIAL/chain/${AID}_20250910_20251231_*	SCRATCH	the store places of STRATEGY's grader (protected folders)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_CLEAN_V5.job.sh.txt	2	<SCRATCH>/work_@@RUNTAG@@/...	SCRATCH	the header line the runner reads	SCRATCH	TEXT
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_CLEAN_V5.job.sh.txt	8	<LAB_REPO>/forensics; <PYTHON>	CODE	F (the dev forensics root: every tool it runs, at its dev path) and PY (the interpreter)	PYTHON	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_CLEAN_V5.job.sh.txt	17	<SCRATCH_DISK>	SCRATCH	fmb: free MB of the scratch drive	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_CLEAN_V5.job.sh.txt	21,24	--wdb <SCRATCH_DISK>	SCRATCH	the scratch drive passed to clean_scratch_v1.py	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tests/sim_env.py	5	<VM_UPLOADS>/uploads/dev/_scratch_scout/kit5_test	CODE	REAL: the 5 fixture files on the machine where SCOUT ran the tests; proof_harness/kit5_tests_main.py points it at tree/fixtures/kit5_test		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/tests/sim_env.py	78,131,144	<DEV>, $HOME/mnt/dev, <SCRATCH_DISK>	CODE	the sandbox maps these Mac paths to its own folders (a test, nothing outside the sandbox is read)		TEXT
+tree/ALARM_DESIGN/KIT_V5/tests/test_kit5_tools.py	187	<SCRATCH>/work_%s/%s/P1_FIRES_V1_LIST.tsv	SCRATCH	a path text the test expects in a FIRES row		TEXT
+tree/ALARM_DESIGN/KIT_V5/skills/alarm-design-v5/SKILL.md	21,23,51	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, $HOME/mnt/volat_store/lab_days	DATA	the agent instructions name the dev tree and the lab days	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	2	<SCRATCH>/work_@@RUNTAG@@/@@JOBNUM@@_GRADE_@@IDEA@@/	SCRATCH	the header line the runner reads (what the job writes)	SCRATCH	TEXT
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	8	<LAB_REPO>/forensics	CODE	F; R=$F/team/RESEARCH; AP=$R/tools/alarm_process: the chain v2_0 and the card v1_2 it pins and runs (TEST editions, not in Alarm)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	8	<PYTHON>	PYTHON	PY: the interpreter of the per-fire file, its check and the hand-off test	PYTHON	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	10	$R/ALARM_DESIGN/runs/@@RUNTAG@@	DATA	RD: the agent run folder (definitions, PREREG, receipts)	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	10	$R/ALARM_DESIGN/runs/CLAUDE1_20261028/tools	CODE	T: the per-fire file, its check and the hand-off test it pins and runs (TEST editions: copied in tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools, but the job runs them at their dev paths)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	11	<SCRATCH>/work_@@RUNTAG@@/$J	SCRATCH	W: the job scratch folder (the chain's 3rd argument)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	11	$RD/receipts/$J	DATA	DV: the receipts copied back to the dev tree	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	18	<SCRATCH_DISK>	SCRATCH	fmb: free MB of the scratch drive (the job stops under 60 GB)	SCRATCH	BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	20-21	$AP/alarm_grade_chain_v2_0_to20251231.sh, $AP/alarm_card_v1_2.py, $T/perfire_v1_to20260430.py, $T/test_perfire_v1.py, $T/lead_null_v1_to20251231.py	CODE	the pins, checked by sha16 at their dev paths		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	26	<DEV>	CODE	the working folder of the job (every later path is absolute)		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	29,32,33,44	$AP/alarm_grade_chain_v2_0_to20251231.sh, $T/perfire_v1_to20260430.py, $T/test_perfire_v1.py, $T/lead_null_v1_to20251231.py	CODE	the steps it runs, at their dev paths		BUILT_IN
+tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md	102	<PYTHON>	PYTHON	a command written in the process document	PYTHON	TEXT
+tree/ALARM_DESIGN/KIT_V5/LEARNINGS_V5.tsv	26	<PYTHON>	DOC	a command in a learning row	PYTHON	TEXT
+tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPT_V5.md	8,18-23	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>	DOC	the prompt tells the agent where the dev tree and the lab store are, on the Mac and in the VM	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPTS_29OCT.md	8-23 (and the same lines of the 3 other prompts)	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>	DOC	the filled prompts of 29 Oct, as above	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/LEARNINGS_V6.tsv	26,51,111	<PYTHON>, $HOME/mnt/dev, $HOME/scout_work/pending_months.txt	DOC	commands and folders named in learning rows	PYTHON, RESEARCH_ROOT	TEXT
+tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPT_V6.md	15,17,18	<LAB_REPO>/forensics, $HOME/mnt/dev	DOC	where the dev tree is, on the Mac and in the VM	RESEARCH_ROOT	TEXT
+tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_29OCT_R2.md	8-10, 22-25 (each prompt)	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>, $HOME/mnt/volat_store	DOC	the filled prompts of the round: the dev tree, the run folder and the lab store, on the Mac and in the VM	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_29OCT_R3.md	8-10, 29-32 (each prompt)	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>, $HOME/mnt/volat_store	DOC	the filled prompts of the round: the dev tree, the run folder and the lab store, on the Mac and in the VM	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_29OCT_R4.md	8-10, 29-32 (each prompt)	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>, $HOME/mnt/volat_store	DOC	the filled prompts of the round: the dev tree, the run folder and the lab store, on the Mac and in the VM	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_29OCT_R5.md	8-10, 29-32 (each prompt)	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>, $HOME/mnt/volat_store	DOC	the filled prompts of the round: the dev tree, the run folder and the lab store, on the Mac and in the VM	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_30OCT_R6.md	8-10, 31-34 (each prompt)	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, <DATA_ROOT>, $HOME/mnt/volat_store	DOC	the filled prompts of the round: the dev tree, the run folder and the lab store, on the Mac and in the VM	RESEARCH_ROOT, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/skills/alarm-design-v6/SKILL.md	20,22,70,89,92	<LAB_REPO>/forensics, <DEV>, $HOME/mnt/dev, $HOME/mnt/SCRATCH_DISK/judge_scratch/..., $HOME/mnt/volat_store/lab_days	DOC	the agent instructions name the dev tree, the job scratch and the lab days	RESEARCH_ROOT, SCRATCH, LAB_DAYS	TEXT
+tree/ALARM_DESIGN/KIT_V6/tools/idea_time_v1.py	14-18	<DEV> on the Mac; ~/mnt/dev in the VM	CODE	_roots(): the dev tree		BUILT_IN
+tree/ALARM_DESIGN/KIT_V6/tools/idea_time_v1.py	20-21	$F/team/RESEARCH/ALARM_DESIGN	DATA	H: the agent runs it reads (board stamps, registers, receipts, claims)	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/perfire_v1_to20260430.py	13-14	<LAB_REPO>/forensics (team/LAB3/code, team/RESEARCH/tools, tools/event_outcomes)	CODE	F: the lab3 code and the lab tools it imports (event_outcomes, labcore waves) at their dev paths		BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/lead_null_v1_to20251231.py	2	<PYTHON>	DOC	the header names the interpreter of its runner job	PYTHON	TEXT
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/lead_null_v1_to20251231.py	78,693	<LAB_REPO>/forensics (team/LAB3/code, team/RESEARCH/tools, tools/event_outcomes)	CODE	F: the store reader and labcore waves it imports at their dev paths		BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/run_alarm_store_v10_3_noladder.sh	21	<DEV>/_scratch_ED3/ed3_2_test/ED3_2_TEST_M_V1.json, ..._JANFEB.json	CODE	LCFG: STRATEGY's test settings in a scratch folder of the dev tree		BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/run_alarm_store_v10_3_noladder.sh	22	<PYTHON>	PYTHON	PY	PYTHON	BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/run_alarm_store_v10_3_noladder.sh	23-30, 44	<LAB_REPO>/forensics (R=$F/team/RESEARCH: LIBRARY universes, registry, context cards; tools/idea_to_grade)	DATA	F and R: the library tables it reads and the grader it runs	RESEARCH_ROOT	BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/run_alarm_store_v10_3_noladder.sh	32	<DEV>/_scratch_tooltrial/grouper_v1	CODE	G: the grouper in a scratch folder of the dev tree		BUILT_IN
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/run_alarm_store_v10_3_noladder.sh	34,45	<SCRATCH>/work_TOOLTRIAL/chain/..., <SCRATCH>/work_ALARMLIB/i2g_v3_2/...	SCRATCH	C and D: its chain folder and the grader store (protected places)	SCRATCH	BUILT_IN

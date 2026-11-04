@@ -1,0 +1,77 @@
+{
+ "_header": "DEF_TEMPLATE_V4: a blank alarm definition, not a real alarm. Owner SCOUT (the alarm kit). New edition by SCOUT helper K13 for release ALARM_V1_5 (31 Oct 2026); old file team/RESEARCH/ALARM_DESIGN/KIT_V2/templates/DEF_TEMPLATE_V3.json 1afcc5d78c8d0a06. Every field and every rule the code applies is explained in DEF_TEMPLATE_V4.md beside it. Copy it, replace every REPLACE and the example inputs, keep the shape; this key may stay or go.",
+ "id": "REPLACE_ID",
+ "family": "REPLACE_FAMILY",
+ "version": "1",
+ "claim": {
+  "one_line": "REPLACE: the moment, who must trade or what changes, the expected move and its side, in one line",
+  "side_meaning": "REPLACE: what +1 and -1 mean as the event's direction (+1 = the event pushes the price up); the lean FADE or FOLLOW goes in your VARIANTS row, never in fire.side",
+  "type": "PREDICT",
+  "footprint_s": 300,
+  "note": "REPLACE: the time scale and its reason (never a result); the codes, each read with metric_brief_v2.py"
+ },
+ "window": {
+  "first": "20250901",
+  "last": "20260430"
+ },
+ "grid_s": 60,
+ "inputs": {
+  "x": {
+   "op": "raw",
+   "code": "A1.S08"
+  },
+  "x_top": {
+   "op": "own_pct",
+   "of": "x",
+   "q": 99
+  },
+  "px": {
+   "op": "price"
+  },
+  "move": {
+   "op": "change",
+   "of": "px",
+   "w_s": 300
+  },
+  "side": {
+   "op": "sign",
+   "of": "move"
+  }
+ },
+ "conditions": [
+  {
+   "name": "REPLACE: the claim in words, with its unit (example: x, the long liquidations of the minute just ended in USD, above its own top 1 pct of the 14 days before)",
+   "lhs": "x",
+   "cmp": ">",
+   "rhs": "x_top",
+   "role": "claim"
+  },
+  {
+   "name": "REPLACE: a second test in words, or delete this condition (example: the 5 min price change is down, the way forced long sales push)",
+   "lhs": "move",
+   "cmp": "<",
+   "rhs": 0,
+   "role": "claim"
+  }
+ ],
+ "fire": {
+  "onset": true,
+  "refractory_s": 3600,
+  "side": {
+   "input": "side",
+   "sign": 1
+  }
+ },
+ "truth": [
+  {
+   "name": "forced_after_60m",
+   "kind": "forced_usd",
+   "start_s": 0,
+   "end_s": 3600,
+   "dir": "opp",
+   "floor_usd": 20000
+  }
+ ],
+ "primary": "forced_after_60m",
+ "base": {}
+}

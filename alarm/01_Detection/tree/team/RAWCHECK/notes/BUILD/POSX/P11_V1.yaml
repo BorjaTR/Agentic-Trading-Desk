@@ -1,0 +1,207 @@
+# POSX P11 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P11_V1.md a7894a60) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel name against ADDON_ARCHITECTURE_V4 b5fcc859 9.4 (med_mad; roll_days not in addon_grid_v1 yet); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 (med_mad); values unchanged
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P11 nits: pass line 2 could not fail (base within its own min and max) and is replaced by the price-correlation line, the keep conditions are the pass lines (BED G2), C13 S01's BAD_INPUT, Binance in conclude; X5: base(D) in THE FIT TABLE X1/fit/POSX/<D>.parquet
+# Signed by BED's REVIEW OK of edition 4, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P11
+producer: POSX
+item: 'crowding: open interest x mark over its trailing median (BUILD_ITEMS_V3 3dbb747a line P11)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when the meaning check's pass lines 1 and 2 hold on 2026-03-08 (levels proposed, EDGE1 or the owner sets them). DROP, or rename to 'price over its median' with a could_build, when P11 mostly follows the price.
+name: Binance open interest in dollars at the close, over its median at the clock hours of the 30 days before D
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 4
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  How much money sits in the coin's open positions now against its usual over the 30 days before D: 1.3 = 30 percent more open
+  interest in dollars than the month's median. It rises with the price alone, the positions unchanged.
+example: >-
+  A coin whose open interest at the clock hours of the last 30 days had a median of 100 million dollars, and 130 million dollars
+  now: P11 = 1.3. With the coins open unchanged and the price 10 percent higher than at every base hour, P11 = 1.1.
+formula: >-
+  OIusd(t) = E2 S02(t) x C13 S01(t): Binance open interest in coins of the contract at the minute end t times the close of the
+  minute ending t (both year rows, value_f64). base(D) = the median of OIusd over the clock-hour minute ends hh:00 of D-30 to D-1
+  (24 x 30 = 720 moments, each with its own day's roster) at which both inputs have a value: the middle one, for an even count the
+  mean of the two middle ones. P11(u) = OIusd(u) / base(D), float64, decimals none (the draft's 12-decimal text dropped, V2 rule
+  4.2). Empty, in this order: E2 S02's reason at u, then C13 S01's; NO_HISTORY when fewer than 684 of the 720 base moments are
+  valued (95 percent, the same floor as P3); ZERO_BASE when base(D) = 0. The base is fixed for the day and uses no row of D.
+source:
+  kind: doc
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 row P6 (line 55, tool none) and section 4.6 (line 74): 'Crowding = (OI x mark at e) / trailing 30-day
+    median of the same, trailing only', practitioner (no paper). Difference: the mark is not in B, so this card values the open
+    interest at the close (C13 S01) and the name says 'at the close' (the mark premium E3 S01 is a few bp on liquid coins,
+    MEANING_E3_V2); the trailing median is taken over the 720 clock-hour moments of the 30 days before D, not every minute.
+inputs:
+  - kind: year
+    ref: E2 S02 (Binance open interest in coins of the contract at the minute end)
+    card: MEANING_E2_V2 5a309fc5 (lines 131 to 148; card testbed/value_audit/registers/CARD_E2_V1.md) / SETTINGS_E2_V1
+    verdict: CLEAN
+    rule_in_force: >-
+      the year's row of E2 S02 at u and at each base clock hour: the last good row received by that moment, the day's file, else the
+      day before (MEANING_E2_V2.yaml line 38)
+    stale_rule: E2 S02's own; older than 61.0 s is empty STALE_VALUE (MEANING_E2_V2.yaml line 36)
+    days: D, and D-30 to D-1 at their 24 clock-hour minute ends (year rows, no CARRY)
+  - kind: year
+    ref: C13 S01 (the close of the minute, a trade price)
+    card: MEANING_C13_V4 / SETTINGS_C13_V1 (LAYER_REGISTER_V32 e249ce94 line 312)
+    verdict: LIMITS
+    rule_in_force: the year's row of C13 S01 at u and at each base clock hour
+    stale_rule: C13 S01's own empty_reason and stale pass through (TRADES_HOLE, THIN_FEED as the year writes them)
+    days: D, and D-30 to D-1 at their 24 clock-hour minute ends (year rows, no CARRY)
+overlaps: none
+per_coin: >-
+  Open interest is in coins of each contract (a 1000-prefixed contract counts thousands of coins, MEANING_E2_V2.yaml line 7) and the close
+  is per contract, so OIusd is dollars for every coin, and the ratio has no unit: coins compare by P11, never by OIusd. A coin new on
+  the roster, or with many empty hours, is NO_HISTORY until 684 of its 720 base moments are valued. A coin with empty C13 S01
+  (thin coins, THIN_FEED) loses those base hours.
+time: >-
+  The base is computed once per D from the 30 days before D and holds all day; 00:00 of D reads D's own year rows (no CARRY). The year
+  starts 10 Sep 2025 (build_register.py line 159): D = 8 Oct 2025 and earlier have at most 672 base moments (NO_HISTORY everywhere);
+  D = 9 Oct 2025 can reach 696 (valued where every other hour is); 10 Oct 2025 is the first full window. Crash days in the base
+  (10 Oct 2025) move the median little (a median of 720).
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S12
+      label: oi_usd_over_30d_median
+      units: ratio (1 = the median of the 30 days before D)
+      value_kind: float
+      decimals: none
+      means: Binance open interest in dollars at the close over its median at the clock hours of the 30 days before D
+      never: [a rise in positions when only the price rose, leverage (no margin data), the number of traders]
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the latest known_at of the rows used (E2 S02 and C13 S01 at u, and the base rows, all before 00:00 of D); an empty row
+    takes the known_at of the input rows read at u, or u when none; so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: E2 S02 (or C13 S01) empty NO_ROSTER at u
+    - reason: NO_FILE
+      when: E2 S02 empty NO_FILE at u (its reason first), or C13 S01 empty NO_FILE
+    - reason: BAD_INPUT
+      when: E2 S02 empty BAD_INPUT at u, or C13 S01 empty BAD_INPUT at u
+    - reason: NO_VALUE
+      when: E2 S02 empty NO_VALUE at u
+    - reason: STALE_VALUE
+      when: E2 S02 empty STALE_VALUE at u (older than 61.0 s), stale 1
+    - reason: TRADES_HOLE
+      when: E2 S02 valued and C13 S01 empty TRADES_HOLE at u
+    - reason: THIN_FEED
+      when: E2 S02 valued and C13 S01 empty THIN_FEED at u
+    - reason: NO_HISTORY
+      when: both inputs valued at u and fewer than 684 of the 720 base moments of D-30 to D-1 valued
+    - reason: ZERO_BASE
+      when: base(D) = 0
+    - reason: NO_ROW
+      when: no year row of E2 S02 or C13 S01 for the coin at u (a roster coin the year did not write); never read as 0
+  stale_rule: stale = the stale of the input whose reason is written (1 only with STALE_VALUE); the base's age is by design, never stale
+  max_staleness_s: 61
+  window_days: 30
+  no_history: >-
+    NO_HISTORY while fewer than 684 of the 720 base moments are valued: every day up to 8 Oct 2025; 9 Oct 2025 is the first day with a
+    possible value (696 moments, 9 Sep 2025 not in the year); 10 Oct 2025 the first full window. A new coin waits about 29 days.
+  fit_rule: >-
+    base from the 30 days before D only, recomputed each day (no row of D); the 684 floor and the 720 moments fixed; base(D) and its
+    count per coin written to THE FIT TABLE X1/fit/POSX/<D>.parquet (B's schema; names P11.base, P11.n; as_of 00:00 of D; known_at the
+    latest known_at of the base moments, before D; ADDON_ARCHITECTURE_V4 edit 3 section 5, REVIEW_LEAD_EDGE1_V1 X5)
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 an odd base
+    input: base OIusd values [80, 100, 120] (window shortened to 3 in the test, floor 3), now 130
+    answer: base 100, P11 = 1.3
+  - case: E2 an even base
+    input: base [80, 100, 120, 140], now 110
+    answer: base (100 + 120) / 2 = 110, P11 = 1
+  - case: E3 coins times the close
+    input: E2 S02 = 1,000 coins and C13 S01 = 50 at u; base(D) = 50,000
+    answer: OIusd 50,000, P11 = 1
+  - case: E4 the price alone
+    input: base moments all at 1,000 coins and close 50 (base 50,000); at u 1,000 coins and close 55
+    answer: P11 = 1.1 (the coins unchanged)
+  - case: E5 the 95 percent floor
+    input: 683 of 720 base moments valued; then 684
+    answer: empty NO_HISTORY; then valued
+  - case: E6 a base moment with one input empty
+    input: at one base hour E2 S02 valued and C13 S01 empty THIN_FEED
+    answer: that moment is not in the base (719 of 720 counted)
+  - case: E7 the reason order
+    input: at u E2 S02 empty STALE_VALUE stale 1 and C13 S01 empty THIN_FEED
+    answer: P11 empty STALE_VALUE, stale 1
+  - case: E8 a zero base
+    input: all base moments OIusd 0
+    answer: P11 empty ZERO_BASE
+  - case: E9 a skewed base
+    input: base [80, 100, 300] (window 3, floor 3), now 130
+    answer: base 100 (the median; the mean would be 160 and give 0.8125), P11 = 1.3
+unit_tests:
+  - test: U1 (E1, E2, E3, E9)
+    planted: E2 S02 and C13 S01 rows of four coins at the base clock hours (window length a parameter, 3 or 4 in the test) and at u
+    expect: P11 floats 1.3, 1.0, 1.0, 1.3; known_at = the later of the two input rows at u
+  - test: U2 (E4)
+    planted: 720 base hours at 1,000 coins and close 50; at u 1,000 coins and close 55
+    expect: P11 = 1.1 (float of 11/10)
+  - test: U3 (E5, E6)
+    planted: a coin with 683 valued base moments, one with 684, one with one base hour C13 S01 empty THIN_FEED
+    expect: empty NO_HISTORY; valued; the third coin's base median over 719 moments
+  - test: U4 (E7, E8 and a D-hour planted)
+    planted: E7 and E8 rows; a planted extreme OIusd at 05:00 of D
+    expect: STALE_VALUE stale 1; ZERO_BASE; the D-hour value moves no base (base from D-30 to D-1 only)
+  - test: U5 the row stamps
+    planted: U1 to U4
+    expect: every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day
+mutants:
+  - mutant: M1 the base including D's own hours
+    caught_by: U4 (the planted 05:00 value of D changes the base)
+  - mutant: M2 the mean in place of the median
+    caught_by: U1 (E9 gives 0.8125 in place of 1.3)
+  - mutant: M3 open interest in coins only (no close)
+    caught_by: U2 (1.0 in place of 1.1)
+  - mutant: M4 the floor off by one (685 or 683)
+    caught_by: U3 (the 684 coin empty, or the 683 coin valued)
+  - mutant: M5 C13 S01's reason before E2 S02's
+    caught_by: U4 (THIN_FEED in place of STALE_VALUE)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 12:10, 23:59 and the coin-minute of the day's largest P11 (the tester picks it after the recompute)
+      why: a full 30-day base (6 Feb to 7 Mar 2026), the day start with no CARRY, the day end, the tail
+    - point: 2025-09-24, all coins, minute ends 00:00 and 12:10
+      why: NO_HISTORY at every coin-minute (14 days of the year before D)
+  pass: >-
+    The tester recomputes OIusd, the 720-moment base and P11 from B's rows with Fraction, never the builder's code: floats within 1e-9
+    relative (V2 rule 5), empty reasons, stale and known_at equal. One small runner job (31 days of two names at 24 hours plus D).
+meaning_check:
+  pass_lines:
+    - 'On 2026-03-08, over the coin-hours whose close moved under 0.5 percent in the hour, the hour changes of P11 and of E2 S02 have the same sign at 95 percent or more of those with E2 S02 changed (with a flat price P11 follows the positions; proposed level, EDGE1 or the owner sets it)'
+    - 'On 2026-03-08, the correlation over the day of log P11 with log C13 S01 is under 0.95 for at least half of the coins (P11 is not the price alone; proposed level, EDGE1 or the owner sets it)'
+  report_only:
+    - per coin, the correlation over the day of log P11 with log C13 S01 (the price part of P11; above 0.95 for most coins adds a never line for that day)
+    - P11 in coins (E2 S02 over the median of E2 S02 at the same base moments) beside P11
+    - how often P11 is above 1.5 or below 0.67 on each day, per coin
+    - the base moments counted per coin (720, or fewer and why)
+conclude:
+  may:
+    - a coin's Binance open interest in dollars at the Binance close against its own month (above 1 more money in open positions than usual)
+  never:
+    - a rise in positions when only the price rose (P11 rises 10 percent with the price, the coins unchanged)
+    - leverage or crowding of one side (no margin data, no side)
+    - a comparison of OIusd levels across coins as crowding (the ratio compares, the level is size)
+    - the mark price's dollar value (the close is used, a trade price)
+readers: none yet
+implementation:
+  how: >-
+    Per day: E2 S02 and C13 S01 rows of the 720 base moments for all coins (24 rows per coin and day from 30 days of B, polars), one
+    median per coin; then one column expression over D's rows; no loop over rows or minutes in Python. The base rows are read once and
+    shared with P3's base pass.
+  kernel: 'addon_grid_v2.med_mad, its median part, over the stack of base moments (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 257; ADDON_ARCHITECTURE_V4 9.4)'
+  memory_mb: 150
+  seconds_share: 1.5
+data_checks: none

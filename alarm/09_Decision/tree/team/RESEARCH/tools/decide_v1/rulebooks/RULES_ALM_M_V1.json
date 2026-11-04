@@ -1,0 +1,59 @@
+{
+ "schema": "DECIDE_RULEBOOK_V1",
+ "alarm_id": "ALM_M_V1",
+ "version": 2,
+ "note": "version 2 (26 Oct 2026, decide V1.0.1): S1 is FAILED by the outcome loop (loop_v1_1_run, audit AUDIT_DECIDE_LOOP_V1_1_INDEP.md 972a812dea5bb3c2): S1 passed in 0 of 22 cells and the skipped TIGHTER fires faded at least as well as the rest, so the mechanism is contradicted. A FAILED line stays as a record and never decides. Nothing pays after cost for M (no cell nets above zero at the stress cost), so entry and exit stay UNSET and the Jan-Feb look is not spent. The FADE side stays CANDIDATE: it beats the tough baseline (P1 6 of 6 TT cells) but does not survive cost. Version 1 note: every line was CANDIDATE from one loop on Sep 10 - Dec 31 2025.",
+ "side": {
+  "value": "FADE",
+  "status": "CANDIDATE",
+  "mechanism": "a coin's 15 min move in its own top 1% of the 14 days before overshoots and partly comes back",
+  "evidence": {
+   "source": "team/RESEARCH/LEAD/loop2/LOOP2_REPORT_V1.md",
+   "sha16": "07c38e8b796c645e",
+   "cell": "M big move only (kept): against the move +6.8 points vs cleaned random on +2c before -1c within 1 h, 1,435 waves, every month positive; with the move -3.1. Also: reaches +2c before -1c 39% vs break-even 67% (nothing pays yet)"
+  }
+ },
+ "skip_rules": [
+  {
+   "id": "S1",
+   "field": "ctx.LIQ_COIN.SPREAD",
+   "states": [
+    "TIGHTER",
+    "ABOUT_USUAL",
+    "WIDER"
+   ],
+   "reasons": [
+    "UNKNOWN*",
+    "NO_HISTORY*",
+    "NOT_READY*",
+    "NOT_APPLICABLE*",
+    "LATER*",
+    "OWN_TRIGGER*",
+    "META*"
+   ],
+   "skip_if": [
+    "TIGHTER"
+   ],
+   "status": "FAILED",
+   "mechanism": "a tighter than usual book at the fire suggests real two-sided interest rather than a thin push, so the move tends to keep going and a fade is on the wrong side. INFERENCE: the evidence cell measured FOLLOW (with the push) reaching +8c, not the fade; that skipping the fade pays is not measured yet and is tested directly on the TIGHTER fires by the outcome loop (loop_v1/DECIDE_LOOP_PREREG_V1.md)",
+   "evidence": {
+    "source": "team/RESEARCH/LIBRARY/context_split/runs_loop_v1/LOOP_SUMMARY_V2.md",
+    "sha16": "9615fb3b191bd2ac",
+    "cell": "M LIQ_COIN.SPREAD: TIGHTER, FOLLOW reach +8c within 1 h, 44.91 vs 23.97, +18.4 points after the move x volatility cell, 750 fires, 420 waves, no warning"
+   },
+   "note": "states copied from context_split/library_v4.py field LIQ_COIN.SPREAD; reasons = the context library's typed non-states (library_v4.py TYPED: a word starting with one of them is not a state). FAILED 26 Oct 2026 by the outcome loop (DECIDE_LOOP_PREREG_V1_1.md and ADDENDUM_1; ledger asks PREREG_ALM_M_V1_20261026T071055Z TAKE FAIL and PREREG_ALM_M_V1_20261026T071628Z SKIPRULE FAIL): S1 passes in 0 of 22 cells; P2 (the TIGHTER fires are worse to fade) holds in only 9 of 22 cells, the TIGHTER fade edge is higher than TAKE's in 13 of 22. Result file loop_v1_1_run/LOOP_RESULT_V1.md 4c1583802e9c49fd."
+  }
+ ],
+ "entry": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "exit": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "size": {
+  "value": 1,
+  "status": "DEFAULT"
+ }
+}

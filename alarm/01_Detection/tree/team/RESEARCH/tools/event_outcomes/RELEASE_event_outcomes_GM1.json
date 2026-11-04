@@ -1,0 +1,64 @@
+{
+ "by": "BUILD5 make_gm1.py, 31 Oct 2026",
+ "data_vintage": "none pinned here: every run freezes its own input vintages (PRICE / EPI index sha16, funding files) in RUN_FROZEN.json",
+ "files": {
+  "team/RESEARCH/tools/event_outcomes/ARCHITECTURE.md": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "e6384aecb822250f"
+  },
+  "team/RESEARCH/tools/event_outcomes/OUTCOMES_CORE_V3.json": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "c332fb4e54745640"
+  },
+  "team/RESEARCH/tools/event_outcomes/README.md": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "7908dcb1f4acfb91"
+  },
+  "team/RESEARCH/tools/event_outcomes/acceptance_v3.py": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "9726414a19c5b888"
+  },
+  "team/RESEARCH/tools/event_outcomes/event_outcomes_gm1.py": {
+   "role": "event_outcomes VERSION 3, edition gm1 (BUILD5 G1 D4: GRADE = event_outcomes_rel1.py, MONTH = event_outcomes_aw1_rel1.py, the window chosen by EO_WINDOWS)",
+   "sha16": "85118044ba212080"
+  },
+  "team/RESEARCH/tools/event_outcomes/release_v3.py": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "c9f5d769a66b71e4"
+  },
+  "team/RESEARCH/tools/event_outcomes/test_a51_on_successor.py": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "97ec8920f848c4f4"
+  },
+  "team/RESEARCH/tools/event_outcomes/test_event_outcomes.py": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "e657fff414afb5b7"
+  },
+  "team/RESEARCH/tools/event_outcomes/test_outcomes_v3.py": {
+   "role": "event_outcomes VERSION 3 (own)",
+   "sha16": "5666b0f786e4cda3"
+  },
+  "team/RESEARCH/tools/event_profile/run_parallel_gm1.py": {
+   "role": "the shared launcher (outcomes branch) run executes, edition gm1 (workers run event_outcomes_gm1.py)",
+   "sha16": "5334685539ade682"
+  }
+ },
+ "open_findings": [
+  "see team/RESEARCH/tools/event_outcomes/A51_ANSWERS_V3.md"
+ ],
+ "reason": "G1 D4 (one edition for GRADE and MONTH): RELEASE_event_outcomes_V3_REL1.json e9e08fbe66b6571a with event_outcomes_gm1.py and run_parallel_gm1.py in place of event_outcomes_rel1.py and run_parallel_rel1.py; every other file, release, runtime and finding the same",
+ "release": "event_outcomes_GM1",
+ "releases": {
+  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "eca2c8a125d24283",
+  "team/RESEARCH/tools/bucket_proof/RELEASE_label_ewsd_V2_6.json": "c257b3111351a28d",
+  "team/RESEARCH/tools/exit_engine/RELEASE_exit_engine_V1_7.json": "9d359a7034e5d7c5",
+  "team/RESEARCH/tools/factory/RELEASE_factory_V7.json": "2d7e3657ebb9de76",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "3cd411844dd24562"
+ },
+ "replaces": "none (V3_REL1 stays for the chains that run event_outcomes_rel1.py)",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "status": "TEST, NOT REVIEWED (BUILD5 G1 D4; V3_CANDIDATE: CANDIDATE: NOT APPROVED; independent re-review of A51-01..07 pending)"
+}

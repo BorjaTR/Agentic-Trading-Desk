@@ -1,0 +1,4 @@
+stage	question
+fires	does it fire on a few coin-days (hc_defs)
+memory	does it fit in memory (hc_mem_probe)
+size	waves a month (hc_size)

@@ -1,0 +1,180 @@
+# POSX P10 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P10_V1.md 9fcd1e88) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel line against ADDON_ARCHITECTURE_V4 b5fcc859 9.4; values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P10 fix X7: Binance in the name and label (more P10 nits follow in this edition); the BUILD_TEST keep conditions as pass lines with levels proposed (BED G2; FLAT's share now a pass line), the word's path through value_txt (EDGE1 nits); NO_ROW as P1 and P11 (EDGE1 nit)
+# Signed by BED's REVIEW OK of edition 3, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P10
+producer: POSX
+item: 'open interest against price quadrant (BUILD_ITEMS_V3 3dbb747a line 16, P10)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when the meaning check's pass lines 1 and 2 hold (each word fires; FLAT does not dominate; levels proposed for EDGE1 or the owner to set). DROP, or move to OPEN O1 B (a dead band measured first), when either fails.
+name: the practitioners' word for the last hour from the signs of the Binance open interest change and the Binance close change
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 3
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  The trading floor's reading of the last 60 minutes from two signs: NEW_LONGS (open interest up, price up), NEW_SHORTS (open interest
+  up, price down), SHORT_COVERING (open interest down, price up), LONG_EXIT (both down), FLAT (either unchanged). A label of lore,
+  not a tested signal.
+example: 'Open interest +5 coins and the close -1 over the hour: NEW_SHORTS. Open interest -3, close +2: SHORT_COVERING.'
+formula: >-
+  dOI = E2 S02(u) - E2 S02(u - 60 min); dP = C13 S01(u) - C13 S01(u - 60 min); the signs compare the two exact year values directly
+  (a > b on the floats, no tolerance). S11 = NEW_LONGS when dOI > 0 and dP > 0; NEW_SHORTS when dOI > 0 and dP < 0; SHORT_COVERING
+  when dOI < 0 and dP > 0; LONG_EXIT when dOI < 0 and dP < 0; FLAT when dOI = 0 or dP = 0. At u before 01:00 the reads at u - 60 min
+  are D-1's year rows (at u = 00:30, E2 S02 and C13 S01 at 23:30 of D-1; a day holds the minute ends 00:00 to 23:59). Empty, first
+  reason in this order - NO_HISTORY when u - 60 min falls before 10 Sep 2025; E2 S02 at u; E2 S02 at u - 60 min; C13 S01 at u;
+  C13 S01 at u - 60 min. OPEN O1 (reviewer, then EDGE1) - A, APPLIED here, FLAT only at an exact 0; B, a dead band (opinion,
+  RESEARCH_TOOLS_V1 4.6), its width measured first. LONG_EXIT names 'long liquidation or closing' without claiming liquidations
+  (A4, A1 measure those).
+source:
+  kind: doc
+  ref: >-
+    Marketcalls (2008) and Quantsapp (the practitioners' open interest and price mapping; RESEARCH_TOOLS_V1 aad3cc38 section 4.6, row
+    P6). CME says only that rising open interest confirms a trend: the mapping is lore, not a law. No tool computes it on our data.
+inputs:
+  - kind: year
+    ref: E2 S02 (Binance open interest in coins at the minute end)
+    card: CARD_E2_V1 (testbed/value_audit/registers, 65b57ca4) rules 1 to 7 / SETTINGS_E2_V1 row S02 / MEANING_E2_V2.md line 15
+    verdict: CLEAN
+    rule_in_force: the year's rows at u and at u - 60 min (CARD_E2_V1 rule 1, line 102)
+    stale_rule: STALE_VALUE when the row is older than 61.0 s (CARD_E2_V1 rule 5, line 106), stale 1; passes through
+    days: D, and D-1 for u - 60 min before 00:00 of D (B of D-1 read directly; no CARRY needed for year rows)
+  - kind: year
+    ref: C13 S01 (close, the price of the minute's last trade)
+    card: CARD_C13_V4 (69ff088d) rules 5 to 8 / SETTINGS_C13_V1 row S01 / MEANING_C13_V4
+    verdict: LIMITS
+    rule_in_force: the year's rows at u and at u - 60 min
+    stale_rule: C13 S01's own empty reasons (NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT, CARD_C13_V4 rule 6, lines 101 to 105) and stale pass through
+    days: D, and D-1 for u - 60 min before 00:00 of D
+overlaps: none
+per_coin: >-
+  Every coin of D's roster. E2 S02 is polled every few seconds (RESEARCH_TOOLS_V1 4.5), so dOI is rarely exactly 0 and FLAT comes
+  mostly from dP = 0 (the same last trade price an hour apart, likelier on wide-step coins such as the 1000x coins). A minute without
+  a trade empties C13 S01 (TRADES_HOLE, CARD_C13_V4 rule 6), so a quiet minute at u or u - 60 min empties the word.
+time: >-
+  00:00 to 00:59 of D read D-1's rows at u - 60 min. The first year day, 10 Sep 2025, has no D-1 in B: empty NO_HISTORY at 00:00 to
+  00:59. Funding settles and crash hours swing open interest; no rule changes with the hour.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S11
+      label: bn_oi_price_quadrant_60m
+      units: a word (NEW_LONGS, NEW_SHORTS, SHORT_COVERING, LONG_EXIT, FLAT)
+      value_kind: word
+      decimals: none
+      word_path: written as text through value_txt (value_kind 3) by addon_write_v1, value_f64 empty (EDGE1 lead review, V4 edit 4)
+      means: the practitioners' word for the last hour from the signs of the Binance open interest change and the Binance close change
+      never: [a liquidation count (LONG_EXIT is closing of any kind), who traded, a signal tested to pay]
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the latest known_at of the four year rows read (each known by its own as_of <= u); empty rows known_at = u; so known_at <= as_of
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: u - 60 min falls before 10 Sep 2025, the year's first day (00:00 to 00:59 of 10 Sep 2025)
+    - reason: NO_ROSTER
+      when: the first empty input row (in the formula's order) is NO_ROSTER
+    - reason: NO_FILE
+      when: the first empty input row is NO_FILE
+    - reason: BAD_INPUT
+      when: the first empty input row is BAD_INPUT
+    - reason: NO_VALUE
+      when: E2 S02 empty NO_VALUE at u or u - 60 min
+    - reason: STALE_VALUE
+      when: E2 S02 empty STALE_VALUE at u or u - 60 min, stale 1
+    - reason: TRADES_HOLE
+      when: C13 S01 empty TRADES_HOLE at u or u - 60 min (no trade in that minute), stale as the year row
+    - reason: THIN_FEED
+      when: C13 S01 empty THIN_FEED at u or u - 60 min, stale as the year row
+    - reason: NO_ROW
+      when: no year row of E2 S02 or C13 S01 for the coin at u or u - 60 min (a roster coin the year did not write), as P1 and P11; never read as a change of 0
+  stale_rule: stale = the stale of the year row whose reason empties the word; else 0
+  max_staleness_s: 61
+  window_days: 1
+  no_history: >-
+    u - 60 min reaches D-1 for u before 01:00; the year's first day 10 Sep 2025 (ADDON_ARCHITECTURE_V3 line 32) has no D-1, so 00:00
+    to 00:59 of that day are empty NO_HISTORY; full from 11 Sep 2025.
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the four quadrants
+    input: '(dOI, dP) = (+5, -1), (-3, +2), (+1, +1), (-1, -1)'
+    answer: NEW_SHORTS, SHORT_COVERING, NEW_LONGS, LONG_EXIT
+  - case: E2 FLAT
+    input: '(dOI, dP) = (0, +5) and (+5, 0)'
+    answer: FLAT both
+  - case: E3 across midnight
+    input: u = 00:30 of D
+    answer: the reads at u - 60 min are E2 S02 and C13 S01 at 23:30 of D-1
+  - case: E4 an empty read
+    input: E2 S02 at u - 60 min empty NO_FILE
+    answer: empty NO_FILE, stale 0, known_at = u
+  - case: E5 the first year day
+    input: u = 00:30 of 10 Sep 2025
+    answer: empty NO_HISTORY; at 01:00 valued (u - 60 min = 00:00 of 10 Sep 2025)
+  - case: E6 a tiny open interest change
+    input: 'E2 S02 1000.001 at u - 60 min and 1000.002 at u; close +0.5'
+    answer: NEW_LONGS (no dead band under O1 A)
+unit_tests:
+  - test: U1 (E1, E2, E6)
+    planted: E2 S02 and C13 S01 year rows of six coins at 11:00 and 12:00 giving each case
+    expect: S11 at 12:00 = NEW_SHORTS, SHORT_COVERING, NEW_LONGS, LONG_EXIT, FLAT, FLAT, and NEW_LONGS for E6
+  - test: U2 (E3)
+    planted: the same rows at 23:30 of D-1 and 00:30 of D
+    expect: S11 at 00:30 from the 23:30 reads of D-1, every word as in U1
+  - test: U3 (E4, E5)
+    planted: an empty E2 S02 NO_FILE at u - 60 min; a first-day file with no D-1
+    expect: empty NO_FILE stale 0; NO_HISTORY at 00:00 to 00:59, valued from 01:00
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: value_kind 3 (word) or 0 (empty), as_of = u, known_at <= as_of, rows sorted name, coin, as_of
+mutants:
+  - mutant: M1 the two mixed signs swapped (NEW_SHORTS and SHORT_COVERING exchanged)
+    caught_by: U1 (the first two coins)
+  - mutant: M2 a 59 minute lag
+    caught_by: U1 with the 11:01 rows planted to give other signs (the word changes)
+  - mutant: M3 FLAT dropped (a zero sign read as below 0)
+    caught_by: U1 (E2 gives LONG_EXIT or SHORT_COVERING in place of FLAT)
+  - mutant: M4 D-1 not read
+    caught_by: U2 (00:30 empty in place of a word)
+  - mutant: M5 a dead band of 0.01 percent applied (O1 B before it is ruled)
+    caught_by: U1 (E6 gives FLAT in place of NEW_LONGS)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:30, 12:10, 23:59
+      why: the lag across midnight, an ordinary minute, the day's last minute
+    - point: 2025-09-24, all coins, minute ends 00:30, 12:10, 23:59
+      why: the same on an early year day
+    - point: 2026-03-08, one coin-minute of each word (the tester picks them from B before the job)
+      why: every branch of the formula
+  pass: The tester recomputes the word from B's four rows, never the builder's code; words, empty reasons, stale and known_at equal.
+meaning_check:
+  pass_lines:
+    - 'Each of the four quadrant words fires on both days for at least 10 coins (a word that never fires means a sign or lag fault; proposed level, EDGE1 or the owner sets it)'
+    - 'FLAT holds at most 20 percent of the valued coin-minutes on each day (proposed level, EDGE1 or the owner sets it)'
+  report_only:
+    - each word's share per coin and day (one word holding most hours is the market's drift)
+    - the close's change in the hour after each word (reported only; no word is claimed to predict)
+conclude:
+  may:
+    - over the last hour, whether open interest and price moved together or apart, and the floor's name for that
+  never:
+    - a liquidation count (LONG_EXIT is closing of any kind; A1, A4 measure liquidations)
+    - who traded or which side opened
+    - a tested signal
+readers: none yet
+implementation:
+  how: >-
+    Per coin, the minute grid of D-1's last hour and D: E2 S02 and C13 S01 shifted by 60 minute ends; np.sign of both comparisons;
+    one np.select into the five words; reasons by masks; no loop over rows or minutes in Python.
+  kernel: 'new: lag_sign_word (signs of two 60 minute differences into a word; no ADDON_ARCHITECTURE_V4 9.4 kernel writes words)'
+  memory_mb: 50
+  seconds_share: 0.5
+data_checks:
+  - what: 'OPEN O1: FLAT only at an exact 0 (A, applied) or a dead band (B), its width measured first on 24 Sep 2025 and 8 Mar 2026'
+    who: BED (review), then EDGE1

@@ -1,0 +1,109 @@
+{
+ "tool": "board_line_v2",
+ "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/board_line_v2.py",
+ "file_sha16": "71dacd6da8607c91",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "every step: the one way a kit agent posts a line on its board",
+ "question": "How do I post a board line that passes the board rules (stamp first, under 578 characters, no em dash)?",
+ "usage_from_code": "python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/board_line_v2.py --settings <settings file> <RUN> <KIND> \"<text: what, with files and sha16>\"",
+ "settings_keys": [
+  "BOARD"
+ ],
+ "code_options": [
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  2
+ ],
+ "commands": [
+  {
+   "name": "post",
+   "does": "twins the board, then appends one line <UTC stamp> <SEAT> <KIND> <text> to BOARD/<SEAT>.txt",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "the run tag (its seat names the board file)",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "KIND",
+     "required": true,
+     "meaning": "START CLAIM COUNT PREREG JOB DECISION STUCK ASK ANSWER CHECKPOINT DONE NOTE",
+     "example": "DECISION"
+    },
+    {
+     "name": "text",
+     "required": true,
+     "meaning": "what, with its files and sha16; at least 10 characters; no tab, newline or em dash",
+     "example": "GIVENB GB1: STOP (decide_v2.py): R1 missed, 1 of 4 months (receipts/20263709_GRADE_GIVENB/HANDOFF/REAL_SEALED/REAL_RULES_GB1.tsv c0627b7443ac9fd1)"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/board_line_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 DECISION \"GIVENB GB1: STOP (decide_v2.py): R1 missed, 1 of 4 months (receipts/20263709_GRADE_GIVENB/HANDOFF/REAL_SEALED/REAL_RULES_GB1.tsv c0627b7443ac9fd1)\"",
+   "writes": "BOARD/<SEAT>.txt (one line appended) and its twin BOARD/<SEAT>.txt.pre_<RUN>_<stamp> first",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: <reason> on stderr: bad usage, no --settings, BOARD empty, a bad run tag, a KIND not in the list, a tab, newline or em dash, a text under 10 characters, a line of 578 characters or more"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "NOTE",
+      "docs test: a line on the planted board only"
+     ],
+     "exit": 0,
+     "prints": "POSTED"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "USAGE board_line_v2.py"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "AD1_20261029",
+    "WHATEVER",
+    "a text of more than ten characters"
+   ],
+   "exit": 2,
+   "prints": "KIND 'WHATEVER'"
+  }
+ ],
+ "rules": [
+  "it has no dry mode: every call that passes its checks appends a line (the docs test posts only to a planted temp board)",
+  "never deletes; twins the board before the append"
+ ],
+ "outputs": [
+  {
+   "file": "<BOARD>/<SEAT>.txt (the line)",
+   "where": "BOARD/<SEAT>.txt: the appended line",
+   "columns": [
+    "stamp",
+    "seat",
+    "kind",
+    "text"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/board_line_v2_COLUMNS.tsv",
+ "reads": [],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

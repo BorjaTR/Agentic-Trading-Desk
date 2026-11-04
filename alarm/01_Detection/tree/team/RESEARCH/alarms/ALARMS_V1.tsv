@@ -1,0 +1,3 @@
+# ALARMS_V1.tsv of the clean desk repo (desk/build/fix_pins_v2.py): the lab's found alarms are not shipped, so this table holds
+# the release's header row only. A fresh desk has no alarms; a desk's own alarms live in its registry.
+utc	alarm	name	plain	status	detection	offer	side	card	by

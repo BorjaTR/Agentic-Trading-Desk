@@ -1,0 +1,174 @@
+# HL3_V4.yaml (STRATEGY 2026-10-25T02:53:43Z): merged edition: OX-DATA's proposed successor with QUANT's ADOPTs (A6-A8, A10, market-trade words, tail spans, t_k = max(funding, block time), HLR-03 drop of S03 >= S04 only, HLR-04, HLR-05, HLR-08 at 1e-9 rel + 1e-12 coins, HO3 NO_PREVIOUS, HF3 S11 never) and the REJECTs restored from our signed edition (concrete meaning lines A1, our real_check points A2, T3 from RAW A3, QUANT's tie kept A4, coin map A5, v1 code A9, the HL3 backstop line); REVIEW_OXDATA_HL_V3V4_QUANT 42ae76e7, LAB1 co-sign 02:13:30Z
+kind: build_metric
+id: HL3
+producer: HLLIQX
+item: Hyperliquid liquidations with the liquidated account, size and side (MISSING_INFO_BACKLOG M02)
+tier: BUILD
+name: Hyperliquid largest single liquidation trade and the backstop share of liquidated dollars over the last minute
+status:
+  drafter: STRATEGY
+  reviewer: LAB1 + QUANT
+  edition: 4
+  signed: false
+  signed_by: 'LAB1 2026-10-25T02:55:15Z (by diff vs signed)'
+  changes: 'edition 4 (STRATEGY 2026-10-25T02:53:43Z): merged edition: OX-DATA''s proposed successor with QUANT''s ADOPTs (A6-A8, A10, market-trade words,
+    tail spans, t_k = max(funding, block time), HLR-03 drop of S03 >= S04 only, HLR-04, HLR-05, HLR-08 at 1e-9 rel + 1e-12 coins, HO3 NO_PREVIOUS, HF3 S11
+    never) and the REJECTs restored from our signed edition (concrete meaning lines A1, our real_check points A2, T3 from RAW A3, QUANT''s tie kept A4,
+    coin map A5, v1 code A9, the HL3 backstop line); REVIEW_OXDATA_HL_V3V4_QUANT 42ae76e7, LAB1 co-sign 02:13:30Z'
+means: Largest liquidation tid amount and share whose raw method is backstop over the last60s. The method field alone does not establish why book liquidity
+  was insufficient.
+example: 'SOL, 10 Oct 2025, u = 21:15:05. Liquidated-account rows with block time in (21:14:04, 21:15:04]: tid 7 = 60 SOL x 180 = 10,800 (method market),
+  tid 8 = 40 x 180 = 7,200 (market), tid 9 = 20 x 181 = 3,620 (backstop). S05 = 10,800; S06 = 3,620 / 21,620 = 0.1674.'
+formula: 'For coin c and point u: W = the fills rows of c with is_liquidated_account = true and block_time_us in (u - 61 s, u - 1 s]. Trade dollars = sum(px
+  x sz) per tid within W. S05 = the largest trade dollars in W (0 when W is empty in complete hours). S06 = sum of px x sz over W with liq_method = backstop
+  divided by the sum over W; EMPTY NO_LIQUIDATION when W is empty. The method words are taken as written by the node; any method other than market and backstop
+  is named in flags.'
+source:
+  kind: ours
+  ref: PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 rows F03, F04; Hyperliquid node fills (liquidation.method)
+inputs:
+- kind: reader
+  ref: prod_reader_hl_node_v1
+  exists: true
+  stream: fills table of hl_node_read V1 (columns as in PRODUCER_HLLIQX_V1)
+  rule_in_force: rows with block time in (u - 61 s, u - 1 s]
+  stale_rule: Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.
+  days: D's 24 hour files; the CARRY of D-1 (its last 61 s of liquidation rows) for the points 00:00:00 to 00:01:00 (the contract grid)
+  data_check: Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof
+  verdict: LIMITS
+  waits_for: Independent release approval; source is available and bounded raw comparisons passed
+  reader_call: hl_node_read.read on the reader of record (rebuild 78fa56c5 once released; OX-DATA A8)
+overlaps: none
+per_coin: same as HL1
+time: crash days; HOLE hours touching the window; the first minute of D needs the CARRY of D-1 (EMPTY HOLE when D-1 is not built)
+output:
+  group_file: X1/day=<D>/HLLIQX.parquet
+  names:
+  - name: S05
+    label: hl_liq_max_trade_usd_60s
+    units: USD
+    value_kind: float
+    decimals: none
+    means: the largest single liquidation trade (one trade id, one piece) in dollars in the 60 s known at u
+    never:
+    - the largest position
+    - a sum
+    - the largest account's whole liquidation (X's 18,000 in two pieces shows as 10,800)
+  - name: S06
+    label: hl_liq_backstop_share_60s
+    units: share 0 to 1
+    value_kind: float
+    decimals: none
+    means: share of the minute's liquidated dollars closed by the backstop
+    never:
+    - a value when nothing was liquidated (EMPTY)
+  grid: 5s
+  cadence: every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per
+    day; D 00:00:00 is the old D-1 24:00:00, values unchanged
+  as_of_rule: as_of = u
+  known_at_rule: 'known_at = u, so known_at <= as_of on every row (empty rows too): rows with block time <= u - 1 s only (MODEL_AVAILABLE_AT, 1 s delay)'
+  known_at_kind: MODEL_AVAILABLE_AT
+  empty_reasons:
+  - reason: HOLE
+    when: any hour touching (u - 61 s, u - 1 s] is HOLE
+  - reason: NO_LIQUIDATION
+    when: S06 when the window holds no liquidation
+  - reason: NO_HISTORY
+    when: points before 1 Sep 2025 00:01:01
+  stale_rule: none (stale = 0 always)
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+  - flag: OTHER_METHOD
+    when: the window holds a method word other than market or backstop
+  quality_companion:
+    codes:
+    - code: X1.HLLIQX.Q01
+      kind: WORD
+      meaning: Categorical JSON flags and pair_quality only
+    writer: write_hl_v2.py
+    scope: Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next
+      snapshot, not earlier.
+edge_cases:
+- case: E1 the example
+  input: tids 7, 8 market, 9 backstop
+  answer: S05 10800, S06 0.16744
+- case: E2 one trade in several rows (same tid)
+  input: tid 7 as two rows of 30 SOL each at 180
+  answer: trade dollars 10,800 (summed per tid), S05 10800
+- case: E3 empty window, complete hours
+  input: no rows
+  answer: S05 0, S06 EMPTY NO_LIQUIDATION
+- case: E4 the window crosses 00:00 and D-1 is not built
+  input: u = 00:00:30
+  answer: S05, S06 EMPTY HOLE
+unit_tests:
+- test: U1 (E1)
+  planted: the example rows
+  expect: S05 10800, S06 3620 / 21620
+- test: U2 (E2)
+  planted: tid 7 split into two rows
+  expect: S05 10800
+- test: U3 (E3, E4)
+  planted: no rows in hour 10; D-1 not built
+  expect: S05 0 and S06 EMPTY NO_LIQUIDATION in hour 10; EMPTY HOLE at 00:00:30
+mutants:
+- mutant: M1 the largest ROW instead of the largest trade
+  caught_by: U2 (S05 5400)
+- mutant: M2 S06 = 0 on an empty window
+  caught_by: U3
+- mutant: M3 read D-2 when D-1 is not built
+  caught_by: U3
+real_check:
+  points:
+  - point: 2025-10-10, BTC, ETH, SOL, 21:00 to 21:59
+    why: the crash hour, backstop use expected
+  - point: 2025-10-15, BTC, 10:00 to 10:59
+    why: an ordinary hour
+  - point: 2025-09-28 BTC 10:01 UTC
+    why: ordinary completed conversion window
+  - point: 2025-09-28 BTC 06:09 UTC
+    why: first eligible forced event after warmup, chosen from source only
+  - point: 2025-09-29 ETH 10:01 UTC
+    why: different coin and completed BUILD day, same executable
+  pass: 'QUANT recomputes from this card''s words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read''s converted
+    tables, never the builder''s code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative; tolerance for floats: abs difference
+    <= 1e-9 + 1e-9 x abs(expected) (OX-DATA), counts equal'
+meaning_check:
+  pass_lines:
+  - S05 <= the window's sum of HL1 (S01 + S02) over the same 60 s at every valued point
+  - S06 > 0 on at least one minute of 10-11 Oct 2025 for BTC or ETH (backstop used in the crash), else the method field is checked by hand
+  - Every valued output obeys its stated formula, units and population; missing data is never zero.
+  - No input whose modeled availability is after u changes a value at u.
+  report_only:
+  - the share of backstop dollars per month
+  - the method word census
+conclude:
+  may:
+  - The size of the largest liquidation piece, and method share; not concentration by account.
+  - whether the book could not absorb it (backstop)
+  never:
+  - anything after u
+  - the size of positions still open
+readers: none yet
+implementation:
+  how: vectorised; per tid dollars first; polars rolling over the 12 bins of 5 s per coin for max and the backstop sum; the CARRY of D-1's last 61 s prepended
+  kernel: 'new: hl_rolling_60s'
+  memory_mb: 600
+  seconds_share: 3
+data_checks:
+- what: the method word census
+  who: QUANT
+- what: Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points
+  who: OX-DATA separate reference implementation; not independent-person review
+  evidence:
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json
+- what: Independent design/release approval remains unassigned; exact final-version acceptance pending
+  who: Research peer and LAB1 plus outside reviewer
+card: HL3_V3

@@ -1,0 +1,288 @@
+{
+  "kind": "build_metric",
+  "id": "HF3",
+  "producer": "HLFLOWX",
+  "item": "Hyperliquid positions opened vs closed by side: new money vs unwinding (MISSING_INFO_BACKLOG M19)",
+  "tier": "BUILD",
+  "name": "Hyperliquid long/short dollars opened and closed, and opening share over60s",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 4,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "Account-side position opening and closing valued at execution prices; opening share divides opened dollars by all opened and closed dollars. Both account sides may contribute. It does not measure deposits, new cash or predictive value.",
+  "example": "SOL, u = 21:16:05, rows in (21:15:04, 21:16:04]: account A opened a long of 10 SOL at 180 (Open Long), account B closed a long of 30 SOL at 180 (Close Long), account C flipped from short 5 to long 3 SOL at 181 ('Short > Long', size 8: closes 5, opens 3). S07 (opened long) = 10 x 180 + 3 x 181 = 2,343; S08 (opened short) = 0; S09 (closed long) = 5,400; S10 (closed short) = 5 x 181 = 905; S11 = 2,343 / (2,343 + 0 + 5,400 + 905) = 0.2709.",
+  "formula": "For coin c and point u: R = ALL fills rows of c (every account's own row, both sides of each trade) with block_time_us in (u - 61 s, u - 1 s]. Per row, the account's own position change decides, never the dir word (BUILD4 09:35Z: the node writes the Liquidated word on BOTH rows of a liquidation trade): p0 = start_position (signed coins before the fill), p1 = p0 + sz when side is B, p0 - sz when side is A; open_long = max(p1, 0) - max(p0, 0) when above 0; close_long = max(p0, 0) - max(p1, 0) when above 0; open_short = max(-p1, 0) - max(-p0, 0) when above 0; close_short = max(-p0, 0) - max(-p1, 0) when above 0 (a flip gives one close and one open). Rows counted: perp rows whose dir is a market-trade word (Open Long, Open Short, Close Long, Close Short, 'Long > Short', 'Short > Long', 'Liquidated Cross Long', 'Liquidated Isolated Long', 'Liquidated Cross Short', 'Liquidated Isolated Short', 'Auto-Deleveraging'); any other word (e.g. 'Net Child Vaults') is counted UNMAPPED (flag and count, never added to S07-S10, kept in the producer's raw check (c)); spot rows (Buy, Sell, 'Spot Dust Conversion') excluded (QUANT MUST 07:27Z). A row whose word disagrees with its own position change (e.g. a Liquidated Long word on a row whose long grows) is counted DIR_DISAGREE, named, and still counted by its position change. Dollars = coins x px. S07 = sum open_long $, S08 = sum open_short $, S09 = sum close_long $, S10 = sum close_short $. S11 = (S07 + S08) / (S07 + S08 + S09 + S10); EMPTY NO_TRADE when the denominator is 0.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 rows F07, F08; Hyperliquid node fills (dir, startPosition)"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "fills table of hl_node_read V1 (columns as in PRODUCER_HLFLOWX_V1)",
+      "rule_in_force": "every perp fill row with block time in (u - 61 s, u - 1 s]",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's 24 hour files; the CARRY of D-1 (its last 61 s)",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    }
+  ],
+  "overlaps": "none",
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "HOLE hours touching the window; crash days; the first minute of D from the CARRY of D-1",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLFLOWX/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S07",
+        "label": "hl_open_long_usd_60s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of long positions opened in the last 60 s",
+        "never": [
+          "net buying (opening a long can be a maker fill)"
+        ]
+      },
+      {
+        "name": "S08",
+        "label": "hl_open_short_usd_60s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of short positions opened in the last 60 s"
+      },
+      {
+        "name": "S09",
+        "label": "hl_close_long_usd_60s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of long positions closed in the last 60 s (liquidations included)"
+      },
+      {
+        "name": "S10",
+        "label": "hl_close_short_usd_60s",
+        "units": "USD",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of short positions closed in the last 60 s (liquidations included)"
+      },
+      {
+        "name": "S11",
+        "label": "hl_opening_share_60s",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "the share of opened dollars among all opened and closed dollars in the last 60 s",
+        "never": [
+          "a share when nothing traded (EMPTY)",
+          "net direction",
+          "external capital inflow or deposits; new money entering the venue"
+        ]
+      }
+    ],
+    "grid": "5s",
+    "cadence": "every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per day; D 00:00:00 is the old D-1 24:00:00, values unchanged",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at = u, so known_at <= as_of on every row (empty rows too): rows with block time <= u - 1 s only (MODEL_AVAILABLE_AT, 1 s delay)",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "any hour touching the window is HOLE"
+      },
+      {
+        "reason": "NO_TRADE",
+        "when": "S11 when nothing was opened or closed in the window"
+      },
+      {
+        "reason": "NO_HISTORY",
+        "when": "points before 1 Sep 2025 00:01:01"
+      }
+    ],
+    "stale_rule": "none (stale = 0 always)",
+    "max_staleness_s": 60,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": [
+      {
+        "flag": "UNMAPPED_DIR",
+        "when": "the window holds a dir word outside the market-trade words (its count written)"
+      },
+      {
+        "flag": "DIR_DISAGREE",
+        "when": "a row's dir word disagrees with its own position change (its count written; liquidation counterparties expected)"
+      }
+    ],
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLFLOWX.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        },
+        {
+          "code": "X1.HLFLOWX.Q03",
+          "kind": "WHOLE",
+          "meaning": "Unmapped direction count in the producer window; unknown coverage remains EMPTY"
+        },
+        {
+          "code": "X1.HLFLOWX.Q04",
+          "kind": "WHOLE",
+          "meaning": "Direction disagreement count in the producer window; unknown coverage remains EMPTY"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1 the example (open, close, flip)",
+      "input": "A, B, C as in the example",
+      "answer": "S07 2343, S08 0, S09 5400, S10 905, S11 0.27091"
+    },
+    {
+      "case": "E2 the two rows of one trade",
+      "input": "a trade where the buyer opens a long and the seller closes a long, 1 SOL at 180",
+      "answer": "S07 180 and S09 180 (each account's own row counted)"
+    },
+    {
+      "case": "E4 a liquidation trade (the word on both rows), ADL and a vault row",
+      "input": "the liquidated account sells 2 SOL at 180 (start_position +2, side A, 'Liquidated Cross Long'); its counterparty buys them (start_position 0, side B, the same word, as the node writes it); an 'Auto-Deleveraging' row of 1 SOL at 180 (start_position -5, side B); a 'Net Child Vaults' row",
+      "answer": "S09 += 360 (the liquidated long closed), S07 += 360 (the counterparty opened a long; DIR_DISAGREE 1), S10 += 180, the vault row UNMAPPED (count 1)"
+    },
+    {
+      "case": "E3 nothing traded",
+      "input": "no rows",
+      "answer": "S07-S10 0, S11 EMPTY NO_TRADE"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1 (E1)",
+      "planted": "the example rows",
+      "expect": "S07 2343, S09 5400, S10 905, S11 2343/8648"
+    },
+    {
+      "test": "U2 (E2)",
+      "planted": "the one trade as two rows",
+      "expect": "S07 180, S09 180, S11 0.5"
+    },
+    {
+      "test": "U3 (E3 and HOLE)",
+      "planted": "no rows in hour 10; HOLE hour 14",
+      "expect": "zeros and EMPTY NO_TRADE in hour 10; EMPTY HOLE in hour 14"
+    },
+    {
+      "test": "U4 (E4)",
+      "planted": "the four E4 rows only",
+      "expect": "S07 360, S08 0, S09 360, S10 180, S11 0.4, UNMAPPED_DIR 1, DIR_DISAGREE 1"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "M1 a flip counted as a full open",
+      "caught_by": "U1 (S07 2,848, S10 0)"
+    },
+    {
+      "mutant": "M2 taker rows only",
+      "caught_by": "U2 (only one of the two rows counted)"
+    },
+    {
+      "mutant": "M4 open/close read from the dir word (the edition 2 rule)",
+      "caught_by": "U4 (S07 0, S09 720)"
+    },
+    {
+      "mutant": "M5 the Liquidated words left out of the market-trade words",
+      "caught_by": "U4 (S07 0, S09 0, UNMAPPED_DIR 3)"
+    },
+    {
+      "mutant": "M3 S11 = 0 when nothing traded",
+      "caught_by": "U3"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-10-10, BTC and SOL, 21:00 to 21:59",
+          "why": "the crash hour, closing should dominate"
+        },
+        {
+          "point": "2025-10-15, BTC, 10:00 to 10:59",
+          "why": "an ordinary hour"
+        }
+      ],
+      "pass": "QUANT recomputes from this card's words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read's converted tables, never the builder's code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "S11 by hour of day and month"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "whether the last minute was new money or unwinding, by side"
+    ],
+    "never": [
+      "direction after u",
+      "anything about other venues"
+    ]
+  },
+  "readers": "none yet",
+  "implementation": {
+    "how": "NumPy bins and rolling windows; taker rows and account transitions from signed start/end positions; unique identifiers counted over the whole declared window. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_rolling_60s",
+    "memory_mb": 2000,
+    "seconds_share": 10,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HF3_V4"
+}

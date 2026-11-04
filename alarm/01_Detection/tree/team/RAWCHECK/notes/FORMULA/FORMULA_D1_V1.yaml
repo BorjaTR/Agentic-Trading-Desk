@@ -1,0 +1,285 @@
+# FORMULA_D1_V1.yaml: the card of the formula group D1, the order flow at the top of the book, EDITION 1 (TREE, 2026-10-18, FR1 = FP1,
+# FORMULA_REVIEW_WORKPACKAGES_V4 330187e5 section 0c, the smart check). Written by team/TREE/proposals/gen_formula_d1_card_tree_v1.py from the
+# job files (numbers from files). Edit 2 (METRIC_AUDIT review E2, 15:31:18Z): the whole-file sign count beside the 75 points. Edit 3
+# (EDGE1 15:33:13Z): .quotes_off another metric beside, recomputed at named points (J15985). Computation J15911 to J15913 (formula_d1 ed1 e031d2c101fa8be8); step 4 meaning_ofi ef48d2534299c9e8 (tests 77fdbc92983d39d3), J15940.
+group: D1
+name: order flow at the top of the book (formula, Cont, Kukanov and Stoikov 2014, priced in dollars)
+summary: 'The order flow at the best bid and ask of one coin over a window W ending at e (1, 5, 30, 60, 120 s): every change of the top
+  signed by the side it helps (bids added or asks taken away help the buyers), in dollars at each level''s own price, summed over the window.
+  S01 to S05: the net over the gross, a share from -1 to 1 (renamed from "ofi"); S06 to S10: the gross in whole dollars. The flows are Cont,
+  Kukanov and Stoikov''s e_n priced in dollars; the paper sums e_n in contracts and does not divide it.'
+read_as: 'Which side the top of the coin''s book is being bought or sold into, and how busy it is. The share has the sign of the paper''s
+  OFI at 75 of 75 of step 3''s points (J15940) and moves with the mid over the same window: corr 0.37 to 0.59 pooled over every coin-minute
+  of 2 days, 0.41 to 0.73 at the median coin (J15940 price). It is a share, not the paper''s magnitude: the paper''s depth-normalised form is could_build D1.CB1.'
+conclude:
+  may:
+  - 'whether the top of the coin''s book was bought into (plus) or sold into (minus) over the window, and how one-sided, as a share of its gross (the paper''s sign at 75 of 75 points)'
+  - 'that the share moved with the mid over the same window (corr 0.37 to 0.59 pooled, J15940)'
+  - 'how busy the coin''s top was over the window (S06 to S10), against the same coin''s own history'
+  never:
+  - 'S01 to S05 as the paper''s OFI or in a price-impact regression with the paper''s slope: they are divided by the gross flow, not the depth; the paper''s form is could_build D1.CB1'
+  - 'a share near 0 as balanced on a wide-tick coin: equal adds on both sides give -(ask - bid) / (ask + bid), half the relative spread (E16)'
+  - 'S06 to S10 compared across coins as more trading: the gross counts every dollar added to or taken from the best quotes, quote churn included, and scales with the coin''s price and book'
+  - 'a 1 s or 5 s share of plus or minus 1 as a strong signal: such windows hold a handful of events (BTC 8 Mar 2026 02:10: 6 in 1 s, 74 in 5 s; J15910)'
+  - 'a value from an EMPTY one, or 0'
+  - 'a .seen_at_e_off copy as a metric of its own: it is the year''s cross-check of the same metric'
+  - 'a .quotes_off twin as the same metric: it is the same rule on another stream (equal to the main at 0 to 32% of rows); another metric beside, the owner rules it'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D1_V4.md (dfdc22a7a7e6883c)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_D1_V2.tsv (299597cafc3fe2b7)
+  built_on_register: 'raw D2 S01 (the top of the book, LIMITS: MEANING_D2D3_V2) and C13 S05 (LIMITS: MEANING_C13_V4), LAYER_REGISTER_V19 b38bf075 (step 1: cited, not rechecked)'
+  producer: testbed/value_audit/code/L0_y52f11 prod_D1_v6.py 66d634cc8e2c7ecc (CARD_D1_V4 edition 4)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D1.parquet
+  year_output_columns: name, coin, as_of_us (e), value_kind (0 empty, 1 float, 2 int, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'D1', settings, coins, moments)
+source:
+  vendor: Tardis.dev, binance-futures (CSV files)
+  exchange_stream: 'book_ticker: Binance USD-M futures bookTicker channel, one message on every change of the best bid or ask price or amount (SOURCE_SPEC_book_ticker_V2 Q-B1, Q-T2)'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYMBOL>_<YYYY-MM-DD>.csv.gz (read by exact path)
+  columns: exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price, bid_price, bid_amount
+  fields:
+    bid_price, ask_price: 'the best bid and ask in USDT [proof: SOURCE_SPEC_book_ticker_V2 Q-T2; raw D2 S01 LIMITS, MEANING_D2D3_V2]'
+    bid_amount, ask_amount: 'the amount at the best bid and ask in the coin; its dollars are price x amount [proof: SOURCE_SPEC_book_ticker_V2 Q-T2; recomputed exactly, D1_STAMPS_V1]'
+    timestamp: 'the message''s event time, microseconds [proof: SOURCE_SPEC_book_ticker_V2 Q-N1]'
+    local_timestamp: 'the arrival at Tardis, microseconds; the file is in arrival order [proof: SOURCE_SPEC_book_ticker_V2 Q-T2, F4]'
+  latency: 'an event is known at the later arrival of its two rows (CARD_D1_V4 rule 2); known_at = the latest arrival in the window (rule 10)'
+reading_rules:
+- 'an event = a book_ticker row with the row before it in file order: b = [Pb_n >= Pb_n-1] Pb_n qb_n - [Pb_n <= Pb_n-1] Pb_n-1 qb_n-1, a = [Pa_n >= Pa_n-1] Pa_n-1 qa_n-1 - [Pa_n <= Pa_n-1] Pa_n qa_n, in dollars; net = b + a, gross = |b| + |a| (CARD_D1_V4 rule 2)'
+- 'the window of W ending at e: the events stamped after e - W and up to e, and received by e (rule 3)'
+- 'S06 to S10 = the gross sum rounded once to the whole dollar, half up; S01 to S05 = the net sum over the gross sum rounded once to 6 decimals, half up, a tie away from 0; 0.000000 when the gross is 0 (rules 4, 5)'
+- 'empty BOOK_HOLE (stale) unless a row stamped in the last 30 s was received at every moment of [e - W, e]; BAD_INPUT when an event of the window has a bad row; NO_FILE when a needed file is missing (D-1 when e - W - 30 s is before 00:00); the first failing in that order, then NO_LEVELS; a window with no event is 0 only when the row in force before it is good (rules 6 to 9, 18)'
+- 'COPIES: the year writes 10 .seen_at_e_off (the book seen at e only), the same metric: ACCEPTED as its cross-check (the owner''s copies rule): equal to the metric at 100% of rows on both days, no book hole there (J15849 TWINS_20260308 a9bc9402dcda74b9, TWINS_20250924 0ea4c5c8804a3576)'
+- 'BESIDE, ANOTHER METRIC (EDGE1 15:33:13Z, the owner rules): the 10 .quotes_off are the same rules on the Tardis quotes stream (CARD_D1_V4 rule 15): recomputed exactly at 200 of 200 named points (BTC, CRV, PEPE, XMR x 00:03, 02:10, 04:00, the busiest and calmest minute, 8 Mar 2026; J15985, formula_d1 ed3 bc64d30fd6fa106d); equal to the main at 0 to 32% of rows, corr 0.90 to 0.95 (shares), 0.84 to 0.98 (grosses), |gap| median 0.025 to 0.061 share points (J15849): another stream of the top, not a second source of the same number; no meaning work on them until the owner rules'
+values:
+  units: 'S01 to S05: a share from -1 to 1, 6 decimals; S06 to S10: whole dollars'
+  empty: 'NO_ROSTER, NO_FILE, BOOK_HOLE, BAD_INPUT, NO_LEVELS; value_kind 0; never read empty as 0 (no empty on 8 Mar 2026: J15910 schema)'
+  stale: with BOOK_HOLE
+  flags: DUPLICATE_ROW:<coin>
+interpret:
+  do:
+  - read S01 to S05 as the share of the top's dollar flow that helped the buyers (plus) or the sellers (minus), with its gross beside
+  - read S06 to S10 against the same coin's own history
+  dont:
+  - read the share as the paper's OFI magnitude
+  - compare grosses across coins
+biases:
+- what: equal amounts added on both sides are priced at the bid and at the ask
+  direction: the share leans to the sellers (minus) when both sides grow alike
+  size: '-(ask - bid) / (ask + bid): half the relative spread (CARD_D1_V4 E16: -0.004975 for 100 / 101)'
+  proof: test_meaning_ofi 77fdbc92983d39d3 t_step4_cks_vs_d1
+- what: the share divides by the gross; quote churn inflates the gross
+  direction: towards 0 on churning coins, against the paper's depth-normalised OFI
+  size: 'not measured beyond step 3''s points (the smart check, section 0c item 5)'
+  proof: CARD_D1_V4 rule 5; J15910 (the 134.39 dollar flips of BTC 02:10)
+external_checks:
+- what: the paper's OFI (Cont, Kukanov and Stoikov 2014) coded apart from the producer, on the planted cases and at step 3's points
+  where: rawcheck/meaning_ofi.py cks() (tests t_step4_cks_vs_d1) and OFI_NAME_20260308.tsv 0013bfff559278f7 (J15940)
+  status: 'SAME SIGN, ANOTHER UNIT: 75 of 75 points (the whole file (BTC, ETH, CRV, every minute end x 5 windows): the same sign at 21509 of 21512, the others at |share| 0.000005 or less); the share is the paper''s flow in dollars over the gross'
+- what: the mid move over the same window (the year's C1 S01 5 s, S02 30 s, S25 60 s, S03 120 s), every coin-minute of 8 Mar 2026 and 24 Sep 2025 (year store only)
+  where: rawcheck/meaning_ofi.py price (J15940, 6 s a day)
+  status: 'MOVES WITH IT: corr 0.37 to 0.59 pooled (20250924 73287, 20260308 74724 coin-minutes), 0.41 to 0.73 at the median coin'
+tools:
+- what: every setting recomputed exactly from the Tardis rows against the year
+  run: python3 -B -m rawcheck.formula_d1 --days <D,..> --at auto|HHMM,.. [--coins ..] --out <dir>; formula_d1 coin <D> <COIN> <HHMM>; formula_d1 schema <D>
+  where: 'team/LAB/code (formula_d1.py ed1 e031d2c101fa8be8 ran the stamps; tests bf88a4f197339203 at that run; ed2 dec3416b11291227: the same rules, a faster decimal parse and --at auto, tests test_formula_d1.py 05a194fff0cef187 35 of 35, 12 of 12 mutants in J15980; ed3 bc64d30fd6fa106d: --stream quotes, J15985)'
+- what: the papers' forms and the price relation
+  run: python3 -B -m rawcheck.meaning_ofi point <D> <COIN> <HHMM>; price <D>; look <D> <COIN> <HHMM> <W>
+  where: 'team/LAB/code (meaning_ofi.py ef48d2534299c9e8, tests test_meaning_ofi.py 77fdbc92983d39d3)'
+used_by: 'nobody yet (CARD_D1_V4 part 1: NO READER FOUND); old names EF.ef_ofi_<W>s and EF.ef_ofi_gross_<W>s'
+references:
+  K_cks2014: 'R. Cont, A. Kukanov, S. Stoikov (2014), The price impact of order book events, Journal of Financial Econometrics 12(1), 47-88'
+  K_tardis: https://docs.tardis.dev (binance-futures book_ticker)
+settings:
+- id: D1.S01
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: 1 s
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the best bid and ask, rounded once to 6 decimals, half up'
+  aliases: EF.ef_ofi_1s
+  means: 'which side the changes of the top of the book helped over the last 1 s, as a share from -1 (all to the sellers) to 1 (all to the buyers)'
+  name: 'order flow share at the top over 1 s (net over gross dollars, -1 to 1)'
+  renamed_from: 'order flow imbalance over 1 s (EF.ef_ofi_1s)'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): the paper''s OFI coded apart on CARD_D1_V4 E13 to E16: the same sign, another unit (E14: +4 contracts, share 1.000000); 2 contracts added on each side: the paper 0, ours (bid - ask) / (bid + ask) = -0.004975 (E16). On step 3''s points (BTC, ETH, CRV x the 5 minute ends x 5 windows, 8 Mar 2026; J15940 OFI_NAME 0013bfff559278f7): the same sign 75 of 75 (BTC 02:10, 60 s: -744.965 contracts, share -0.181641); the whole file (BTC, ETH, CRV, every minute end x 5 windows): the same sign at 21509 of 21512, the others at |share| 0.000005 or less. It moves with the mid over its window (the year''s C1, every coin-minute of 8 Mar 2026 and 24 Sep 2025, J15940 price): corr 0.37 to 0.59 pooled, 0.41 to 0.73 at the median coin'
+  open: 'the paper''s OFI priced in dollars and divided by the gross flow, not the paper''s sum in contracts (renamed; could_build D1.CB1); equal adds on both sides lean to the sellers by half the relative spread (E16); the 1 s window held 6 events at BTC 02:10 (J15910): a share of plus or minus 1 there is a few quotes'
+- id: D1.S02
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: 5 s
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the best bid and ask, rounded once to 6 decimals, half up'
+  aliases: EF.ef_ofi_5s
+  means: 'which side the changes of the top of the book helped over the last 5 s, as a share from -1 (all to the sellers) to 1 (all to the buyers)'
+  name: 'order flow share at the top over 5 s (net over gross dollars, -1 to 1)'
+  renamed_from: 'order flow imbalance over 5 s (EF.ef_ofi_5s)'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): the paper''s OFI coded apart on CARD_D1_V4 E13 to E16: the same sign, another unit (E14: +4 contracts, share 1.000000); 2 contracts added on each side: the paper 0, ours (bid - ask) / (bid + ask) = -0.004975 (E16). On step 3''s points (BTC, ETH, CRV x the 5 minute ends x 5 windows, 8 Mar 2026; J15940 OFI_NAME 0013bfff559278f7): the same sign 75 of 75 (BTC 02:10, 60 s: -744.965 contracts, share -0.181641); the whole file (BTC, ETH, CRV, every minute end x 5 windows): the same sign at 21509 of 21512, the others at |share| 0.000005 or less. It moves with the mid over its window (the year''s C1, every coin-minute of 8 Mar 2026 and 24 Sep 2025, J15940 price): corr 0.37 to 0.59 pooled, 0.41 to 0.73 at the median coin'
+  open: 'the paper''s OFI priced in dollars and divided by the gross flow, not the paper''s sum in contracts (renamed; could_build D1.CB1); equal adds on both sides lean to the sellers by half the relative spread (E16); the 5 s window held 74 events at BTC 02:10 (J15910)'
+- id: D1.S03
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: 30 s
+  clock: 'fire second (the year steps: every 30 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the best bid and ask, rounded once to 6 decimals, half up'
+  aliases: EF.ef_ofi_30s
+  means: 'which side the changes of the top of the book helped over the last 30 s, as a share from -1 (all to the sellers) to 1 (all to the buyers)'
+  name: 'order flow share at the top over 30 s (net over gross dollars, -1 to 1)'
+  renamed_from: 'order flow imbalance over 30 s (EF.ef_ofi_30s)'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): the paper''s OFI coded apart on CARD_D1_V4 E13 to E16: the same sign, another unit (E14: +4 contracts, share 1.000000); 2 contracts added on each side: the paper 0, ours (bid - ask) / (bid + ask) = -0.004975 (E16). On step 3''s points (BTC, ETH, CRV x the 5 minute ends x 5 windows, 8 Mar 2026; J15940 OFI_NAME 0013bfff559278f7): the same sign 75 of 75 (BTC 02:10, 60 s: -744.965 contracts, share -0.181641); the whole file (BTC, ETH, CRV, every minute end x 5 windows): the same sign at 21509 of 21512, the others at |share| 0.000005 or less. It moves with the mid over its window (the year''s C1, every coin-minute of 8 Mar 2026 and 24 Sep 2025, J15940 price): corr 0.37 to 0.59 pooled, 0.41 to 0.73 at the median coin'
+  open: 'the paper''s OFI priced in dollars and divided by the gross flow, not the paper''s sum in contracts (renamed; could_build D1.CB1); equal adds on both sides lean to the sellers by half the relative spread (E16); decisions unchanged'
+- id: D1.S04
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: 60 s
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the best bid and ask, rounded once to 6 decimals, half up'
+  aliases: EF.ef_ofi_60s
+  means: 'which side the changes of the top of the book helped over the last 60 s, as a share from -1 (all to the sellers) to 1 (all to the buyers)'
+  name: 'order flow share at the top over 60 s (net over gross dollars, -1 to 1)'
+  renamed_from: 'order flow imbalance over 60 s (EF.ef_ofi_60s)'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): the paper''s OFI coded apart on CARD_D1_V4 E13 to E16: the same sign, another unit (E14: +4 contracts, share 1.000000); 2 contracts added on each side: the paper 0, ours (bid - ask) / (bid + ask) = -0.004975 (E16). On step 3''s points (BTC, ETH, CRV x the 5 minute ends x 5 windows, 8 Mar 2026; J15940 OFI_NAME 0013bfff559278f7): the same sign 75 of 75 (BTC 02:10, 60 s: -744.965 contracts, share -0.181641); the whole file (BTC, ETH, CRV, every minute end x 5 windows): the same sign at 21509 of 21512, the others at |share| 0.000005 or less. It moves with the mid over its window (the year''s C1, every coin-minute of 8 Mar 2026 and 24 Sep 2025, J15940 price): corr 0.37 to 0.59 pooled, 0.41 to 0.73 at the median coin'
+  open: 'the paper''s OFI priced in dollars and divided by the gross flow, not the paper''s sum in contracts (renamed; could_build D1.CB1); equal adds on both sides lean to the sellers by half the relative spread (E16); decisions unchanged'
+- id: D1.S05
+  layer: formula
+  side: 'signed (plus: the flow helped the buyers)'
+  window: 120 s
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s net dollar flow over its gross dollar flow at the best bid and ask, rounded once to 6 decimals, half up'
+  aliases: EF.ef_ofi_120s
+  means: 'which side the changes of the top of the book helped over the last 120 s, as a share from -1 (all to the sellers) to 1 (all to the buyers)'
+  name: 'order flow share at the top over 120 s (net over gross dollars, -1 to 1)'
+  renamed_from: 'order flow imbalance over 120 s (EF.ef_ofi_120s)'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'step 4 (meaning_ofi ef48d2534299c9e8, tests 77fdbc92983d39d3): the paper''s OFI coded apart on CARD_D1_V4 E13 to E16: the same sign, another unit (E14: +4 contracts, share 1.000000); 2 contracts added on each side: the paper 0, ours (bid - ask) / (bid + ask) = -0.004975 (E16). On step 3''s points (BTC, ETH, CRV x the 5 minute ends x 5 windows, 8 Mar 2026; J15940 OFI_NAME 0013bfff559278f7): the same sign 75 of 75 (BTC 02:10, 60 s: -744.965 contracts, share -0.181641); the whole file (BTC, ETH, CRV, every minute end x 5 windows): the same sign at 21509 of 21512, the others at |share| 0.000005 or less. It moves with the mid over its window (the year''s C1, every coin-minute of 8 Mar 2026 and 24 Sep 2025, J15940 price): corr 0.37 to 0.59 pooled, 0.41 to 0.73 at the median coin'
+  open: 'the paper''s OFI priced in dollars and divided by the gross flow, not the paper''s sum in contracts (renamed; could_build D1.CB1); equal adds on both sides lean to the sellers by half the relative spread (E16); decisions unchanged'
+- id: D1.S06
+  layer: formula
+  side: none
+  window: 1 s
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the best bid and ask (every dollar added or taken, whatever its side), rounded once to the whole dollar, half up'
+  aliases: EF.ef_ofi_gross_1s
+  means: 'how many dollars were added to or taken from the best bid and ask over the last 1 s'
+  name: 'gross order flow at the top over 1 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity: the paper has no gross (CARD_D1_V4 rule 2: |b| + |a| per event); recomputed exactly (computation); Spearman with the absolute mid change over the window 0.12 to 0.43 (J15940 price, every coin-minute of 2 days)'
+  open: 'counts quote churn: an amount added and taken back at the best counts twice (BTC 02:10: the last events of the 5 s window are 134.39 dollar flips, J15910); it scales with the coin''s price and book, so only the same coin''s history compares'
+- id: D1.S07
+  layer: formula
+  side: none
+  window: 5 s
+  clock: 'fire second (the year steps: every 5 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the best bid and ask (every dollar added or taken, whatever its side), rounded once to the whole dollar, half up'
+  aliases: EF.ef_ofi_gross_5s
+  means: 'how many dollars were added to or taken from the best bid and ask over the last 5 s'
+  name: 'gross order flow at the top over 5 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity: the paper has no gross (CARD_D1_V4 rule 2: |b| + |a| per event); recomputed exactly (computation); Spearman with the absolute mid change over the window 0.12 to 0.43 (J15940 price, every coin-minute of 2 days)'
+  open: 'counts quote churn: an amount added and taken back at the best counts twice (BTC 02:10: the last events of the 5 s window are 134.39 dollar flips, J15910); it scales with the coin''s price and book, so only the same coin''s history compares'
+- id: D1.S08
+  layer: formula
+  side: none
+  window: 30 s
+  clock: 'fire second (the year steps: every 30 s)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the best bid and ask (every dollar added or taken, whatever its side), rounded once to the whole dollar, half up'
+  aliases: EF.ef_ofi_gross_30s
+  means: 'how many dollars were added to or taken from the best bid and ask over the last 30 s'
+  name: 'gross order flow at the top over 30 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity: the paper has no gross (CARD_D1_V4 rule 2: |b| + |a| per event); recomputed exactly (computation); Spearman with the absolute mid change over the window 0.12 to 0.43 (J15940 price, every coin-minute of 2 days)'
+  open: 'counts quote churn: an amount added and taken back at the best counts twice (BTC 02:10: the last events of the 5 s window are 134.39 dollar flips, J15910); it scales with the coin''s price and book, so only the same coin''s history compares'
+- id: D1.S09
+  layer: formula
+  side: none
+  window: 60 s
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the best bid and ask (every dollar added or taken, whatever its side), rounded once to the whole dollar, half up'
+  aliases: EF.ef_ofi_gross_60s
+  means: 'how many dollars were added to or taken from the best bid and ask over the last 60 s'
+  name: 'gross order flow at the top over 60 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity: the paper has no gross (CARD_D1_V4 rule 2: |b| + |a| per event); recomputed exactly (computation); Spearman with the absolute mid change over the window 0.12 to 0.43 (J15940 price, every coin-minute of 2 days)'
+  open: 'counts quote churn: an amount added and taken back at the best counts twice (BTC 02:10: the last events of the 5 s window are 134.39 dollar flips, J15910); it scales with the coin''s price and book, so only the same coin''s history compares'
+- id: D1.S10
+  layer: formula
+  side: none
+  window: 120 s
+  clock: 'fire second (the year steps: every minute end)'
+  scope: coin
+  contracts: USDT
+  aggregate: 'the window''s gross dollar flow at the best bid and ask (every dollar added or taken, whatever its side), rounded once to the whole dollar, half up'
+  aliases: EF.ef_ofi_gross_120s
+  means: 'how many dollars were added to or taken from the best bid and ask over the last 120 s'
+  name: 'gross order flow at the top over 120 s, dollars'
+  computation:
+    status: RELIABLE
+    proof: 'D1_STAMPS_V1 7d89b1d5698c8343: 770 of 770 MATCH (value, known_at, stale, flags) at 51, 51, 52 roster coins x 00:05 01:00 02:10 03:00 04:00 x 24 Sep, 4 Nov 2025, 8 Mar 2026 (J15911 to J15913, formula_d1 ed1 e031d2c101fa8be8, tests bf88a4f197339203 35 of 35, 12 of 12 mutants)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the card''s own quantity: the paper has no gross (CARD_D1_V4 rule 2: |b| + |a| per event); recomputed exactly (computation); Spearman with the absolute mid change over the window 0.12 to 0.43 (J15940 price, every coin-minute of 2 days)'
+  open: 'counts quote churn: an amount added and taken back at the best counts twice (BTC 02:10: the last events of the 5 s window are 134.39 dollar flips, J15910); it scales with the coin''s price and book, so only the same coin''s history compares'
+could_build:
+- id: D1.CB1
+  intended: 'the paper''s order flow imbalance: the sum of e_n over W in contracts, and its depth-normalised form OFI / D (D the mean top depth over W), Cont, Kukanov and Stoikov 2014'
+  was_name_of: D1.S01, D1.S02, D1.S03, D1.S04, D1.S05
+  formula: 'OFI_W = the sum over the window''s events of 1{Pb_n >= Pb_n-1} qb_n - 1{Pb_n <= Pb_n-1} qb_n-1 - 1{Pa_n <= Pa_n-1} qa_n + 1{Pa_n >= Pa_n-1} qa_n-1 (contracts); OFI_W / D'
+  needs: the book_ticker rows (already read by the producer)
+  adds: 'the size of the flow against the book''s depth, the quantity of the paper''s price-impact law; the share keeps only its side and one-sidedness (opinion until built and measured)'
+  status: NOT_BUILT

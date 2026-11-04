@@ -1,0 +1,68 @@
+{
+ "by": "ALARMLIB",
+ "changes": {
+  "B1": "i2g_grade3_v3_2.grade: HONEST and STRESS FILL_SHARE leave out NO_COST parents (GROSS keeps them)",
+  "B2": "i2g_rules_v1_2.passive_entry: a decision price older than MAX_STALE_S 60 s -> NO_PRICE (the only rules function changed; cost_legs and path_values unchanged)",
+  "names": "every other V3.2 file differs from its V3.1 file only in module names, VERSION I2G_V3_2, RUN schema I2G_RUN_V3_2 and the pins file name"
+ },
+ "consumers_not_changed": {
+  "exit_engine_ED3": "still imports i2g_rules_v1.passive_entry (no freshness check): its resting-entry results need a recheck by its owner"
+ },
+ "diffs_for_review": "team/RESEARCH/tools/idea_to_grade/V3_2_LOGS/DIFF_*.txt (V3.1 file vs V3.2 file)",
+ "files": {
+  "team/RESEARCH/LIBRARY/UNIVERSE_ALARMS_V1.tsv": "13c4722a5f5ab86b",
+  "team/RESEARCH/LIBRARY/alarm_library/ALARM_REGISTRY_V1.tsv": "31f0d8ac17d599da",
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2.json": "4000a8e47b6847ee",
+  "team/RESEARCH/tools/idea_to_grade/README_V3_2.md": "2266bbda5d1e2f72",
+  "team/RESEARCH/tools/idea_to_grade/alarm_contract_v1.py": "65c37dbff4cb3ef4",
+  "team/RESEARCH/tools/idea_to_grade/full_population_v3_2.sh": "31eeebde7689002e",
+  "team/RESEARCH/tools/idea_to_grade/i2g_engine_v3_2.py": "d9fa240631bf2a59",
+  "team/RESEARCH/tools/idea_to_grade/i2g_grade3_v3_2.py": "c359118528972939",
+  "team/RESEARCH/tools/idea_to_grade/i2g_rules_v1.py": "29cd896d5436693a",
+  "team/RESEARCH/tools/idea_to_grade/i2g_rules_v1_2.py": "2fd143d066355df8",
+  "team/RESEARCH/tools/idea_to_grade/i2g_universe_v1.py": "bafe15d96fd41ae0",
+  "team/RESEARCH/tools/idea_to_grade/idea_to_grade_v3_2.py": "a124c3c5e23200c8",
+  "team/RESEARCH/tools/idea_to_grade/mutants_i2g_v3_2.py": "8a14c273d348fbd3",
+  "team/RESEARCH/tools/idea_to_grade/regress_v3_2_ext.py": "3c2e28475a645c8a",
+  "team/RESEARCH/tools/idea_to_grade/release_pins_v3_2.py": "e9067752ca5fbb93",
+  "team/RESEARCH/tools/idea_to_grade/test_i2g_v3_2.py": "83d675829fea3aeb",
+  "team/RESEARCH/tools/idea_to_grade/test_i2g_v3_2_real.py": "c05ae44994d93f5b"
+ },
+ "full_population": {
+  "alarm": "ALM_M_V1",
+  "coins": 52,
+  "events": "<SCRATCH>/work_LEAD/loop2/det_M_v1/EVENTS.tsv",
+  "events_sha16": "4398647f907dc922",
+  "parents": 10764,
+  "run": "<SCRATCH>/work_ALARMLIB/i2g_v3_2/full_ALM_M_V1_20261026T081253Z/run",
+  "status": "COMPLETE, VERIFIED, TEST (scratch ledger)",
+  "tree_peak_gb_sampled": 4.16,
+  "wall_s": 421
+ },
+ "open_not_blocking": [
+  "external review BACKLOG (mutation harness import, D3, J2 README gaps, release-record schema, GiB label)",
+  "a GRADED run needs a PREREG row in the real TRIES_LEDGER_V1"
+ ],
+ "pins": {
+  "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2.json",
+  "files": 46,
+  "sha16": "4000a8e47b6847ee"
+ },
+ "regression_ext": {
+  "B1": "ALL/FOLLOW/RR/HONEST FILL_SHARE on V3.1 values 0.9415227198170552 over 10745 parents, 1428 clusters (= report); V3.2 table equals the oracle on all 64 net resting FILL_SHARE ALL rows",
+  "B2": "observation 147181 VVV control FADE: V3.1 FILLED wait 8.999 s -> V3.2 NO_PRICE",
+  "log": "team/RESEARCH/tools/idea_to_grade/V3_2_LOGS/REGRESS_EXT_V3_2.log",
+  "script": "team/RESEARCH/tools/idea_to_grade/regress_v3_2_ext.py",
+  "unchanged": "OBSERVATIONS, WEIGHTS identical; 26 non-resting VALUES3 columns identical over 252700 rows; 2 rows lose a stale resting price, none gains one; 3080 TT table rows identical; 240 of 7200 table rows change, all net FILL_SHARE",
+  "verdict": "PASSED, 0 checks failed"
+ },
+ "release": "idea_to_grade_V3_2",
+ "scope": "only the two blockers of team/OUTSIDE/DATA/REVIEW_IDEA_TO_GRADE_V3_1_EXT_V1.md (owner 26 Oct 08:01Z); BACKLOG items out of scope",
+ "supersedes": "RELEASE_idea_to_grade_V3_1.json 69df7350a98e9681 (its files are kept unchanged; ED3 imports i2g_rules_v1.py)",
+ "tests": {
+  "mutants": "43/43 killed (3 new: stale price kept, stale limit off by one, NO_COST in net fill share); note: test_20 errors inside the mutant temp folder (event_profile import, backlog), the new mutants also fail a real assertion",
+  "pure_v3_2": "26/26 OK (Mac)",
+  "real": "13 passed in 16.47 s (Mac)"
+ },
+ "written_utc": "2026-10-26T08:25:00Z"
+}

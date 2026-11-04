@@ -1,0 +1,656 @@
+# OUR_RULE_Y3_V1.yaml: the card of Y3's OUR RULES S01 to S26 (the other fires around a fire, and the facts of each UTC minute), EDITION 1
+# (METRIC_AUDIT, 2026-10-18; OR2 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86; reviewer METRIC_AUDIT2). Made as OUR_RULE_C2_V1;
+# meaning_register edition 5 checks it. Register of the day: LAYER_REGISTER_V31 43a6e2a33503f1f5 (Y3 S01 to S26 our_rule, NOT_CHECKED).
+# Input named first (EDGE1 16:01:25Z HOW): J15998 (rule_y3src 733e99c0). Computation and meaning: J16005 (rule_y3 13584182, the card's rules
+# written again with no import of prod_Y3_v4 or its reader), every row of 8 Mar 2026 and 24 Sep 2025. One card for the 26 (16 fire, 10
+# minute settings). Pass lines: hb/METRIC_AUDIT.txt 2026-10-18T16:14:28Z (input), 16:35:04Z (filed J16005).
+
+group: Y3
+name: "the other fires around a fire, and the facts of each UTC minute, on the fire list (our rule)"
+summary: >-
+  A fire is one CUSUM, CUSUM_W30 or CUSUM_W40 trigger of mode EXHAUSTION of one coin at one second, on its side (up or down), from the
+  list prod_reader_fire_list_v1 calls 'engine'. At each fire of D, Y3 counts the fires before it (60 s, 300 s, the day, its minute, 30
+  and 60 min: any side, its side, the other side, other coins, its own coin), its rank in its minute and its seconds since the minute's
+  first fire; at each of the 1,440 minute ends, the minute's fires, coins, span, leader and its second, the coins up and down, and the
+  share of the roster (less BTC) that fired within 60 s and 300 s of a minute's first fire. Every window looks back and leaves the
+  fire's own second out; a value is empty LIST_SILENT when the list had a gap over 739 s in its span, NO_FILE when a day it needs has no
+  file, NO_FIRE when a minute has no fire, NO_ROSTER without the week's roster.
+read_as: >-
+  The year's Y3 is exactly the card's rules on the list it read: 28,323 of 28,323 values on 8 Mar 2026 and 23,031 of 23,031 on 24 Sep
+  2025, the fire ids equal (663 and 411; J16005). But that list is not the engine's recorded triggers the card names: on the year days
+  the reader's 'engine' files are ARCH's year root (VOLAT_FOR root_year52r), every row 'source' REPLAYED: the engine's code fed the
+  recorded data again (ARCH_REPLAYED_FIRES_V3 section 1). It holds 51 and 50 coins and 663 and 411 fires a day where the card's facts
+  (the live engine, Sep 2026) say 18 to 32 coins and 155 to 301; never BTC holds (0 BTC fires). Y3's silence gap is the engine's 739 s,
+  while the reader's normal gap for the replay list is 900 s: 304 fire values and 33 minute values are LIST_SILENT on 24 Sep 2025.
+
+conclude:
+  may:
+    - "the counts, ranks, spans and shares as the card's rules define them, on the list the year reads (J16005: 28,323 of 28,323 and 23,031 of 23,031 values; fire ids equal)"
+    - "on the year days, how clustered the replayed EXHAUSTION fires were: 64.4 and 59.1 percent of fires lead their minute (S11); 86.6 and 83.2 percent have a fade of their side in the 300 s before (S05); 52.0 and 45.8 percent refire within the hour (S22) (J16005)"
+  never:
+    - "Y3 on a year day as the live engine's recorded fires: every row read is REPLAYED (2,886 + 4,314 rows for 8 Mar 2026, 4,904 + 3,900 for 24 Sep 2025; J16005), a replay of the engine's code, not measured here against the engine's own file on a day both hold"
+    - "the card's thin facts on the year (18 to 32 coins a day, 155 to 301 fires, spec F1, F7): 51 and 50 coins, 663 and 411 fires (J16005); only 'never BTC' holds"
+    - "a LIST_SILENT value of a year day as an engine outage: the gap is the engine's 739 s on a replayed list whose reader gap is 900 s (prod_reader_fire_list_v1 NORMAL_GAP_S); 304 fire and 33 minute values on 24 Sep 2025"
+    - "a fifth of any Y3 name from FIFTHS: all 26 are fifths NO (F04 by prod_FIFTHS_v11 Rules.classify over METRIC_CLOCK_FIFTHS_V2; OUR_RULE_FIFTHS_V1): CHAIN_forced_LONG_ride's 'cofire_5m in fifth 4 SKIP' (CARD_Y3_V9 part 1) reads a fifth FIFTHS never writes"
+    - "S04 as a count of fires (it counts the other coins, OPEN-5 A); S18, S19 as the share at the minute m (they describe the minute that ended 60 s and 300 s before m, OPEN-4 A)"
+    - "S26 at 0 (the first fire after a quiet hour) as common: 5 of 663 and 5 of 408 valued fires (J16005)"
+
+where:
+  card: "testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_Y3_V9.md 5db54644b448e8f1 (part 3 rules 1 to 11, 13 to 16, 19 to 24; OPEN-1 to OPEN-11; cases EDGES_Y3_V5 04499bcd06396bf1)"
+  settings_register: "testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_Y3_V3.tsv 1c72cc165c646adb"
+  built_on_register: "the fire list (no card of its own in RAWCHECK): the reader's 'engine' kind under VOLAT_FOR <SCRATCH>/work_ARCH/roots/root_year52r/volat-agent/forensics: db/data_storage/layer2_fires_<D>.jsonl (8 Mar 2026 f35516790b91a6cd, 7 Mar a0bb714c2c5090d3; 24 Sep 2025 bcfb42743a1646c9, 23 Sep 3ca3ecd9699c154f; J15998), made from the CUSUM chain on the year roster (WARMUP_YEAR_V2 3e3e05c19300f254 section 4 item 3, jobs 11140, 11148); the week's roster ROSTER_<monday>.csv there"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V31.tsv 43a6e2a33503f1f5 (Y3 S01 to S26 our_rule, NOT_CHECKED)"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_Y3_v4.py 452c4814f13533da through prod_reader_fire_list_v1.py bd163d9fe632c1b3, run by drivers/work_DB2/drivers_opt/drive_day_Y3_v5.py a8ea617ab00ff768 (PRODUCER_EDITIONS Y3 row: env VOLAT_PACKS; VOLAT_FOR root_year52r)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/Y3.parquet
+  year_output_columns: "name (S01 to S26, S22 to S26 with .present_off), coin (the fire's coin, MARKET for the minute settings), as_of_us (the fire's t, or the minute end m), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags (fid=<fid> on a fire row); no source column: the SOURCE_Y3v4 stamp is not kept (J15998); 28,323 rows on 8 Mar 2026, 23,031 on 24 Sep 2025"
+  read_it_with: "team/RAWCHECK/code/rawcheck/rule_y3.py year(D)"
+
+source:
+  vendor: "none outside: our replayed CUSUM chain (the engine's code on the recorded market data)"
+  exchange_stream: "the engine's line form, 'source' REPLAYED in every row (J16005)"
+  files: "layer2_fires_<D-1>, layer2_fires_<D> of root_year52r db/data_storage; ROSTER_<monday of D>.csv of its forensics/knowledge/roster"
+  columns: "t (seconds, up to 2 decimals), coin, dir (LONG up, SHORT down), mode, trigger_type, fid"
+  fields:
+    fires: "rows with a valid t, not bad, not repeated, of CUSUM, CUSUM_W30, CUSUM_W40 and mode EXHAUSTION; each window a fire of its own [proof: CARD_Y3_V9 rule 1; cases E14, E21, E39, E40; J16005 fid sets equal]"
+    windows: "[e - W, e), the fire's own second left out; .present_off [e - W, e] beside [proof: rules 3, 23; E16, E17, E46, E49 to E53]"
+    seen: "a row of any kind with a valid t in [u - 739 s, u] at every moment u of the span, else LIST_SILENT; D-1 read when the span less 739 s starts before 00:00, its absence NO_FILE [proof: rules 13, 14; E3 to E7, E42, E45, E48, E55, H1, H2]"
+    minute: "the minute [m - 60 s, m) at minute end m; S18, S19 the minute [m - 60 s - W, m - W), forward from its first fire, over the roster less BTC, 4 decimals half up [proof: rules 9 to 11; E28 to E36]"
+  latency: "known at its t (no write stamp in the list, spec A1); a minute's facts at its end; S18, S19 W seconds later"
+  silence: "LIST_SILENT on 24 Sep 2025: 304 fire values, 33 minute values; 8 Mar 2026: none (J16005)"
+
+reading_rules:
+  - "0 = the list was seen and nothing of that kind fired; empty = not seen, no file, no fire in the minute, or no roster: never 0"
+  - "a count of fires counts triggers (one move can fire the 3 windows); a count of coins counts coins"
+  - "up and down are the trigger's side; a fade trades against it (the owner's LONG fade fades a down fire)"
+  - "a minute setting at a fire gives the last full minute"
+
+values:
+  units: "counts, ranks and 0/1; seconds (S10, S14, S16, exact); a coin (S15); shares 0 to 1 (S18, S19, 4 decimals)"
+  zero: "nothing of that kind in the window, the list seen"
+  empty: "NO_FILE, LIST_SILENT (stale), NO_FIRE, NO_ROSTER; value_kind 0. Never read empty as 0"
+  stale: "true only with LIST_SILENT"
+  flags: "fid=<fid> on every fire row; BAD_INPUT, DUPLICATE_ROW (rule 15: not compared here)"
+
+interpret:
+  do:
+    - "read a fire's counts with its side and window; read S20, S21 beside S12, S13"
+  dont:
+    - "read the year's Y3 as the live engine's alarms"
+    - "read S26 = 0 as usual"
+
+biases:
+  - {what: "the list on the year days", direction: "replayed, denser and wider than the card's live facts", size: "51 and 50 coins, 663 and 411 fires a day against 18 to 32 and 155 to 301 (spec F1, F7); 0 BTC", proof: "J16005 LIST lines"}
+  - {what: "the silence gap", direction: "more empties than the replay's own gap would give", size: "304 fire and 33 minute values LIST_SILENT on 24 Sep 2025 at 739 s (the replay kind's reader gap is 900 s)", proof: "J16005; prod_reader_fire_list_v1 NORMAL_GAP_S"}
+
+external_checks:
+  - {what: "every Y3 row of 2 days against the card's rules written again (rule_y3), on the input named by J15998", where: "the year's own list and rows (a recompute, our source)", status: "VERIFIED: 28,323 of 28,323 (8 Mar 2026), 23,031 of 23,031 (24 Sep 2025); fid sets equal (RULE_Y3_STAMPS_V1 c00a6ea41b8d5773; J16005 log b6fe6ab4b349adf3)"}
+  - {what: "which list fed the rows", where: "the reader's 'engine' files under the Y3 row's VOLAT_FOR", status: "NAMED: J15998 (663 = 663 and 411 = 411 rule-1 fires; the files' sha16); J16005 every row 'source' REPLAYED"}
+  - {what: "the replayed list against the engine's own recorded file", where: "none on these days (the live data_storage starts 4 Jul 2026)", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "the input of a Y3 day named and its stamp rebuilt", run: "python3 -B -m rawcheck.rule_y3src <VOLAT_FOR> <D> ...", where: "team/RAWCHECK/code (rule_y3src.py 733e99c055932c1c, tests 390fce8389363baa 6 of 6, 3 of 3 mutants)"}
+  - {what: "every Y3 row of a day recomputed, the fid sets, how often each fires", run: "python3 -B -m rawcheck.rule_y3 <VOLAT_FOR> <D> ...", where: "team/RAWCHECK/code (rule_y3.py 13584182af3586c1, tests/test_rule_y3.py dbab52b327b8790e 162 of 162 on 57 cases, 9 of 9 mutants; runner job: the SCRATCH_DISK list, the year store)"}
+
+used_by: "CHAIN_forced_LONG_fade reads S21 (COINS-IN-MINUTE classes 1, 3-4, 5-8, 9+); CHAIN_forced_LONG_ride reads S05 by a fifth (fifth 4 SKIP) that FIFTHS never writes (all Y3 names F04: its source is open); CHAIN_chop_LONG_ride, CHAIN_chop_SHORT_fade, CHAIN_trend_LONG_fade, CHAIN_trend_LONG_ride, CHAIN_trend_SHORT_fade_2, CHAIN_trend_SHORT_ride_4 read S19; CHAIN_trend_SHORT_ride_4 S18; WORDS edition 5 S22 to S26 (REFIRE L43, W7; CROWD L45; PACE L50, L51) (CARD_Y3_V9 part 1). To TREE's RR1: every reader of Y3 on a year day reads replayed fires"
+
+references:
+  CARD: "testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_Y3_V9.md 5db54644b448e8f1"
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_Y3_STAMPS_V1.tsv c00a6ea41b8d5773"
+  JOBS: "15998 (the input), 16005 (every row, 2 days; log b6fe6ab4b349adf3)"
+  PASS_LINES: "hb/METRIC_AUDIT.txt 2026-10-18T16:14:28Z, 16:35:04Z"
+  REPLAY: "team/REPLAY/notes/ARCH_REPLAYED_FIRES_V3.md d3dbab7c431accf4 (sections 1, 2); team/LAYERS/handover_20261014/snapshots/WARMUP_YEAR_V2.md 3e3e05c19300f254 (section 4 item 3)"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): no rename (each count is what its name says); the list's identity is a never line and every setting's open"
+
+settings:
+- id: Y3.S01
+  name: fires in the 60 s before the fire, any side
+  layer: our_rule
+  side: any
+  window: '[e - 60 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the count of fires stamped in the window; over every coin
+  aliases: BURST.n_fires_60s
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many fires came in the minute before this one
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: >0 at 467 of 663 fires (70.4 percent, 8 Mar 2026), 293 of 411 (71.3, 24 Sep 2025); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S02
+  name: fires of the fire's side in the 60 s before
+  layer: our_rule
+  side: the fire's
+  window: '[e - 60 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the fires of its side (its dir); over every coin
+  aliases: BURST.n_fires_60s_same_side
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many fires of its own side came in the minute before
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005 as S01 (sides: up 344, down 319 on 8 Mar; 217, 194 on 24 Sep); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S03
+  name: fires of the other side in the 60 s before
+  layer: our_rule
+  side: the other
+  window: '[e - 60 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the fires of the other side; over every coin
+  aliases: BURST.n_fires_60s_other_side
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many fires of the other side came in the minute before
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J16005 as S01; the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S04
+  name: other coins with a fire in the 300 s before
+  layer: our_rule
+  side: any
+  window: '[e - 300 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: distinct coins other than the fire's with a fire in the window (OPEN-5 A); over the other coins
+  aliases: F.cofire_300s
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many other coins fired in the 5 minutes before
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: median 9, p90 38 (8 Mar); median 4, p90 31 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: 'on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine''s recorded triggers the card''s rule 1 names; S04 as a count of fires: it counts the other coins (OPEN-5 A)'
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+  - 'S04 as a count of fires: it counts the other coins (OPEN-5 A)'
+- id: Y3.S05
+  name: fades of the fire's side in the 300 s before, any coin
+  layer: our_rule
+  side: the fire's
+  window: '[e - 300 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the fires of its side (every fire is a fade, EXHAUSTION); over every coin, its own too
+  aliases: cofire_5m
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: whether the list is crowding its own fades of one side
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: >0 at 574 of 663 fires (86.6 percent), 342 of 411 (83.2); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: 'on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine''s recorded triggers the card''s rule 1 names; a fifth of S05 from FIFTHS: Y3 S05 is fifths NO (F04), no fifth row'
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+  - 'a fifth of S05 from FIFTHS: Y3 S05 is fifths NO (F04), no fifth row'
+- id: Y3.S06
+  name: fires earlier today, every coin
+  layer: our_rule
+  side: any
+  window: '[00:00 of e''s UTC day, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the count of fires (OPEN-6 A); over every coin
+  aliases: W.n_earlier_fires_today
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how busy the day was before this fire
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: median 331, max 662 (8 Mar); 133, 266 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S07
+  name: the fire's ordinal among its coin's fires today
+  layer: our_rule
+  side: any
+  window: '[00:00 of e''s UTC day, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: 1 + its coin's fires in the window (OPEN-6 A); over the fire's coin
+  aliases: W.ordinal_coin_today
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: the how-many-th fire of this coin today
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J16005 (every fire of 2 days); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S08
+  name: the fire's rank in its UTC minute
+  layer: our_rule
+  side: any
+  window: '[start of e''s minute, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: 1 + the fires before it in its minute; fires at one second share the rank (OPEN-1 A); over every coin
+  aliases: m4_rank
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: where the fire sits in its minute
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: a tie at the first second in 48 of 160 (8 Mar) and 31 of 127 (24 Sep) busy minutes; the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S09
+  name: fires before it in its UTC minute
+  layer: our_rule
+  side: any
+  window: '[start of e''s minute, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: S08 less 1; over every coin
+  aliases: m4_fires_before_me
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many fires led it in its minute
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J16005 (every fire of 2 days); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S10
+  name: seconds since the first fire of its minute
+  layer: our_rule
+  side: any
+  window: '[start of e''s minute, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: e less the first fire's t, 0 when none (exact seconds); over every coin
+  aliases: m4_secs_since_first
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how late in its minute's wave the fire came
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J16005 (every fire of 2 days); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S11
+  name: the fire leads its minute (1) or not (0)
+  layer: our_rule
+  side: any
+  window: '[start of e''s minute, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: 1 when no fire before it in its minute, else 0; over every coin
+  aliases: m4_is_leader
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: whether this fire opened its minute
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 1074 of 1074 values, every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: 1 at 427 of 663 fires (64.4 percent), 243 of 411 (59.1); the count is what the name says (CARD_Y3_V9 rules 3 to 8, 13)'
+  open: 'on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine''s recorded triggers the card''s rule 1 names; S11 = 1 as alone: it may share its second with other fires (OPEN-1 A)'
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+  - 'S11 = 1 as alone: it may share its second with other fires (OPEN-1 A)'
+- id: Y3.S12
+  name: fires in the minute just ended
+  layer: our_rule
+  side: any
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the count of fires; over every coin
+  aliases: m4_minute_fires_n
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many fires the last minute held
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: a fire in 160 of 1,440 minutes (11.1 percent, 8 Mar), 127 (8.8, 24 Sep); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S13
+  name: coins with a fire in the minute just ended
+  layer: our_rule
+  side: any
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: distinct coins; over every coin
+  aliases: m4_minute_coins_n
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many coins fired in the last minute
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: of the busy minutes, 1 coin in 93 of 160 (8 Mar), 80 of 127 (24 Sep); 9 or more in 18 and 8; the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S14
+  name: span of the minute's fires
+  layer: our_rule
+  side: any
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: last t less first t, seconds; NO_FIRE when none; over every coin
+  aliases: m4_span_s
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how spread the last minute's fires were
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J16005 (every minute of 2 days); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S15
+  name: the minute's first coin
+  layer: our_rule
+  side: any
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the coin of the first fire; coins tied at the first second joined by _AND_ in alphabetical order; NO_FIRE when none; over every coin
+  aliases: m4_leader
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: who led the last minute
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: ties in 48 of 160 and 31 of 127 busy minutes; the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S16
+  name: second of the minute's first fire
+  layer: our_rule
+  side: any
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: first t less m - 60 s; NO_FIRE when none; over every coin
+  aliases: m4_leader_t
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: when in the last minute the first fire came
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J16005 (every minute of 2 days); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S17
+  name: coins of the week's roster less BTC
+  layer: our_rule
+  side: any
+  window: the week of m
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the count of the roster file's coins less BTC; over the roster less BTC
+  aliases: m4_roster_n
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION; the week''s roster'
+  means: how many coins the shares are over
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: 51 (ROSTER_20260302, 52 with BTC), 50 (ROSTER_20250922); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S18
+  name: share of the roster with a fire within 60 s of the minute's first fire
+  layer: our_rule
+  side: any
+  window: the minute [m - 120 s, m - 60 s), then [t_first, t_first + 60 s)
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: coins with a fire over S17, 4 decimals half up (OPEN-4 A); over the roster less BTC
+  aliases: m4_roster_share_60s
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION; the week''s roster'
+  means: how much of the market fired at once (a block)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: median 0.0196, p90 0.2549 (8 Mar); 0.02, 0.14 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: 'on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine''s recorded triggers the card''s rule 1 names; S18 as the share at the minute m: it is the minute that ended 60 s before m'
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+  - 'S18 as the share at the minute m: it is the minute that ended 60 s before m'
+- id: Y3.S19
+  name: share of the roster with a fire within 300 s of the minute's first fire
+  layer: our_rule
+  side: any
+  window: the minute [m - 360 s, m - 300 s), then [t_first, t_first + 300 s)
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: coins with a fire over S17, 4 decimals half up (OPEN-4 A); over the roster less BTC
+  aliases: m4_roster_share_300s
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION; the week''s roster'
+  means: how much of the market followed within 5 minutes (a rotation)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: median 0.0784, p90 0.4902 (8 Mar); 0.04, 0.4 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: 'on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine''s recorded triggers the card''s rule 1 names; S19 as the share at the minute m: it is the minute that ended 300 s before m'
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+  - 'S19 as the share at the minute m: it is the minute that ended 300 s before m'
+- id: Y3.S20
+  name: coins with an up fire in the minute just ended
+  layer: our_rule
+  side: up
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: distinct coins with an up fire (OPEN-9 A); over every coin
+  aliases: n_coins (COINS-IN-MINUTE, up)
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many coins fired up in the last minute
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: of 160 busy minutes 0 in 75, 1 in 39, 9 or more in 10 (8 Mar); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S21
+  name: coins with a down fire in the minute just ended
+  layer: our_rule
+  side: down
+  window: '[m - 60 s, m)'
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: distinct coins with a down fire (OPEN-9 A); over every coin
+  aliases: n_coins (COINS-IN-MINUTE, down)
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many coins fired down in the last minute (read by CHAIN_forced_LONG_fade)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2880 of 2880 values, every minute end of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: of 160 busy minutes 0 in 85, 1 in 54, 9 or more in 8 (8 Mar); 72, 35, 4 of 127 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 9 to 11, 13)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S22
+  name: the fire's coin's fires in the hour before (REFIRE)
+  layer: our_rule
+  side: any
+  window: '[e - 3,600 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: its coin's fires, any side and window; over the fire's coin
+  aliases: ff_same_coin_60m
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: whether the coin fired again within the hour (L43)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2148 of 2148 values (with .present_off), every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: >0 at 345 of 663 fires (52.0 percent), 187 of 408 valued (45.8); the count is what the name says (CARD_Y3_V9 rules 20 to 23)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S23
+  name: the fire's coin's fires in the 45 min before (REFIRE)
+  layer: our_rule
+  side: any
+  window: '[e - 2,700 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: its coin's fires, any side and window; over the fire's coin
+  aliases: g_refire_n45
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: whether the coin fired within 45 minutes of a previous alarm (W7)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2148 of 2148 values (with .present_off), every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: >0 at 339 of 663 (51.1 percent), 172 of 410 (42.0); the count is what the name says (CARD_Y3_V9 rules 20 to 23)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S24
+  name: coins with a fire in the 30 min before (CROWD)
+  layer: our_rule
+  side: any
+  window: '[e - 1,800 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: distinct coins; over every coin, its own too when earlier (OPEN-11 A)
+  aliases: crowd_30m_n
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: how many coins fired in the half hour up to this one (L45)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2148 of 2148 values (with .present_off), every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: median 20, p90 42 (8 Mar); 12, 33 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 20 to 23)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S25
+  name: fires in the 30 min before (PACE)
+  layer: our_rule
+  side: any
+  window: '[e - 1,800 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the count of fires; over every coin
+  aliases: ff_fires_30m
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: many fires in the last 30 minutes (L50)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2148 of 2148 values (with .present_off), every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: median 24, p90 90 (8 Mar); 14, 39 (24 Sep); the count is what the name says (CARD_Y3_V9 rules 20 to 23)'
+  open: on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine's recorded triggers the card's rule 1 names
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+- id: Y3.S26
+  name: fires in the hour before (PACE)
+  layer: our_rule
+  side: any
+  window: '[e - 3,600 s, e)'
+  clock: the fire's second
+  scope: a fire (keyed by fid)
+  contracts: USDT
+  aggregate: the count of fires; over every coin
+  aliases: ff_fires_60m
+  derived_from: 'the root_year52r engine-form list of D-1 and D (REPLAYED rows): CUSUM, CUSUM_W30, CUSUM_W40 of mode EXHAUSTION'
+  means: 0 = the first fire after a quiet hour (L51)
+  computation:
+    status: RELIABLE
+    proof: 'J16005 rule_y3 13584182: 2148 of 2148 values (with .present_off), every fire of 8 Mar 2026 and 24 Sep 2025 (RULE_Y3_STAMPS_V1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16005: 0 at 5 of 663 fires (0.8 percent), 5 of 408 valued (1.2); median 34, 22; the count is what the name says (CARD_Y3_V9 rules 20 to 23)'
+  open: 'on the year the list is the replayed CUSUM chain (every row REPLAYED, J16005), not the engine''s recorded triggers the card''s rule 1 names; S26 at 0 as common: the first fire after a quiet hour is 5 fires a day'
+  never:
+  - Y3 on a year day as the live engine's recorded fires (REPLAYED rows)
+  - 'S26 at 0 as common: the first fire after a quiet hour is 5 fires a day'

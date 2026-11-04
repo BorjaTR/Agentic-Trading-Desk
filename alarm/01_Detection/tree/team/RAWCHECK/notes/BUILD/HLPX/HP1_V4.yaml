@@ -1,0 +1,235 @@
+# HP1_V4.yaml (STRATEGY 2026-10-25T02:53:43Z): merged edition: OX-DATA's proposed successor with QUANT's ADOPTs (A6-A8, A10, market-trade words, tail spans, t_k = max(funding, block time), HLR-03 drop of S03 >= S04 only, HLR-04, HLR-05, HLR-08 at 1e-9 rel + 1e-12 coins, HO3 NO_PREVIOUS, HF3 S11 never) and the REJECTs restored from our signed edition (concrete meaning lines A1, our real_check points A2, T3 from RAW A3, QUANT's tie kept A4, coin map A5, v1 code A9, the HL3 backstop line); REVIEW_OXDATA_HL_V3V4_QUANT 42ae76e7, LAB1 co-sign 02:13:30Z
+kind: build_metric
+id: HP1
+producer: HLPX
+item: Hyperliquid price paths for every month from the node fills (MISSING_INFO_BACKLOG M18)
+tier: BUILD
+name: Hyperliquid last trade price, volume-weighted price, trade count and traded dollars in the last 5 s
+status:
+  drafter: STRATEGY
+  reviewer: LAB1 + QUANT
+  edition: 4
+  signed: false
+  signed_by: 'LAB1 2026-10-25T02:55:15Z (by diff vs signed)'
+  changes: 'edition 4 (STRATEGY 2026-10-25T02:53:43Z): merged edition: OX-DATA''s proposed successor with QUANT''s ADOPTs (A6-A8, A10, market-trade words,
+    tail spans, t_k = max(funding, block time), HLR-03 drop of S03 >= S04 only, HLR-04, HLR-05, HLR-08 at 1e-9 rel + 1e-12 coins, HO3 NO_PREVIOUS, HF3 S11
+    never) and the REJECTs restored from our signed edition (concrete meaning lines A1, our real_check points A2, T3 from RAW A3, QUANT''s tie kept A4,
+    coin map A5, v1 code A9, the HL3 backstop line); REVIEW_OXDATA_HL_V3V4_QUANT 42ae76e7, LAB1 co-sign 02:13:30Z'
+means: Native Hyperliquid PERP last execution price, five-second VWAP, buyer-side trade count and execution notional, subject to source coverage. This is
+  neither a mark price nor proof of availability in every month.
+example: 'BTC, 10 Oct 2025, u = 21:15:05. Trades with block time in (21:14:59, 21:15:04] (the 5 s known at u, given the 1 s delay): 3 trades (tids 11, 12,
+  13) at 112,000 for 0.5 BTC, 111,950 for 1.0 BTC, 111,900 for 0.5 BTC, the last one in block order at 111,900. S01 = 111,900; S02 = (56,000 + 111,950 +
+  55,950) / 2.0 = 111,950; S03 = 3; S04 = 223,900 dollars.'
+formula: 'Only mapped native PERP buyer rows; Settlement and spot/HIP3 rows excluded. For coin c and point u on the 5 s add-on contract grid of day D (u
+  = 00:00:00 to 23:59:55, minute ends included): take the fills table rows of c with block_time_us in (u - 6 s, u - 1 s] (the last 5 s known at u, the stated
+  1 s publication delay) and side = B (the buyer row: one row per trade; tid unique among them). S03 = the number of those rows. S04 = sum(px x sz). S02
+  = S04 / sum(sz) when S03 > 0. S01 = px of the last of those rows by (block_number, row order in the block); when S03 = 0, S01 = the px of the last buyer
+  row with block_time_us <= u - 1 s (the CARRY of D-1 included) if that row is at most 60 s old, else EMPTY STALE_PRICE. Prices from px_text parsed once
+  to float64; no rounding (decimals none).'
+source:
+  kind: ours
+  ref: PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 row F11; the node's own fills (Hyperliquid hl-mainnet-node-data, node_fills_by_block)
+inputs:
+- kind: reader
+  ref: prod_reader_hl_node_v1
+  exists: true
+  stream: 'fills table of hl_node_read V1: block_time_us, block_number, coin, px, px_text, sz, side, tid; the day manifest (HOLE hours)'
+  rule_in_force: a trade belongs to the bin holding its block time; one row per trade (side B)
+  stale_rule: Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.
+  days: 'D''s 24 hour files; D-1''s last 6 s of fills (day D covers block times (D-1 23:59:54, D 23:59:54]); the CARRY of D-1 (carry_out: the last buyer
+    row per coin ever seen plus D-1''s last 6 s of buyer rows) for S01'
+  data_check: Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof
+  verdict: LIMITS
+  waits_for: Independent release approval; source is available and bounded raw comparisons passed
+  reader_call: hl_node_read.read on the reader of record (rebuild 78fa56c5 once released; OX-DATA A8)
+overlaps:
+- setting: hl_prices_v1 (SCOUT)
+  kind: copy
+  why: the same venue's prints from an earlier source for 12 Sep-26 Oct 2025; a cross-check, never merged
+per_coin: Coins named by Hyperliquid's names through the coin map (kPEPE and the other 1000-coins map to our roster names; a 1000-coin's px is Hyperliquid's
+  own quote unit, stated in the map); coins not listed on Hyperliquid are not written (NOT_ON_HL in the map); spot '@' coins never; thin coins have many
+  empty bins (S03 = 0, S01 carried up to 60 s, then STALE_PRICE); roster changes follow the week's roster.
+time: Use block times (u-6s,u-1s]. Missing-hour and actual manifest-tail spans that intersect this interval make all outputs HOLE. Missing D-1 makes boundary
+  cells HOLE; last price remains HOLE until an eligible trade is known. A known trade may carry at most60s; stale flag only when carried and older than5s.
+output:
+  group_file: X1/day=<D>/HLPX.parquet
+  names:
+  - name: S01
+    label: hl_last_px
+    units: price (quote units of the HL coin)
+    value_kind: float
+    decimals: none
+    means: the last Hyperliquid trade price at or before u, at most 60 s old
+    never:
+    - a mid or mark price
+    - a price we could have filled at without cost
+    - a Binance price
+    max_staleness_s: 60
+  - name: S02
+    label: hl_vwap_5s
+    units: price
+    value_kind: float
+    decimals: none
+    means: the size-weighted average trade price of the 5 s known at u
+    never:
+    - a value for a bin with no trade (that is EMPTY NO_TRADE)
+  - name: S03
+    label: hl_trades_5s
+    units: count
+    value_kind: whole
+    decimals: none
+    means: the number of trades in the 5 s known at u, each trade once
+    never:
+    - fills counted twice (buyer and seller)
+  - name: S04
+    label: hl_notional_5s
+    units: USDC (Hyperliquid's quote, in dollars)
+    value_kind: float
+    decimals: none
+    means: the dollars traded in the 5 s known at u
+    never:
+    - volume in coins
+  grid: 5s
+  cadence: every 5 s on the add-on contract grid u = 00:00:00 to 23:59:55 of D (addon_contract_v1.grid; minute ends included), 17,280 points per coin per
+    day; D 00:00:00 is the old D-1 24:00:00, values unchanged
+  as_of_rule: as_of = u
+  known_at_rule: 'known_at = u, so known_at <= as_of on every row (empty rows too): a row at u uses only trades with block time <= u - 1 s (MODEL_AVAILABLE_AT:
+    block time plus a stated 1 s publication delay, to be calibrated by LIVE4 against the live trade feed)'
+  known_at_kind: MODEL_AVAILABLE_AT
+  empty_reasons:
+  - reason: NO_TRADE
+    when: S02 when S03 = 0 in the bin
+  - reason: STALE_PRICE
+    when: S01 when the last trade is older than 60 s
+  - reason: HOLE
+    when: every name when the bin's hour is HOLE in the manifest
+  - reason: NO_HISTORY
+    when: S01 before the coin's first trade on Hyperliquid since 1 Sep 2025 (per coin, so later listings too); never when D-1 is not built (that is HOLE)
+  stale_rule: stale = 1 on S01 when the carried trade is older than 5 s (age written in flags)
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+  - flag: CARRIED
+    when: S01 taken from an earlier bin
+  quality_companion:
+    codes:
+    - code: X1.HLPX.Q01
+      kind: WORD
+      meaning: Categorical JSON flags and pair_quality only
+    - code: X1.HLPX.Q02
+      kind: NUMBER
+      meaning: Source age in seconds; unavailable age is EMPTY NO_SOURCE_AGE
+    - code: X1.HLPX.Q03
+      kind: WHOLE
+      meaning: Unmapped direction count in the producer window; unknown coverage remains EMPTY
+    writer: write_hl_v2.py
+    scope: Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next
+      snapshot, not earlier.
+edge_cases:
+- case: E1 three trades in one bin (the example)
+  input: tids 11, 12, 13 as in the example
+  answer: S01 111900, S02 111950, S03 3, S04 223900
+- case: E2 the two rows of one trade
+  input: a buyer row and a seller row with the same tid, px 100, sz 2
+  answer: S03 1, S04 200 (never 2 and 400)
+- case: E3 a quiet coin
+  input: last trade 59 s before u, none since
+  answer: S01 = that px, flag CARRIED; S02 EMPTY NO_TRADE; S03 0; S04 0
+- case: E4 stale
+  input: last trade 61 s before u
+  answer: S01 EMPTY STALE_PRICE; S03 0; S04 0
+- case: E5 a HOLE hour
+  input: the manifest marks hour 14 HOLE
+  answer: all four names EMPTY HOLE for u in (14:00:00, 15:00:05], 721 points (the row at 15:00:05 reads block times (14:59:59, 15:00:04])
+- case: E6 a trade exactly at u - 1 s, and one at u - 0.5 s
+  input: block_time = u - 1 s; another at u - 0.5 s
+  answer: the first in the row at u; the second only in the row at u + 5 s (not yet known at u)
+unit_tests:
+- test: U1 (E1)
+  planted: the three trades of the example
+  expect: S01 111900, S02 111950, S03 3, S04 223900
+- test: U2 (E2)
+  planted: one trade as two rows
+  expect: S03 1, S04 200
+- test: U3 (E3, E4)
+  planted: trades at u - 59 s and, on a second coin, u - 61 s
+  expect: first S01 carried with flag; second EMPTY STALE_PRICE
+- test: U4 (E5)
+  planted: manifest HOLE on hour 14
+  expect: EMPTY HOLE on 721 points (14:00:05 to 15:00:05), no 0
+- test: U5 (E6 and the CARRY)
+  planted: trades at u - 1 s and u - 0.5 s; D-1's last trade at 23:59:30 and D-1 not built
+  expect: the first in the row at u, the second in the row at u + 5 s; S01 at 00:00:00 and at every point of D before its first trade EMPTY HOLE (D-1 not
+    built gives EMPTY HOLE, never D-2's value, never NO_HISTORY)
+- test: U6 (the contract grid and the tail, LAB1 08:11Z)
+  planted: trades at D-1 23:59:55 and D 00:00:02; then the same with D-1's manifest tail_complete false and own_last_block_time_us = D-1 23:59:50
+  expect: the row at D 00:00:00 equals the old grid's D-1 24:00:00 row exactly; with the tail cut, the rows at D 00:00:00 and 00:00:05 are EMPTY HOLE (windows
+    touching (23:59:50, 24:00:00)), never 0
+mutants:
+- mutant: M1 count both rows of a trade
+  caught_by: U2 (S03 2, S04 400)
+- mutant: M2 no age check on the carried price
+  caught_by: U3 (a 61 s old price written)
+- mutant: M3 HOLE written as 0
+  caught_by: U4
+- mutant: M4 no 1 s delay (bins (u - 5 s, u])
+  caught_by: U5 (the trade at u - 0.5 s appears at u, known too early)
+real_check:
+  points:
+  - point: 2025-10-10, BTC and SOL, 21:00 to 21:59
+    why: the crash hour, the busiest bins
+  - point: 2025-10-15, BTC and one thin roster coin, 10:00 to 10:59
+    why: an ordinary hour and empty bins
+  - point: 2025-09-20, BTC, 00:00 to 00:10
+    why: the CARRY of D-1 at 00:00 and the overlap with hl_prices_v1
+  - point: 2025-09-28 BTC 10:01 UTC
+    why: ordinary completed conversion window
+  - point: 2025-09-28 BTC 06:09 UTC
+    why: first eligible forced event after warmup, chosen from source only
+  - point: 2025-09-29 ETH 10:01 UTC
+    why: different coin and completed BUILD day, same executable
+  pass: 'QUANT recomputes from this card''s words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read''s converted
+    tables, never the builder''s code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative, counts equal; tolerance for floats:
+    abs difference <= 1e-9 + 1e-9 x abs(expected) (OX-DATA), counts equal'
+meaning_check:
+  pass_lines:
+  - S01 equals hl_prices_v1's last print within 1e-9 relative at every common point of 12 Sep-26 Oct 2025 (a difference is named)
+  - 'S01 / Binance last trade - 1 for BTC stays within plus or minus 0.5 pct on 99.9 pct of valued points of a quiet BUILD day (1000-coins: compared in
+    the same unit through the coin map''s multiplier)'
+  - the daily sum of S04 per coin is within plus or minus 5 pct of Hyperliquid's published daily volume where we hold it
+  - Every valued output obeys its stated formula, units and population; missing data is never zero.
+  - No input whose modeled availability is after u changes a value at u.
+  report_only:
+  - the share of EMPTY points per coin and month
+  - the HL-Binance gap on 10-11 Oct 2025
+conclude:
+  may:
+  - what Hyperliquid traded at, at or before u
+  - how busy Hyperliquid was in the last 5 s
+  never:
+  - a fill price we could have had
+  - anything after u
+  - a mark or index price
+readers: hl_prices_v2 users (money tests, the HL-Binance comparison, entry timing), none yet
+implementation:
+  how: vectorised over the day and all coins; buyer rows only; bin = ceil((block_time_us + 1e6) / 5e6) (the 1 s delay); polars group-by (coin, bin); last
+    by (block_number, row order); forward carry with age by coin, cut at 60 s
+  kernel: 'new: hl_bin_last_vwap (the 5 s bin on node fills)'
+  memory_mb: 1200
+  seconds_share: 15
+data_checks:
+- what: the reader's T3 tie on the same days
+  who: QUANT
+- what: Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points
+  who: OX-DATA separate reference implementation; not independent-person review
+  evidence:
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json
+  - team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json
+- what: Independent design/release approval remains unassigned; exact final-version acceptance pending
+  who: Research peer and LAB1 plus outside reviewer
+card: HP1_V3

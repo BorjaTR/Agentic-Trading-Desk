@@ -1,0 +1,229 @@
+# V2_V1.yaml: VOLX 5-minute realised variance on a 15 s grid (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181, its CARRY of section 4).
+# The content of my .md draft (V2_V1.md 62e2eec3, 17:33Z) in the template's keys; S03, S04 by PRODUCER_VOLX_V1.yaml; floats; the 1 s,
+# 60 s and sub-grid twins of the draft are now the tester's (meaning_check: the noise check). S04 is new: V3's HARQ needs the quarticity.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): F1 (E1's rows every 10 s), F2 (the flag's NO_FILE), F3 (E9 and M1), F4
+# (roll_points, no whole-day cumulative sum), F5 (E10 the 00:00:00.000000 row, M7), N1 (the phases), A1 to A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): X1 (a header-only file has no rows), X2 (E11 a row
+# with no stamp), X3 (E12 D's file missing at 00:00), X4 (the CARRY's words), X7 Binance, the nits (C4 S01's rounding, BAD_ROW by C4 rule
+# 12), FIRST_DAY_NO_CARRY dropped (an empty row carries no flag).
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+# Edition 5: BED's fix check (REVIEW_LEAD_BED_VOLX_V1 fe399b4d): E11, a row with no stamp is bad and never in force, no flag
+# (CARD_C4_V3 rule 1; prod_C4_v3 5719a87f lines 45, 172 to 177): S03 = S04 = 0; M8 'read as good'.
+kind: build_metric
+id: V2
+producer: VOLX
+item: '5 minute realised variance (after the 1 s noise check)'
+tier: BUILD
+name: the coin's realised variance of the Binance USDT-M mid over the 5 minutes ending at the minute end, from 15 s log returns (S03), and the sum of their fourth powers (S04)
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 5
+  signed: false
+means: >-
+  How much the coin's mid moved in the last 5 minutes, as a variance of log returns sampled every 15 s (100 x sqrt(S03) is the percent
+  move). Sampled every 15 s, not every second, so a mid bouncing between two prices does not inflate it (C4 S01 samples every 1 s).
+example: >-
+  A mid at 100 for the 5 minutes except one 15 s sample at 101: two returns ln(1.01) and ln(100/101), S03 = 0.0001980181681750177
+  (two moves of about 1 percent; 100 x sqrt(S03) = 1.4072 percent), S04 = 1.9605597463694797e-08. A mid that never moves gives 0.
+formula: >-
+  The samples of the window ending at u: u, u - 15 s, ..., u - 300 s (21 moments). mid(t) = (bid + ask) / 2 of the book_ticker row
+  in force at t by CARD_C4_V3 8bd8accb rules 1 to 3 (the last GOOD row in file order stamped at or before t and received by t; known
+  when t less its stamp is 30 s or less; a bad row is never in force), exact on the reader's integers. r_k = math.log(mid(u - (k - 1)
+  x 15 s) / mid(u - k x 15 s)) of the nearest double of each exact quotient, k = 1 to 20. S03 = math.fsum(r_k^2); S04 =
+  math.fsum(r_k^4); float64, not rounded (decimals none). A value needs the top known at all 21 samples (CARD_C4_V3 rule 4), else
+  both are empty TOP_HOLE, stale. A row with no stamp (the reader's t = arr = -1) is bad (why 2 STAMP): it is never in force and raises
+  no flag (CARD_C4_V3 rule 1; the year reads its stamp -1 as written, so it is in no window: prod_C4_v3 5719a87f lines 45, 76 to 81,
+  172 to 177). The 12 windows ending at h:05, h:10, ..., h + 1:00 tile the clock hour h exactly (V3 sums them).
+source:
+  kind: paper
+  ref: >-
+    Andersen, Bollerslev, Diebold and Labys 2000, 'Great realisations', Risk 13, 105-108 (realised variance and the choice of the
+    sampling step by the signature plot); RESEARCH_TOOLS_V1 aad3cc38 rows V0 (no tool: BUILD, a small script) and V2 (RV as HAR's
+    input), section 5.8; the quarticity of Barndorff-Nielsen and Shephard 2002 as used by Bollerslev, Patton and Quaedvlieg 2016, J.
+    Econometrics 192(1) 1-18 (HARQ, RESEARCH_TOOLS_V1 5.2). The rules in force are C4's (CARD_C4_V3 rules 1 to 5).
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures, book_ticker_<SYMBOL>_<YYYY-MM-DD>.csv.gz), pack book_ticker_v2 (188dc357), the reader C4 uses
+    rule_in_force: CARD_C4_V3 rules 1 to 3 (the last good row stamped at or before t and received by t; known within 30 s of its stamp)
+    stale_rule: a sample not known (no good row in force, or its stamp more than 30 s before t) makes the window empty TOP_HOLE, stale 1
+    days: "D's raw for u = 00:01 to 24:00 (the 24:00 row is D+1's 00:00 row); the CARRY of D-1 (X1/carry/VOLX/<D-1>.npz, ADDON_ARCHITECTURE_V4 section 4: D's 00:00 rows, the good row in force at 24:00 of D-1, the rows of D-1's file not in force at 24:00 (max(t, arr) > 24:00), the latest stamp read, D-1's 15 s mids 23:00:00 to 23:59:45 as the tail; files are cut by arrival) for u = 00:00 to 00:04; the first year day 10 Sep 2025 reads 9 Sep 2025's file once"
+  - kind: year
+    ref: C13 S05 (the raw check of the day, PRODUCER_VOLX_V1) and C4 S01 (the noise check, meaning_check only)
+    card: MEANING_C13_V4 fe5df65ba7680fc8; BASIC_C4_V2 77144598266db102
+    verdict: LIMITS
+    rule_in_force: B's row at the minute end as written
+    stale_rule: B's empties are compared as empties
+    days: D
+overlaps:
+  - setting: C4 S01
+    kind: other_metric
+    why: >-
+      C4 S01 is 100 x sqrt of the same sum on the 1 s grid (CARD_C4_V3 rule 6), rounded to 6 decimals; S03 is the variance itself on
+      the 15 s grid. On the same rows (C4 S01 / 100)^2 equals the 1 s sum within C4's rounding (C4 S01 is 100 x sqrt of the exact sum, rounded once
+      to 6 decimals half up as a Decimal, CARD_C4_V3 rule 6): the tester's check, not a twin.
+per_coin: >-
+  The 1000-coins and coins with a large price step against the price: their mid sits on few prices and bounces; this is where the
+  15 s grid matters most (the noise check is per coin). Thin coins: a top older than 30 s at any of the 21 samples gives TOP_HOLE more
+  often; never filled. No roster file for D's week: NO_ROSTER (every coin).
+time: >-
+  The 00:00 row of D is D-1's 24:00 row (ADDON_ARCHITECTURE_V4 section 4); the windows ending 00:01 to 00:04 start in D-1: their D-1
+  samples and the row in force at 24:00 come from D-1's CARRY. Funding settles and quarter hours carry
+  bursts that are real variance, kept. The first year day 10 Sep 2025: 9 Sep's file read once for 00:00 to 00:04.
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S03
+      label: rv_5m_grid15s
+      units: log return squared (a variance; not percent, not annualised)
+      value_kind: float
+      decimals: none
+      means: the sum of the 20 squared 15 s mid log returns of the 5 minutes ending at u
+      never: ['S03 as a percent volatility (100 x sqrt(S03) is the percent move of the 5 minutes)']
+    - name: S04
+      label: quartic_5m_grid15s
+      units: log return to the fourth power
+      value_kind: float
+      decimals: none
+      means: the sum of the 20 fourth powers of the same returns (V3's quarticity)
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the latest arrival among the good rows in force at the 21 samples (each received by its sample, so by u); an empty row
+    known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: the coin's file of D (or the CARRY for 00:00 to 00:04) is missing, by CARD_C4_V3 rule 5 (a header-only or empty gzip file is there and has no rows, then TOP_HOLE); checked before TOP_HOLE; at 00:00 when D's file is missing though D-1's is there (phase B, E12)
+    - reason: TOP_HOLE
+      when: a sample of the 21 has no good row in force, or its row is stamped more than 30 s before the sample
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_FILE, TOP_HOLE (CARD_C4_V3 rule 5)
+  stale_rule: stale = 1 exactly when the row is empty TOP_HOLE
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: RAW_DIFFERS
+      when: "the day's raw check failed for the coin (the reader's mid at a minute end against B's C13 S05: PRODUCER_VOLX_V1 raw_check)"
+    - flag: BAD_ROW
+      when: 'a bad row stamped in the window and received by u (CARD_C4_V3 rule 12, the year''s BAD_ROW:<coin>); an empty value carries no flag'
+edge_cases:
+  - case: E1 a mid that never moves
+    input: 'good rows every 10 s from u - 310 s to u (bid 99.99, ask 100.01), each received at once'
+    answer: 'S03 = 0, S04 = 0 (values)'
+  - case: E2 one sample at 101
+    input: 'mid 100 at every sample but u - 150 s, where a row bid 100.99 ask 101.01 is in force from u - 160 s to u - 140 s'
+    answer: 'S03 = 0.0001980181681750177; S04 = 1.9605597463694797e-08'
+  - case: E3 the 1 s bounce (the research toy, the tester's grid)
+    input: 'log mids 0, 0.001, 0, 0.001, 0 on consecutive seconds'
+    answer: 'the 1 s sum 4e-06, the 2 s sum 0: the fine grid sees a bounce the coarse grid does not'
+  - case: E4 a hole
+    input: 'the row in force at u - 60 s stamped u - 91 s, no later good row before u - 60 s'
+    answer: 'S03, S04 empty TOP_HOLE, stale 1, known_at u'
+  - case: E5 the day start
+    input: 'u = 00:02 of D; the CARRY of D-1 holds mids 100 at 23:57:00 to 23:59:45 and the good row in force at 24:00 (mid 100, stamped 23:59:50); D rows mid 100 from 00:00:10'
+    answer: 'S03 = 0 (a value; 12 samples from the CARRY, the sample 00:00:00 from the carried row, 8 from D)'
+  - case: E6 no CARRY and no file of D-1
+    input: 'u = 00:02 of D; neither the CARRY nor the file of D-1'
+    answer: 'S03, S04 empty NO_FILE, stale 0 (no flag: an empty value carries none; the manifest names the missing CARRY)'
+  - case: E7 a bad row
+    input: 'E2 with the 101 row marked bad (why 6)'
+    answer: 'the 101 row is never in force: S03 = 0'
+  - case: E8 a row received after its sample
+    input: 'the 101 row of E2 stamped u - 160 s but received u - 145 s'
+    answer: 'not in force at u - 150 s (received after it): S03 = 0'
+  - case: E9 a 1 s bounce between two samples
+    input: 'E1''s rows; a row with mid 101 (bid 100.99, ask 101.01) stamped u - 152 s, then mid 100 at u - 151 s, each received at once'
+    answer: 'S03 = 0 on the 15 s grid (u - 150 s and u - 165 s both see 100); the 1 s grid would give 0.0001980181681750177'
+  - case: E10 the row at exactly 00:00:00.000000
+    input: "the CARRY's mids 100 at D-1's samples 23:55:00 to 23:59:45; a row of D's file with mid 101 (bid 100.99, ask 101.01) stamped and received at 00:00:00.000000"
+    answer: 'S03 at u = 00:00 = ln(1.01)^2 = 9.900908408750885e-05, S04 = 9.802798731847399e-09, known_at 00:00:00 of D (phase B adds the row from D''s raw: ADDON_ARCHITECTURE_V4 edit 3 line 37)'
+  - case: E11 a row with no stamp
+    input: 'E1''s rows (every 10 s) without the u - 90 s row; a row with no stamp (t = arr = -1), mid 101, right after the u - 100 s row in the file'
+    answer: 'the row is bad (why 2) and never in force (CARD_C4_V3 rule 1): the sample u - 90 s sees the u - 100 s row (mid 100, 10 s old), every sample is 100; S03 = 0, S04 = 0, no flag'
+  - case: E12 D's file missing at 00:00
+    input: "u = 00:00 of D; D-1's file and CARRY there, D's file missing"
+    answer: 'S03, S04 empty NO_FILE at 00:00 (the year reads D''s file there: phase B sets it, ADDON_ARCHITECTURE_V4 edit 4)'
+unit_tests:
+  - test: U1 (E1, E2, E7, E8, E9, E11)
+    planted: 'a book_ticker pack with pp 2: the rows of each case (t, arr in microseconds, bid_px, ask_px, bad, why)'
+    expect: 'S03 0, 0.0001980181681750177, 0, 0, 0, 0 (E11, no flag); S04 0, 1.9605597463694797e-08, 0, 0, 0, 0 within 1e-9 relative (0 exact)'
+  - test: U2 (E4, E5, E6, E10, E12)
+    planted: 'the rows of each case; the planted CARRY of D-1 for E5 and E10; the E10 row in D''s file'
+    expect: 'TOP_HOLE stale 1; 0 with the CARRY; NO_FILE (no flag); E12 NO_FILE at 00:00; E10 9.900908408750885e-05 and 9.802798731847399e-09, known_at 00:00:00'
+  - test: U3 the tiling
+    planted: 'a random good-row path of one clock hour'
+    expect: 'the sum of S03 at h:05, h:10, ..., h + 1:00 equals the fsum of the 240 squared 15 s returns of the hour within 1e-12 relative'
+  - test: U4 the stamps
+    planted: U1 to U3
+    expect: 'every row as_of = u, known_at <= u (empty rows u); 1,440 rows per name and coin; empty never 0'
+mutants:
+  - mutant: M1 the 1 s grid as the value
+    caught_by: 'U1 (E9 gives 0.0001980181681750177, not 0)'
+  - mutant: M2 percent instead of variance (100 x sqrt)
+    caught_by: 'U1 (E2 gives 1.4071892842649765)'
+  - mutant: M3 a row received after its sample used
+    caught_by: 'U1 (E8 gives 0.0001980181681750177)'
+  - mutant: M4 22 samples (u - 315 s included)
+    caught_by: "U3 (the windows overlap: the hour's sum exceeds the 240 returns' sum)"
+  - mutant: M5 a hole filled by the last mid
+    caught_by: 'U2 (E4 gives a value)'
+  - mutant: M6 a bad row in force
+    caught_by: 'U1 (E7 gives 0.0001980181681750177)'
+  - mutant: M7 the 00:00 row from D-1's run alone (D's raw not read in phase B)
+    caught_by: 'U2 (E10 gives 0)'
+  - mutant: M8 a row with no stamp read as good (standing at the row before)
+    caught_by: 'U1 (E11 gives 0.0001980181681750177)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, ETHUSDT, 1000PEPEUSDT and a thin coin (named by the tester), u = 00:00 to 00:04
+      why: the windows from the CARRY of 7 Mar 2026
+    - point: 2026-03-08, the same coins, u = 08:01, 12:00, 23:59
+      why: a funding settle, a plain minute, the day's end
+    - point: 2025-09-24, the same coins, u = 12:00 to 12:59
+      why: a whole clock hour (the tiling V3 reads)
+  pass: >-
+    The tester recomputes S03, S04 and the empty reasons from this card's words through the reader (rawcheck/check_volx.py, never the
+    producer's code), the mids as Fractions on the pack's integers: floats within 1e-9 relative, words equal; and the 1 s sum on the
+    same rows against C4 S01 of B (equal within C4's 6-decimal rounding). One small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "THE NOISE CHECK (the signature plot, RESEARCH_TOOLS_V1 V0; before the build, on 8 Mar 2026, 24 Sep 2025 and 5 more year days spread over 10 Sep 2025 to 9 Mar 2026, by the tester): each coin's mean daily RV at 1, 5, 15 and 60 s (averaged over the starting offsets); pass: the 15 s mean within 10 percent of the 60 s mean for at least 45 of the 52 coins; a coin over it is named (OPEN for the owner: one grid for all, A, or a grid per coin, B)"
+    - "S03 is a variance of the same mids C4 S01 reads: at every valued coin-minute of 8 Mar 2026, 100 x sqrt(S03) and C4 S01 have a Spearman correlation of 0.8 or more per coin (a lower one is named with its coin)"
+  report_only:
+    - the 1 s inflation per coin, the mean of (C4 S01 / 100)^2 over the mean S03 (above 1.1 C4 S01 carries noise)
+    - the share of TOP_HOLE per coin and hour
+conclude:
+  may:
+    - how much the coin's mid moved over the 5 minutes ending at u, as a variance of 15 s log returns
+    - the sum of S03 over the 12 windows of a clock hour as the hour's realised variance (V3 does so)
+  never:
+    - "Hyperliquid's variance (the Binance USDT-M mid; the owner trades on Hyperliquid, X7)"
+    - 'a volatility in percent (it is a variance; 100 x sqrt(S03) is the percent move)'
+    - S03 equal to C4 S01 at face value (another grid, another unit)
+    - an annualised volatility
+readers: V3 (the hourly RV and RQ are the sums of the 12 S03, S04 of the hour); none outside VOLX yet
+implementation:
+  how: >-
+    Per coin: the reader's good rows in force at the 5,760 samples of the 15 s grid of D (and the CARRY's) by one np.searchsorted on
+    the pack's stamp and arrival arrays (the received-by rule as K1's in_force kernel), the mids exact on integers then float64 logs,
+    the 15 s returns, their squares and fourth powers; the 5-minute sums at the 1,440 minute ends by roll_points (sliding windows of 20
+    returns, the CARRY head first; never a whole-day cumulative sum, ADDON_ARCHITECTURE_V4 9.3 rule 5). The pack is shared with COST and
+    BOOKX when they run in one process. PHASES (section 4 line 35): S03, S04 at 00:00 to 00:04 are windowed across 00:00, phase B from
+    the CARRY's tail of D-1's 15 s mids (NaN where a sample was not known, CARD_C4_V3 rule 3) with D's 00:00:00.000000 row (E10);
+    00:05 to 24:00 are final in phase A.
+  kernel: "addon_grid_v2.in_force on the 15 s grid (CARD_C13_V4 rule 9 = C4's rules 1 to 3: the last good row in file order with max(t, arr) <= the sample, the age on the stamp), then addon_grid_v2.roll_points (sliding windows of 20 returns, the CARRY head first)"
+  memory_mb: 300
+  seconds_share: 3
+data_checks:
+  - what: the noise check of meaning_check line 1 (a read-only runner job before the build)
+    who: METRIC_AUDIT
+  - what: "the CARRY of the first year day: is 9 Sep 2025's book_ticker file on the Expansion for every roster coin (TREE's K1 data check)"
+    who: TREE

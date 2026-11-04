@@ -1,0 +1,185 @@
+# BASIC_C6_V4.yaml: EDITION 4 = edition 3 (BASIC_C6_V3.yaml c841fa83cf653dc9, kept; the owner's review OK, EDGE1 14:08:23Z) with the owner's
+# copies rule as BASIC_C1_V5 95244119 and BASIC_C3_V2 4cdfefaa: the 5 .quotes_off copies are no rows of their own; they are read as the
+# year's ACCEPTED cross-check (one reading rule with their shares from J15849, one never line). S06.first_off (the first low, another
+# value: CARD_C6_V5 rule 17) stays a setting. No other change.
+# Edit 2 (before landing): EDGE2's REVIEW C6 V3 (hb/EDGE2.txt 14:15:47Z) 2 edits + 1 small: built_on BASIC_C7_V2 2e7cddfd; N7 is ETH alone in
+# the 2 h dial and heat 'can pass 1'; 2.55 USD.
+# (V3:) BASIC_C6_V3.yaml: the card of the basic settings of C6 market motion (BED, 2026-10-18, BR2 = WP2 of BASIC_REVIEW_WORKPACKAGES_V3
+# 075b96c8). EDITION 3 = edition 2 (BASIC_C6_V2.yaml bedf4ab246509af4, kept) with EDGE2's REVIEW BR2.C6 (hb/EDGE2.txt 13:24:18Z) done:
+# (1) the five .quotes_off twins of S01, S02, S05, S06, S07 added, computation NOT_CHECKED, their distance from the main from EDGE1's
+# J15849 TWINS (EDGE1's rule 13:29:58Z), the year names listed whole (26); (2) heat can pass 1 when the dials count different coins
+# (CARD_C6_V5 N7: 2.5), never read as a level; (3) built_on MEANING_C13_V4 with its sha16; (4) S01's maximum as the log prints it (5.493,
+# 5.291); latency, stale and flags marked as the card's words, not checked here. No status of S01 to S07 changed.
+# EDITION 2 = edition 1 (BASIC_C6_V1.yaml bd2c207dace2ed84, kept) + C6 S07 heat, now that C7 (EDGE2's BASIC_C7_V1 639222fb,
+# REVIEW OK by BED 13:07Z) gives its inputs; built_on cites MEANING_C13_V4 (C13 closed with the owner). Made the way BASIC_C8_V3 was
+# (METRIC_REVIEW_METHOD_V1 section 5; the owner's rename rule, 14:1x Berlin). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py checks it.
+# Layer of every setting here: basic (a return, ratio, position or time on BTC's whole-second mids; a ratio of two C7 dials). S03, S04
+# (robust z), S08 (persistence in a tenth), S09 to S12 (floors) are our rules, their twins with them: not in this card.
+
+group: C6
+name: market motion, BTC over 6 hours and the market's heat (basic, built on the book mid and C7)
+summary: >-
+  Four numbers about BTC's mid over the 6 hours ending at a minute end e, from whole-second samples of the mid of the top of book: S01
+  the 30 minute log return in units of the 6 hour realised volatility scaled to 30 minutes; S02 S01 now less S01 30 minutes before; S05
+  where the mid sits inside its 6 hour high-low range (0 at the low, 1 at the high); S06 the minutes since the last whole second at the 6
+  hour low, and its twin S06.first_off from the first one. S07 (heat) is the market's 15 minute dial over its 2 hour dial (C7 S04 over
+  C7 S07): the typical coin's last 15 minute mid range against its 2 hour one.
+read_as: >-
+  How far BTC has run and where it sits in its 6 hour range. S05 and S06 equal the same rules on Binance's 1 minute klines but where a
+  trade printed below (or above) every whole-second mid (8 Mar 04:48: a trade low 81 USD under the mids' low); S01 tracks the same z on
+  minute closes (corr 0.996 and 0.998) but is larger: BTC's 1 second mid moves run on (the 6 h volatility read from 1 s mids is 0.74 to
+  0.86 of the one read from 1 minute closes). Two names said something else and are renamed: S01 is no velocity (a move per time) but a
+  return over a volatility, S02 is the change of that z, not an acceleration. S07 heat follows the same ratio of the median Binance kline
+  ranges (corr 0.996 and 0.995), a few percent lower on mids; a random walk gives about 0.35, the median minute 0.31 (8 Mar) and 0.35.
+
+conclude:
+  may:
+    - "how far BTC moved over 30 minutes measured in its own 6 hour volatility (S01), and whether that grew (S02)"
+    - "where BTC's mid sits in its 6 hour range (S05) and how long ago it stood at its low (S06, S06.first_off)"
+    - "whether the market's last 15 minutes were wide against its last 2 hours (S07): near 1 the last 15 minutes spanned the 2 hour range, about 0.35 is what a random walk gives"
+  never:
+    - "BTC's speed in points per minute from S01: it is a z; the same 30 minute move gives a larger S01 on a calm day"
+    - "that BTC is stretched because S01 passes a floor set on minute data: S01 runs 1.16 to 1.34 times a minute-sampled z (J15833 c6name)"
+    - "that BTC traded at its 6 h low or high from S05 = 0 or 1, nor that no trade went beyond: the extremes are whole-second mids; a trade printed 81 USD under them on 8 Mar 2026 04:48 (J15833 why6)"
+    - "that the market traded over a range that wide from S07: it is a ratio of two mid dials, each below the trade range (C7's never)"
+    - "S07 as a level of 0 to 1 when the dials count different coins: it can pass 1 (CARD_C6_V5 N7: 2.5, the 2 h dial over ETH alone)"
+    - "a copy (.quotes_off) as a metric of its own: it is the year's cross-check of the same metric on a second price feed; read the six metrics"
+    - "anything from S03, S04, S08 to S12 or their twins (our rules: not in this card)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C6_V5.md 961767ab40b1bd39 (rules 1 to 21; edition 5, CLK 7 Oct 2026)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C6_V2.tsv ca847d981b0838f6 (12 settings)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05 the book mid: LIMITS; LAYER_REGISTER_V7); team/RAWCHECK/notes/BASIC/BASIC_C7_V2.yaml 2e7cddfd (landed 13:56:50Z; C7 S04, S07: LIMITS) for S07; BED's book base MID_1S, every whole second (BOOK_BASE_<D>/BTC.parquet, built by int_recompute_book B3 f9097b6cee089ef2), proven against the raw tops by KILL on BTC on 8 Mar 2026, 24 Sep and 4 Nov 2025 (hb/KILL.txt 2026-10-18T03:30:34Z, 18 of 18)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V7.tsv (C6 S01, S02, S05, S06, S07 basic; S03, S04, S08 to S12 our_rule)"
+  producer: testbed/value_audit/code (C6's producer of CARD_C6_V5), reading BTC's book_ticker of D and D-1
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C6.parquet
+  year_output_columns: "name (26 names: S01 to S12; S01.quotes_off to S08.quotes_off; S03.mad_off, S04.mad_off, S06.first_off, S08.ceil_off, S11.interp_off, S12.interp_off; job 15812 schema, both days), coin (BTC for S01 to S06 and their twins, MARKET for S07 to S12), as_of_us (e), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: team/RAWCHECK/code/rawcheck/ours.py at(D, 'C6', settings, ['BTC'], moments)
+
+source:
+  vendor: "Binance USD-M futures through Tardis"
+  exchange_stream: "book_ticker (best bid and ask), BTCUSDT; the quotes stream (Tardis quotes, the top rebuilt from the depth stream) beside: written as .quotes_off copies, the year's cross-check"
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_BTCUSDT_<YYYY-MM-DD>.csv.gz (D and D-1)
+  columns: "the top in force at each whole second e - W s to e (C4 rules 1 to 5): its mid = (bid + ask) / 2, exact; W 21,600 s (S01, S05, S06), 23,400 s (S02)"
+  fields:
+    samples: "every whole second of the window must have a known top, else empty TOP_HOLE (a missing file NO_FILE first) [proof: CARD_C6_V5 rule 1; basic_c6 tests T8, T9]"
+    s01: "ln(mid(e) / mid(e - 1,800 s)) / sqrt(Q x 1,800 / 21,600), Q the math.fsum of the 21,600 squared 1 s log returns ending at e; Q 0: NO_MOVE [proof: CARD_C6_V5 rules 2, 3; C6_STAMPS_V1 15 of 15]"
+    s02: "S01 at e less S01 at e - 1,800 s [proof: CARD_C6_V5 rule 4; C6_STAMPS_V1 15 of 15]"
+    s05: "(mid(e) - low) / (high - low) over the 21,601 samples, exact; high = low: NO_MOVE [proof: CARD_C6_V5 rule 7; C6_STAMPS_V1 15 of 15]"
+    s06: "(e - tau*) / 60 s, tau* the last sample at the low; first_off the first [proof: CARD_C6_V5 rules 8, 17; C6_STAMPS_V1 15 of 15 each]"
+    s07: "C7 S04 (dial_15m) over C7 S07 (dial_2h) of the same minute end, the exact quotient of the two written decimals, 6 decimals; d2h 0: NO_MOVE; either empty: empty with its reason [proof: CARD_C6_V5 rule 10; C6_STAMPS_V1 15 of 15]"
+  latency: "known_at = the latest arrival among the rows in force at the samples (CARD_C6_V5 rule 14), at most e; the 30 s known rule of C4 (the card's words: known_at not checked here, open)"
+
+reading_rules:
+  - "the year also writes 8 copies of S01 to S08 on a second price feed (.quotes_off, Tardis quotes); 5 belong to this card's settings (S01, S02, S05, S06, S07). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): S01, S02 (z values) never equal to 6 decimals but corr 0.99998 to 0.99999, gap p99 0.025 to 0.050; S05 equal at 73.06% (8 Mar 2026) and 73.75% (24 Sep 2025), S06 at 99.51% and 95.97% (once 77.8 minutes apart on 8 Mar: the quotes put the 6 h low at another second), S07 at 50.49% and 85.97% (gap p99 0.009 and 0.007); corr 0.99983 to 1.0 (J15849 TWINS, q_15849, a9bc9402, 0ea4c5c8); not separate metrics"
+  - "every value is read at a minute end e (at a fire, the window ending at the fire, CARD_C6_V5 rule 13)"
+  - "the samples are whole seconds: a dip or spike that lasts under a second between two samples is not seen"
+  - "S01, S02 are doubles rounded once to 6 decimals; S05, S06 exact, 6 decimals"
+  - "empty is never 0: NO_MOVE (Q 0 or a flat window), TOP_HOLE, NO_FILE"
+
+values:
+  units: "S01, S02: a z-like ratio (return over volatility, no unit), S01 typically within -2 to 2 (|S01| median 0.65 to 0.72, max 5.493 on 8 Mar 2026 and 5.291 on 24 Sep 2025, J15833 c6name); S05: 0 to 1; S06: minutes, 0 to 360; S07: a ratio, 0 to 1 when the two dials count the same coins (median 0.31 and 0.35, max 0.83 on these days); it can pass 1 when they count different coins (CARD_C6_V5 N7: 2.5)"
+  zero: "S01 0 = no move over 30 minutes; S05 0 = at the 6 h low, 1 at the high; S06 0 = the mid is at its 6 h low at e"
+  empty: "NO_MOVE, TOP_HOLE, NO_FILE; value_kind 0 with NaN in value_f64; none empty on 8 Mar 2026 or 24 Sep 2025 (job 15812 schema)"
+  stale: "true when empty TOP_HOLE (the card's words, CARD_C6_V5 part 2; not checked here: none empty on these days)"
+  flags: "BAD_ROW:BTC when a bad row was skipped in the window (CARD_C6_V5 rule 15; not checked here)"
+
+interpret:
+  do:
+    - "read S01 as how many 30 minute volatilities BTC has moved in the last 30 minutes (plus up, minus down)"
+    - "read S02 above 0 as S01 rising against 30 minutes before"
+    - "read S05 near 0 as BTC at the bottom of its 6 hour range, near 1 at the top"
+    - "read S06 as how long ago BTC's mid last stood at its 6 hour low; S06.first_off how long ago it first reached it"
+    - "read S07 above about 0.5 as a market whose last 15 minutes were wide against its 2 hours (p90 0.54 both days), under 0.2 as a quiet last 15 minutes"
+  dont:
+    - "read S01 by its old name (velocity): it is a z, not points per minute; within a day it follows the plain 30 min return (corr 0.977 and 0.985) but its scale moves with the 6 h volatility"
+    - "compare S01 with a z built on minute closes: S01 is 1 / 0.86 (8 Mar) to 1 / 0.74 (24 Sep) times larger (job 15833 c6name)"
+    - "read S05 or S06 against a trade high or low: a trade can print beyond every whole-second mid (8 Mar 04:48, 18:19)"
+
+biases:
+  - {what: "BTC's 1 second mid returns run on (positively correlated), so the 6 h volatility from 1 s mids is smaller than from 1 minute closes", direction: "S01, S02 larger in size than the same z on minute closes", size: "kline z over ours, where |ours| > 0.5: median 0.860 (8 Mar), 0.744 (24 Sep), p10 to p90 0.69 to 0.92; 8 Mar 22:05 ours -5.49, klines -3.89", proof: "job 15833 c6, c6name; why6 8 Mar 22:05"}
+  - {what: "the 6 h low and high are of whole-second mids; a trade can print below the lowest mid (a sweep through the bid inside a second)", direction: "S05 lower, S06 at a different moment than on klines", size: "S05 within 0.021 of the kline value on 77.6% (8 Mar) and 99.0% (24 Sep) of minutes; S06 in the kline bracket on 83.8% and 95.1%; 8 Mar 04:48: trade low 66,720.8 at 02:52, whole-second mid low 66,801.65 at 02:51:12, sub-second mid low 66,755.4 (HILO), so ours 0.0254, klines 0.1322", proof: "job 15833 c6, why6 8 Mar 04:48, 18:19, 22:05, 24 Sep 03:51"}
+
+external_checks:
+  - {what: "S01, S02, S05, S06 at every minute end of 8 Mar 2026 and 24 Sep 2025, the same rules on Binance 1 minute klines (minute samples in place of seconds: Q from 360 one-minute log returns, the high and low from the 360 klines ending in (e - 6 h, e], S06 to its minute)", where: "Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with both biases named: job 15833 c6 (corr S01 0.9963 / 0.9985, S02 0.9964 / 0.9984, S05 0.9963 / 0.9999)"}
+  - {what: "the gaps at one minute: the whole-second mid samples (BED's book base MID_1S) and sub-second mid lows (HILO MID_LO_1S) beside the kline lows", where: "BED's book base, the klines", status: "EXPLAINED: why6 8 Mar 04:48, 18:19, 22:05 and 24 Sep 03:51 (job 15833)"}
+  - {what: "the names: velocity (a move per time) against the z; acceleration against the change of the plain 30 min return", where: "the klines", status: "DIFFERED, RENAMED: job 15833 c6name (S01 vs the plain 30 min return corr 0.977, 0.985), cb (S02 vs its change corr 0.978, 0.985)"}
+  - {what: "S06.first_off against the first kline at the 6 h low", where: "the klines", status: "VERIFIED: in the bracket on 84.0% (8 Mar), 97.7% (24 Sep) of minutes (job 15833 c6first)"}
+  - {what: "S07 at every minute end, the same ratio of the median over the roster coins of the Binance kline high-low range of the 15 and the 120 minutes", where: "the klines (meaning_relative heat, my own range code, independent of EDGE2's)", status: "VERIFIED: corr 0.996 (8 Mar), 0.995 (24 Sep), within 0.041 on 97.9% and 98.5% of minutes (job 15833 heat)"}
+
+tools:
+  - {what: "every value equal to a recompute from BED's book base MID_1S (exact mids, the card's doubles)", run: "python3 -B -m rawcheck.basic_c6 --days <D1,D2> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_c6.py 81c5b43222ef2be6, tests 12 of 12, mutants 9 of 9; job 15819; C6_STAMPS_V1 95ef605bc06f4153)"}
+  - {what: "every minute end against the same rules on Binance 1 minute klines", run: "python3 -B -m rawcheck.meaning_relative c6 <D> | c6first <D>", where: "team/RAWCHECK/code (meaning_relative.py 8ad2306031266355 ed5; runner job)"}
+  - {what: "the names tested; the volatility ratio", run: "python3 -B -m rawcheck.meaning_relative c6name <D> | cb <D>", where: team/RAWCHECK/code}
+  - {what: "one minute: the mids, the sub-second lows and the kline lows of the window", run: "python3 -B -m rawcheck.meaning_relative why6 <D> <HHMM>", where: team/RAWCHECK/code}
+  - {what: "S07 heat against the ratio of the median kline ranges; C7 S04, S07 against the median kline ranges", run: "python3 -B -m rawcheck.meaning_relative heat <D>", where: team/RAWCHECK/code}
+
+used_by: >-
+  S01 (vel) by CHAIN_chop_LONG_fade_3, CHAIN_chop_SHORT_fade, CHAIN_forced_SHORT_fade; S02 (accel) by CHAIN_chop_LONG_fade_3,
+  CHAIN_chop_LONG_ride, CHAIN_chop_SHORT_fade, CHAIN_chop_SHORT_ride_2, CHAIN_forced_LONG_fade, CHAIN_forced_SHORT_fade,
+  CHAIN_forced_SHORT_ride; S05 (pos_6h) by CHAIN_chop_SHORT_fade, CHAIN_forced_LONG_fade and the labels STRETCH/AT-TOP-6H,
+  STRETCH/AT-BOTTOM-6H with the floors S09 0.9 and S10 0.1; S07 (heat) by CHAIN_trend_SHORT_fade_2 (heat 3+4 -> SKIP) and the labels
+  HEAT/HOT, PATH-HEAT/HEAT-GONE (with the floor S11); nobody reads S06 (run_min); every setting through its fifths (CARD_C6_V5 'Who reads
+  it today')
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C6_V5.md
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C6_STAMPS_V1.tsv 95ef605bc06f4153 (job 15819: 24 Sep, 4 Nov 2025, 8 Mar 2026 x 01:00 04:00 12:10 16:00 22:06; 90 of 90 MATCH, S07 included)"
+  JOBS: "15812 (first look), 15817 (basic_c6 ed1), 15818 (why6), 15819 (basic_c6 ed2, the stamps), 15825 (meaning_relative ed4 246b5c755c580e27, every part both days), 15831 (ed5: c6first, heat), 15833 (THE proof run, meaning_relative ed5 8ad2306031266355: tests 44 of 44, mutants 19 of 19, every part both days)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+  EDITION_1: "team/RAWCHECK/notes/BASIC/BASIC_C6_V1.yaml bd2c207dace2ed84 (the same five settings; S07 waited for C7)"
+  EDITION_2: "team/RAWCHECK/notes/BASIC/BASIC_C6_V2.yaml bedf4ab246509af4 (+ S07 heat); edition 3 = EDGE2's REVIEW BR2.C6 (hb/EDGE2.txt 13:24:18Z) done"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (meaning_twins ed3 74d02bc2; 8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+
+settings:
+  - {id: C6.S01, name: "BTC 30 min log return in 6 h volatility units", renamed_from: "velocity", layer: basic, side: none, window: "30 min over 6 h", clock: minute end (fire second at a fire), scope: BTC, contracts: USDT,
+     aggregate: "ln(mid(e) / mid(e - 1,800 s)) / sqrt(Q x 1,800 / 21,600), Q the sum of squared 1 s log returns over 21,600 s", aliases: "vel (old name)",
+     means: "how many 30 minute volatilities (of the last 6 hours) BTC's mid moved in the last 30 minutes; plus up, minus down",
+     computation: {status: RELIABLE, proof: "C6_STAMPS_V1 15 of 15 (J15819, basic_c6 81c5b432)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c6: the same rule on 1 minute klines corr 0.9963 (8 Mar), 0.9985 (24 Sep); c6name: kline z over ours median 0.860 and 0.744 (the 1 s volatility smaller); old name failed: a velocity is a move per time; the plain 30 min return corr 0.977 and 0.985 within a day"},
+     open: "its volatility is of 1 s mid returns, which run on: 0.74 to 0.86 of the 1 minute one on these days, so S01 is larger than a minute-sampled z by 1.16 to 1.34 times"}
+  - {id: C6.S02, name: "change of S01 over 30 min", renamed_from: "acceleration", layer: basic, side: none, window: "30 min over 6 h, at e and at e - 30 min", clock: minute end (fire second at a fire), scope: BTC, contracts: USDT,
+     aggregate: "S01(e) - S01(e - 1,800 s)", aliases: "accel (old name)",
+     derived_from: "C6 S01 at two points",
+     means: "whether BTC's 30 minute move in volatility units grew (plus) or shrank against 30 minutes before",
+     computation: {status: RELIABLE, proof: "C6_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c6: the same rule on klines corr 0.9964 (8 Mar), 0.9984 (24 Sep); cb: against the change of the plain 30 min return corr 0.978 and 0.985; old name failed: S01 is no velocity, so its change is no acceleration"},
+     open: "the volatility of 1 s mids, as S01: larger than a minute-sampled change (8 Mar 22:55: ours 7.60, klines 5.60)"}
+  - {id: C6.S05, name: "BTC position in its 6 h range", layer: basic, side: none, window: "6 h", clock: minute end (fire second at a fire), scope: BTC, contracts: USDT,
+     aggregate: "(mid(e) - low) / (high - low) over the 21,601 whole-second mids", aliases: "pos_6h (old name, read by 2 labels)",
+     means: "0 = BTC's mid at its 6 hour low, 1 = at its high",
+     computation: {status: RELIABLE, proof: "C6_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c6: the same rule on klines within 0.021 on 77.6% (8 Mar), 99.0% (24 Sep), corr 0.9963 and 0.9999; why6 8 Mar 04:48: the trade low under every whole-second mid"},
+     open: "the high and low are of whole-second mids: a trade (or a sub-second mid) beyond them is not counted, so S05 is lower near a trade-only low (8 Mar 04:48: ours 0.0254, klines 0.1322)"}
+  - {id: C6.S06, name: "minutes since BTC's last whole second at its 6 h low", layer: basic, side: none, window: "6 h", clock: minute end (fire second at a fire), scope: BTC, contracts: USDT,
+     aggregate: "(e - tau*) / 60 s, tau* the last whole-second sample at the 6 h low", aliases: "run_min (old name)",
+     means: "how long ago BTC's mid last stood at its 6 hour low, in minutes (0 = at the low now)",
+     computation: {status: RELIABLE, proof: "C6_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c6: in the bracket of the last kline at the low on 83.8% (8 Mar) and 95.1% (24 Sep) of minutes; why6 8 Mar 18:19 (ours 0: the mid's low now; the trade low 66,730.0 at 13:26 under every whole-second mid), 24 Sep 03:51 (trade low at 03:48, 2.55 USD under the mid low at 03:50)"},
+     open: "the low of whole-second mids, as S05: where a trade printed below every sampled mid the kline's low is elsewhere, up to 293 minutes away (8 Mar 18:19)"}
+  - {id: C6.S06.first_off, name: "minutes since BTC's first whole second at its 6 h low", layer: basic, side: none, window: "6 h", clock: minute end (fire second at a fire), scope: BTC, contracts: USDT,
+     aggregate: "(e - tau_first) / 60 s, tau_first the first whole-second sample at the 6 h low", aliases: "run_min first_off (the twin, CARD_C6_V5 rule 17)",
+     means: "how long ago BTC's mid first reached its 6 hour low, in minutes",
+     computation: {status: RELIABLE, proof: "C6_STAMPS_V1 15 of 15"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 c6first: in the bracket of the first kline at the low on 84.0% (8 Mar), 97.7% (24 Sep); it differs from S06 at 160 and 970 minutes, by a median 0 and 0.033, at most 0.1 and 1.27 minutes"},
+     open: "as S06; it differs from S06 only when the mid sat at its low for more than one second (a run of equal samples)"}
+  - {id: C6.S07, name: "heat: the market's 15 min mid dial over its 2 h mid dial", layer: basic, side: none, window: "15 min over 2 h", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "C7 S04 (dial_15m) / C7 S07 (dial_2h), exact quotient of the written decimals, 6 decimals", aliases: "heat (old name, read by 1 chain and 2 labels)",
+     derived_from: "C7 S04 and C7 S07 of the same minute end",
+     means: "how wide the typical coin's last 15 minutes were against its last 2 hours: near 1 the 15 minutes spanned the 2 hour range; about 0.35 for a random walk",
+     computation: {status: RELIABLE, proof: "C6_STAMPS_V1 15 of 15 (J15819, basic_c6 81c5b432, from our C7 rows)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15833 heat: the same ratio of the median Binance kline ranges (15 and 120 minutes) corr 0.9957 (8 Mar), 0.9946 (24 Sep), within 0.041 on 97.9% and 98.5% of minutes, gap median 0.013 and 0.008; scale: median 0.307 and 0.349, p10 0.19 and 0.22, p90 0.54 and 0.54, max 0.83"},
+     open: "both dials are mid ranges below the trade range (C7's open), the 15 minute one more (C7 S04 / kline 0.922 and 0.962, S07 0.959 and 0.974, J15833 heat), so heat on mids runs a few percent under the same ratio on trades; it can pass 1 when the two dials count different coins (CARD_C6_V5 N7: 2.5, the 2 h dial over ETH alone)"}
+
+could_build:
+  - {id: C6.CB1, intended: "velocity: BTC's move per unit of time", was_name_of: "C6.S01",
+     formula: "100 x ln(mid(e) / mid(e - 1,800 s)) / 30, points per minute",
+     needs: "nothing new: the same mids",
+     adds: "LITTLE within a day: corr with S01 0.977 (8 Mar), 0.985 (24 Sep) (J15833 c6name, the 30 min log return on klines); across days its scale is the price's, S01's the volatility's",
+     status: NOT_BUILT}
+  - {id: C6.CB2, intended: "acceleration: the change of the velocity", was_name_of: "C6.S02",
+     formula: "C6.CB1 at e less C6.CB1 at e - 1,800 s (points per minute)",
+     needs: "C6.CB1",
+     adds: "LITTLE within a day: corr with S02 0.978 (8 Mar), 0.985 (24 Sep) (J15833 cb, on klines)",
+     status: NOT_BUILT}

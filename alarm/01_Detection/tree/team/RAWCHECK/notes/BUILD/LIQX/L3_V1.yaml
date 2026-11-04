@@ -1,0 +1,273 @@
+# L3_V1.yaml: LIQX liquidations over open interest (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2, the 5 s grid;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181). S03, S04 by PRODUCER_LIQX_V1.yaml.
+# Edition 2 (before review; what TREE's VOLX review taught, REVIEW_VOLX_TREE_V1 404b9dcd): the PHASES line, E9 the row at exactly
+# 00:00:00.000000 (ADDON_ARCHITECTURE_V4 edit 3 line 37) with M6, NO_ROSTER as no roster file, the empty_order, sliding windows.
+# Edition 3: EDGE1's lead review section 0 (REVIEW_LEAD_EDGE1_V1 8dd9867d X1 to X11): X1 the file rules of A1 rule 5 and E2 rule 2 word
+# for word (a ticker file missing is NO_FILE, not NO_OI), X2 rows with no stamp (A1's and E2 rule 3's), X3 the 00:00:00 point, X4 the
+# CARRY's words (files cut by arrival, SOURCE_SPEC_derivative_ticker_V2 line 13, F8) and the reads falling back to D-1 (E2 rule 2), X7
+# Binance, X10 the read by the reader's own at() (E2 reads by arrival; addon_grid_v2.in_force is C13's max(t, arr)), X11 the roster
+# file; FIRST_DAY_NO_CARRY dropped; the seen rule as L2's (phase B at every point). Edge cases E10 to E18.
+# Edition 4: BED's lead review (REVIEW_LEAD_BED_LIQX_V1 a395b964): N = OI x mark overflows int64 for BTC (the division on two floats of
+# exact integers, E3 the test, M11); known_at by A1's rule; NO_RATE_BASE; max_staleness 121 s; the 61.0 s edge (E19); the read at tau
+# 00:00:00 in D's run; the raw check for coins with no USDC file; a bad USDC row; an outage (E20).
+kind: build_metric
+id: L3
+producer: LIQX
+item: 'liquidations over open interest'
+tier: BUILD
+name: the coin's long (S03) and short (S04) liquidation dollars of the last 60 s on its Binance USDT contract, over that contract's open interest in dollars (Binance's open interest x mark price) at the window's start, in basis points
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  How big the last minute's forced closes were against the positions open: S03 = 10 says longs worth 0.1 percent of the open interest
+  were liquidated in 60 s. The same dollars weigh more on a coin with little open interest. Binance futures only, never Hyperliquid.
+example: >-
+  Long liquidations of 5,000 USDT in the last 60 s, the open interest 60 s ago 1,000 coins at a mark of 50 (50,000 USDT): S03 =
+  5,000 / 50,000 x 10,000 = 1,000 bp. BTC-like: 1,234,567 USDT of longs over 80,000 BTC x 67,000 gives 2.3032966417910448 bp.
+formula: >-
+  Numerator, side s at u (a 5 s point): the sum over the coin's USDT-contract liquidation rows of side s (sell = long, buy = short;
+  CARD_A1_V5 7d0fff50 rule 3) stamped in (u - 60 s, u] and received by u of price x amount, exact (A1 rule 2, not rounded here); a
+  repeated row counts each time (A1 rule 10); a row with no exchange stamp is in no window, a row with no arrival is received at once
+  (L2's X2 words, prod_A1_v3 lines 146, 147). Denominator: the open interest and the mark price of the coin's USDT symbol read at
+  tau = u - 60 s by CARD_E2_V1 65b57ca4 rules 1 to 6 word for word: the field on the last good row received by tau (local_timestamp
+  at or before tau) that carries it, in the file of the day of tau, else in the file of the day before (rules 1, 2); 'A touched file
+  missing, or only a .part file: NO_FILE. A touched file that cannot be read whole (the reader's BROKEN): BAD_INPUT. A file with only
+  its header, or a 20-byte empty gzip, is a file with no rows' (rule 2); a bad row of a touched file later in the file than the row
+  read and received by tau gives BAD_INPUT, and 'a bad row with no arrival of its own is received when the row before it in the file
+  was' (rule 3); none: NO_VALUE (rule 4); the age tau less the row's arrival over 61.0 s: STALE_VALUE, exactly 61.0 s is not over
+  (rule 5). Open interest's read first, then mark's. N = OI x mark (USDT). The arithmetic: the numerator is an exact int64 at the
+  liquidation file's decimals; OI and mark are exact integers at their files' decimals (open interest to 3, mark to 8:
+  SOURCE_SPEC_derivative_ticker_V2 line 33, F11), each under 2^53, but their product does not fit int64 (BTC: 8 x 10^7 x 6.7 x 10^12 =
+  5.36 x 10^20); so S03, S04 = float(numerator) x 10^(4 + the decimals of OI and mark - those of the numerator) / (float(OI) x
+  float(mark)) in bp, within 1e-9 relative of the exact fraction (the tester's Fraction); never an int64 product (E3, M11). One
+  division; no difference of close numbers, so X8 does not apply. Only the USDT contract's rows count, bad ones included (A1 has no
+  USDT-only setting: its USDC-only bullet, rule 4, mirrored; L2's S02 rule). The coin must
+  be seen at u by A1 rule 5 as in L2 (else A1's reason); the read's reasons: NO_FILE, BAD_INPUT, NO_OI for NO_VALUE, STALE_OI for
+  STALE_VALUE; OI = 0 gives ZERO_OI. Zero liquidations with a valid denominator give 0 (a value).
+source:
+  kind: ours
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 row L3 and section 3.3 (liq_dollars(W, side) / (OI_coins x mark) with OI and mark the last rows at or
+    before e - W; OI in coins: E2's own check against Binance metrics, J15785; planted 1,000 bp); the dollar and side rules are A1's,
+    the read rule E2's; the ticker files hold the rows that arrived in the UTC day (SOURCE_SPEC_derivative_ticker_V2 line 13, F8). No
+    tool: BUILD.
+inputs:
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: liquidations (binance-futures, the USDT contract), A1's reader; its alive() and thin() for the seen rule
+    rule_in_force: rows stamped in (u - 60 s, u] and received by u (A1 rule 1)
+    stale_rule: "A1 rule 16 (the market's liquidation stream silent over 960 s: stale)"
+    days: "D's raw for 00:00:05 to 24:00:00 and D's rows at exactly 00:00:00.000000; the CARRY of D-1 (X1/carry/LIQX/<D-1>.npz): the USDT rows of (23:59:00, 24:00] received by 24:00 as per-second exact sums by side with their first arrivals, the rows of D-1's file stamped after 24:00 (max(t, arr) > 24:00: X4), the seen state as L2's, for the points 00:00:05 to 00:01:00"
+  - kind: reader
+    ref: prod_reader_derivative_ticker_v2
+    exists: true
+    stream: derivative_ticker (binance-futures, open_interest and mark_price of the USDT symbol; SOURCE_SPEC_derivative_ticker_V2 506c2269)
+    rule_in_force: CARD_E2_V1 rule 1 (the last good row received by u - 60 s carrying the field)
+    stale_rule: "age over 61.0 s: STALE_OI, stale (E2 rule 5)"
+    days: "D's raw; the CARRY of D-1: the reads of open_interest and mark_price at tau = 23:59:05 to 23:59:55 of D-1 (E2 rules 1 to 6 as D-1's run reads them, its own CARRY behind; the denominators of 00:00:05 to 00:00:55; the read at tau 00:00:00 of D, for u = 00:01:00, is D's run's: D's file first by E2 rule 1, then the CARRY's last good row) and, per field, the last good row of D-1's file with the bad rows after it and the file's status (what a read early in D falls back to, E2 rule 2)"
+overlaps:
+  - setting: A1 S08, S10
+    kind: other_metric
+    why: "A1 S08 (USDT and USDC long dollars of the 60 s ending at the minute end, whole dollars) less A1 S10 (USDC only) is the numerator of S03 at minute ends within 1 dollar (two roundings); S04 the same with S09, S11: the raw check of PRODUCER_LIQX_V1"
+per_coin: >-
+  The USDT contract only, liquidations and open interest alike (a USDC contract has its own open interest, not read). The 1000-coins:
+  OI in thousands of coins and a mark per thousand, the product in USDT unchanged. Thin coins: small OI, so a few dollars give a large
+  S03. A coin not seen is empty with A1's reason.
+time: >-
+  Every 5 s of D. The window's start u - 60 s is in D-1 for 00:00:05 to 00:00:55 (and the denominator at 00:01:00 reads 00:00:00, D's
+  file first): both from the CARRY. A read at tau in D whose D file holds no good row carrying the field yet falls back to D-1's last
+  one (E2 rule 2), stale after 61.0 s (E13). 00:00:00 is D-1's 24:00:00 point; D's phase B adds D's 00:00:00.000000 rows (E9) and
+  makes it NO_FILE when D's USDT liquidation file is missing (X3, E15). The denominator is the open interest before the window, so the liquidations do not shrink their own base. The
+  OI is a REST poll about every 6 s on Tardis (RESEARCH_TOOLS_V1 3.3): a few seconds old at best.
+output:
+  group_file: X1/day=<D>/LIQX.parquet
+  grid: 5s
+  names:
+    - name: S03
+      label: liq_long_usdt_60s_over_oi_bp
+      units: basis points of the open interest in USDT
+      value_kind: float
+      decimals: none
+      means: long liquidation dollars of the last 60 s over OI x mark at u - 60 s, USDT contract, x 10,000
+    - name: S04
+      label: liq_short_usdt_60s_over_oi_bp
+      units: basis points of the open interest in USDT
+      value_kind: float
+      decimals: none
+      means: the same for the short side
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: "A1's rule with the reads: known_at = the latest arrival among the liquidation rows counted and the OI and mark rows read (all received by u), else u (reader v6 keeps no trade's arrival); an empty row known_at = u; so known_at <= as_of on every row"
+  empty_reasons:
+    - reason: NO_FILE
+      when: "the coin's USDT liquidation file is missing (or only .part) for a day the window touches (A1 rule 5; at 00:00:00, D's: X3), or a derivative_ticker file the read at u - 60 s touches is missing or only .part (E2 rule 2)"
+    - reason: TRADES_HOLE
+      when: no USDT trade in [u - 60 s, u] received by u (A1 rule 5; the trades file missing included)
+    - reason: THIN_FEED
+      when: the coin's thin state is on (A1 rule 5, R8; as L2)
+    - reason: BAD_INPUT
+      when: "a bad USDT liquidation row stamped in the window and received by u (A1 rule 4; a bad USDC row does not count, E21), or the ticker read's BAD_INPUT: a touched file BROKEN, or a bad row later in the file than the one read and received by u - 60 s, a bad row with no arrival received when the row before it was (E2 rules 2, 3)"
+    - reason: NO_OI
+      when: no good derivative_ticker row carrying open_interest or mark_price received by u - 60 s in the touched files (E2's NO_VALUE, rule 4)
+    - reason: STALE_OI
+      when: the OI or mark read at u - 60 s is over 61.0 s old (E2's STALE_VALUE, rule 5; exactly 61.0 s is not over)
+    - reason: ZERO_OI
+      when: the open interest read is 0
+    - reason: NO_ROSTER
+      when: no roster file for the week (the year root's ROSTER_<monday>.csv, as L2; every coin, the coin axis is the week's roster)
+  empty_order: "the first that applies, in this order, NO_ROSTER, then A1's (NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT), then the reads' (open interest's, then mark's: NO_FILE, BAD_INPUT, NO_OI, STALE_OI, E2 rule 6), then ZERO_OI"
+  stale_rule: "stale = 1 on STALE_OI, TRADES_HOLE, THIN_FEED and when the market's liquidation stream has been silent over 960 s at u (A1 rule 16)"
+  max_staleness_s: 121
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: DUPLICATE_ROW
+      when: a repeated liquidation row counted (A1 rule 10), or the ticker row read is a repeated line (E2 rule 11)
+    - flag: NO_RATE_BASE
+      when: "the thin base or start is missing (as L2_V1's flag); the coin is read as not thin"
+edge_cases:
+  - case: E1 the research case
+    input: 'long rows of 5,000 USDT in (u - 60 s, u]; OI 1,000, mark 50 at u - 60 s'
+    answer: 'S03 1000.0; S04 0.0'
+  - case: E2 the short side
+    input: 'short rows of 1,000 USDT; OI 2,000, mark 40'
+    answer: 'S04 125.0'
+  - case: E3 BTC-like
+    input: 'long rows of 1,234,567 USDT; OI 80000.000, mark 67000.00000000 at the files'' decimals (3 and 8: the product 5.36 x 10^20 at 10^-11)'
+    answer: 'S03 2.3032966417910448 (1234567/536000; the overflow test)'
+  - case: E4 the base before the window
+    input: 'E1 with an OI row of 900 received at u - 30 s'
+    answer: 'S03 1000.0 (the OI at u - 60 s, not at u)'
+  - case: E5 a stale OI
+    input: 'the last OI row received at u - 125 s'
+    answer: 'S03, S04 empty STALE_OI, stale 1 (age 65 s at u - 60 s)'
+  - case: E6 zero open interest
+    input: 'OI 0'
+    answer: 'S03, S04 empty ZERO_OI'
+  - case: E7 a USDC row
+    input: 'E1 plus a long USDC row of 2,000 USDT'
+    answer: 'S03 1000.0 (USDT only)'
+  - case: E8 the day start
+    input: "u = 00:00:20 of D; D-1's CARRY: long rows of 3,000 USDT in (23:59:20, 24:00], the OI 1,000 and mark 50 in force at 23:59:20; a long row of 2,000 at 00:00:10"
+    answer: 'S03 1000.0'
+  - case: E9 the row at exactly 00:00:00.000000
+    input: "D-1's CARRY: long USDT rows of 4,000 in (23:59:00, 24:00], the OI 1,000 and mark 50 in force at 23:59:00; a long USDT row of 1,000 in D's file stamped and received at 00:00:00.000000"
+    answer: 'S03 at the 00:00:00 point 1000.0 (5,000 over 50,000; phase B adds the row from D''s raw)'
+  - case: E10 a ticker row with no stamp (X2, E2 rule 3)
+    input: 'E1 with OI rows of 1,000 received at u - 100 s and u - 70 s, then a row with no timestamp and no local_timestamp right after the u - 70 s row in the file'
+    answer: 'S03, S04 empty BAD_INPUT (received with the u - 70 s row, later in the file than the row read); a value again once a good row arrives after it'
+  - case: E11 a liquidation row with no exchange stamp
+    input: 'E1 plus a long USDT row of 9,000 with timestamp empty, received at u - 10 s'
+    answer: 'S03 1000.0 (in no window)'
+  - case: E12 the ticker file missing
+    input: "D's derivative_ticker file of the coin missing; at u = 12:00:00"
+    answer: 'S03, S04 empty NO_FILE (not NO_OI)'
+  - case: E13 a read falling back to D-1
+    input: "D-1's last good OI and mark row received 23:59:58 of D-1 (OI 1,000, mark 50); D's first good row received 00:03:00 (the same OI and mark); long rows of 500 USDT in every window"
+    answer: 'S03 100.0 to 00:01:55 (age 57 s at tau 00:00:55), empty STALE_OI stale 1 at 00:02:00 (62 s) to 00:03:55, 100.0 from 00:04:00 (D''s row at tau 00:03:00); phase B'
+  - case: E14 a row of D-1's file stamped after 24:00 (X4)
+    input: "D-1's file: a long USDT row of 500 stamped 00:00:00.300 of D, received 23:59:59.900 of D-1; OI 1,000 and mark 50 throughout"
+    answer: 'S03 100.0 at 00:00:05 and 00:01:00, 0.0 at 00:01:05 (phase B from the CARRY)'
+  - case: E15 D's liquidation file missing at midnight (X3)
+    input: "D's USDT liquidation file missing, D-1's there"
+    answer: 'S03, S04 empty NO_FILE at 00:00:00 (phase B) and at every point of D'
+  - case: E16 a 1000-coin
+    input: '1000PEPEUSDT: long rows of 3,000 USDT; OI 2,000,000 (thousands of coins) at a mark of 0.0125 (per thousand)'
+    answer: 'S03 1200.0 (N 25,000 USDT)'
+  - case: E17 a thin coin
+    input: "L2's E17 counts"
+    answer: 'S03, S04 empty THIN_FEED, stale 1, at 10:01:00 to 10:05:55'
+  - case: E18 an empty ticker file
+    input: "D's derivative_ticker file of the coin header-only; D-1's last good row received 23:59:58 of D-1"
+    answer: 'the reads fall back to D-1 (a file with no rows): S03 valued to 00:01:55, STALE_OI from 00:02:00 to 23:59:55'
+  - case: E19 the 61.0 s edge
+    input: 'E1 with the last OI and mark row received exactly 61.0 s before tau = u - 60 s'
+    answer: 'S03 1000.0 (an age of exactly 61.0 s is not over, E2 rule 5); 61.000001 s gives STALE_OI'
+  - case: E20 an outage
+    input: "L2's E19 rows; OI 1,000 and mark 50 read fresh"
+    answer: 'S03 0.0 with stale 0 to 10:16:00 and stale 1 from 10:16:05 (A1 rule 16); values unchanged'
+  - case: E21 a bad USDC row
+    input: 'E1 plus a USDC row with price 0 (bad) stamped u - 30 s'
+    answer: 'S03 1000.0 (USDT rows only)'
+unit_tests:
+  - test: U1 (E1 to E4, E7)
+    planted: 'liquidation and derivative_ticker packs with the rows of each case, a USDT trade every second'
+    expect: 'S03, S04 of each case within 1e-9 relative (0.0 exact)'
+  - test: U2 (E5, E6, E8, E9)
+    planted: 'the stale and zero OI rows; the CARRY of D-1; the E9 row in D''s file'
+    expect: 'STALE_OI stale 1; ZERO_OI; 1000.0; E9 1000.0 at 00:00:00'
+  - test: U4 (E10 to E18)
+    planted: "the ticker row with no stamp; the liquidation row with no stamp; no ticker file; D-1's last row with D's first at 00:03:00; D-1's row stamped after 24:00; no liquidation file of D; the 1000-coin; L2's thin counts; a header-only ticker file"
+    expect: 'each answer exactly as written; the reads equal prod_reader_derivative_ticker_v2 at(D, f, taus, carry=True) on the same files (the twin)'
+  - test: U5 (E19 to E21) and the arithmetic
+    planted: 'the 61.0 s row; L2''s outage rows; the bad USDC row; E3 at the files'' decimals'
+    expect: 'each answer as written; E3 within 1e-9 relative of 1234567/536000 and not from an int64 product'
+  - test: U3 the stamps and the grid
+    planted: U1, U2
+    expect: '17,280 rows per name and coin; known_at <= as_of at every row; empty never 0'
+mutants:
+  - mutant: M1 the OI at u (the window's end)
+    caught_by: 'U1 (E4 gives 1111.111111111111)'
+  - mutant: M2 OI in coins without the mark
+    caught_by: 'U1 (E1 gives 50,000 bp)'
+  - mutant: M3 USDC rows counted
+    caught_by: 'U1 (E7 gives 1400.0)'
+  - mutant: M4 the side mapping reversed (sell = short)
+    caught_by: 'U1 (E1 gives S03 0.0, S04 1000.0)'
+  - mutant: M5 the CARRY's rows dropped (the OI state kept)
+    caught_by: 'U2 (E8 gives 400.0)'
+  - mutant: M6 the 00:00:00 point from D-1's run alone (D's raw not read in phase B)
+    caught_by: 'U2 (E9 gives 800.0)'
+  - mutant: M7 a bad ticker row with no arrival skipped
+    caught_by: 'U4 (E10 gives 1000.0)'
+  - mutant: M8 a missing ticker file read as NO_OI
+    caught_by: 'U4 (E12 gives NO_OI)'
+  - mutant: M9 no fall back to D-1 (D's file only)
+    caught_by: 'U4 (E13 gives NO_OI at 00:01:00 to 00:03:55)'
+  - mutant: M10 the rows of D-1's file stamped after 24:00 dropped
+    caught_by: 'U4 (E14 gives 0.0 at 00:01:00)'
+  - mutant: M11 N = OI x mark as an int64 product
+    caught_by: 'U5 (E3: the product wraps past 2^63, a wrong S03)'
+  - mutant: M12 the age edge strict (61.0 s read as over)
+    caught_by: 'U5 (E19 gives STALE_OI)'
+real_check:
+  points:
+    - point: 2025-10-10, BTCUSDT and ETHUSDT, the points of the 10 minute ends with the largest A1 liquidation dollars of the evening
+      why: the crash (S03 at its largest)
+    - point: 2026-03-08, BTCUSDT, DOGEUSDT and a thin coin (named by the tester), 12:16:00 to 12:27:00 every 5 s
+      why: DOGE's burst of 12:16:01.8 (BASIC_A1_V2), a thin coin's small OI
+    - point: 2026-03-08, every roster coin, 00:00:00 to 00:01:00 every 5 s
+      why: the CARRY of 7 Mar 2026
+    - point: 2025-09-10 to 2025-09-12 (THE PILOT), every roster coin, 00:00:00 to 00:01:00 and 12:00:00 to 12:05:00 every 5 s
+      why: "what the pilot shows: no window over 60 s, so values from 00:00:00 of 10 Sep 2025 (9 Sep's liquidation and ticker files read once)"
+  pass: >-
+    The tester recomputes S03, S04, the reasons and stale from this card's words on the readers' rows (rawcheck/check_liqx.py, Fraction
+    on the decimal strings, never the producer's code): floats within 1e-9 relative, words equal. In LIQX's one small read-only job.
+meaning_check:
+  pass_lines:
+    - "S03 x N / 10,000 equals A1 S08 - A1 S10 within 1 dollar at every minute end of 2026-03-08 and 2025-10-10 where all are valued (the numerator is A1's, USDT only), and equals A1 S08 within 0.5 dollar where the coin has no USDC file that day (A1 S10 is NO_FILE there, CARD_A1_V5 rule 6, O10)"
+    - "the crash ranks first: BTCUSDT's largest S03 of 1 Oct to 31 Oct 2025 falls on 10 Oct 2025 between 20:00 and 23:59 UTC"
+  report_only:
+    - S03 and S04 per coin against the coin's OI size (the thin-coin effect)
+    - the share of STALE_OI points per coin
+conclude:
+  may:
+    - "how large the last 60 s of long (short) liquidations on the coin's Binance USDT contract were against its Binance open interest, in basis points"
+  never:
+    - "the whole coin's liquidations (USDT contract only; USDC liquidations and open interest not read)"
+    - "an exact share: the files hold at most one print a second (L2), so S03, S04 are floors in bursts"
+    - "the open interest after the liquidations (the base is the open interest 60 s before u)"
+    - "Hyperliquid's liquidations or open interest (Binance futures only; the owner trades on Hyperliquid)"
+readers: none yet (planned beside A4's waves in the forced-flow labels)
+implementation:
+  how: "Per coin, phase A: the USDT rows' exact dollars by side at the file's decimals (int64; the division on floats of the exact integers, never an int64 N), each row counting at the points u >= max(its stamp, its arrival) with u - 60 s < its stamp (an interval of points; the sums by a difference array of integers, exact); the reads at tau = u - 60 s by the reader's at(D, f, taus, carry=False) with E2 rules 2 to 6 beside (the bad rows, the file status, the age); one division per point. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4 line 35): phase B, day after day, makes every value: the sums of 00:00:05 to 00:01:00 with the CARRY's parts (E8, E14), the 00:00:00 point (E9, E15), the reads whose tau is in D-1 or falls back to D-1 (00:00:05 to 00:01:00, and in D before D's first good row carrying the field: E13, E18), the seen rule at every point (L2's), stale by A1 rule 16 where it needs the CARRY. No L3 value is final in phase A."
+  kernel: "card-local numpy steps with brute twins (X10; L2's two-condition window: FOR EDGE1); the reads by prod_reader_derivative_ticker_v2 at() (E2 reads by arrival alone; addon_grid_v2 85c8ece1 in_force is CARD_C13_V4 rule 9's max(t, arr) <= u in file order, not E2's rule)"
+  memory_mb: 250
+  seconds_share: 1.5
+data_checks: none

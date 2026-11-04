@@ -1,0 +1,2 @@
+# 02_Freeze: every absolute or machine path in the files of MANIFEST.tsv. None: nothing is copied (no tool of this part is released). The paths built into the TEST editions are summed up in README, "Data and settings (when released)". status: ARG, BUILT_IN, TEXT as in the other parts
+file	line	path	kind	what	settings_key	status

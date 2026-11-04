@@ -1,0 +1,9 @@
+# MACHINE_PATHS_KNOWN.tsv for 03_Grading (SCOUT, 31 Oct 2026, release ALARM_V1_5): released files kept unchanged with a machine
+# path, for _tools/machine_paths_v2.py. A row holds while the file's sha16 is unchanged; any change makes the line CODE again.
+# Source: the STATIC scan of GitHub Trading/Alarm (= ALARM_V1_4), 31 Oct 05:36Z (team/SCOUT/devpaths/
+# scan_GITHUB_V1_4_20261031T053614Z/03_Grading.tsv), less the 4 past editions ALARM_V1_5 moves to archive/; reasons from
+# team/SCOUT/devpaths/KNOWN_REASONS_V1_5.tsv (by known_from_scan_v1.py).
+file	line	path	sha16	reason
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	35	<PYTHON>	583672d036d2ad85	MONTH chain v2_2, past edition kept: v2_2_2 names it in the merged EVENTS.tsv header (line 93) and test_month_parts_v1.py (TESTS.tsv) tests it; JOB_MONTH_V7 runs v2_2_2
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	35	<LAB_REPO>/forensics	583672d036d2ad85	MONTH chain v2_2, past edition kept: v2_2_2 names it in the merged EVENTS.tsv header (line 93) and test_month_parts_v1.py (TESTS.tsv) tests it; JOB_MONTH_V7 runs v2_2_2
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	78	<DATA_ROOT>/lab_days	583672d036d2ad85	MONTH chain v2_2, past edition kept: v2_2_2 names it in the merged EVENTS.tsv header (line 93) and test_month_parts_v1.py (TESTS.tsv) tests it; JOB_MONTH_V7 runs v2_2_2

@@ -1,0 +1,163 @@
+# V6_V1.yaml: VOLX implied minus realised volatility gap (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181). S09, S10 by PRODUCER_VOLX_V1.yaml.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): N1 (the pass line's own sum and count), N2 (0.029589041095890407 is one
+# float step below 54 / 1825; both give 60.0), N3 (roll_points, no cumulative sums), A1, A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the 43,200-point window replaced by 29 daily sums plus a
+# 1,440-point window over D-30 and D (roll_points at 43,200 points cost 3.3 s and about 600 MB a coin, EDGE1's cloud measure), X7.
+# Edition 5: BED's fix check (REVIEW_LEAD_BED_VOLX_V1 fe399b4d): the nits, S09 tested within 1e-9 x S07 absolute (X8: a
+# difference that crosses 0); seconds_share not benched (T5 sets it).
+kind: build_metric
+id: V6
+producer: VOLX
+item: 'implied minus realised volatility gap'
+tier: BUILD
+name: BTC's implied volatility (DVOL, V4) minus its realised volatility of the last 30 days from 1-minute Binance BTCUSDT mid returns, both annualised percent (S09), and that realised volatility (S10)
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  How much more (S09 above 0) or less (below 0) volatility BTC options price for the next 30 days than BTC actually showed over the
+  last 30 days, in annualised percentage points; S10 is the realised side alone.
+example: >-
+  A sum of squared 1-minute mid log returns over the last 30 days of 0.029589041095890407 gives S10 = 100 x sqrt(525,600 / 43,200 x
+  0.029589041095890407) = 60.0 percent a year; with DVOL at 50, S09 = 50 - 60 = -10.0 points (options priced less than the last month
+  showed). In variance form 2,500 - 3,600 = -1,100 (not written: S07^2 - S10^2).
+formula: >-
+  S10 at u: the minute ends m in (u - 30 days, u] (43,200), r(m) = math.log(C13 S05(m) / C13 S05(m - 60 s)) of BTCUSDT when both mids
+  are valued; n = the valued returns; with n >= 41,040 (95 percent), S10 = 100 x sqrt(525,600 x mean of r(m)^2) (annualised by the
+  365-day year of minutes, as DVOL is), float64; with n < 41,040 empty FEW_MINUTES. S09 = S07 at u (V4) - S10 at u, float64; empty
+  when S07 or S10 is empty (S07's reason first); stale when S07 is.
+source:
+  kind: ours
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 row V3 and section 5.3 ('RV_30d annualised percent = 100 x sqrt(sum of squared 1-minute mid log
+    returns over 43,200 minutes x 525,600 / 43,200); VRP = DVOL^2 - RV^2'; nothing computes it: BUILD). The gap is written in
+    volatility points, as the item says; the variance form is the reader's S07^2 - S10^2.
+inputs:
+  - kind: addon
+    ref: VOLX S07 (V4)
+    card: VOLX/V4_V1
+    rule_in_force: S07 at u as written
+    stale_rule: S09 stale when S07 is
+    days: D (and V4's CARRY)
+  - kind: year
+    ref: C13 S05 (BTCUSDT)
+    card: MEANING_C13_V4 fe5df65ba7680fc8
+    verdict: LIMITS
+    rule_in_force: B's rows at the minute ends as written (the mid in force, 30 s at most)
+    stale_rule: an empty mid makes its return and the next one not valued; never filled
+    days: D-30 to D (31 B day files, each checked against its MANIFEST_L0BIN parquet_sha16)
+overlaps:
+  - setting: C4 S03
+    kind: other_metric
+    why: C4 S03 is BTC's 24 h realised volatility on 1 s mids in percent, not annualised (CARD_C4_V3 rule 6); S10 is 30 days of 1-minute mids, annualised. Not a copy.
+per_coin: BTCUSDT only (DVOL is BTC's, V4); the realised side of other coins is not written here.
+time: >-
+  DVOL is a 30-day FORWARD expectation and S10 a 30-day BACKWARD realisation: the gap compares a forecast with the past month (an
+  ex-ante proxy of the variance risk premium), not with what came after. S10 moves every minute, S07 once an hour. Crash days stay in
+  S10 for 30 days. NO_HISTORY before 10 Oct 2025 (D-30 is the first year day 10 Sep 2025).
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S09
+      label: iv_minus_rv30_btc_pts
+      units: annualised percentage points
+      value_kind: float
+      decimals: none
+      means: DVOL in force (S07) minus BTC's 30-day realised volatility (S10)
+      max_staleness_s: 7200
+    - name: S10
+      label: rv30_btc_ann_pct
+      units: annualised percent
+      value_kind: float
+      decimals: none
+      means: BTC's realised volatility of the 43,200 one-minute mid log returns of the last 30 days, annualised by the 365-day year
+      max_staleness_s: 60
+  cadence: minute end (1,440 rows per day, BTCUSDT only, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: "S10: the latest known_at among the C13 S05 rows read (at or before u); S09: the later of S07's and S10's; an empty row known_at = u; so known_at <= as_of on every row"
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: D before 10 Oct 2025 (the window reaches before the first year day)
+    - reason: FEW_MINUTES
+      when: S10 (and S09) with fewer than 41,040 valued returns of 43,200
+    - reason: NO_CANDLE
+      when: S09 when S07 is empty NO_CANDLE
+    - reason: NO_FILE
+      when: S09 when S07 is empty NO_FILE
+  empty_order: the first that applies, in this order, NO_HISTORY, FEW_MINUTES, then S07's NO_FILE, NO_CANDLE (S09)
+  stale_rule: S09 stale exactly when S07 is; S10 never stale
+  max_staleness_s: 7200
+  window_days: 30
+  no_history: "fills on 10 Oct 2025 (the window (u - 30 days, u] from 10 Sep 2025 00:00 at u = 10 Oct 00:00); NO_HISTORY on every day before"
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the example
+    input: 'sum of r^2 over 43,200 valued returns 0.029589041095890407 (one float step below 54 / 1825 = 0.02958904109589041; both give 60.0); S07 50'
+    answer: 'S10 60.0; S09 -10.0'
+  - case: E2 missing minutes
+    input: 'the same mean r^2 over 41,040 valued returns'
+    answer: 'S10 60.0 (the mean, not the sum); S09 -10.0'
+  - case: E3 too few
+    input: '41,039 valued returns'
+    answer: 'S10, S09 empty FEW_MINUTES'
+  - case: E4 S07 stale or empty
+    input: "V4 E3 (stale) and V4 E4 (NO_CANDLE) at u"
+    answer: "S09 = S07 - S10 stale 1; S09 empty NO_CANDLE, S10 valued"
+  - case: E5 the year start
+    input: 'D = 2025-10-09; D = 2025-10-10'
+    answer: 'NO_HISTORY; valued from u = 00:00'
+unit_tests:
+  - test: U1 (E1, E2, E3)
+    planted: '31 days of C13 S05 rows for BTCUSDT whose returns have the case''s mean square (a planted alternating path), the empties placed'
+    expect: 'S10 60.0, 60.0, FEW_MINUTES within 1e-9 relative'
+  - test: U2 (E4, E5)
+    planted: "V4's planted candles with a missing hour; D = 2025-10-09 and 10"
+    expect: 'stale S09; NO_CANDLE with S10 valued; NO_HISTORY then valued'
+  - test: U3 the stamps
+    planted: U1, U2
+    expect: 'BTCUSDT rows only; known_at <= as_of at every row'
+mutants:
+  - mutant: M1 the sum scaled as if all 43,200 were valued (missing minutes as 0)
+    caught_by: 'U1 (E2 gives 58.48076606885378, not 60.0)'
+  - mutant: M2 annualised by 252 trading days (100 x sqrt(252 x 1,440 x mean r^2))
+    caught_by: 'U1 (E1 gives 49.854583059682625, not 60.0)'
+  - mutant: M3 the variance gap written (S07^2 - S10^2)
+    caught_by: 'U1 (S09 -1,100 not -10.0)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, u = 00:00, 01:01, 12:00, 23:59
+      why: the S07 serve edges and a full window
+    - point: 2025-10-10, BTCUSDT, u = 00:00 and 21:30
+      why: the first valued day and the crash evening
+  pass: >-
+    The tester recomputes S09, S10 and the reasons from this card's words on B's C13 S05 rows and V4's candles (rawcheck/check_volx.py):
+    floats within 1e-9 relative (S09 within 1e-9 x S07 absolute: a difference of two numbers of one size that crosses 0, X8), words
+    equal. In VOLX's one small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "S10 at 23:59 of each day of 10 Oct 2025 to 9 Mar 2026 and the tester's own 100 x sqrt(525,600 x (the sum of the 30 daily sums of squared valued 1-minute returns) / (the sum of the 30 daily valued counts)) agree within 1e-9 relative (the same mean by another order)"
+    - "S07 and S10 move together: Spearman 0.5 or more over the daily 12:00 values of 10 Oct 2025 to 9 Mar 2026 (V4's line)"
+  report_only:
+    - the share of minutes with S09 above 0, per month
+    - S09 around the crash of 10 Oct 2025
+conclude:
+  may:
+    - "how much more or less volatility BTC options price for the next 30 days than BTC showed in the last 30 days, in annualised points"
+    - "S10 alone as BTC's 30-day realised volatility, annualised"
+  never:
+    - "Hyperliquid's realised volatility (the Binance BTCUSDT mid, X7)"
+    - "the variance risk premium realised (that needs the next 30 days' volatility, a label, never a live metric)"
+    - "S09 at minute precision (S07 is an hourly close up to 59 minutes old)"
+    - another coin's gap
+readers: none yet (planned in the HEAT labels)
+implementation:
+  how: "The 31 days of BTC's C13 S05; squared returns and the valid mask; the sum and count of (u - 30 days, u] = the 29 whole-day sums and counts of D-29 to D-1 (np.sum per day) plus the 1,440 points ending at u of the series D-30 then D (roll_points, sliding windows of 1,440; never a whole-span cumulative sum, ADDON_ARCHITECTURE_V4 9.3 rule 5); S09 by one subtraction with S07. PHASES: S10 none (B only); S09 follows S07 (00:00 to 01:00 phase B with V4)."
+  kernel: "addon_grid_v2.roll_points (a 1,440-point window over the 2,880 points of D-30 and D) plus 29 per-day sums (a card-local numpy step with its brute twin)"
+  memory_mb: 5
+  seconds_share: 0.05
+data_checks: none

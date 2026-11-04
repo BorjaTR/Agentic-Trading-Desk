@@ -1,0 +1,5 @@
+{"tool": "true_gate", "edition": "ALARM_V1_21_1", "commands": {
+ "check": {"args": ["<claim.json>"], "reads": "no lab data", "exit": {"0": "OK", "2": "REFUSED <CODE>"}},
+ "run": {"args": ["<claim.json>", "<out dir (new)>"], "outputs": ["TRUE_CARD.txt", "TRUE_ROW.tsv", "TRUE_ROW.sha16"], "exit": {"0": "a word printed", "2": "REFUSED <CODE>"}},
+ "fp": {"args": ["<claim.json>", "<out.tsv (new)>", "<sets>", "rows|waves"], "outputs": ["<out.tsv>"], "exit": {"0": "done", "2": "REFUSED <CODE>"}}},
+ "status": "print-only; Sep-Dec only; not blind; X1 families guessed"}

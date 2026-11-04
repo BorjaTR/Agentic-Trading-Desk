@@ -1,0 +1,82 @@
+{
+ "by": "BUILD1 (labcore V2_3 cycle, STRATEGY-190912a; owner as in RELEASE_alarm_design_V3_2.json)",
+ "files": {
+  "team/RESEARCH/ALARM/receipts/null_cal/NULL_CAL_V1.txt": {
+   "role": "S07-04 calibration receipt",
+   "sha16": "7579d1ab883c0fed"
+  },
+  "team/RESEARCH/ALARM/settings/WINDOWS_V1.json": {
+   "role": "BUILD/CHECK month split read by the card (CHECK never opened)",
+   "sha16": "1069473688858fbc"
+  },
+  "team/RESEARCH/tools/alarm_checks/offer_ladder_v1.py": {
+   "role": "reused unchanged: ladder rule, at_decision, kind, levels",
+   "sha16": "73e074219b7de2ae"
+  },
+  "team/RESEARCH/tools/alarm_design/README.md": {
+   "role": "design + V2 + V3 contract",
+   "sha16": "58c17d807a53517f"
+  },
+  "team/RESEARCH/tools/alarm_design/alarm_design_v2.py": {
+   "role": "the tool (run, try, card)",
+   "sha16": "4adf69f4eb34c567"
+  },
+  "team/RESEARCH/tools/alarm_design/grade_edges_v1.py": {
+   "role": "base-from-edges: grade an existing list against the external matched base (draw_v3 EDGES/CENSUS)",
+   "sha16": "6ab1c43a36d5fe5a"
+  },
+  "team/RESEARCH/tools/alarm_design/mutants_alarm_design_v2.py": {
+   "role": "mutants (20, all must fail the tests)",
+   "sha16": "46a2d5142e8cbda9"
+  },
+  "team/RESEARCH/tools/alarm_design/mutants_grade_edges_v1.py": {
+   "role": "grade_edges mutants (5, all must fail)",
+   "sha16": "37b992b47ca0f8d7"
+  },
+  "team/RESEARCH/tools/alarm_design/null_calibration_v1.py": {
+   "role": "S07-04 synthetic null calibration",
+   "sha16": "9562a859b2c9038f"
+  },
+  "team/RESEARCH/tools/alarm_design/offer_edges_v1.py": {
+   "role": "AHEAD grade on the draw V3 base by EDGES (reuses offer_ladder_v1; months a setting; luck bar; cost of record per row)",
+   "sha16": "c5964cdadbe0224a"
+  },
+  "team/RESEARCH/tools/alarm_design/test_alarm_design_v2.py": {
+   "role": "planted tests (32)",
+   "sha16": "ffad8283c8bd1615"
+  },
+  "team/RESEARCH/tools/alarm_design/test_grade_edges_v1.py": {
+   "role": "grade_edges tests (7)",
+   "sha16": "07fe810c5d5714fc"
+  },
+  "team/RESEARCH/tools/alarm_design/test_offer_edges_v1.py": {
+   "role": "offer_edges tests (3)",
+   "sha16": "1a2fe4d6a9358c59"
+  },
+  "team/RESEARCH/tools/alarms/onset_band_v6.py": {
+   "role": "reused: own 14-day band (edges)",
+   "sha16": "9acf9cc8a0b24f53"
+  },
+  "team/RESEARCH/tools/model_v1/matched_controls_v1.py": {
+   "role": "reused: retrospective busy reference (never the verdict)",
+   "sha16": "36313be46daba9a1"
+  }
+ },
+ "landing": "V3_2 = V3_1 unchanged + offer_edges_v1 (the offer-after-fire grade on the draw V3 base, linked by EDGES) + its tests; nests costs V3_4",
+ "release": "V3_3",
+ "releases": {
+  "team/LAYERS/tools/costs_v2/RELEASE_costs_V3_5.json": "979fe9b2f791ee38",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_4.json": "8075b40f2e97e7a1"
+ },
+ "replaces": "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_2.json",
+ "rule": "FROZEN: any change to a listed file is a new release; every run checks it first and records the five unbound files (STRATEGY 19:03:55Z)",
+ "run_with": "<PYTHON>",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tests_result": "V2_4 landing 20:35:18Z: suites rerun in progress at the cut (owner deadline 20:45Z); last full green per tool tonight: labcore 79 + R5 (scratch, V2_4 code), context 26+8s, profile 28+4s + proof plan 2, match 15, cause 71 (LAB1 rerun 20:26Z), fairness 53, bucket 51, exit 51+1s + 37, judge v1 34+1s v2 70 chain 8 + teeth 40/40, finder 42, alarm_design 63, reading_value v2+v3 7; the rerun result is posted beside the table",
+ "text_changes": [],
+ "tool": "alarm_design",
+ "written_utc": "2026-10-23T20:45:53Z"
+}

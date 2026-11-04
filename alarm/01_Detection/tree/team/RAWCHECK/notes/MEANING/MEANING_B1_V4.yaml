@@ -1,0 +1,625 @@
+# MEANING_B1_V4.yaml: the meaning register of B1 taker flow, EDITION 4 (EDGE1, 2026-10-18, closed with the owner 15:2x Berlin)
+# = MEANING_B1_V3 (fee868ccd42141eb, kept) with: the 9 whale settings and their 4 twins RENAMED to what they are (fills of 25,000+), their
+# old intention in could_build (B1.CB1 whale orders on aggTrades, B1.CB2 aggTrades blocks); conclude (may, never); every limit with its
+# effect on decisions; S10, S11 pointed at job 15756; the basic settings (S03, S08, S09, S12, S13, S14 and twins) moved to BASIC_B1_V1 (BED).
+group: B1
+name: taker_flow
+summary: 'Who is taking liquidity on a coin and how hard: dollars bought and sold by TAKERS (the side that crossed the spread) in a window ending at e, signed + buy, - sell; split by
+  trade size (whale = a trade of 25,000 dollars or more); and the same summed or shared over the 52 roster coins.'
+read_as: 'S01, S02, S10, S11: Binance''s taker volume as we could know it at e (equal to Binance''s kline in about 99% of coin-minutes). S04 to S07 and S15 to S19 were the WHALE settings;
+  they are renamed in edition 4 to what they are: flow in single FILLS (or same-millisecond slices) of 25,000 dollars or more, the same floor for BTC and a thin coin; real whale orders
+  are B1.CB1 (not built). The basic settings S03, S08, S09, S12, S13, S14 moved to BASIC_B1_V1 (BED, BR4).'
+where:
+  card: testbed/value_audit/registers/CARD_B1_V7.md
+  settings_register: testbed/value_audit/registers/SETTINGS_B1_V2.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_trades_V1.md
+  producer: prod_B1_v3.py with prod_reader_trades_v1.py (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/B1.parquet
+  year_output_columns: name (S01 to S19, S03.seen_at_e_off to S08.seen_at_e_off, S10.coverage to S19.coverage), coin (roster coin, or MARKET for S10 to S19), as_of_us (e), value_kind,
+    value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'B1', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: 'Binance trade channel: one row = one trade (not aggTrade); off-book trades (insurance fund, ADL) left out'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz
+  columns: exchange, symbol, timestamp, local_timestamp, id, side, price, amount
+  fields:
+    row: 'one trade; our row set equals Binance''s own trade count [proof: SOURCE_SPEC_trades Q-N2, Q-N3; job 15778: kline trade count = our rows in 5 of 5 minutes]'
+    side: 'the TAKER''s side: buy = the taker bought, sell = the taker sold (Binance m flag: buyer is maker -> sell) [proof: Tardis docs T1; SOURCE_SPEC_trades Q-N2; job 15780: 100%
+      agreement with Binance aggTrades is_buyer_maker on 6,549 rows]'
+    price: 'trade price, USDT, exact [proof: SOURCE_SPEC_trades Q-N2]'
+    amount: 'trade quantity in the coin (a 1000-prefixed symbol counts in thousands) [proof: SOURCE_SPEC_trades Q-N2 (q)]'
+    timestamp: 'Binance trade time T, microseconds; the file is in id order (0 rows going back, job 15780) [proof: SOURCE_SPEC_trades Q-N2; job 15780]'
+    local_timestamp: 'arrival at Tardis [proof: Tardis docs T1; SOURCE_SPEC_trades F3]'
+    dollars: 'price x amount of a row, exact [proof: card rule 2; SOURCE_SPEC_trades]'
+  latency: middle 3 ms, p99 37 to 190 ms, max 6.6 s; 1,000 to 6,142 rows a day arrive after their minute (SOURCE_SPEC_trades F3, F4)
+  silence: no coin silent over 81 s on normal days; 600 s or more is an outage (28 Jul) (SOURCE_SPEC_trades F5)
+reading_rules:
+- 'window: rows stamped after e - W and up to e, received by e (card, A1 rule 1); Binance''s kline minute is [e - 60 s, e) by trade time'
+- a row's dollars = price x amount exact; sums rounded once to the whole dollar, half up
+- 'sign: + taker buy, - taker sell'
+- whale = a row (one fill) of 25,000 dollars or more; S03 = S04 + S05 exactly (card)
+- 'S06: blocks = consecutive rows with the same stamp, side and price (B3 rule 3) over the last 1,000 rows; a block of 25,000 or more is whale'
+- S07 = S04 at e less S04 at e - 300 s
+- S09 = net taker dollars of the last 5 s divided by 5 (dollars a second)
+- 'market: S10, S11 sum the coins seen; S12 the median of the coins'' S08; S13 (mean of S12''s last 5 minute ends - mean of the last 120) / (1.4826 x MAD); S14 = S13 squared; S15 to
+  S17 share of coins above 0 less share below 0; S18 the 10th percentile (nearest rank) of S06; S19 share of coins with S06 below 0'
+- 'seen: as A1 rule 5; a window longer than 60 s is empty unless the coin was seen through all of it; the .seen_at_e_off twin is empty only when the coin is not seen at e'
+- 'coverage twins: how many roster coins the market value counted'
+values:
+  units: US dollars, whole (S01 to S07, S10, S11); dollars a second (S09); a ratio (S08, S12); a z score (S13) and its square (S14); a share from -1 to +1 (S15 to S17), dollars (S18),
+    a share 0 to 1 (S19)
+  zero: the coin was seen and buying equals selling in the window, or the window holds no row
+  empty: 'not seen (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT); real on 8 Mar: S03 to S05 and S08 20 values, S06 65, S07 40, S09 6 (job 15779). Never read empty as 0'
+  stale: 1 with a TRADES_HOLE or THIN_FEED empty
+  flags: DUPLICATE_ROW, NO_RATE_BASE
+interpret:
+  do:
+  - read S01 and S02 as Binance's taker buy and sell volume of the minute, known at e
+  - read S04, S05 and the whale shares as "fills of 25,000 dollars or more", per coin very different (a BTC order's 99th percentile is about 220,000 dollars, a thin coin's 19,000 to
+    24,000; job 15773)
+  - compare flows in proportion to the coin's own volume (B3 S04 is the 30 minute base)
+  dont:
+  - read S04 to S07 or S15 to S19 as what big traders did; one big order split into small fills counts as retail (BTC whale share of dollars 50% by fill vs 81% by order; ENA 7% vs 32%;
+    AVAX 9% vs 23%; job 15773)
+  - read S06's blocks as Binance's aggregated trades; they cut Binance's groups (10 to 16% more, job 15780)
+  - read empty as 0
+biases:
+- what: late trades left out
+  direction: either way
+  size: S01 differs from Binance's taker buy in 0.39 to 1.16% of coin-minutes with a value (median 0.04 to 0.45% of the value, max 93%, a thin minute where one late trade is most of
+    it); S02 0.38 to 1.11%; decisions unchanged
+  proof: job 15787; mechanism as C13 (job 15774) and the market misses (jobs 15754, 15755)
+- what: whale per fill, not per order
+  direction: whale dollars LOW, retail HIGH
+  size: 'BTC 50% vs 81% of dollars; ENA 7% vs 32%; AVAX 9% vs 23%; the 5-minute sign differs in some windows; decisions: wrong if read as big traders; renamed in edition 4, so unchanged
+    by the new names'
+  proof: job 15773
+- what: one whale floor (25,000) for every coin
+  direction: 'BTC: few whales relative to its size; thin coins: a whale is near their largest orders'
+  size: 'order p99 BTC about 220,000, thin coins 19,000 to 24,000; decisions: may matter for thin coins (opinion); reviewed at the our-rules level'
+  proof: job 15773
+- what: blocks (S06) cut Binance's taker orders
+  direction: more, smaller blocks
+  size: 10 to 16% more blocks than Binance's aggTrades in 4 coin-minutes; decisions unchanged
+  proof: jobs 15780, 15781
+external_checks:
+- what: taker buy and sell dollars per minute
+  where: Binance 1m klines (taker_buy_quote, quote_volume) from data.binance.vision, held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'VERIFIED: every coin-minute of 3 days, job 15780'
+- what: taker side
+  where: Binance aggTrades is_buyer_maker, held at <ARCHIVE_DISK>/scratch_EDGE2/realcheck/outside/binance/aggTrades (10 days, 113 coin-days)
+  status: VERIFIED 6,549 of 6,549 rows, job 15780
+- what: taker orders (for a whale per order)
+  where: 'Binance aggTrades: one row per taker order and price, with first_trade_id..last_trade_id'
+  status: the only exact source; our rules cannot rebuild it from trades (jobs 15780, 15781)
+tools:
+- what: our raw values equal Tardis and Binance
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code
+- what: basic computations recomputed
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part b1 (and --part b1market)
+  where: team/LAB/code
+- what: every coin-minute against Binance klines
+  run: python3 -B -m rawcheck.meaning_flow day <D>
+  where: team/LAB/code
+- what: blocks and side against Binance aggTrades
+  run: python3 -B -m rawcheck.meaning_flow blocks <D> <COIN> <HHMM> [--brief]
+  where: team/LAB/code
+- what: whale by fill, block and order
+  run: python3 -B -m rawcheck.meaning_b1 <D> <COIN> <HHMM> <minutes>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_flow.py e8ed447b32f5335e, meaning_b1.py 87b6e2945f4fec4f, rawcheck raw code 84454de7fac2e458 (RAW_STAMPS_V1)
+  where: team/LAB/code/rawcheck
+used_by: labels FLOW/FORCED and FLOW/ORGANIC (S12, S15); chains CHAIN_forced_SHORT_fade/ride (S12, S14), CHAIN_quiet_SHORT_fade_3 (S13, S15), CHAIN_chop_LONG_fade_3 (S14), CHAIN_chop_SHORT_ride_2
+  (S14, S17), six chains on S15; A5 liq_vs_flow (S02, S11) (card)
+references:
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+  N1: https://github.com/tardis-dev/tardis-node/blob/master/src/mappers/binance.ts (quoted in SOURCE_SPEC_trades_V1 Q-N2, Q-N3)
+  K1: https://data.binance.vision (klines and aggTrades)
+settings:
+- id: B1.S01
+  layer: raw
+  side: buy
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sum
+  aliases: m9_taker_buy_usd, coin.m9_taker_buy_usd
+  means: dollars takers bought in the minute ending at e
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Tardis 9 of 9, Binance 9 of 9; job 15787: equal to Binance taker_buy_quote in 98.84 to 99.61% of coin-minutes with a value'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: row set and side = Binance's (jobs 15778, 15780)
+  open: differing coin-minutes not explained one by one (late trades expected); decisions unchanged
+- id: B1.S02
+  layer: raw
+  side: sell
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sum
+  aliases: m9_taker_sell_usd, coin.m9_taker_sell_usd
+  means: dollars takers sold in the minute ending at e
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS 9 of 9 and 9 of 9; job 15787: equal to Binance quote - taker_buy in 98.89 to 99.62%'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: row set and side = Binance's (jobs 15778, 15780)
+  open: differing coin-minutes not explained one by one; decisions unchanged
+- id: B1.S04
+  layer: our_rule
+  read_by: B1.S07 and B1.S15 (and through S07, B1.S17); FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: net
+  window: 300 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sum of fills of 25,000 dollars or more
+  aliases: EF.ef_cvd_whale_usd_300s_25k_trades, EF.ef_whale_cvd
+  means: net taker dollars of the last 5 minutes in FILLS of 25,000 dollars or more (named whale)
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: job 15773:
+      per fill misses split orders'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: net taker dollars in single fills of 25,000 dollars or more, last 5 minutes
+  renamed_from: whale net flow (25k fills)
+- id: B1.S04.seen_at_e_off
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: 300 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: as S04
+  aliases: none
+  means: as S04 but empty only when not seen at e (switched off)
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: as S04'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; computation of the twin not
+    recomputed'
+  name: 'net taker dollars in single fills of 25,000 dollars or more, last 5 minutes (switched off: empty only when the coin is not seen at e)'
+  renamed_from: whale net flow (25k fills), switched-off twin
+- id: B1.S05
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: net
+  window: 300 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sum of fills under 25,000 dollars
+  aliases: EF.ef_retail_cvd
+  means: net taker dollars of the last 5 minutes in FILLS under 25,000 dollars (named retail)
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: job 15773:
+      split whale orders land here'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: net taker dollars in fills under 25,000 dollars, last 5 minutes
+  renamed_from: retail net flow (fills under 25k)
+- id: B1.S05.seen_at_e_off
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: 300 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: as S05
+  aliases: none
+  means: as S05 but empty only when not seen at e (switched off)
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: as S05'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; computation of the twin not
+    recomputed'
+  name: 'net taker dollars in fills under 25,000 dollars, last 5 minutes (switched off: empty only when the coin is not seen at e)'
+  renamed_from: retail net flow (fills under 25k), switched-off twin
+- id: B1.S06
+  layer: our_rule
+  read_by: B1.S16, B1.S18, B1.S19; FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: sum over same-stamp blocks of 25,000 dollars or more
+  aliases: EF.ef_cvd_whale_usd_1000t_25k_aggapprox
+  means: net taker dollars over the last 1,000 trades in BLOCKS (same stamp, side, price) of 25,000 dollars or more
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: jobs
+      15780, 15781: blocks cut Binance''s taker orders (10 to 16% more)'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: net taker dollars in same-millisecond slices of 25,000 dollars or more, last 1,000 trades
+  renamed_from: whale block flow
+- id: B1.S06.seen_at_e_off
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: as S06
+  aliases: none
+  means: as S06 but empty only when not seen at e (switched off)
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: as S06'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; computation of the twin not
+    recomputed'
+  name: 'net taker dollars in same-millisecond slices of 25,000 dollars or more, last 1,000 trades (switched off: empty only when the coin is not seen at e)'
+  renamed_from: whale block flow, switched-off twin
+- id: B1.S07
+  layer: our_rule
+  read_by: B1.S17; FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: net
+  window: 300 s change
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: S04 at e - S04 at e - 300 s
+  aliases: EF.ef_whale_cvd_d
+  means: the change of S04 over 5 minutes
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: built
+      on S04'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: 5-minute change of S04 (single fills of 25,000 or more)
+  renamed_from: whale flow change
+- id: B1.S07.seen_at_e_off
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: 300 s change
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: as S07
+  aliases: none
+  means: as S07 but empty only when not seen at e (switched off)
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: as S07'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; computation of the twin not
+    recomputed'
+  name: '5-minute change of S04 (single fills of 25,000 or more) (switched off: empty only when the coin is not seen at e)'
+  renamed_from: whale flow change, switched-off twin
+- id: B1.S10
+  layer: raw
+  side: buy
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: sum of the coins' S01
+  aliases: m9_mkt_taker_buy_usd
+  means: dollars takers bought in the minute, summed over the roster coins seen
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS: Binance 5 of 8, the other 3 explained as late trades (jobs 15754, 15755)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'as S01; market rule as A1; market rows against Binance klines: MATCH, 9 explained late (RAW_STAMPS, job 15756)'
+  open: the 52-coin sum only, not all of Binance; decisions unchanged
+- id: B1.S10.coverage
+  layer: basic
+  side: buy
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many roster coins S10 counted
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8 (coins with trades that minute)
+  meaning:
+    status: DEFINED
+    proof: card
+  open: none
+- id: B1.S11
+  layer: raw
+  side: sell
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: sum of the coins' S02
+  aliases: m9_mkt_taker_sell_usd
+  means: dollars takers sold in the minute, summed over the roster coins seen
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS: Binance 2 of 8, the other 6 explained as late trades (jobs 15754, 15755)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'as S02; market rows against Binance klines: MATCH, 9 explained late (RAW_STAMPS, job 15756)'
+  open: the 52-coin sum only; decisions unchanged
+- id: B1.S11.coverage
+  layer: basic
+  side: sell
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many roster coins S11 counted
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS 8 of 8
+  meaning:
+    status: DEFINED
+    proof: card
+  open: none
+- id: B1.S15
+  layer: our_rule
+  read_by: labels FLOW/FORCED and FLOW/ORGANIC (E1_LABELS_V2, input whale_net); word families FLOW and Whale flow (WORD_INPUTS_MAP_V1, CARD_WORDS_V12 E64); LEVELS row E1.whale_net; chains
+    CHAIN_quiet_SHORT_fade_3, CHAIN_chop_SHORT_fade, CHAIN_forced_LONG_ride, CHAIN_forced_SHORT_fade, CHAIN_forced_SHORT_ride, CHAIN_trend_SHORT_fade_2, CHAIN_trend_SHORT_ride_4 (CARD_B1_V7);
+    FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: 300 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: share of coins with S04 > 0 less share < 0
+  aliases: whale_net
+  means: how many coins' 25k-fills net buy minus net sell, -1 to +1
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: built
+      on S04'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: share of coins whose single fills of 25,000+ net bought, less the share that net sold, -1 to +1
+  renamed_from: whale breadth
+- id: B1.S15.coverage
+  layer: basic
+  side: net
+  window: 300 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many coins S15 counted
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED
+    proof: card
+  open: recompute
+  name: coins counted for S15
+- id: B1.S16
+  layer: our_rule
+  read_by: word family Whale flow (CARD_WORDS_V12 E64); LEVELS row E1.whale_net_1000t; FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the same share on S06
+  aliases: whale_net_1000t
+  means: as S15 but on S06's blocks
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: built
+      on S06'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: the same share on S06 slices of 25,000+
+  renamed_from: whale block breadth
+- id: B1.S16.coverage
+  layer: basic
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many coins S16 counted
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED
+    proof: card
+  open: recompute
+  name: coins counted for S16
+- id: B1.S17
+  layer: our_rule
+  read_by: chain CHAIN_chop_SHORT_ride_2 condition 7 (CARD_B1_V7); word family Whale flow (CARD_WORDS_V12 E64); LEVELS row E1.whale_flow; A4's shadow twin, switched off (CARD_A4_V6);
+    FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782)
+  side: net
+  window: 600 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the same share on S07
+  aliases: whale_flow, whale_flow_1000t
+  means: as S15 but on S07 (the change of the 25k-fill flow)
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: built
+      on S07'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: the same share on S07 (the change of the big-fill flow)
+  renamed_from: whale change breadth
+- id: B1.S17.coverage
+  layer: basic
+  side: net
+  window: 600 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many coins S17 counted
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED
+    proof: card
+  open: recompute
+  name: coins counted for S17
+- id: B1.S18
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: 10th percentile (nearest rank) of the coins' S06
+  aliases: EF.ef_dl_whale_p10
+  means: the 10th percentile coin's S06 (how hard the worst-selling coins' blocks sell)
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: built
+      on S06'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: the 10th percentile coin of S06 slice flow (the hardest-selling coins)
+  renamed_from: whale block worst coins
+- id: B1.S18.coverage
+  layer: basic
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many coins S18 counted
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED
+    proof: card
+  open: recompute
+  name: coins counted for S18
+- id: B1.S19
+  layer: our_rule
+  read_by: FIFTHS cuts named after it (1,175 FIFTHS names on these settings in a year day, job 15782); HEALTH settings (SETTINGS_HEALTH_V6)
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: share of coins with S06 < 0
+  aliases: EF.ef_dl_whale_sold_share
+  means: share of coins whose S06 blocks net sold, 0 to 1
+  computation:
+    status: RELIABLE
+    proof: J15772
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 4 (the owner 15:1x Berlin): per FILL, not per order (job 15773: BTC whale share 50% by fill vs 81% by order; ENA 7% vs 32%; AVAX 9% vs 23%); was: built
+      on S06'
+  open: 'a fixed 25,000-dollar floor for every coin (BTC order p99 about 220,000, thin coins 19,000 to 24,000): the rule is reviewed at the our-rules level; decisions unchanged once
+    read by its new name'
+  name: share of coins whose S06 slices net sold, 0 to 1
+  renamed_from: whale block selling share
+- id: B1.S19.coverage
+  layer: basic
+  side: net
+  window: last 1000 rows
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count
+  aliases: none
+  means: how many coins S19 counted
+  computation:
+    status: NOT_CHECKED
+    proof: none
+  meaning:
+    status: DEFINED
+    proof: card
+  open: recompute
+  name: coins counted for S19
+could_build:
+- id: B1.CB1
+  intended: 'whale flow: what big traders did, per ORDER, with a size floor per coin'
+  was_name_of: B1.S04, B1.S04.seen_at_e_off, B1.S05, B1.S05.seen_at_e_off, B1.S07, B1.S07.seen_at_e_off, B1.S15, B1.S17
+  formula: net taker dollars of taker ORDERS above the coin's own floor (for example its order-size p99 over 14 days), from Binance aggTrades (one row per taker order and price)
+  needs: Binance aggTrades files (data.binance.vision) for every roster coin and day; our trades cannot rebuild orders (jobs 15780, 15781)
+  adds: 'NEW information: BTC whale share of dollars 81% by order against 50% by fill; ENA 32% against 7%; AVAX 23% against 9% (job 15773)'
+  status: NOT_BUILT
+- id: B1.CB2
+  intended: block flow on Binance's own aggregated trades
+  was_name_of: B1.S06, B1.S06.seen_at_e_off, B1.S16, B1.S18, B1.S19
+  formula: the S06, S16, S18, S19 rules on Binance aggTrades rows instead of our same-millisecond slices
+  needs: Binance aggTrades files, as B1.CB1
+  adds: 'our slices run 10 to 16% above Binance aggTrades in 4 coin-minutes (job 15780): a correction, little new information'
+  status: NOT_BUILT
+conclude:
+  may:
+  - how many dollars takers bought and sold per coin and minute (S01, S02; Binance's kline in about 99% of coin-minutes) and over the roster coins seen (S10, S11)
+  - the direction of net taker flow
+  - how much flow came in single fills of 25,000 dollars or more (S04 and its family, by their new names)
+  never:
+  - 'what big traders or whales did, from S04 to S07 or S15 to S19: one big order split into small fills counts as small (by order BTC 81%, by fill 50%)'
+  - that S06's slices are Binance's aggregated trades (ours run 10 to 16% more)
+  - 'big-fill dollars compared across coins: 25,000 dollars is a huge fill for a thin coin and a routine one for BTC'
+  - 'the market total (S10, S11) as all of Binance: it is the roster coins seen'
+  - 'that our taker buy equals Binance''s in every minute: trades received after the minute end are left out'
+  - a flow from an EMPTY value, or 0

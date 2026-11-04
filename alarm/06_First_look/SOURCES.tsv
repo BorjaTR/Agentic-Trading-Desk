@@ -1,0 +1,41 @@
+repo_path	dev_path	sha16	bytes	role
+tree/tools/alarm_first_look/fl_read_v11.py	team/RESEARCH/tools/alarm_first_look/fl_read_v11.py	a2e764accef55078	84596	the first look reader, edition 11 (current): edition 9's rule (SIZE and SIDE bars; Sep-Dec z >= 2, Jan-Apr confirms at z >= 1) on the grade's 30 min waves
+tree/tools/alarm_first_look/fair_v4.py	team/RESEARCH/tools/alarm_first_look/fair_v4.py	d491536c6718e494	27316	the ladder v4 (current): both bars on made-up alarms with known answers (the null by weight, plants, side flips), FAIR_CALIB
+tree/tools/alarm_first_look/fl_read_v8.py	team/RESEARCH/tools/alarm_first_look/fl_read_v8.py	b18b229389c2704a	81293	edition 8, kept only because the planted bugs swap the reader's import to it (mutants_fair_v4 own 1; mutants_fl_read_v11 EXTRA_SRC)
+tree/tools/alarm_first_look/tests/test_fl_read_v11.py	team/RESEARCH/tools/alarm_first_look/tests/test_fl_read_v11.py	d5c4bd7865e0c4c8	101506	edition 11's tests (132; T29 review D's unit world)
+tree/tools/alarm_first_look/tests/test_fair_v4.py	team/RESEARCH/tools/alarm_first_look/tests/test_fair_v4.py	5b923209422ca2d2	51737	ladder v4's tests (54; T17, T18 review C)
+tree/tools/alarm_first_look/mutants_fl_read_v11.py	team/RESEARCH/tools/alarm_first_look/mutants_fl_read_v11.py	cf2e564ba7f93feb	3984	edition 11's planted bugs (29; every one must fail the tests)
+tree/tools/alarm_first_look/mutants_fl_read_v10.py	team/RESEARCH/tools/alarm_first_look/mutants_fl_read_v10.py	78e9a704efe14518	3592	edition 10's planted bug list, read by mutants_fl_read_v11
+tree/tools/alarm_first_look/mutants_fl_read_v9.py	team/RESEARCH/tools/alarm_first_look/mutants_fl_read_v9.py	891fa233d62f73aa	5841	edition 9's planted bug list, read by mutants_fl_read_v10
+tree/tools/alarm_first_look/mutants_fair_v4.py	team/RESEARCH/tools/alarm_first_look/mutants_fair_v4.py	e5374f2906c1bcc4	5541	ladder v4's planted bugs (79; review C's 10 included)
+tree/tools/alarm_first_look/mutants_fair_v3.py	team/RESEARCH/tools/alarm_first_look/mutants_fair_v3.py	4d6052bcc29e1326	8415	ladder v3's planted bug list, read by mutants_fair_v4
+tree/tools/alarm_first_look/mutants_fair_v2.py	team/RESEARCH/tools/alarm_first_look/mutants_fair_v2.py	8628ab72dfd9b6af	4292	ladder v2's planted bug list, read by mutants_fair_v3
+tree/tools/alarm_first_look/mutants_fair_v1.py	team/RESEARCH/tools/alarm_first_look/mutants_fair_v1.py	f87676c8bfb1b235	7954	ladder v1's planted bug list, read by mutants_fair_v3
+tree/tools/money_direction/md_v1.py	team/RESEARCH/tools/money_direction/md_v1.py	323adc895fc8cf10	24208	months, costs and the gz table reader the reader imports (not its waves since edition 11)
+tree/tools/labcore/__init__.py	team/RESEARCH/tools/labcore/__init__.py	aa84aeb6a1797239	520	labcore package marker
+tree/tools/labcore/waves.py	team/RESEARCH/tools/labcore/waves.py	f61b22c588ee6b9a	2302	THE ONE wave module: the grade's 30 min waves (1,800 s gap), imported by edition 11
+tree/tools/alarm_first_look/README.md	team/RESEARCH/tools/alarm_first_look/README.md	db55d4e60ae0c7c3	31985	the first look's manual (dev docs)
+tree/tools/alarm_first_look/SCOPE.md	team/RESEARCH/tools/alarm_first_look/SCOPE.md	30ae9529df4123c6	1497	scope
+tree/tools/alarm_first_look/ARCHITECTURE.md	team/RESEARCH/tools/alarm_first_look/ARCHITECTURE.md	5c747c4c919d6d61	6907	architecture
+tree/tools/alarm_first_look/REQUIREMENTS.md	team/RESEARCH/tools/alarm_first_look/REQUIREMENTS.md	8425c0a07396c58f	13306	requirements and their tests
+tree/tools/alarm_first_look/BASELINE.tsv	team/RESEARCH/tools/alarm_first_look/BASELINE.tsv	84dd84007b329ecc	16509	every landed file with its sha16 and status
+tree/tools/alarm_first_look/reviews/REVIEW_A_FL9_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_A_FL9_20261030.md	55184207820988e1	8973	review A (edition 9), with SCOUT's answers
+tree/tools/alarm_first_look/reviews/REVIEW_B_FAIR2_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_B_FAIR2_20261030.md	03dc246f96f38f37	12284	review B (ladder v2), with SCOUT's answers
+tree/tools/alarm_first_look/reviews/REVIEW_C_FL10_FAIR3_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_C_FL10_FAIR3_20261030.md	3ed932701d5ae874	8845	review C (edition 10, ladder v3: code), with SCOUT's answers
+tree/tools/alarm_first_look/reviews/REVIEW_D_FAIR3_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_D_FAIR3_20261030.md	a4d34ca488d0734d	10702	review D (ladder v3: statistics), with SCOUT's answers
+FIRSTLOOK_SETTINGS_V1.json	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/FIRSTLOOK_SETTINGS_V1.json	02a2fac433aab727	3860	the reader and tools, as a setting (ALARM_V1_19_1)
+tree/tools/alarm_first_look/fl_lists_v3.py	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/tree/tools/alarm_first_look/fl_lists_v3.py	f8e9ba0cab345c13	5727	one variant, two lists (ALARM_V1_19_1)
+tree/tools/alarm_first_look/fl_receipt_v1.py	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/tree/tools/alarm_first_look/fl_receipt_v1.py	beefdcca7110d23f	4923	the receipt row and page (ALARM_V1_19_1)
+tree/tools/alarm_first_look/busy_v2.py	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/06_First_look/tree/tools/alarm_first_look/busy_v2.py	fa844bfbad7e7e92	13975	busy_v1 with the package place
+tree/tools/alarm_first_look/night_export_v4.py	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/06_First_look/tree/tools/alarm_first_look/night_export_v4.py	870a7578dafc725e	2091	night_export_v3, module by path
+tree/tools/alarm_first_look/fl_extract_v1.py	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/06_First_look/tree/tools/alarm_first_look/fl_extract_v1.py	e19190f41bafe04b	3450	exact copy
+tree/tools/alarm_first_look/OUTCOMES_FIRSTLOOK_V1.json	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/06_First_look/tree/tools/alarm_first_look/OUTCOMES_FIRSTLOOK_V1.json	6983ca1ba1db40b1	5703	exact copy
+README.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/06_First_look/README.md	91018a3e06ab2e48	2001	replaces the part page
+tree/tools/alarm_first_look/bar_v1.py	team/RESEARCH/tools/alarm_first_look/bar_v1.py	f83282239e1d31f8	12785	first look edition 12: the bar B per moment
+tree/tools/alarm_first_look/fl_read_v12.py	team/RESEARCH/tools/alarm_first_look/fl_read_v12.py	eb7e9069da5b79d6	17868	first look edition 12: reader edition 12
+tree/tools/alarm_first_look/fair_v5.py	team/RESEARCH/tools/alarm_first_look/fair_v5.py	dec0f07ffab2a9a3	9145	first look edition 12: ladder for SIZE at B
+tree/tools/alarm_first_look/check_fl12_v1.py	team/RESEARCH/tools/alarm_first_look/check_fl12_v1.py	13c0292d8dbd7153	7382	first look edition 12: real-data checks inside the job
+tree/tools/alarm_first_look/tests/test_fl12_v1.py	team/RESEARCH/tools/alarm_first_look/tests/test_fl12_v1.py	b924f08289cf37f0	44251	first look edition 12: tests
+tree/tools/alarm_first_look/mutants_fl12_v1.py	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/tree/tools/alarm_first_look/mutants_fl12_v1.py	5d1f771c80bd5512	14277	first look edition 12: planted bugs
+tree/tools/alarm_first_look/check_cost_shares_v1.py	team/RESEARCH/tools/alarm_first_look/check_cost_shares_v1.py	7c9e3e3c76804d39	2341	first look edition 12: the real COST cells: empty shares (job 20266523)
+tree/tools/alarm_first_look/tests/repro_hold2_v1.py	team/RESEARCH/tools/alarm_first_look/tests/repro_hold2_v1.py	44f8ae7fd395b766	1886	first look edition 12: GPT hold 2, reproduced

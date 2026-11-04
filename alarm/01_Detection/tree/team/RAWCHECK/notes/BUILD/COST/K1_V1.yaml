@@ -1,0 +1,318 @@
+# K1_V1.yaml: COST half spread per coin, every 5 s and by hour of day (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2
+# ef29966d). The content of TREE's .md draft (17:32Z) moved into the template's keys; floats (decimals none) and the CARRY by V2 section 4.
+# Worked examples recomputed with exact fractions by team/TREE/proposals/verify_cost_examples_tree_v3.py.
+# Edition 2: METRIC_AUDIT's review 17:46:31Z: F2 (the copy check's rounding), N1 (seen by any row read, D2 rule 3), N4 (the CARRY
+# for 00:00 only, in ADDON_ARCHITECTURE_V4's form); F1 max_staleness_s 86400 on S02, S03 (build_register edition 3); S03's never line quoted (it parsed as a map).
+# Edition 3: the owner's 5 s grid (BUILD_ITEMS_V4 9d424de3, ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4, WORKPACKAGES_V2 edit 2 rule 4.11):
+# output.grid 5s; the values at every 5 s point; the hour tables built from the minute ends as in edition 2 and written at every
+# point; the CARRY state for the points whose seen window crosses 00:00. Nothing else changed. Signed by METRIC_AUDIT's REVIEW COST EDITION 3 OK 18:11:15Z.
+# Edition 4: the owner's OK of K1 with the fix (EDGE1 18:19:46Z): the kernel cited is addon_grid_v2 85c8ece1 (in_force with
+# bad_ends=True for CARD_D2_V3 rule 4 and its seen output for rule 3), not edition 1; and ADDON_ARCHITECTURE_V4 edit 3 0591d181's binding lines: the
+# phases (section 4 line 35) and the row at exactly 00:00:00.000000 (line 37) as a case. Values unchanged. Signed by METRIC_AUDIT's REVIEW COST EDITION 4 OK 18:36:48Z (its nit taken: the days lines cite edit 3).
+# Edition 5: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d sections 0, 1): X1 the file rule word for word (CARD_D2_V3 rule 5),
+# X2 a row with no stamp (rule 1), X3 the 00:00 point with D's file missing, X4 the CARRY wording, X6 pass lines that can fail, the
+# M10 case E15b, E8's prices, the label without 'end'. Values unchanged.
+# Edition 6: METRIC_AUDIT2's FIX CHECK COST (REVIEW_LEAD_METRIC_AUDIT2_COST_V1 f426be58): its nits: NO_FILE in place of FIRST_DAY_NO_CARRY,
+# D-1's file at 00:00:00 too, the empty gzip planted, the pass line on integers, the implementation wording as the kernel line. Values unchanged.
+kind: build_metric
+id: K1
+producer: COST
+item: 'cost table: half spread per coin and hour (Hyperliquid)'
+tier: BUILD_FIRST
+name: half spread on Binance USDT-M every 5 s, in bps of the mid, and its typical and bad value for this hour of day over the 14 days before D
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 6
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T20:05:34Z'
+means: >-
+  What crossing the top of the Binance book costs a taker against the mid, per coin: half the quoted spread in basis points at every
+  5 s point of D, minute ends included (S01), and what it usually is (median, S02) and what it is in a bad minute (90th percentile, S03) at this UTC hour of the
+  day over the 14 days before D. A Binance value: the test bed's venue, Hyperliquid, is not held yet.
+example: >-
+  BTC's best bid 67,000.0 and best ask 67,000.1 (one price step apart): the mid is 67,000.05, half the spread 0.05 USDT, which is
+  0.007462680998 bps of the mid (S01). A coin quoted 100.00 and 100.02 pays 0.999900009999 bps; a 1000-coin quoted 0.0101234 and
+  0.0101236 pays 0.098780066183 bps. If the coin's S01 at the 840 minute ends of 13:00 to 13:59 on the 14 days before D were 1, 2,
+  ..., 840 bps, at any point of 13:00:00 to 13:59:55 of D S02 is 420.5 (the mean of the two middle values) and S03 is 756 (the value
+  at rank 756 = ceil(0.9 x 840)).
+formula: >-
+  S01: the rows are the coin's bookTicker rows in file order (D-1's state from the CARRY first); a row with no stamp (the reader's why
+  2, t = arr = -1) stands at the stamp and arrival of the row before it, and the first row read with no stamp is in no window
+  (CARD_D2_V3 rule 1). The row in force at u is the last row read in file order (good or bad) stamped at or before u and received by u
+  (t <= u and arr <= u; rule 2); the book is seen at u when some row read (good or bad) is stamped in [u - 30 s, u] and
+  received by u (rule 3; the row in force itself may be older, and a row received by u but stamped after u is neither in force nor
+  seen); the first failing reason in the order NO_FILE, BOOK_HOLE, BAD_INPUT (rule 6); with P_bid, P_ask its prices (the reader's integers at 10^pp) and M = (P_ask + P_bid) / 2,
+  S01 = (P_ask - P_bid) / (2 M) x 10,000 bps, computed exactly and written as float64. A row in force that is bad (any reader why, a
+  crossed or locked top why 6 included) gives BAD_INPUT, never a value. S02, S03: h = the UTC hour of u (the points h:00:00 to h:59:55);
+  H = the coin's S01 values at the minute ends of hour h on the 14 days D-14 to D-1 (60 a day, 840 in all; the 5 s points between
+  minute ends are not in the table: opinion, a minute's points move together, and the floor, the examples and the cost stay
+  edition 2's), valued ones only; with at
+  least 600 valued, S02 = the median of H (the middle value, or the mean of the two middle values for an even count: CARD_D2_V3
+  rule 11's median) and S03 = the value at rank ceil(0.9 n) of H sorted ascending (nearest rank, no interpolation).
+source:
+  kind: doc
+  ref: >-
+    The quoted half spread: half of ask minus bid over the mid (Goyenko, Holden and Trzcinka 2009, J. Financial Economics 92(2),
+    153-181, the quoted and effective spread family; RESEARCH_TOOLS_V1 aad3cc38 section 7.1, O1: 'half-spread bp = (ask - bid)/(2
+    mid) x 10,000 from book_ticker at e'). No tool needed (one division). The hour cells are ours: BUILD_PLAN_V2 14ccbcd5 line 76
+    'per coin and hour'. The rule in force and its 30 s are the year's D2 (BASIC_D2_V1 568a9585 line 58, CARD_D2_V3 rules 2 to 6).
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures, book_ticker_<SYMBOL>_<YYYY-MM-DD>.csv.gz), pack book_ticker_v2 (188dc357)
+    rule_in_force: the last row read in file order (good or bad) with t <= u and arr <= u (CARD_D2_V3 rule 2); a bad row in force gives BAD_INPUT (rule 4)
+    stale_rule: not seen (no row read, good or bad, stamped in [u - 30 s, u] and received by u; rule 3) gives BOOK_HOLE, stale 1; files by CARD_D2_V3 rule 5 word for word (D's file is always needed, the 00:00:00 point included; D-1's when u - 30 s is before 00:00:00 of D, here its CARRY; a needed file missing, or only a .part file, makes the value empty NO_FILE; a file with only its header or an empty gzip has no rows)
+    days: "D's raw for the points 00:00:05 to 24:00:00 (the 24:00:00 point written to X1/carry/COST/<D>.npz as D+1's 00:00:00 point, with the state at 24:00: the row in force, the latest stamp read, and the rows not in force at 24:00 (max(t, arr) > 24:00: files are cut by arrival, SOURCE_SPEC_book_ticker_V2 lines 15, 23); ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the 00:00:00 point of D is D-1's 24:00 point, completed in D's phase B by any row of D's file stamped and received at exactly 00:00:00.000000 (ADDON_ARCHITECTURE_V4 edit 3 0591d181 line 37), and the points 00:00:05 to 00:00:25 (u - 30 s before the day, CARD_D2_V3 rule 5) take the row in force and the seen rule from that state with D's rows; the first year day (10 Sep 2025) reads 9 Sep 2025's file once (when it is missing, the points that need it are empty NO_FILE: rule 5; an empty value carries no flag)"
+  - kind: addon
+    ref: COST S01 of D-14 to D-1
+    card: COST/K1_V1
+    rule_in_force: the valued S01 rows of the 14 days before D at the minute ends of hour h
+    stale_rule: a missing COST day of the 14 gives NO_HISTORY (the table is never built from fewer days)
+    days: D-14 to D-1
+overlaps:
+  - setting: D2 S04
+    kind: copy
+    why: >-
+      D2 S04 is the median spread of the roster coins with a value, (P^a - P^b) / mid x 10,000 of the same row in force, exact,
+      rounded once to 4 decimals half up (CARD_D2_V3 80f0a6d2 rules 10, 11): the exact (Fraction) median over the roster coins with
+      a value at u of (P_ask - P_bid) / M x 10,000 (2 x S01 before the float), rounded once to 4 decimals half up, as CARD_D2_V3 rule
+      11, is the same state. A cross-check (the raw check of PRODUCER_COST_V1), not a twin.
+per_coin: >-
+  Price step: BTC's spread is one step (0.1 USDT) most of the time, so S01 takes few values (0.0075 bps a step at 67,000) and S02, S03
+  are such steps too; coarse-step coins (CRV, the 1000-coins: 1000PEPE near 0.0101 with a 0.0000001 step) sit on one or two steps,
+  so S01 compares across coins only with the step. The 1000-coins quote per 1,000 coins: bps are unchanged by the scale
+  (MEANING_D2D3_V2 759626f6 line 33). Thin coins have a wide and jumpy S01 and a high S03. Funding coins (8 h, 4 h, 1 h) and coins
+  missing on Hyperliquid change nothing in the formula. A coin entering the roster has no S02, S03 until it has 14 COST days
+  (NO_HISTORY).
+time: >-
+  Spreads widen at night (UTC), at weekends and in crashes; funding settles (00:00, 08:00, 16:00 UTC, every 4 h or 1 h for those
+  coins) and the quarter hours are ordinary minutes for the formula; the hour cells hold the hour-of-day profile; the 14 days mix 4
+  weekend days with 10 weekdays (a weekday or weekend split has too few values per cell: not built). A crash day raises S03 for the
+  14 days after it. The 00:00:00 point of D is D-1's 24:00 point and 00:00:05 to 00:00:25 read the CARRY's state (S02, S03 at every point come from D's own table). The first year day: S02, S03 NO_HISTORY.
+output:
+  group_file: X1/day=<D>/COST.parquet
+  names:
+    - name: S01
+      label: half_spread_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: half the quoted spread at the 5 s point u, from the bookTicker row in force
+    - name: S02
+      label: half_spread_hour_median_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: the median of S01 at this UTC hour's minute ends over the 14 days before D
+      max_staleness_s: 86400
+    - name: S03
+      label: half_spread_hour_p90_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: the nearest-rank 90th percentile of the same values
+      never: ['S03 as a worst case (one minute in ten of that hour was wider)']
+      max_staleness_s: 86400
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    S01: known_at = the arrival of the row in force (arr <= u by the rule in force); S02, S03: known_at = 00:00 of D (the table is
+    fixed before D begins, so for every u of D); an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "S01 when a needed file is missing or only a .part file (CARD_D2_V3 rule 5): D's file at every point (the 00:00:00 point too, though D-1's CARRY holds a row: phase B sets it NO_FILE, ADDON_ARCHITECTURE_V4 X3); D-1's (its CARRY) at 00:00:00 to 00:00:25 (the 00:00:00 point is D-1's 24:00 point, NO_FILE in D-1's own run when D-1's file is missing). A file with only its header or an empty gzip is there and has no rows (then BOOK_HOLE where nothing is seen)"
+    - reason: BOOK_HOLE
+      when: S01 when no row read (good or bad) is stamped in [u - 30 s, u] and received by u (CARD_D2_V3 rule 3)
+    - reason: BAD_INPUT
+      when: S01 when the row in force is bad (any reader why; crossed or locked why 6)
+    - reason: NO_HISTORY
+      when: S02, S03 when any of the 14 COST days before D is missing (10 Sep to 23 Sep 2025, a new coin)
+    - reason: FEW_VALUES
+      when: S02, S03 when fewer than 600 of the cell's 840 minute ends have a valued S01
+  stale_rule: stale = 1 exactly when S01 is empty BOOK_HOLE; S02, S03 are never stale (fixed for the day)
+  max_staleness_s: 30
+  window_days: 14
+  no_history: >-
+    S02, S03 first fill on 24 Sep 2025 (COST days 10 to 23 Sep 2025 before it): empty NO_HISTORY from 10 Sep to 23 Sep 2025, valued
+    on 167 of the 181 year days; S01 has no history.
+  fit_rule: >-
+    the hour table: S02, S03 from COST S01 of the 14 days before D only, refit once a day before 00:00 of D; nothing of day D enters it
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 one-step spread
+    input: 'the row in force: bid 67000.0, ask 67000.1'
+    answer: S01 0.007462680998
+  - case: E2 a decimal coin
+    input: 'bid 100.00, ask 100.02'
+    answer: S01 0.999900009999
+  - case: E3 a 1000-coin price
+    input: 'bid 0.0101234, ask 0.0101236'
+    answer: S01 0.098780066183
+  - case: E4 the research book
+    input: 'bid 9, ask 11'
+    answer: S01 1000.0
+  - case: E5 crossed or locked
+    input: 'bid 100.02, ask 100.02 (reader why 6)'
+    answer: S01 empty BAD_INPUT
+  - case: E6 seen exactly
+    input: 'the last row stamped exactly u - 30 s, received u - 29.95 s'
+    answer: 'its value; known_at u - 29.95 s'
+  - case: E7 not seen
+    input: 'the last row stamped u - 30.001 s'
+    answer: S01 empty BOOK_HOLE, stale 1, known_at u
+  - case: E8 arrives after u
+    input: 'bid 100.00, ask 100.02 stamped u - 5 s received u - 4.9 s; then bid 100.00, ask 100.04 stamped u - 0.5 s received u + 0.2 s'
+    answer: 'the row before it is in force: S01 0.999900009999 (taking the late row: 1.999600079984)'
+  - case: E9 the 00:00 carry
+    input: "D-1's job at u = 24:00 of D-1: the row in force bid 100.00, ask 100.02 stamped 23:59:58.7, received 23:59:58.71; written to X1/carry/COST/<D-1>.npz"
+    answer: 'the 00:00 row of D: S01 0.999900009999, known_at 23:59:58.71 of D-1'
+  - case: E14 seen by another row (CARD_D2_V3 rule 3)
+    input: 'in file order: A bid 100.00, ask 100.02 stamped u - 10 s received u - 9 s; then B bid 100.00, ask 100.04 stamped u - 40 s received u - 8 s'
+    answer: 'B is in force (the last in file order), the book seen by A: S01 1.999600079984, known_at u - 8 s'
+  - case: E15 a skew row
+    input: 'the row before stamped u - 31 s received u - 30.5 s; then a row stamped u + 0.2 s received u - 0.1 s (arr <= u < t)'
+    answer: 'the skew row is neither in force nor seen: S01 empty BOOK_HOLE, stale 1, known_at u'
+  - case: E15b a skew row beside a seen row (EDGE1's M10 case)
+    input: 'A bid 100.00, ask 100.02 stamped u - 10 s received u - 9.9 s; then a skew row bid 100.00, ask 100.04 stamped u + 0.2 s received u - 0.1 s'
+    answer: 'A is in force and seen: S01 0.999900009999 (by arrival only the skew row: 1.999600079984)'
+  - case: E19 a row with no stamp (CARD_D2_V3 rule 1)
+    input: 'A bid 100.00, ask 100.02 stamped u - 10 s received u - 9.9 s; then B bid 100.00, ask 100.04 with no stamp (why 2, t = arr = -1)'
+    answer: 'B stands at u - 10 s and u - 9.9 s, is the last row read in force and is bad: S01 empty BAD_INPUT (not stale; the book is seen)'
+  - case: E20 a file with only its header (CARD_D2_V3 rule 5)
+    input: "u = 12:00 of D; D's file holds only its header; the CARRY's last row stamped 23:59:58 of D-1"
+    answer: 'the file is there and has no rows: S01 empty BOOK_HOLE, stale 1 (not NO_FILE)'
+  - case: E21 D's file missing, D-1's there (ADDON_ARCHITECTURE_V4 X3)
+    input: "no file of D (or only a .part); D-1's CARRY with its 24:00 row bid 100.00, ask 100.02"
+    answer: 'every point of D, 00:00:00 included, empty NO_FILE, not stale'
+  - case: E16 the 5 s CARRY
+    input: "u = 00:00:10 of D, no row of D read by then; the CARRY's state: D-1's last row bid 100.00, ask 100.02 stamped 23:59:50, received 23:59:50.01"
+    answer: 'in force and seen (23:59:50 is in [23:59:40, 00:00:10]): S01 0.999900009999, known_at 23:59:50.01 of D-1'
+  - case: E17 a point between minute ends
+    input: 'u = 12:10:05; the row in force bid 100.00, ask 100.02'
+    answer: "S01 0.999900009999; S02, S03 hour 12's cell, the same as at 12:10:00"
+  - case: E18 the row at exactly 00:00:00.000000
+    input: "the CARRY's 24:00 state of D-1: bid 100.00, ask 100.02 stamped 23:59:58.7; then D's first row bid 100.00, ask 100.04 stamped and received at 00:00:00.000000"
+    answer: "in force at the 00:00:00 point (t <= u and arr <= u, CARD_D2_V3 rule 2) though not in D-1's raw: S01 1.999600079984, known_at 00:00:00 of D (phase B adds it)"
+  - case: E10 the table full
+    input: 'S01 = 1, 2, ..., 840 at the 840 minute ends of hour h'
+    answer: 'S02 420.5; S03 756.0 (rank 756)'
+  - case: E11 the table at its floor
+    input: '600 valued: 1, ..., 600; 240 empty'
+    answer: 'S02 300.5; S03 540.0'
+  - case: E12 the table short
+    input: '599 valued'
+    answer: S02, S03 empty FEW_VALUES
+  - case: E13 the year start
+    input: 'D = 20 Sep 2025'
+    answer: S02, S03 empty NO_HISTORY
+unit_tests:
+  - test: U1 (E1 to E4)
+    planted: 'a pack per case with pp 1, 2, 7, 0: t, arr in microseconds, bid_px, ask_px; bad false'
+    expect: 'S01 0.007462680998, 0.999900009999, 0.098780066183, 1000.0 within 1e-9 relative of the Fraction recompute'
+  - test: U2 (E5 to E9, E14, E15)
+    planted: the rows of each case, the CARRY row for E9
+    expect: 'E5 BAD_INPUT; E6 valued, known_at u - 29.95 s; E7 BOOK_HOLE stale 1; E8 0.999900009999; E9 0.999900009999 with known_at of D-1; E14 1.999600079984 known_at u - 8 s; E15 BOOK_HOLE stale 1; E15b 0.999900009999; E19 BAD_INPUT'
+  - test: U6 the files (E20, E21) and the meaning lines made tests
+    planted: "a header-only file of D with the CARRY; an empty gzip of D (20 bytes, CARD_D2_V3 line 143's E20) with the CARRY; no file of D with the CARRY; the U3 table; any valued planted rows"
+    expect: 'E20 BOOK_HOLE stale 1; the empty gzip BOOK_HOLE stale 1 (there, with no rows); E21 NO_FILE at every point, 00:00:00 included; S03 >= S02 wherever both are valued; S01 >= the step / (2 x mid) x 10,000 - 1e-9 at every valued point (true by construction: tests, not pass lines)'
+  - test: U3 (E10 to E13)
+    planted: 'COST S01 rows of 14 planted days at hour h: 1 to 840; then 600 valued; then 599 valued; then D = 20 Sep 2025'
+    expect: 'S02 420.5, S03 756.0; S02 300.5, S03 540.0; FEW_VALUES; NO_HISTORY'
+  - test: U4 the stamps
+    planted: U1 to U3
+    expect: 'every row as_of = u, known_at <= u; empty rows known_at = u; 17,280 rows per name and coin (u every 5 s); empty never 0'
+  - test: U5 the grid (E16, E17, E18)
+    planted: 'the CARRY state of E16; the E17 row; a table cell; the E18 CARRY and the row of D at 00:00:00.000000'
+    expect: 'E16 0.999900009999 known_at of D-1; E17 its value with the cell of hour 12; E18 1.999600079984 known_at 00:00:00 of D; the minute-end rows equal edition 2 (a filter on whole minutes)'
+mutants:
+  - mutant: M1 the mid as the bid ((ask - bid) / (2 x bid))
+    caught_by: U1 (E2 gives 1.0 against 0.999900009999)
+  - mutant: M2 the full spread instead of half
+    caught_by: U1 (E4 gives 2000.0)
+  - mutant: M3 a bad row used
+    caught_by: U2 (E5 gives 0.0)
+  - mutant: M4 the received-by rule dropped (stamp only)
+    caught_by: U2 (E8 takes the late row)
+  - mutant: M5 the 30 s strict (the row of exactly u - 30 s refused)
+    caught_by: U2 (E6 gives BOOK_HOLE)
+  - mutant: M6 the median as the lower middle
+    caught_by: U3 (S02 420.0)
+  - mutant: M7 the p90 interpolated
+    caught_by: U3 (S03 756.1)
+  - mutant: M8 the table read from day D itself (look-ahead)
+    caught_by: U3 with day D's planted S01 = 10,000 at hour h (S02 moves)
+  - mutant: M9 seen from the row in force's own stamp
+    caught_by: U2 (E14 gives BOOK_HOLE)
+  - mutant: M10 the row in force by arrival only (t <= u dropped)
+    caught_by: U2 (E15b gives 1.999600079984)
+  - mutant: M11 the CARRY state dropped for 00:00:05 to 00:00:25
+    caught_by: U5 (E16 gives NO_FILE or BOOK_HOLE)
+  - mutant: M12 the table built from every 5 s point
+    caught_by: U3 with planted 5 s values between the minute ends (S02 moves)
+  - mutant: M13 the 00:00:00 point taken from D-1's run alone
+    caught_by: U5 (E18 gives 0.999900009999)
+  - mutant: M14 a row with no stamp left out (or at stamp -1)
+    caught_by: U2 (E19 gives A's 0.999900009999)
+  - mutant: M15 an EMPTY file read as NO_FILE
+    caught_by: U6 (E20 gives NO_FILE)
+  - mutant: M16 the 00:00:00 point valued from D-1's CARRY when D's file is missing
+    caught_by: U6 (E21 gives 0.999900009999 at 00:00:00)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 00:00:00, 00:00:05, 00:00:25, 12:10:00 and 12:10:05
+      why: one-step spreads; 00:00:00 is 7 Mar's 24:00 point and 00:00:05 to 00:00:25 use its CARRY state; a point between minute ends
+    - point: 2026-03-08, the thinnest coin of the day (the tester names it from D2 before the job), its widest S01 minute
+      why: a wide jumpy spread
+    - point: 2026-03-08, 1000PEPEUSDT, 12:10
+      why: a 1000-coin, a coarse step
+    - point: 2026-03-08, CRVUSDT, 08:00
+      why: a funding settle on a wide-step coin
+    - point: 2026-03-08, every coin, S02 and S03 at 00:00 and 12:00
+      why: the hour table from 22 Feb to 7 Mar 2026 (hours 0 and 12)
+    - point: 2026-03-08, every coin, all 1,440 minute ends
+      why: the copy check against D2 S04 (overlaps)
+  pass: >-
+    The tester recomputes S01, S02, S03, the empty reasons and stale from this card's words through the reader, with Fraction on the
+    pack's integers (rawcheck/check_cost.py, never the producer's code): floats within 1e-9 relative, words equal; the copy check
+    equal at D2 S04's 4 decimals at every minute end. One small read-only runner job.
+meaning_check:
+  pass_lines:
+    - 'at every minute end of 2026-03-08: the exact (Fraction) median over the roster coins with a value of (P_ask - P_bid) / M x 10,000 (2 x S01 before the float), rounded once to 4 decimals half up as CARD_D2_V3 rule 11, equals D2 S04 (the copy)'
+    - "BTCUSDT's book in force is one price step wide (ask_px - bid_px = 1 on the reader's integers at 10^1) at 80 percent or more of its valued minute ends of 2026-03-08 (a one-tick book most of the time: per_coin; it can fail)"
+  report_only:
+    - how often S01 is exactly one price step, per coin
+    - the 24 hour cells of S02 for the median coin
+    - S01 at the funding-settle minutes against the hour's S02
+conclude:
+  may:
+    - what a taker paid in half spread on Binance USDT-M for this coin at the 5 s point, for a size within the best level's amount
+    - this coin's usual (S02) and bad-minute (S03) half spread for this hour of day over the 14 days before D
+    - a coin against itself across hours and days
+  never:
+    - Hyperliquid's cost (another venue and another step; the Hyperliquid book is not held)
+    - the cost of a size above the best level's amount (that is K2, K3)
+    - a ranking of coins without their price step (a one-step coin's S01 is its step over its price)
+    - S02, S03 as today's spread (they describe the 14 days before D)
+readers: "none yet (planned: the test bed's fill and cost model, X2's take-or-skip filter, R4 net of cost)"
+implementation:
+  how: >-
+    Per coin, vectorised over the day: the row in force at the 17,280 points by addon_grid_v2.in_force (bad_ends=True: the last row
+    read, good or bad, with max(t, arr) <= u in file order; the rows with no stamp filled from the row before, X2), then one vector
+    division on the integer prices; S02, S03 from the 14 past COST files: one sort per (coin, hour cell) of at most 840 values. The
+    book_ticker pack is read once per coin per day and shared with BOOKX (K4, K5, K7). PHASES (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4): S01 is
+    point-local, final in phase A at 00:00:30 to 24:00:00; its 00:00:00 to 00:00:25 points are phase B (D-1's CARRY state, the
+    00:00:00.000000 row, E18); S02, S03 are the table pass (day after day, from the sealed COST S01 of the 14 days before D).
+  kernel: 'addon_grid_v2.in_force (85c8ece1; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 9.4) with bad_ends=True (CARD_D2_V3 rule 4: a bad row in force gives BAD_INPUT) and its seen output (rule 3; E14, E15), max(t, arr) <= u in file order, cap 30 s; S02, S03 by roll_days (to be written with its brute twin, section 9.4) and nearest_rank'
+  memory_mb: 300
+  seconds_share: 3
+data_checks:
+  - what: the share of coin-minutes where S01 is exactly one price step, and each coin's step (one read-only runner job)
+    who: TREE
+  - what: "the CARRY of the first year day: is 9 Sep 2025's book_ticker file on the Expansion for every roster coin"
+    who: TREE (a read-only runner job)
+  - what: the Hyperliquid book source (ADDON_ARCHITECTURE_V3 section 12, question 2); until then K1 is Binance's
+    who: the owner

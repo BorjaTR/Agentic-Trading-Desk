@@ -1,0 +1,193 @@
+# POSX P13 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P13_V1.md 9733acf5) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 b5fcc859 section 4 CARRY wording (00:00 = D-1's 24:00 row; the row in force at 24:00 and rows known after 24:00), flag FIRST_DAY_NO_CARRY, kernel in_force (9.4); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 in_force with bad_ends=True (an empty field gives NO_VALUE, the card's own rule); values unchanged
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 cited as edit 3 0591d181 (the binding edition); wording only, values unchanged
+# Edition 5 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P13 fixes: no RAW_DIFFERS from the producer's check (c) (BED G1), E5 and U3's NO_FILE at all 1,440 minute ends settled by X3a; nit NO_ROSTER (the roster file); BED G2 levels proposed
+# Edition 6 (METRIC_AUDIT2, 18 Oct 2026): no flag on an empty row (CARD_B1_V7 rule 18 and CARD_C13_V4 rule 7: an empty value carries no flag; REVIEW_LEAD_EDGE1_V1 6.2 for V4 edit 4; METRIC_AUDIT2's own FF found on FLOWX): FIRST_DAY_NO_CARRY dropped, the first year day's reads that need D-1's missing file are empty NO_FILE; values unchanged
+# Signed by BED's REVIEW OK of edition 6, 2026-10-18T19:57:45Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P13
+producer: POSX
+item: 'taker buy/sell ratio, Binance metrics (after a timestamp check) (BUILD_ITEMS_V3 3dbb747a line P13)'
+tier: BUILD_TEST
+test_condition: >-
+  KEEP when, on 2026-03-08, P13 is NOT within 1 percent of B1's own 5 minute taker ratio at 95 percent or more of the rows under either alignment (meaning check line 1; levels proposed, EDGE1 or the owner sets them), the difference then named. DROP as a copy of B1 (as L1, BUILD_ITEMS_V3 line 2) when it is.
+name: Binance's taker buy over taker sell volume of its latest 5-minute metrics row (known 10 minutes after create_time)
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 6
+  signed: true
+  signed_by: 'BED 2026-10-18T19:57:45Z'
+means: >-
+  In the latest 5 minutes Binance reports for the coin, the volume aggressive buyers took over the volume aggressive sellers took:
+  over 1, takers bought more than they sold. Known 10 minutes after the row's create_time; it may be a copy of our own B1 flow
+  (the meaning check decides whether the card is kept).
+example: >-
+  The row created 10:00 carries sum_taker_long_short_vol_ratio 1.25 and is known at 10:10: P13 = 1.25 from 10:10 until the next row
+  becomes known (10:15); at 10:09 P13 is the row created 9:55.
+formula: >-
+  A metrics row is known at known_at = create_time + 600 s (HANDOVER_EDGE1_V103 901368a5 line 80; ties: latest known_at <= t, line
+  82); a row belongs to the day of its create_time (line 89). P13(u) = sum_taker_long_short_vol_ratio on the coin's latest row with
+  known_at <= u, read as float64 from the archive's text, decimals none (the draft's 12-decimal rounding dropped, V2 rule 4.2). A read
+  touches the coin's file of D and the CARRY of D-1 (the row in force at 24:00 of D-1 and the rows of D-1's file known after 24:00; as CARD_E1_V9 rule 2, line 282, for a missing file); u = 00:00 of D is D-1's 24:00 row, computed by POSX of D-1 and handed in X1/carry/POSX/<D-1>.npz (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4). Empty, in
+  this order: NO_FILE (a touched file missing: D's file missing empties every minute end of D), BAD_INPUT (a file not readable
+  whole), NO_VALUE (no row known by u, or the field empty or not a number: a period with no taker sells has no defined ratio),
+  STALE_VALUE (the row's known_at more than 900 s before u; exactly 900 s is valued).
+source:
+  kind: doc
+  ref: >-
+    Binance USD-M taker_buy_sell_volume (buySellRatio, buyVol, sellVol; its timestamp = 'Start time of the period' per the docs,
+    RESEARCH_TOOLS_V1 aad3cc38 section 4.7, line 77; row P7 line 56); the archive data.binance.vision data/futures/um/daily/metrics
+    column sum_taker_long_short_vol_ratio (binance-public-data issue 211); the volume unit of the archive column (coins or dollars)
+    is not documented.
+inputs:
+  - kind: reader
+    ref: prod_reader_binance_metrics_v1
+    exists: false
+    data_check: >-
+      P12's new reader over Expansion volat_archive/metrics_um (5 minute rows, 2022 to 31 Jul 2026, HANDOVER_EDGE1_V103 line 41),
+      column sum_taker_long_short_vol_ratio; the timestamp test, the coverage and how a period with no sells is written (data_checks
+      2 to 4) before the card signs
+    stream: Binance metrics_um daily files per symbol (1000x symbols by their Binance names)
+    rule_in_force: the latest row of the coin with known_at = create_time + 600 s <= u
+    stale_rule: STALE_VALUE when that row's known_at is more than 900 s before u
+    days: >-
+      D (u = 00:01 to 24:00 from D's file) and THE CARRY of D-1, P12's (ADDON_ARCHITECTURE_V4 section 4): D-1's 24:00 rows (D's
+      00:00 rows of S14), the row in force at 24:00 of D-1 and the rows of D-1's file known after 24:00 (created from 23:50 of D-1, and a
+      2025 file's row created 00:00 of D, HANDOVER_EDGE1_V103 line 89). Day file D = the CARRY's 00:00 rows + D's rows 00:01 to 23:59.
+      The first year day reads 9 Sep 2025's file once (if it is missing, the reads that need it are empty NO_FILE by the year's file rule, and no flag is written on an empty row: CARD_B1_V7 rule 18, REVIEW_LEAD_EDGE1_V1 6.2).
+  - kind: year
+    ref: B1 S01 and B1 S02 (taker buy and taker sell dollars of the minute), for the meaning check only, not read by the producer
+    card: MEANING_B1_V4 d3275871 (lines 122 to 148) / LAYER_REGISTER_V32 e249ce94 lines 97, 98
+    verdict: LIMITS
+    rule_in_force: the year's rows of B1 S01 and S02 at the 5 minute ends of the metrics row's period (both alignments, meaning check)
+    stale_rule: B1's own empty_reason pass through; an empty minute leaves the period out of the comparison
+    days: D (the meaning check's day)
+overlaps:
+  - setting: B1 S01, B1 S02
+    kind: copy
+    why: >-
+      Binance's taker buy over sell volume of a 5 minute period is the same state as the sum of B1 S01 over the sum of B1 S02 over
+      those 5 minute ends (B1 S01 equals Binance's taker_buy_quote in 98.84 to 99.61 percent of coin-minutes, MEANING_B1_V4.yaml line 134),
+      from another source and perhaps in coins: a cross-check; the meaning check decides whether P13 drops as a copy (as L1 did,
+      BUILD_ITEMS_V3 line 2)
+per_coin: >-
+  Every roster coin with a metrics file; absent coins NO_FILE. The 1000x contracts by their Binance symbols: a ratio has no size
+  unit. Thin coins can have 5 minute periods with almost no sells: the ratio is then large or undefined (NO_VALUE when the field is
+  empty or not a number).
+time: >-
+  One row every 5 minutes, known 10 minutes after create_time: P13 repeats over 5 minute ends. 00:00 of D is D-1's 24:00 row; until D's first row is known (00:10 or 00:15) the reads take the CARRY's rows.
+  A gap in the archive leaves P13 valued for 15 minutes after the last row became known, then STALE_VALUE. The value describes a
+  period that ended 5 to 10 minutes (or more) before u.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S14
+      label: taker_buy_sell_ratio_5m_bn
+      units: ratio (taker buy volume over taker sell volume of the row's 5 minutes)
+      value_kind: float
+      decimals: none
+      means: Binance's taker buy over sell volume of its latest 5 minute metrics row known by u
+      never: [a ratio of the minute ending u, a value known at its create_time, open interest]
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the row's create_time + 600 s (<= u); an empty row known_at = u; so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (knowledge/roster/ROSTER_<monday>.csv), every coin (REVIEW_LEAD_EDGE1_V1 X11)
+    - reason: NO_FILE
+      when: a touched file missing or only .part (the coin's metrics file of D, then every minute end of D is empty, 00:00 included even when D-1's file is there, phase B setting the carried point, X3a; the CARRY of D-1 when it is needed)
+    - reason: BAD_INPUT
+      when: a file read not readable whole
+    - reason: NO_VALUE
+      when: no row of the coin known by u in the files read, or the ratio field empty or not a number
+    - reason: STALE_VALUE
+      when: the row in force at u became known more than 900 s before u; stale 1
+  stale_rule: stale = 1 when the reason is STALE_VALUE
+  max_staleness_s: 900
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 a new row becomes known
+    input: 'rows every 5 minutes; created 9:55 ratio 1.10 (known 10:05), created 10:00 ratio 1.25 (known 10:10); u = 10:10, then 10:09'
+    answer: P13 = 1.25 at 10:10 (known_at 10:10); 1.10 at 10:09 (known_at 10:05)
+  - case: E2 an empty field
+    input: the latest row known by u has an empty sum_taker_long_short_vol_ratio
+    answer: P13 empty NO_VALUE, stale 0, known_at = u
+  - case: E3 a gap at 900 s and at 960 s
+    input: 'no row created after 10:40 (ratio 0.90, known 10:50); u = 11:05, then 11:06'
+    answer: P13 = 0.90 at 11:05 (age 900 s); empty STALE_VALUE stale 1 at 11:06
+  - case: E4 the day start from the CARRY
+    input: 'u = 00:00 of D; CARRY row created 23:50 of D-1 ratio 1.05 (known 00:00); D''s first row created 00:05'
+    answer: P13 = 1.05 at 00:00 (D-1's 24:00 row, since the row created 23:50 is known at 24:00 and D's file has no row known by then)
+  - case: E5 no file
+    input: no metrics file for the coin and D
+    answer: P13 empty NO_FILE at all 1,440 minute ends
+  - case: E6 the copy test by hand
+    input: 'row created T ratio 1.25; B1 S01 over the 5 minute ends after T sums to 600,000 dollars and B1 S02 to 480,000'
+    answer: 'ours 600,000 / 480,000 = 1.25: equal (a copy row under the start alignment)'
+unit_tests:
+  - test: U1 (E1)
+    planted: a metrics file of two coins, rows every 5 minutes, ratio 1.00 except the rows named in E1, through the new reader in a sandbox
+    expect: P13 1.25 at 10:10 to 10:14, 1.10 at 10:05 to 10:09; known_at as written
+  - test: U2 (E2, E3)
+    planted: the same file with one empty ratio field on the second coin's 11:00 row, and no row created after 10:40 on the first coin (its 10:40 ratio 0.90)
+    expect: second coin NO_VALUE at 11:10 to 11:14; first coin 0.90 at 11:05, STALE_VALUE stale 1 from 11:06
+  - test: U3 (E4, E5)
+    planted: a CARRY of D-1 whose row in force at 24:00 is the 23:50 row (no row known after 24:00), D's file from the row created 00:05; a third coin with no file of D
+    expect: 1.05 at 00:00 to 00:14 (age at most 840 s; the 00:05 row known 00:15); the third coin NO_FILE at all 1,440 minute ends
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day
+mutants:
+  - mutant: M1 create_time used as known (no 600 s wait)
+    caught_by: U1 (1.25 at 10:00 to 10:04 in place of 1.00, and 1.00 at 10:05 to 10:09 in place of 1.10)
+  - mutant: M2 the sell over buy inverse
+    caught_by: U1 (0.8 in place of 1.25)
+  - mutant: M3 an empty field read as 0
+    caught_by: U2 (0 in place of NO_VALUE)
+  - mutant: M4 no 900 s level
+    caught_by: U2 (0.90 at 11:06 in place of STALE_VALUE)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 00:10, 12:10 and one minute after a gap (the tester picks it from the raw file before the job)
+      why: the CARRY at the day start, the first row of D known, an ordinary minute, the 900 s level
+    - point: 2025-09-24, all coins, minute ends 00:00, 00:10, 12:10
+      why: a 2025 file (00:05 to the next 00:00) and the create_time day rule
+  pass: >-
+    After the timestamp test (data check 2). The tester recomputes P13 from the raw metrics files with Fraction, never the builder's
+    code: floats within 1e-9 relative (V2 rule 5), empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'DECIDES THE CARD (2026-03-08, all coins): P13 of the row created T against ours, sum of B1 S01 over sum of B1 S02 over the 5 minute ends T + 1 to T + 5 (start alignment) and T - 4 to T (end alignment); if under one alignment the two are within 1 percent at 95 percent or more of the rows with both valued, P13 is a COPY of B1 and drops (as L1, BUILD_ITEMS_V3 line 2) and that alignment is the taker column''s timestamp; otherwise the difference is named (period start or end, volume in coins against dollars) and P13 stays (proposed levels, EDGE1 or the owner sets them)'
+  report_only:
+    - the share of rows within 1 percent under each alignment, and the largest gaps with their coins and minutes
+    - the share of minute ends where P13 repeats the minute before (about 4 of 5)
+conclude:
+  may:
+    - whether takers bought more than they sold on Binance in the coin's latest reported 5 minutes, as known at u
+  never:
+    - a ratio of the minute ending u (the period ended 5 to 10 minutes or more before u)
+    - a value known at its create_time (known 10 minutes later)
+    - open interest or positions (taker flow only)
+    - anything B1 does not already say, if the meaning check names P13 a copy
+readers: none yet
+implementation:
+  how: >-
+    With P12: the same reader pass, CARRY and as-of join by known_at (np.searchsorted of u into create_time + 600 s), the 900 s level as
+    a mask, one more column; vectorised over all coins, no loop over rows or minutes in Python.
+  kernel: 'addon_grid_v2.in_force(t = arr = known_at = create_time + 600 s, value, good, u, cap 900 s, bad_ends=True) (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 68; ADDON_ARCHITECTURE_V4 9.4): bad_ends keeps this card''s rule that a row with an empty or non-numeric field gives NO_VALUE (not the row before); shared with P12'
+  memory_mb: 20
+  seconds_share: 0.3
+data_checks:
+  - what: 'the timestamp test for the taker column: create_time as the period''s start (the docs) or end, by the meaning check''s alignment and Binance REST for the last 30 days; the 600 s known-at rule kept either way'
+    who: the builder, with P12's timestamp test
+  - what: 'coverage: metrics files per coin and day for 10 Sep 2025 to 9 Mar 2026 (P12''s check)'
+    who: the builder, a read-only runner job
+  - what: how the archive writes a period with no taker sells (empty, inf, or a number) and the column's volume unit (coins or dollars)
+    who: the builder, with the coverage job

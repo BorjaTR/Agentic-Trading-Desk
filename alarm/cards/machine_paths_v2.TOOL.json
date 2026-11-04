@@ -1,0 +1,154 @@
+{
+ "tool": "machine_paths_v2",
+ "file": "_tools/machine_paths_v2.py",
+ "file_sha16": "249b2d8a0240d3eb",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "a release proof, not a loop step: the STATIC proof of CLEAN_RELEASE_V1 section 1 (no machine path written into a part's code)",
+ "question": "Does this part of the Alarm folder still have a machine path written into its code?",
+ "usage_from_code": "python3 -B _tools/machine_paths_v2.py <part folder> [--all] [--tsv OUT]",
+ "settings_keys": [],
+ "code_options": [
+  "--all",
+  "--tsv"
+ ],
+ "code_exits": [
+  0,
+  1,
+  2
+ ],
+ "commands": [
+  {
+   "name": "scan",
+   "does": "scans a part's files (its MANIFEST.tsv, or every file with --all) and prints each CODE, MARKED and KNOWN row and a verdict",
+   "args": [
+    {
+     "name": "part folder",
+     "required": true,
+     "meaning": "the part, e.g. <INSTALL>/Agentic; the files its MANIFEST.tsv lists (repo_path)",
+     "example": "<INSTALL>/Agentic"
+    },
+    {
+     "name": "--all",
+     "required": false,
+     "meaning": "every file under the folder instead of the MANIFEST",
+     "example": "--all"
+    },
+    {
+     "name": "--tsv",
+     "required": false,
+     "meaning": "also write every row (file, line, path, kind) to this new file",
+     "example": "MP_AGENTIC.tsv"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/_tools/machine_paths_v2.py <INSTALL>/Agentic",
+   "writes": "nothing, or the --tsv file (refused if it exists)",
+   "refuses": [
+    {
+     "exit": 1,
+     "when": "CODE or CALLS_ARCHIVE rows found (listed): verdict NOT CLEAN"
+    },
+    {
+     "exit": 2,
+     "when": "refused: no MANIFEST.tsv without --all, the --tsv file exists, a listed file missing, a MACHINE_PATHS_KNOWN.tsv row with an empty column or a line that is no number; no part folder (prints the usage)"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "{WORLD}/part_clean",
+      "--all"
+     ],
+     "exit": 0,
+     "prints": "CODE 0, CALLS_ARCHIVE 0, KNOWN 0, MARKED 0, NAMES_ARCHIVE 0, ARCHIVE 0, TEXT 0 -> CLEAN"
+    },
+    {
+     "args": [
+      "{WORLD}/part_dirty",
+      "--all"
+     ],
+     "exit": 1,
+     "prints": "-> NOT CLEAN"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "python3 -B _tools/machine_paths_v2.py"
+  },
+  {
+   "args": [
+    "{WORLD}/part_clean"
+   ],
+   "exit": 2,
+   "prints": "REFUSED NO MANIFEST.tsv"
+  }
+ ],
+ "rules": [
+  "reads files only; writes nothing but the --tsv file",
+  "takes no settings file: it reads the part folder named"
+ ],
+ "outputs": [
+  {
+   "file": "OUT (--tsv)",
+   "where": "the --tsv file: one row per machine path found",
+   "columns": [
+    "file",
+    "line",
+    "path",
+    "kind"
+   ]
+  },
+  {
+   "file": "printed: row lines",
+   "where": "stdout: one line per CODE, CALLS_ARCHIVE, MARKED or NAMES_ARCHIVE row",
+   "columns": [
+    "kind",
+    "file",
+    "line",
+    "path"
+   ]
+  },
+  {
+   "file": "printed: KNOWN lines",
+   "where": "stdout: one line per KNOWN row",
+   "columns": [
+    "file",
+    "line",
+    "path",
+    "reason"
+   ]
+  },
+  {
+   "file": "printed: STALE lines",
+   "where": "stdout: one line per MACHINE_PATHS_KNOWN.tsv row that matches nothing",
+   "columns": [
+    "file",
+    "line",
+    "path",
+    "known_file"
+   ]
+  },
+  {
+   "file": "printed: summary line",
+   "where": "stdout, last line",
+   "columns": [
+    "part",
+    "files",
+    "CODE",
+    "CALLS_ARCHIVE",
+    "KNOWN",
+    "MARKED",
+    "NAMES_ARCHIVE",
+    "ARCHIVE",
+    "TEXT",
+    "verdict"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/machine_paths_v2_COLUMNS.tsv",
+ "reads": [],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

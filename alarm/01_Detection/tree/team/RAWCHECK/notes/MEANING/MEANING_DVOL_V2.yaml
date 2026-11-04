@@ -1,0 +1,182 @@
+# MEANING_DVOL_V2.yaml: the meaning register of Deribit DVOL, EDITION 2 (EDGE1, 2026-10-18, closed with the owner 15:5x Berlin)
+# = MEANING_DVOL_V1 (ecdd64cb6dbebacc, kept) + conclude (may, never), every limit with its effect on decisions, module sha16. C4 S11 stays
+# REBUILD (no reader, BUILD_LIST_V4).
+group: DVOL
+name: Deribit BTC implied volatility index (raw hourly candles)
+summary: 'How much the BTC options market expects BTC to move over the next 30 days, as an annualised percent: Deribit''s DVOL index (a 30-day variance-swap style implied volatility
+  from Deribit BTC options, computed every second and smoothed as the EMA of the last 240 seconds). Our files hold its hourly candles: open, high, low, close of each UTC hour.'
+read_as: 'DVOL 45 means the options market prices about 45 / sqrt(365) = 2.4% for a typical one-day BTC move over the next 30 days. A candle stamped t covers the hour [t, t + 1 h) and
+  is only known at t + 1 h. Over the year it ran from 35.5 to 89.8 (median 45.8); it jumps in crashes (10 Oct 2025 21:00 to 22:00 UTC: 43.3 to a high of 64.9; 5 Feb 2026: 53.5 at 00:00
+  to a close of 89.8 for the hour 21:00 to 22:00, high 90.3).'
+where:
+  card: 'none yet: C4 S11 in testbed/value_audit/registers/CARD_C4_V3.md (rule 10, O8) names it and leaves it empty NO_READER'
+  settings_register: testbed/value_audit/registers/SETTINGS_C4_V1.tsv (S11 dvol)
+  source_spec: 'none yet (CARD_C4_V3 O8: ''no source spec and no proven reader''); this register is the first written definition'
+  producer: none reads the files; C4 (prod_C4_v3.py) writes S11 empty NO_READER
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C4.parquet (S11, empty NO_READER at all 1,440 minute ends of every day checked, job 147303)
+  year_output_columns: name, coin (BTC), as_of_us, value_kind (0 = EMPTY, its value_f64 holds NaN), value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/meaning_dvol.py (cover; day <D> --api <F>)
+source:
+  vendor: Tardis.dev, exchange deribit, the DVOL index (one file per UTC day, pulled with the era map pull)
+  exchange_stream: Deribit's volatility index candles (the same rows as Deribit's public get_volatility_index_data, resolution 3600)
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/deribit/deribit_dvol_BTC_<YYYY-MM-DD>.csv.gz (BTC only; read by exists checks on the known name, the tardis folder
+    is never listed)
+  columns: exchange, symbol, timestamp, local_timestamp, open, high, low, close
+  fields:
+    timestamp: 'the hour the candle OPENS, microseconds UTC; 24 whole hours per day file [proof: job 147303 3,888 rows, every stamp on a whole hour; Deribit API rows equal with the same
+      stamps, job 15795 + EDGE1 compare 48 of 48]'
+    local_timestamp: 'NOT an arrival time: one value on every row of every file, 1790778864651929 = 2026-09-30, the download moment [proof: job 147303 min = max]'
+    open_high_low_close: 'DVOL in annualised percent over the hour [proof: Deribit API equal 48 of 48 (10 and 11 Oct 2025) and job 15798 (5 Feb 2026); Deribit Insights DV1]'
+    dvol_definition: '30-day implied volatility of Deribit BTC options: the two expiries around 30 days, variance-swap method, time-weighted, a raw value every second, DVOL = EMA of
+      the last 240 raw values; annualised percent [proof: DV1]'
+  latency: a candle stamped t is final at t + 1 h (the end of its hour); the files were downloaded 30 Sep 2026, so nothing in them says when a candle was first seen live
+  silence: 'none inside a file (24 rows); whole days missing: 10 to 28 Sep 2025 (19 days, job 147303)'
+reading_rules:
+- 'a reader at moment e may only use candles with timestamp + 1 h <= e (the last CLOSED hour: CARD_C4_V3 rule 10 ''its last closed hourly candle'')'
+- use close as the level; high and low are the extremes of the EMA-smoothed index within the hour
+- never use local_timestamp as an arrival time (it is the download moment)
+- a day with no file is NO_FILE for every hour of it, not stale and not zero
+values:
+  units: annualised percent (DVOL 50 = 50% a year; daily move about DVOL / 19.1)
+  zero: never seen (year min 35.54)
+  empty: no file (10 to 28 Sep 2025); C4 S11 is empty NO_READER everywhere today
+  stale: not defined yet (no reader)
+  flags: none
+interpret:
+  do:
+  - read a high DVOL as the options market pricing big moves ahead; read a jump as fear or demand for protection arriving
+  - compare it with realised volatility of the same window (C4) for the volatility risk premium
+  - remember the 240-second EMA: a sudden spike is softened and arrives a few minutes late inside the hour
+  dont:
+  - read it as the volatility of the last hour; it is a 30-day forward-looking expectation
+  - use the candle of the current hour before it closes (look-ahead)
+  - read it as a volatility of an altcoin; it is BTC options only (ETH DVOL exists at Deribit; we hold no ETH files)
+biases:
+- what: EMA of 240 one-second values
+  direction: lags and smooths
+  size: 'about 4 minutes of smoothing inside each candle; decisions unchanged today: nothing reads DVOL yet (C4 S11 empty)'
+  proof: DV1
+- what: hourly candles only
+  direction: coarse
+  size: 'the latest usable value is up to 1 h 59 min old at a fire (last closed hour); decisions unchanged today: nothing reads DVOL yet (C4 S11 empty)'
+  proof: CARD_C4_V3 rule 10; candle stamps, job 147303
+external_checks:
+- what: every candle of 10 and 11 Oct 2025 (48)
+  where: Deribit public get_volatility_index_data (currency BTC, resolution 3600), saved as team/LAB/notes/MEANING/outside/deribit_dvol_api_20251010_11.json
+  status: 'VERIFIED: 48 of 48 open, high, low, close equal (EDGE1 2026-10-18; job 15798)'
+- what: every candle of 5 Feb 2026 (24)
+  where: the same API, outside/deribit_dvol_api_20260205.json
+  status: VERIFIED by job 15798 (see the receipt)
+- what: the index definition
+  where: DV1
+  status: VERIFIED
+tools:
+- what: files present over the year, 24 whole hours, open = previous close
+  run: python3 -B -m rawcheck.meaning_dvol cover
+  where: team/LAB/code
+- what: one day's candles against Deribit's own rows
+  run: python3 -B -m rawcheck.meaning_dvol day <D> --api <saved API json>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_dvol.py 53279951e8e07ef3 (job 15798)
+  where: team/LAB/code/rawcheck
+used_by: 'nobody: C4 S11 is the only named consumer and it is empty NO_READER (CARD_C4_V3 O8). BUILD item: a dvol reader and source spec (RAWCHECK/BUILD_LIST)'
+references:
+  DV1: https://insights.deribit.com/?p=1813 (Deribit Insights, DVOL methodology)
+  DA1: https://www.deribit.com/api/v2/public/get_volatility_index_data (Deribit public API)
+  C4: testbed/value_audit/registers/CARD_C4_V3.md rule 10 and O8
+settings:
+- id: DVOL.close
+  layer: raw
+  side: none
+  window: 1 hour candle
+  clock: hour start t; known at t + 1 h
+  scope: BTC
+  contracts: Deribit BTC options
+  aggregate: last DVOL value of the hour
+  aliases: dvol
+  means: BTC 30-day implied volatility (annualised %) at the end of the hour
+  computation:
+    status: RELIABLE
+    proof: Deribit API equal 48 of 48 (10, 11 Oct 2025); job 15798 (5 Feb 2026)
+  meaning:
+    status: DEFINED
+    proof: DV1; API stamps = hour start
+  open: files missing 10 to 28 Sep 2025; matters only when C4 S11 is built
+- id: DVOL.open
+  layer: raw
+  side: none
+  window: 1 hour candle
+  clock: hour start t
+  scope: BTC
+  contracts: Deribit BTC options
+  aggregate: first DVOL value of the hour
+  aliases: none
+  means: DVOL at the start of the hour (about the previous close)
+  computation:
+    status: RELIABLE
+    proof: as DVOL.close
+  meaning:
+    status: DEFINED
+    proof: DV1
+  open: none
+- id: DVOL.high
+  layer: raw
+  side: none
+  window: 1 hour candle
+  clock: hour start t; known at t + 1 h
+  scope: BTC
+  contracts: Deribit BTC options
+  aggregate: max of the EMA-smoothed DVOL in the hour
+  aliases: none
+  means: the highest smoothed DVOL inside the hour (fear spike)
+  computation:
+    status: RELIABLE
+    proof: as DVOL.close
+  meaning:
+    status: DEFINED
+    proof: DV1 (EMA 240)
+  open: none
+- id: DVOL.low
+  layer: raw
+  side: none
+  window: 1 hour candle
+  clock: hour start t; known at t + 1 h
+  scope: BTC
+  contracts: Deribit BTC options
+  aggregate: min of the EMA-smoothed DVOL in the hour
+  aliases: none
+  means: the lowest smoothed DVOL inside the hour
+  computation:
+    status: RELIABLE
+    proof: as DVOL.close
+  meaning:
+    status: DEFINED
+    proof: DV1 (EMA 240)
+  open: none
+- id: C4.S11
+  layer: raw
+  side: none
+  window: last closed hour
+  clock: fire second
+  scope: BTC
+  contracts: Deribit BTC options
+  aggregate: DVOL.close of the last closed hourly candle
+  aliases: dvol
+  means: 'what the card promises: BTC DVOL of the last closed hour. What it delivers today: nothing (empty NO_READER on every minute)'
+  computation:
+    status: NOT_RELIABLE
+    proof: 'job 147303: empty NO_READER at 1,440 of 1,440 minute ends on 6 year days'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: CARD_C4_V3 rule 10; this register
+  open: 'BUILD: no source spec, no reader; 19 days of files missing (10 to 28 Sep 2025)'
+conclude:
+  may:
+  - how big a BTC move the options market prices for the next 30 days, annualised (45 is about 45 / sqrt(365) = 2.4% a day), from the last CLOSED hour
+  - a jump as fear or demand for protection arriving (it softens a spike over about 4 minutes)
+  never:
+  - 'the volatility of the last hour: DVOL is a 30-day forward-looking expectation'
+  - 'anything from the current hour''s candle before it closes: a candle stamped t is known only at t + 1 h'
+  - 'anything from C4 S11 today: it is empty NO_READER at every minute end (no reader built)'
+  - the implied volatility of any coin but BTC

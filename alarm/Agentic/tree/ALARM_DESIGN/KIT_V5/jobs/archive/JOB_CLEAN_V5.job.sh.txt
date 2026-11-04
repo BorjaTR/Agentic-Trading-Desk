@@ -1,0 +1,28 @@
+# JOB @@JOBNUM@@_@@SEAT@@_CLEAN_@@IDEA@@ -- @@RUNTAG@@ (ALARM_DESIGN KIT_V5 JOB_CLEAN_V5, template @@TPLSHA@@): removes this run's own SCRATCH_DISK scratch of its finished, decided jobs @@ITEMS_LIST@@ once their proof is on dev, keeping the fire lists and per-fire files on dev first (the owner 29 Oct 2026 14:52 Berlin: clean up after themselves, logging the proof). Only clean_scratch_v1.py removes, only inside judge_scratch. TEST, NOT REVIEWED.
+# WRITES <SCRATCH>/work_@@RUNTAG@@/ (removals only) and team/RESEARCH/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_CLEAN_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# DRIVE: SCRATCH_DISK
+set -u
+F=<LAB_REPO>/forensics; R=$F/team/RESEARCH; PY=<PYTHON>
+export PYTHONDONTWRITEBYTECODE=1
+RD=$R/ALARM_DESIGN/runs/@@RUNTAG@@; K5=$R/ALARM_DESIGN/KIT_V5; J=@@JOBNUM@@_CLEAN_@@IDEA@@; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+mkdir -p $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m <SCRATCH_DISK> | awk 'NR==2{print $4}'; }
+ck $K5/tools/clean_scratch_v1.py 90e6dab92f49dee1
+h=$((10#$(date -u +%H%M))); if [ $h -ge 2320 ] || [ $h -lt 15 ]; then st quiet 0 0 "QUIET WINDOW NEAR: not started"; st end 0 0 "not started"; exit 0; fi
+f0=$(fmb); st start 0 0 "SCRATCH_DISK free ${f0} MB"
+t0=$(date +%s); $PY -B $K5/tools/clean_scratch_v1.py $RD @@SEAT@@ $DV $JOBS --wdb <SCRATCH_DISK> --dry < /dev/null > $DV/DRY.txt 2>&1; r=$?
+st dry $r $(( $(date +%s)-t0 )) "$(tail -n 1 $DV/DRY.txt | tr '\t' ' ' | cut -c1-200)"
+[ $r -eq 0 ] || { st end $r 0 "dry refused: nothing removed"; exit $r; }
+t0=$(date +%s); $PY -B $K5/tools/clean_scratch_v1.py $RD @@SEAT@@ $DV $JOBS --wdb <SCRATCH_DISK> --apply < /dev/null > $DV/APPLY.txt 2>&1; r=$?
+st apply $r $(( $(date +%s)-t0 )) "$(tail -n 1 $DV/APPLY.txt | tr '\t' ' ' | cut -c1-200)"
+(cd $DV && shasum -a 256 DRY.txt APPLY.txt CLEANED.tsv 2>/dev/null) > $DV/SHA16.txt
+st end $r 0 "SCRATCH_DISK free $(fmb) MB (was ${f0} MB)"
+exit 0

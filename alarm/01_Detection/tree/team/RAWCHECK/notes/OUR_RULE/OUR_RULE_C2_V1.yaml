@@ -1,0 +1,91 @@
+# OUR_RULE_C2_V1.yaml: the card of C2's OUR RULE S09 (the share of coins near BTC), EDITION 1 (EDGE2, 2026-10-18; OR3 of
+# OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86). Made as OUR_RULE_C9_V1 66c345c9; meaning_register edition 5 checks it. Register of the day:
+# LAYER_REGISTER_V29 3ada04c1de934f65 (C2 S09 our_rule: computation RELIABLE by C2_STAMPS_V1, meaning NOT_TESTED, MEANING_NEXT before this
+# card). The computation stands (C2_STAMPS_V1 8eceeedb: 15 of 15); the meaning by the smart check: how often its label's floor fires on the
+# year's own rows of 24 Sep 2025, and what the hour looks like then (J15999 c2fire). Pass lines: hb/EDGE2.txt 2026-10-18T16:08Z, before J15999.
+
+group: C2
+name: relative move, our rule S09 (the share of the roster coins but BTC within 0.5 points of BTC over 1 h)
+summary: >-
+  At a minute end: the share of the roster coins but BTC whose 1 h return (C1 S13) is under 0.5 points away from BTC's (C1 S18), either side;
+  exactly 0.5 is not near. Rounded once to 6 decimals.
+read_as: >-
+  S09 is high when BTC did NOT move: on 24 Sep 2025 it was 0.85 or more (the floor at which the label WHY-SCOPE/BTC-LED calls a fire BTC-led)
+  at 23.89% of minutes, and at those minutes BTC's own 1 h move was under 0.5 points at 99.42% (its median size 0.1002 points); over the day
+  S09 ranks against BTC's |1 h move| at Spearman -0.40387 (J15999 c2fire). With a fixed 0.5-point floor, coins sit near BTC because the hour
+  was quiet, not because BTC led them. The computation equals our recompute (C2_STAMPS_V1).
+
+conclude:
+  may:
+    - "how many coins' last hour sat within 0.5 points of BTC's (S09: a share 0 to 1; C2_STAMPS_V1)"
+  never:
+    - "S09 at 0.85 or more as BTC leading the market: BTC's own 1 h move was under 0.5 points at 99.42% of those minutes (24 Sep 2025, J15999 c2fire); a quiet hour gives the same S09"
+    - "S09 as how much the market follows BTC: it falls when BTC moves (Spearman -0.40387 with BTC's |1 h move|, J15999 c2fire)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C2_V9.md 4177e235d1fee76e (rule 8, O5; edge cases N2, N3a, N3b, N7)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C2_V1.tsv 8648289df127fa30
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml 965e482ed18e3e2b (C1 S13 the coin's 1 h mid return, S18 BTC's: basic, CLEAN); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65 (C2 S09 our_rule)"
+  producer: "testbed/value_audit/code/prod_C2_v7.py (CARD_C2_V9), reading C1's built part of D"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C2.parquet
+  year_output_columns: "name (S01 to S10 and their twins; S09 with .coverage and .strict_off), coin (MARKET for S09), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_candle.py ours(D, names, group='C2')"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures book_ticker, through our C1 mid returns (BASIC_C1_V5)"
+  exchange_stream: "bookTicker as Tardis records it, read by C1"
+  files: "the year's C1 output of D, the week's roster"
+  columns: "C1 S13 of every roster coin but BTC, C1 S18 (BTC's 1 h return)"
+  fields:
+    near: "a coin is near when |its 1 h return - BTC's| is under 0.5 points (exactly 0.5 is not); S09 = the near coins over the coins with a value [proof: CARD_C2_V9 rule 8, O5 A; C2_STAMPS_V1 8eceeedbb4fda108: S09 15 of 15 (3 days x 5 moments)]"
+  latency: "known_at = the latest known_at of the C1 values used (CARD_C2_V9)"
+  silence: "no coin counted: empty (CARD_C2_V9)"
+
+reading_rules:
+  - "near is under 0.5 points either side of BTC's 1 h return, the same 0.5 for every coin"
+  - "BTC itself is not counted"
+
+values:
+  units: "a share 0 to 1"
+  zero: "no coin within 0.5 points of BTC's hour"
+  empty: "NO_ROSTER, ALL_COINS_EMPTY or the coins' common reason; value_kind 0. Never read empty as 0"
+  stale: "as C2's other market settings"
+  flags: "none of its own"
+
+interpret:
+  do:
+    - "read S09 with BTC's own hour beside it (C1 S18): a high S09 with a still BTC is a quiet market"
+  dont:
+    - "read S09 at 0.85 or more alone as BTC-led"
+
+biases:
+  - {what: "a fixed 0.5-point floor", direction: "S09 high in quiet hours", size: "at 0.85 or more at 23.89% of 24 Sep 2025's minutes, BTC's 1 h move under 0.5 points at 99.42% of them; Spearman -0.40387 with BTC's |1 h move|", proof: "J15999 c2fire"}
+
+external_checks:
+  - {what: "S09 recomputed from our C1 at 5 moments of 3 days", where: "the year's C1 output (a recompute, our source)", status: "VERIFIED: C2_STAMPS_V1 8eceeedbb4fda108: S09 15 of 15 (LAYER_REGISTER_V29: RELIABLE); the near edge planted: tests/test_basic_c2.py f5e36a72e1c12b0a 2 of 2 (BED, J16008; EDGE1 16:25:58Z)"}
+  - {what: "how often the label's floor 0.85 is reached, and BTC's own hour then", where: "the year's own C2 and C1 rows of 24 Sep 2025", status: "MEASURED: J15999 c2fire (meaning_rule_or3 ed2 92699c335a68398a, tests 9def5008fc9e7a24 11 of 11; log af3a5cac5c0546aa)"}
+  - {what: "an outside record", where: "none: our rule on our returns", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "how often S09 reaches 0.85 and BTC's hour then", run: "python3 -B -m rawcheck.meaning_rule_or3 c2fire <D>", where: "team/RAWCHECK/code (meaning_rule_or3.py 92699c335a68398a)"}
+
+used_by: "the label WHY-SCOPE/BTC-LED (S09 at 0.85 or more, the floor scope_near_btc, or C1's btc_15m 0.3 percent or more either way); the chains by fifths: CHAIN_chop_LONG_fade_3 enters on 1 and 2, CHAIN_forced_LONG_fade waits on 2, CHAIN_forced_LONG_ride enters on 2, CHAIN_forced_SHORT_fade skips on 4, CHAIN_forced_SHORT_ride on 4 and 5, CHAIN_quiet_LONG_fade_4 (CARD_C2_V9 lines 34, 36). To TREE's RR1 (hb/EDGE2.txt 16:1xZ): a decision may rest on 'BTC-led' that is a quiet hour"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C2_V9.md 4177e235d1fee76e
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml 23e187d3297bb9a2 (the basic settings of C2)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C2_STAMPS_V1.tsv 8eceeedbb4fda108"
+  JOBS: "15999 (c2fire 24 Sep 2025; log af3a5cac5c0546aa)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T16:08Z, posted before J15999 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): no rename (the name says the rule); the misreading is the label's, in never and used_by"
+
+settings:
+  - {id: C2.S09, name: "share of the roster coins but BTC within 0.5 points of BTC over 1 h", layer: our_rule, side: none, window: "3,600 s", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the coins but BTC with |C1 S13 - C1 S18| under 0.5 over the coins with a value, rounded once to 6 decimals", aliases: "share_near_btc",
+     derived_from: "C1 S13 of every roster coin but BTC and C1 S18 (BTC's 1 h return)",
+     means: "how many coins' last hour sat within half a point of BTC's",
+     computation: {status: RELIABLE, proof: "C2_STAMPS_V1 8eceeedb: 15 of 15 (24 Sep, 4 Nov 2025, 8 Mar 2026 x 5 moments); the edge (exactly 0.5 is not near, 0.4999 is) planted with its mutant in BED's tests/test_basic_c2.py f5e36a72e1c12b0a, 2 of 2 (J16008 18b9f24ffb476fe8, basic_c2 d509ba03cf9d767d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15999 c2fire (24 Sep 2025): min 0.04, median 0.80, p90 0.88, max 0.96; at 0.85 or more at 23.89% of minutes, where BTC's own 1 h move was under 0.5 points at 99.42% (|median| 0.1002); Spearman with BTC's |1 h move| -0.40387; the share rule 8 says (no rename)"},
+     open: "high in quiet hours: the label WHY-SCOPE/BTC-LED reads 0.85 or more as BTC-led; one day measured",
+     never: ["S09 at 0.85 or more as BTC leading (BTC's hour under 0.5 points at 99.42% of those minutes)"]}

@@ -1,0 +1,357 @@
+{
+ "by": "LAB1 (labcore V2_7 cycle: v2_7 package + S1 run check 1a99409b + S3 selection 8acde428 + S2 quality de149c3d + lab3 write/bins/days fixes; owner as in RELEASE_labcore_V2_7_CANDIDATE.json)",
+ "changes_from_V2_6": "new files only: labcore/v2_7 (selection, runs, cache, ROSTER_WEEK_ALIASES_V1.json, release_v27.py, README), FUNCTIONS_V2.tsv, tests/test_v27_candidate.py, tests/fault_child_wrapper.py; every V2_6 pin unchanged",
+ "files": {
+  "team/LAB3/LAB4/proposals/metric_traps/METRIC_TRAPS_V3.tsv": {
+   "role": "metric status/traps read by labcore.briefs (through metric_brief)",
+   "schema_sha16": "c03c1771724ced99",
+   "value_columns": [
+    "code",
+    "never_read_as",
+    "read_it_as",
+    "empty_means",
+    "status",
+    "proof",
+    "card"
+   ],
+   "value_sha16": "baed7b2b9d7d2877"
+  },
+  "team/LAB3/METRICS_V1.tsv": {
+   "role": "metric cards read by labcore.briefs (through metric_brief)",
+   "schema_sha16": "e3053554c78e0cda",
+   "value_columns": [
+    "code",
+    "layer",
+    "kind",
+    "unit",
+    "unit_text",
+    "scope",
+    "scope_text",
+    "step",
+    "step_s",
+    "window",
+    "file_col",
+    "card_sha16",
+    "meaning",
+    "use_may",
+    "use_never",
+    "read_as",
+    "empty_when",
+    "source",
+    "store",
+    "clock",
+    "exact_k",
+    "base_code",
+    "comp_status",
+    "meaning_status",
+    "build",
+    "search",
+    "name_status",
+    "ext_status"
+   ],
+   "value_sha16": "11e3db0928c0edfe"
+  },
+  "team/LAB3/code/lab3/__init__.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "e3b0c44298fc1c14"
+  },
+  "team/LAB3/code/lab3/asof.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "d511d6af57eb9d3a"
+  },
+  "team/LAB3/code/lab3/binfmt.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "ebc5f60e969069e9"
+  },
+  "team/LAB3/code/lab3/bins.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "f5c0f9a5f9cb8537"
+  },
+  "team/LAB3/code/lab3/days.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "ecf85ffb7bc0fa69"
+  },
+  "team/LAB3/code/lab3/evt.py": {
+   "role": "lab3 evt1 layout (D2, BUILD5): loaded by lab3.days for an evt1 root; added beside days.py by repin_apply_v5 (SCOUT Q7 14:51:03Z)",
+   "sha16": "e371b1f812d51889"
+  },
+  "team/LAB3/code/lab3/labgroups.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "6d59a8d98274ef2f"
+  },
+  "team/LAB3/code/lab3/law.py": {
+   "role": "THE seal table read by labcore.gates.load_law",
+   "sha16": "f777c329396b6190"
+  },
+  "team/LAB3/code/lab3/rows.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "747414c711bbd499"
+  },
+  "team/LAB3/code/lab3/write.py": {
+   "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
+   "sha16": "99e43dc0bc01f55a"
+  },
+  "team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json": {
+   "role": "the canonical lab roster document read by labcore.v2_7.selection (also pinned by sha256 in its code)",
+   "sha16": "b93de33b2a73a56e"
+  },
+  "team/OUTSIDE/COORD/development/DEV2/shared_population_v2/population.py": {
+   "role": "imported by labcore.v2_7.selection (DEV2 shared resolver, OX-CODE1 approved L1)",
+   "sha16": "72ef5006473f2b15"
+  },
+  "team/OUTSIDE/COORD/development/performance_v2/labcore_candidate/event_selection.py": {
+   "role": "imported by labcore.v2_7.selection (performance_v2 event_selection)",
+   "sha16": "fa7f3d8940e93346"
+  },
+  "team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief.py": {
+   "role": "metric brief rules called by labcore.briefs",
+   "sha16": "e566e6279ae34d60"
+  },
+  "team/RESEARCH/tools/alarm_stamp/STAMP_CATALOG_V1.tsv": {
+   "role": "the stamp catalogue alarm_stamp reads (V2_3 C1 binding)",
+   "schema_sha16": "1cc2b66193910365",
+   "value_columns": [
+    "code",
+    "store",
+    "clock",
+    "exact_k",
+    "scope",
+    "meaning",
+    "unit",
+    "level",
+    "block"
+   ],
+   "value_sha16": "447aaab5de954f04"
+  },
+  "team/RESEARCH/tools/alarm_stamp/alarm_stamp.py": {
+   "role": "stamp reader loaded by labcore.stores (V2_3 C1 binding)",
+   "sha16": "5dfc98dd92bbecf4"
+  },
+  "team/RESEARCH/tools/entry_card/heat_offer_v2.py": {
+   "role": "eagerly imported by alarm_stamp and used for LEVELS/FIELDS at import (OX-SKEPTIC A36-C01)",
+   "sha16": "c14e05a3975186be"
+  },
+  "team/RESEARCH/tools/event_decisions/run_manifest_candidate.py": {
+   "role": "imported by labcore.v2_7.runs (decisions_fixer candidate; LAB1 moves it into labcore in one step)",
+   "sha16": "b0aa41ef63a960f5"
+  },
+  "team/RESEARCH/tools/event_profile/clock_series.py": {
+   "role": "re-exported by labcore.v2_7.series (event_profile/clock_series.py, FROZEN 5b5a331ccd81c605, owner event_profile)",
+   "sha16": "b3fb23c793f49487"
+  },
+  "team/RESEARCH/tools/freeze_judge/WINDOWS_V1.tsv": {
+   "role": "THE window table read by labcore.gates (BUILD / CHECK / BLIND)",
+   "schema_sha16": "a89a97ec67af40b0",
+   "sha16": "d9c5c1a21ceea8f4"
+  },
+  "team/RESEARCH/tools/labcore/FUNCTIONS_V1.tsv": {
+   "role": "labcore registry (one row per public function, sha16 of its source)",
+   "schema_sha16": "6b891cb91cdb1561",
+   "value_columns": [
+    "function",
+    "module",
+    "sha16"
+   ],
+   "value_sha16": "a6077513b72de260"
+  },
+  "team/RESEARCH/tools/labcore/FUNCTIONS_V2.tsv": {
+   "role": "labcore registry V2 = V1 rows + labcore/v2_7 rows (sha16 of each function source)",
+   "schema_sha16": "6b891cb91cdb1561",
+   "value_columns": [
+    "function",
+    "module",
+    "sha16"
+   ],
+   "value_sha16": "e7ff1da0be4ab6a9"
+  },
+  "team/RESEARCH/tools/labcore/README.md": {
+   "role": "labcore contract text",
+   "sha16": "964fa40d12b55a06"
+  },
+  "team/RESEARCH/tools/labcore/__init__.py": {
+   "role": "labcore module",
+   "sha16": "aa84aeb6a1797239"
+  },
+  "team/RESEARCH/tools/labcore/_rows.py": {
+   "role": "labcore module",
+   "sha16": "6a9894ef5405e5a5"
+  },
+  "team/RESEARCH/tools/labcore/briefs.py": {
+   "role": "labcore module",
+   "sha16": "b1ad0fd9168649d8"
+  },
+  "team/RESEARCH/tools/labcore/costs.py": {
+   "role": "labcore module",
+   "sha16": "fc2ae669d6e5d182"
+  },
+  "team/RESEARCH/tools/labcore/gates.py": {
+   "role": "labcore module",
+   "sha16": "aae13278ad4f4209"
+  },
+  "team/RESEARCH/tools/labcore/ids.py": {
+   "role": "labcore module",
+   "sha16": "125206de9ef290f8"
+  },
+  "team/RESEARCH/tools/labcore/jobgate.py": {
+   "role": "labcore module",
+   "sha16": "16f894eda2f57f07"
+  },
+  "team/RESEARCH/tools/labcore/lookahead.py": {
+   "role": "labcore module",
+   "sha16": "844c7c3aff7408e0"
+  },
+  "team/RESEARCH/tools/labcore/prices.py": {
+   "role": "labcore module",
+   "sha16": "fc4fb3a6fa304d15"
+  },
+  "team/RESEARCH/tools/labcore/release.py": {
+   "role": "labcore module",
+   "sha16": "9ee1e0ea3dd6b004"
+  },
+  "team/RESEARCH/tools/labcore/settings.py": {
+   "role": "labcore module",
+   "sha16": "5ff377a0a5688d4b"
+  },
+  "team/RESEARCH/tools/labcore/stores.py": {
+   "role": "labcore module",
+   "sha16": "048ee7cfee92036e"
+  },
+  "team/RESEARCH/tools/labcore/tests/fault_child_wrapper.py": {
+   "role": "labcore V2_7 candidate test",
+   "sha16": "a2ff6a57ecbd23e5"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_a04_v1.py": {
+   "role": "labcore test",
+   "sha16": "a80e7e4a1088874e"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_a15_03_withdrawn.py": {
+   "role": "labcore test (A15-03 withdrawn row)",
+   "sha16": "c44ffb9abfb470b4"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_labcore_review02_v1.py": {
+   "role": "labcore test",
+   "sha16": "3a681f660b118698"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_labcore_v1.py": {
+   "role": "labcore test",
+   "sha16": "a441918683611cef"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_move_v1.py": {
+   "role": "labcore test",
+   "sha16": "610a35fc213b6374"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_release_v1.py": {
+   "role": "labcore test",
+   "sha16": "18463afbd9732407"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_release_v23.py": {
+   "role": "labcore test (V2_3 value pins + closure)",
+   "sha16": "508e94bc9e40ade5"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_skeptic02_v1.py": {
+   "role": "labcore test",
+   "sha16": "71d528ea7cca418c"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_tick_stores.py": {
+   "role": "labcore test",
+   "sha16": "1a1741ab76b6bf23"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_v27_candidate.py": {
+   "role": "labcore V2_7 candidate test",
+   "sha16": "d7e0381b16bf7beb"
+  },
+  "team/RESEARCH/tools/labcore/tests/test_v27_quality.py": {
+   "role": "labcore V2_7 candidate test",
+   "sha16": "03633b8ef1748a76"
+  },
+  "team/RESEARCH/tools/labcore/tick_stores.py": {
+   "role": "labcore module",
+   "sha16": "a4d4acac60cfc973"
+  },
+  "team/RESEARCH/tools/labcore/times.py": {
+   "role": "labcore module",
+   "sha16": "4633d101604fe585"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/README_V2_7_CANDIDATE.md": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "1e7f9076db48426e"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/ROSTER_WEEK_ALIASES_V1.json": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "da980e83d19e2621"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/__init__.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "8a0aaf9e01445cbd"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/cache.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "b35e9202f73a9cc2"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/quality.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "de149c3d38ace304"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/release_v27.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "a03f9766742b7deb"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/rows.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "47304dedd15d1879"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/runs.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "57eec69280d93054"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/selection.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "d837719e85f3eb08"
+  },
+  "team/RESEARCH/tools/labcore/v2_7/series.py": {
+   "role": "labcore V2_7 candidate (labcore/v2_7)",
+   "sha16": "584f37430408eee6"
+  },
+  "team/RESEARCH/tools/labcore/waves.py": {
+   "role": "labcore module",
+   "sha16": "f61b22c588ee6b9a"
+  }
+ },
+ "not_pinned_run_inputs": {
+  "BACKFILL_GATE.txt": "live state read by labcore.jobgate, never pinned",
+  "cost table": "named by each run settings (s.cost.table) and pinned by that run settings sha16; labcore.costs reads it",
+  "lab_days, research_days, tick stores": "data vintage of each run (its own input manifest), never certified by a library release",
+  "ledger, TRIES_TYPES_V1, OPENS_V1, LOOKS_V1": "run inputs and state of the CHECK authorization (labcore.gates); named per call"
+ },
+ "open_review": [],
+ "reason": "LAB1 V2_7 cut 25 Oct: S1 run check 1a99409b, S3 selection 8acde428, S2 quality de149c3d, lab3 fixes",
+ "release": "V2_7",
+ "releases": {
+  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_7.json": "789a9a01eb4d5cea",
+  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "eca2c8a125d24283"
+ },
+ "replaces": "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_6.json",
+ "rule": "FROZEN: any change to a pinned file is labcore V3. labcore.release.check(this file) runs at the start of every labcore use and refuses on any missing file, sha16 or schema difference, or another python / numpy (OX-SKEPTIC A04-02 rule 2).",
+ "run_with": "<PYTHON> (the framework python3.11 has numpy 2.4.6 and is refused)",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "status": "RELEASED (LAB1 25 Oct 2026, LAB1_REQUESTS_V1 items 1-7, FIX_ROUND3 S1-S3)",
+ "still_unbound": "the other tools in unpinned_other_tools (alarm_stamp, alarms a01/a02, entry_card) have no release yet: named, not certified by this release (A15-02 stays open for them)",
+ "tests_result": "labcore 140 passed + G1 registry (regenerated by release_v27.py); S1 test_run_manifest_s1 31/31 (3 old-test expectation changes reconciled by decisions_fixer); lab3 test_lab3_v27_fixes ALL OK, quarantine and research_days_v2 ALL OK; quality 6/6",
+ "text_changes": [
+  "team/LAB3/LAB4/proposals/metric_traps/METRIC_TRAPS_V3.tsv",
+  "team/LAB3/METRICS_V1.tsv",
+  "team/RESEARCH/tools/alarm_stamp/STAMP_CATALOG_V1.tsv",
+  "team/RESEARCH/tools/labcore/FUNCTIONS_V1.tsv",
+  "team/RESEARCH/tools/labcore/FUNCTIONS_V2.tsv"
+ ],
+ "tool": "labcore",
+ "unbind_removed": {},
+ "unpinned_other_tools": {
+  "team/RESEARCH/tools/alarms/a01_onset_v2.py": "another tool: pinned by its own release once it has one (STRATEGY-144233)",
+  "team/RESEARCH/tools/alarms/a02_climax_v3.py": "another tool: pinned by its own release once it has one (STRATEGY-144233)"
+ },
+ "written_utc": "2026-10-25T14:25:33Z"
+}

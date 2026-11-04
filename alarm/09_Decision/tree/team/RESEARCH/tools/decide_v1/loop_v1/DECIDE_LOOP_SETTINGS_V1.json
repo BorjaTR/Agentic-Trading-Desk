@@ -1,0 +1,196 @@
+{
+ "schema": "DECIDE_LOOP_SETTINGS_V1",
+ "alarm_id": "ALM_M_V1",
+ "rulebook": {
+  "path": "team/RESEARCH/tools/decide_v1/rulebooks/RULES_ALM_M_V1.json"
+ },
+ "decide_release": {
+  "path": "team/RESEARCH/tools/decide_v1/RELEASE_DECIDE_V1_CANDIDATE.json",
+  "sha16": "SET_AT_REFREEZE"
+ },
+ "decisions": {
+  "path": "<SCRATCH>/work_DECIDE/run_v1_4/ALM_M_V1_OWN/DECISIONS.tsv",
+  "sha16": "3d131e6867b8aa9a"
+ },
+ "grader": {
+  "tool": "idea_to_grade_V3_1",
+  "release": "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json",
+  "sha16": "69df7350a98e9681"
+ },
+ "source_list": {
+  "path": "<SCRATCH>/work_LEAD/loop2/det_M_v1/EVENTS.tsv",
+  "sha16": "4398647f907dc922",
+  "note": "kept for the record only: no graded run uses the whole list, since 12-23 Sep has no spread reading"
+ },
+ "universe": {
+  "path": "team/RESEARCH/LIBRARY/UNIVERSE_ALARMS_V1.tsv",
+  "sha16": "13c4722a5f5ab86b"
+ },
+ "days": {
+  "first": "20250901",
+  "last": "20251231",
+  "research_window": "20250901:20251231"
+ },
+ "i2g_args": {
+  "delay_s": 2,
+  "workers": 2,
+  "nice": 10,
+  "roster": "team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json"
+ },
+ "groups": {
+  "VALUED": {
+   "events": "VALUED_EVENTS.tsv = TAKE + SKIPRULE (the spread has a reading: 24 Sep - 31 Dec)",
+   "subset": true,
+   "fires": 9357
+  },
+  "TAKE": {
+   "events": "TAKE_EVENTS.tsv",
+   "subset": true,
+   "fires": 8607,
+   "decision": "TAKE|4|NO_SKIP_LINE_TRUE"
+  },
+  "SKIPRULE": {
+   "events": "SKIPRULE_EVENTS.tsv",
+   "subset": true,
+   "fires": 750,
+   "decision": "SKIP|4|SKIP_RULE"
+  },
+  "BADDATA": {
+   "events": "BADDATA_EVENTS.tsv (1,388 = every fire of 12-23 Sep, before 14 days of spread history; 19 on 28-31 Dec)",
+   "subset": true,
+   "fires": 1407,
+   "decision": "SKIP|1|BAD_DATA"
+  }
+ },
+ "direction": "FADE",
+ "cells_choosable": [
+  [
+   "TT",
+   "V1_1h"
+  ],
+  [
+   "TT",
+   "V2_1h"
+  ],
+  [
+   "TT",
+   "C2C1_1h"
+  ],
+  [
+   "TT",
+   "V1_4h"
+  ],
+  [
+   "TT",
+   "V2_4h"
+  ],
+  [
+   "TT",
+   "C4C2_4h"
+  ],
+  [
+   "RT",
+   "V1_1h"
+  ],
+  [
+   "RT",
+   "V2_1h"
+  ],
+  [
+   "RT",
+   "C2C1_1h"
+  ],
+  [
+   "RT",
+   "V1_4h"
+  ],
+  [
+   "RT",
+   "V2_4h"
+  ],
+  [
+   "RT",
+   "C4C2_4h"
+  ],
+  [
+   "RR",
+   "V1_1h"
+  ],
+  [
+   "RR",
+   "V2_1h"
+  ],
+  [
+   "RR",
+   "C2C1_1h"
+  ],
+  [
+   "RR",
+   "V1_4h"
+  ],
+  [
+   "RR",
+   "V2_4h"
+  ],
+  [
+   "RR",
+   "C4C2_4h"
+  ],
+  [
+   "RT",
+   "V1_15m"
+  ],
+  [
+   "RT",
+   "V2_15m"
+  ],
+  [
+   "RR",
+   "V1_15m"
+  ],
+  [
+   "RR",
+   "V2_15m"
+  ]
+ ],
+ "cells_described_only": [
+  [
+   "TT",
+   "V1_15m"
+  ],
+  [
+   "TT",
+   "V2_15m"
+  ],
+  [
+   "TT",
+   "ret_15m"
+  ],
+  [
+   "TT",
+   "ret_1h"
+  ],
+  [
+   "TT",
+   "ret_4h"
+  ]
+ ],
+ "bar": {
+  "edge_stat": "TOUGH_EDGE",
+  "net_stat": "PARENT",
+  "cost_main": "HONEST",
+  "cost_check": "STRESS",
+  "min_waves_month": 30,
+  "half_effect": 0.5
+ },
+ "split": {
+  "path": "<SCRATCH>/work_DECIDE/loop_v1_split_v3",
+  "code": "team/RESEARCH/tools/decide_v1/loop_v1/split_groups_v1.py"
+ },
+ "events_sha16": {
+  "VALUED": "306f0d0fa1096ac4",
+  "TAKE": "664528eb7535413c",
+  "SKIPRULE": "8ac6ebe31bb64957",
+  "BADDATA": "f987f72c48aee480"
+ }
+}

@@ -1,0 +1,5 @@
+# 04_Month_check: the files copied from the dev tree. None since 30 Oct (SCOUT's task; the owner, 30 Oct 13:5x Berlin: "everything that is agentic
+# we keep it in one folder at the top level of ALARM"): the month check is the KIT_V5 MONTH job and decide_forward_v1.py, kept in Alarm/Agentic;
+# its grade chain v2_2 is in 03_Grading. This part holds documents only. Sync: cd Alarm && python3 -B _tools/sync_from_dev_v1.py <dev forensics root> 04_Month_check
+repo_path	dev_path	role
+README.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/04_Month_check/README.md	replaces the part page

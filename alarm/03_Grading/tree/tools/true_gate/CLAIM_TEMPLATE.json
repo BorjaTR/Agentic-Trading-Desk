@@ -1,0 +1,18 @@
+{
+ "id": "<IDEA>_<V>_<LABEL>",
+ "alarm_id": "<SEAT>_<IDEA>_<V>",
+ "idea": "<IDEA>",
+ "V": "<V>",
+ "claim": "<the event, DETECT or PREDICT, in one sentence>",
+ "def": "<absolute path of ideas/<IDEA>/defs/<V>.json: required>",
+ "def_sha16": "<its sha16, the VARIANTS row's: required>",
+ "perfire": "<absolute path of the GRADE job's PERFIRE_<V>.tsv, that name: kind, coin, t, side, w, c are read; race columns never>",
+ "perfire_sha16": "<its sha16>",
+ "first": "20250910",
+ "last": "20251231",
+ "lab_days": "<the settings key LAB_DAYS>",
+ "lean": "FADE",
+ "label": {"kind": "metric_test", "code": "E2.S04", "when": "present", "end_s": 600, "test": "<=", "agg": "last", "thr": -0.5, "max_age_s": 120},
+ "mirror": {"kind": "metric_test", "code": "E2.S04", "when": "present", "end_s": 600, "test": ">=", "agg": "last", "thr": 0.5, "max_age_s": 120},
+ "activity": {"code": "E2.S04", "mode": "change", "max_age_s": 120}
+}

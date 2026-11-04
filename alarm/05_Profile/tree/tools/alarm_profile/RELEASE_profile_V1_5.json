@@ -1,0 +1,134 @@
+{
+ "by": "BUILD1 (labcore V2_3 cycle, STRATEGY-190912a; owner as in RELEASE_profile_V1_4.json)",
+ "changed": [
+  "team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv"
+ ],
+ "files": {
+  "team/LAB3/code/lab3/__init__.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "e3b0c44298fc1c14"
+  },
+  "team/LAB3/code/lab3/asof.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "d511d6af57eb9d3a"
+  },
+  "team/LAB3/code/lab3/binfmt.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "ebc5f60e969069e9"
+  },
+  "team/LAB3/code/lab3/bins.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "23bf4d116e47c415"
+  },
+  "team/LAB3/code/lab3/days.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "eb8236dbe13d67cc"
+  },
+  "team/LAB3/code/lab3/labgroups.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "6d59a8d98274ef2f"
+  },
+  "team/LAB3/code/lab3/law.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "04a2f0fe82a62c0e"
+  },
+  "team/LAB3/code/lab3/rows.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "747414c711bbd499"
+  },
+  "team/LAB3/code/lab3/write.py": {
+   "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
+   "sha16": "a0a15f9580f9fa72"
+  },
+  "team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv": {
+   "role": "what each context value reads (proof display)",
+   "schema_sha16": "8b96d57ed7d7c08b",
+   "value_columns": [
+    "value",
+    "level",
+    "block",
+    "inputs",
+    "upstream"
+   ],
+   "value_sha16": "04ce6c8c99c89ad0"
+  },
+  "team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv": {
+   "role": "the catalogue (generated from episode_blocks docstrings)",
+   "schema_sha16": "1cc2b66193910365",
+   "value_columns": [
+    "code",
+    "store",
+    "clock",
+    "exact_k",
+    "scope",
+    "meaning",
+    "unit",
+    "level",
+    "block"
+   ],
+   "value_sha16": "1b50128533353300"
+  },
+  "team/RESEARCH/tools/alarm_profile/PROFILES_V1.tsv": {
+   "role": "named groupings over EPI and CTX values",
+   "schema_sha16": "8a64fd2f76c96e98",
+   "value_columns": [
+    "profile",
+    "group",
+    "tool",
+    "value"
+   ],
+   "value_sha16": "7f2337881851478c"
+  },
+  "team/RESEARCH/tools/alarm_profile/PROOFS_V1.tsv": {
+   "role": "the proof plan (FROZEN_1 proof_plan_sha16, V2_3 C3)",
+   "schema_sha16": "51b5ad369a5a5b4d",
+   "sha16": "caf20c2bf5b5ef96"
+  },
+  "team/RESEARCH/tools/alarm_profile/README.md": {
+   "role": "design note and contract",
+   "sha16": "168d4894a421aaeb"
+  },
+  "team/RESEARCH/tools/alarm_profile/alarm_profile.py": {
+   "role": "tool module",
+   "sha16": "9eb6732a281bf46f"
+  },
+  "team/RESEARCH/tools/alarm_profile/episode_blocks.py": {
+   "role": "tool module",
+   "sha16": "150dc80c8e681efe"
+  },
+  "team/RESEARCH/tools/alarm_profile/test_alarm_profile.py": {
+   "role": "test",
+   "sha16": "5e22427c38f8c76c"
+  },
+  "team/RESEARCH/tools/alarms/a01_onset_v2.py": {
+   "role": "A01 onset definition episode_blocks uses (V2_3 C1 binding)",
+   "sha16": "ffe90db285aa85c5"
+  },
+  "team/RESEARCH/tools/alarms/a02_climax_v3.py": {
+   "role": "A02 climax definition episode_blocks uses (V2_3 C1 binding)",
+   "sha16": "ded5b36195f4b1b5"
+  }
+ },
+ "landing": "P04 + A09 + P09 (+ P03 context, P05 profile)",
+ "release": "V1_5",
+ "releases": {
+  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_4.json": "87f3c60f29048b06"
+ },
+ "replaces": "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_4.json",
+ "rule": "FROZEN until both outside approvals and STRATEGY sign-off; any change to a listed file is a new release (V1_1, V2)",
+ "run_with": "<PYTHON>",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tests_result": "V2_4 landing 20:35:18Z: suites rerun in progress at the cut (owner deadline 20:45Z); last full green per tool tonight: labcore 79 + R5 (scratch, V2_4 code), context 26+8s, profile 28+4s + proof plan 2, match 15, cause 71 (LAB1 rerun 20:26Z), fairness 53, bucket 51, exit 51+1s + 37, judge v1 34+1s v2 70 chain 8 + teeth 40/40, finder 42, alarm_design 63, reading_value v2+v3 7; the rerun result is posted beside the table",
+ "text_changes": [
+  "team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv",
+  "team/RESEARCH/tools/alarm_profile/PROFILES_V1.tsv"
+ ],
+ "tool": "alarm_profile",
+ "unbind_removed": {
+  "team/RESEARCH/tools/alarms/alarm_view_v1.py": "declared but used by no tool in this graph: declaration removed (V2_3 C1)"
+ },
+ "written_utc": "2026-10-23T20:45:52Z"
+}

@@ -1,0 +1,196 @@
+# MEANING_D2D3_V2.yaml: the meaning register of D2 S01 and D3 S01 (top of book), EDITION 2 (EDGE1, 2026-10-18, closed with the owner 15:3x Berlin)
+# = MEANING_D2D3_V1 (7915a64467ba9b2f, kept) with D2 S01 and its twin RENAMED (size-weighted mid), D2.CB1 (Stoikov micro-price) in could_build,
+# conclude (may, never), every limit with its effect on decisions, module sha16s. Closes the owner decision on the D2 S01 name by the rename rule.
+group: D2+D3
+name: top_of_book (raw rows)
+summary: The best bid and best ask of one coin at a minute end e. D2 S01 = the weighted mid of Binance's own bookTicker (the ask weighted by the amount at the bid, the bid by the amount
+  at the ask). D3 S01 = the dollars resting at the best bid plus the best ask, from the 25-level book Tardis rebuilds from Binance's depth stream.
+read_as: 'D2 S01 (renamed in edition 2: size-weighted mid) is a price between bid and ask that leans to the side with MORE resting size behind it (big bid queue -> closer to the ask).
+  It is Stoikov''s weighted mid, not his micro-price (D2.CB1, not built). D3 S01 is how many dollars sit at the very top; a fast-moving number: Binance''s two top-of-book channels give
+  different sizes in 12 to 45% of seconds, by up to 35%.'
+where:
+  card: testbed/value_audit/registers/CARD_D2_V3.md; testbed/value_audit/registers/CARD_D3_V4.md
+  settings_register: testbed/value_audit/registers/SETTINGS_D2_V1.tsv; SETTINGS_D3_V2.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_book_ticker_V2.md; SOURCE_SPEC_book_snapshot_25_V2.md; SOURCE_SPEC_quotes_V2.md
+  producer: prod_D2 with prod_reader_book_ticker_v2.py and prod_reader_quotes_v2.py; prod_D3 with prod_reader_book_snapshot_25_v1.py and prod_reader_quotes_v2.py (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D2.parquet and D3.parquet
+  year_output_columns: name (S01, S01.quotes_off, ...), coin, as_of_us (e), value_kind, value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'D2' or 'D3', settings, coins, moments)
+source:
+  vendor: Tardis.dev, exchange binance-futures (Binance USDT-margined perpetuals)
+  exchange_stream: 'D2: Binance bookTicker (best bid and ask, pushed on every change). D3: Binance depth stream, rebuilt by Tardis into book_snapshot_25 (25 levels a side, a row each
+    time one of them changes). Twins: quotes, Tardis''s top of book from the same depth stream'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz, book_snapshot_25_<COIN>USDT_<YYYY-MM-DD>.csv.gz, quotes_<COIN>USDT_<YYYY-MM-DD>.csv.gz
+  columns: 'book_ticker and quotes: exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price, bid_price, bid_amount; book_snapshot_25: timestamp, local_timestamp, asks[0..24].price/amount,
+    bids[0..24].price/amount'
+  fields:
+    book_ticker.row: 'one bookTicker message: best bid and ask prices and the amounts resting there, a state until the next row [proof: SOURCE_SPEC_book_ticker Q-B1, Q-T2]'
+    book_ticker.timestamp: 'Binance event time E, whole milliseconds; file order decides inside one ms [proof: SOURCE_SPEC_book_ticker Q-N1]'
+    book_snapshot_25.row: 'the whole top 25 levels a side, written when any of them changed; crossed levels removed; RPI orders not in it [proof: SOURCE_SPEC_book_snapshot_25 Q-B1, Q-C1,
+      Q-B4, Q-X1]'
+    quotes.row: 'the best bid and ask Tardis takes from the same depth-stream book; identical to book_snapshot_25''s top in 240 of 240 seconds tested and in every coin-minute of 3 days
+      for D3 S01 [proof: job 15783]'
+    amounts: 'coins resting at the price (a 1000-prefixed symbol counts in thousands); dollars = price x amount [proof: SOURCE_SPEC_book_ticker; card D3 rule 7]'
+    book_ticker_vs_depth: 'Binance''s two channels: best PRICES the same in 57 to 60 of 60 seconds, all four numbers the same in 33 to 53 of 60 (55 to 88%) [proof: job 15783, BTC, AVAX,
+      ENA 8 Mar]'
+  latency: 'book_ticker middle 2.2 to 3.5 ms, p99 5.4 to 161.7 ms; book_snapshot_25 middle 2 ms, p99 5 to 13 ms (specs F5, F4); row in force at a whole second: median age 30 to 178 ms
+    (book_ticker), 34 to 109 ms (snapshot) (job 15783)'
+  silence: 'book_ticker: a silence over 30 s is a feed hole (spec F7); book_snapshot_25: over 15 s (spec F5)'
+reading_rules:
+- 'the row in force at e: the last row in file order stamped and received by e; the file of D-1 when needed (D2 rules 1, 2; D3 rules 1, 2)'
+- 'seen: D2 a book row stamped in [e - 30 s, e]; D3 in [e - 15 s, e]; else empty BOOK_HOLE (D2 rule 3, D3 rule 3)'
+- D2 S01 = (P_ask x Q_bid + P_bid x Q_ask) / (Q_bid + Q_ask), exact, rounded once to 10 decimals (D2 rule 7)
+- D3 S01 = P_bid x Q_bid + P_ask x Q_ask at level 0, exact, rounded once to the whole dollar (D3 rule 7)
+- 'twins .quotes_off: the same rules on the quotes stream, gap 30 s (D2 rule 17, D3 rule 18)'
+- 'empty reasons, first failing: NO_FILE, BOOK_HOLE, BAD_INPUT (rule 6)'
+values:
+  units: D2 S01 USDT per coin (10 decimals); D3 S01 US dollars, whole
+  zero: 'never: a price or a resting amount is always above 0'
+  empty: NO_ROSTER, NO_FILE, BOOK_HOLE, BAD_INPUT; none on 24 Sep, 4 Nov, 8 Mar (job 15783). Never read empty as 0
+  stale: 1 exactly when empty BOOK_HOLE
+  flags: BAD_INPUT:<coin> on market values only
+interpret:
+  do:
+  - read D2 S01 as the mid pulled toward the side opposite the bigger queue; equal to the mid when both sizes are equal
+  - read D3 S01 as a snapshot of the top's dollars at one moment; compare it with the coin's own history, not across coins
+  - expect the quotes twins to match D3 exactly (same source) and D2 almost exactly (differences median 0.0001 to 0.0005%)
+  dont:
+  - read D2 S01 as a forecast of the next price; Stoikov shows the weighted mid is noisy and not a martingale
+  - read one minute-end D3 S01 as stable depth; the size at the top changes many times a second and the two Binance channels disagree by up to 35% in a given second
+  - treat D3's quotes twin as an independent check; it is the same depth stream
+biases:
+- what: D2 S01 is the weighted mid, not Stoikov's micro-price
+  direction: none
+  size: 'a naming difference: weighted mid = I x ask + (1 - I) x bid, I = Q_bid / (Q_bid + Q_ask); renamed in edition 2, so decisions unchanged'
+  proof: Stoikov, Gatheral60 slides [S1]; card D2 rule 7 says 'Stoikov's weighted mid'
+- what: two Binance top-of-book channels disagree on sizes
+  direction: either way
+  size: 'all four numbers equal in 55 to 88% of seconds; top dollars up to 20 to 35% apart in a second; microprice at most 0.35 bp apart; decisions: may matter for a single minute-end
+    D3 value (opinion), not for its rank in the coin''s history'
+  proof: job 15783
+- what: D2 vs its quotes twin
+  direction: either way
+  size: equal in 63.5 to 82.0% of coin-minutes; difference median 0.0001 to 0.0005%, max 0.49%; decisions unchanged
+  proof: job 15783 (3 days, all coin-minutes)
+external_checks:
+- what: best bid and ask at a moment
+  where: no outside copy held; Binance publishes no top-of-book history we hold
+  status: 'NOT_AVAILABLE: second Tardis stream only'
+- what: D2 against a second stream
+  where: D2 S01.quotes_off (depth stream) in the year output
+  status: 'VERIFIED close: job 15783'
+- what: D3 against a second stream
+  where: book_ticker amounts (Binance's other channel)
+  status: 'VERIFIED that they differ: 55 to 88% of seconds equal, job 15783'
+tools:
+- what: our raw values equal Tardis
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code
+- what: D2, D3 against their twins, every coin-minute
+  run: python3 -B -m rawcheck.meaning_book day <D>
+  where: team/LAB/code
+- what: the top in three streams, second by second
+  run: python3 -B -m rawcheck.meaning_book top <D> <COIN> <HHMM>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_book.py dea3e9c08d746446, rawcheck raw code 84454de7fac2e458 (RAW_STAMPS_V1)
+  where: team/LAB/code/rawcheck
+used_by: 'D2 S01: nobody reads it (CARD_D2_V3: NO READER FOUND for S01 to S04); D2 S02 micro_dev is built on it; D3 S07 copies its formula with 5 levels. D3 S01: D3 S15 (coin over market),
+  S16 (the market median, read by CHAIN_chop_SHORT_ride_2 and WHY-DRIVER/AIR-POCKET), S17 depth_thin_z (BOOKS labels, D5 liquidity_latch) (CARD_D3_V4)'
+references:
+  S1: https://www.ma.imperial.ac.uk/~ajacquie/Gatheral60/Slides/Gatheral60%20-%20Stoikov.pdf (Stoikov, the weighted mid and the micro-price)
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+settings:
+- id: D2.S01
+  layer: basic
+  side: none
+  window: row in force, 30 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: weighted mid
+  aliases: EF.ef_microprice
+  means: 'named microprice: the best-bid/best-ask mid weighted by the opposite sizes, at e'
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 2 (the owner 15:3x Berlin): card rule 7 is Stoikov''s weighted mid, not his micro-price (Stoikov S1); job 15783: equal to the quotes twin in 63.5 to 82.0%
+      of coin-minutes, median difference 0.0001 to 0.0005%'
+  open: the two top-of-book channels disagree in some seconds (D2 at most 0.35 bp, job 15783); decisions unchanged
+  name: 'size-weighted mid: bid and ask weighted by the opposite sizes'
+  renamed_from: microprice
+- id: D2.S01.quotes_off
+  layer: basic
+  side: none
+  window: row in force, 30 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: weighted mid
+  aliases: none
+  means: as D2 S01 on the quotes stream (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'renamed in edition 2 (the owner 15:3x Berlin): card rule 7 is Stoikov''s weighted mid, not his micro-price (Stoikov S1); job 15783: equal to the quotes twin in 63.5 to 82.0%
+      of coin-minutes, median difference 0.0001 to 0.0005%'
+  open: switched off; as D2 S01
+  name: 'size-weighted mid: bid and ask weighted by the opposite sizes (quotes stream, switched off)'
+  renamed_from: microprice (quotes stream, switched off)
+- id: D3.S01
+  layer: basic
+  side: none
+  window: row in force, 15 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: bid dollars + ask dollars at level 0
+  aliases: CUBE.top_depth_usd
+  means: dollars resting at the best bid plus the best ask at e, from the depth-stream 25-level book
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: spec Q-B1; job 15783
+  open: 'no outside copy: which channel''s size is right at a given second is not testable; bookTicker sizes differ in 12 to 45% of seconds; decisions: may matter for a decision on one
+    minute-end value (opinion); read it against the coin''s own history'
+- id: D3.S01.quotes_off
+  layer: basic
+  side: none
+  window: row in force, 30 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: bid dollars + ask dollars
+  aliases: none
+  means: as D3 S01 from the quotes stream (switched off); identical to D3 S01 in every coin-minute of 3 days
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Tardis 9 of 9; job 15783: = D3 S01 in 221,760 of 221,760'
+  meaning:
+    status: DEFINED
+    proof: job 15783
+  open: none
+could_build:
+- id: D2.CB1
+  intended: 'Stoikov''s micro-price: the expected mid after the book''s next moves, from the imbalance and the spread'
+  was_name_of: D2.S01, D2.S01.quotes_off
+  formula: 'Stoikov (2018) micro-price: a fitted function of the imbalance I = Q_bid / (Q_bid + Q_ask) and the spread, estimated per coin from past book changes'
+  needs: a fitted model per coin, tested on unseen days (the model level); the book_ticker stream we already read
+  adds: 'unknown until fitted: the weighted mid is noisy and not a martingale (Stoikov S1); the micro-price claims to forecast the next mid'
+  status: NOT_BUILT
+conclude:
+  may:
+  - 'which side has more resting size at the top: D2 leans toward the ask when the bid queue is bigger'
+  - roughly how many dollars sit at the very top of the book, against the coin's own history (D3 S01)
+  never:
+  - 'a forecast of the next price from D2: Stoikov shows the weighted mid is noisy and not a martingale'
+  - that D2 is Stoikov's micro-price (it was renamed; the micro-price is D2.CB1, not built)
+  - 'one minute-end D3 value as stable depth: the size at the top changes many times a second and the two Binance channels disagree by up to 35% in a given second'
+  - 'the depth below the top: D3 S01 is level 0 only (bid plus ask at the best price)'
+  - 'the quotes twins as an independent check: they come from the same depth stream'

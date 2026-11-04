@@ -1,0 +1,7 @@
+# MACHINE_PATHS_KNOWN.tsv for Agentic (SCOUT, 31 Oct 2026, release ALARM_V1_5): released files kept unchanged with a machine
+# path, for _tools/machine_paths_v2.py. A row holds while the file's sha16 is unchanged; any change makes the line CODE again.
+# Source: the STATIC scan of GitHub Trading/Alarm (= ALARM_V1_4), 31 Oct 05:36Z (team/SCOUT/devpaths/
+# scan_GITHUB_V1_4_20261031T053614Z/Agentic.tsv), less the 5 past editions ALARM_V1_5 moves to archive/; reasons from
+# team/SCOUT/devpaths/KNOWN_REASONS_V1_5.tsv (by known_from_scan_v1.py).
+file	line	path	sha16	reason
+tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/perfire_v1_to20260430.py	13	<LAB_REPO>/forensics	59a865d0127d1482	past edition of perfire_v1_1_to20260430.py (which JOB_GRADE_V7 and JOB_MONTH_V7 run), kept: v1_1 prints its name in its usage line (90)

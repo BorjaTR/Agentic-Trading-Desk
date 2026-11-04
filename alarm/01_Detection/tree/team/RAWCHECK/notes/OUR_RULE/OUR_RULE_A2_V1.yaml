@@ -1,0 +1,110 @@
+# OUR_RULE_A2_V1.yaml: the card of A2's OUR RULES S03 long_liq_z and S04 short_liq_z (the number of coins liquidated in the last 30 s as a z
+# against the 6 hours of minute ends before), EDITION 1 (BED, 2026-10-18; OR4 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1
+# 15:54:31Z; reviewer EDGE2). Made as OUR_RULE_C9_V1 66c345c9 (EDGE2); ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it.
+# Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (A2 S03, S04 our_rule, NOT_CHECKED before this card). The smart
+# check (section 1): the inputs cited by what they are (S01, S02 renamed in BASIC_A2_V2), planted tests and mutants first, ONE small job
+# (J16010: S03, S04 replayed at every 30 s mark of 2 days from the year's own counts), how often they fire, readers to TREE's RR1. Pass lines:
+# the OR4 plan (hb/BED.txt 15:57:05Z) and the BED OR4 pass-line form; posted results 16:42:41Z.
+
+# Edit 2 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.A2 OK with nits 16:59:25Z; edit 1 was the stamps): (1) the cases planted
+# and not planted listed; (2) the empty level -0.2186 to -0.4958 as printed; (3) 'never -1' written as the bound it is (-sqrt((1 - p0) / p0));
+# (4) tests ed2 10aca9f8 catch a raise per case; (5) rule_a2 ed2 00445c80, the docstring's 0.50 dollars. No verdict changed.
+group: A2
+name: liquidation breadth, our rules (S03, S04 the count of coins with long, short liquidations in 30 s as a z against the last 6 hours)
+summary: >-
+  At e (every 30 s mark): z = (n x c - S1) / sqrt(n x S2 - S1 x S1), n = 360, c = the count at e (A2 S01 long, S02 short), S1, S2 the sum and
+  the sum of squares of the counts at the 360 minute ends in [e - 21,600 s, e), e left out; whole numbers exactly, then one double division,
+  written unrounded. Empty: the count's reason; SHORT_HISTORY when a baseline count is empty; FLAT_BASE when every baseline count is equal
+  (CARD_A2_V6 rules 10 to 13, 15).
+read_as: >-
+  The year writes both exactly: 11,520 of 11,520 values (every 30 s mark of 8 Mar 2026 and 24 Sep 2025, S03 and S04) replayed from its own
+  counts, as doubles equal to the last bit (RULE_A2_STAMPS_V1, J16010). The counts are 0 most of the time (S01 at 72.47% and 54.20% of marks,
+  S02 at 78.33% and 55.66%), so the z has a floor at the empty level, -0.2186 to -0.4958 at the marks printed. By construction, at a count of 0 the z is
+  -mean/sd of the baseline, at least -sqrt((1 - p0) / p0) with p0 the baseline's share of zero counts (Cauchy-Schwarz), so it cannot go
+  below -1 while p0 is 0.5 or more (the day's zero share 54.20% to 78.33%, near the edge on 24 Sep); they are 2 or more at 3.06% to 4.58% of marks and 3 or more at 2.22% to 3.30%. A z of a mostly-zero count: its low fifths say
+  'nothing liquidated', not 'fewer than usual'.
+
+conclude:
+  may:
+    - "how many more roster coins had long (short) liquidations in the last 30 s than over the last 6 hours, in standard units (S03, S04: the year's value equals our replay at 11,520 of 11,520 marks; RULE_A2_STAMPS_V1, J16010)"
+  never:
+    - "S03, S04 below 0 as fewer liquidations than usual: the counts are 0 at 54 to 78% of marks, and the z cannot go below -1 while the baseline's zero share is 0.5 or more (by construction; J16010)"
+    - "S03, S04 of 2 or more as rare: 3.06% to 4.58% of marks (J16010)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A2_V6.md 72aa3914fea654d6 (rules 10 to 13, 15; edge cases planted N4b, E21a to E21c, E22, E23a, E23b, E23c, E24a, E24b, E25 to E27, E28a, E30; not planted N6a to N6c (D-1's files missing), E17, E28b, E29 (SHORT_HISTORY and FLAT_BASE are held by E25, B1, E28a; E29 a coin out all along is A1's), E31 to E36 (the variants, flags, known_at))
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A2_V3.tsv 7e98f965a56c7deb (S03 long_liq_z, S04 short_liq_z, step 30 s)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml 6e185c7a6626ef8d (A2 S01, S02: the roster coins with long, short liquidations summing to 0.50 dollars or more in the last 30 s: basic, RELIABLE; RENAMED there from long_liq_coins_30s, short_liq_coins_30s)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (A2 S03, S04 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_A2_v5.py 754a40ba11fd6248 (CARD_A2_V6 part 5, CLK 6 Oct 2026), reading A1's day call of D and D-1"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A2.parquet
+  year_output_columns: "name (S03, S04 and their .coverage, .e_inside_off, .flat0_off, .n1_off, .own_roster_off, .w60_off), coin (MARKET), as_of_us (every 30 s: 2,880 a day), value_kind (0 = EMPTY), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'A2', ['S01', 'S02', 'S03', 'S04'], coins=['MARKET'])"
+
+source:
+  vendor: "Tardis.dev, binance-futures liquidations (USDT and USDC), through A1 S03, S04 and A2 S01, S02"
+  exchange_stream: "forceOrder as Tardis records it, read by A1; A2 S03, S04 read A2's counts"
+  files: "the year's A2 output of D-1 (from 18:00) and D (A2.parquet)"
+  columns: "A2 S01, S02 (MARKET) at every 30 s mark of D-1 and D, value_kind, value_f64, empty_reason; A2 S03, S04 of D"
+  fields:
+    z: "the count at e against the counts at the 360 minute ends in [e - 21,600 s, e) (at a 30 s mark between minute ends, the first at or after e - 21,600 s to the last before e); whole-number S1, S2, then float(n c - S1) / math.sqrt(float(n S2 - S1 S1)) [proof: CARD_A2_V6 rules 10, 13; planted E21a to E21c, E23a to E24b, E23c, E30 in tests/test_rule_a2.py; mutants far_edge_out, e_inside, n_minus_1; RULE_A2_STAMPS_V1]"
+    empty: "the count's reason at e, else SHORT_HISTORY (a baseline count empty), else FLAT_BASE (n S2 = S1 S1) [proof: rule 12; planted E22, E24a, E25, E26, E27, E28a, B1; mutant flat_first]"
+  latency: "known_at = the latest known_at of the coin values counted at e and in the 360 baseline counts (CARD_A2_V6 rule 17); not checked here"
+  silence: "the count at e empty (TRADES_HOLE, ...): the z empty with it; none on the two days (J16010: empty 0)"
+
+reading_rules:
+  - "the z of a count that is mostly 0: at a count of 0 it sits at minus the baseline mean over its spread, a small negative number"
+  - "the baseline is the 6 hours of minute ends before e, e left out; a 30 s mark reads the same minute-end series"
+  - "the year also writes the variants .e_inside_off, .flat0_off, .n1_off, .own_roster_off, .w60_off and the coverage: not checked in this card"
+
+values:
+  units: "a z, no unit (+ = more coins than the last 6 hours)"
+  zero: "0: the count at the baseline mean (CARD_A2_V6 E21b)"
+  empty: "the count's reasons, SHORT_HISTORY, FLAT_BASE, NO_ROSTER; value_kind 0. Never read empty as 0"
+  stale: "the count's at e; SHORT_HISTORY and FLAT_BASE never stale"
+  flags: "the count's at e (USDC_MISSING, DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT)"
+
+interpret:
+  do:
+    - "read S03, S04 with S01, S02 beside: a z of 3 can be 2 coins after 6 quiet hours"
+  dont:
+    - "read the low fifths as a calm market against a busy usual: they are the empty level"
+
+biases:
+  - {what: "a mostly-zero count", direction: "the z bounded below near 0", size: "at a count of 0 at least -sqrt((1 - p0) / p0): never -1 or less while the baseline's zero share p0 is 0.5 or more; the counts 0 at 54.20% to 78.33% of marks", proof: "J16010"}
+
+external_checks:
+  - {what: "S03 and S04 replayed by the card's rules from the year's own S01, S02 at every 30 s mark of 8 Mar 2026 and 24 Sep 2025 (the baseline from 18:00 of D-1)", where: "the year's A2 rows (a replay, our source; S01, S02 RELIABLE by BASIC_A2_V2)", status: "VERIFIED: RULE_A2_STAMPS_V1 029d2e206b75e5d8: 5,760 of 5,760 MATCH each (J16010 log a0b10ada6b975ef3, rule_a2 ed1 31bcfdde3da5b9af, tests 4e8f2f047d4b09d7 20 of 20: 16 cases, 4 mutants; tests ed2 10aca9f8 catch a raise per case: n_minus_1 now caught by E21a to E21c's values)"}
+  - {what: "how often S03, S04 reach 2, 3 and -1; how often the counts are 0", where: "the year's own A2 rows of the two days", status: "MEASURED: J16010"}
+  - {what: "an outside record", where: "none: our rule on our counts; the counts are checked in BASIC_A2_V2", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "S03, S04 replayed at every 30 s mark of D", run: "python3 -B -m rawcheck.rule_a2 --days <D,..> --out <dir>", where: "team/RAWCHECK/code (rule_a2.py ed2 00445c807c7993e1: the docstring's 0.50 dollars, no code changed; ed1 31bcfdde ran J16010)"}
+
+used_by: "S03 by CHAIN_trend_SHORT_ride_4 (condition 3: SKIP when long_liq_z is in fifth 3 or 4); S04 by CHAIN_chop_SHORT_fade (condition 1: SKIP in fifth 4 or 5), CHAIN_forced_LONG_fade (condition 5: ENTER in fifth 4, or 4 or 5), CHAIN_forced_LONG_ride (conditions 7, 8: ENTER in fifth 3; SKIP in fifth 4, or 4 or 5) (CARD_A2_V6 'Who reads it today'). To TREE's RR1 (hb/BED.txt 16:42:41Z): with the counts 0 most marks, the lower fifths hold the empty level"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A2_V6.md 72aa3914fea654d6
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml 6e185c7a6626ef8d (S01, S02, the inputs)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_A2_STAMPS_V1.tsv 029d2e206b75e5d8 (J16010)"
+  JOBS: "16010 (tests, rule_a2 on 8 Mar 2026 and 24 Sep 2025; log a0b10ada6b975ef3)"
+  PASS_LINES: "hb/BED.txt 2026-10-18T15:57:05Z (the OR4 plan); no separate pass lines for A2 before J16010 (a replay of the year's own rows only)"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): long_liq_z and short_liq_z are the standard z of a count (the spread dividing by n): no rename"
+
+settings:
+  - {id: A2.S03, name: "long-liquidated coin count as a z against the last 6 hours of minute ends", layer: our_rule, side: long, window: "the count of 30 s at e against the 360 minute ends in [e - 21,600 s, e)", clock: "every 30 s", scope: market, contracts: "USDT+USDC (A1 S03)",
+     aggregate: "(n c - S1) / sqrt(n S2 - S1^2), n = 360, c = A2 S01 at e; unrounded; SHORT_HISTORY, FLAT_BASE", aliases: "long_liq_z",
+     derived_from: "A2 S01 (BASIC_A2_V2) at e and at the 360 minute ends before",
+     means: "how many more coins had long liquidations in the last 30 s than over the last 6 hours, in standard units",
+     computation: {status: RELIABLE, proof: "RULE_A2_STAMPS_V1 029d2e20: 5,760 of 5,760 (every 30 s mark of 8 Mar 2026 and 24 Sep 2025; J16010, rule_a2 31bcfdde)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16010: 2 or more at 0.0306 and 0.0458 of marks, 3 or more at 0.0222 and 0.0278, -1 or less at 0 (8 Mar 2026, 24 Sep 2025; by construction while the baseline's zero share is 0.5 or more); S01 at 0 on 0.7247 and 0.5420; the standard z of a count (no rename)"},
+     open: "a mostly-zero count: bounded below at -sqrt((1 - p0) / p0); two days",
+     never: ["S03 below 0 as fewer liquidations than usual (the counts are 0 most marks)"]}
+  - {id: A2.S04, name: "short-liquidated coin count as a z against the last 6 hours of minute ends", layer: our_rule, side: short, window: "the count of 30 s at e against the 360 minute ends in [e - 21,600 s, e)", clock: "every 30 s", scope: market, contracts: "USDT+USDC (A1 S04)",
+     aggregate: "(n c - S1) / sqrt(n S2 - S1^2), n = 360, c = A2 S02 at e; unrounded; SHORT_HISTORY, FLAT_BASE", aliases: "short_liq_z",
+     derived_from: "A2 S02 (BASIC_A2_V2) at e and at the 360 minute ends before",
+     means: "how many more coins had short liquidations in the last 30 s than over the last 6 hours, in standard units",
+     computation: {status: RELIABLE, proof: "RULE_A2_STAMPS_V1 029d2e20: 5,760 of 5,760 (every 30 s mark of 8 Mar 2026 and 24 Sep 2025; J16010)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16010: 2 or more at 0.0441 and 0.0389 of marks, 3 or more at 0.0330 and 0.0222, -1 or less at 0; S02 at 0 on 0.7833 and 0.5566; the standard z of a count (no rename)"},
+     open: "as S03; read by 3 chains by fifths",
+     never: ["S04 below 0 as fewer liquidations than usual (the counts are 0 most marks)"]}

@@ -1,0 +1,382 @@
+stream	venue	phase	column	arrow_type	exchange_field	meaning	unit	exact_rule	dedupe_key	known_at_rule	raw_sealed
+aggTrade	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	a	int64	a	aggregate trade id (steps by 1 per symbol: the id proof)	-	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	p_m	int64	p	price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	p_e	int8	p	price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	q_m	int64	q	quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	q_e	int8	q	quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	f	int64	f	first raw trade id in the aggregate	-	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	l	int64	l	last raw trade id in the aggregate	-	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	T	int64	T	trade time	ms	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	m	bool	m	buyer is the maker (true = a taker SELL)	-	as sent	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,a	recv_wall_ns: our receive time of the frame	no
+aggTrade	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,a	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	u	int64	u	order book update id	-	as sent	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	b_m	int64	b	best bid price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	b_e	int8	b	best bid price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	B_m	int64	B	best bid quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	B_e	int8	B	best bid quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	a_m	int64	a	best ask price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	a_e	int8	a	best ask price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	A_m	int64	A	best ask quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	A_e	int8	A	best ask quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	T	int64	T	transaction time	ms	as sent	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,u	recv_wall_ns: our receive time of the frame	no
+bookTicker	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,u	recv_wall_ns: our receive time of the frame	no
+depth	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	U	int64	U	first update id in the event	-	as sent	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	u	int64	u	final update id in the event	-	as sent	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	pu	int64	pu	final update id of the previous event (pu = last u: the chain proof)	-	as sent	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	T	int64	T	transaction time	ms	as sent	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	b_px_m	list<int64>	b	price levels: decimal mantissas	quote	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	b_px_e	list<int8>	b	price levels: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	b_q_m	list<int64>	b	quantities (0 = level removed): decimal mantissas	base	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	b_q_e	list<int8>	b	quantities: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	a_px_m	list<int64>	a	price levels: decimal mantissas	quote	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	a_px_e	list<int8>	a	price levels: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	a_q_m	list<int64>	a	quantities (0 = level removed): decimal mantissas	base	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	a_q_e	list<int8>	a	quantities: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depth	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,u	recv_wall_ns; ONE chain (primary connection), never a union of two	no
+depthSnapshot	binance-futures	P1a	symbol	string	symbol	the contract (set by the REST lane from the request; the answer does not carry it)	-	as sent	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	lastUpdateId	int64	lastUpdateId	the book state id: diffs with u >= it continue this snapshot	-	as sent	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	E	int64	E	message output time	ms	as sent	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	T	int64	T	transaction time	ms	as sent	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	b_px_m	list<int64>	bids	price levels: decimal mantissas	quote	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	b_px_e	list<int8>	bids	price levels: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	b_q_m	list<int64>	bids	quantities: decimal mantissas	base	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	b_q_e	list<int8>	bids	quantities: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	a_px_m	list<int64>	asks	price levels: decimal mantissas	quote	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	a_px_e	list<int8>	asks	price levels: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	a_q_m	list<int64>	asks	quantities: decimal mantissas	base	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	a_q_e	list<int8>	asks	quantities: powers of ten	-	exact decimal (mantissa x 10^exponent)	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+depthSnapshot	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,lastUpdateId	resp_recv_ns (REST); requested at start and on a broken chain	no
+dvol	deribit	P1a	index_name	string	params.data.index_name	btc_usd or eth_usd	-	as sent	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	vol_m	int64	params.data.volatility	DVOL implied volatility index: decimal mantissa	pct	exact decimal (mantissa x 10^exponent)	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	vol_e	int8	params.data.volatility	DVOL implied volatility index: power of ten	-	exact decimal (mantissa x 10^exponent)	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	timestamp	int64	params.data.timestamp	index time	ms	as sent	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	dropped:jsonrpc	DROPPED	jsonrpc	protocol word	-	not kept (raw keeps it)	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	dropped:method	DROPPED	method	protocol word (subscription)	-	not kept (raw keeps it)	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+dvol	deribit	P1a	dropped:params.channel	DROPPED	params.channel	the subscription name (index_name kept)	-	not kept (raw keeps it)	index_name,timestamp	recv_wall_ns: our receive time of the frame	yes
+forceOrder	binance-futures	P1a	symbol	string	o.s	the contract (USDT and USDC, all symbols)	-	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	S	string	o.S	order side: SELL = a long liquidated	-	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	o_type	string	o.o	order type	-	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	tif	string	o.f	time in force	-	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	X	string	o.X	order status	-	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	p_m	int64	o.p	order price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	p_e	int8	o.p	order price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	ap_m	int64	o.ap	average price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	ap_e	int8	o.ap	average price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	q_m	int64	o.q	original quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	q_e	int8	o.q	original quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	l_m	int64	o.l	last filled quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	l_e	int8	o.l	last filled quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	z_m	int64	o.z	filled accumulated quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	z_e	int8	o.z	filled accumulated quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	T	int64	o.T	order trade time	ms	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+forceOrder	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,T,S,p_m,p_e,q_m,q_e	recv_wall_ns; a 1-per-second SNAPSHOT per symbol: a lower bound, two connections cannot add the missing prints	yes
+hl_book	hyperliquid	P1b	symbol	string	coin	the Hyperliquid coin name	-	as sent	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	T	int64	time	book time	ms	as sent	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	bid_px_m	list<int64>	levels[0][].px	bid levels, best first: price mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	bid_px_e	list<int8>	levels[0][].px	bid levels, best first: price power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	bid_sz_m	list<int64>	levels[0][].sz	bid levels, best first: size mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	bid_sz_e	list<int8>	levels[0][].sz	bid levels, best first: size power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	bid_n	list<int64>	levels[0][].n	bid levels, best first: orders at the level	-	as sent	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	ask_px_m	list<int64>	levels[1][].px	ask levels, best first: price mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	ask_px_e	list<int8>	levels[1][].px	ask levels, best first: price power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	ask_sz_m	list<int64>	levels[1][].sz	ask levels, best first: size mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	ask_sz_e	list<int8>	levels[1][].sz	ask levels, best first: size power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	ask_n	list<int64>	levels[1][].n	ask levels, best first: orders at the level	-	as sent	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_book	hyperliquid	P1b	dropped:levels	DROPPED	levels	kept as the bid_* and ask_* lists	-	not kept (raw keeps it)	symbol,T	recv_wall_ns: our receive time of the frame	no
+hl_ctx	hyperliquid	P1b	symbol	string	coin	the Hyperliquid coin name	-	as sent	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	funding_m	int64	ctx.funding	funding rate per hour: decimal mantissa	rate	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	funding_e	int8	ctx.funding	funding rate per hour: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	oi_m	int64	ctx.openInterest	open interest: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	oi_e	int8	ctx.openInterest	open interest: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	mark_m	int64	ctx.markPx	mark price: decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	mark_e	int8	ctx.markPx	mark price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	oracle_m	int64	ctx.oraclePx	oracle price: decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	oracle_e	int8	ctx.oraclePx	oracle price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	mid_m	int64	ctx.midPx	book mid price (null when no book): decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	mid_e	int8	ctx.midPx	book mid price (null when no book): power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	premium_m	int64	ctx.premium	premium of mark over oracle: decimal mantissa	rate	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	premium_e	int8	ctx.premium	premium of mark over oracle: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	impact_bid_m	int64	ctx.impactPxs[0]	impact bid price: decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	impact_bid_e	int8	ctx.impactPxs[0]	impact bid price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	impact_ask_m	int64	ctx.impactPxs[1]	impact ask price: decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	impact_ask_e	int8	ctx.impactPxs[1]	impact ask price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	prev_day_m	int64	ctx.prevDayPx	price 24 h ago: decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	prev_day_e	int8	ctx.prevDayPx	price 24 h ago: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	day_ntl_vlm	string	ctx.dayNtlVlm	24 h notional volume, the exact text (too many digits for a mantissa)	USD	as sent	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	day_base_vlm	string	ctx.dayBaseVlm	24 h base volume, the exact text	base	as sent	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	T	int64	-	our receive time in ms (the message has no exchange time)	ms	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_ctx	hyperliquid	P1b	dropped:ctx.impactPxs	DROPPED	ctx.impactPxs	kept as impact_bid and impact_ask	-	not kept (raw keeps it)	symbol,T	recv_wall_ns (no exchange time in the message)	no
+hl_trade	hyperliquid	P1b	symbol	string	coin	the Hyperliquid coin name	-	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	side	string	side	aggressor: B = buy, A = sell	-	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	px_m	int64	px	fill price: decimal mantissa	USD	exact decimal (mantissa x 10^exponent)	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	px_e	int8	px	fill price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	sz_m	int64	sz	fill size: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	sz_e	int8	sz	fill size: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	T	int64	time	fill time	ms	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	tid	int64	tid	trade id (unique, not gap-free)	-	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	hash	string	hash	the transaction hash	-	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	buyer	string	users[0]	the buyer address	-	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	seller	string	users[1]	the seller address	-	as sent	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,tid	recv_wall_ns: our receive time of the frame	no
+hl_trade	hyperliquid	P1b	dropped:users	DROPPED	users	kept as buyer and seller	-	not kept (raw keeps it)	symbol,tid	recv_wall_ns: our receive time of the frame	no
+kline1m	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	t_open	int64	k.t	candle open time	ms	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	T_close	int64	k.T	candle close time	ms	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	o_m	int64	k.o	open: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	o_e	int8	k.o	open: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	h_m	int64	k.h	high: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	h_e	int8	k.h	high: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	l_m	int64	k.l	low: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	l_e	int8	k.l	low: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	c_m	int64	k.c	close: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	c_e	int8	k.c	close: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	v_m	int64	k.v	base volume: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	v_e	int8	k.v	base volume: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	q_m	int64	k.q	quote volume: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	q_e	int8	k.q	quote volume: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	V_m	int64	k.V	taker buy base volume: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	V_e	int8	k.V	taker buy base volume: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	Q_m	int64	k.Q	taker buy quote volume: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	Q_e	int8	k.Q	taker buy quote volume: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	n	int64	k.n	number of trades	-	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	f	int64	k.f	first trade id of the minute (a free completeness check)	-	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	L	int64	k.L	last trade id of the minute (a free completeness check)	-	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	dropped:k.B	DROPPED	k.B	documented as ignore	-	not kept (raw keeps it)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	dropped:k.i	DROPPED	k.i	interval: always 1m by the subscription	-	not kept (raw keeps it)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	dropped:k.s	DROPPED	k.s	symbol repeated (s kept)	-	not kept (raw keeps it)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+kline1m	binance-futures	P1a	dropped:k.x	DROPPED	k.x	final flag: only final candles are recorded	-	not kept (raw keeps it)	symbol,t_open	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	p_m	int64	p	mark price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	p_e	int8	p	mark price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	i_m	int64	i	index price (a spot composite): decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	i_e	int8	i	index price (a spot composite): power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	P_m	int64	P	estimated settle price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	P_e	int8	P	estimated settle price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	r_m	int64	r	funding rate: decimal mantissa	rate	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	r_e	int8	r	funding rate: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	T_next_funding	int64	T	next funding time	ms	as sent	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	yes
+markPrice	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,E	recv_wall_ns: our receive time of the frame	yes
+openInterest	binance-futures	P1a	symbol	string	symbol	the contract	-	as sent	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	oi_m	int64	openInterest	open interest: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	oi_e	int8	openInterest	open interest: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	time	int64	time	server time of the value	ms	as sent	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+openInterest	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,time	resp_recv_ns (REST): the answer's arrival; req_sent_ns beside it	yes
+ticker	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	c_m	int64	c	last traded price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	c_e	int8	c	last traded price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	Q_m	int64	Q	last traded quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	Q_e	int8	Q	last traded quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	p_m	int64	p	price change over the rolling 24 h: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	p_e	int8	p	price change over the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	P_m	int64	P	price change percent over the rolling 24 h: decimal mantissa	percent	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	P_e	int8	P	price change percent over the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	w_m	int64	w	weighted average price over the rolling 24 h: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	w_e	int8	w	weighted average price over the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	o_m	int64	o	open price of the rolling 24 h: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	o_e	int8	o	open price of the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	h_m	int64	h	high price of the rolling 24 h: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	h_e	int8	h	high price of the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	l_m	int64	l	low price of the rolling 24 h: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	l_e	int8	l	low price of the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	v_m	int64	v	base volume of the rolling 24 h: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	v_e	int8	v	base volume of the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	q_m	int64	q	quote volume of the rolling 24 h: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	q_e	int8	q	quote volume of the rolling 24 h: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	O	int64	O	statistics open time	ms	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	C	int64	C	statistics close time	ms	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	F	int64	F	first trade id of the 24 h	-	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	L	int64	L	last trade id of the 24 h	-	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	n	int64	n	number of trades of the 24 h	-	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,E	recv_wall_ns: our receive time of the frame	no
+ticker	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,E	recv_wall_ns: our receive time of the frame	no
+topLongShort	binance-futures	P1a	symbol	string	symbol	the contract	-	as sent	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	ratio_m	int64	longShortRatio	top traders long/short position ratio: decimal mantissa	ratio	exact decimal (mantissa x 10^exponent)	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	ratio_e	int8	longShortRatio	top traders long/short position ratio: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	long_acc_m	int64	longAccount	long share: decimal mantissa	share	exact decimal (mantissa x 10^exponent)	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	long_acc_e	int8	longAccount	long share: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	short_acc_m	int64	shortAccount	short share: decimal mantissa	share	exact decimal (mantissa x 10^exponent)	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	short_acc_e	int8	shortAccount	short share: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	timestamp	int64	timestamp	period time	ms	as sent	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+topLongShort	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,timestamp	resp_recv_ns (REST)	yes
+trade	binance-futures	P1a	symbol	string	s	the contract	-	as sent	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	t	int64	t	raw trade id (checked for holes; filled only from Tardis)	-	as sent	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	p_m	int64	p	price: decimal mantissa	quote	exact decimal (mantissa x 10^exponent)	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	p_e	int8	p	price: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	q_m	int64	q	quantity: decimal mantissa	base	exact decimal (mantissa x 10^exponent)	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	q_e	int8	q	quantity: power of ten	-	exact decimal (mantissa x 10^exponent)	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	T	int64	T	trade time	ms	as sent	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	E	int64	E	event time	ms	as sent	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	m	bool	m	buyer is the maker	-	as sent	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	X	string	X	execution type as sent (MARKET, INSURANCE_FUND, ...)	-	as sent	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	recv_wall_ns	int64	-	our receive time of the frame, UTC wall clock	ns	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	recv_mono_ns	int64	-	our receive time of the frame, monotonic clock (lag statistics survive an NTP step)	ns	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	conn	string	-	the connection that delivered the kept row (A, B, or a single connection name; REST for REST rows)	-	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	frame_seq	int64	-	the frame number on that connection; events of one batched frame share it	-	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	other_recv_mono_ns	int64	-	arrival of the other connection's copy (A + B streams only; null if it never came)	ns	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	arrival_seq	int64	-	the global arrival order of this process	-	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	write_wall_ns	int64	-	when the batch holding the row was written (R5 measured per row)	ns	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	src	string	-	ws, rest_fill, rest_poll (OI, top long/short) or rest_snapshot (depth snapshot)	-	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	req_sent_ns	int64	-	REST rows: when the request was sent (null on websocket rows; V3 s4 REST rows, LAB1 B5 MUST 2)	ns	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	used_weight	int64	-	REST rows: the X-MBX-USED-WEIGHT-1M header of the answer (null on websocket rows)	-	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	raw	binary	-	the payload bytes as received (sealed only for low-volume streams; always in live segments)	-	ours	symbol,t	recv_wall_ns: our receive time of the frame	no
+trade	binance-futures	P1a	dropped:e	DROPPED	e	event type: the block names the stream	-	not kept (raw keeps it)	symbol,t	recv_wall_ns: our receive time of the frame	no

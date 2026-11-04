@@ -1,0 +1,195 @@
+# BASIC_C9_V1.yaml: the card of the basic group C9 range register (built on the C13 trade candles), EDITION 1 (EDGE2, 2026-10-18; BR3 = WP3 of
+# BASIC_REVIEW_WORKPACKAGES_V3 075b96c8). Made as BASIC_C3_V2 4cdfefaa and BASIC_C8_V3 1a1d8a67; ONE SOURCE OF TRUTH; rawcheck/meaning_register.py
+# edition 5 6223b1ad3de7bb1b checks it and writes .md, .flat.jsonl, .agent.jsonl. Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V18
+# b2d8bb81 (C9 NOT_CHECKED before this card). The 15 basic settings; the dial and touch settings (S02, S04, S05, S09, S11, S12, S16, S18, S19, S23,
+# S24, S26, S27, S29, S30: our rules) and the 9 .coverage counts are not in this card. Every meaning number is from the BR3 proof run on meaning_minute
+# edition 4 fe27fa1c60137712: J15895 (8 Mar 2026), J15896 (24 Sep 2025); first in J15886, J15887 (edition 2: the same C9 lines); J15884, J15885
+# (edition 1) printed 88 C9 lines against 123, without the 'by flag' lines (BED, hb/BED.txt 15:08:33Z).
+# Edit 1 (EDGE2, 18 Oct 2026, before landing): BED's REVIEW BR3.C9 (hb/BED.txt 15:08:33Z): E1 the SHORT_WINDOW opens cite c9day (the largest 3
+# all DASH; S21 c9worst); E2 the jobs of may 2, 3 and never 2, 3 (may 3: at most 0.0500, S28 24 Sep 13:57); E3 this header; E4 each age
+# setting's own two tie shares (c9name). Never 2 now names the six ages (the lows too: c9name, ours the latest at 100% on 8 Mar).
+
+group: C9
+name: range register (basic, built on the C13 trade candles)
+summary: >-
+  For each roster coin at a minute end e, over the last W minute ends (W = 60, 120, 240; e - (W - 1) min to e): the highest C13 high and the
+  lowest C13 low of the minutes C13 has valued. S01, S08, S15 the width between them in percent of the close at e; S03, S10, S17 where the close
+  sits in it (0 the low, 1 the high); S06, S13, S20 and S07, S14, S21 how many minutes ago the high and the low were last set; S22, S25, S28 the
+  median pos over the roster coins.
+read_as: >-
+  The coin's TRADE range over the last 1, 2, 4 hours, as Binance's own 1-minute candles give it: equal to the same formula on the klines within
+  1e-9 at 99.75 to 99.76% of coin-minutes on 8 Mar 2026 and 99.41 to 99.52% on 24 Sep 2025 (Spearman 0.999885 to 1.000000; minutes since an
+  edge the same at 100% and 99.83 to 99.94%) (J15895, J15896). The rest has two named causes: a window that reads fewer than W minutes where C13
+  is empty (the year's flag SHORT_WINDOW; DASH on 24 Sep: C13 empty at 33 of the 60 minutes to 10:41), and a minute whose C13 candle differs
+  from the kline's by a late or a boundary trade (MEANING_C13_V4 LIMITS). The market medians S22, S25, S28 equal the kline median at 98.82 to
+  99.31% (8 Mar) and 90.42 to 91.32% (24 Sep) of minutes: one middle coin's pos moves them. Computation: 9,285 of 9,285 (C9_STAMPS_V1).
+
+conclude:
+  may:
+    - "how wide a coin's trade range of the last 60, 120, 240 minutes is in percent of its last price (S01, S08, S15) and where its last price sits in it (S03, S10, S17): equal to Binance's candles within 1e-9 at 99.41 to 99.76% of coin-minutes (J15895, J15896)"
+    - "how many minutes ago the window's high and low were last set (S06, S07, S13, S14, S20, S21): the same minute as on the candles at 99.83 to 100%, the LATEST minute that touched the edge (J15895, J15896 c9day, c9name)"
+    - "where the typical coin sits in its range (S22, S25, S28, the median): at most 0.0500 from the candle median at every minute of both days (the largest: S28 24 Sep 13:57, ours 0.15 against the kline median 0.20000000000000473; J15895, J15896 c9market, c9mlook)"
+  never:
+    - "a width, place or age from a window with C13 minutes missing as the full window's: the year flags it SHORT_WINDOW (557 to 1,330 coin-minutes of 24 Sep, equal to the candles at 70.02 to 96.77% only; DASH 10:41: the 21.40 high missed)"
+    - "S06, S07, S13, S14, S20, S21 as the FIRST touch of the edge: it is the latest (the klines' earliest and latest edge differ at 20.31 to 29.77% of coin-minutes on 8 Mar, 12.79 to 17.93% on 24 Sep; J15895, J15896 c9name)"
+    - "S22, S25, S28 as a mean or as a share of coins near their high: it is the median pos (against the mean pos equal at 0.00% of minutes both days, J15895, J15896 c9name)"
+    - "a pos when the window had one price: empty NO_RANGE, never 0.5"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C9_V4.md 0475da4281e68c35 (rules 1 to 17, O1, O2)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C9_V1.tsv b6aabe0d8ce8cfc1 (30 settings, 51 metrics)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01 close, S02 high, S03 low, S04 no trade: raw, LIMITS)"
+  layer_list: "team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C9 S01, S03, S06 to S08, S10, S13 to S15, S17, S20 to S22, S25, S28 basic); LAYER_REGISTER_V18 b2d8bb81"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C9_v5.py d8a46ee26caf5f20 (CARD_C9_V4 edition 4; reads C13's built parts of D and D-1)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C9.parquet
+  year_output_columns: "name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9schema), coin (every roster coin; MARKET for S22 to S30), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 4 a decimal; 2 a count), value_f64, value_txt, known_at_us, stale, empty_reason, flags (SHORT_WINDOW:<coin> and others)"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_minute.py c9ours(D, names) (value_kind 0 empty, else value_f64; the flag SHORT_WINDOW beside)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures trades, through our raw C13 (MEANING_C13_V4)"
+  exchange_stream: "trades as Tardis records them, read by C13; C9 reads C13's minute rows, never a stream"
+  files: "the year's C13 output of D and D-1 (C13.parquet), the week's roster (the year roster root)"
+  columns: "C13 S01 close, S02 high, S03 low, S04 no trade, each with value_kind, value_f64, value_txt, known_at_us, empty_reason, flags"
+  fields:
+    window: "the W minute ends e - (W - 1) x 60 s to e, D-1's rows for the first W - 1 minutes of D; a minute C13 has empty is skipped, the value flagged SHORT_WINDOW [proof: CARD_C9_V4 rules 1, 2, O1; C9_STAMPS_V1 08f8e198, planted N4, E204 in tests/test_basic_c9.py 6c652c13]"
+    width_pos: "width = 100 x (high - low) / close at e; pos = (close - low) / (high - low), NO_RANGE when high = low; exact, rounded once to 12 decimals half up [proof: CARD_C9_V4 rules 3 to 5, 9; C9_STAMPS_V1]"
+    since: "minutes since the latest window minute end whose high (low) equals the window high (low) [proof: CARD_C9_V4 rule 8; planted E206; J15895 c9name]"
+    median: "the median of the coins' pos with a value [proof: CARD_C9_V4 rule 12; C9_STAMPS_V1 15 of 15]"
+  latency: "known_at = the latest known_at of the C13 rows read; C13's close of (e - 60 s, e] received by e (CARD_C9_V4 rule 11; MEANING_C13_V4)"
+  silence: "a coin is empty with C13's reason when C13's close at e is empty (24 Sep: 105 coin-minutes THIN_FEED, TRADES_HOLE, J15896 c9schema; 8 Mar: 0)"
+
+reading_rules:
+  - "a window reads the minutes C13 has valued; fewer than W: the year flags SHORT_WINDOW:<coin> and the value is of the minutes read (CARD_C9_V4 O1 A)"
+  - "the width is in percent of the CLOSE at e (of the low it differs: equal at 0.21 to 1.66% only, J15895, J15896 c9name)"
+  - "min since takes the LATEST minute that set the edge"
+  - "the market values are medians over the roster coins with a value, with a .coverage count beside (not in this card)"
+
+values:
+  units: "S01, S08, S15: percent of the close; S03, S10, S17, S22, S25, S28: 0 to 1; S06, S07, S13, S14, S20, S21: minutes (0 to W - 1)"
+  zero: "width 0 = one price in the window; min since 0 = the minute ending at e set the edge; pos 0 = the close is the window low"
+  empty: "NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (C13's), NO_RANGE (pos), ALL_COINS_EMPTY (market); value_kind 0 with NaN. Never read empty as 0"
+  stale: "true when empty because a feed went quiet or thin (C13's TRADES_HOLE, THIN_FEED)"
+  flags: "SHORT_WINDOW:<coin>, DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT (CARD_C9_V4 rules 10, 13)"
+
+interpret:
+  do:
+    - "read S01, S08, S15 and S03, S10, S17 as the candle range and place of the last 1, 2, 4 hours"
+    - "check the flags for SHORT_WINDOW before reading a value of a coin with C13 gaps"
+  dont:
+    - "read a SHORT_WINDOW value as the full window's"
+    - "read S06 to S21's minutes as the first touch"
+    - "read empty as 0"
+
+biases:
+  - {what: "a window that reads fewer than W minutes", direction: "a narrower range: the missing minutes' high or low are not read", size: "24 Sep 2025: 557 (60 min) to 1,330 (240 min) coin-minutes flagged, equal to the candles at 70.02 to 96.77%; DASH 10:41 width 0.234742 against 0.516432", proof: "J15896 c9day (by flag), c9look DASH 10:41, 11:09, 23:30, c9worst S21"}
+  - {what: "C13's candle (e - 60 s, e] received by e against the kline's [e - 60 s, e)", direction: "either way, one minute's high, low or close", size: "0.24 to 0.25% of coin-minutes on 8 Mar (no SHORT_WINDOW that day); ETH 22:04 one minute's low 1921.68 against 1921.06; CRV 20:29 the close 0.238 against 0.237", proof: "J15895 c9day, c9look ETH 22:04, CRV 20:29; MEANING_C13_V4"}
+
+external_checks:
+  - {what: "the 15 settings recomputed exactly from our C13 S01 to S04 (D-1 too) for every roster coin and the market at 01:00, 04:00, 12:10, 16:00, 22:06 of 3 days", where: "the year's C13 output", status: "VERIFIED: C9_STAMPS_V1 08f8e198296d9aac: 9,285 of 9,285 MATCH (J15883 log 601956bf, basic_c9 ed1 05eb9951d6dff3a7, tests 6c652c13 21 of 21, code adaec4ef66579609)"}
+  - {what: "every roster coin at every minute end of 8 Mar 2026 and 24 Sep 2025 against the same formulas on Binance 1m klines (the W klines ending at e, all present); the market medians against the median of the kline pos", where: "Binance 1m klines (data.binance.vision), <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with named gaps (J15895, J15896 c9day, c9market, c9mlook, c9look, c9worst)"}
+  - {what: "the names: width of the close against of the low; pos in [0, 1]; the latest against the earliest edge; the median against the mean", where: "the klines; our values", status: "VERIFIED (J15895, J15896 c9name)"}
+
+tools:
+  - {what: "the 15 settings recomputed from our C13", run: "python3 -B -m rawcheck.basic_c9 --days <D,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_c9.py 05eb9951d6dff3a7)"}
+  - {what: "against the klines; the market; the names; one market minute; one coin's window; the largest gaps", run: "python3 -B -m rawcheck.meaning_minute c9day <D> | c9market <D> | c9name <D> | c9mlook <D> <S> <HHMM> | c9look <D> <COIN> <HHMM> <W> | c9worst <D> <S> [N]", where: "team/RAWCHECK/code (meaning_minute.py fe27fa1c60137712 edition 4, tests cf7599c3d65b163b 17 of 17)"}
+
+used_by: "BTC's S03, S10, S17 by CHAIN_chop_SHORT_fade; BTC's S20 by CHAIN_chop_SHORT_fade and CHAIN_chop_SHORT_ride_2; S22 by CHAIN_chop_SHORT_ride_2; BTC's S14, S21, S15 by CHAIN_trend_SHORT_fade_2; BTC's S08 and S28 by CHAIN_trend_SHORT_ride_4; the record's fifths on every metric (CARD_C9_V4 'Who reads it today'); every other coin value: nobody yet"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C9_V4.md 0475da4281e68c35
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C9_STAMPS_V1.tsv 08f8e198296d9aac (J15883)"
+  JOBS: "THE PROOF RUN on meaning_minute ed. 4 fe27fa1c: 15895 (8 Mar 2026; log c614ed0cc165794a), 15896 (24 Sep 2025; log b2cc0ab1d5be3792); first 15884, 15885 (ed. 1), 15886, 15887 (ed. 2), the same lines; 15883 (stamps)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T13:55Z, posted before the code ran"
+
+settings:
+  - {id: C9.S01, name: "60 min high-low width, pct of the close at e", layer: basic, side: none, window: "60 minute ends (e - 59 min to e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (the largest C13 high - the smallest C13 low of the minutes read) / C13 close at e; exact, 12 decimals", aliases: "coin.m7w060_width_pct; m7w060_mkt_width_pct (BTC)",
+     means: "how wide the coin's trade range of the last 60 minutes is, in percent of its last price",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day against the same formula on the 60 klines ending at e: equal within 1e-9 at 99.75% (8 Mar), 99.41% (24 Sep) of coin-minutes, Spearman 1.000000, 0.999886; 24 Sep on full windows 99.64%, on the 557 values flagged SHORT_WINDOW 70.02%"},
+     open: "a window reads its valued minutes (CARD_C9_V4 O1 A): where C13 is empty the window misses those minutes' high and low (DASH 24 Sep: C13 empty at 33 of the 60 minutes to 10:41, the 21.40 high of 10:23 missed, J15896 c9look); else a minute's C13 high or low differs from the kline's by a late or boundary trade (ETH 8 Mar 22:04, J15895 c9look)"}
+  - {id: C9.S03, name: "place of the close in its 60 min high-low range", layer: basic, side: none, window: "60 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(close at e - low) / (high - low); high = low: empty NO_RANGE; 12 decimals", aliases: "coin.m7w060_pos; m7w060_mkt_pos (BTC)",
+     means: "0 = the last price is at the 60-minute low, 1 = at its high",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: equal within 1e-9 at 99.76%, 99.44%, Spearman 0.999982, 0.999888; 24 Sep full windows 99.64%, SHORT_WINDOW 73.25%; c9name: within [0, 1] at 100% both days"},
+     open: "as the width: SHORT_WINDOW on 24 Sep; and the close at e can differ from the kline's (CRV 8 Mar 20:29: the same window edges 0.24, 0.236, ours 0.238 against 0.237, J15895 c9look)"}
+  - {id: C9.S06, name: "minutes since the 60 min high was last set", layer: basic, side: none, window: "60 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(e - the LATEST window minute end whose high equals the window high) / 60 s", aliases: "coin.m7w060_min_since_high; m7w060_mkt_min_since_high (BTC)",
+     means: "how fresh the 60-minute high is: 0 = the minute ending at e set it",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: the same minute as the klines at 100% (8 Mar), 99.88% (24 Sep; full windows 100%, SHORT_WINDOW 84.38%); c9name: ours equals the LATEST kline edge, not the earliest (a tie of edges at 29.77% (8 Mar) and 17.38% (24 Sep) of coin-minutes)"},
+     open: "SHORT_WINDOW on 24 Sep (gap up to 46 minutes, the largest 3 all DASH, J15896 c9day)"}
+  - {id: C9.S07, name: "minutes since the 60 min low was last set", layer: basic, side: none, window: "60 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(e - the LATEST window minute end whose low equals the window low) / 60 s", aliases: "coin.m7w060_min_since_low; m7w060_mkt_min_since_low (BTC)",
+     means: "how fresh the 60-minute low is: 0 = the minute ending at e set it",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: the same minute as the klines at 100% (8 Mar), 99.83% (24 Sep; full windows 100%, SHORT_WINDOW 77.56%); c9name: ours equals the LATEST kline edge, not the earliest (a tie of edges at 26.36% (8 Mar) and 16.68% (24 Sep) of coin-minutes)"},
+     open: "SHORT_WINDOW on 24 Sep (gap up to 59 minutes, the largest 3 all DASH, J15896 c9day)"}
+  - {id: C9.S22, name: "median over the roster coins of the place in the 60 min range", layer: basic, side: none, window: "60 minute ends", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "the median of the coins' pos with a value (an even count: the mean of the two middle ones); 12 decimals", aliases: "m7w060_mkt_pos_median",
+     means: "where the typical coin's last price sits in its 60-minute range: 0.5 the middle",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 15 of 15 (J15883)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9market against the median of the roster coins' kline pos: equal within 1e-9 at 99.31% (8 Mar), 90.42% (24 Sep) of minutes (under the 99% pass line of 13:55Z), max gap 0.0094, 0.0375; c9name: against the MEAN equal at 0%"},
+     open: "one middle coin's pos moves the median: 8 Mar 1600: AAVE, FIL (a minute's C13 candle against the kline's); 24 Sep 1050: DASH (SHORT_WINDOW) (J15895, J15896 c9mlook)"}
+  - {id: C9.S08, name: "120 min high-low width, pct of the close at e", layer: basic, side: none, window: "120 minute ends (e - 119 min to e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (the largest C13 high - the smallest C13 low of the minutes read) / C13 close at e; exact, 12 decimals", aliases: "coin.m7w120_width_pct; m7w120_mkt_width_pct (BTC)",
+     means: "how wide the coin's trade range of the last 120 minutes is, in percent of its last price",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day against the same formula on the 120 klines ending at e: equal within 1e-9 at 99.75% (8 Mar), 99.43% (24 Sep) of coin-minutes, Spearman 1.000000, 0.999960; 24 Sep on full windows 99.64%, on the 924 values flagged SHORT_WINDOW 82.90%"},
+     open: "a window reads its valued minutes (CARD_C9_V4 O1 A): where C13 is empty the window misses those minutes' high and low (DASH 24 Sep: C13 empty at 33 of the 60 minutes to 10:41, the 21.40 high of 10:23 missed, J15896 c9look); else a minute's C13 high or low differs from the kline's by a late or boundary trade (ETH 8 Mar 22:04, J15895 c9look)"}
+  - {id: C9.S10, name: "place of the close in its 120 min high-low range", layer: basic, side: none, window: "120 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(close at e - low) / (high - low); high = low: empty NO_RANGE; 12 decimals", aliases: "coin.m7w120_pos; m7w120_mkt_pos (BTC)",
+     means: "0 = the last price is at the 120-minute low, 1 = at its high",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: equal within 1e-9 at 99.76%, 99.43%, Spearman 0.999992, 0.999885; 24 Sep full windows 99.64%, SHORT_WINDOW 82.90%; c9name: within [0, 1] at 100% both days"},
+     open: "as the width: SHORT_WINDOW on 24 Sep; and the close at e can differ from the kline's (CRV 8 Mar 20:29: the same window edges 0.24, 0.236, ours 0.238 against 0.237, J15895 c9look)"}
+  - {id: C9.S13, name: "minutes since the 120 min high was last set", layer: basic, side: none, window: "120 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(e - the LATEST window minute end whose high equals the window high) / 60 s", aliases: "coin.m7w120_min_since_high; m7w120_mkt_min_since_high (BTC)",
+     means: "how fresh the 120-minute high is: 0 = the minute ending at e set it",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: the same minute as the klines at 100% (8 Mar), 99.91% (24 Sep; full windows 100%, SHORT_WINDOW 92.53%); c9name: ours equals the LATEST kline edge, not the earliest (a tie of edges at 28.10% (8 Mar) and 17.49% (24 Sep) of coin-minutes)"},
+     open: "SHORT_WINDOW on 24 Sep (gap up to 46 minutes, the largest 3 all DASH, J15896 c9day)"}
+  - {id: C9.S14, name: "minutes since the 120 min low was last set", layer: basic, side: none, window: "120 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(e - the LATEST window minute end whose low equals the window low) / 60 s", aliases: "coin.m7w120_min_since_low; m7w120_mkt_min_since_low (BTC)",
+     means: "how fresh the 120-minute low is: 0 = the minute ending at e set it",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: the same minute as the klines at 100% (8 Mar), 99.87% (24 Sep; full windows 100%, SHORT_WINDOW 89.50%); c9name: ours equals the LATEST kline edge, not the earliest (a tie of edges at 23.82% (8 Mar) and 15.50% (24 Sep) of coin-minutes)"},
+     open: "SHORT_WINDOW on 24 Sep (gap up to 27 minutes, the largest 3 all DASH, J15896 c9day)"}
+  - {id: C9.S25, name: "median over the roster coins of the place in the 120 min range", layer: basic, side: none, window: "120 minute ends", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "the median of the coins' pos with a value (an even count: the mean of the two middle ones); 12 decimals", aliases: "m7w120_mkt_pos_median",
+     means: "where the typical coin's last price sits in its 120-minute range: 0.5 the middle",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 15 of 15 (J15883)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9market against the median of the roster coins' kline pos: equal within 1e-9 at 99.10% (8 Mar), 90.42% (24 Sep) of minutes (under the 99% pass line of 13:55Z), max gap 0.0145, 0.0426; c9name: against the MEAN equal at 0%"},
+     open: "one middle coin's pos moves the median: 8 Mar 0934: FIL, TRX (a minute's C13 candle against the kline's); 24 Sep 1054: DASH (SHORT_WINDOW) (J15895, J15896 c9mlook)"}
+  - {id: C9.S15, name: "240 min high-low width, pct of the close at e", layer: basic, side: none, window: "240 minute ends (e - 239 min to e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (the largest C13 high - the smallest C13 low of the minutes read) / C13 close at e; exact, 12 decimals", aliases: "coin.m7w240_width_pct; m7w240_mkt_width_pct (BTC)",
+     means: "how wide the coin's trade range of the last 240 minutes is, in percent of its last price",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day against the same formula on the 240 klines ending at e: equal within 1e-9 at 99.75% (8 Mar), 99.51% (24 Sep) of coin-minutes, Spearman 1.000000, 0.999987; 24 Sep on full windows 99.64%, on the 1,330 values flagged SHORT_WINDOW 92.71%"},
+     open: "a window reads its valued minutes (CARD_C9_V4 O1 A): where C13 is empty the window misses those minutes' high and low (DASH 24 Sep: C13 empty at 33 of the 60 minutes to 10:41, the 21.40 high of 10:23 missed, J15896 c9look); else a minute's C13 high or low differs from the kline's by a late or boundary trade (ETH 8 Mar 22:04, J15895 c9look)"}
+  - {id: C9.S17, name: "place of the close in its 240 min high-low range", layer: basic, side: none, window: "240 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(close at e - low) / (high - low); high = low: empty NO_RANGE; 12 decimals", aliases: "coin.m7w240_pos; m7w240_mkt_pos (BTC)",
+     means: "0 = the last price is at the 240-minute low, 1 = at its high",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: equal within 1e-9 at 99.75%, 99.52%, Spearman 0.999995, 0.999920; 24 Sep full windows 99.64%, SHORT_WINDOW 93.08%; c9name: within [0, 1] at 100% both days"},
+     open: "as the width: SHORT_WINDOW on 24 Sep; and the close at e can differ from the kline's (CRV 8 Mar 20:29: the same window edges 0.24, 0.236, ours 0.238 against 0.237, J15895 c9look)"}
+  - {id: C9.S20, name: "minutes since the 240 min high was last set", layer: basic, side: none, window: "240 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(e - the LATEST window minute end whose high equals the window high) / 60 s", aliases: "coin.m7w240_min_since_high; m7w240_mkt_min_since_high (BTC)",
+     means: "how fresh the 240-minute high is: 0 = the minute ending at e set it",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: the same minute as the klines at 100% (8 Mar), 99.94% (24 Sep; full windows 100%, SHORT_WINDOW 96.77%); c9name: ours equals the LATEST kline edge, not the earliest (a tie of edges at 29.03% (8 Mar) and 17.93% (24 Sep) of coin-minutes)"},
+     open: "SHORT_WINDOW on 24 Sep (gap up to 46 minutes, the largest 3 all DASH, J15896 c9day)"}
+  - {id: C9.S21, name: "minutes since the 240 min low was last set", layer: basic, side: none, window: "240 minute ends", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "(e - the LATEST window minute end whose low equals the window low) / 60 s", aliases: "coin.m7w240_min_since_low; m7w240_mkt_min_since_low (BTC)",
+     means: "how fresh the 240-minute low is: 0 = the minute ending at e set it",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15883, basic_c9 05eb9951 from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9day: the same minute as the klines at 100% (8 Mar), 99.92% (24 Sep; full windows 100%, SHORT_WINDOW 95.41%); c9name: ours equals the LATEST kline edge, not the earliest (a tie of edges at 20.31% (8 Mar) and 12.79% (24 Sep) of coin-minutes)"},
+     open: "SHORT_WINDOW on 24 Sep (gap up to 188 minutes, J15896 c9day; every coin-minute off by more than 1e-9 is DASH (61), J15896 c9worst S21)"}
+  - {id: C9.S28, name: "median over the roster coins of the place in the 240 min range", layer: basic, side: none, window: "240 minute ends", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "the median of the coins' pos with a value (an even count: the mean of the two middle ones); 12 decimals", aliases: "m7w240_mkt_pos_median",
+     means: "where the typical coin's last price sits in its 240-minute range: 0.5 the middle",
+     computation: {status: RELIABLE, proof: "C9_STAMPS_V1 08f8e198: 15 of 15 (J15883)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c9market against the median of the roster coins' kline pos: equal within 1e-9 at 98.82% (8 Mar), 91.32% (24 Sep) of minutes (under the 99% pass line of 13:55Z), max gap 0.0063, 0.0500; c9name: against the MEAN equal at 0%"},
+     open: "one middle coin's pos moves the median: 8 Mar 2029: CRV (a minute's C13 candle against the kline's); 24 Sep 1357: DASH (SHORT_WINDOW) (J15895, J15896 c9mlook)"}

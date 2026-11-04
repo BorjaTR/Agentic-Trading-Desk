@@ -1,0 +1,192 @@
+# OUR_RULE_A7_V1.yaml: the card of A7 oi_since_wave's OUR RULES S01 to S10 (the open interest's change since the market's liquidation wave
+# began, per coin and for the market, on the long and the short wave's clock), EDITION 1 (BED, 2026-10-18; OR4 of
+# OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1 15:54:31Z; reviewer EDGE2). Made as OUR_RULE_C9_V1 66c345c9 (EDGE2) and
+# OUR_RULE_COIN_C2_V1 8134247e8777737d (METRIC_AUDIT2, the same rename); ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it. Register of the
+# day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (A7 S01 to S10 our_rule, NOT_CHECKED before this card). The smart check (section 1):
+# the inputs cited by what they are, planted tests and mutants first, ONE small job (J16019: every coin and the market at every minute end of
+# 2 days; J16017 before it is void: my ed1 compared the year's shares as text, owned 17:01:09Z), how often, readers to TREE's RR1. Pass lines:
+# hb/BED.txt 'BED PASS LINES OR4.A7', posted before J16017 and J16019 ran.
+
+# Edit 1 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.A7 OK with nits 17:18:08Z): (1) A4 S04, S05 not landed, V32 NOT_CHECKED, said
+# here and in rule_a7 ed3 c1d1d0b7 (its docstring only, the code as ed2's); (2) 'the flush far along is rare' replaced by the sizes; (3) the
+# whole dollar's tie, half away from 0, written and planted (B6, tests ed3 4d9f11a8, 22 of 22 on the Mac, J16024); (4) the stamp and the sha16; notes (5) the
+# roster an open line, (6) the coin settings' proofs say they quote the market's numbers. No verdict changed.
+# Edit 2 (BED, 18 Oct 2026, before landing): the B6 tests run on the Mac, J16024 (EDGE1 17:38:13Z), 22 of 22; no other change.
+
+group: A7
+name: open interest since the liquidation wave began, our rules (per coin and for the market, on the long and the short wave's clock)
+summary: >-
+  At a minute end m with the market's long (short) wave of age a running (A4 S04, S05): the start is the minute end m - (a + 1) min; per coin
+  S01 (S03) = (OI(m) - OI(start)) / OI(start), 6 decimals; S02 (S04) = (OI(m) - OI(start)) x mark(m), whole dollars, OI = E2 S02 (the coin's
+  Binance open interest in coins), mark = the coin's Binance mark price at m (derivative_ticker, 61.0 s level); for the market S05 (S08) the
+  coins' summed dollars over their summed OI(start) x mark(m), S06 (S09) the median of the coins' shares, S07 (S10) the summed dollars. No
+  wave: NO_WAVE (A4's reason) (CARD_A7_V6 rules 1 to 7).
+read_as: >-
+  The year writes all ten exactly: every roster coin at every minute end (74,880 and 73,440 values each of S01 to S04) and the market (1,440
+  each of S05 to S10) on 8 Mar 2026 and 24 Sep 2025, from the year's A4 and E2 rows and the mark read from the Tardis files (RULE_A7_STAMPS_V1,
+  J16019). While a long wave runs (248 and 385 minute ends) the market's share S05 is below 0 at 58.87% and 56.88% of them, by a median of
+  -0.0187% and -0.0080% (the most -0.69% and -0.21%): the open interest moves hundredths of a percent and either way; A7's card's 'very
+  negative: the flush far along' names no level, and no minute is counted against one here. In a short wave (287, 271) S08 is below 0 at 68.29% and 69.00%. The dollars settings value the change in coins
+  at the mark NOW: they leave out the price's move on the open interest, so they are not 'the change of the dollar open interest' their old
+  names say (RENAMED, RULING 3, EDGE1 16:19:26Z).
+
+conclude:
+  may:
+    - "how much of a coin's (the market's) open interest has left or come in since the minute before the market's liquidation wave began, as a share (S01, S03, S05, S06, S08, S09) and in coins valued at the mark now (S02, S04, S07, S10) (RULE_A7_STAMPS_V1, J16019)"
+  never:
+    - "S02, S04, S07, S10 as the change of the dollar open interest: they are the change in coins valued at the mark of m, the price move left out (RULING 3)"
+    - "S05 below 0 as the flush far along: it is below 0 at 58.87% and 56.88% of the long-wave minutes, by a median of -0.0187% and -0.0080% (8 Mar 2026, 24 Sep 2025, J16019)"
+    - "a short wave's S08 below 0 as the shorts covering: the open interest also falls at 68.29% and 69.00% of the short-wave minutes, which the long side shows too (J16019)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A7_V6.md 998506e4bef9e144 (rules 1 to 7, O1, O2, O5; edge cases planted E60 to E64, E66 to E69, N2; not planted E1, E28, E30, E50, N1 to N8 but N2 (the inputs' reasons pass through from A4, E2), E65 (A4's), E70 to E75 (the ticker's bad and repeated rows, D-1's files))
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A7_V1.tsv 6319ec3f0ba15644
+  built_on_register: "team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml 62ccb2c440eaabda (A4 S04, S05, the market wave's age: our rule; computation RELIABLE by that card, filed and OK'd by EDGE2 17:06:28Z but not landed: LAYER_REGISTER_V32 still NOT_CHECKED); team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml 473ec5d1b66ae952 (E2 S02, the coin's Binance open interest in coins at the minute end: raw, RELIABLE, CLEAN); the mark: Tardis derivative_ticker mark_price by E2's reading rules (no year setting); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (A7 S01 to S10 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code/prod_A7_v3.py 2aab402dd1a90d58 (CARD_A7_V6 edition 6; prod_A7_v4.py 1db32481 on disk changes only the stale stamp, its docstring)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A7.parquet
+  year_output_columns: "name (S01 to S10 and the market's .coverage), coin (every roster coin for S01 to S04, MARKET for S05 to S10), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; a share or whole dollars), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'A7', ['S01', ..., 'S10'])"
+
+source:
+  vendor: "Tardis.dev, binance-futures derivative_ticker (open interest, mark price) and liquidations, through E2 S02 and A4 S04, S05"
+  exchange_stream: "the ticker's openInterest and markPrice as Tardis records them; A4's waves from forceOrder"
+  files: "the year's A4 (D), E2 (D-1, D) and A7 (D) output; <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<SYM>_<YYYY-MM-DD>.csv.gz of D (and D-1 before D's first row) for the mark"
+  columns: "A4 S04, S05 (MARKET); E2 S02 of every roster coin; local_timestamp, mark_price (the check reads the mark's text exactly)"
+  fields:
+    start: "the minute end m - (a + 1) min, a the side's wave age at m [proof: CARD_A7_V6 rule 2; planted E60 (age 0: m - 1 min), E61 (age 10: m - 11 min), E66 (age 14) in tests/test_rule_a7.py; mutant start_at_first; RULE_A7_STAMPS_V1]"
+    coin: "share (OI(m) - OI(start)) / OI(start), 6 decimals half away from 0, ZERO_BASE at a start of 0 (the dollars stand); dollars (OI(m) - OI(start)) x mark(m), whole dollars, a tie half away from 0 (prod_A7_v3 69, 70; basic_book.rnd 51 to 58); an empty input: m's reason, then the start's, then the mark's [proof: rules 3 to 6; planted E60 to E62, E64, E66 to E68, N2, B1, B6 (-0.5 dollars give -1, 2.5 give 3); mutants start_reason_first, round_even]"
+    market: "the summed dollars over the summed OI(start) x mark(m) of the coins with both, the median of the shares, the summed dollars; no coin: the common reason, else ALL_COINS_EMPTY [proof: rule 7; planted E60 to E64, E69, N2, B2; mutants share_any, mean_share]"
+    mark: "the mark_price of the last row received by m carrying one (D's file, else D-1's); its age over 61.0 s: STALE_VALUE (61.0 s exactly is not); no file NO_FILE [proof: E2 rules 1 to 6; planted B3, B4 on planted ticker files; mutant level_60; E2's bad-row rule 3 not read here]"
+  latency: "known_at = the latest of A4's, E2's at m and at the start, and the mark's row (CARD_A7_V6 rule 8); not checked here"
+  silence: "no wave: every value of the side NO_WAVE; the mark never empty at a coin-minute of a running wave on the two days (J16019)"
+
+reading_rules:
+  - "the clock is the market's wave (A4); the open interest is each coin's own (E2)"
+  - "the share compares coins with coins; the dollars value that change at the mark of m, not the dollar open interest's change"
+  - "the year also writes the market's coverage beside: not checked in this card"
+  - "the check takes the roster from sources.roster (CF.ROSTER_CSV, team/LAB/code/COIN_SYMBOLS_V2.csv, by onboard date), not D's week roster file (CARD_A7_V6 rule 11); the coin sets agreed on both days (every coin-minute matched: 52 and 51 coins, J16019); NO_ROSTER not read: an open"
+
+values:
+  units: "S01, S03, S05, S06, S08, S09: a share (-0.05 = 5% of the start's open interest left); S02, S04, S07, S10: dollars (coins x the mark of m)"
+  zero: "0: the open interest where it was at the start"
+  empty: "NO_WAVE, NO_HISTORY and A1's reasons (through A4); NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE (E2's and the mark's); ZERO_BASE; NO_ROSTER; ALL_COINS_EMPTY; value_kind 0. Never read empty as 0"
+  stale: "true for an empty value from a stale input (A4's stale or STALE_VALUE)"
+  flags: "DUPLICATE_ROW:<coin>, BAD_INPUT:<coin> (CARD_A7_V6 rule 9; not checked here)"
+
+interpret:
+  do:
+    - "read S05 and S08 against their own small size: hundredths of a percent move while a wave runs"
+  dont:
+    - "read the dollars as the dollar open interest's change"
+
+biases:
+  - {what: "the open interest moves little inside a wave", direction: "S05, S08 near 0, either sign", size: "S05 below 0 at 58.87% and 56.88% of long-wave minutes, median -0.0187% and -0.0080%, the most -0.69% and -0.21%; S08 below 0 at 68.29% and 69.00% (8 Mar 2026, 24 Sep 2025)", proof: "J16019"}
+
+external_checks:
+  - {what: "S01 to S10 recomputed by the card's rules from the year's A4 S04, S05 and E2 S02 (D-1 and D) and the mark read from the Tardis derivative_ticker of every roster coin (52 and 51), every coin and the market at every minute end of 8 Mar 2026 and 24 Sep 2025", where: "the year's rows and Tardis derivative_ticker (a recompute, our source)", status: "VERIFIED: S01 to S04 74,880 of 74,880 and 73,440 of 73,440 each, S05 to S10 1,440 of 1,440 each (J16019 log e9af414f1358bc22, rule_a7 ed2 3ab74ed0424eda74, tests 3d5ea43d7455bd08 21 of 21: 15 cases, 6 mutants; tests ed3 4d9f11a80d04c05a adds B6: 22 of 22 (16 cases, 6 mutants) on the Mac, J16024 (log b9f73bc5643893cc, tests log 75de6c8b9b0ed881; rule_a7 c1d1d0b7), as in BED's cloud copy); RULE_A7_STAMPS_V1 05ee3d5810413c5f holds BTC's and the market's rows while a wave ran (633 and 558 a coin setting)"}
+  - {what: "how often the market's share is below 0 while a wave runs, its size, the dollars", where: "the year's own A7 rows of the two days", status: "MEASURED: J16019"}
+  - {what: "an outside record", where: "none: our rule on our inputs; E2 is checked against Binance in MEANING_E2_V2", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "S01 to S10 at every minute end of D, every coin", run: "python3 -B -m rawcheck.rule_a7 --days <D,..> --out <dir>", where: "team/RAWCHECK/code (rule_a7.py ed3 c1d1d0b7997001cc, its docstring only; ed2 3ab74ed0 ran J16019; ed1 fa58d3c8 ran J16017, void)"}
+
+used_by: "nobody yet (CARD_A7_V6 'Who reads it today': S01 to S10; no reader uses a floor in dollars). To TREE's RR1 (hb/BED.txt, the DONE OR4.A7 line): no reader"
+
+could_build:
+  - {id: A7.CB1, intended: "the change of the coin's dollar open interest since the minute before the market's wave began (what 'oi_chg_usd' reads as)", was_name_of: "A7.S02, A7.S04",
+     formula: "OI(m) x mark(m) - OI(start) x mark(start), whole dollars",
+     needs: "the mark at the start (D-1 included), beside what S02, S04 read",
+     adds: "the price move on the whole open interest since the wave began; its size against S02 not measured",
+     status: NOT_BUILT}
+  - {id: A7.CB2, intended: "the market's summed change of the dollar open interest since the wave began (what 'oi_chg_usd_sum' reads as)", was_name_of: "A7.S07, A7.S10",
+     formula: "the sum over the roster coins of A7.CB1",
+     needs: "A7.CB1",
+     adds: "as A7.CB1, summed; not measured",
+     status: NOT_BUILT}
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A7_V6.md 998506e4bef9e144
+  BASIC: "none: built on OUR_RULE_A4_V1 (A4 S04, S05) and MEANING_E2_V2 (E2 S02)"
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_A7_STAMPS_V1.tsv 05ee3d5810413c5f (J16019)"
+  JOBS: "16019 (tests, rule_a7 ed2 on 8 Mar 2026 and 24 Sep 2025; log e9af414f1358bc22); 16017 (ed1, void: the shares compared as text); 16024 (tests ed3 only, 22 of 22; log b9f73bc5643893cc)"
+  PASS_LINES: "hb/BED.txt 'BED PASS LINES OR4.A7', posted before J16017 and J16019 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z; for A7 EDGE1 16:19:26Z): 'oi_chg_usd' calls up the change of the dollar open interest; S02, S04, S07, S10 value the change in coins at the mark of m: RENAMED (could_build A7.CB1, CB2); the shares: no rename"
+
+settings:
+  - {id: A7.S01, name: "coin's open interest change since the minute before the market's long wave began, a share of the coins then", layer: our_rule, side: long, window: "the long wave", clock: minute end, scope: coin, contracts: "USDT (E2's Binance open interest)",
+     aggregate: "(OI(m) - OI(start)) / OI(start), E2 S02 in coins, start = m - (A4 S04 + 1) min; 6 decimals; ZERO_BASE; NO_WAVE (A4)", aliases: "m5_long_oi_chg_share, coin.m5_long_oi_chg_share",
+     derived_from: "E2 S02 at m and at the start; A4 S04",
+     means: "how much of the coin's open interest has left (negative) or come in since the market's long wave began",
+     computation: {status: RELIABLE, proof: "J16019: 74,880 of 74,880 (8 Mar 2026) and 73,440 of 73,440 (24 Sep 2025), every roster coin at every minute end; rule_a7 3ab74ed0"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: the market's S05 (not the coins' own shares, not summarized) below 0 at 0.5887 and 0.5688 of long-wave minutes, median -0.000187 and -0.000080; a share the card's rule 5 says (no rename)"},
+     open: "per-coin shares not summarized here; two days"}
+  - {id: A7.S02, name: "coin's open interest change in coins since the minute before the market's long wave began, valued at the mark price of m (dollars)", renamed_from: "m5_long_oi_chg_usd", layer: our_rule, side: long, window: "the long wave", clock: minute end, scope: coin, contracts: "USDT (E2's open interest, the ticker's mark)",
+     aggregate: "(OI(m) - OI(start)) x mark(m), whole dollars; the mark's reason after the open interest's", aliases: "m5_long_oi_chg_usd, coin.m5_long_oi_chg_usd (the old name: not the dollar open interest's change)",
+     derived_from: "E2 S02 at m and at the start; A4 S04; the mark at m",
+     means: "the coins that left or came in since the wave began, at today's price",
+     computation: {status: RELIABLE, proof: "J16019: 74,880 of 74,880 and 73,440 of 73,440, every roster coin at every minute end"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: the market's S07 (the sum, not the coins' own dollars, not summarized) median -2,466,521 and -2,210,883 dollars over the long-wave minutes; RENAMED (RULING 3: the price move left out, could_build A7.CB1)"},
+     open: "the dollar open interest's change (A7.CB1) not built",
+     never: ["S02 as the change of the dollar open interest"]}
+  - {id: A7.S03, name: "coin's open interest change since the minute before the market's short wave began, a share of the coins then", layer: our_rule, side: short, window: "the short wave", clock: minute end, scope: coin, contracts: "USDT (E2's Binance open interest)",
+     aggregate: "as S01 on A4 S05's clock", aliases: "m5_short_oi_chg_share, coin.m5_short_oi_chg_share",
+     derived_from: "E2 S02 at m and at the start; A4 S05",
+     means: "how much of the coin's open interest has left or come in since the market's short wave (the squeeze) began",
+     computation: {status: RELIABLE, proof: "J16019: 74,880 of 74,880 and 73,440 of 73,440"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: the market's S08 (not the coins' own shares, not summarized) below 0 at 0.6829 and 0.6900 of short-wave minutes; a share (no rename)"},
+     open: "per-coin shares not summarized here; two days"}
+  - {id: A7.S04, name: "coin's open interest change in coins since the minute before the market's short wave began, valued at the mark price of m (dollars)", renamed_from: "m5_short_oi_chg_usd", layer: our_rule, side: short, window: "the short wave", clock: minute end, scope: coin, contracts: "USDT (E2's open interest, the ticker's mark)",
+     aggregate: "as S02 on A4 S05's clock", aliases: "m5_short_oi_chg_usd, coin.m5_short_oi_chg_usd (the old name: not the dollar open interest's change)",
+     derived_from: "E2 S02 at m and at the start; A4 S05; the mark at m",
+     means: "the coins that left or came in since the squeeze began, at today's price",
+     computation: {status: RELIABLE, proof: "J16019: 74,880 of 74,880 and 73,440 of 73,440"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: the market's S10 (the sum, not the coins' own dollars, not summarized) median -6,919,254 and -5,055,466 dollars over the short-wave minutes; RENAMED (RULING 3, could_build A7.CB1)"},
+     open: "as S02",
+     never: ["S04 as the change of the dollar open interest"]}
+  - {id: A7.S05, name: "market's open interest change since the long wave began: the coins' dollars over their starting dollars", layer: our_rule, side: long, window: "the long wave", clock: minute end, scope: market, contracts: "USDT",
+     aggregate: "the sum of the coins' exact S02 over the sum of their OI(start) x mark(m), the coins with both; 6 decimals; ZERO_BASE at a sum of 0", aliases: "m5_mkt_long_oi_chg_share",
+     derived_from: "A7 S01, S02 of every roster coin",
+     means: "how much of the market's open interest has left or come in since the long wave began",
+     computation: {status: RELIABLE, proof: "J16019: 1,440 of 1,440 a day (8 Mar 2026, 24 Sep 2025)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: below 0 at 0.5887 and 0.5688 of long-wave minutes (248, 385), median -0.000187 and -0.000080, min -0.006904 and -0.002069, max 0.004232 and 0.002577; a share (no rename)"},
+     open: "small and either way; no reader; two days",
+     never: ["S05 below 0 as the flush far along (below 0 at 58.87% and 56.88% of long-wave minutes, by hundredths of a percent)"]}
+  - {id: A7.S06, name: "median coin's open interest change since the long wave began (a share)", layer: our_rule, side: long, window: "the long wave", clock: minute end, scope: market, contracts: "USDT",
+     aggregate: "the median of the coins' exact S01 (the mean of the two middle ones for an even count); 6 decimals", aliases: "m5_mkt_long_oi_chg_share_median",
+     derived_from: "A7 S01 of every roster coin",
+     means: "the typical coin's open interest change since the long wave began",
+     computation: {status: RELIABLE, proof: "J16019: 1,440 of 1,440 a day"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: not summarized beyond the match; a median the card's rule 7 says (no rename)"},
+     open: "how often not measured; two days"}
+  - {id: A7.S07, name: "market's summed open interest change in coins since the long wave began, each valued at its mark of m (dollars)", renamed_from: "m5_mkt_long_oi_chg_usd_sum", layer: our_rule, side: long, window: "the long wave", clock: minute end, scope: market, contracts: "USDT",
+     aggregate: "the sum of the coins' exact S02, whole dollars", aliases: "m5_mkt_long_oi_chg_usd_sum (the old name: not the dollar open interest's change)",
+     derived_from: "A7 S02 of every roster coin",
+     means: "the coins that left or came in across the market since the long wave began, at today's prices",
+     computation: {status: RELIABLE, proof: "J16019: 1,440 of 1,440 a day"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: median -2,466,521 and -2,210,883 dollars, min -90,555,143 and -56,149,208, max 55,771,042 and 71,001,039 over the long-wave minutes; RENAMED (RULING 3, could_build A7.CB2)"},
+     open: "the dollar open interest's change (A7.CB2) not built",
+     never: ["S07 as the change of the market's dollar open interest"]}
+  - {id: A7.S08, name: "market's open interest change since the short wave began: the coins' dollars over their starting dollars", layer: our_rule, side: short, window: "the short wave", clock: minute end, scope: market, contracts: "USDT",
+     aggregate: "as S05 on the short clock", aliases: "m5_mkt_short_oi_chg_share",
+     derived_from: "A7 S03, S04 of every roster coin",
+     means: "how much of the market's open interest has left or come in since the short wave began",
+     computation: {status: RELIABLE, proof: "J16019: 1,440 of 1,440 a day"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: below 0 at 0.6829 and 0.6900 of short-wave minutes (287, 271), median -0.000522 and -0.000181, min -0.005737 and -0.002125, max 0.007094 and 0.001082; a share (no rename)"},
+     open: "below 0 in most squeezes too; no reader; two days",
+     never: ["S08 below 0 as shorts covering (it falls in most long waves as well)"]}
+  - {id: A7.S09, name: "median coin's open interest change since the short wave began (a share)", layer: our_rule, side: short, window: "the short wave", clock: minute end, scope: market, contracts: "USDT",
+     aggregate: "the median of the coins' exact S03; 6 decimals", aliases: "m5_mkt_short_oi_chg_share_median",
+     derived_from: "A7 S03 of every roster coin",
+     means: "the typical coin's open interest change since the short wave began",
+     computation: {status: RELIABLE, proof: "J16019: 1,440 of 1,440 a day"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: not summarized beyond the match; a median (no rename)"},
+     open: "how often not measured; two days"}
+  - {id: A7.S10, name: "market's summed open interest change in coins since the short wave began, each valued at its mark of m (dollars)", renamed_from: "m5_mkt_short_oi_chg_usd_sum", layer: our_rule, side: short, window: "the short wave", clock: minute end, scope: market, contracts: "USDT",
+     aggregate: "the sum of the coins' exact S04, whole dollars", aliases: "m5_mkt_short_oi_chg_usd_sum (the old name: not the dollar open interest's change)",
+     derived_from: "A7 S04 of every roster coin",
+     means: "the coins that left or came in across the market since the squeeze began, at today's prices",
+     computation: {status: RELIABLE, proof: "J16019: 1,440 of 1,440 a day"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16019: median -6,919,254 and -5,055,466 dollars, min -75,862,750 and -59,285,801, max 92,033,200 and 30,100,445 over the short-wave minutes; RENAMED (RULING 3, could_build A7.CB2)"},
+     open: "as S07",
+     never: ["S10 as the change of the market's dollar open interest"]}

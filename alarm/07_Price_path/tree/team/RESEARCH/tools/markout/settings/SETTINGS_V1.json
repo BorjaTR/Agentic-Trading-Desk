@@ -1,0 +1,8 @@
+{
+ "about": "markout_v1 settings (owner STRATEGY, 29 Oct 2026). Waits in seconds after the alarm; the run's own execution delay (2 s) is added on top.",
+ "waits_s": [0, 60, 120, 180, 300, 600, 900],
+ "max_wait_s": 3600,
+ "max_workers": 3,
+ "allowed_last": "20260228",
+ "split_day": "20251101"
+}

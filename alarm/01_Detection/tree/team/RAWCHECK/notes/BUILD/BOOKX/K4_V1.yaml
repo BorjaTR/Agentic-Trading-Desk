@@ -1,0 +1,288 @@
+# K4_V1.yaml: BOOKX Stoikov's micro-price (D2.CB2) (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8).
+# Worked examples recomputed by team/TREE/proposals/verify_bookx_examples_tree_v3.py (the toy chain, exact fractions).
+# On the owner's 5 s grid (BUILD_ITEMS_V4 9d424de3, ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4, WORKPACKAGES_V2 edit 2 rule 4.11): every 5 s point of D,
+# minute ends included; the chain is fitted on every second of the 14 days before D (unchanged by the grid).
+# Edition 2: METRIC_AUDIT's REVIEW BOOKX 18:20:25Z (F1 to F5 and the nits) and ADDON_ARCHITECTURE_V4 edit 3 0591d181 (the phases, section 4 line 35; the
+# row at exactly 00:00:00.000000, line 37; the fit table, section 5; the kernels of addon_grid_v2 85c8ece1, section 9.4).
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 2): X5 D's own counts in their own file known at 24:00 of D,
+# the tick fixed per day before counting, the first 30 s of a fit day left out, X1, X2, the order of the empty reasons, the missing
+# edge cases, the integer bucket, Binance in the never line; METRIC_AUDIT's ed2 nits N9, N10. Values unchanged.
+# Edition 4: METRIC_AUDIT2's FIX CHECK BOOKX (REVIEW_LEAD_METRIC_AUDIT2_BOOKX_V1 3414cef5): the per_coin tick per day, the missing file of D planted (E19,
+# M10), E16's mutant (M11). Values unchanged.
+# Edition 5: METRIC_AUDIT2's FINDING K4 (20:15:31Z) after the signing: the real-check pass takes G* by the card's own series, not (I - B)^-1 g1 (I - B is singular: B's rows sum to 1). Values unchanged.
+kind: build_metric
+id: K4
+producer: BOOKX
+item: micro-price (Stoikov 2018, D2.CB2)
+tier: BUILD
+name: Stoikov's micro-price of Binance's top of book every 5 s (the mid plus the expected change of the mid given the top's imbalance and spread, a Markov chain fitted on the coin's 14 days before D), in USDT and as its distance from the mid in bps
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 5
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T20:21:10Z'
+means: >-
+  Where the mid is expected to go, from what the top of the book looks like now: the mid plus Stoikov's adjustment G*, the expected sum
+  of the mid's future changes given the imbalance of the best bid and ask amounts and the spread in ticks, learnt from the coin's own
+  14 days before D (S01 in USDT, S02 the adjustment in bps of the mid). What the year's D2 S02 ('micro_dev') was named for: D2 S02 is
+  the size-weighted mid, renamed (BASIC_D2_V1 568a9585).
+example: >-
+  A coin with a 0.1 USDT step quoted 100.0 / 100.1 (one tick, mid 100.05) and much more resting at the bid than at the ask (I = qb / (qb + qa) = 0.75). In the
+  coin's past, from that kind of book the mid moved up more often than down: the fitted chain gives G* = +2/9 of a half tick =
+  0.011111111111 USDT. The micro-price is 100.061111111111 (S01) and S02 = 1.110555833194 bps. The size-weighted mid would say +0.025
+  USDT (a quarter tick): it ignores what the past says about the next moves.
+formula: >-
+  The rows, the row in force, seen, BAD_INPUT and the files are CARD_D2_V3 rules 1 to 6 word for word (a row with no stamp stands at
+  the stamp and arrival of the row before it; D's file is always needed, the 00:00:00 point too; a needed file missing or only a .part:
+  NO_FILE; a header-only file or an empty gzip has no rows). The tick of a coin-day is fixed before counting: Binance's tickSize of the
+  symbol that day (exchangeInfo as held: data check), else the gcd of the day's best bid and ask prices on the reader's integers.
+  Observations: on each fit day, the bookTicker row in force at every whole second s from 00:00:30 to 23:59:59 (the first 30 s are left
+  out: their seen test reaches D-1), good and seen (a row read stamped in [s - 30 s, s] and received by s); the state X_s = (b, S): b =
+  min(10 qb // (qb + qa), 9) on the integer amounts (10 buckets of the best amounts' bid share), S = (Pa - Pb) / tick a whole number
+  1 to 4 (else the second is off grid); the mid M_s. Pairs (s, s + 1 s) with both seconds in that window of the same fit day (86,369 a
+  day, none across 00:00), good and on grid:
+  dM = (M_s+1 - M_s) / (tick / 2) in half ticks. Symmetrised: each pair also counted mirrored, ((9 - b, S), (9 - b', S'), -dM). With n_i
+  the pairs from state i: Q[i, j] = #(dM = 0, i to j) / n_i; R1[i, k] = #(dM = k from i) / n_i for k in K = the non-zero half-tick
+  moves -8 to +8 (a larger move is dropped and counted); T[i, j] = #(dM != 0, i to j) / n_i. Then g1 = (I - Q)^-1 R1 k (k the moves in
+  USDT, k x tick / 2), B = (I - Q)^-1 T, g_(n+1) = B g_n, G* = the sum of g_n until |g_n| < 1e-12 x tick (at most 1,000 terms).
+  At each 5 s point u: the state of the row in force at u gives S01 = M_u + G*(state) and S02 = G*(state) / M_u x 10,000 bps. The fit
+  uses the 14 days before D only; float64 linear algebra. Every point of D, the 00:00:00 point included, uses D's chain (fit on D-14 to
+  D-1, known at 00:00 of D): the 00:00:00 point is assembled in D's fit pass from the CARRY's row in force at 24:00 of D-1 and any
+  row of D's file stamped and received at exactly 00:00:00.000000 (E8, E9). The first failing reason, in this order: NO_FILE,
+  BOOK_HOLE, BAD_INPUT, NO_HISTORY, FEW_VALUES, FIT_TICK_CHANGED, FIT_SINGULAR, SPREAD_OFF_GRID, STATE_UNVISITED.
+source:
+  kind: paper
+  ref: >-
+    Stoikov 2018, 'The micro-price: a high-frequency estimator of future prices', Quantitative Finance 18(12), 1959-1966; the algebra
+    from Gatheral's slides and arXiv 2411.13594 (RESEARCH_TOOLS_V1 aad3cc38 section 7.2, O2: no tool on PyPI; sstoikov/microprice on
+    GitHub has no licence file and could not be read past its first part). OPEN (named, the default built): the clock of the chain
+    (each second here; each update in the alternative), the 10 buckets and the 4-tick grid (opinion).
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures), pack book_ticker_v2 (188dc357)
+    rule_in_force: the row in force at a moment s or u is the last row read in file order (good or bad) stamped at or before it and received by it; seen when some row read (good or bad) is stamped in the 30 s before it and received by it (CARD_D2_V3 rules 2, 3, 6)
+    stale_rule: not seen gives BOOK_HOLE at u (stale 1); unseen seconds are left out of the fit
+    days: "D's raw for the points 00:00:05 to 24:00:00 (24:00:00 written to X1/carry/BOOKX/<D>.npz with the state at 24:00: the row in force, the latest stamp read and the rows not in force at 24:00, max(t, arr) > 24:00; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the 00:00:00 point of D is D-1's 24:00 point, and 00:00:05 to 00:00:25 take the row in force and the seen rule from that state with D's rows"
+  - kind: addon
+    ref: K4's counts files X1/stats/BOOKX/<d>.parquet of D-14 to D-1 (per coin, the day's transition counts and tick; each known at 24:00 of its day d, so before D)
+    card: BOOKX/K4_V1
+    rule_in_force: the 14 days' counts added up give Q, R1, T
+    stale_rule: a missing day of the 14 gives NO_HISTORY
+    days: D-14 to D-1
+overlaps:
+  - setting: D2 S01
+    kind: other_metric
+    why: >-
+      D2 S01 is the size-weighted mid (bid and ask weighted by the opposite sizes, BASIC_D2_V1 568a9585), the first-order guess K4
+      replaces with the fitted chain; the same row, another formula (the owner's list of other metrics)
+per_coin: >-
+  The tick per coin-day, fixed before that day's counting (formula: Binance's tickSize as held, else that day's gcd); the points of D
+  use the chain's tick from D's fit table (the 14 days' shared tick; never D's own day gcd, known only at 24:00 of D); a row of D whose
+  spread is not a whole number of that tick is off grid. BTC sits at a one-tick spread most of the time: its states are (b, 1). Coarse-step coins and the 1000-coins are mostly 1 to 2
+  ticks. Thin coins visit few states: STATE_UNVISITED appears. A coin entering the roster has no chain for 14 days.
+time: >-
+  The chain is refit once a day from the 14 days before D: a change of regime shows after a lag; the seconds of the fit are UTC
+  seconds; the 00:00:00 point is D-1's 24:00 point and 00:00:05 to 00:00:25 read the CARRY's state; funding settles and quarter hours are ordinary seconds. The first year days:
+  NO_HISTORY until 24 Sep 2025.
+output:
+  group_file: X1/day=<D>/BOOKX.parquet
+  names:
+    - name: S01
+      label: microprice_stoikov_usdt
+      units: USDT (per 1,000 coins for a 1000-coin)
+      value_kind: float
+      decimals: none
+      means: the mid plus Stoikov's fitted adjustment for the top's state at u
+    - name: S02
+      label: microprice_stoikov_dev_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: the adjustment G* over the mid, the expected change of the mid in bps
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the later of the arrival of the row in force at u and the chain's known_at (00:00 of D, the end of its fit window: the
+    fit table, ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 5); an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "a needed file missing or only a .part (CARD_D2_V3 rule 5): D's file at every point (00:00:00 too: phase B sets it NO_FILE though the CARRY holds a row); D-1's CARRY at 00:00:05 to 00:00:25. A header-only file or an empty gzip is there and has no rows"
+    - reason: BOOK_HOLE
+      when: no row read (good or bad) stamped in [u - 30 s, u] and received by u (CARD_D2_V3 rule 3)
+    - reason: BAD_INPUT
+      when: the row in force at u is bad (any reader why)
+    - reason: SPREAD_OFF_GRID
+      when: the spread at u is not a whole number of ticks from 1 to 4
+    - reason: STATE_UNVISITED
+      when: the state at u had no pair in the 14 fit days
+    - reason: FIT_TICK_CHANGED
+      when: the 14 fit days do not share one tick for the coin (a tick change inside the window)
+    - reason: FIT_SINGULAR
+      when: I - Q is singular for the coin, or the series has not converged after 1,000 terms
+    - reason: NO_HISTORY
+      when: any of the 14 fit days before D is missing for the coin
+    - reason: FEW_VALUES
+      when: fewer than 604,800 good pairs in the fit, counted before the mirror (about half of the 14 days' 1,209,166 pairs, 86,369 a day)
+  stale_rule: stale = 1 exactly when the value is empty BOOK_HOLE
+  max_staleness_s: 30
+  window_days: 14
+  no_history: >-
+    the chain first fits on 24 Sep 2025 (the counts of 10 to 23 Sep 2025): S01, S02 empty NO_HISTORY from 10 Sep to 23 Sep 2025,
+    valued on 167 of the 181 year days
+  fit_rule: >-
+    the chain (Q, R1, T, the tick) per coin from the counts of the 14 days before D only, refit once a day before 00:00 of D; D's chain
+    (G* per state, the tick) goes to X1/fit/BOOKX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 5: B's schema, as_of 00:00
+    of D, known_at the end of the fit window, 24:00 of D-1); D's OWN counts are data of day D: their own file X1/stats/BOOKX/<D>.parquet,
+    known_at 24:00 of D, never in D's table (REVIEW_LEAD_EDGE1_V1 X5), read by the fits of D+1 to D+14
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the toy chain
+    input: 'two states L, H with one spread; Q = [[0.4, 0.2], [0.2, 0.4]], R1 = [[0.3, 0.1], [0.1, 0.3]] on k = (-1, +1) half ticks, T = [[0.15, 0.25], [0.25, 0.15]]'
+    answer: '(I - Q)^-1 = [[15/8, 5/8], [5/8, 15/8]]; g1 = (-0.25, +0.25); B = [[0.4375, 0.5625], [0.5625, 0.4375]]; g2 = (0.03125, -0.03125); G* = (-2/9, +2/9) half ticks'
+  - case: E2 from counts, the mirror
+    input: 'only L pairs planted, 100: L to L no move 40, L to H no move 20; down one half tick to L 10, to H 20; up one to L 5, to H 5'
+    answer: 'the mirror makes H''s 100 pairs; Q, R1, T as E1'
+  - case: E3 the price
+    input: 'E1 at state H, tick 0.1, the row 100.0 / 100.1 (mid 100.05)'
+    answer: 'G* = 2/9 x 0.05 = 0.011111111111 USDT; S01 100.061111111111; S02 1.110555833194'
+  - case: E4 off grid
+    input: 'the spread at u is 5 ticks'
+    answer: S01, S02 empty SPREAD_OFF_GRID
+  - case: E5 unvisited
+    input: 'the state at u (bucket 0, 3 ticks) has no pair in the fit'
+    answer: S01, S02 empty STATE_UNVISITED
+  - case: E6 a large move
+    input: 'a pair with dM = 10 half ticks'
+    answer: dropped from the counts (n_i excludes it) and counted in the fit report
+  - case: E7 the bucket edge
+    input: 'I = 1.0 (no ask amount is impossible on a good row; I = 0.9999)'
+    answer: bucket 9
+  - case: E8 the row at exactly 00:00:00.000000
+    input: "the CARRY's row in force at 24:00 of D-1 in state L (100.0 / 100.1); D's first row in state H (100.0 / 100.1) stamped and received at 00:00:00.000000; D's chain = E1's"
+    answer: 'in force at the 00:00:00 point though not in D-1''s raw: S01 100.061111111111, known_at 00:00:00 of D'
+  - case: E10 not seen
+    input: 'the last row read stamped u - 30.001 s'
+    answer: S01, S02 empty BOOK_HOLE, stale 1, known_at u
+  - case: E11 a bad row in force
+    input: 'the row in force crossed (why 6), seen'
+    answer: S01, S02 empty BAD_INPUT
+  - case: E12 a singular chain
+    input: 'two states that never move and never leave (Q = I, R1 = 0, T = 0)'
+    answer: 'I - Q singular: S01, S02 empty FIT_SINGULAR'
+  - case: E13 few pairs
+    input: '604,799 good pairs in the 14 days'
+    answer: S01, S02 empty FEW_VALUES
+  - case: E14 a fit day missing
+    input: 'the counts file of D-3 missing'
+    answer: S01, S02 empty NO_HISTORY
+  - case: E15 a 1000-coin
+    input: '1000PEPEUSDT, tick 0.0000001, the row 0.0101234 / 0.0101235 (one tick) in the toy chain''s state H'
+    answer: 'G* = 2/9 x 0.00000005 = 1.111111111111e-08 USDT; S01 0.010123461111111; S02 0.010975617118'
+  - case: E16 a row with no stamp
+    input: 'the E3 row stamped u - 10 s received u - 9.9 s; then a row 100.0 / 100.2 with no stamp (why 2, t = arr = -1)'
+    answer: 'it stands at u - 10 s and u - 9.9 s, in force and bad: S01, S02 empty BAD_INPUT'
+  - case: E17 a header-only file of D
+    input: "u = 12:00; D's file holds only its header"
+    answer: S01, S02 empty BOOK_HOLE, stale 1 (not NO_FILE)
+  - case: E18 a tick change
+    input: 'the 14 fit days: tick 0.1 on 10 days, 0.01 on 4'
+    answer: S01, S02 empty FIT_TICK_CHANGED
+  - case: E19 D's file missing (X1, X3a)
+    input: "no book_ticker file of D (or only a .part); the CARRY holds a row in state H"
+    answer: 'every point of D, 00:00:00 included, S01, S02 empty NO_FILE, not stale'
+  - case: E9 the chain of the 00:00:00 point (METRIC_AUDIT F4)
+    input: "no row of D at 00:00:00.000000; the CARRY's row in force in state H (100.0 / 100.1, received 23:59:58); D's chain = E1's, D-1's chain with G*(H) = 0"
+    answer: 'S01 at 00:00:00 = 100.061111111111 (D''s chain), known_at 00:00:00 of D (the chain''s); D-1''s chain would give 100.05'
+unit_tests:
+  - test: U1 (E1)
+    planted: the matrices of E1
+    expect: 'G* = (-0.222222222222, 0.222222222222) within 1e-9 relative; the exact (I - Q)^-1 [[15/8, 5/8], [5/8, 15/8]]'
+  - test: U2 (E2)
+    planted: 'a fit day of seconds giving the 100 L pairs of E2 (two states, one spread)'
+    expect: the Q, R1, T of E1 after the mirror, and G* of U1
+  - test: U3 (E3 to E7)
+    planted: the rows of each case with the chain of U1
+    expect: 'S01 100.061111111111, S02 1.110555833194; SPREAD_OFF_GRID; STATE_UNVISITED; the pair dropped; bucket 9'
+  - test: U5 (E10 to E18)
+    planted: the rows, counts files and ticks of each case
+    expect: 'BOOK_HOLE stale 1; BAD_INPUT; FIT_SINGULAR; FEW_VALUES; NO_HISTORY; 0.010123461111111 and 0.010975617118; BAD_INPUT; BOOK_HOLE stale 1; FIT_TICK_CHANGED; E19 NO_FILE at every point, 00:00:00 included'
+  - test: U6 the counting window
+    planted: 'a fit day whose pairs at 00:00:00 to 00:00:29 all move up, the rest the E2 pairs'
+    expect: 'the E2 chain (the first 30 s left out)'
+  - test: U4 (E8, E9) the 00:00:00 point
+    planted: "the CARRY's 24:00 state of D-1; D's first row at 00:00:00.000000 (E8) or none (E9); D's chain E1's, D-1's chain with G*(H) = 0"
+    expect: '100.061111111111 known_at 00:00:00 of D, both cases'
+mutants:
+  - mutant: M1 no symmetrisation
+    caught_by: 'U2 (H has no pairs: STATE_UNVISITED at H)'
+  - mutant: M2 G* stopped at g1
+    caught_by: 'U1 (0.25 in place of 0.222222222222)'
+  - mutant: M3 the adjustment in ticks in place of half ticks
+    caught_by: 'U3 (E3 S01 100.072222222222)'
+  - mutant: M4 the fit read from day D itself (look-ahead)
+    caught_by: U2 with day D's planted pairs all moving up (G* changes)
+  - mutant: M5 the 00:00:00 point from D-1's run alone
+    caught_by: 'U4 (E8 gives state L: 100.038888888889)'
+  - mutant: M6 the 00:00:00 point with D-1's chain
+    caught_by: 'U4 (E9 gives 100.05)'
+  - mutant: M7 the first 30 s of a fit day counted
+    caught_by: U6 (the up moves enter R1 and G* changes)
+  - mutant: M8 one tick for the 14 days by their gcd
+    caught_by: U5 (E18 gives a value)
+  - mutant: M10 the 00:00:00 point valued from the CARRY when D's file is missing
+    caught_by: U5 (E19 gives 100.061111111111 at 00:00:00)
+  - mutant: M11 a row with no stamp left out
+    caught_by: U5 (E16 gives E3's value 100.061111111111)
+  - mutant: M9 D's own counts read by D's fit (X5)
+    caught_by: U2 with D's planted counts all moving up (G* changes)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 00:00:00, 00:00:05, 12:10:00 and 12:10:05
+      why: a one-tick coin, the CARRY at 00:00:00 and its state at 00:00:05, a point between minute ends
+    - point: 2026-03-08, CRVUSDT, 08:00
+      why: a coarse-step coin at a funding settle
+    - point: 2026-03-08, the thinnest coin, a minute whose state is rare in its fit
+      why: STATE_UNVISITED or a thinly fitted state
+  pass: >-
+    The tester recomputes the counts of the 14 days from this card's words through the reader (rawcheck/check_bookx.py), then Q, R1, T
+    exactly with Fraction, B = (I - Q)^-1 T exactly, then G* by the formula's own series (g_(n+1) = B g_n in float64 from the exact
+    B, stopped as the formula says; I - B itself is singular, B's rows summing to 1: METRIC_AUDIT2 20:15:31Z), and S01, S02 at the points: floats within 1e-9 relative
+    (or 1e-12 x tick absolute where G* is near 0; rule 4.5), words equal.
+meaning_check:
+  pass_lines:
+    - "the claim of the paper, the line that passes: on 2026-03-08 the micro-price predicts the mid 60 s later with a smaller mean squared error than the mid itself and than D2 S01 (the size-weighted mid) for at least two thirds of the roster coins with values; else K4 is reported as not adding"
+  report_only:
+    - 'how often G* lies within half the spread (|S01 - M| <= (Pa - Pb) / 2), per coin (expected of a symmetrised chain, not proven: opinion)'
+    - the share of points per coin that are STATE_UNVISITED or SPREAD_OFF_GRID
+    - the clock OPEN (each second against each update) on two coins
+conclude:
+  may:
+    - where the coin's past says the mid is going from the top's current imbalance and spread (S02 sign and size)
+    - the micro-price as a better mid than the mid when the meaning check passes
+  never:
+    - a forecast with a horizon (G* sums all the future changes the chain expects, not the next minute's)
+    - the size-weighted mid (that is D2 S01)
+    - a value for a state the fit never saw (STATE_UNVISITED)
+    - "Hyperliquid's micro-price (this is Binance's book only; the owner trades on Hyperliquid)"
+readers: none yet
+implementation:
+  how: >-
+    Per coin: the row in force at the 86,400 seconds of each fit day by np.searchsorted (vectorised), the states and moves as integer
+    arrays, the counts by np.bincount on (i, j, k) codes; D's counts to X1/stats/BOOKX/<D>.parquet (known_at 24:00 of D); before D the
+    14 days' counts files added, one
+    40 x 40 solve and the series by matrix products; at u one table lookup per point. Shares the book_ticker pack with COST K1.
+    PHASES (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4): D's counts in phase A (days in parallel); S01, S02 at every point in the fit pass, after the 14
+    days' counts are sealed (the 00:00:00 point from the CARRY's state, E8, E9).
+  kernel: 'new: addon_fit_v1.markov_counts (the per-second states and their transition counts), on addon_grid_v2 85c8ece1 in_force (bad_ends=True, the seen output; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 9.4) at the 86,400 seconds and the 17,280 points'
+  memory_mb: 600
+  seconds_share: 7
+data_checks:
+  - what: each coin's tick per day (the gcd rule against Binance's exchangeInfo where held) and the share of seconds with a spread of 1 to 4 ticks (one read-only runner job)
+    who: TREE
+  - what: the clock OPEN (each second or each update) and the 10 buckets, decided by EDGE1 before code
+    who: EDGE1

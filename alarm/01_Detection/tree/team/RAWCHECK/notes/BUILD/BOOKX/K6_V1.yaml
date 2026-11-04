@@ -1,0 +1,281 @@
+# K6_V1.yaml: BOOKX multi-level order flow imbalance with weights fitted on the days before D (D4.CB1) (TREE, 18 Oct 2026;
+# BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8). Worked examples recomputed by team/TREE/proposals/verify_bookx_examples_tree_v3.py.
+# On the owner's 5 s grid (BUILD_ITEMS_V4 9d424de3, ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4, WORKPACKAGES_V2 edit 2 rule 4.11): every 5 s point of D,
+# minute ends included; the weights are fitted on the minute-end vectors of the 14 days before D (opinion: a minute's points move
+# together).
+# Edition 2: METRIC_AUDIT's REVIEW BOOKX 18:20:25Z (F1 to F5 and the nits) and ADDON_ARCHITECTURE_V4 edit 3 0591d181 (the phases, section 4 line 35; the
+# row at exactly 00:00:00.000000, line 37; the fit table, section 5; the kernels of addon_grid_v2 85c8ece1, section 9.4).
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 2): X5 D's statistics in their own file known at 24:00 of D,
+# a degenerate fit FIT_DEGENERATE, X1, X2 (the year's D4 rows and files, as D1), the event as D1 rule 2, seen_all at 15 s, NO_LEVELS
+# (D4 edition 7), the missing edge cases and the order of the reasons, M4's vectors in U2, the never lines. Values unchanged.
+# Edition 4: METRIC_AUDIT2's FIX CHECK BOOKX (REVIEW_LEAD_METRIC_AUDIT2_BOOKX_V1 3414cef5): E13 NO_LEVELS (NO_DEPTH dropped: Q = 0 needs every level empty,
+# which NO_LEVELS catches first), the missing file of D planted (E17, M9), |sum w| by a tolerance, 'the row before' for the seed.
+# Values unchanged.
+kind: build_metric
+id: K6
+producer: BOOKX
+item: multi-level order flow with fitted weights (D4.CB1)
+tier: BUILD
+name: integrated order flow imbalance of Binance's first 10 book levels over 10 s and 60 s, each level's flow over the levels' mean depth, combined with weights fitted on the 14 days before D (the first principal component)
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 4
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T19:45:33Z'
+means: >-
+  The order flow of the first 10 price levels of each side (Cont, Kukanov and Stoikov's e_n at every level, Xu, Gould and Howison's
+  levels), each level's net scaled by the mean depth of the 10 levels, then combined into one number with weights that the coin's own
+  past 14 days give (the first principal component, Cont, Cucuringu and Zhang): S07 over 10 s, S08 over 60 s. Plus is buying pressure.
+  The year's D4 is the same events with equal weights in dollars over gross (renamed, FORMULA_D4_V2).
+example: >-
+  Two levels: the book goes from bids 100 x 5, 99 x 3 / asks 101 x 4, 102 x 6 to bids 100 x 2, 99 x 3 / asks 101 x 4, 102 x 9
+  (level 1: 3 coins left the bid, -3; level 2: 3 coins joined the ask at 102, -3), then to bids 99 x 3, 98 x 8 / the same asks (the
+  best bid of 100 is gone: level 1 counts -2, the old 2 coins; level 2 counts -3, the old 3 coins at 99). Level flows -5 and -6; the
+  mean depth a side of level 1 over the two rows is 13/4, of level 2 29/4, their mean 21/4; scaled flows -20/21 and -8/7. With
+  fitted weights 0.6 and 0.4 the integrated flow is (0.6 x -20/21 + 0.4 x -8/7) / 1.0 = -1.028571428571 (a 2-level toy: Q the mean of
+  its 2 levels; in K6's 10-level form with levels 3 to 10 empty Q = 1.05 and the value is -5.142857142857).
+formula: >-
+  Rows are the coin's book_snapshot_25 rows in file order (D-1's from the CARRY first), a row with no stamp at the stamp and arrival
+  of the row before it (the year's D4 rule 1 = CARD_D1_V4 rule 1); an event n is a row with the row before it in file order, stamped
+  as row n and received at the later arrival of the two (D1 rule 2). Level m = 1 to 10 of a side is
+  the m-th filled level (the snapshot's index m - 1; an empty level has amount 0 and a price beyond the side: 0 for a bid, infinite for
+  an ask, as D4: FORMULA_D4_V2 line 48). e_n^m = the paper's e_n at level m (FORMULA K5 at level m), in contracts. For the window (u -
+  W, u], W = 10 s (S07) or 60 s (S08), the events stamped after u - W and up to u and received by u (D1 rule 3):
+  OFI^m = the sum of e_n^m; d^m = the sum over the window's events of (qb_n^m + qa_n^m) / (2 N); Q = (1/10) sum_m d^m; ofi^m =
+  OFI^m / Q. The integrated value = sum_m w_m ofi^m / sum_m |w_m|, with w the coin's weights for that W. The weights: on the 14 days
+  before D, at every minute end with a valued vector, the vector ofi_W (10 values); the sample covariance about the mean (divided by n);
+  w = its eigenvector of the largest eigenvalue, signed so that sum_m w_m > 0 and scaled so that sum_m |w_m| = 1 (as written to the fit
+  table); a degenerate fit (a zero covariance, the two largest eigenvalues within 1e-12 relative of each other, or |sum_m w_m| <= 1e-12 x sum_m |w_m|
+  so that no sign can be chosen) gives FIT_DEGENERATE. Every point of D, the 00:00:00 point included, uses D's weights (fit on D-14 to D-1, known at 00:00 of D): the 00:00:00
+  point is assembled in D's fit pass from the CARRY's tail and any row of D stamped and received at exactly 00:00:00.000000 (E9). The book is seen as D4 (a row read stamped in the
+  last 15 s and received at every moment of [u - W, u], else BOOK_HOLE: EDGE1's seen_all kernel at 15 s); an event with a bad row as
+  row n or the row before gives BAD_INPUT; a window holding a row with no filled level on one side gives NO_LEVELS (FORMULA_D4_V2 line
+  49, D4 edition 7); no event gives NO_EVENTS (Q = 0 needs every level of every event row empty, which NO_LEVELS catches first). Files as D4 (D1 rule 8 with 15 s: D's file always needed, D-1's
+  CARRY when u - W - 15 s is before 00:00 of D; missing or only a .part: NO_FILE; a header-only file or an empty gzip has no rows). The
+  first failing reason: NO_FILE, BOOK_HOLE, BAD_INPUT, NO_LEVELS, NO_HISTORY, FEW_VALUES, FIT_DEGENERATE, NO_EVENTS. Exact
+  flows and depths (Fraction), the eigenvector in float64; written as float64.
+source:
+  kind: paper
+  ref: >-
+    Cont, Cucuringu and Zhang 2023, 'Cross-impact of order flow imbalance in equity markets', Quantitative Finance (arXiv 2112.13213
+    v4): ofi^m = OFI^m / Q^M with Q^M the mean depth of M levels, M = 10; integrated OFI = w1' ofi / ||w1||_1, w1 the first principal
+    vector from historical data. Xu, Gould and Howison 2019 (Multi-level order-flow imbalance in a limit order book, Market
+    Microstructure and Liquidity): level m = the m-th populated best quote. Cont, Kukanov and Stoikov 2014 for e_n. RESEARCH_TOOLS_V1
+    aad3cc38 section 7.3 (O3b): no tool exists, build ours.
+inputs:
+  - kind: reader
+    ref: prod_reader_book_snapshot_25_v1
+    exists: true
+    stream: book_snapshot_25 (binance-futures), pack book_snapshot_25_v1 (dc08ebf5); the same rows as the year's D4
+    rule_in_force: "the year's D4 rules (CARD_D1_V4 rules 1 to 3 at 10 levels): the events stamped in (u - W, u] and received by u, at the later arrival of their two rows"
+    stale_rule: no row stamped in the last 15 s received at some moment of [u - W, u] gives BOOK_HOLE, stale 1
+    days: "D's raw for the points 00:00:05 to 24:00:00 (24:00:00 and the tail written to X1/carry/BOOKX/<D>.npz: the events of the last 60 s per level, the last row read, the rows not in force at 24:00 with max(t, arr) > 24:00; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the 00:00:00 point of D is D-1's 24:00 point; the points whose window or seen test reaches before 00:00 (u - W - 15 s before 00:00: 00:00:05 to 00:01:10 for W = 60 s, to 00:00:20 for W = 10 s) take D-1's part from that CARRY: the per-level window sums and count, the row before (CARD_D1_V4 rule 2), the last row read, its stamps and the latest moment the book was not seen"
+  - kind: addon
+    ref: K6's statistics files X1/stats/BOOKX/<d>.parquet of D-14 to D-1 (per coin and W, the day's n, sum of ofi, sum of ofi ofi'; each known at 24:00 of its day d)
+    card: BOOKX/K6_V1
+    rule_in_force: the 14 days' statistics added up give the covariance
+    stale_rule: a missing day of the 14 gives NO_HISTORY
+    days: D-14 to D-1
+overlaps:
+  - setting: D4 S04 x D4 S09
+    kind: copy
+    why: >-
+      D4 S04 is the net over the gross dollars of the same 10-level events over 60 s, equal weights, rounded once to 6 decimals half
+      up (a tie away from 0), and D4 S09 their gross rounded once to the whole dollar half up (FORMULA_D4_V2 12503a5c reading rules 1, 2:
+      D1's windows and roundings; D4's NO_LEVELS for a one-sided book meets K6's NO_LEVELS: compared as empties): the 60 s events priced at each level's own prices, net X and gross G exact over the 10 levels, give
+      round(X / G, 6) = D4 S04 and round(G, 0) = D4 S09 exactly where D4 holds values: the raw check of PRODUCER_BOOKX_V1, not a twin (fitted weights and
+      depth scaling make K6 another quantity).
+per_coin: >-
+  Contracts per level cancel in ofi^m (scaled by depth), so S07, S08 compare across coins. Thin coins: fewer than 10 filled levels a
+  side at times (the empty level convention), shallow books. The weights are per coin: a coin whose deep levels churn without moving
+  the price gets small deep weights. Level by index: one fill of the best level moves every level's index (the planted level shift of
+  FORMULA_D4_V2), as the papers define it. A coin entering the roster has no weights for 14 days (NO_HISTORY).
+time: >-
+  The weights are refit once a day from the 14 days before D: a regime change shows after a lag; the 00:00:00 point is D-1's 24:00 point and
+  the windows reaching before 00:00 add D-1's part from the CARRY; funding settles and quarter hours are ordinary minutes. The first year days: NO_HISTORY until 24 Sep 2025.
+output:
+  group_file: X1/day=<D>/BOOKX.parquet
+  names:
+    - name: S07
+      label: mlofi_integrated_10s
+      units: unitless (depth-scaled flow)
+      value_kind: float
+      decimals: none
+      means: the 10-level flow over (u - 10 s, u], depth-scaled, combined with the coin's fitted weights
+    - name: S08
+      label: mlofi_integrated_60s
+      units: unitless (depth-scaled flow)
+      value_kind: float
+      decimals: none
+      means: the same over (u - 60 s, u]
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the later of the latest arrival of the rows used (each <= u by the rule) and the weights' known_at (00:00 of D, the end of
+    their fit window: the fit table, ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 5); an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "a needed file missing or only a .part (D4's files, D1 rule 8): D's file at every point (00:00:00 too: phase B sets it NO_FILE); D-1's CARRY where u - W - 15 s is before 00:00 of D. A header-only file or an empty gzip is there and has no rows"
+    - reason: BOOK_HOLE
+      when: no row stamped in the last 15 s was received at some moment of [u - W, u]
+    - reason: BAD_INPUT
+      when: an event of the window has a bad row (any why bit), as row n or as the row before it
+    - reason: NO_LEVELS
+      when: the window holds a row with no filled level on one side (D4 edition 7)
+    - reason: NO_EVENTS
+      when: the window has no event
+    - reason: NO_HISTORY
+      when: any of the 14 fit days before D is missing for the coin
+    - reason: FEW_VALUES
+      when: fewer than 16,128 valued vectors (80% of 14 x 1,440) in the fit
+    - reason: FIT_DEGENERATE
+      when: a zero covariance, two largest eigenvalues equal within 1e-12 relative, or |sum_m w_m| <= 1e-12 x sum_m |w_m|
+  stale_rule: stale = 1 exactly when the value is empty BOOK_HOLE
+  max_staleness_s: 15
+  window_days: 14
+  no_history: >-
+    the weights first fit on 24 Sep 2025 (the fit statistics of 10 to 23 Sep 2025): S07, S08 empty NO_HISTORY from 10 Sep to 23 Sep
+    2025, valued on 167 of the 181 year days
+  fit_rule: >-
+    the weights w (per coin and W) from the statistics of the 14 days before D only, refit once a day before 00:00 of D; D's weights go
+    to X1/fit/BOOKX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 5, known_at 24:00 of D-1); D's OWN statistics (n, the
+    sum and the sum of outer products of its minute-end vectors) are data of day D: their own file X1/stats/BOOKX/<D>.parquet, known_at
+    24:00 of D, never in D's table (REVIEW_LEAD_EDGE1_V1 X5), read by the fits of D+1 to D+14
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 two levels, the level shift
+    input: 'the row before (rule 2): bids 100x5, 99x3 / asks 101x4, 102x6; events bids 100x2, 99x3 / asks 101x4, 102x9; bids 99x3, 98x8 / the same asks'
+    answer: 'e level 1: -3, -2; level 2: -3, -3; OFI -5, -6; d 13/4, 29/4; the 2-level toy Q 21/4, ofi -20/21 (-0.952380952381), -8/7 (-1.142857142857); K6''s 10 levels (3 to 10 empty, depth 0, E7) Q = 1.05, ofi -4.761904761905, -5.714285714286'
+  - case: E2 the integration
+    input: 'E1 with w = (0.6, 0.4, 0, ..., 0)'
+    answer: 'S07 -5.142857142857 (the 2-level toy -1.028571428571)'
+  - case: E3 the fit, one direction
+    input: 'past vectors (1, 1), (2, 2), (-1, -1), (3, 3)'
+    answer: 'w = (0.5, 0.5)'
+  - case: E4 the fit, a slope
+    input: 'past vectors (2, 1), (-2, -1), (4, 2), (-4, -2)'
+    answer: 'covariance [[10, 5], [5, 2.5]]; w = (2/3, 1/3)'
+  - case: E5 the fit, two directions
+    input: 'past vectors (2, 1), (-2, -1), (4, 2), (-4, -2), (1, -1), (-1, 1)'
+    answer: 'covariance [[7, 3], [3, 2]]; w = (0.681024967591, 0.318975032409)'
+  - case: E6 the sign
+    input: 'E3 with the eigenvector returned as (-0.7071, -0.7071)'
+    answer: 'flipped: w = (0.5, 0.5)'
+  - case: E7 an empty level
+    input: 'a side with 7 filled levels: levels 8 to 10 empty in both rows'
+    answer: 'e^8 to e^10 = 0; their depth 0 enters Q'
+  - case: E8 no history
+    input: 'D = 20 Sep 2025'
+    answer: S07, S08 empty NO_HISTORY
+  - case: E10 not seen
+    input: 'no row read stamped in the 15 s before u - 3 s'
+    answer: S07, S08 empty BOOK_HOLE, stale 1
+  - case: E11 a bad row inside
+    input: 'E1 with its middle row marked bad'
+    answer: S07 empty BAD_INPUT
+  - case: E12 no event
+    input: 'the last row stamped u - 12 s, nothing after (W = 10 s)'
+    answer: S07 empty NO_EVENTS
+  - case: E13 no depth (both sides empty)
+    input: 'every level of both sides empty in the window''s rows (amounts 0)'
+    answer: 'S07 empty NO_LEVELS (a row with no filled level on a side comes first in the order)'
+  - case: E14 few vectors
+    input: '16,127 valued vectors in the 14 days'
+    answer: S07, S08 empty FEW_VALUES
+  - case: E15 a degenerate fit
+    input: 'past vectors (1, -1), (-1, 1), (2, -2), (-2, 2) (the first eigenvector (1, -1) / 2 sums to 0); and a zero covariance (every vector 0)'
+    answer: S07, S08 empty FIT_DEGENERATE in both
+  - case: E16 a row with no stamp
+    input: 'E1 with its second row carrying no stamp (why 2)'
+    answer: 'it takes the row before''s stamp and arrival and is bad: S07 empty BAD_INPUT'
+  - case: E17 D's file missing (X1, X3a)
+    input: "no snapshot file of D (or only a .part); the CARRY holds D-1's tail"
+    answer: 'every point of D, 00:00:00 included, S07, S08 empty NO_FILE, not stale'
+  - case: E9 the row at exactly 00:00:00.000000
+    input: "u = 00:00:00 of D, W = 10 s: the CARRY's tail holds E1's first row (the row before) and its second row stamped 23:59:59; D's first row, E1's third, stamped and received at 00:00:00.000000; D's weights (0.6, 0.4, 0, ..., 0)"
+    answer: 'both events in the window (phase B adds the row): S07 -5.142857142857; D-1''s run alone (one event, Q 0.9) gives -3.333333333333'
+unit_tests:
+  - test: U1 (E1, E2)
+    planted: 'a snapshot pack with pp 0, qp 0, the three rows of E1 (two levels filled, the rest empty), the first stamped u - 11 s'
+    expect: 'Q 1.05, ofi^1 -4.761904761905, ofi^2 -5.714285714286; with w (0.6, 0.4, 0, ...) S07 -5.142857142857 (10 levels, 8 empty)'
+  - test: U2 (E3 to E6)
+    planted: "the past vectors of each case as 14 days of statistics, and M4's vectors (1, 0), (3, 2)"
+    expect: 'w (0.5, 0.5); (2/3, 1/3); (0.681024967591, 0.318975032409) within 1e-9; the sign flipped'
+  - test: U3 (E7, E8)
+    planted: 'a 7-level side; D = 20 Sep 2025'
+    expect: 'zeros at levels 8 to 10; NO_HISTORY'
+  - test: U5 (E10 to E16)
+    planted: the rows and statistics of each case
+    expect: 'BOOK_HOLE stale 1; BAD_INPUT; NO_EVENTS; NO_LEVELS; FEW_VALUES; FIT_DEGENERATE (two cases); BAD_INPUT; E17 NO_FILE at every point, 00:00:00 included'
+  - test: U4 (E9) the 00:00:00 point
+    planted: "the CARRY's tail of E9, D's row at 00:00:00.000000, D's weights in the fit table"
+    expect: 'S07 -5.142857142857'
+mutants:
+  - mutant: M1 each level scaled by its own depth in place of the levels' mean depth Q
+    caught_by: 'U1 (ofi^1 -5/3.25 = -1.538461538462)'
+  - mutant: M2 the weights normalised by the L2 norm in place of the L1 norm
+    caught_by: 'U2 (E3 gives 0.7071 a level)'
+  - mutant: M3 the eigenvector sign left as returned
+    caught_by: U2 (E6 gives -0.5, -0.5 and flips S07)
+  - mutant: M4 the covariance not centred
+    caught_by: 'U2 with vectors (1, 0), (3, 2) (the centred and uncentred first vectors differ)'
+  - mutant: M5 the fit read from day D itself (look-ahead)
+    caught_by: U2 with day D's planted vectors along (1, -1)
+  - mutant: M6 the 00:00:00 point from D-1's run alone
+    caught_by: 'U4 (E9 gives -3.333333333333)'
+  - mutant: M9 the 00:00:00 point valued from the CARRY's tail when D's file is missing
+    caught_by: U5 (E17 gives a value at 00:00:00)
+  - mutant: M7 a degenerate fit given weights anyway (the sign of a sum 0 taken as plus)
+    caught_by: U5 (E15 gives a value)
+  - mutant: M8 a row with no stamp left out
+    caught_by: U5 (E16 gives a value)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 00:00:00, 00:00:30, 12:10:00 and 12:10:05
+      why: the CARRY's row before; ten deep levels
+    - point: 2026-03-08, CRVUSDT, 02:10
+      why: "D4's own planted case of the deep levels' churn (FORMULA_D4_V2 open: level 1 -5.78e+05 contracts at 60 s)"
+    - point: 2026-03-08, the thinnest coin, a minute with fewer than 10 filled levels
+      why: the empty level convention
+    - point: 2026-03-08, every coin, all 1,440 minute ends
+      why: the copy check against D4 S04 x D4 S09 (overlaps)
+  pass: >-
+    The tester recomputes ofi^m, Q and the integrated S07, S08 with the day's published weights from this card's words through the
+    reader (rawcheck/check_bookx.py): floats within 1e-9 relative, words equal; the weights recomputed from the 14 days' statistics
+    within 1e-9.
+meaning_check:
+  pass_lines:
+    - 'at every minute end of 2026-03-08, the 60 s events priced at each level over the 10 levels give, from the exact net X and gross G, round(X / G, 6) half up (a tie away from 0) = D4 S04 and round(G, 0) half up = D4 S09 (the copy; equal, no tolerance)'
+    - "Cont, Cucuringu and Zhang's claim checked, the line that passes: the integrated 60 s flow explains the next 60 s mid change at least as well (R2) as D4 S04 (equal weights) on 2026-03-08 for at least two thirds of the roster coins with values, else the fitted weights are reported as not helping"
+  report_only:
+    - each coin's weights (how much the deep levels count)
+    - the share of the first component in the covariance per coin
+conclude:
+  may:
+    - the depth-scaled order flow of the first 10 levels over the last 10 s or 60 s, combined as the coin's own past says the levels move together
+    - S07, S08 across coins
+  never:
+    - the weights as stable (they are refit each day from the 14 days before D and move with them)
+    - a flow of trades (resting book changes)
+    - D4's equal-weight share (another quantity; D4 stays, renamed 'order flow share at 10 levels')
+    - "Hyperliquid's order flow (this is Binance's book only; the owner trades on Hyperliquid)"
+readers: none yet
+implementation:
+  how: >-
+    Per coin, vectorised over the day: the level arrays of the snapshot pack (rows x 25, the first 10 used), np.diff and the indicator
+    form per level, the sums of e^m and of the depths by grid blocks (never a whole-day cumulative sum, ADDON_ARCHITECTURE_V4 edit 3 0591d181 9.3 rule 5); the 14
+    days' statistics added for the covariance (10 x 10) and one np.linalg.eigh per coin and W before the day. Shares the snapshot pack
+    load with COST K2, K3. PHASES (section 4): D's ofi vectors and statistics in phase A; S07, S08 at every point in the fit pass (D's
+    weights); the points whose window reaches before 00:00 or holds D's first row (its event pairs it with D-1's last row) from the
+    CARRY's tail (E9).
+  kernel: 'new: window_stamped over the 10 levels (the events stamped in (u - W, u] and received by u, by grid blocks, each with its row before), as K5: addon_grid_v2 85c8ece1 per_window sums by arrival only'
+  memory_mb: 800
+  seconds_share: 8
+data_checks:
+  - what: the copy check against D4 on 2026-03-08 and 2025-09-24
+    who: the tester
+  - what: the fit table's labels for the 20 weights and the statistics per coin (X1/fit/BOOKX/<D>.parquet, ADDON_ARCHITECTURE_V4 section 5)
+    who: EDGE1 (the shared writer's design)

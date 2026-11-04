@@ -1,0 +1,2 @@
+# 08_Registry: every absolute or machine path in the files of MANIFEST.tsv. None: no file is copied (no released tool). The built-in paths of the TEST builder are in README.md, "Data and settings". status: ARG, BUILT_IN, TEXT (as in 05_Profile).
+file	line	path	kind	what	settings_key	status

@@ -1,0 +1,192 @@
+# BASIC_E1_V2.yaml: the card of the basic settings of E1, EDITION 2 (EDGE1, 2026-10-18, BR5 edit 1) = BASIC_E1_V1 (kept) with EDGE2's review of 14:58:45Z applied.
+# Made as BASIC_C1_V5 (METRIC_REVIEW_METHOD_V1 section 5). Computation J15897 to J15899 (basic_deriv 9420f568) and J15922 to J15924 (basic_deriv d47ad0be: the coverages), meaning J15900 (meaning_deriv 7e89c066, tests 1642b1fb); the .hl_off names J15849.
+group: E1
+name: market funding (basic, built on E1 S01, E1 S04 and the Tardis derivative_ticker rows)
+summary: 'Funding across the market from each roster coin''s live funding estimate per 8 h. S06: the median over the coins of E1 S01. S05: the open-interest-weighted lower median of
+  the estimate less Binance''s default rate 0.0001, signed (minus = the weighted middle expects less than the default), weight open interest x index price. S05.coverage and S06.coverage
+  count the coins each is over. One value per minute end for the MARKET.'
+read_as: 'What the market currently expects to pay at the next settles, per 8 h. S06 and S06.coverage are recomputed exactly from the year''s E1 S01 at every minute end of both days
+  (J15897, J15922). S05 and S05.coverage are recomputed from the Tardis rows themselves (each coin''s funding_rate x 8 / its interval from the year''s E1 S04, open interest, index price,
+  each within 61 s): exact at 1,439 of 1,440 minute ends, 00:00 needing D-1''s rows (J15898, J15899, J15923, J15924). Both are built on an estimate (E1 S01, renamed in MEANING_E1_V2):
+  one minute before the 08:00 and 16:00 settles, where every coin settles, S06 is 0.0000007 to 0.0000014 above the median rate Binance then paid and S05 within 0.0000024 of the same
+  weighted rule on the paid rates; an hour before, 0.000008 to 0.000022 apart, 12 to 24% of the paid value (J15900). S05 was below 0 at all 4 settles checked: it is signed, the estimate
+  less the default. S06''s old name ''funding'' reads as the funding paid: RENAMED to the median live funding estimate; the median paid rate is could_build E1.CB2. The year also writes
+  S05, S06 and their coverages for Hyperliquid''s market under .hl_off: another metric (below), not a copy.'
+conclude:
+  may:
+  - 'what the market expects to pay at the next settles: the middle coin''s live estimate (S06) and the open-interest-weighted one less the 0.01% default, signed (S05), per 8 h'
+  - their change against their own history
+  - how many coins each is over (S05.coverage, S06.coverage)
+  never:
+  - 'S05 or S06 as funding paid: they are estimates until the settle (an hour before, 12 to 24% of the paid value apart at the 4 settles checked, J15900)'
+  - 'S05 below 0 as shorts paying: it is the estimate less 0.0001; the weighted rate itself is S05 + 0.0001 and can still be above 0 (24 Sep 2025 08:00: S05 -0.0000373, J15900)'
+  - 'S05 as the typical coin: its weight is open interest x price, so the largest coins decide it'
+  - 'a 4 h coin''s part as its rate per settle: E1 S01 is scaled to 8 h (x 2)'
+  - 'the .hl_off names as Binance''s S05, S06: they are Hyperliquid''s market (CARD_E1_V9 rule 28), equal to S05, S06 at 0.00% of minutes (J15849)'
+where:
+  card: testbed/value_audit/registers/CARD_E1_V9.md
+  settings_register: testbed/value_audit/registers/SETTINGS_E1_V3.tsv
+  built_on_register: team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml (E1 S01 and S04, RELIABLE)
+  producer: testbed/value_audit/code/prod_E1_v3.py
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E1.parquet
+  year_output_columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'E1', settings, coins, moments)
+source:
+  vendor: 'none new: S06 reads our raw E1 S01 (MEANING_E1_V2); S05 reads the Tardis.dev binance-futures derivative_ticker rows itself (funding_rate, open_interest, index_price) and each
+    coin''s interval from the year''s E1 S04'
+  exchange_stream: 'derivative_ticker: the state Tardis builds from Binance''s markPrice stream (mark, index, funding rate, next funding time; every 1 s) and the open interest snapshot
+    (MEANING_E1_V2 source)'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz (S05, read by basic_deriv e1s05); <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E1.parquet
+    (S06 from E1 S01; the interval E1 S04)
+  columns: exchange, symbol, timestamp, local_timestamp, funding_timestamp, funding_rate, predicted_funding_rate, open_interest, last_price, index_price, mark_price (Tardis); name, coin
+    (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us, stale, empty_reason,
+    flags (the year)
+  fields:
+    estimate: 'E1 S01: Binance''s live funding estimate for the coin''s next settle, x 8 / interval; S05 recomputes it as funding_rate x 8 / E1 S04 [proof: MEANING_E1_V2 S01; basic_deriv
+      e1s05]'
+    weight: 'open_interest x index_price of the same derivative_ticker, each in force at e within 61.0 s [proof: CARD_E1_V9 rule 23]'
+    default_rate: '0.0001 per 8 h, Binance''s interest rate alone [proof: CARD_E1_V9 rule 23; Binance FAQ B2]'
+  latency: the latest arrival over the coins counted (CARD_E1_V9 rule 23)
+reading_rules:
+- 'S05: the coins with rate, open interest and index price in force (61.0 s); a coin''s rate = funding_rate x 8 / E1 S04; d = rate - 0.0001, signed; w = open interest x index; in increasing
+  d the first d where the running w reaches half the total (CARD_E1_V9 rules 11, 23)'
+- 'S06: the median of S01 over the coins with a value; even count: the mean of the two middle ones (rules 12, 24)'
+- 'S05.coverage: the coins counted for S05; S06.coverage: the coins with S01 (CARD_E1_V9 rules 23, 24)'
+- 'Another metric beside, not a copy: S05.hl_off, S05.coverage.hl_off, S06.hl_off, S06.coverage.hl_off are the same two rules on Hyperliquid''s funding (rules 11, 12; default 0.0000125),
+  edition 2''s market kept switched off (CARD_E1_V9 rule 28). Not checked here: whether to check them is the owner''s decision'
+values:
+  units: 'a rate per 8 h (0.0001 = 0.01% of the position per 8 h); coverage: coins'
+  range: 'S05 signed: below 0 at all 4 settles checked (J15900); S06 the rate; coverage 0 to the roster count (52 on 8 Mar 2026, 51 on 24 Sep 2025)'
+  zero: 'S05 0: the weighted middle sits at the default rate; S06 0: the middle coin expects no payment'
+  empty: 'S05: ZERO_WEIGHT (no weight), NO_ROSTER, ALL_COINS_EMPTY, the coins'' common reason; S06: NO_ROSTER, ALL_COINS_EMPTY, the coins'' common reason; value_kind 0. Never read empty
+    as 0'
+  stale: when every coin is stale
+  flags: the coins'
+interpret:
+  do:
+  - read S06 as the middle coin's current expectation, per 8 h
+  - read S05 above 0 as the open-interest-weighted market expecting more than the interest rate (longs crowded), below 0 as less (the rate itself may still be above 0)
+  dont:
+  - read either as paid funding
+  - read S05 as the typical coin
+biases:
+- what: an estimate an hour before a settle against the rates then paid
+  direction: above the paid rates at all 4 settles checked
+  size: S06 0.000013 to 0.000022, S05 0.000008 to 0.000022 an hour before (12 to 24% of the paid value); within 0.0000024 one minute before
+  proof: 'J15900 e1m (opinion: 4 settles are too few to call it a bias)'
+external_checks:
+- what: S06 and S05 one minute and one hour before each settle where every coin settles, against the same rule on the paid rates
+  where: Binance fundingRate and metrics (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance
+  status: 'CLOSE: one minute before, S06 0.0000007 to 0.0000014 above and S05 within 0.0000024; one hour before, 0.000008 to 0.000022 apart, 12 to 24% of the paid value (08:00 and 16:00
+    of both days, 00:00 needs D-1; J15900). e1m has no planted test (meaning_deriv tests cover the other parts)'
+- what: the .hl_off names against S05, S06
+  where: the year rows (meaning_twins 74d02bc2)
+  status: 'MEASURED, another metric: S05.hl_off and S06.hl_off equal 0.00% of minutes both days (gap median 0.000118, 0.000041 and 0.000109, 0.000073); .coverage.hl_off equal on 8 Mar,
+    4 coins fewer on 24 Sep (not listed on Hyperliquid) (J15849)'
+tools:
+- what: every setting recomputed from the year rows at every minute end of 8 Mar 2026 and 24 Sep 2025
+  run: python3 -B -m rawcheck.basic_deriv <e1|e1s05> <D> --out <dir>
+  where: 'team/LAB/code (basic_deriv.py edition 2 d47ad0be25b652a6, tests fe8494593bd921d4 21 of 21, jobs 15922 to 15924; edition 1 9420f5683f1d09b0, tests 245df8fea9f2c2e7 18 of 18,
+    jobs 15897 to 15899; runner job: the year store, Tardis for e1s05)'
+- what: against Binance's own records
+  run: python3 -B -m rawcheck.meaning_deriv e1m <D>
+  where: 'team/LAB/code (meaning_deriv.py edition 1 7e89c066ae3366bd with tests 1642b1fb5e4eb3db 9 of 9 for J15900; edition 2 ae69d2fc24c87cf9 with tests 611e429090a63399 10 of 10 for
+    J15901; runner job: the outside files on the SCRATCH_DISK)'
+used_by: 'S05: the base of E1 S07 (funding z, our rule) and through it POSITIONING and the chains (CARD_E1_V9); S06: the FIFTHS buckets, none value 0.0001 (registers/FIFTHS_NONE_VALUE_V2.tsv,
+  its last row)'
+references:
+  K_funding: https://data.binance.vision (USD-M futures fundingRate monthly)
+  K_metrics: https://data.binance.vision (USD-M futures metrics, 5 minutes)
+  K_mark_index: https://data.binance.vision (USD-M futures markPriceKlines and indexPriceKlines, 1 minute)
+  held_at: <SCRATCH_DISK>/realcheck/outside/binance
+settings:
+- id: E1.S05
+  layer: basic
+  side: none
+  window: at e
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: lower weighted median of (rate - 0.0001), rate = funding_rate x 8 / E1 S04, weight open_interest x index_price, exact, signed
+  aliases: MV_FUNDING_BASE.agg
+  means: 'where the market''s open-interest-weighted funding estimate sits against Binance''s default 0.01% per 8 h: plus = above (longs expected to pay more than the interest rate),
+    minus = below'
+  name: market funding estimate less the default rate, signed (OI-weighted lower median, per 8 h)
+  computation:
+    status: RELIABLE
+    proof: 'J15898, J15899 (basic_deriv 9420f568) and J15923, J15924 (edition 2 d47ad0be) e1s05: recomputed from the Tardis derivative_ticker rows of all 52 (8 Mar 2026) and 51 (24 Sep
+      2025) coins, the interval from the year''s E1 S04: exact at 1,439 of 1,440 minute ends (00:00 needs D-1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 e1m: one minute before the 08:00 and 16:00 settles -0.0000024, +0.0000003 (8 Mar) and 0.0000000, +0.0000003 (24 Sep) from the same weighted rule on the rates Binance
+      paid (weights from its metrics open interest value); an hour before +0.0000217, +0.0000184 and +0.0000077, +0.0000093 (14 to 21% of the paid value); S05 itself -0.00013717, -0.00012835,
+      -0.00003733, -0.00005084 one minute before: signed, below 0 at all 4'
+  open: 'built on live estimates (E1 S01): it changes until the settle; checked at 4 settles (00:00 needs D-1); e1m has no planted test; the recompute''s tests do not plant rule 6 BAD_INPUT
+    or the 61 s limit on funding_timestamp (CARD_E1_V9 rule 23): proved on the real rows of two days'
+- id: E1.S05.coverage
+  layer: basic
+  side: none
+  window: at e
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of the coins with funding rate, open interest and index price in force (61.0 s)
+  aliases: none
+  means: how many coins S05's weighted median is over
+  name: coins counted for S05
+  computation:
+    status: RELIABLE
+    proof: 'J15923, J15924 basic_deriv d47ad0be e1s05: recomputed from the Tardis rows, equal at 1,439 of 1,440 minute ends both days; at 00:00 the recompute reads no D-1 row and counts
+      0 against 52 and 51, the one gap'
+  meaning:
+    status: DEFINED
+    proof: 'CARD_E1_V9 rule 23; J15849: 52 at every minute (8 Mar), 51 (24 Sep)'
+  open: none
+- id: E1.S06
+  layer: basic
+  side: none
+  window: at e
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: 'median over the coins of S01 (even count: the mean of the two middle)'
+  aliases: funding
+  means: the middle coin's current funding estimate for its next settle, per 8 h
+  name: median live funding estimate of the roster coins, per 8 h
+  renamed_from: funding
+  computation:
+    status: RELIABLE
+    proof: 'J15897 and J15922 (edition 2): recomputed from E1 S01 at 1,440 of 1,440 minute ends both days, exact'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 e1m: one minute before the 08:00 and 16:00 settles +0.0000012, +0.0000014 (8 Mar) and +0.0000007, +0.0000011 (24 Sep) above the median rate paid; an hour before +0.0000218,
+      +0.0000150 and +0.0000128, +0.0000195 (12 to 24% of the paid value); renamed (the owner''s rule): an estimate, not the funding paid'
+  open: an estimate until the settle (E1 S01's open); e1m has no planted test
+- id: E1.S06.coverage
+  layer: basic
+  side: none
+  window: at e
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of the coins with S01
+  aliases: none
+  means: how many coins S06's median is over
+  name: coins counted for S06
+  computation:
+    status: RELIABLE
+    proof: 'J15922 basic_deriv d47ad0be e1: equal at 1,440 of 1,440 minute ends both days, exact'
+  meaning:
+    status: DEFINED
+    proof: 'CARD_E1_V9 rule 24; J15849: 52 at every minute (8 Mar), 51 (24 Sep)'
+  open: none
+could_build:
+- id: E1.CB2
+  intended: 'the median funding rate paid at the coins'' last settle, per 8 h: what the name funding suggests'
+  was_name_of: E1.S06
+  formula: median over the coins of E1 S09 x 8 / E1 S04
+  needs: 'nothing new: S09 (the paid rate, equal to Binance on 591 of 591 settles, job 15784, MEANING_E1_V2) and S04 are in the year'
+  adds: 'the paid rates, not the estimate; it changes only at settles. J15900 measured it on Binance''s record (paid_med): -0.00011763, -0.00012203 (8 Mar 08:00, 16:00), 0.00008723,
+    0.00008046 (24 Sep); S06 is within 0.0000014 of it one minute before, 12 to 24% of it apart one hour before'
+  status: NOT_BUILT

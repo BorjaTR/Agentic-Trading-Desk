@@ -1,0 +1,416 @@
+{
+ "tool": "queue_job_v9",
+ "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v9.py",
+ "file_sha16": "74ca3cebd6664073",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "steps 5 COUNT, 6 GRADE, 8 ENTRY and 10 MONTH of AGENTS.md: every job since ALARM_V1_9: COUNT on JOB_COUNT_V6, GRADE on JOB_GRADE_V11, ENTRY on JOB_ENTRY_V6, MONTH on JOB_MONTH_V11; KIND CLEAN is refused (the owner 31 Oct 2026 10:51 Berlin: scratch cleanup is DSK's)",
+ "question": "How do I queue my COUNT, GRADE, ENTRY or MONTH job so that the runner runs it from the release folder?",
+ "usage_from_code": "python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v9.py --settings <file> [--job-settings <file>] <RUN> <KIND> <IDEA> <ITEMS> [--queue Q_Vn] [--from-job <JOB>] [--behind] [--forward-only] [--dry]",
+ "settings_keys": [
+  "PYTHON",
+  "LAB_DAYS",
+  "RESEARCH_STORE",
+  "SCRATCH",
+  "RESEARCH_ROOT",
+  "RUNNER_QUEUES",
+  "RUNNER_ALLOC",
+  "RUNNER_RELEASE",
+  "FEED_GATE"
+ ],
+ "code_options": [
+  "--behind",
+  "--dry",
+  "--forward-only",
+  "--from-job",
+  "--job-settings",
+  "--queue",
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  2
+ ],
+ "commands": [
+  {
+   "name": "grade-month",
+   "does": "queues one GRADE job (1 to 3 variants on Sep-Dec 2025; JOB_GRADE_V11, the chain v2_0_6: v2_0_5 with Outcomes, the menu and the card in one process, perfire and the hand-off from the kept rows) or one MONTH job (the Jan-Apr 2026 reads of a decided variant, --from-job <its GRADE job>; JOB_MONTH_V11, the chain v2_2_6: v2_2_5 with Outcomes, the menu and the card in one process, perfire from the kept rows); with --dry it only prints the filled job. A variant is graded once: a change is a new variant. The job gives its chain FEED_GATE and RESEARCH_STORE of --job-settings: Outcomes reads the feed gate and the research days from them",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "the run tag",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "KIND",
+     "required": true,
+     "meaning": "GRADE, ENTRY or MONTH",
+     "example": "ENTRY"
+    },
+    {
+     "name": "IDEA",
+     "required": true,
+     "meaning": "the idea",
+     "example": "FORCEDBREAK"
+    },
+    {
+     "name": "ITEMS",
+     "required": true,
+     "meaning": "1 to 3 different variant names, each registered in VARIANTS before its job",
+     "example": "FB5"
+    },
+    {
+     "name": "--from-job",
+     "required": false,
+     "meaning": "ENTRY and MONTH: the GRADE job of the idea (ENTRY: only variants whose hand-off R1 passed; MONTH: only PASS or NEEDS MORE MONTHS)",
+     "example": "20263757_GRADE_FORCEDBREAK"
+    },
+    {
+     "name": "--forward-only",
+     "required": false,
+     "meaning": "MONTH only: V is the other side of a STOP variant V0 (same definition, other lean, VARIANTS reason FORWARD ONLY OF V0); --from-job is V0's GRADE job; decided by decide_forward_v2.py",
+     "example": "--forward-only"
+    },
+    {
+     "name": "--dry",
+     "required": false,
+     "meaning": "every check, then print the filled job",
+     "example": "--dry"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v9.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 GRADE FORCEDBREAK FB5 --dry",
+   "writes": "with --dry: nothing. Without: the twin, one RUNS row and the job in IN; the job writes RUN/receipts/<N>_GRADE_<IDEA>/ (the hand-off for decide_v2) or RUN/receipts/<N>_MONTH_<IDEA>/ (one read per Jan-Apr month)",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: <reason> on stderr: as count, and a variant already graded (never re-run), a MONTH whose GRADE job has no receipts yet"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "GRADE",
+      "FLOWX",
+      "V1",
+      "--dry"
+     ],
+     "exit": 2,
+     "prints": "ALREADY GRADED"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "MONTH",
+      "FLOWX",
+      "V1",
+      "--from-job",
+      "20263757_GRADE_FLOWX",
+      "--dry"
+     ],
+     "exit": 2,
+     "prints": "HAS NO RECEIPTS YET"
+    }
+   ]
+  },
+  {
+   "name": "count",
+   "does": "checks everything, then queues one COUNT job (up to 3 definitions); with --dry it only prints the filled job",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "--job-settings",
+     "required": false,
+     "meaning": "the settings file of the machine that runs the job (the job runner's), when it is another one (default: --settings)",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "the run tag: the folder RESEARCH_ROOT/ALARM_DESIGN/runs/<RUN>; the seat is the part before _",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "KIND",
+     "required": true,
+     "meaning": "COUNT",
+     "example": "COUNT"
+    },
+    {
+     "name": "IDEA",
+     "required": true,
+     "meaning": "the idea: capitals and digits, starting with a letter; its claim file runs/IDEAS_CLAIMED/<RUN>_<IDEA>.txt must exist",
+     "example": "FORCEDBREAK"
+    },
+    {
+     "name": "ITEMS",
+     "required": true,
+     "meaning": "V=ideas/<IDEA>/defs/<V>.json, comma separated, at most 3; each window must cover 20250910 to 20260430",
+     "example": "FB5=ideas/FORCEDBREAK/defs/FB5.json"
+    },
+    {
+     "name": "--queue",
+     "required": false,
+     "meaning": "a queue Q_V1..Q_V21 (default: the first empty one)",
+     "example": "Q_V3"
+    },
+    {
+     "name": "--behind",
+     "required": false,
+     "meaning": "allow a queue that holds only your own jobs (your 3rd job then waits there)",
+     "example": "--behind"
+    },
+    {
+     "name": "--dry",
+     "required": false,
+     "meaning": "every check, then print the filled job; claims, writes and queues nothing",
+     "example": "--dry"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v9.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 COUNT FORCEDBREAK FB5=ideas/FORCEDBREAK/defs/FB5.json --dry",
+   "writes": "with --dry: nothing. Without: the job twin RUN/jobs/<N>_judge_<SEAT>_COUNT_<IDEA>.job.sh, one RUNS row, the job in <RUNNER_QUEUES>/<Q_Vn>/IN. The job then writes RUN/receipts/<N>_COUNT_<IDEA>/ (STAGES.tsv, COUNT_<V>.tsv, FIRST20_<V>.tsv, DISK.tsv, SHA16.txt, det logs) and SCRATCH/work_<RUN>/<N>_COUNT_<IDEA>/",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: <reason> on stderr. No --settings; a key it needs is empty (RESEARCH_ROOT, RUNNER_QUEUES, RUNNER_ALLOC, SCRATCH, and for the job PYTHON, LAB_DAYS and RESEARCH_STORE); a bad run tag, kind or name; no run folder; the idea not claimed; a definition outside ideas/<IDEA>/, missing, or whose window misses 20250910-20260430; more than 3 definitions; your job budget (2 jobs, 3 with --behind); no empty queue; SCRATCH free under 60,000 MB plus WRITES_MB; the run's scratch still on SCRATCH_DISK over 10,000 MB (ask DSK on the board); a template or reg_append_v1.py whose sha16 changed; a placeholder left; a refused word; bash -n failed; the allocator failed"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "COUNT",
+      "FLOWX",
+      "V1=ideas/FLOWX/defs/V1.json",
+      "--dry"
+     ],
+     "exit": 0,
+     "prints": "DRY RUN OK: AD1_20261029 COUNT FLOWX V1 on Q_V1"
+    }
+   ]
+  },
+  {
+   "name": "entry",
+   "does": "queues one ENTRY job for a variant whose GRADE passed R1 (decide_v2 asks for it): the store runner v11 grades its entry with the grader V3.2 S6 rel1 and markout_v1_2 (JOB_ENTRY_V6); with --dry it only prints the filled job",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "RUN",
+     "required": true,
+     "meaning": "the run tag",
+     "example": "AD1_20261029"
+    },
+    {
+     "name": "KIND",
+     "required": true,
+     "meaning": "GRADE, ENTRY or MONTH",
+     "example": "ENTRY"
+    },
+    {
+     "name": "IDEA",
+     "required": true,
+     "meaning": "the idea",
+     "example": "FORCEDBREAK"
+    },
+    {
+     "name": "ITEMS",
+     "required": true,
+     "meaning": "1 to 3 different variant names, each registered in VARIANTS before its job",
+     "example": "FB5"
+    },
+    {
+     "name": "--from-job",
+     "required": false,
+     "meaning": "ENTRY and MONTH: the GRADE job of the idea (ENTRY: only variants whose hand-off R1 passed; MONTH: only PASS or NEEDS MORE MONTHS)",
+     "example": "20263757_GRADE_FORCEDBREAK"
+    },
+    {
+     "name": "--forward-only",
+     "required": false,
+     "meaning": "MONTH only: V is the other side of a STOP variant V0 (same definition, other lean, VARIANTS reason FORWARD ONLY OF V0); --from-job is V0's GRADE job; decided by decide_forward_v2.py",
+     "example": "--forward-only"
+    },
+    {
+     "name": "--dry",
+     "required": false,
+     "meaning": "every check, then print the filled job",
+     "example": "--dry"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v9.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env AD1_20261029 ENTRY FORCEDBREAK FB5 --from-job 20263757_GRADE_FORCEDBREAK --dry",
+   "writes": "with --dry: nothing. Without: the twin, one RUNS row and the job in IN; the job writes RUN/receipts/<N>_ENTRY_<IDEA>/ (then decide again with decide_v2 --entry <ENTRY job>)",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: <reason> on stderr: as count, and a GRADE job (--from-job) with no receipts yet, or a variant whose R1 did not pass"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "AD1_20261029",
+      "ENTRY",
+      "FLOWX",
+      "V1",
+      "--from-job",
+      "20263757_GRADE_FLOWX",
+      "--dry"
+     ],
+     "exit": 2,
+     "prints": "HAS NO RECEIPTS YET"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "--settings <file> IS REQUIRED"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "AD1_20261029",
+    "FROB",
+    "FLOWX",
+    "V1",
+    "--dry"
+   ],
+   "exit": 2,
+   "prints": "KIND 'FROB': one of COUNT, GRADE, ENTRY, MONTH"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "AD1_20261029",
+    "CLEAN",
+    "FLOWX",
+    "20263690_COUNT_FLOWX",
+    "--dry"
+   ],
+   "exit": 2,
+   "prints": "CLEAN REMOVED: the owner 31 Oct 2026 10:51 Berlin"
+  }
+ ],
+ "rules": [
+  "the way a KIT_V5 agent queues every job since ALARM_V1_9: COUNT (JOB_COUNT_V6), GRADE (JOB_GRADE_V11, the chain v2_0_6: v2_0_5 with Outcomes, the menu and the card in one process, perfire and the hand-off from the kept rows), ENTRY (JOB_ENTRY_V6) and MONTH (JOB_MONTH_V11, the chain v2_2_6: v2_2_5 with Outcomes, the menu and the card in one process, perfire from the kept rows); KIND CLEAN is refused (CLEAN REMOVED: the owner 31 Oct 2026 10:51 Berlin; scratch cleanup is DSK's, on the owner's word); queue_job_v5, queue_job_v6, queue_job_v7 and queue_job_v8 are past editions",
+  "run --dry first; it claims, writes and queues nothing",
+  "never deletes, never overwrites (the twin is opened new; IN is written as .part then renamed)",
+  "reads no market data; the job reads code only inside the release folder (@@ALARM@@) and checks each pin's sha16 there",
+  "the quiet window is gone (the owner 30 Oct 2026 23:32 Berlin): jobs can be queued at any hour",
+  "the run's disk budget (10,000 MB) counts a finished job's measured scratch only while its folder SCRATCH/work_<RUN>/<JOB> is on SCRATCH_DISK, so DSK's sweep frees it; on a DISK BUDGET refusal ask DSK on the board"
+ ],
+ "outputs": [
+  {
+   "file": "RUNS.tsv",
+   "where": "<RESEARCH_ROOT>/ALARM_DESIGN/runs/<RUN>/registers/RUNS.tsv: one row per queued job, at queue time",
+   "columns": [
+    "utc_queued",
+    "job",
+    "job_sha16",
+    "kind",
+    "idea",
+    "variants",
+    "queue",
+    "prereg_rel",
+    "prereg_sha16",
+    "writes_mb",
+    "mem_mb",
+    "minutes",
+    "template_sha16",
+    "from_job",
+    "receipts_rel"
+   ]
+  },
+  {
+   "file": "STAGES.tsv",
+   "where": "RUN/receipts/<N>_<KIND>_<IDEA>/STAGES.tsv: one line per stage of the job, written as it runs",
+   "columns": [
+    "stage",
+    "rc",
+    "seconds",
+    "utc",
+    "note"
+   ]
+  },
+  {
+   "file": "COUNT_<V>.tsv",
+   "where": "RUN/receipts/<N>_COUNT_<IDEA>/COUNT_<V>.tsv: fires, waves and coins per Sep-Dec month",
+   "columns": [
+    "month",
+    "fires",
+    "waves",
+    "coins",
+    "max_fires_in_a_wave",
+    "fires_on_BTC"
+   ]
+  },
+  {
+   "file": "FIRST20_<V>.tsv",
+   "where": "RUN/receipts/<N>_COUNT_<IDEA>/FIRST20_<V>.tsv: the header and first 20 fires of the detection, every detect.py column (coin and t first)",
+   "columns": [
+    "coin",
+    "t"
+   ]
+  },
+  {
+   "file": "DISK.tsv",
+   "where": "RUN/receipts/<N>_COUNT_<IDEA>/DISK.tsv: two key-value rows",
+   "columns": [
+    "du_mb_W",
+    "free_mb_end"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/queue_job_v9_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V6.job.sh.txt",
+   "sha16": "57b5c18ed82061f6"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V11.job.sh.txt",
+   "sha16": "38cc8726273bfd67"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V11.job.sh.txt",
+   "sha16": "e35a16147513f492"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py",
+   "sha16": "c301c5977ecd6860"
+  },
+  {
+   "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/runs/TEMPLATE_V3/README_RUN.md",
+   "sha16": "3f1e3fb46430a5c5"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

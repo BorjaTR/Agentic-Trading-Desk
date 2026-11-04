@@ -1,0 +1,37 @@
+# 04_Month_check: copied files to delete before the commit (the owner, 30 Oct 2026 12:33 Berlin, option a: released editions only;
+# 30 Oct layout: byte copies under tree/, tool documents in <tool>/). Each path is relative to 04_Month_check.
+path	why
+ALARM_DESIGN/KIT_V5/MANIFEST_SHA16.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/MANIFEST_SHA16.txt, same bytes)
+ALARM_DESIGN/KIT_V5/PROCESS_V7.md	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md, same bytes)
+ALARM_DESIGN/KIT_V5/README.md	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/README.md, same bytes)
+ALARM_DESIGN/KIT_V5/jobs/JOB_CLEAN_V5.job.sh.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_CLEAN_V5.job.sh.txt, same bytes)
+ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V5.job.sh.txt, same bytes)
+ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_ENTRY_V5.job.sh.txt, same bytes)
+ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V5.job.sh.txt, same bytes)
+ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V5.job.sh.txt, same bytes)
+ALARM_DESIGN/KIT_V5/skills/alarm-design-v5/SKILL.md	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/skills/alarm-design-v5/SKILL.md, same bytes)
+ALARM_DESIGN/KIT_V5/templates/FORECAST_V5.md	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/templates/FORECAST_V5.md, same bytes)
+ALARM_DESIGN/KIT_V5/tests/mutants_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tests/mutants_v1.py, same bytes)
+ALARM_DESIGN/KIT_V5/tests/sim_env.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tests/sim_env.py, same bytes)
+ALARM_DESIGN/KIT_V5/tests/test_kit5_tools.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tests/test_kit5_tools.py, same bytes)
+ALARM_DESIGN/KIT_V5/tools/audit_run_v2.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v2.py, same bytes)
+ALARM_DESIGN/KIT_V5/tools/board_line_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tools/board_line_v1.py, same bytes)
+ALARM_DESIGN/KIT_V5/tools/clean_scratch_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tools/clean_scratch_v1.py, same bytes)
+ALARM_DESIGN/KIT_V5/tools/decide_forward_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_forward_v1.py, same bytes)
+ALARM_DESIGN/KIT_V5/tools/decide_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v1.py, same bytes)
+ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v4.py, same bytes)
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/README.md	the rule of a folder of TEST editions; stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/conditions_v1.py	old layout; a TEST edition the kit runs (not released), now copied in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/conditions_v1.py, same bytes)
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/month_read_v3.py	old layout; a TEST edition the kit runs (not released), now copied in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/month_read_v3.py, same bytes)
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py	old layout; a TEST edition the kit runs (not released), now copied in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py, same bytes)
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/split_v1.py	old layout; a TEST edition the kit runs (not released), now copied in Alarm/Agentic since 30 Oct (Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/split_v1.py, same bytes)
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/test_conditions_v1.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED; no RELEASE json, BASELINE row or kit MANIFEST_SHA16 entry); stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/test_month_read_v3.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED; no RELEASE json, BASELINE row or kit MANIFEST_SHA16 entry); stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/test_reg_append_v1.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED; no RELEASE json, BASELINE row or kit MANIFEST_SHA16 entry); stays in the dev tree
+ALARM_DESIGN/runs/CLAUDE1_20261028/tools/test_split_v1.py	TEST edition, not released (CLAUDE1 28 Oct: TEST, NOT REVIEWED; no RELEASE json, BASELINE row or kit MANIFEST_SHA16 entry); stays in the dev tree
+fixtures/kit5_test/DP2_CURVE.tsv	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/fixtures/kit5_test/DP2_CURVE.tsv, same bytes)
+fixtures/kit5_test/DP2_GATES.json	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/fixtures/kit5_test/DP2_GATES.json, same bytes)
+fixtures/kit5_test/DP2_TABLE_W0.tsv	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/fixtures/kit5_test/DP2_TABLE_W0.tsv, same bytes)
+fixtures/kit5_test/read_stratentry_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/fixtures/kit5_test/read_stratentry_v1.py, same bytes)
+fixtures/kit5_test/reg_append_v1.py	old layout; the kit is in Alarm/Agentic since 30 Oct (Agentic/tree/fixtures/kit5_test/reg_append_v1.py, same bytes)
+proof_harness/kit5_main.py	replaced by the tests-only harness kit5_tests_main.py (H2, written in the repo, not a dev file), which is in Alarm/Agentic/proof_harness/ since 30 Oct; the mutants mode is dropped because the kit mutants must never run on the shared VM (they filled its disk at 11:37Z)

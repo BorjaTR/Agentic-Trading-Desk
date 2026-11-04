@@ -1,0 +1,14 @@
+Written by SCOUT for the repo on 30 Oct 2026 from tree/team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V1_CANDIDATE.json, _V2_CANDIDATE.json, _V2_1_CANDIDATE.json, _V2_2.json, _V2_3.json, _V2_3_1.json and README.md (section Evidence); not the owner's document (owner seat: STRATEGY/LEAD).
+
+# detect: changelog (newest first)
+detect.py keeps VERSION 'DETECT_V1' in every release; the editions are the idea_to_grade releases that pin it (owner seat STRATEGY/LEAD,
+built by i2g_detector / i2g_grader, 25 Oct 2026).
+
+| release | detect.py sha16 | what changed and why | source |
+|---|---|---|---|
+| V2_3_1 (in use: KIT_V5 JOB_COUNT_V5 checks 83c52bfd; grade chain v2_0 runs detect.py by path, no sha16 check) | 83c52bfd27166f76 | A54-FINAL-01 onset repair: a shared condition known to be false now makes the step a decided OFF predecessor even when the claim is unknown or skipped; detect.py and the engine call one shared conditions_known. Recovers a missed real BTC onset at 2025-10-10 14:58:00. Nested release alarm_design V3_8_1. Closure signed by both sides (team/OUTSIDE/A54/i2g_review_v1/repair_v23/CLOSURE.md, not copied). | RELEASE_idea_to_grade_V2_3_1.json; README.md lines 78-86; alarm_design/README.md section V3.8.1 |
+| V2_3 | 23f9cec148975cea | Nested release alarm_design V3_8 (first cut of the repair; V3_8_1 replaced it). detect.py unchanged. | RELEASE_idea_to_grade_V2_3.json; RELEASE_alarm_design_V3_8_1.json (landing) |
+| V2_2 | 23f9cec148975cea | Grader side: PRICE source absence is part of the run's frozen source identity (SOURCE_CHANGED). detect.py unchanged. | RELEASE_idea_to_grade_V2_2.json; README.md lines 87-91 |
+| V2_1 CANDIDATE | 23f9cec148975cea | Fixes for the outside review A53 (its 6 regressions are test_detect_a53.py: grid 70 s keeps the last valid step, midnight uses the true predecessor, a COMPLETE run needs its output pins, a downstream reader refuses a run without its COVERAGE pin, a bad operand is refused before any output, a corrupt price read stops the run); A54-F2/F3 in the grader; A54 outside tests 11 of 11. | RELEASE_idea_to_grade_V2_1_CANDIDATE.json (v2_1_changes, outside_a54_tests) |
+| V2 CANDIDATE | c536f0bc308ec5c9 | Guards only: refusals before staging (exit 2 REFUSED CODE), required research window and nothing read outside it, code pins checked per worker, worker watchdog, strict PRICE frames, read_run/verify_run. Numbers unchanged. | RELEASE_idea_to_grade_V2_CANDIDATE.json (v2_changes) |
+| V1 CANDIDATE | 770e0afa0221276f | First edition: one generic detector with the outside detector's semantics, GRID and BASE paths, parallel by day chunks. Acceptance: BN_OI idea, 52 coins, 20250912-20260228, 14,289 alarms equal to the outside selection. Status was CANDIDATE_INDEPENDENT_REVIEW_PENDING. | RELEASE_idea_to_grade_V1_CANDIDATE.json; README.md lines 96-100 |

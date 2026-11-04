@@ -1,0 +1,728 @@
+# OUR_RULE_C10_M11_V1.yaml: the card of C10 price_legs, today's legs (the record's M11: 30 of its 57 settings), EDITION 1 (METRIC_AUDIT,
+# 2026-10-18; OR1 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, TREE's split 16:28:53Z, METRIC_AUDIT3's half given to me by EDGE1
+# 16:51:33Z (5); reviewer METRIC_AUDIT2). Made as OUR_RULE_C2_V1; meaning_register edition 5 checks it. The other 27 are TREE's
+# OUR_RULE_C10_LEGS_V1 0436d01747b0bcfa. Computation: TREE's one job J16004 for all 57 (rule_c10 df768be1, RULE_C10_STAMPS_V1 eeb7b180); the empty
+# reasons by rule_c10 edition 2 in J16021 (5d3fd87f, RULE_C10_STAMPS_V2 8710779c: 2,038 of 2,038 MATCH reason; EDGE1 16:51:33Z (4)). Meaning: J16015 (meaning_c10m11 78599032) on the year rows of 8 Mar 2026 and
+# 24 Sep 2025. Pass lines: hb/METRIC_AUDIT.txt 2026-10-18T16:56:06Z (filed), 16:57:06Z (result). Edit 3: METRIC_AUDIT2's nit 17:25:27Z (source.silence).
+
+group: C10
+name: "price legs, our rules: today's legs (the record's M11: the running leg against the legs completed today, and the market's shares)"
+summary: >-
+  On the legs of OUR_RULE_C10_LEGS_V1 (a coin's price cut by its swings of X = 0.25, 0.5 or 1 dial), at each minute end m and for each X:
+  the legs completed today (from 00:00 of D) and their median size; the running leg's size against that median (leg rel size); the
+  median recovered pullback of today's legs and the running pullback against it; the minutes since the last higher low and the last lower
+  high among the last 8 swings. For the market: the share of coins whose leg rel size is over 1 (big leg share), and the medians of the
+  coins' leg rel size and pullback rel. Empty NO_PRIOR_LEG before a leg completes today, NO_PULLBACK when no completed leg had a
+  recovered pullback, NO_SWING when the last 8 swings hold no higher low (lower high).
+read_as: >-
+  Every value is the card's rule (TREE's J16004: 364 of 364 a coin setting, 7 of 7 a market one, at 7 points of 8 Mar 2026). They are
+  relative to the coin's own day: 'big' means bigger than the coin's median leg completed today, which about half the legs are at their
+  end (56.7 to 60.1 percent on 8 Mar 2026, 41.2 to 47.2 on 24 Sep 2025, J16015): the big leg share sits near one half (median 0.615,
+  0.712, 0.608 on 8 Mar; 0.392, 0.354, 0.431 on 24 Sep) and moves with the day, not with a fixed size. Early in the UTC day the medians
+  stand on 1 or 2 legs (at X 1, 43 percent of coins have fewer than 3 legs at 12:00 of 8 Mar). At X 1 the minutes since a higher low
+  are empty NO_SWING at 52.1 percent of 8 Mar's coin-minutes.
+
+conclude:
+  may:
+    - "the running leg against the coin's legs completed today, its pullback against their typical recovered pullback, and the time since the last higher low or lower high, as the card's rules 10 to 13 define them (J16004)"
+    - "the market's share of coins in a leg bigger than their own median leg of today, and the middle coin's ratios (rule 16)"
+  never:
+    - "S45, S50, S55 over 0.5 as the market in unusually big legs: 'big' is over each coin's median leg of today (O4 A), which about half the legs are at their end (56.7 to 60.1 percent, 8 Mar 2026; 41.2 to 47.2, 24 Sep 2025; J16015); over 0.5 at 63.1, 70.1, 59.1 percent of 8 Mar's minutes"
+    - "an M11 value early in the UTC day as the day's typical: the medians stand on 1 or 2 legs (fewer than 3 legs at 00:00 for 76, 97 and 100 percent of coins at X 0.25, 0.5, 1; at X 1 still 43 percent at 12:00, 8 Mar 2026; J16015)"
+    - "S13, S27, S41 empty as 'no higher low for a long time': NO_SWING means none among the last 8 swings (at X 1 52.1 percent of 8 Mar 2026's coin-minutes, 39,043 of 74,880)"
+    - "the record's m6x<X>_m6x<X>_m11_mkt_* names of S08 to S14, S22 to S28, S36 to S42 as the market: they are BTC's values; the market is S45 to S47, S50 to S52, S55 to S57 (CARD_C10_V4 part 1)"
+    - "a leg rel size or pullback rel across coins as one scale: each is the coin against its own day"
+
+where:
+  card: "testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C10_V4.md 547b306cc4eb09f3 (part 3 rules 10 to 13, 16; O4; cases E301, E302, E306, E307, E312, N4)"
+  settings_register: "testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C10_V1.tsv 8d53b17bfa8e6b04 (57 settings; this card 30 of them)"
+  built_on_register: "team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml 0436d01747b0bcfa (the legs, sizes, pullbacks and swings, TREE); team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01 to S04, LIMITS); team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml 870571c2386a8d41 (C9 S08, the dial's input, LIMITS); no input renamed (RENAMED_READERS_V1 holds no C10 row)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv e249ce941c5cdb16 (C10 our_rule, NOT_CHECKED before these cards)"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C10_v5.py fbf38a2bed1ee9c1 (CARD_C10_V4 edition 4)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C10.parquet
+  year_output_columns: "name (S01 to S57; the market ones with .coverage), coin (every roster coin and MARKET), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_c10m11.py day(D)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures trades, through our C13 and the C10 chain (OUR_RULE_C10_LEGS_V1)"
+  exchange_stream: "trades as Tardis records them, read by C13"
+  files: "the year's C13 of D-1 and D, the roster of D's week (as OUR_RULE_C10_LEGS_V1)"
+  columns: "the chain's legs at each minute end: size at the end, recovered pullback, swing highs and lows with their minutes"
+  fields:
+    today: "a leg completes at the minute its swing is confirmed; today's legs are those completed at minute ends of D up to m [proof: CARD_C10_V4 rule 10; planted E301, E302 (the flat leg from 00:00 of D-1 a completed leg of size 0, METRIC_AUDIT2 16:00:11Z); J16004]"
+    ratios: "leg rel size and pullback rel, exact, 12 decimals half up; empty NO_PRIOR_LEG, NO_PULLBACK in rule 12's order [proof: rules 11, 12, 14; E306, E307; J16004 values; J16021 the reasons, 2,038 of 2,038 (rule 12's order planted only)]"
+    swings: "the last 8 confirmed swings, the latest higher low (lower high), counted from the swing's own minute, not its confirmation [proof: rule 13; E301 S27 1, E312; J16004]"
+    market: "over the coins with a value: the share with a leg rel size over 1, the medians [proof: rule 16, O4 A; J16004 7 of 7]"
+  latency: "as OUR_RULE_C10_LEGS_V1 (known_at of C13's rows at m)"
+  silence: "the year's rows hold C13's empties: TRADES_HOLE 16, THIN_FEED 89 coin-minutes of each M11 coin setting on 24 Sep 2025, none on 8 Mar 2026 (J16015); the pass-through is proven on planted N1a only (no recompute ran on 24 Sep 2025: J16004, J16021 are 8 Mar)"
+
+reading_rules:
+  - "every M11 value is the coin against its own legs of today (from 00:00 of D)"
+  - "'big' (S45, S50, S55) is a leg rel size over 1: bigger than the coin's median leg of today (O4 A)"
+  - "the record's m6x<X>_m6x<X>_m11_mkt_* names of the coin settings are BTC's values"
+
+values:
+  units: "S08, S22, S36: counts; S09, S23, S37: percent; S10, S24, S38, S12, S26, S40: ratios (12 decimals); S11, S25, S39: a share 0 to 1; S13, S14, S27, S28, S41, S42: minutes; S45, S50, S55: a share 0 to 1; S46, S51, S56, S47, S52, S57: ratios"
+  zero: "S08 0: no leg completed today; S12 0: the close at the leg's extreme; S45 0: no coin bigger than its median leg"
+  empty: "NO_PRIOR_LEG, NO_PULLBACK, NO_SWING, NO_DIAL, C13's (TRADES_HOLE, THIN_FEED, NO_FILE, BAD_INPUT), ALL_COINS_EMPTY (the market); value_kind 0. Never read empty as 0"
+  stale: "as C13's (TRADES_HOLE, THIN_FEED)"
+  flags: "as OUR_RULE_C10_LEGS_V1"
+
+interpret:
+  do:
+    - "read S10 (S24, S38) with S08 (S22, S36) beside it: a ratio on 1 or 2 legs is young"
+  dont:
+    - "read the big leg share as a size: it is a rank against each coin's own day"
+
+biases:
+  - {what: "'big' against the coin's own median leg of today", direction: "about half by construction, up on a day whose legs grow", size: "running legs over 1 at 59.4, 63.3, 56.6 percent of coin-minutes on 8 Mar 2026, 45.0, 45.9, 44.2 on 24 Sep 2025 (X 0.25, 0.5, 1); legs at their end over the earlier median 56.7, 58.8, 60.1 and 41.4, 41.2, 47.2 percent", proof: "J16015 SET and NAME lines"}
+  - {what: "few legs early in the day", direction: "medians of 1 or 2 legs", size: "fewer than 3 legs at 00:00 for 76, 97, 100 percent of coins (X 0.25, 0.5, 1); at X 1 43 percent at 12:00 and 19 at 18:00 (8 Mar 2026)", proof: "J16015 SET lines"}
+
+external_checks:
+  - {what: "the 30 settings recomputed exactly from our C13 at 7 points of 8 Mar 2026 named by case (TREE's rule_c10 for all 57)", where: "our C13 rows (a recompute, our source)", status: "VERIFIED: 364 of 364 a coin setting, 7 of 7 a market one (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2; J16004 log 75e5730ab4797b93); the empty reasons 2,038 of 2,038 MATCH (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8; J16021 log 36a50a25c70af9e2); not met on that day, planted only: NO_RANGE, NO_DIAL, the market's reasons, rule 12's order"}
+  - {what: "how often each reading fires, and 'big' at a minute against 'big' at a leg's end", where: "the year's own C10 rows of 8 Mar 2026 and 24 Sep 2025", status: "MEASURED: J16015 (meaning_c10m11 7859903228c539e1, tests ae72bdde6d1549fd 7 of 7, 3 of 3 mutants; log e83e47f546264df9)"}
+  - {what: "an outside record", where: "none: our rule on our candles", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "how often each M11 reading fires on a day, and the big-leg name test", run: "python3 -B -m rawcheck.meaning_c10m11 <D> ...", where: "team/RAWCHECK/code (meaning_c10m11.py 7859903228c539e1; runner job: the year store)"}
+
+used_by: "the record's fifths (M6, the E1 rule) of every metric as of the minute before a fire (CARD_C10_V4 part 1); FIFTHS grades 27 of the 30 (F01: S09 to S11, S13, S14, S23 to S25, S27, S28, S37 to S39, S41, S42, S45, S46, S50, S51, S55, S56; F06: S12, S26, S40, S47, S52, S57) and never S08, S22, S36 (F04); no chain, label or word reads them (CARD_C10_V4: nobody yet). No input renamed: nothing for RR1"
+
+references:
+  CARD: "testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C10_V4.md 547b306cc4eb09f3"
+  LEGS: "team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml 0436d01747b0bcfa (TREE)"
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_C10_STAMPS_V1.tsv eeb7b1804ddb67c2, RULE_C10_STAMPS_V2.tsv 8710779c7fcea3f8 (the reasons) (TREE)"
+  JOBS: "16004 (TREE, the computation of all 57), 16021 (TREE, the same with the empty reasons; log 36a50a25c70af9e2), 16015 (the meaning, 2 days; log e83e47f546264df9)"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): no rename (each value is what its name says; 'big' is O4 A, a never line)"
+
+settings:
+- id: C10.S08
+  name: prior legs n at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of the legs that ended at minute ends of D up to m (rule 10); over the legs completed today
+  aliases: m6x025_m11_prior_legs_n (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how many legs of at least X dials the coin finished today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 34 (p10 8, p90 103) | 44; fewer than 3 at 00:00 76 percent, 01:00 16, 03:00 2 (8 Mar); fifths class F04'
+  open: early in the UTC day the count is small (at X 1 fewer than 3 legs at 43 percent of coins at 12:00 of 8 Mar 2026)
+  never:
+  - S08 empty as 0
+- id: C10.S09
+  name: prior legs median size pct at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the median of their sizes in percent (rule 10); over the legs completed today
+  aliases: m6x025_m11_prior_legs_median_size_pct (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the typical size of the coin's finished legs today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.5718 percent | 0.5227; NO_PRIOR_LEG 1,076 | 662; fifths class F01'
+  open: a median of 1 or 2 legs early in the day (S08, S22, S36 under 3)
+  never:
+  - 'S09 early in the day as the day''s typical leg: it stands on 1 or 2 legs'
+- id: C10.S10
+  name: leg rel size at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: leg size pct / prior legs median size pct, 12 decimals (rule 11); over the running leg against today's completed legs
+  aliases: m6x025_m11_leg_rel_size (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the running leg against the coin's typical leg today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.1369 | 0.9345; over 1 at 59.4 | 45.0 percent of coin-minutes; fifths class F01'
+  open: about half of coin-minutes over 1 by construction (a running leg against the median of the day's legs); early values on 1 or 2 legs
+  never:
+  - 'S10 over 1 as a big leg: about half the coin-minutes are'
+- id: C10.S11
+  name: typical pullback share at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the median of their recovered pullbacks (rule 12); over the legs completed today with a recovered pullback
+  aliases: m6x025_m11_typical_pullback_share (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how deep the coin's legs pulled back before going on, today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.3 | 0.2664; NO_PULLBACK 1,331 | 721; fifths class F01'
+  open: a median of few legs early in the day
+  never:
+  - S11 empty as 0
+- id: C10.S12
+  name: pullback rel at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: pullback share / typical pullback share, 12 decimals (rule 12); over the running leg against today's typical pullback
+  aliases: m6x025_m11_pullback_rel (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the running leg's pullback against today's typical
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.5722 | 0.6324; over 1 (deeper than today''s typical) 24.2 | 30.8 percent; fifths class F06'
+  open: "the pullback share over a typical of few legs early in the day; rule 12's reason order (the pullback share's own reason first) planted only (J16021: not met on 8 Mar 2026)"
+  never:
+  - S12 empty as 0
+- id: C10.S13
+  name: min since higher low at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (m - the minute of the latest swing low higher than the swing low before it) / 60 s (rule 13); over the last 8 confirmed swings
+  aliases: m6x025_m11_min_since_higher_low (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how long since the last higher low
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 49 min | 34; NO_SWING 9,839 | 7,222; fifths class F01'
+  open: NO_SWING when the last 8 swings hold no higher low (half the coin-minutes at X 1 on 8 Mar 2026)
+  never:
+  - 'S13 empty as no higher low for long: NO_SWING means none among the last 8 swings'
+- id: C10.S14
+  name: min since lower high at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (m - the minute of the latest swing high lower than the swing high before it) / 60 s (rule 13); over the last 8 confirmed swings
+  aliases: m6x025_m11_min_since_lower_high (and BTC's as m6x025_m6x025_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.25 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how long since the last lower high
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 45 min | 33; NO_SWING 11,039 | 7,871; fifths class F01'
+  open: NO_SWING when the last 8 swings hold no lower high
+  never:
+  - S14 empty as 0
+- id: C10.S45
+  name: big leg share at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the share of them with a leg rel size over 1 (rule 16, O4 A)
+  aliases: m6x025_m6x025_m11_mkt_big_leg_share
+  derived_from: the coins' leg rel size at X 0.25
+  means: the share of coins whose running leg is bigger than their median leg completed today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.6154 | 0.3922; over 0.5 at 63.1 | 38.1 percent of minutes; fifths class F01'
+  open: 'O4 A: ''big'' is over the coin''s own median leg completed today, which about half the legs pass (J16015): the share sits near one half; the owner named no bar (O4 B)'
+  never:
+  - 'S45 over 0.5 as the market in unusually big legs: ''big'' is over each coin''s median leg of today (O4 A), about half by construction'
+- id: C10.S46
+  name: leg rel size median at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the median of the coins' leg rel sizes (rule 16)
+  aliases: m6x025_m6x025_m11_mkt_leg_rel_size_median
+  derived_from: the coins' leg rel size at X 0.25
+  means: the middle coin's running leg against its typical leg today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.1292 | 0.8954; fifths class F01'
+  open: "about 1 by construction; early in the day on 1 or 2 legs; the market's empty reasons planted only (J16021: not met)"
+  never:
+  - S46 empty as 0
+- id: C10.S47
+  name: pullback rel median at X 0.25 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the median of the coins' pullback rels (rule 16)
+  aliases: m6x025_m6x025_m11_mkt_pullback_rel_median
+  derived_from: the coins' pullback rel at X 0.25
+  means: the middle coin's pullback against its typical today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.5891 | 0.6753; fifths class F06'
+  open: "early in the day on few legs; the market's empty reasons planted only (J16021: not met)"
+  never:
+  - S47 empty as 0
+- id: C10.S22
+  name: prior legs n at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of the legs that ended at minute ends of D up to m (rule 10); over the legs completed today
+  aliases: m6x050_m11_prior_legs_n (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how many legs of at least X dials the coin finished today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 12 (p10 2, p90 30) | 12; fewer than 3 at 00:00 97 percent, 01:00 75, 03:00 11 (8 Mar); fifths class F04'
+  open: early in the UTC day the count is small (at X 1 fewer than 3 legs at 43 percent of coins at 12:00 of 8 Mar 2026)
+  never:
+  - S22 empty as 0
+- id: C10.S23
+  name: prior legs median size pct at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the median of their sizes in percent (rule 10); over the legs completed today
+  aliases: m6x050_m11_prior_legs_median_size_pct (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the typical size of the coin's finished legs today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.0583 | 0.9882; NO_PRIOR_LEG 2,114 | 3,273; fifths class F01'
+  open: a median of 1 or 2 legs early in the day (S08, S22, S36 under 3)
+  never:
+  - 'S23 early in the day as the day''s typical leg: it stands on 1 or 2 legs'
+- id: C10.S24
+  name: leg rel size at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: leg size pct / prior legs median size pct, 12 decimals (rule 11); over the running leg against today's completed legs
+  aliases: m6x050_m11_leg_rel_size (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the running leg against the coin's typical leg today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.2300 | 0.9423; over 1 at 63.3 | 45.9 percent; fifths class F01'
+  open: about half of coin-minutes over 1 by construction (a running leg against the median of the day's legs); early values on 1 or 2 legs
+  never:
+  - 'S24 over 1 as a big leg: about half the coin-minutes are'
+- id: C10.S25
+  name: typical pullback share at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the median of their recovered pullbacks (rule 12); over the legs completed today with a recovered pullback
+  aliases: m6x050_m11_typical_pullback_share (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how deep the coin's legs pulled back before going on, today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.2836 | 0.3125; NO_PULLBACK 2,190 | 3,319; fifths class F01'
+  open: a median of few legs early in the day
+  never:
+  - S25 empty as 0
+- id: C10.S26
+  name: pullback rel at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: pullback share / typical pullback share, 12 decimals (rule 12); over the running leg against today's typical pullback
+  aliases: m6x050_m11_pullback_rel (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the running leg's pullback against today's typical
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.7097 | 0.5748; over 1 33.2 | 26.6 percent; fifths class F06'
+  open: "the pullback share over a typical of few legs early in the day; rule 12's reason order (the pullback share's own reason first) planted only (J16021: not met on 8 Mar 2026)"
+  never:
+  - S26 empty as 0
+- id: C10.S27
+  name: min since higher low at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (m - the minute of the latest swing low higher than the swing low before it) / 60 s (rule 13); over the last 8 confirmed swings
+  aliases: m6x050_m11_min_since_higher_low (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how long since the last higher low
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 140 | 116; NO_SWING 17,995 | 10,609; fifths class F01'
+  open: NO_SWING when the last 8 swings hold no higher low (half the coin-minutes at X 1 on 8 Mar 2026)
+  never:
+  - 'S27 empty as no higher low for long: NO_SWING means none among the last 8 swings'
+- id: C10.S28
+  name: min since lower high at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (m - the minute of the latest swing high lower than the swing high before it) / 60 s (rule 13); over the last 8 confirmed swings
+  aliases: m6x050_m11_min_since_lower_high (and BTC's as m6x050_m6x050_m11_mkt_*)
+  derived_from: 'the C10 chain at X 0.5 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how long since the last lower high
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 136 | 119; NO_SWING 5,897 | 8,351; fifths class F01'
+  open: NO_SWING when the last 8 swings hold no lower high
+  never:
+  - S28 empty as 0
+- id: C10.S50
+  name: big leg share at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the share of them with a leg rel size over 1 (rule 16, O4 A)
+  aliases: m6x050_m6x050_m11_mkt_big_leg_share
+  derived_from: the coins' leg rel size at X 0.5
+  means: the share of coins whose running leg is bigger than their median leg completed today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.7115 | 0.3542; over 0.5 at 70.1 | 34.2 percent; fifths class F01'
+  open: 'O4 A: ''big'' is over the coin''s own median leg completed today, which about half the legs pass (J16015): the share sits near one half; the owner named no bar (O4 B)'
+  never:
+  - 'S50 over 0.5 as the market in unusually big legs: ''big'' is over each coin''s median leg of today (O4 A), about half by construction'
+- id: C10.S51
+  name: leg rel size median at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the median of the coins' leg rel sizes (rule 16)
+  aliases: m6x050_m6x050_m11_mkt_leg_rel_size_median
+  derived_from: the coins' leg rel size at X 0.5
+  means: the middle coin's running leg against its typical leg today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.2452 | 0.8642; fifths class F01'
+  open: "about 1 by construction; early in the day on 1 or 2 legs; the market's empty reasons planted only (J16021: not met)"
+  never:
+  - S51 empty as 0
+- id: C10.S52
+  name: pullback rel median at X 0.5 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the median of the coins' pullback rels (rule 16)
+  aliases: m6x050_m6x050_m11_mkt_pullback_rel_median
+  derived_from: the coins' pullback rel at X 0.5
+  means: the middle coin's pullback against its typical today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.7535 | 0.6434; fifths class F06'
+  open: "early in the day on few legs; the market's empty reasons planted only (J16021: not met)"
+  never:
+  - S52 empty as 0
+- id: C10.S36
+  name: prior legs n at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: count of the legs that ended at minute ends of D up to m (rule 10); over the legs completed today
+  aliases: m6x100_m11_prior_legs_n (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how many legs of at least X dials the coin finished today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 3 (p10 0, p90 7) | 3; fewer than 3 at 12:00 43 percent, 18:00 19 (8 Mar); 35, 18 (24 Sep); fifths class F04'
+  open: early in the UTC day the count is small (at X 1 fewer than 3 legs at 43 percent of coins at 12:00 of 8 Mar 2026)
+  never:
+  - S36 empty as 0
+- id: C10.S37
+  name: prior legs median size pct at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the median of their sizes in percent (rule 10); over the legs completed today
+  aliases: m6x100_m11_prior_legs_median_size_pct (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the typical size of the coin's finished legs today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 2.1129 | 2.2367; NO_PRIOR_LEG 10,340 | 9,921; fifths class F01'
+  open: a median of 1 or 2 legs early in the day (S08, S22, S36 under 3)
+  never:
+  - 'S37 early in the day as the day''s typical leg: it stands on 1 or 2 legs'
+- id: C10.S38
+  name: leg rel size at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: leg size pct / prior legs median size pct, 12 decimals (rule 11); over the running leg against today's completed legs
+  aliases: m6x100_m11_leg_rel_size (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the running leg against the coin's typical leg today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.0818 | 0.9202; over 1 at 56.6 | 44.2 percent; fifths class F01'
+  open: about half of coin-minutes over 1 by construction (a running leg against the median of the day's legs); early values on 1 or 2 legs
+  never:
+  - 'S38 over 1 as a big leg: about half the coin-minutes are'
+- id: C10.S39
+  name: typical pullback share at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the median of their recovered pullbacks (rule 12); over the legs completed today with a recovered pullback
+  aliases: m6x100_m11_typical_pullback_share (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how deep the coin's legs pulled back before going on, today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.4442 | 0.3754; NO_PULLBACK 12,479 | 9,933; fifths class F01'
+  open: a median of few legs early in the day
+  never:
+  - S39 empty as 0
+- id: C10.S40
+  name: pullback rel at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: pullback share / typical pullback share, 12 decimals (rule 12); over the running leg against today's typical pullback
+  aliases: m6x100_m11_pullback_rel (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: the running leg's pullback against today's typical
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.5385 | 0.4474; over 1 22.2 | 22.4 percent; fifths class F06'
+  open: "the pullback share over a typical of few legs early in the day; rule 12's reason order (the pullback share's own reason first) planted only (J16021: not met on 8 Mar 2026)"
+  never:
+  - S40 empty as 0
+- id: C10.S41
+  name: min since higher low at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (m - the minute of the latest swing low higher than the swing low before it) / 60 s (rule 13); over the last 8 confirmed swings
+  aliases: m6x100_m11_min_since_higher_low (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how long since the last higher low
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 431 | 410; NO_SWING 39,043 (52.1 percent) | 20,084; fifths class F01'
+  open: NO_SWING when the last 8 swings hold no higher low (half the coin-minutes at X 1 on 8 Mar 2026)
+  never:
+  - 'S41 empty as no higher low for long: NO_SWING means none among the last 8 swings'
+- id: C10.S42
+  name: min since lower high at X 1 dial
+  layer: our_rule
+  side: none
+  window: today (00:00 of D to m); the chain from 00:00 of D-1
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (m - the minute of the latest swing high lower than the swing high before it) / 60 s (rule 13); over the last 8 confirmed swings
+  aliases: m6x100_m11_min_since_lower_high (and BTC's as m6x100_m6x100_m11_mkt_*)
+  derived_from: 'the C10 chain at X 1 (OUR_RULE_C10_LEGS_V1: legs, sizes, recovered pullbacks, swings) on C13 S01 to S03 and the dial'
+  means: how long since the last lower high
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 364 of 364 (52 coins x 7) at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 515 | 454; NO_SWING 6,697 | 17,279; fifths class F01'
+  open: NO_SWING when the last 8 swings hold no lower high
+  never:
+  - S42 empty as 0
+- id: C10.S55
+  name: big leg share at X 1 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the share of them with a leg rel size over 1 (rule 16, O4 A)
+  aliases: m6x100_m6x100_m11_mkt_big_leg_share
+  derived_from: the coins' leg rel size at X 1
+  means: the share of coins whose running leg is bigger than their median leg completed today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.6078 | 0.4314; over 0.5 at 59.1 | 27.8 percent; fifths class F01'
+  open: 'O4 A: ''big'' is over the coin''s own median leg completed today, which about half the legs pass (J16015): the share sits near one half; the owner named no bar (O4 B)'
+  never:
+  - 'S55 over 0.5 as the market in unusually big legs: ''big'' is over each coin''s median leg of today (O4 A), about half by construction'
+- id: C10.S56
+  name: leg rel size median at X 1 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the median of the coins' leg rel sizes (rule 16)
+  aliases: m6x100_m6x100_m11_mkt_leg_rel_size_median
+  derived_from: the coins' leg rel size at X 1
+  means: the middle coin's running leg against its typical leg today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 1.1017 | 0.9265; fifths class F01'
+  open: "about 1 by construction; early in the day on 1 or 2 legs; the market's empty reasons planted only (J16021: not met)"
+  never:
+  - S56 empty as 0
+- id: C10.S57
+  name: pullback rel median at X 1 dial
+  layer: our_rule
+  side: none
+  window: as its coins
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: the median of the coins' pullback rels (rule 16)
+  aliases: m6x100_m6x100_m11_mkt_pullback_rel_median
+  derived_from: the coins' pullback rel at X 1
+  means: the middle coin's pullback against its typical today
+  computation:
+    status: RELIABLE
+    proof: 'J16004 rule_c10 df768be16fdb0d50 (TREE): 7 of 7 at the 7 named points of 8 Mar 2026 (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2); again with the empty reasons in J16021 rule_c10 ed2 5d3fd87f1b58cf7c: the same values and every row empty on both sides MATCH reason, 2,038 of 2,038 (NO_PRIOR_LEG 804, NO_PULLBACK 830, NO_SWING 404; RULE_C10_STAMPS_V2 8710779c7fcea3f8)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J16015 on the year rows (8 Mar 2026 | 24 Sep 2025): median 0.5733 | 0.4232; fifths class F06'
+  open: "early in the day on few legs; the market's empty reasons planted only (J16021: not met)"
+  never:
+  - S57 empty as 0

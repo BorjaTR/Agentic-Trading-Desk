@@ -1,0 +1,224 @@
+# BASIC_COIN_C3_V1.yaml: the card of the basic group COIN_C3 coin strength (built on the C13 book mid closes), EDITION 1 (EDGE2, 2026-10-18; BR3 =
+# WP3 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8). Made as BASIC_C9_V1; meaning_register edition 5 6223b1ad3de7bb1b checks it. Register of the day:
+# LAYER_REGISTER_V18 b2d8bb81 (COIN_C3 NOT_CHECKED before this card). S01 to S12, S21, S22; S13 to S20 (over the coin's dial: our rules) not here.
+# Every meaning number is from the BR3 proof run on meaning_minute edition 4 fe27fa1c: J15895 (8 Mar 2026), J15896 (24 Sep 2025); first J15889, J15890.
+# Edit 1 (EDGE2, 18 Oct 2026, before landing): BED's REVIEW BR3.COIN_C3 (hb/BED.txt 15:08:56Z): E1 the year's 20 twins of these 14 settings: the 14
+# .quotes_off are copies (the year's accepted cross-check, as BASIC_C1_V5: one reading rule, one never line, no rows); the 6 .cov_off counts are
+# rows, recomputed by basic_coinc3 ed. 2 6d5e7d90 (COINC3_STAMPS_V2, J15968: 15,400 of 15,400); E2 the 24 Sep rank misses named (3 ties of the
+# 6-decimal check, BED's J15935); E3 the jobs of may 2, the biases over all 12 settings; E4 job 15716's scope; cc3name's labels fixed in
+# meaning_minute ed. 5 43c71985 (J15969: the same numbers as J15895, J15896 under the right labels).
+# Edit 2 (EDGE2, 18 Oct 2026): the sha16 of COINC3_STAMPS_V2.tsv is ff89f47f8a7bc90d (my edit 1 mistyped one character; BED 15:26:53Z).
+
+group: COIN_C3
+name: coin strength (basic, built on the C13 book mid closes)
+summary: >-
+  For each roster coin at a minute end e, over h = 5, 15, 60, 240 minutes: its return from its book mid closes (C13 S05) in percent points
+  (S01 to S04), that return less BTC's (S05 to S08) and less the median return of the roster less BTC (S09 to S12, 10 coins or more), and its
+  rank among the roster less BTC over 60 and 240 minutes (S21, S22: 0 the worst, 100 the best, a tie at the bottom).
+read_as: >-
+  Returns of the QUOTED MID, against the market. The names hold on our values at 100%: x_btc is the return less BTC's, x_med less the median of
+  the roster WITHOUT BTC, the rank counts the others strictly below (J15895, J15896 cc3name; on 24 Sep the 6-decimal check misses 3 coin-minutes
+  of S21, S22, ties at 6 decimals that differ exactly: S21 PENGU 02:56 with HYPE, S21 APT 22:49 with TIA, S22 BTC 07:11 with ETH; the exact ranks
+  equal the year at every row, BED's J15935). Against the same on Binance's kline closes (the
+  last trade of each minute) they rank coin-minutes alike on a busy day (24 Sep 2025: Spearman 0.983033 to 0.999842) and less on a quiet one
+  (8 Mar 2026: 0.936015 to 0.999045, short horizons lowest): every largest gap is CRV, whose last trade sits a tick from the mid (C1 V5's case).
+  Computation: 15,400 of 15,400 with the six counts .cov_off (COINC3_STAMPS_V2, J15968; V1 10,780 of 10,780 kept). EDGE1's earlier S01 compare
+  (job 15716, BTC alone on 8 Mar) is covered by cc3day over every roster coin (it prints no BTC line of its own). The year also writes 14 copies
+  .quotes_off (the same settings on the quotes' closes): the year's accepted cross-check, not metrics of their own.
+
+conclude:
+  may:
+    - "how a coin's quoted mid moved over 5 to 240 minutes, against BTC and against the typical other coin (S01 to S12): the same sign as on Binance's candles at 93.99 to 99.99% of coin-minutes, Spearman 0.936 to 0.9998 (J15895, J15896)"
+    - "whether a coin led or lagged the other coins over 60 and 240 minutes (S21, S22, 0 to 100): ranking coin-minutes as the candles do, Spearman 0.986789 to 0.998946 (J15895, J15896 cc3day)"
+    - "how many coins less BTC had a return at a horizon (the six .cov_off: the count the median and the rank are over; COINC3_STAMPS_V2)"
+  never:
+    - "a short-horizon excess or rank of a wide-tick coin on a quiet day as its trade move: the last trade bounces a tick around the mid (CRV 8 Mar 22:29: 0.867679 against 1.304348, J15895 cc3look)"
+    - "x_med as against the whole roster: the median leaves BTC out (with BTC it equals at 0.14 to 9.51% of minutes only, J15895, J15896 cc3name)"
+    - "a rank or an x_med when fewer than 10 other coins have a return: empty THIN_ROSTER, never 50 or 0"
+    - "a copy (.quotes_off) as a metric of its own: it is the year's cross-check of the same setting on the quotes' closes; read the 14 settings"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C3_V6.md 457731e44e88010b (rules 1 to 18, OPEN-1 to OPEN-4)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C3_V1.tsv dd7da09c2cb5033a (22 settings)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05 the book mid close: raw, LIMITS)"
+  layer_list: "team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (COIN_C3 S01 to S12, S21, S22 basic); LAYER_REGISTER_V18 b2d8bb81"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_COIN_C3_v5.py 82285b19dda34151 (CARD_COIN_C3_V6 edition 6)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/COIN_C3.parquet
+  year_output_columns: "name, coin (every roster coin), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "meaning_candle.ours(D, names, group='COIN_C3') (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures book_ticker, through our raw C13 S05 (MEANING_C13_V4)"
+  exchange_stream: "bookTicker as Tardis records it, read by C13 (the mid in force at each minute end); COIN_C3 reads C13's S05 rows"
+  files: "the year's C13 output of D and D-1 (C13.parquet), the week's roster (the year roster root)"
+  columns: "C13 S05 (the mid close) with value_kind, value_f64, value_txt, known_at_us, empty_reason, flags"
+  fields:
+    returns: "ret_h = 100 x (close at e / close at e - h min - 1), exact, 6 decimals half up; D-1's rows for a horizon before 00:00 [proof: CARD_COIN_C3_V6 rules 1, 2, 12; COINC3_STAMPS_V1; planted E2 to E5, N4a in tests/test_basic_coinc3.py 900b1e40]"
+    excess: "x_btc = ret - BTC's ret; x_med = ret - the median of the roster less BTC (10 or more, an even count the mean of the two middle) [proof: CARD_COIN_C3_V6 rules 3 to 6, OPEN-1 A, OPEN-2 A; planted E6 to E11, N3a, N3b]"
+    rank: "100 x (others strictly below) / (others), 10 or more [proof: CARD_COIN_C3_V6 rule 8, OPEN-3 A; planted E8 to E11]"
+  latency: "known_at = the latest known_at of the closes read (CARD_COIN_C3_V6 rule 9); a close is the mid in force at the minute end, at most 30 s old (C13)"
+  silence: "empty with the close's reason (NO_FILE, BOOK_HOLE, NO_ROSTER), THIN_ROSTER under 10 coins, NO_BTC without BTC (CARD_COIN_C3_V6 rules 2 to 8)"
+
+reading_rules:
+  - "returns are of the book MID at the minute ends, not of the last trade"
+  - "the median and the rank are over the roster LESS BTC (OPEN-1 A); BTC's own rank places it among them; BTC's own x_btc is 0"
+  - "a tie ranks at the bottom of its tie (OPEN-3 A)"
+  - "the year also writes 14 copies as its own cross-check, .quotes_off (S01 to S12, S21, S22 by the same rules on the quotes' closes, C13 S05.quotes_off; CARD_COIN_C3_V6 rule 15). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to the setting at 92.38 to 99.07% of coin-minutes (8 Mar 2026) and 88.23 to 98.91% (24 Sep 2025), corr 0.99959 to 1.00000 (J15849 TWINS); a copy is no metric of its own: read the 14 settings"
+
+values:
+  units: "S01 to S12: percent points; S21, S22: 0 to 100"
+  zero: "0 = no move (or the same move as the reference); BTC's S05 to S08 are 0 by rule"
+  empty: "NO_ROSTER, NO_FILE, BOOK_HOLE, THIN_ROSTER, NO_BTC; value_kind 0 with NaN. Never read empty as 0"
+  stale: "true only with BOOK_HOLE"
+  flags: "SKIPPED_BAD_ROW (C13's)"
+
+interpret:
+  do:
+    - "read S05 to S12 for a move of the coin's own against BTC's or the market's; S21, S22 for the leader or the laggard"
+  dont:
+    - "read a 5 min excess of a wide-tick coin on a quiet day as its trade move"
+    - "read empty as 0"
+
+biases:
+  - {what: "the mid close against the last trade of the minute", direction: "either way, up to a tick on a wide-tick coin", size: "over S01 to S12: 8 Mar 2026 |gap| median 0.000160 (S01) to 0.012176 (S12) points, p90 0.057110 to 0.069825, largest 0.4367 (S01) to 0.5295 (S12), every largest gap CRV; 24 Sep 2025 median 0.001789 to 0.007006, p90 0.023101 to 0.027312, largest 0.1543 to 0.1887", proof: "J15895, J15896 cc3day, cc3look CRV 22:29 (8 Mar), 04:17 (24 Sep)"}
+
+external_checks:
+  - {what: "S01 to S12, S21, S22 recomputed exactly from our C13 S05 (D-1 and D) for every roster coin at 5 minute ends of 3 days", where: "the year's C13 output", status: "VERIFIED: COINC3_STAMPS_V2 ff89f47f8a7bc90d: 15,400 of 15,400 MATCH with the six .cov_off (J15968 log fc827a6c, basic_coinc3 ed2 6d5e7d901dd41071, tests 4da111da 26 of 26); V1 4229faea3f59dc06 10,780 of 10,780 (J15888, ed1 54d8b719) kept"}
+  - {what: "every roster coin at every minute end of 2 days against the same on Binance kline closes", where: "Binance 1m klines, <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with a named gap (J15895, J15896 cc3day, cc3look)"}
+  - {what: "the names on our own values: x_btc, x_med less BTC, the strict rank", where: "our values", status: "VERIFIED (J15895, J15896 cc3name; the 3 rank coin-minutes of 24 Sep are ties of the 6-decimal check, the exact ranks equal: BED's J15935)"}
+  - {what: "the 14 .quotes_off copies against their settings", where: "the year rows (meaning_twins 74d02bc2)", status: "MEASURED: equal at 92.38 to 99.07% (8 Mar), 88.23 to 98.91% (24 Sep), corr 0.99959 to 1.00000 (J15849 TWINS): copies, an accepted cross-check"}
+
+tools:
+  - {what: "recomputed from our C13 S05, the six counts too", run: "python3 -B -m rawcheck.basic_coinc3 --days <D,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_coinc3.py ed2 6d5e7d901dd41071, tests 4da111da025f060d 26 of 26; ed1 54d8b719c82c6632 kept)"}
+  - {what: "against the kline closes; the names; one coin-minute", run: "python3 -B -m rawcheck.meaning_minute cc3day <D> | cc3name <D> | cc3look <D> <COIN> <HHMM>", where: "team/RAWCHECK/code (meaning_minute.py fe27fa1c60137712 edition 4 for J15895, J15896, tests cf7599c3 17 of 17; edition 5 43c71985848403e5: cc3name labels each x_med line by its own pair, ed. 4 printed 'S01 - S09' on all four, the numbers the same, J15969)"}
+
+used_by: "S07 (x_btc_60) by the coin layer's Q6 block, WITH or AGAINST (no rule written yet); S07 and S22 compared with the record's engine rows (never a source); nobody else (CARD_COIN_C3_V6 'Who reads it today')"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C3_V6.md 457731e44e88010b
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/COINC3_STAMPS_V2.tsv ff89f47f8a7bc90d (J15968, with the six .cov_off); COINC3_STAMPS_V1.tsv 4229faea3f59dc06 (J15888) kept"
+  JOBS: "THE PROOF RUN on meaning_minute ed. 4: 15895 (8 Mar 2026; log c614ed0cc165794a), 15896 (24 Sep 2025; log b2cc0ab1d5be3792); first 15889, 15890 (ed. 3), the same lines; 15888 (stamps); 15968 (stamps ed2, the counts; log fc827a6c); 15969 (cc3name ed5, the labels); BED's 15931, 15935 (independent, the exact ranks)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T14:05Z, posted before the code ran"
+
+settings:
+  - {id: COIN_C3.S01, name: "5 min return of the book mid, pct points", layer: basic, side: none, window: "5 min (the closes at e - 5 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (mid close at e / mid close at e - 5 min - 1); 6 decimals", aliases: "c3_ret_5",
+     means: "how much the coin's quoted mid rose (fell) over the last 5 minutes, in percent",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.975264 (8 Mar), 0.995141 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 0.000160, 0.002101 points; the same sign 99.93%, 99.84%"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S02, name: "15 min return of the book mid, pct points", layer: basic, side: none, window: "15 min (the closes at e - 15 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (mid close at e / mid close at e - 15 min - 1); 6 decimals", aliases: "c3_ret_15",
+     means: "how much the coin's quoted mid rose (fell) over the last 15 minutes, in percent",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.990190 (8 Mar), 0.998059 (24 Sep); |gap| median 0.000260, 0.001789 points; the same sign 99.98%, 99.89%"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S03, name: "60 min return of the book mid, pct points", layer: basic, side: none, window: "60 min (the closes at e - 60 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (mid close at e / mid close at e - 60 min - 1); 6 decimals", aliases: "c3_ret_60",
+     means: "how much the coin's quoted mid rose (fell) over the last 60 minutes, in percent",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.996693 (8 Mar), 0.999468 (24 Sep); |gap| median 0.000486, 0.001960 points; the same sign 99.98%, 99.94%"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S04, name: "240 min return of the book mid, pct points", layer: basic, side: none, window: "240 min (the closes at e - 240 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (mid close at e / mid close at e - 240 min - 1); 6 decimals", aliases: "c3_ret_240",
+     means: "how much the coin's quoted mid rose (fell) over the last 240 minutes, in percent",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.999045 (8 Mar), 0.999842 (24 Sep); |gap| median 0.000880, 0.002335 points; the same sign 99.99%, 99.97%"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S05, name: "5 min return less BTC's, pct points", layer: basic, side: none, window: "5 min (the closes at e - 5 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "the coin's ret_5 - BTC's ret_5, rounded once; BTC's own row 0", aliases: "c3_x_btc_5",
+     means: "how much more (less) the coin moved than BTC over the last 5 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.956659 (8 Mar), 0.992349 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 0.000300, 0.002113 points; the same sign 94.93%, 97.77%; cc3name: S01 - S05 = BTC's S01 within 2e-6 at 100% of coin-minutes both days"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S06, name: "15 min return less BTC's, pct points", layer: basic, side: none, window: "15 min (the closes at e - 15 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "the coin's ret_15 - BTC's ret_15, rounded once; BTC's own row 0", aliases: "c3_x_btc_15",
+     means: "how much more (less) the coin moved than BTC over the last 15 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.980826 (8 Mar), 0.996861 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 0.000360, 0.001791 points; the same sign 97.14%, 98.64%; cc3name: S02 - S06 = BTC's S02 within 2e-6 at 100% of coin-minutes both days"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S07, name: "60 min return less BTC's, pct points", layer: basic, side: none, window: "60 min (the closes at e - 60 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "the coin's ret_60 - BTC's ret_60, rounded once; BTC's own row 0", aliases: "c3_x_btc_60",
+     means: "how much more (less) the coin moved than BTC over the last 60 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.994084 (8 Mar), 0.999082 (24 Sep); |gap| median 0.000515, 0.001970 points; the same sign 98.58%, 99.25%; cc3name: S03 - S07 = BTC's S03 within 2e-6 at 100% of coin-minutes both days"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S08, name: "240 min return less BTC's, pct points", layer: basic, side: none, window: "240 min (the closes at e - 240 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "the coin's ret_240 - BTC's ret_240, rounded once; BTC's own row 0", aliases: "c3_x_btc_240",
+     means: "how much more (less) the coin moved than BTC over the last 240 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.998182 (8 Mar), 0.999759 (24 Sep); |gap| median 0.000941, 0.002373 points; the same sign 99.24%, 99.64%; cc3name: S04 - S08 = BTC's S04 within 2e-6 at 100% of coin-minutes both days"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S09, name: "5 min return less the median of the roster less BTC, pct points", layer: basic, side: none, window: "5 min (the closes at e - 5 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "ret_5 - the median ret_5 of the roster coins less BTC (10 or more), rounded once", aliases: "c3_x_med_5",
+     means: "how much more (less) the coin moved than the typical other coin over 5 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.936015 (8 Mar), 0.983033 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 0.009047, 0.005439 points; the same sign 93.99%, 95.68%; cc3name: ret - x_med is one number a minute at 100%, the median of our returns over the roster LESS BTC at 100% (WITH BTC at 0.14 to 9.51% only)"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S10, name: "15 min return less the median of the roster less BTC, pct points", layer: basic, side: none, window: "15 min (the closes at e - 15 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "ret_15 - the median ret_15 of the roster coins less BTC (10 or more), rounded once", aliases: "c3_x_med_15",
+     means: "how much more (less) the coin moved than the typical other coin over 15 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.968592 (8 Mar), 0.992636 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 0.010655, 0.006079 points; the same sign 96.35%, 97.14%; cc3name: ret - x_med is one number a minute at 100%, the median of our returns over the roster LESS BTC at 100% (WITH BTC at 0.14 to 9.51% only)"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S11, name: "60 min return less the median of the roster less BTC, pct points", layer: basic, side: none, window: "60 min (the closes at e - 60 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "ret_60 - the median ret_60 of the roster coins less BTC (10 or more), rounded once", aliases: "c3_x_med_60",
+     means: "how much more (less) the coin moved than the typical other coin over 60 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.988563 (8 Mar), 0.997906 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 0.011929, 0.006759 points; the same sign 98.19%, 98.36%; cc3name: ret - x_med is one number a minute at 100%, the median of our returns over the roster LESS BTC at 100% (WITH BTC at 0.14 to 9.51% only)"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S12, name: "240 min return less the median of the roster less BTC, pct points", layer: basic, side: none, window: "240 min (the closes at e - 240 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "ret_240 - the median ret_240 of the roster coins less BTC (10 or more), rounded once", aliases: "c3_x_med_240",
+     means: "how much more (less) the coin moved than the typical other coin over 240 minutes",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.995963 (8 Mar), 0.999474 (24 Sep); |gap| median 0.012176, 0.007006 points; the same sign 99.15%, 99.07%; cc3name: ret - x_med is one number a minute at 100%, the median of our returns over the roster LESS BTC at 100% (WITH BTC at 0.14 to 9.51% only)"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S21, name: "rank of the 60 min return among the roster less BTC, 0 to 100", layer: basic, side: none, window: "60 min (the closes at e - 60 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (the others strictly below) / (the others); 10 coins or more; 6 decimals", aliases: "c3_rank_60",
+     means: "0 = the worst coin of the roster over 60 minutes, 100 = the best; a tie ranks at the bottom of its tie",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.986789 (8 Mar), 0.997008 (24 Sep) (under the 0.99 pass line of 14:05Z); |gap| median 2.000000, 0.000000 rank points; cc3name: the strict-below rank of our return among the roster less BTC within 1e-6 at 100% (8 Mar), 99.9973% (24 Sep: 2 coin-minutes off, ties of the 6-decimal check that differ exactly: PENGU 02:56 with HYPE, APT 22:49 with TIA; the exact ranks equal the year, BED's J15935)"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S22, name: "rank of the 240 min return among the roster less BTC, 0 to 100", layer: basic, side: none, window: "240 min (the closes at e - 240 min and e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (the others strictly below) / (the others); 10 coins or more; 6 decimals", aliases: "c3_rank_240",
+     means: "0 = the worst coin of the roster over 240 minutes, 100 = the best; a tie ranks at the bottom of its tie",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V1 4229faea: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_coinc3 54d8b719 from our C13 S05)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 cc3day against the same on Binance kline closes (the last trade): Spearman 0.995022 (8 Mar), 0.998946 (24 Sep); |gap| median 0.000000, 0.000000 rank points; cc3name: the strict-below rank of our return among the roster less BTC within 1e-6 at 100%, 99.9986% (24 Sep: 1 coin-minute off, a tie of the 6-decimal check that differs exactly: BTC 07:11 with ETH; the exact ranks equal the year, BED's J15935)"},
+     open: "of the MID, not of the last trade: on a wide-tick coin the last trade sits at the bid or the ask (CRV 8 Mar 22:24 trade 0.230 under a mid of 0.2305, 22:29 trade 0.233 over 0.2325: 5 min 0.867679 against 1.304348, J15895 cc3look); every largest gap of both days is CRV"}
+  - {id: COIN_C3.S09.cov_off, name: "roster coins less BTC with a 5 min return at e (for S09)", layer: basic, side: none, window: "5 min (the closes at e - 5 min and e)", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "n_5: the count of the roster coins less BTC whose ret_5 at e has a value, written on every coin's row (CARD_COIN_C3_V6 rule 4, V-COV)", aliases: "none (beside S09, switched off)",
+     means: "how many coins S09's median or rank is over at e (10 or more for a value)",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V2 ff89f47f: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15968, basic_coinc3 ed2 6d5e7d90 from our C13 S05; planted counts under the full roster: V-COV N3b, a horizon's own count)"},
+     meaning: {status: DEFINED, proof: "CARD_COIN_C3_V6 rule 4: the population's count; J15968: 51 (8 Mar) and 50 (24 Sep, 4 Nov) at every checked coin-moment, the roster less BTC"},
+     open: "only the full count met at the 15 checked moments; a count under it is proved on planted rows only"}
+  - {id: COIN_C3.S10.cov_off, name: "roster coins less BTC with a 15 min return at e (for S10)", layer: basic, side: none, window: "15 min (the closes at e - 15 min and e)", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "n_15: the count of the roster coins less BTC whose ret_15 at e has a value, written on every coin's row (CARD_COIN_C3_V6 rule 4, V-COV)", aliases: "none (beside S10, switched off)",
+     means: "how many coins S10's median or rank is over at e (10 or more for a value)",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V2 ff89f47f: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15968, basic_coinc3 ed2 6d5e7d90 from our C13 S05; planted counts under the full roster: V-COV N3b, a horizon's own count)"},
+     meaning: {status: DEFINED, proof: "CARD_COIN_C3_V6 rule 4: the population's count; J15968: 51 (8 Mar) and 50 (24 Sep, 4 Nov) at every checked coin-moment, the roster less BTC"},
+     open: "only the full count met at the 15 checked moments; a count under it is proved on planted rows only"}
+  - {id: COIN_C3.S11.cov_off, name: "roster coins less BTC with a 60 min return at e (for S11)", layer: basic, side: none, window: "60 min (the closes at e - 60 min and e)", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "n_60: the count of the roster coins less BTC whose ret_60 at e has a value, written on every coin's row (CARD_COIN_C3_V6 rule 4, V-COV)", aliases: "none (beside S11, switched off)",
+     means: "how many coins S11's median or rank is over at e (10 or more for a value)",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V2 ff89f47f: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15968, basic_coinc3 ed2 6d5e7d90 from our C13 S05; planted counts under the full roster: V-COV N3b, a horizon's own count)"},
+     meaning: {status: DEFINED, proof: "CARD_COIN_C3_V6 rule 4: the population's count; J15968: 51 (8 Mar) and 50 (24 Sep, 4 Nov) at every checked coin-moment, the roster less BTC"},
+     open: "only the full count met at the 15 checked moments; a count under it is proved on planted rows only"}
+  - {id: COIN_C3.S12.cov_off, name: "roster coins less BTC with a 240 min return at e (for S12)", layer: basic, side: none, window: "240 min (the closes at e - 240 min and e)", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "n_240: the count of the roster coins less BTC whose ret_240 at e has a value, written on every coin's row (CARD_COIN_C3_V6 rule 4, V-COV)", aliases: "none (beside S12, switched off)",
+     means: "how many coins S12's median or rank is over at e (10 or more for a value)",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V2 ff89f47f: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15968, basic_coinc3 ed2 6d5e7d90 from our C13 S05; planted counts under the full roster: V-COV N3b, a horizon's own count)"},
+     meaning: {status: DEFINED, proof: "CARD_COIN_C3_V6 rule 4: the population's count; J15968: 51 (8 Mar) and 50 (24 Sep, 4 Nov) at every checked coin-moment, the roster less BTC"},
+     open: "only the full count met at the 15 checked moments; a count under it is proved on planted rows only"}
+  - {id: COIN_C3.S21.cov_off, name: "roster coins less BTC with a 60 min return at e (for S21)", layer: basic, side: none, window: "60 min (the closes at e - 60 min and e)", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "n_60: the count of the roster coins less BTC whose ret_60 at e has a value, written on every coin's row (CARD_COIN_C3_V6 rule 4, V-COV)", aliases: "none (beside S21, switched off)",
+     means: "how many coins S21's median or rank is over at e (10 or more for a value)",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V2 ff89f47f: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15968, basic_coinc3 ed2 6d5e7d90 from our C13 S05; planted counts under the full roster: V-COV N3b, a horizon's own count)"},
+     meaning: {status: DEFINED, proof: "CARD_COIN_C3_V6 rule 4: the population's count; J15968: 51 (8 Mar) and 50 (24 Sep, 4 Nov) at every checked coin-moment, the roster less BTC"},
+     open: "only the full count met at the 15 checked moments; a count under it is proved on planted rows only"}
+  - {id: COIN_C3.S22.cov_off, name: "roster coins less BTC with a 240 min return at e (for S22)", layer: basic, side: none, window: "240 min (the closes at e - 240 min and e)", clock: "minute end", scope: market, contracts: USDT,
+     aggregate: "n_240: the count of the roster coins less BTC whose ret_240 at e has a value, written on every coin's row (CARD_COIN_C3_V6 rule 4, V-COV)", aliases: "none (beside S22, switched off)",
+     means: "how many coins S22's median or rank is over at e (10 or more for a value)",
+     computation: {status: RELIABLE, proof: "COINC3_STAMPS_V2 ff89f47f: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15968, basic_coinc3 ed2 6d5e7d90 from our C13 S05; planted counts under the full roster: V-COV N3b, a horizon's own count)"},
+     meaning: {status: DEFINED, proof: "CARD_COIN_C3_V6 rule 4: the population's count; J15968: 51 (8 Mar) and 50 (24 Sep, 4 Nov) at every checked coin-moment, the roster less BTC"},
+     open: "only the full count met at the 15 checked moments; a count under it is proved on planted rows only"}

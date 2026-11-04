@@ -1,0 +1,309 @@
+# FLOWX F12 (BED, 18 Oct 2026; the 5 s grid edition of BRIEF_FLOWX_V4_DELTA, twin F12_V1.yaml.pre_BED_20261018T182952Z). Facts from
+# FLOWX_WORK_V0.yaml F12, BRIEF_FLOWX_DRAFTERS and BRIEF_FLOWX_V4_DELTA (they override the hand work), ADDON_ARCHITECTURE_V4 (edit 3 0591d18171f2d21f;
+# edit 1 05665220; V3's rules stand unless V4 changes them). Every worked number checked exactly with fractions.Fraction in python3 (a
+# bucket pour in exact arithmetic). Checked with:
+#   cd <VM_HOME>/br2/flowx/kit && python3 -B -m rawcheck.build_register notes/BUILD/FLOWX/F12_V1.yaml --check
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): Y3 v = units / px
+# (the reader's units are dollars at 10^-(pp + qp)), one common scale for D-1 and D (E17); NO_HISTORY only for a D-1 file with no good
+# row, a D-1 file not held is NO_FILE (X1, E16); U1 trades 5 s apart (every bucket value shows on the 5 s grid); Y7 known_at at or after
+# 00:00:00 of D (E5, U3; the 86,400 s bound holds); the seen-at-u departure from B1 rule 9 named; Y1 the PHASES and the CARRY,
+# NO_RATE_BASE; X1 a header-only file (E14), X2 a stampless row (E13), X4 a D-1 file row stamped in D (E15), Y6 repeats (E12); U6,
+# M6 to M9; why V_D rides in the CARRY; SHORT_HISTORY dropped, NO_ROSTER added; Y8; the test_condition's proposed level.
+# Edition 6 fix (BED, 18 Oct 2026, METRIC_AUDIT's KNOWN_DIFF 23:36:17Z): the formula's rows line said 'dup false' against ed6's own
+# repeats rule (line 54, flag DUPLICATE_ROW): now 'a repeated row poured each time'.
+kind: build_metric
+id: F12
+producer: FLOWX
+item: 'VPIN as the paper defines it (B2.CB1)'
+tier: BUILD_TEST
+test_condition: "kept if its partial correlation with the next hour's realised variance, given the trailing realised variance and volume (RESEARCH_TOOLS_V1 6.3, the plan's kill test), is above 0 with p < 0.05 on the held days (proposed level, EDGE1 or the owner sets it); dropped if not; read by no chain until then"
+name: "Binance VPIN as Easley, Lopez de Prado and O'Hara (2012) define it, on exact taker sides (B2.CB1)"
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  The share of the traded volume of the coin's last 50 equal-volume buckets that was one-sided (taker sold minus taker bought, in
+  absolute value, over the volume): 0 = every bucket balanced, 1 = every bucket one side only. A bucket is D-1's volume / 50. Written
+  every 5 s.
+example: >-
+  A coin traded 5,000 units on D-1, so V_D = 100. Poured in order, D-1 fills exactly 50 buckets: 25 with |sold - bought| = 40 and 25 with
+  20, summed 1,500: at 00:00:00 of D VPIN = 1,500 / 5,000 = 3/10 = 0.3000000000. A taker buy of 250 at 00:00:01.000 (received
+  00:00:01.020) fills two buckets with buys (|.| = 100 each, 50 left open) and pushes out the two oldest (40 each): from 00:00:05 VPIN =
+  1,620 / 5,000 = 81/250 = 0.3240000000. The hand work's plant with 3 buckets of 100 and buy volumes 70, 40, 50, 90, 20, 60 gives after
+  buckets 3 to 6: 1/5 = 0.2000000000, 1/3 = 0.3333333333, 7/15 = 0.4666666667, 8/15 = 0.5333333333 (RESEARCH_TOOLS_V1 6.3).
+formula: >-
+  For one coin and day D. Rows: the trades reader's good rows (bad false; a repeated row poured each time, DUPLICATE_ROW: Y6), each with exchange time T, arrival arr, file line,
+  taker side (+ the taker bought, - the taker sold: the reader's side, the true taker side, not the paper's bulk classification) and
+  quantity v = units / px, exact (Y3: the reader's units are the row's dollars px x am as an integer count of 10^-(pp + qp) dollars,
+  prod_reader_trades_v1 926b7ff5 lines 7 to 10, 82, and px is at 10^-pp, so v = am, the coin's quantity at 10^-qp, the paper's shares;
+  a 1000-coin's am in thousands); pp and qp are per file, so D-1's and D's v are put on one common scale (the larger qp) before the pour. D-1's rows: T in D-1 and
+  arr <= 00:00:00 of D. V_D = (the sum of v over D-1's rows) / 50, fixed for all of D (the paper: the average daily volume / 50; ours D-1's
+  volume: a named difference). The pour at the 5 s point u (00:00:00, 00:00:05, ..., 23:59:55 of D): D-1's rows, then D's rows with
+  T <= u and arr <= u, in (T, file line) order, into consecutive buckets of exactly V_D; a row larger than the room left fills the bucket
+  and its excess goes on into the next bucket or buckets on the same side; a bucket closes when it holds exactly V_D (a row that fills it
+  exactly closes it, the next bucket starts empty). D-1's rows fill exactly 50 buckets (their sum is 50 V_D), so D starts on an empty
+  bucket: the CARRY of D-1 is V_D and those 50 imbalances. S12(u) = the sum over the last 50 closed buckets k of |V_S,k - V_B,k|, divided
+  by 50 V_D (= by D-1's volume); the open bucket never counts. A row of D with T <= u received after u is left out at u and poured at the
+  first 5 s point at or after its arrival, at its (T, line) place: the buckets from that place on are poured again (a value already
+  written is never rewritten). D-1's rows received after 00:00:00 of D are in neither V_D nor the pour, nor is a row of D-1's file stamped in D (X4). A repeated row is poured each time (B1 rule 17, Y6), flagged DUPLICATE_ROW on the values whose last 50 buckets hold it. A row with no stamp (t = arr = -1, bad) is never poured and gives no BAD_INPUT (Y5). The coin is seen at u by B1 rule 9 (a trade in [u - 60 s, u] received by u, the last full minute before u not thin, no bad trade row stamped in (u - 60 s, u] and received by u; reader v6's alive and thin): DEPARTS from B1 rule 9 for windows over 60 s (CARD_B1_V7 line 161, O-B1-1 B: seen through the whole window), as F11 (O-FLOWX-4 A): the last 50 buckets span about a day, so a TRADES_HOLE or THIN_FEED inside them does not empty the value; only the row at u is empty. THE FILES (X1): NO_FILE at every row of D when D's trades file is missing or D-1's is missing or not held (V_D needs it), on any day; a header-only or 20-byte file is there with no rows (prod_reader_trades_v1 lines 72 to 73: no trade gives TRADES_HOLE, CARD_B3_V4 line 116). Exact arithmetic (Fraction, or
+  integers on the common scale: each v x 50 against a bucket of D-1's total volume), one float64 at the end, not rounded. The kernel takes the bucket count n;
+  the card's value uses n = 50 (the tests plant n = 1, 2, 3).
+  THE 00:00 POINTS (REVIEW_LEAD_EDGE1_V1 X3): when D's file is missing and D-1's is there, phase B writes the 00:00:00 row NO_FILE too (the year reads D's file there); the 00:00:00 point is completed in phase B after D's rows at exactly 00:00:00.000000 are added.
+source:
+  kind: paper
+  ref: >-
+    Easley, Lopez de Prado and O'Hara 2012, RFS 25(5) 1457-1493: VPIN = the sum over the last n volume buckets of |V_S - V_B| / (n V),
+    50 buckets of the average daily volume / 50, sides by bulk volume classification. RESEARCH_TOOLS_V1 aad3cc38 section 6.3. Named
+    differences here: V_D from D-1's volume alone (not an average of days); the true taker side of every trade (no bulk classification;
+    a BVC twin is not built); written every 5 s (ADDON_ARCHITECTURE_V4 section 4). Oracle only: screamer 3.6.0 VPIN (MIT licence) with
+    our wrapper (bucket_volume 1 on v / V_D).
+inputs:
+  - kind: reader
+    ref: prod_reader_trades_v1
+    exists: true
+    stream: Tardis binance-futures trades (the year's trades stream)
+    fields: t, arr, side, px, units, bad, dup, line (prod_reader_trades_v1 926b7ff5 lines 10 to 11; units and their scale at lines 7 to 10, 79, 82, 89)
+    rule_in_force: >-
+      every good row of D's file (bad false; repeats poured each time, Y6) with T <= u and arr <= u at the 5 s point u, poured in (T, file line) order, v = units / px on one common scale (Y3); for V_D and the
+      CARRY, D-1's good rows with T in D-1 and arr <= 00:00:00 of D
+    stale_rule: none per row (a trade is an event); stale by B1 rule 22 on the seen state at u
+    days: >-
+      D. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4; Y1): phase A of D, days in parallel and without the CARRY, makes only the point-local records of D's raw: D's good trade rows (T, line, arrival, side, v at the file's qp), D's volume and D's own 50 bucket imbalances at V_(D+1) = D's volume / 50 with the arrival of the trade that closed bucket 50 (the CARRY for D+1: D's rows stamped in D and received by its 24:00), D's minute trade counts, live spans and bad trade rows (reader v6). Phase B, day after day with the CARRY of D-1, makes every value: D's pour after the carried 50 buckets on V_D (on one common scale), the seen state at every point (alive from D-1's live spans past 24:00; thin from D-1's counts and thin(D-1, 0)'s end), the 00:00:00 point (the 50 carried imbalances over D-1's volume; NO_FILE when D's file is missing, X3). No value is final in phase A. THE CARRY (X1/carry/FLOWX/<D-1>.npz): V_D, D-1's 50 bucket imbalances poured at V_D (D-1's volume poured at V_D fills exactly 50 buckets, so D starts on an empty bucket) and the arrival of the trade that closed bucket 50, D-1's qp; D-1's 1,440 minute trade counts and thin(D-1, 0)'s end (on, good); D-1's live spans reaching past 24:00; whether D-1's trades file exists (X1: a missing D-1 file gives NO_FILE at every row of D, on any day). The first year day reads 9 Sep 2025's raw once for the first CARRY (R2); if it is not held, every row of 10 Sep 2025 is empty NO_FILE. D-2 is never needed (V from D-1 alone).
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: "the trades files' two stamp columns, as B1 reads them for its seen state (CARD_B1_V7 line 150: alive and thin through prod_reader_liquidations_v6.py; prod_B1_v3 efc2bc52 line 117): the minute counts (a trade counted in its minute when received by the minute's end) and the live spans (a trade stamped t, received a, makes the coin alive at every moment from max(t, a) to t + 60 s), 8566228f lines 98 to 116"
+    rule_in_force: "B1 rule 9's alive (a trade in [e - 60 s, e] received by e) and thin (R8: the base the median of D-1's 1,440 minute counts; a minute under 1 percent turns it on; while on, 5 minutes in a row at 20 percent or more end it; D's start is thin(D-1, 0)'s end, B1 rule 19)"
+    stale_rule: "B1 rule 22 (TRADES_HOLE, THIN_FEED: stale 1); D-1's trades file missing or a base of 0: thin off, flagged NO_RATE_BASE (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    days: "D-2, D-1 and D (D's base is D-1's counts; D's start is thin(D-1, 0)'s end, whose base is D-2's counts). Measured on 8 Mar 2026 (J16034, log f7a76cb05e789815): BTC 3.24 s, DOGE 1.03 s, CRV 0.10 s a pack. It parses each trades file a second time beside the trades reader (ADDON_ARCHITECTURE_V4 9.3 rule 1): FOR EDGE1, a seen-state kernel on the shared trades pack, tested equal to v6"
+overlaps:
+  - setting: B2 S01
+    kind: other_metric
+    why: >-
+      B2 S01 is a VPIN-like value on fills-scale buckets; FORMULA_B2_V1 B2.CB1 finds it another quantity than the paper's VPIN (Spearman
+      0.03 and 0.06 on klines, J15955). S12 is the paper's day-scale bucket (D-1's volume / 50) on exact taker sides.
+per_coin: >-
+  Every roster coin of D (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters: knowledge/roster/ starts at
+  ROSTER_20251006, J16034; Y8, X11). On a day that trades like D-1, D closes about 50 buckets, one each 1,440 / 50 = 28.8
+  minutes on average, so the last 50 buckets span about one day of volume for every coin, BTC and thin coins alike; the ratio is within
+  the coin. A thin coin is often not seen at u (B1 rule 9: the row is empty) while its pour goes on. 1000-coins: quantity in thousands,
+  the same ratio. Coins missing on Hyperliquid change nothing (a Binance value).
+time: >-
+  The 00:00 start reads the CARRY: S12(00:00:00 of D) = the 50 carried imbalances summed over D-1's volume. The value changes only at the
+  5 s points where a bucket closes (about 50 a day). A crash day (10 Oct 2025 evening) gives one-sided buckets; its next day (11 Oct 2025)
+  has a large V_D, so fewer buckets close that day and S12 goes stale more often. The first year day (10 Sep 2025) reads 9 Sep 2025's
+  trades once if held, else it is empty NO_FILE all day (X1: D-1's trades are needed). Funding settles and quarter hours are ordinary points.
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S12
+      label: bn_vpin_taker_50b
+      units: share of the volume of the last 50 buckets, 0 to 1
+      value_kind: float
+      decimals: none
+      means: the one-sided share of the volume of the last 50 closed buckets of V_D = D-1's volume / 50, on true taker sides
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per coin per day, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = max(the arrival of the trade that closed the last full bucket (the latest arrival of the rows poured up to and including
+    that trade, when a row placed before it arrived after it: data_checks), 00:00:00 of D) (Y7: V_D is known at 24:00 of D-1; EDGE1
+    20:26:22Z): at 00:00:00 of D with no bucket of D closed yet, 00:00:00 of D (the CARRY's closer arrived before it); an empty row has
+    known_at = as_of. Every row poured arrived by u, so known_at <= as_of, and as_of - known_at < 86,400 s (max_staleness_s holds).
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters; every coin)
+    - reason: NO_FILE
+      when: "D's trades file is missing (the reader's status NO_FILE), or D-1's trades file is missing or not held (V_D needs it: X1, any day), at every row of D; a header-only or 20-byte file is there with no rows (no trade gives TRADES_HOLE, CARD_B3_V4 line 116)"
+    - reason: TRADES_HOLE
+      when: the coin is not seen at the 5 s point u by B1 rule 9 with this reason (the pour goes on; only the row at u is empty)
+    - reason: THIN_FEED
+      when: the coin is not seen at the 5 s point u by B1 rule 9 with this reason (the pour goes on)
+    - reason: BAD_INPUT
+      when: the coin is not seen at the 5 s point u by B1 rule 9 with this reason (a bad row; bad rows are never poured)
+    - reason: NO_HISTORY
+      when: >-
+        D-1's trades file is there but holds no good row stamped in D-1 and received by 00:00:00 of D (V_D = 0, fewer than 50 full
+        buckets): every row of D (ADDON_ARCHITECTURE_V4 section 5); a D-1 file missing or not held is NO_FILE (X1), not this
+  stale_rule: stale = 1 on a row empty TRADES_HOLE or THIN_FEED (B1 rule 22, CARD_B1_V7 line 174), else 0; a valued row is never stale (METRIC_AUDIT2 FS)
+  max_staleness_s: 86400
+  window_days: 1
+  no_history: >-
+    V_D needs D-1's trades: the first day valued is 10 Sep 2025 when 9 Sep 2025's trades are held (read once), else 11 Sep 2025, and every row of 10 Sep 2025 is then empty NO_FILE (X1); on any later day a D-1 with no good trade received by 00:00:00
+    of D gives NO_HISTORY at all 17,280 points of D (a D-1 file not held gives NO_FILE, X1).
+  fit_rule: >-
+    parameters from days before D only: V_D = D-1's volume / 50 (D-1's good rows received by 00:00:00 of D), refit each day at 00:00 of D
+    (in D-1's phase A); the paper's average daily volume is not used (a named difference). V_D rides in the CARRY, not in a fit table
+    (X5, PF2): it comes with D-1's 50 bucket imbalances, the pour state D's pour continues, made in one step from D-1's rows
+  fifths: none
+  flags:
+    - flag: NO_RATE_BASE
+      when: "on a valued row when the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0): the coin is read as not thin (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row that counts a repeated row (an agg id or a trade id seen before in its file): it counts each time (B1 rule 17, A1 rule 10)"
+edge_cases:
+  - case: E1 the hand work's first plant (the kernel with n = 3, V = 100)
+    input: 'trades in order: buy 70, sell 30, buy 40, sell 60, buy 50, sell 50, buy 90, sell 10, buy 20, sell 80, buy 60, sell 40 (bucket buy volumes 70, 40, 50, 90, 20, 60; |S - B| = 40, 20, 0, 80, 60, 20)'
+    answer: 'after buckets 1 and 2 no value (fewer than n closed); after 3: 60/300 = 1/5 = 0.2000000000; 4: 100/300 = 1/3 = 0.3333333333; 5: 140/300 = 7/15 = 0.4666666667; 6: 160/300 = 8/15 = 0.5333333333'
+  - case: E2 a straddling trade is split (n = 2, V = 100)
+    input: 'buy 60, sell 70, buy 90'
+    answer: 'bucket 1 B 60 S 40 (|.| = 20), bucket 2 S 30 B 70 (|.| = 40), B 20 left open: 60/200 = 3/10 = 0.3000000000'
+  - case: E3 a trade exactly filling a bucket (n = 1, V = 100)
+    input: 'buy 60, sell 40, buy 30'
+    answer: 'the sell 40 closes bucket 1 (B 60 S 40, |.| = 20); bucket 2 starts empty and holds B 30, open: 20/100 = 1/5 = 0.2000000000'
+  - case: E4 the last incomplete bucket is never counted
+    input: 'E1 then a buy 30 (open)'
+    answer: 'still 8/15 = 0.5333333333'
+  - case: E5 the 00:00 start with the CARRY (n = 50), and a 5 s point that is not a minute end
+    input: 'D-1: 25 times (buy 70, sell 30) then 25 times (sell 60, buy 40), all received by 00:00:00 of D, the last buy 40 received at 23:59:58.450 of D-1; D: a buy 250 at T 00:00:01.000 received 00:00:01.020'
+    answer: 'D-1 volume 5,000, V_D = 100, exactly 50 buckets (25 at 40, 25 at 20, sum 1,500), none open: S12(00:00:00) = 1,500/5,000 = 3/10 = 0.3000000000, known_at 00:00:00.000000 of D (Y7; the closer arrived 23:59:58.450 of D-1); at 00:00:05 the buy 250 enters (T <= u, received by u): buckets 51, 52 all buy (100 each), B 50 open, the two oldest (40 each) leave: S12(00:00:05) = (1,500 - 40 - 40 + 100 + 100)/5,000 = 81/250 = 0.3240000000, known_at 00:00:01.020; the same at 00:01:00'
+  - case: E6 a row received late is poured at its place
+    input: 'E5 plus a sell 30 at T 00:00:00.500 received at 00:01:00.040'
+    answer: 'at 00:01:00 left out: 81/250 = 0.3240000000; at 00:01:05 poured before the buy 250: bucket 51 S 30 B 70 (40), bucket 52 B 100 (100), B 80 open: (1,500 - 40 - 40 + 40 + 100)/5,000 = 39/125 = 0.3120000000, known_at 00:01:00.040 (the closer''s own arrival is 00:00:01.020)'
+  - case: E7 a D-1 row received after 00:00:00 of D
+    input: 'E5 plus a sell 100 at T 23:59:59.990 of D-1 received 00:00:00.030 of D'
+    answer: 'in neither V_D nor the pour: V_D = 100, S12(00:00:00) = 3/10 = 0.3000000000'
+  - case: E8 no trade on D-1
+    input: 'D-1''s file held with no good row received by 00:00:00 of D'
+    answer: 'NO_HISTORY at all 17,280 points of D, known_at = as_of'
+  - case: E9 the first year day without the CARRY
+    input: '10 Sep 2025, 9 Sep 2025''s trades not held'
+    answer: 'every row empty NO_FILE (X1: V_D needs 9 Sep 2025''s trades; no flag), known_at = as_of; 11 Sep 2025 is valued from 00:00:00 on 10 Sep 2025''s V; with 9 Sep 2025 held it is read once and 10 Sep 2025 runs as E5'
+  - case: E10 the coin not seen at u
+    input: 'E5 with the coin not seen at 00:00:05 (THIN_FEED by B1 rule 9) and seen at 00:00:10'
+    answer: 'S12(00:00:05) empty THIN_FEED; S12(00:00:10) = 81/250 = 0.3240000000 (the pour went on through 00:00:05)'
+  - case: E11 a quiet stretch with no bucket closing
+    input: 'the last bucket closed by a trade received at 10:00:00.500, no bucket closes after it'
+    answer: 'at 11:00:00 and 11:00:05 the value unchanged, stale 0 (the coin seen by trades that close no bucket), known_at 10:00:00.500 (u - known_at 3,599.5 s and 3,604.5 s, under the 86,400 s bound: a bucket of D-1''s volume / 50 closes about 50 times a day); with the coin unseen instead (no trade in [u - 60 s, u]): empty TRADES_HOLE, stale 1'
+  - case: E12 a repeated trade row (Y6)
+    input: "E5 with D's buy 250 twice in the file (the same trade id)"
+    answer: 'poured each time: buckets 51 to 55 all buy (100 each), none open; the five oldest (40 each) leave: S12(00:00:05) = (1,500 - 200 + 500)/5,000 = 9/25 = 0.3600000000, flag DUPLICATE_ROW, known_at 00:00:01.020'
+  - case: E13 a trade row with no stamp (Y5, X2)
+    input: "E5 plus a trade row with timestamp and local_timestamp empty (t = arr = -1, bad), a sell of 100"
+    answer: 'never poured, no BAD_INPUT: S12(00:00:05) = 81/250 = 0.3240000000 as E5'
+  - case: E14 D's trades file header-only (X1)
+    input: "E5 with D's trades file header-only (there, no rows); D-1's last trade received 23:59:58.450"
+    answer: 'not NO_FILE: S12 = 3/10 = 0.3000000000 (the carried buckets) while D-1''s last trade keeps the coin alive (to 00:00:55); empty TRADES_HOLE, stale 1, from 00:01:00'
+  - case: E15 a row of D-1's file stamped in D (X4)
+    input: "E5 plus a sell 100 in D-1's file at T 00:00:00.020 of D, received 23:59:59.990 of D-1"
+    answer: 'in neither V_D nor the pour: V_D = 100; S12(00:00:00) = 3/10, S12(00:00:05) = 81/250 as E5'
+  - case: E16 D-1's trades file not held on a later day (X1)
+    input: "8 Mar 2026, D-1's trades file not held, D's file there"
+    answer: 'every row of D empty NO_FILE (V_D needs D-1''s file; any day, X1), known_at = as_of; not NO_HISTORY'
+  - case: E17 D-1 and D on different scales (Y3)
+    input: "E5 with D-1's rows at qp 0 (whole coins) and D's file at qp 1: the buy 250 written am 250.0, units = px x am at 10^-(pp + 1)"
+    answer: 'v = units / px: D''s buy is 2,500 tenths of a coin, D-1''s volume 50,000 tenths on the common scale (qp 1), V_D = 1,000 tenths: S12 as E5 (3/10 at 00:00:00, 81/250 at 00:00:05); the two scales left apart would give 25 one-sided buckets of 100 and a wrong value'
+unit_tests:
+  - test: U1 (E1, E4)
+    planted: 'the E1 trades five seconds apart from 12:00:01 (12:00:01, 12:00:06, ..., 12:00:56), all received 10 ms after T, then a buy 30 at 12:01:01; the kernel with n = 3, V = 100'
+    expect: 'no value at 12:00:10 to 12:00:25 (fewer than 3 closed buckets); 1/5 = 0.2000000000 at 12:00:30, 12:00:35; 1/3 = 0.3333333333 at 12:00:40, 12:00:45; 7/15 = 0.4666666667 at 12:00:50, 12:00:55; 8/15 = 0.5333333333 from 12:01:00, 12:01:05 included (the open buy 30 not counted); edition 3''s 1 s spacing closed two buckets inside one 5 s step'
+  - test: U2 (E2, E3)
+    planted: 'the E2 trades (n = 2) and the E3 trades (n = 1), V = 100'
+    expect: '3/10 = 0.3000000000 and 1/5 = 0.2000000000; open buckets B 20 and B 30 not counted'
+  - test: U3 (E5, E6, E7) the CARRY, a non-minute point, a late row, a late D-1 row
+    planted: 'the E5 D-1 and D rows with n = 50, then the E6 sell 30 and the E7 sell 100'
+    expect: 'V_D = 100; 50 carried buckets, none open; S12(00:00:00) = 3/10, known_at 00:00:00.000000 of D (Y7); S12(00:00:05) = S12(00:01:00) = 81/250, known_at 00:00:01.020; S12(00:01:05) = 39/125 = 0.3120000000, known_at 00:01:00.040'
+  - test: U4 (E8, E9, E10, E11) the empty and stale rules
+    planted: 'the rows of each case'
+    expect: 'the answers written in edge_cases: every empty reason, flag, stale and known_at equal'
+  - test: U5 the row stamps
+    planted: U1 to U4
+    expect: 'every row as_of = u and known_at <= as_of; value_kind 1 or 0 (empty); 17,280 rows per coin for a full day; 0 <= S12 <= 1'
+  - test: UX the bounds and the CARRY (moved from the meaning check, X6)
+    planted: U1 to U4's plants
+    expect: '0 <= S12 <= 1 at every planted point; the CARRY holds exactly 50 closed buckets of V_D and no open volume, and S12(00:00:00) = their imbalances over D-1''s volume (E5)'
+  - test: U6 (E12 to E17) the rows, the files and the scales
+    planted: "the rows of each case through the trades reader's packs (pp, qp per file) and reader v6's arrays"
+    expect: "each answer exactly as written; no flag on an empty row"
+mutants:
+  - mutant: M1 include_open_bucket (the open bucket counted as the newest of the n)
+    caught_by: 'U1 (with the open buy 30: (60 + 20 + 30)/300 = 11/30 = 0.3666666667 against 8/15 = 0.5333333333)'
+  - mutant: M2 no_split (a straddling trade kept whole in the bucket it starts)
+    caught_by: 'U3 (the buy 250 whole in bucket 51: (1,500 - 40 + 250)/5,000 = 171/500 = 0.3420000000 at 00:00:05 against 81/250 = 0.3240000000); U2 (one bucket of 130, B 60 S 70: no value against 3/10)'
+  - mutant: M3 v_from_D (V from D's own volume, a look-ahead known only at 24:00 of D)
+    caught_by: 'U3 (V = 250/50 = 5: every bucket one side only, S12 = 1 at 00:00:00 and 00:00:05 against 3/10 and 81/250)'
+  - mutant: M4 bvc_side (the paper's bulk classification by the price change in place of the taker side)
+    caught_by: 'U1 planted with every trade at one price: a zero price change gives Z(0) = 1/2, every bucket half and half, S12 = 0 (or no number when the spread of the price changes is 0) against 8/15 = 0.5333333333'
+  - mutant: M5 minute_grid (only the minute ends computed, held for 60 s)
+    caught_by: 'U3 (S12(00:00:05) = 3/10 against 81/250)'
+  - mutant: M6 dup_dropped (a repeated row poured once)
+    caught_by: 'U6 E12 (81/250 against 9/25)'
+  - mutant: M7 own_scales (D-1's and D's v each on its file's scale)
+    caught_by: 'U6 E17 (a value other than 81/250 at 00:00:05)'
+  - mutant: M8 stampless_bad (a trade row with no stamp gives BAD_INPUT)
+    caught_by: 'U6 E13 (BAD_INPUT against 81/250)'
+  - mutant: M9 nohist_for_missing (a D-1 file not held read as NO_HISTORY)
+    caught_by: 'U6 E16 (NO_HISTORY against NO_FILE)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT and one thin coin (the tester names it), the points 00:00:00, 12:00:00 and 23:59:55
+      why: the year's checked day; the 00:00:00 row from the CARRY of 7 Mar 2026; trades are the year's stream (held)
+    - point: 2026-03-08, BTCUSDT, 12:00:05 to 12:01:00 every 5 s
+      why: 5 s points that are not minute ends (a bucket closing between minute ends)
+    - point: 2025-09-24, the same two coins, the points 00:00:00, 12:00:00 and 23:59:55
+      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991)
+    - point: 2025-10-10, BTCUSDT and the thin coin, the 10 minute ends with the largest A1 liquidation dollars that evening (the tester picks them from A1 before the job), each with its 11 points after it
+      why: the crash, one-sided buckets
+    - point: 2025-10-11, BTCUSDT and the thin coin, the points 00:00:00, 06:00:00, 12:00:00 and 18:00:00
+      why: the crash day's next day has a large V_D (fewer buckets close, stale more often)
+  pass: >-
+    The tester recomputes S12, V_D, the 50 carried imbalances, the empty reasons, flags, stale and known_at at every point from this card's
+    words, with Fraction on the trades reader's rows (never the producer's code): floats equal within 1e-9 relative of the Fraction
+    recompute, words equal. screamer 3.6.0 VPIN runs on the same rows as the oracle (the tool against ours). One small runner job.
+meaning_check:
+  pass_lines:
+    - 'At the real-check points: screamer 3.6.0 VPIN on the same rows (our wrapper: bucket_volume 1 on v / V_D, the true taker sides) equals S12 within 1e-9 relative.'
+    - 'On the checked days, the Spearman correlation of S12 with B2 S01 over the valued minute ends is under 0.9 (proposed level, EDGE1 or the owner sets it); FORMULA_B2_V1 found 0.03 and 0.06 on klines (J15955); above it, the paper''s VPIN and B2 S01 read one quantity'
+  report_only:
+    - 'FORMULA_B2_V1 B2.CB1: S12 against B2 S01 (another quantity: Spearman 0.03 and 0.06 on klines, J15955)'
+    - 'B2.CB2: the 0.60 level (no coin at 0.60 on the paper''s VPIN, J15955)'
+    - 'the kill test of RESEARCH_TOOLS_V1 6.3 (the test_condition): the partial correlation of S12 with the next hour''s realised variance given the trailing realised variance and volume'
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades and aggTrades; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - how one-sided the coin's taker volume was over its last 50 buckets of D-1's volume / 50, as received by u
+    - the coin against itself across days (the ratio is within the coin)
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - a probability of informed trading in itself (it is a one-sidedness share)
+    - B2 S01 or B2 S02 (fills-scale buckets; S12 is a day-scale bucket)
+    - 'orders: the buckets pour trades (fills) on their taker side, not orders (RULING 3: the name says what the value is)'
+    - the paper's own number on the same coin (another V and another side rule; the named differences)
+    - a signal for a chain before its test_condition is met (BUILD_TEST)
+readers: none yet (BUILD_TEST, read by no chain until the test_condition is met)
+implementation:
+  how: >-
+    Per coin, in phase B (it needs V_D from the CARRY): D's good rows stable-sorted on (T, line); the pour of the rows received by 23:59:55
+    of D vectorised (the cumulative volume after the CARRY, the bucket index = floor(cumulative / V_D), the straddling rows split at the
+    bucket edges, buy and sell per bucket by np.bincount, exact in integers when the units are whole: each v x 50 against a bucket of D-1's
+    total volume); per bucket its closing row and the running max of arrival up to it; at the 17,280 points the closed buckets of the
+    stable prefix (the rows before the first row with T <= u not yet received) by np.searchsorted, and the few received rows after it
+    poured on top, vectorised over the points that have such a tail; the last-50 sum by cumulative sums over the bucket axis (the CARRY's
+    50 first). S12 = that sum over D-1's volume, one division. No loop over rows or points in Python (numba is not installed:
+    ADDON_ARCHITECTURE_V4 9.3 rule 7). The trades pack is read once per day for F11, F12, F13, F16.
+  kernel: 'new: vpin_pour (the vectorised pour; the last 50 closed buckets by a cumulative sum over the buckets, not addon_grid_v2.roll_points: buckets are not points)'
+  memory_mb: 400
+  seconds_share: 2
+data_checks:
+  - what: >-
+      known_at: the brief says the arrival of the trade that closed the last full bucket; when a row placed before it (earlier T) arrived
+      after it, this card takes the latest arrival of the rows poured up to it (E6: 00:01:00.040, not 00:00:01.020), else two rows with
+      different values would share one known_at
+    who: EDGE1, with METRIC_AUDIT2
+  - what: the CARRY of the first year day (are 9 Sep 2025's trades held?)
+    who: BED (a read-only runner job)
+  - what: "answered (edition 6, Y3): the units are whole numbers, the row's dollars at 10^-(pp + qp) (prod_reader_trades_v1 926b7ff5 lines 7 to 10, 82); v = units / px is am exactly, at 10^-qp, so the pour runs in int64 on the common scale of D-1 and D"
+    who: BED (read prod_reader_trades_v1 926b7ff5)
+  - what: >-
+      the raw check per day (ADDON_ARCHITECTURE_V4 section 6, V3 section 6 standing): the re-read trades against the year's C13 and B1;
+      what the year read at the 12 minutes of 22 to 24 Sep 2025 (J15991; METRIC_AUDIT J15943, J15945) is found before any trades producer
+      runs on 2025 days
+    who: open (the architecture names no seat)

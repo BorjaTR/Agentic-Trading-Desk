@@ -1,0 +1,243 @@
+# POSX P2 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P2_V1.md 1306131d) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Changed from the draft: the staleness level is Hyperliquid's 261.3 s (the draft said Binance's 61.0 s); the draft's case of a row
+# stamped before u and received after it cannot occur on Hyperliquid (timestamp = local_timestamp); the CARRY of D-1 is written out.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 b5fcc859 section 4 CARRY wording (00:00 = D-1's 24:00 row), flag FIRST_DAY_NO_CARRY, kernel in_force (9.4); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): the 5 s grid (BUILD_ITEMS_V4 9d424de3 line P2; ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4; build_register 5a7144a3): output.grid 5s, 17,280 points, the CARRY at 00:00:00; the raw check stays at the minute ends; values unchanged at the minute ends
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 in_force (t = arr on Hyperliquid); the 00:00:00.000000 row settled by ADDON_ARCHITECTURE_V4 edit 3 section 4 (phase B adds it): its data check closed, planted test U7 added; values unchanged
+# Edition 5 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 cited as edit 3 0591d181 (the binding edition); wording only, values unchanged
+# Edition 6 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P2 fixes: CARD_E1_V9 rule 3 (a later bad row received by u gives BAD_INPUT; E10, U1, M7, M8), the raw check's open interest by CARD_E2_V1 rules 1 to 6, X3a (D missing and D-1 there gives NO_FILE at 00:00:00; E12, M9); nits: the reader's arrays fr, has_fr, oi, has_oi, the row in force per field, BROKEN and EMPTY planted (E13, E14, U8, X1); BED G1: no RAW_DIFFERS, the day refused for the seal instead (E11, U5)
+# Edition 7 (METRIC_AUDIT2, 18 Oct 2026): no flag on an empty row (CARD_B1_V7 rule 18 and CARD_C13_V4 rule 7: an empty value carries no flag; REVIEW_LEAD_EDGE1_V1 6.2 for V4 edit 4; METRIC_AUDIT2's own FF found on FLOWX): FIRST_DAY_NO_CARRY dropped, the first year day's reads that need D-1's missing file are empty NO_FILE; values unchanged
+# Signed by BED's REVIEW OK of edition 7, 2026-10-18T19:57:45Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P2
+producer: POSX
+item: 'funding per hour, Hyperliquid (BUILD_ITEMS_V4 9d424de3 line P2, every 5 s)'
+tier: BUILD
+name: Hyperliquid funding rate in force on the coin's perpetual, per hour, as Hyperliquid gives it
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 7
+  signed: true
+  signed_by: 'BED 2026-10-18T19:57:45Z'
+means: >-
+  The share of the position the longs pay the shorts (above 0) or receive (below 0) per hour on Hyperliquid, where the owner trades
+  (EDGE1 16:21:06Z), at the rate in force at each 5 s point (minute ends included). Hyperliquid's rate is already per hour (CARD_E1_V9 line 183).
+example: >-
+  A coin whose last Hyperliquid row before 12:10:00 (received 12:09:50) carries funding_rate 0.0000130 reads 0.000013 per hour;
+  at the interest rate alone it reads 0.0000125 per hour, the same default as Binance's 0.0001 per 8 h (CARD_E1_V9 line 183).
+formula: >-
+  For one coin and each 5 s point u of D (00:00:00 to 23:59:55, minute ends included): the good rows of the coin's Hyperliquid derivative_ticker file of D carrying the funding rate (the reader's
+  arrays fr and has_fr, present and valid on a good row; the row in force is taken per field) in arrival order (arr = local_timestamp; on Hyperliquid timestamp = local_timestamp, reader v1
+  lines 8 to 10); the row in force is the last one with arr <= u (the reader's at(), prod_reader_hl_derivative_ticker_v1 lines 299 to
+  302, O3 line 27); u = 00:00:00 of D is D-1's 24:00:00 point, computed by POSX of D-1 from D-1's file and handed in X1/carry/POSX/<D-1>.npz (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); for u = 00:00:05 to 24:00:00 a D file with no good row by u leaves in force the CARRY's row in force at 24:00 of D-1 (CARD_E1_V9 rule 2: the file of the day before is touched only then). D's file missing (or only .part) gives NO_FILE at every point of D, 00:00:00 included even when D-1's file is there: the year reads D's file at 00:00, so phase B sets that point to NO_FILE (REVIEW_LEAD_EDGE1_V1 X3a); a header-only or 20-byte gzip file is there with no rows (X1). P2(u) = that row's
+  funding_rate as given (the reader holds it exactly as an integer x 10^scale from its string, plain or exponent form such as 4e-8,
+  reader v1 lines 12 to 14), written as the float64 nearest it; decimals none. Its age u - arr over 261.3 s (the reader's SILENCE_S,
+  v1 line 40, v3 line 48; CARD_E1_V9 rule 5 line 285, the Hyperliquid level) gives empty STALE_VALUE, stale 1; an age of exactly
+  261.3 s is not over the level. A bad row (bad, badk > 0) never stands; when a bad row comes later in the file than the row read and is received by u, the read is
+  BAD_INPUT (CARD_E1_V9 rule 3, line 283; a bad row with no arrival of its own is received when the row before it in the file was); a
+  good row that merely lacks fr is not bad. Reasons in CARD_E1_V9 rule 6's order (line 286): NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE.
+  The raw check (PRODUCER_POSX raw_check (b)) names a differing coin-minute and refuses the seal; it never empties P2 (BED G1). No conversion:
+  the rate is per hour as given (no x 8, no / 8).
+source:
+  kind: doc
+  ref: >-
+    Hyperliquid funding is paid every hour and the rate is per hour (CARD_E1_V9 530157c1 line 183, HL Q-H2: 0.0000125 an hour is
+    0.0001 per 8 h); the field is Tardis's funding_rate of the hyperliquid derivative_ticker stream (reader columns,
+    prod_reader_hl_derivative_ticker_v3 955f16fa line 44; v1 34d0d2cc line 36). Hyperliquid funding per coin is not in the year (AR2
+    F11; E1's Hyperliquid market S05, S06 beside, switched off: SETTINGS_E1_V3 line 1). No tool computes it (fetch only).
+inputs:
+  - kind: reader
+    ref: prod_reader_hl_derivative_ticker_v1
+    exists: true
+    stream: 'hyperliquid derivative_ticker (derivative_ticker_<NAME>_<YYYY-MM-DD>.csv.gz; NAME the coin, k<coin> for a Binance 1000x symbol: CARD_E1_V9 line 245, reader v1 hl_name lines 81 to 84)'
+    fields: t, arr (local_timestamp, us), fr (funding_rate, int64 x 10^scale_fr), has_fr, oi (open_interest), has_oi, bad, badk (reader v1 lines 15 to 19, 183 to 185); meta status (NO_FILE, BROKEN, EMPTY, OK), scales, manifest sha16
+    rule_in_force: the last good row carrying funding_rate with arr <= u, else the CARRY's row in force at 24:00 of D-1 (reader v1 at(), lines 299 to 302)
+    stale_rule: u - arr over 261.3 s gives STALE_VALUE, stale 1 (reader v1 line 40; CARD_E1_V9 rule 5 line 285)
+    days: >-
+      D (u = 00:00:05 to 24:00:00 from D's file) and THE CARRY of D-1 (ADDON_ARCHITECTURE_V4 section 4, X1/carry/POSX/<D-1>.npz): D-1's
+      24:00:00 rows (D's 00:00:00 rows of S02) and per coin the row in force at 24:00 of D-1 (arr, exact funding_rate, open_interest for the
+      raw check) with D-1's file status (NO_FILE, BROKEN, EMPTY or OK). On Hyperliquid timestamp = local_timestamp (reader v1 lines 8
+      to 10), so no row of D-1's file arrives after 24:00. Day file D = the CARRY's 00:00:00 rows + D's rows 00:00:05 to 23:59:55. The first
+      year day reads D-1's file once (if it is missing, the reads that need it are empty NO_FILE by the year's file rule, and no flag is written on an empty row: CARD_B1_V7 rule 18, REVIEW_LEAD_EDGE1_V1 6.2).
+  - kind: year
+    ref: E2 S05 (Hyperliquid open interest in coins at the minute end), read only for the raw check
+    card: MEANING_E2_V2 5a309fc5 / SETTINGS_E2_V1 (testbed/value_audit/registers)
+    verdict: LIMITS
+    rule_in_force: the year's row of E2 S05 at u (the open_interest on the Hyperliquid row in force, level 261.3 s, MEANING_E2_V2.yaml line 36)
+    stale_rule: E2 S05's own stale and empty_reason
+    days: D
+overlaps: none
+per_coin: >-
+  A roster coin not listed on Hyperliquid has no file: P2 empty NO_FILE all day (XMR, ZEC, DASH, ICP on 24 Sep 2025; 3 coins on 4
+  Nov 2025; none on 8 Mar 2026: MEANING_E2_V2.yaml line 34, job 15786). The 1000x coins: Binance's 1000PEPEUSDT is Hyperliquid's kPEPE
+  (reader v1 hl_name lines 81 to 84, CARD_E1_V9 line 245); the rate is a share of the position, the same for either contract size.
+  Hyperliquid has no 4 h or 8 h coins: every coin pays hourly.
+time: >-
+  A row only when a value changes; a coin can be silent up to 261 s (MEANING_E2_V2.yaml line 33, SOURCE_SPEC_hl F6). The rate is paid on
+  every hour; P2 is the rate in force, not a payment; a coin's row changes every few seconds to minutes, so many 5 s points repeat the one before. 00:00:00 of D is D-1's 24:00:00 point from the CARRY (ADDON_ARCHITECTURE_V4 section
+  4), subject to the 261.3 s level. The first year day reads D-1's file once.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S02
+      label: funding_hl_per_hour
+      units: fraction of the position per hour (0.0000125 = 0.00125 percent)
+      value_kind: float
+      decimals: none
+      means: Hyperliquid funding rate in force on the coin's perpetual at the 5 s point, per hour, as given
+      never:
+        - the rate paid at the last hour (not in the stream)
+        - a rate per 8 h
+        - Binance's rate
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: known_at = arr of the row read when valued (arr <= u); u for an empty row; so known_at <= as_of
+  empty_reasons:
+    - reason: NO_FILE
+      when: the coin's Hyperliquid file of D missing or only a .part file (every point of D, 00:00:00 included, X3a); or D's file has no good row by u and the CARRY says D-1's file was missing
+    - reason: BAD_INPUT
+      when: a file the read touches cannot be read whole (the reader's status BROKEN); or a bad row later in the file than the row read is received by u (CARD_E1_V9 rule 3)
+    - reason: NO_VALUE
+      when: no good row carrying fr with arr <= u in D's file nor in the CARRY (an EMPTY file, header only or a 20-byte gzip, is a file with no rows)
+    - reason: STALE_VALUE
+      when: the row in force is older than 261.3 s at u (stale 1)
+  stale_rule: stale = 1 only with STALE_VALUE
+  max_staleness_s: 261.3
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the latest received row
+    input: 'u = 12:10:00; rows (arr, funding_rate): (12:09:10, 0.0000125), (12:09:50, 0.0000130)'
+    answer: 'P2 = 0.000013 (float64 1.3e-05); known_at 12:09:50; stale 0'
+  - case: E2 a row arriving after u
+    input: 'E1 plus a row (12:10:02, 0.0000200)'
+    answer: 'P2 = 0.000013 at 12:10:00 (the 12:10:02 row is not received by u); P2 = 0.00002 at 12:11:00'
+  - case: E3 the level is 261.3 s
+    input: 'u = 12:10:00; the only row of D received at 12:05:38.700000 (age exactly 261.3 s), funding_rate 0.0000125; again with the row at 12:05:38.699999 (age 261.300001 s)'
+    answer: 'exactly 261.3 s: P2 = 0.0000125, stale 0; 261.300001 s: empty STALE_VALUE, stale 1, known_at u'
+  - case: E4 a row 100 s old (the draft's 61.0 s level would empty it)
+    input: 'u = 12:10:00; the last row received at 12:08:20, funding_rate 0.0000110'
+    answer: 'P2 = 0.000011, stale 0 (100 s is under 261.3 s)'
+  - case: E5 a negative rate and an exponent form
+    input: 'funding_rate -0.00002 on one coin; funding_rate written 4e-8 on another'
+    answer: 'P2 = -0.00002; P2 = 0.00000004 (float64 4e-08), read from its string exactly (reader v1 lines 12 to 14)'
+  - case: E6 the CARRY at 00:00
+    input: 'CARRY row of D-1: (23:58:30 of D-1, 0.0000110); D''s first good row at 00:00:40 with 0.0000120'
+    answer: 'P2 at 00:00:00 to 00:00:35 = 0.000011 (age 90 s to 125 s), known_at 23:58:30 of D-1 (00:00:00 is D-1''s 24:00:00 point, handed in the CARRY); from 00:00:40 = 0.000012, known_at 00:00:40'
+  - case: E7 the CARRY too old
+    input: 'CARRY row of D-1 at 23:55:00 of D-1; D''s first good row at 00:06:00'
+    answer: 'every 5 s point from 00:00:00 to 00:05:55 empty STALE_VALUE (age 300 s to 655 s); 00:06:00 valued'
+  - case: E8 a coin with no file
+    input: 'XMRUSDT on 24 Sep 2025 (no Hyperliquid file: MEANING_E2_V2.yaml line 34)'
+    answer: 'empty NO_FILE at all 17,280 points, stale 0'
+  - case: E9 a 1000x coin
+    input: 'roster symbol 1000PEPEUSDT; the file derivative_ticker_kPEPE_<D>.csv.gz with funding_rate 0.0000125'
+    answer: 'P2 of 1000PEPEUSDT = 0.0000125 (kPEPE read)'
+  - case: E10 a bad row
+    input: 'u = 12:10:00; rows (12:09:00, 0.0000125) good, (12:09:30, 0.5) bad (badk 8)'
+    answer: 'at 12:09:15 P2 = 0.0000125, known_at 12:09:00; at 12:10:00 P2 empty BAD_INPUT, stale 0, known_at = u (the bad row never stands, and received after the row read it makes the read BAD_INPUT: CARD_E1_V9 rule 3)'
+  - case: E11 the raw check fails
+    input: 'the reader''s open_interest at 03:00 of D (read by CARD_E2_V1 rules 1 to 6) differs from the year''s E2 S05 at 03:00 for one coin'
+    answer: 'P2 written as computed for every coin and point; the coin-minute named in MANIFEST_X1_<D>_POSX.tsv with both values; the day not sealed (PRODUCER_POSX raw_check, BED G1)'
+  - case: E12 D's file missing, D-1's there
+    input: 'the coin''s file of D missing; D-1''s file there, its row in force at 24:00 (23:59:50 of D-1, 0.0000110)'
+    answer: 'empty NO_FILE at all 17,280 points, 00:00:00 included (phase B sets the carried point to NO_FILE: the year reads D''s file at 00:00, X3a), stale 0'
+  - case: E13 a broken file
+    input: 'the coin''s file of D cannot be read whole (reader status BROKEN)'
+    answer: 'empty BAD_INPUT at every point of D, stale 0'
+  - case: E14 an empty file (header only, or a 20-byte gzip)
+    input: 'D''s file EMPTY; the CARRY''s row in force at 24:00: (23:59:00 of D-1, 0.0000110)'
+    answer: 'P2 = 0.000011 at 00:00:00 to 00:03:20 (age 60 s to 260 s; the file of the day before touched by CARD_E1_V9 rule 2), empty STALE_VALUE stale 1 from 00:03:25 (265 s) to 23:59:55'
+unit_tests:
+  - test: U1 (E1, E2, E10)
+    planted: a sandbox hyperliquid store with derivative_ticker files of three coins (rows above, timestamp = local_timestamp), read through prod_reader_hl_derivative_ticker_v1
+    expect: 'coin A (E1) 1.3e-05 at 12:10:00; coin B (E2) 1.3e-05 at 12:10:00 and 2e-05 at 12:11:00; coin C (E10) 1.25e-05 at 12:09:15, empty BAD_INPUT at 12:10:00; known_at the rows'' arr (u on the empty); stale 0'
+  - test: U2 (E3, E4, E7)
+    planted: the rows of E3 (both variants), E4 and E7 with arr in microseconds
+    expect: 'E3 exactly 261,300,000 us valued, 261,300,001 us STALE_VALUE stale 1; E4 1.1e-05 stale 0; E7 the points 00:00:00 to 00:05:55 STALE_VALUE, 00:06:00 valued'
+  - test: U3 (E5, E9)
+    planted: 'files with funding_rate strings -0.00002 and 4e-8; a file named kPEPE for roster symbol 1000PEPEUSDT'
+    expect: 'P2 -2e-05, 4e-08 (bit equal to float of the strings); 1000PEPEUSDT valued from kPEPE'
+  - test: U4 (E6, E8)
+    planted: a CARRY of D-1 and D's file of E6; no file at all for a fourth coin; the first-year-day path reading D-1's file instead of the CARRY
+    expect: 'E6 answers, the same with the CARRY or with D-1''s file read once; the fourth coin NO_FILE at 17,280 points'
+  - test: U5 (E11) the raw check
+    planted: year E2 S05 rows equal to the reader's open_interest at every minute end; then one value changed at 03:00
+    expect: 'equal: P2 written, the day sealable; changed: P2 written the same, the manifest line with both values, the seal refused'
+  - test: U8 (E12, E13, E14) the year's file cases (X1, X3a)
+    planted: 'coin D with no file of D and D-1''s file there; coin E with a file that cannot be read whole; coin F with a header-only file of D, then a 20-byte gzip, and the CARRY row of E14'
+    expect: 'coin D NO_FILE at 17,280 points (00:00:00 included); coin E BAD_INPUT at 17,280 points; coin F 1.1e-05 to 00:03:20 then STALE_VALUE stale 1, both forms of the empty file alike'
+  - test: U6 the row stamps
+    planted: U1 to U5
+    expect: 'every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 17,280 rows per coin for a full planted day; the minute-end rows equal a minute-grid run'
+  - test: U7 the row at exactly 00:00:00.000000 (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4)
+    planted: 'D''s file with a good row stamped and received at exactly 00:00:00.000000 (funding_rate 0.0000140); the CARRY''s row in force 0.0000110'
+    expect: 'P2(00:00:00) = 1.4e-05, known_at 00:00:00 (D''s phase B adds the row, V4 edit 3 section 4), not 1.1e-05'
+mutants:
+  - mutant: M1 P2 = rate x 8 (a per 8 h reading)
+    caught_by: U1 (1.04e-04 in place of 1.3e-05)
+  - mutant: M2 P2 = rate / 8
+    caught_by: U1 (1.625e-06 in place of 1.3e-05)
+  - mutant: M3 Binance's 61.0 s level in place of 261.3 s
+    caught_by: U2 (E4 empty STALE_VALUE in place of 1.1e-05)
+  - mutant: M4 the level strict (an age of exactly 261.3 s stale)
+    caught_by: U2 (E3 exactly 261,300,000 us STALE_VALUE in place of valued)
+  - mutant: M5 kPEPE not mapped (the file looked up as 1000PEPEUSDT)
+    caught_by: U3 (NO_FILE in place of 1.25e-05)
+  - mutant: M6 the CARRY ignored
+    caught_by: U4 (00:00 NO_VALUE in place of 1.1e-05)
+  - mutant: M7 bad rows read
+    caught_by: U1 (E10 gives 0.5 at 12:10:00 in place of BAD_INPUT)
+  - mutant: M8 a later bad row ignored (the earlier good row stands, CARD_E1_V9 rule 3 dropped)
+    caught_by: U1 (E10 gives 1.25e-05 at 12:10:00 in place of BAD_INPUT)
+  - mutant: M9 the CARRY's 00:00:00 row kept when D's file is missing
+    caught_by: U8 (coin D 1.1e-05 at 00:00:00 in place of NO_FILE)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, the 5 s points 00:00:00 to 00:01:55 and 12:10:00 to 12:10:55
+      why: the CARRY at the day start, the first points after it, an ordinary minute at every 5 s point
+    - point: 2026-03-08, the coin and the 5 s point just after the day's longest Hyperliquid silence (the tester finds it from the reader's silences(D))
+      why: a row near or over the 261.3 s level
+    - point: 2025-09-24, all coins, the 5 s points of 00:00 and 12:10; XMRUSDT, ZECUSDT, DASHUSDT, ICPUSDT all day
+      why: an early year day; the coins with no Hyperliquid file (NO_FILE)
+    - point: 2026-03-08 and 2025-09-24, the 1000x roster coins (1000PEPEUSDT as kPEPE) at 12:10
+      why: the k-name mapping
+  pass: >-
+    The tester recomputes from the raw file through the same reader edition with Fraction on the reader's integers, never the
+    builder's code: floats within 1e-9 relative (V2 rule 4.5), empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'The unit: the most common valued P2 over all coin-minutes of 2026-03-08 is 0.0000125 per hour (the interest rate alone, CARD_E1_V9 lines 183, 291); a mode at 0.0001 would be a per-8-h field (fails)'
+    - 'The stream: the raw check equal at 1,440 of 1,440 minute ends per coin on both days (E2 S05 from the same pack: value, reason and stale)'
+  report_only:
+    - P2 x 8 against P1 x 8 per coin (the gap is P5's meaning)
+    - the share of coin-minutes at 0.0000125 per day
+    - 'P2 at hh:59 against the rate Hyperliquid paid at hh:00: NOT_CHECKED (no paid record held, data check 2)'
+conclude:
+  may:
+    - what a long pays (above 0) or receives (below 0) per hour on Hyperliquid at the rate in force now
+  never:
+    - the rate paid at the last hour (the stream gives the rate in force, not the payment)
+    - a rate per 8 h
+    - Binance's rate (that is P1)
+readers: none yet (P5 in the same producer)
+implementation:
+  how: >-
+    Per coin, vectorised over the day: the reader's pack of D (loaded once for the producer), the good rows with has_funding_rate,
+    stable sort on arr, the CARRY's row in force put in front; np.searchsorted of the 17,280 points into arr (the reader's at() rule), the
+    age test against 261,300,000 us, reasons by status; no loop over rows or minutes in Python. The raw check is the same lookup on
+    open_interest compared with E2 S05's rows of D.
+  kernel: 'addon_grid_v2.in_force(t = arr, arr, funding_rate, good, u, cap 261.3 s) (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 68; ADDON_ARCHITECTURE_V4 9.4): on Hyperliquid t = arr, so file order is arrival order and the age is u - arr; the good mask is the reader''s good row carrying fr, the bad mask the reader''s bad only (a row lacking fr is not bad); skipped_bad gives BAD_INPUT (CARD_E1_V9 rule 3); shared with P7'
+  memory_mb: 150
+  seconds_share: 1.5
+data_checks:
+  - what: 'which Hyperliquid reader edition the add-on reads: the year''s v1 (day_build_v58 RDIR line 458, PACK_PLAN line 464) or v3 (v1 plus M:exact_units_v3, v3 lines 2 to 5); and that its pack equals the year''s pack for the same day'
+    who: the builder, with LAYERS
+  - what: 'the rate Hyperliquid paid each hour: whether any held source records it (none named today; the owner''s Hyperliquid account history would be one)'
+    who: EDGE1

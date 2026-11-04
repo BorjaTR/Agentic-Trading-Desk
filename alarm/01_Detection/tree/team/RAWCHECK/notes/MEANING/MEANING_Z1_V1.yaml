@@ -1,0 +1,141 @@
+# MEANING_Z1_V1.yaml: the meaning register of Z1 macro calendar and of the calendar rows under it (EDGE1, 2026-10-18; the owner 12:07
+# Berlin: "we need proper calendar and news definitions. They should have their own card ... We need to understand their meaning").
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py (edition 2) checks it and writes .flat.jsonl and .md.
+
+group: Z1
+name: macro calendar (scheduled prints and the clocks to them)
+summary: >-
+  At every minute end: how many minutes to the next and since the last scheduled print, which kinds they are, and a window word
+  (PRE_FIVE, PRE_THIRTY, POST_FIFTEEN, POST_SIXTY). A print is any row of our own calendar file that is not the funding grid: US data
+  releases (CPI, PPI, NFP), FOMC statement, press conference, minutes and meeting day 1, other BLS and BEA releases (OTHER_MACRO: JOLTS,
+  import prices, ECI, productivity ...) and the weekly Deribit options expiry (OPEX_DERIBIT, every Friday 08:00 UTC).
+read_as: >-
+  A clock to the REAL release times, written after the fact (rows fetched 21 Aug and 11 Oct 2026), shutdown reschedules included: Sep CPI
+  on 24 Oct 2025, Nov NFP on 16 Dec, Jan NFP on 11 Feb 2026; the Oct 2025 CPI, NFP and PPI were canceled and have no row. S01 = 2,880
+  means 'no calendar row in the next 48 h', not 'no news'. Every kind weighs the same: a Friday Deribit expiry or a JOLTS release moves
+  S01 like a CPI; S02, S04 and S08 say which kind.
+
+where:
+  card: testbed/value_audit/registers/CARD_Z1_V2.md (17 rules)
+  settings_register: testbed/value_audit/registers/SETTINGS_Z1_V1.tsv (13 settings)
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_news_V2.md (THE MACRO CALENDAR, F8 to F12, Q-K1, Q-K2)
+  producer: testbed/value_audit/code/prod_Z1_v1.py through prod_reader_news_v1.py (year copy in code/L0_y52f12/value_audit/code)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/Z1.parquet
+  year_output_columns: "name (S01 to S13 and the .noother_off, .ownday_off, .fire_second_off, .prev_minute_off twins), coin MARKET, as_of_us (u), value_kind (0 = EMPTY, NaN in value_f64), value_f64 (numbers), value_txt (words), known_at_us, stale, empty_reason, flags"
+  year_calendar_pack: "<SCRATCH_DISK>/volat_year_20250910/work/work_DB2/drivers_v1/packs_Z1_<D>/news_v1/calendar/V2_fa743426a00da8db.npz (177 year days; 9 to 12 Oct 2025 have no calendar pack there, and their Z1 values match this pack too: jobs 15796, 15797)"
+  year_prints_list: team/BED/seats/EDGE1/receipts/q_15795/calendar_year_prints.tsv (the 128 prints of 1 Sep 2025 to 30 Mar 2026)
+  read_it_with: team/LAB/code/rawcheck/meaning_calendar.py (prints, cover, day)
+
+source:
+  vendor: "none: our own file, written by our calendar lane from official pages (BLS, Federal Reserve) plus rule rows (Deribit expiry, FOMC press = statement + 30 min, the funding grid)"
+  exchange_stream: "none: a schedule, not a feed"
+  files: >-
+    The year read FOR/knowledge/MACROCAL_V2.csv in an edition of 4,949,929 bytes, sha16 3f0ad13cf4080157, 13,706 rows (the pack's
+    manifest, job 15794). THAT EDITION IS NOT ON DISK ANY MORE: knowledge/MACROCAL_V2.csv today is 3,261,583 bytes, 7a7a25649bd02870,
+    9,045 rows, with no row 29 Sep to 6 Dec 2025, 16 Dec 2025 to 6 Jan 2026 and 16 Jan to 6 Mar 2026; no MACROCAL file of that size
+    under either forensics tree or the year's SCRATCH_DISK folder (EDGE1 find, job 15796). The pack (npz) is the only copy found.
+  columns: utc_ts, date, time_utc, event_type, event_name, region, source_method, confidence, notes, local_tz, local_time, utc_offset_hours (the pack keeps t, event_type, confidence, region, name, fetched, line, bad, dup)
+  fields:
+    utc_ts: "the print time in UTC seconds; a row whose utc_ts differs from date + time_utc is bad [proof: prod_reader_news_v1.parse_calendar; SOURCE_SPEC_news_V2 line 16]"
+    event_type: "CPI, PPI, NFP, FOMC_STMT, FOMC_PRESS, FOMC_MEET, FOMC_MINUTES, OPEX_DERIBIT, OTHER_MACRO; FUNDING_RESET_1H and _8H are the funding grid, never a print [proof: pack meta kinds, job 15795; card rule 1]"
+    confidence: "CONFIRMED (from an official page) 86, DERIVED (by a rule) 38, MEETING-DAY 4 in 1 Sep 2025 to 30 Mar 2026; REFUSED rows have no date and are never a print [proof: job 15795]"
+    fetched: "the day named in source_method ('fetched YYYYMMDD'): 20260821 for the FOMC rows, 20261011 for the BLS rows of Sep to Nov 2025 and Feb to Mar 2026 (-1 for the older V2 rows) [proof: job 15795 list]"
+    funding_grid: "24 FUNDING_RESET_1H rows a day make the day covered (card rule 10): every year day is covered [proof: meaning_calendar cover, job 15798: 181 of 181]"
+  latency: "none applied: known_at = as_of (card rule 16: 'a schedule known before its time'); see open L1"
+  silence: "no hole in the year: every day covered (job 15798)"
+
+reading_rules:
+  - "prints = rows not bad, not FUNDING_*, not REFUSED; a repeated row once (rule 1)"
+  - "S01: the next print in (u, u + 2,880 min], minutes rounded up, else 2,880; S02 its kinds joined by _AND_, else NONE (rule 3)"
+  - "S03: the last print in [u - 2,880 min, u] (a print at u is the last), minutes rounded down, else 2,880; S04 its kinds (rule 4)"
+  - "S05: next within 30 min or last within 60 min; the nearer names the window, the next at a tie (rule 6)"
+  - "S07 = 1 when u's day lacks one of its 24 hourly funding rows; then values whose span touches it are empty NOT_COVERED (rules 10, 11)"
+  - "at a fire: the value at the last full minute end (rule 14)"
+
+values:
+  units: "minutes (S01, S03), words (S02, S04, S05, S06, S08), a count of rows (S09), 0 or 1 (S07, S10 to S13)"
+  zero: "S03 = 0 in the minute of a print; S01 is never 0 (a print at u is the last one)"
+  empty: "NOT_COVERED, NO_FILE: none on the year days (every day covered). value_kind 0 with NaN in value_f64. Never read empty as 0"
+  stale: never (rule 16)
+  flags: "DUPLICATE_ROW:<kind> (none in the year: 0 repeated rows, job 15795)"
+
+interpret:
+  do:
+    - read S01 small (under 30) as 'a scheduled print is coming', then look at S02 for which kind
+    - use the .noother_off twin to drop OTHER_MACRO; nothing drops OPEX_DERIBIT (every Friday 08:00 UTC is a print)
+    - read the times as what really happened (reschedules included), which a trader may not have known 48 h ahead in Oct 2025 to Feb 2026
+  dont:
+    - read S01 = 2,880 as 'quiet market': it only says the calendar has no row in the next 48 h
+    - read the kinds as an importance score: CPI and JOLTS give the same S01
+    - read POST windows as 'the market reacted'; they are clock windows only
+    - expect FOMC_PRESS after the 10 Dec 2025 statement: that row is missing (open C2)
+
+biases:
+  - {what: "after-the-fact times (rows fetched Aug and Oct 2026)", direction: "toward knowing reschedules earlier than a trader did", size: "not measured: the announce dates of the shutdown reschedules are not in the file", proof: "job 15795 fetched column; BLS1 page lists the revised dates"}
+  - {what: "Dec 2025 FOMC press conference (10 Dec 19:30 UTC) and meeting day 1 (9 Dec) missing", direction: "S05 and S08 name FOMC_STMT only; no FOMC_PRESS window", size: "1 of 5 meetings in the year", proof: "job 15795 list against FED1 (press conference Yes for all 5)"}
+  - {what: "OPEX_DERIBIT and FOMC_PRESS are rule rows (DERIVED)", direction: "either", size: "38 of 128 prints", proof: "job 15795"}
+
+external_checks:
+  - {what: "CPI, NFP and PPI rows of Dec 2025 to Mar 2026 (10 rows: 16 and 18 Dec, 9, 13, 14 and 30 Jan, 11, 13 and 27 Feb, 18 Mar)", where: "BLS1 revised release dates page", status: "VERIFIED: all 10 days equal; 8:30 ET = 13:30 UTC in winter, 12:30 UTC on 18 Mar (EDT)"}
+  - {what: "FOMC statements 17 Sep, 29 Oct, 10 Dec 2025, 28 Jan, 18 Mar 2026; minutes 8 Oct, 19 Nov, 30 Dec 2025, 18 Feb 2026", where: "FED1 FOMC calendar", status: "VERIFIED (dates; the 14:00 ET time is the Fed's standing time, not printed on the page)"}
+  - {what: "Oct 2025 CPI, NFP, PPI canceled (no row)", where: BLS1, status: VERIFIED}
+  - {what: "CPI, NFP, PPI rows of Sep to Nov 2025 (5, 10, 11 Sep, 24 Oct, 20 and 25 Nov) and 6 and 11 Mar 2026", where: "BLS schedules", status: "NOT_CHECKED outside (rows say CONFIRMED, fetched 20261011)"}
+  - {what: "Deribit expiry Fridays 08:00 UTC", where: "Deribit contract specifications", status: "NOT_CHECKED outside; all 30 Fridays of 5 Sep 2025 to 27 Mar 2026 present (job 15795)"}
+
+tools:
+  - {what: "every Z1 setting recomputed from the year calendar pack, against the year output", run: "python3 -B -m rawcheck.meaning_calendar day <D> [<D> ..]", where: "team/LAB/code (runner job: the pack is on the SCRATCH_DISK)"}
+  - {what: "the prints between two days", run: "python3 -B -m rawcheck.meaning_calendar prints <FROM> <TO>", where: team/LAB/code}
+  - {what: "the covered year days", run: "python3 -B -m rawcheck.meaning_calendar cover", where: team/LAB/code}
+
+used_by: "nobody yet (CARD_Z1_V2: no reader for any of the 20 metrics); PRODUCER_REGISTRY_V5 names M8 and families.py:news_row as the old consumers"
+
+references:
+  BLS1: https://www.bls.gov/bls/2025-lapse-revised-release-dates.htm
+  FED1: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+  CARD: testbed/value_audit/registers/CARD_Z1_V2.md
+
+# J15796 = 12 settings x 8,640 minute ends of 6 days; J15797 = the same on 9 to 12 Oct 2025; J15798 = meaning_calendar 487450d6, 13 settings x 14,400 minute ends of 10 days, 0 differ.
+settings:
+  - {id: Z1.S01, layer: basic, side: none, window: "(u, u + 48 h]", clock: minute end, scope: market, contracts: none, aggregate: "minutes to the next print, rounded up; 2,880 when none", aliases: "m8_min_to_next",
+     means: "minutes until the next calendar row of any kind but funding (US data, FOMC, other BLS/BEA, Friday Deribit expiry)",
+     computation: {status: RELIABLE, proof: "J15798: 14,400 of 14,400 equal; J15796, J15797"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 3; BLS1, FED1 checks"},
+     open: "O1 OPEX_DERIBIT counts as a print in a group named macro (owner: rename or add a twin without it); L1 after-the-fact times; C2 Dec press row missing; C3 the year calendar edition exists only as the pack"}
+  - {id: Z1.S02, layer: basic, side: none, window: "(u, u + 48 h]", clock: minute end, scope: market, contracts: none, aggregate: "kinds at the next print, alphabetical, _AND_", aliases: "m8_next_kind",
+     means: "which kind(s) the next print is (e.g. CPI_AND_OTHER_MACRO, OPEX_DERIBIT); NONE when no row in 48 h",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 3"}, open: "C2 (no FOMC_PRESS on 10 Dec 2025)"}
+  - {id: Z1.S03, layer: basic, side: none, window: "[u - 48 h, u]", clock: minute end, scope: market, contracts: none, aggregate: "minutes since the last print, rounded down; 2,880 when none", aliases: "m8_min_since_last",
+     means: "minutes since the last calendar row of any kind but funding (0 in the minute of the print)",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 4"}, open: "O1, C2 as S01"}
+  - {id: Z1.S04, layer: basic, side: none, window: "[u - 48 h, u]", clock: minute end, scope: market, contracts: none, aggregate: "kinds at the last print", aliases: "m8_last_kind",
+     means: "which kind(s) the last print was",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 4"}, open: "C2"}
+  - {id: Z1.S05, layer: our_rule, side: none, window: "[u - 60 min, u + 30 min]", clock: minute end, scope: market, contracts: none, aggregate: "window word of the nearer print", aliases: "m8_window",
+     means: "PRE_FIVE / PRE_THIRTY before the next print, POST_FIFTEEN / POST_SIXTY after the last, NONE outside; the nearer print names it",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 6"}, open: "O1 (Friday 08:00 OPEX opens a window), C2"}
+  - {id: Z1.S06, layer: our_rule, side: none, window: "u +- 48 h", clock: minute end, scope: market, contracts: none, aggregate: "NONE, NEXT, LAST or BOTH", aliases: "m8_capped",
+     means: "which of the two clocks found no print within 48 h",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED, proof: "card rule 5"}, open: none}
+  - {id: Z1.S07, layer: our_rule, side: none, window: "the UTC day of u", clock: minute end, scope: market, contracts: none, aggregate: "1 when the day lacks one of its 24 hourly funding rows", aliases: "m8_hole",
+     means: "the calendar file does not cover this day (0 on every year day)",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400; cover 181 of 181"}, meaning: {status: DEFINED, proof: "card rule 10"}, open: "coverage is judged by the funding grid rows, not by the print rows"}
+  - {id: Z1.S08, layer: our_rule, side: none, window: "[u - 60 min, u + 30 min]", clock: minute end, scope: market, contracts: none, aggregate: "kinds of the print naming S05", aliases: "O.macro_event_type",
+     means: "which kind the current window belongs to; NONE outside a window",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 7"}, open: "C2"}
+  - {id: Z1.S09, layer: basic, side: none, window: "(u, u + 30 min] and [u - 60 min, u]", clock: minute end, scope: market, contracts: none, aggregate: "count of print rows", aliases: "O.macro_n_prints_active",
+     means: "how many calendar rows fall in the window around u (a CPI with its Real Earnings co-release counts 2)",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 8"}, open: "O1"}
+  - {id: Z1.S10, layer: our_rule, side: none, window: "(u, u + 30 min]", clock: minute end, scope: market, contracts: none, aggregate: "0 or 1", aliases: "O.macro_is_pre30",
+     means: "a print is due within 30 min",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 9"}, open: "O1"}
+  - {id: Z1.S11, layer: our_rule, side: none, window: "(u, u + 5 min]", clock: minute end, scope: market, contracts: none, aggregate: "0 or 1", aliases: "O.macro_is_pre5",
+     means: "a print is due within 5 min",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 9"}, open: "O1"}
+  - {id: Z1.S12, layer: our_rule, side: none, window: "[u - 15 min, u]", clock: minute end, scope: market, contracts: none, aggregate: "0 or 1", aliases: "O.macro_is_post15",
+     means: "a print came out in the last 15 min",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 9"}, open: "O1"}
+  - {id: Z1.S13, layer: our_rule, side: none, window: "[u - 60 min, u]", clock: minute end, scope: market, contracts: none, aggregate: "0 or 1", aliases: "O.macro_is_post60",
+     means: "a print came out in the last 60 min",
+     computation: {status: RELIABLE, proof: "J15798 14,400 of 14,400"}, meaning: {status: DEFINED_WITH_OPEN, proof: "card rule 9"}, open: "O1"}
+  - {id: Z1.twins, layer: our_rule, side: none, window: "as each setting", clock: "minute end, fire second, minute end less 60 s", scope: market, contracts: none, aggregate: "as each setting", aliases: ".noother_off, .ownday_off, .fire_second_off, .prev_minute_off",
+     means: "switched-off twins: without OTHER_MACRO; NOT_COVERED only for u's own day; the value at the fire second; the value one minute earlier",
+     computation: {status: NOT_CHECKED, proof: "none"}, meaning: {status: DEFINED, proof: "card rules 14, 15"}, open: "not recomputed"}

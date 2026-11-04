@@ -1,0 +1,178 @@
+# BASIC_E3_V2.yaml: the card of the basic settings of E3, EDITION 2 (EDGE1, 2026-10-18, BR5 edit 1) = BASIC_E3_V1 (kept) with EDGE2's review of 14:58:45Z applied.
+# Made as BASIC_C1_V5 (METRIC_REVIEW_METHOD_V1 section 5). Computation J15897 (basic_deriv 9420f568), meaning J15900 (meaning_deriv 7e89c066, tests 1642b1fb), J15901 (meaning_deriv ae69d2fc, tests 611e4290).
+group: E3
+name: mark premium speed (basic, built on E3 S01)
+summary: 'How fast the market''s mark premium moves: the median over the roster coins of the change of each coin''s exact mark premium (10,000 x (mark - index) / index of the row read
+  at e and at e - W: E3 S01 before its rounding) over 60 s (S02) and 300 s (S03), in bp per minute, rounded once to 4 decimals; with the coins counted (.coverage).'
+read_as: 'Whether the typical coin''s premium over spot is widening (plus) or narrowing, per minute. Recomputed from E3 S01 at every minute end of both days, equal within one unit of
+  the 4th decimal: the year works on the exact premiums, our recompute on E3 S01 rounded to 4 decimals (J15897). Against the same rule on Binance''s mark and index 1 minute klines it
+  follows closely, not exactly: corr 0.93 to 0.97, the other sign on 5.4 to 6.4% of minutes, |gap| median 0.11 bp per minute for S02, max 8.068 (J15900). At 8 Mar 2026 02:51 and 02:52
+  the kline basis of 36 and 37 of the 52 coins moves over 3 bp per minute away from ours and back while ours stays (counted from the look3 tables of J15901): consistent with Binance''s
+  index kline close being the next second''s index (MEANING_E3_V2, jobs 15734, 15735). 22:06 is different: our own premiums moved (our median from -2.17 to 10.06 bp per minute; DASH
+  -23.91 to -0.70 against klines -4.07 to -4.95): cause open. The old names said basis; E3 S01 is the mark premium (renamed in MEANING_E3_V2): RENAMED; the instant basis speed is could_build
+  E3.CB2.'
+conclude:
+  may:
+  - whether the typical coin's mark premium over spot is widening (plus) or narrowing, and how fast, in bp per minute (S02 over the last minute, S03 over the last 5 minutes)
+  never:
+  - 'the speed of the instant basis (last trade or book mid against spot): it is Binance''s smoothed mark premium'
+  - 'a single minute''s small S02 as a direction: its kline version differs by a median 0.11 bp per minute and has the other sign on 5.5 to 6.1% of minutes (J15900)'
+  - 'Binance''s 1 minute kline basis speed as the same number: its basis jumps and comes back at single minutes (8 Mar 2026 02:51, J15901), consistent with its index close being the
+    next second''s index'
+  - 'a jump at one minute as Binance moving alone: at 8 Mar 2026 22:06 our own premiums moved (median 10.06 bp per minute against klines 3.22), cause open'
+where:
+  card: testbed/value_audit/registers/CARD_E3_V1.md
+  settings_register: testbed/value_audit/registers/SETTINGS_E3_V1.tsv
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_E3_V2.yaml (E3 S01, raw: RELIABLE, DEFINED)'
+  producer: testbed/value_audit/code/prod_E3_v1.py
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E3.parquet
+  year_output_columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'E3', settings, coins, moments)
+source:
+  vendor: 'none new: built on our raw E3 S01 (Tardis.dev binance-futures derivative_ticker mark_price and index_price; MEANING_E3_V2)'
+  exchange_stream: 'derivative_ticker: Binance''s mark price and index price from its markPrice stream, every 1 s (MEANING_E3_V2)'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz (read by the producer of the raw E3); <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E3.parquet
+    (E3 S01 read here)
+  columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  fields:
+    premium: 'E3 S01: 10,000 x (mark - index) / index of one row, bp: Binance''s smoothed mark premium [proof: MEANING_E3_V2 S01]'
+    speed: '(b(e) - b(e - W)) x 60 s / W from the exact premiums of the two reads, then the median over the coins [proof: CARD_E3_V1 rules 8, 9]'
+  latency: as E3 S01's (the row's arrival); a premium older than 61 s is empty STALE_VALUE and leaves its coin out
+reading_rules:
+- speed of a coin over W = (b(e) - b(e - W)) x 60 s / W in bp per minute, b the exact premium of the row read at e and at e - W (before E3 S01's rounding), empty when either read is
+  (CARD_E3_V1 rule 8)
+- 'the market value is the median over the coins with a speed (even count: the mean of the two middle), rounded once to 4 decimals; .coverage counts them (rule 9)'
+values:
+  units: bp per minute
+  empty: NO_ROSTER, NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE, ALL_COINS_EMPTY; value_kind 0. Never read empty as 0
+  stale: when every coin is stale
+  flags: DUPLICATE_ROW:<coin>, BAD_INPUT:<coin>
+interpret:
+  do:
+  - read the sign as the premium widening (plus) or narrowing
+  - read S03 for the trend of the last 5 minutes and S02 for the last minute
+  dont:
+  - read a small S02 as a direction
+  - read it as the instant basis
+biases:
+- what: Binance's kline basis at single minutes
+  direction: the outside record jumps and comes back, ours stays
+  size: 36 and 37 of 52 coins at 8 Mar 2026 02:51, 02:52; 11 of 51 at 24 Sep 2025 04:32 (the two speeds over 3 bp per minute apart; counted from the look3 tables of J15901)
+  proof: 'J15901 look3; consistent with MEANING_E3_V2 (jobs 15734, 15735: Binance''s index kline close is the next second''s index)'
+- what: our own premiums at 8 Mar 2026 22:06
+  direction: ours moves more than the klines
+  size: median 60 s speed ours 10.06 against klines 3.22 bp per minute; 43 of 52 coins over 3 apart; DASH ours -23.91 to -0.70, klines -4.07 to -4.95
+  proof: J15900 e3m; J15901 look3 2206 (counted from its table); cause open
+external_checks:
+- what: S02, S03 against the same rule on kline basis
+  where: Binance mark and index 1 minute klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/mark_1m, index_1m
+  status: 'FOLLOWS, NOT EQUAL: S02 corr 0.9347, 0.9579, S03 0.9396, 0.9674; the other sign on 5.49%, 6.12% (S02) and 6.42%, 5.37% (S03) of minutes; |gap| median 0.109, 0.110 and 0.025,
+    0.023, max 8.068, 2.497 and 1.858, 0.425 bp per minute (J15900); the widest named (J15901)'
+tools:
+- what: every setting recomputed from the year rows at every minute end of 8 Mar 2026 and 24 Sep 2025
+  run: python3 -B -m rawcheck.basic_deriv e3 <D> --out <dir>
+  where: 'team/LAB/code (basic_deriv.py edition 2 d47ad0be25b652a6, tests fe8494593bd921d4 21 of 21, jobs 15922 to 15924; edition 1 9420f5683f1d09b0, tests 245df8fea9f2c2e7 18 of 18,
+    jobs 15897 to 15899; runner job: the year store)'
+- what: against Binance's own records
+  run: python3 -B -m rawcheck.meaning_deriv e3m <D>; look3 <D> <HHMM>
+  where: 'team/LAB/code (meaning_deriv.py edition 1 7e89c066ae3366bd with tests 1642b1fb5e4eb3db 9 of 9 for J15900; edition 2 ae69d2fc24c87cf9 with tests 611e429090a63399 10 of 10 for
+    J15901; runner job: the outside files on the SCRATCH_DISK)'
+used_by: 'S02: CHAIN_trend_SHORT_ride_4 (SETTINGS_E3_V1); S03: nobody named'
+references:
+  K_funding: https://data.binance.vision (USD-M futures fundingRate monthly)
+  K_metrics: https://data.binance.vision (USD-M futures metrics, 5 minutes)
+  K_mark_index: https://data.binance.vision (USD-M futures markPriceKlines and indexPriceKlines, 1 minute)
+  held_at: <SCRATCH_DISK>/realcheck/outside/binance
+settings:
+- id: E3.S02
+  layer: basic
+  side: none
+  window: 60 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: median over the coins of (b(e) - b(e - 60 s)) per minute, b the exact premium of each read (CARD_E3_V1 rule 8), 4 decimals
+  aliases: basis_vel_60s
+  means: how fast the typical coin's mark premium over spot moved in the last minute, bp per minute; plus = widening
+  name: median mark premium speed over 60 s, bp per minute
+  renamed_from: basis_vel_60s
+  computation:
+    status: RELIABLE
+    proof: 'J15897 basic_deriv 9420f568: equal at 1,439 of 1,439 minute ends both days within one unit of the 4th decimal (exact 69.63% and 75.19%: E3 S01 is rounded to 4 decimals, the
+      year''s rule uses the exact premium); 00:00 needs D-1'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 meaning_deriv e3m: against the median kline speed corr 0.9347 (8 Mar), 0.9579 (24 Sep), Spearman 0.9587, 0.9595, |gap| median 0.109, 0.110, max 8.068, 2.497 bp per
+      minute, same sign 94.51%, 93.88%; J15901: 8 Mar 02:51 klines 7.46 against ours -0.61, the kline basis of 36 of 52 coins over 3 bp per minute away from ours and back at 02:52 (counted
+      from the look3 tables); 22:06 our own premiums moved; renamed (the owner''s rule): E3 S01 is the mark premium'
+  open: 'our recompute is within one unit of the 4th decimal (it reads E3 S01, rounded); a median of 60 s changes of a smoothed premium: its kline version differs by a median 0.11 bp
+    per minute and in sign on 5.5 to 6.1% of minutes, so one minute near 0 has no direction; 8 Mar 2026 22:06 apart, cause open'
+- id: E3.S02.coverage
+  layer: basic
+  side: none
+  window: 60 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: count of the coins with a 60 s speed
+  aliases: none
+  means: how many coins S02's median is over
+  name: coins counted for S02
+  computation:
+    status: RELIABLE
+    proof: 'J15897: equal at 1,439 of 1,439 minute ends both days, exact'
+  meaning:
+    status: DEFINED
+    proof: 'CARD_E3_V1 rule 9; J15849: 52 at every minute (8 Mar), 51 (24 Sep)'
+  open: none
+- id: E3.S03
+  layer: basic
+  side: none
+  window: 300 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: median over the coins of (b(e) - b(e - 300 s)) x 60 / 300, b the exact premium of each read (CARD_E3_V1 rule 8), 4 decimals
+  aliases: basis_vel_300s
+  means: how fast the typical coin's mark premium moved over the last 5 minutes, bp per minute
+  name: median mark premium speed over 300 s, bp per minute
+  renamed_from: basis_vel_300s
+  computation:
+    status: RELIABLE
+    proof: 'J15897: equal at 1,435 of 1,435 minute ends both days within one unit of the 4th decimal (exact 94.01% and 95.19%); the first 5 minutes need D-1'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 e3m: against the median kline speed corr 0.9396 (8 Mar), 0.9674 (24 Sep), Spearman 0.9624, 0.9689, |gap| median 0.0255, 0.0235 bp per minute, same sign 93.58%, 94.63%;
+      renamed (the owner''s rule)'
+  open: 'our recompute is within one unit of the 4th decimal (it reads E3 S01, rounded); as S02, smaller: its kline version differs by a median 0.024 bp per minute and in sign on 5.4
+    to 6.4% of minutes'
+- id: E3.S03.coverage
+  layer: basic
+  side: none
+  window: 300 s
+  clock: fire second
+  scope: market
+  contracts: USDT
+  aggregate: count of the coins with a 300 s speed
+  aliases: none
+  means: how many coins S03's median is over
+  name: coins counted for S03
+  computation:
+    status: RELIABLE
+    proof: 'J15897: equal at 1,435 of 1,435 minute ends both days, exact'
+  meaning:
+    status: DEFINED
+    proof: 'CARD_E3_V1 rule 9; J15849: 52 (8 Mar), 51 (24 Sep) at every minute'
+  open: none
+could_build:
+- id: E3.CB2
+  intended: 'the speed of the instant basis (book mid less spot index): what basis_vel_60s and basis_vel_300s say'
+  was_name_of:
+  - E3.S02
+  - E3.S03
+  formula: median over the coins of the change of 10,000 x (C13 S05 - index) / index over 60 s and 300 s, per minute
+  needs: E3.CB1 (the instant basis, MEANING_E3_V2), not built
+  adds: 'unknown until built (the mark premium is smoothed; the instant basis moves more on thin coins: 4.6 to 8.3 bp apart at the median, MEANING_E3_V2)'
+  status: NOT_BUILT

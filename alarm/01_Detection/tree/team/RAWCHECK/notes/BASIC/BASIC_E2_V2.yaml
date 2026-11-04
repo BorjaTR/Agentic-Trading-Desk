@@ -1,0 +1,196 @@
+# BASIC_E2_V2.yaml: the card of the basic settings of E2, EDITION 2 (EDGE1, 2026-10-18, BR5 edit 1) = BASIC_E2_V1 (kept) with EDGE2's review of 14:58:45Z applied.
+# Made as BASIC_C1_V5 (METRIC_REVIEW_METHOD_V1 section 5). Computation J15897 (basic_deriv 9420f568) and J15922 (basic_deriv d47ad0be: S03 on the any-age read), meaning J15900 (meaning_deriv 7e89c066, tests 1642b1fb), J15901 (meaning_deriv ae69d2fc, tests 611e4290); the copies J15849.
+group: E2
+name: open interest changes (basic, built on E2 S01, S02, S05)
+summary: 'Open interest changes and freshness. S04: a coin''s Binance open interest change over 10 minutes, S06 its Hyperliquid one, in percent of the value 10 minutes before. S07: the
+  mean over the roster coins of the 1 minute Binance change, with the coins counted (.coverage). S03: 1 when the row the open interest at e comes from (read at any age) arrived at or
+  before e - 60 s, else 0. Every change exact, then rounded once to 4 decimals; the levels are E2 S01, S02, S05 (raw).'
+read_as: 'Whether positions are being opened (plus) or closed, on one coin or across the market. Recomputed exactly from the year''s own levels at every minute end of both days (J15897;
+  S03 on the any-age read, J15922). Against Binance''s own 5 minute open interest record the 10 minute change agrees: corr 0.98 and 0.99, |gap| median 0.002 percentage points, the same
+  sign at 97 to 98% of marks (J15900). The widest gaps (PENGU 8 Mar 2026 03:10, VVV 24 Sep 2025 01:15) are jumps of 1.6% and 1.5% inside the minute after the mark that Binance''s 5 minute
+  figure already holds: consistent with a snapshot taken a few seconds after the mark, not measured (at VVV 01:05, 01:25, 01:35 the two are equal, J15901 look2). In a crash Binance''s
+  figure trails ours by 15 minutes or more (10 Oct 2025, MEANING_E2_V2). S07 summed over 5 minutes tracks our own mean 5 minute change within 0.00026 and 0.00043 points (corr 1.0000)
+  and follows Binance''s (corr 0.97 and 0.99). S03 was 0 at every coin-minute of both days and S02 was never stale there: a real 1 is unseen. A 0 says a row arrived in the last minute,
+  not that the open interest was new: a ticker row repeats the last snapshot. S06 (Hyperliquid) has no outside record held. S04.any_age_off and S06.any_age_off are the year''s copies
+  (an accepted cross-check, equal 100%, J15849).'
+conclude:
+  may:
+  - whether positions in a coin were opened (S04 plus) or closed over the last 10 minutes, in percent (the sign of Binance's own record at 97 to 98% of 5 minute marks)
+  - the same on Hyperliquid, within the coin (S06)
+  - whether the market as a whole opened or closed positions in the last minute (S07, the mean coin)
+  - whether no open interest row arrived in the last minute (S03 1; proved on planted rows only)
+  never:
+  - 'open interest changes compared as dollars across coins: they are percent of a level in coins'
+  - 'the exact minute of a jump against Binance''s 5 minute record: a jump in the seconds after a mark lands on the other side (PENGU 8 Mar 2026 03:10, J15901)'
+  - 'Binance''s 5 minute figure as a check to the minute in a crash: it trails ours by 15 minutes or more (10 Oct 2025, MEANING_E2_V2)'
+  - 'S03 0 as a new open interest snapshot: a row arrived in the last minute, and a ticker row repeats the last open interest'
+  - 'that a stale feed was caught by S03 on a real day: S02 was never stale on the proof days; its 1 is seen on planted rows only'
+  - 'S07 as the median coin: it is a mean, one coin''s jump moves it (1.6% / 52 = 0.03 points)'
+where:
+  card: testbed/value_audit/registers/CARD_E2_V1.md
+  settings_register: testbed/value_audit/registers/SETTINGS_E2_V1.tsv
+  built_on_register: team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml (E2 S01, S02, S05, raw, RELIABLE)
+  producer: testbed/value_audit/code/prod_E2_v1.py
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E2.parquet
+  year_output_columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'E2', settings, coins, moments)
+source:
+  vendor: 'none new: built on our raw E2 S01, S02, S05 (Tardis.dev derivative_ticker open interest of Binance and of Hyperliquid; MEANING_E2_V2)'
+  exchange_stream: 'derivative_ticker: Binance''s open interest snapshot (about every 6 s), carried on the ticker rows until the next; Hyperliquid''s open interest (MEANING_E2_V2)'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz and the Hyperliquid files (read by the producer
+    of the raw E2); <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E2.parquet (the levels E2 S01, S02, S02.any_age_off, S05 read here)
+  columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  fields:
+    open_interest: 'Binance open interest in coins, a snapshot about every 6 s (E2 S01, S02) [proof: MEANING_E2_V2]; Hyperliquid''s in coins, unit not documented (E2 S05) [proof: MEANING_E2_V2]'
+    change: '100 x (OI(e) - OI(e - W)) / OI(e - W), both by rule 1 on the same venue; OI(e - W) = 0 gives ZERO_BASE [proof: CARD_E2_V1 rule 8]'
+    carried: '1 when the row the any-age value at e (S02.any_age_off) is read from arrived at or before e - 60 s, else 0; never STALE_VALUE [proof: CARD_E2_V1 rule 9, case E48]'
+  latency: as E2 S01, S02, S05 (the row's arrival); a level older than 61 s (Binance) or 261.3 s (Hyperliquid) is STALE_VALUE
+reading_rules:
+- change over W = 100 x (OI(e) - OI(e - W)) / OI(e - W), W = 600 s (S04, S06) or 60 s (each coin of S07), rounded once to 4 decimals (CARD_E2_V1 rule 8)
+- S07 = the mean over the coins with a 60 s change, rounded once to 4 decimals; .coverage counts them (rule 10)
+- S03 = 1 when the any-age value at e (S02.any_age_off) comes from a row that arrived at or before e - 60 s, else 0; never STALE_VALUE (rule 9, case E48)
+- 'S04.any_age_off, S06.any_age_off are the year''s copies of S04, S06 read at any age: an accepted cross-check, equal 100% on both days (J15849), not separate metrics'
+values:
+  units: percent (S04, S06, S07); 0 or 1 (S03)
+  empty: 'NO_ROSTER, NO_FILE (S06: a coin not listed on Hyperliquid, job 15786), BAD_INPUT, NO_VALUE, STALE_VALUE (not S03), ZERO_BASE, ALL_COINS_EMPTY; value_kind 0. Never read empty
+    as 0'
+  stale: with STALE_VALUE
+  flags: DUPLICATE_ROW:<coin>, BAD_INPUT:<coin>
+interpret:
+  do:
+  - read S04 and S06 as the coin's positions opened (plus) or closed in 10 minutes, in percent
+  - read S07 as the mean coin's change of the last minute
+  dont:
+  - compare changes across coins as dollars
+  - read S07 as the typical coin when one coin jumps
+biases:
+- what: Binance's 5 minute record against our minute end
+  direction: a jump in the seconds after a mark lands one mark earlier there than in ours
+  size: PENGU 8 Mar 2026 03:10 (1.6%), VVV 24 Sep 2025 01:15 (1.5%); |gap| p90 0.017 to 0.020 points over all marks
+  proof: 'J15900 e2m; J15901 look2 (consistent with a snapshot a few seconds after the mark; at VVV 01:05, 01:25, 01:35 the two are equal: not measured)'
+- what: Binance's own 5 minute figure in a crash
+  direction: theirs late, not ours
+  size: '10 Oct 2025 21 to 23 UTC: it trails ours by 15 minutes or more; decisions unchanged'
+  proof: MEANING_E2_V2 (EDGE2 jobs 15734 to 15736, 15740)
+external_checks:
+- what: S04 against the 10 minute change of the metrics open interest
+  where: Binance metrics 5 minutes (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/metrics
+  status: 'CLOSE: corr 0.9818, 0.9910, same sign 96.86%, 97.80%, |gap| median 0.0022, 0.0023, p90 0.020, 0.017, max 1.644, 1.463 points at 14,820 and 14,535 coin-marks (J15900)'
+- what: S07 summed over 5 minutes against the mean 5 minute metrics change
+  where: the same
+  status: 'FOLLOWS: corr 0.9693, 0.9900, same sign 94.06%, 95.80% at 286 marks a day; against our own mean 5 minute change |gap| max 0.000262, 0.000427 points (J15900)'
+- what: S04.any_age_off, S06.any_age_off against S04, S06
+  where: the year rows (meaning_twins 74d02bc2)
+  status: 'MEASURED: equal 100.00% at every coin-minute both days (J15849): copies, an accepted cross-check'
+tools:
+- what: every setting recomputed from the year rows at every minute end of 8 Mar 2026 and 24 Sep 2025
+  run: python3 -B -m rawcheck.basic_deriv e2 <D> --out <dir>
+  where: 'team/LAB/code (basic_deriv.py edition 2 d47ad0be25b652a6, tests fe8494593bd921d4 21 of 21, jobs 15922 to 15924; edition 1 9420f5683f1d09b0, tests 245df8fea9f2c2e7 18 of 18,
+    jobs 15897 to 15899; runner job: the year store)'
+- what: against Binance's own records
+  run: python3 -B -m rawcheck.meaning_deriv e2m <D>; look2 <D> <COIN> <HHMM>
+  where: 'team/LAB/code (meaning_deriv.py edition 1 7e89c066ae3366bd with tests 1642b1fb5e4eb3db 9 of 9 for J15900; edition 2 ae69d2fc24c87cf9 with tests 611e429090a63399 10 of 10 for
+    J15901; runner job: the outside files on the SCRATCH_DISK)'
+used_by: 'S07: the forced SHORT chains (SETTINGS_E2_V1); S04, S06: EF.ef_oi_bn_pct_10m, EF.ef_oi_hl_pct_10m; S03: m1_oi_carried'
+references:
+  K_funding: https://data.binance.vision (USD-M futures fundingRate monthly)
+  K_metrics: https://data.binance.vision (USD-M futures metrics, 5 minutes)
+  K_mark_index: https://data.binance.vision (USD-M futures markPriceKlines and indexPriceKlines, 1 minute)
+  held_at: <SCRATCH_DISK>/realcheck/outside/binance
+settings:
+- id: E2.S03
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 1 when the row the any-age open interest at e (S02.any_age_off) is read from arrived at or before e - 60 s, else 0
+  aliases: m1_oi_carried
+  means: whether the coin's open interest at e comes from a row older than a minute (1) or a row arrived in the last minute (0; that row may repeat the last open interest)
+  name: open interest carried (no row in the last 60 s)
+  computation:
+    status: RELIABLE
+    proof: 'J15922 basic_deriv d47ad0be: recomputed from S02.any_age_off (CARD_E2_V1 rule 9, case E48) at 74,880 of 74,880 (8 Mar 2026) and 73,440 of 73,440 (24 Sep 2025) coin-minutes,
+      exact; 0 at all of them, S02 stale at 0 coin-minutes; the 1 on planted rows (test_basic_deriv T8, T8b: S02 STALE, the row at e - 62 s gives 1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'CARD_E2_V1 rule 9; J15900, J15922: 0 at every coin-minute of both days (a row arrived every minute)'
+  open: 'a real 1 is never seen (S02 never stale on the proof days): the 1 is proved on planted rows only; a 0 is not a new snapshot (a ticker row repeats the last open interest)'
+- id: E2.S04
+  layer: basic
+  side: none
+  window: 600 s
+  clock: fire second
+  scope: coin
+  contracts: USDT
+  aggregate: 100 x (OI(e) - OI(e - 600 s)) / OI(e - 600 s) of Binance, 4 decimals
+  aliases: EF.ef_oi_bn_pct_10m
+  means: how much the coin's Binance open interest changed in the last 10 minutes, percent; plus = positions opened
+  name: Binance open interest change over 10 minutes, percent
+  computation:
+    status: RELIABLE
+    proof: 'J15897: recomputed from E2 S01 at 74,360 of 74,360 and 72,930 of 72,930 coin-minutes, exact (the first 10 minutes need D-1)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 meaning_deriv e2m: against the same change of Binance''s metrics open interest (the row labelled T - 300 s) at every 5 minute mark: corr 0.9818 (8 Mar), 0.9910 (24
+      Sep), Spearman 0.9797, 0.9893, |gap| median 0.0022, 0.0023, p90 0.020, 0.017 points, same sign 96.86%, 97.80%; J15901 look2: PENGU 8 Mar 03:10 ours 0.08 against 1.72 is a 1.6%
+      jump between 03:10 and 03:11 that Binance''s 03:10 figure already holds (consistent with a snapshot a few seconds after the mark)'
+  open: a jump in the seconds after a 5 minute mark lands on the other side of it against Binance's record (PENGU 8 Mar 2026 03:10, VVV 24 Sep 2025 01:15)
+- id: E2.S06
+  layer: basic
+  side: none
+  window: 600 s
+  clock: fire second
+  scope: coin
+  contracts: Hyperliquid perpetuals
+  aggregate: 100 x (OI(e) - OI(e - 600 s)) / OI(e - 600 s) of Hyperliquid, 4 decimals
+  aliases: EF.ef_oi_hl_pct_10m
+  means: how much the coin's Hyperliquid open interest changed in the last 10 minutes, percent
+  name: Hyperliquid open interest change over 10 minutes, percent
+  computation:
+    status: RELIABLE
+    proof: 'J15897: recomputed from E2 S05 at 74,360 of 74,360 and 67,210 of 67,210 coin-minutes, exact; 4 coins not listed on Hyperliquid on 24 Sep (both empty, NO_FILE)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'the change of E2 S05 (Hyperliquid open interest in coins; MEANING_E2_V2: unit not documented, decisions unchanged as percent changes within the coin)'
+  open: 'no outside record of Hyperliquid open interest held: the change is as good as the Tardis level (MEANING_E2_V2 S05''s open)'
+- id: E2.S07
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: mean over the roster coins of 100 x (OI(e) - OI(e - 60 s)) / OI(e - 60 s) of Binance, 4 decimals
+  aliases: oi_vel
+  means: the mean coin's Binance open interest change over the last minute, percent
+  name: mean 1 minute open interest change of the roster coins, percent
+  computation:
+    status: RELIABLE
+    proof: 'J15897: recomputed from E2 S02 at 1,439 of 1,439 minute ends both days, exact'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 e2m: summed over the 5 minutes ending at each mark it tracks our own mean 5 minute change within |gap| max 0.000262 (8 Mar), 0.000427 (24 Sep) points (corr 1.0000,
+      median 0.00005) and follows Binance''s mean 5 minute metrics change: corr 0.9693, 0.9900, same sign 94.06%, 95.80%'
+  open: 'a mean: one coin''s jump moves it (PENGU''s 1.6% in a minute is 0.03 points of S07); Binance''s 5 minute record checks only its 5 minute sum'
+- id: E2.S07.coverage
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of the coins with a 60 s change
+  aliases: none
+  means: how many coins S07's mean is over
+  name: coins counted for S07
+  computation:
+    status: RELIABLE
+    proof: 'J15897: equal at 1,439 of 1,439 minute ends both days, exact'
+  meaning:
+    status: DEFINED
+    proof: 'CARD_E2_V1 rule 10; J15849: 52 at every minute (8 Mar), 51 (24 Sep)'
+  open: none

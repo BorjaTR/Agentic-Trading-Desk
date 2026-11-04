@@ -1,0 +1,154 @@
+# BASIC_D2_V1.yaml: the card of D2 top_of_book's basic settings S02, S03, S04 and the coverage S04.coverage (BED, 2026-10-18; BR5 book part,
+# the owner in BED's chat 14:3xZ: 'then you can take these cards ... part of EDGE1 packages'; EDGE1 14:33:59Z: yes). D2 S01 (raw) stays in
+# MEANING_D2D3_V2 (renamed there: size-weighted mid); S05 spread_z is our rule (not here). Made the way BASIC_C8_V3 was (METRIC_REVIEW_METHOD_V1
+# section 5; the rename rule; conclude). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it. The year's copies
+# S02.quotes_off, S03.quotes_off, S04.quotes_off are no rows of their own (the owner's copies rule, BASIC_C1_V5): one reading rule with their
+# J15849 shares and one never line.
+# Edit 2 (BED, 18 Oct 2026, before landing; EDGE1 15:38:05Z): the copies' never line names their p99 gaps (the moments the two streams'
+# tops differ, J15849 TWINS); nothing else changed.
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR5 book (hb/EDGE2.txt 15:33:58Z): (1) S02's means: 'more of the coin rests at
+# the best bid (qb above qa)', not 'more coins' (a roster coin elsewhere). Nothing else changed.
+
+group: D2
+name: top of the book, basic (the weighted mid's distance, the top's dollar imbalance, the median coin's spread)
+summary: >-
+  From the bookTicker row in force at e (the last row stamped and received by e, seen within 30 s): S02 = the size-weighted mid (D2 S01)
+  less the mid, over the mid, in basis points (4 decimals); S03 = the dollars at the best bid less the dollars at the best ask over their
+  sum (6 decimals); S04 = the spread (ask - bid) / mid in basis points of the median roster coin (4 decimals), with S04.coverage the coins
+  counted. Every value exact, rounded once.
+read_as: >-
+  S02 is the top's size imbalance times half the spread, nothing more: S02 / (half the coin's spread) equals the size imbalance, against
+  S03 corr 0.999999 on both days, and |S02| never passes half the spread (74,880 and 73,440 coin-minutes, J15947, J15948). Its old name
+  micro_dev says Stoikov's micro-price: RENAMED, as D2 S01 was (MEANING_D2D3_V2). S03 is the TOP level only: against D3's 5-level imbalance
+  Spearman 0.55676 and 0.60937, against the 25 levels 0.20759 and 0.22658: its old name ob_imb (order-book imbalance) is RENAMED. The card's
+  claim that the top leans (more on the bid, the next move up) holds as a lean, not a forecast: the next change of the mid goes to S03's side
+  at 62.80% and 62.34% of coin-minutes, 74.14% and 73.24% when |S03| is 0.8 or more, 52.20% and 51.65% below 0.2 (J15947, J15948, the mid
+  from BED's book base MID_1S). S04 is mostly the price step: 98.94% and 97.03% of coin spreads are one step (the smallest spread of the
+  coin's day), and S04 is 1.0000 and 1.0172 times the median coin's step at the median minute (J15947, J15948 spread). Recomputed it equals
+  ours at every value checked (BOOK_STAMPS_V1).
+
+conclude:
+  may:
+    - "which side has more dollars resting at the best bid and ask now (S03), and that the next move of the mid went to that side at 62.80% (8 Mar 2026) and 62.34% (24 Sep 2025) of coin-minutes, 74.14% and 73.24% at |S03| 0.8 or more (J15947, J15948 lean)"
+    - "how far the size-weighted mid sits from the mid (S02), in bps: half the coin's spread times the top's size imbalance (J15947, J15948 d2)"
+    - "the median coin's spread now (S04), in bps, against the same day's minutes: it stays at the median coin's price step most of the day (1.0000 and 1.0172 times it at the median minute, J15947, J15948 spread) and rises when coins widen (max 4.7511 and 2.0578 bps)"
+  never:
+    - "a forecast of the next price from S02 or S03: the next mid change goes the other way at 37.20% and 37.66% of coin-minutes (J15947, J15948)"
+    - "S02 as a micro-price signal: it is S03's size imbalance times half the spread (corr 0.999999), so across coins it mostly measures the spread (D2.CB2 is the micro-price's distance)"
+    - "S03 as the order book's imbalance: it is the best bid and ask only; the 25 levels rank otherwise (Spearman 0.20759, 0.22658 against D3 S02, J15947, J15948)"
+    - "S04 as market liquidity on its own: 98.94% and 97.03% of the coin spreads are one price step (J15947, J15948 spread), so S04 moves with the median coin's step and its price"
+    - "a copy (S02.quotes_off, S03.quotes_off, S04.quotes_off) as a metric of its own: it is the year's cross-check of the same state on the depth stream; read S02, S03, S04. Where a copy differs, the two streams' tops differ at that moment: gap p99 0.4229 to 0.4855 bps (S02), 0.5201 to 0.7902 share points (S03), 0.0769 to 0.1090 bps (S04) (J15849 TWINS; a copy by EDGE1's rule 15:38:05Z: the same state from a coarser stream)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D2_V3.md 80f0a6d271bf5610 (rules 1 to 17; edge cases E1 to E44)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_D2_V1.tsv 64d5823a95e5e801
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml f33f6ba098035767 (the book_ticker top and D2 S01: raw, RELIABLE by RAW_STAMPS_V1, LIMITS: the two Binance channels disagree on sizes in some seconds)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V21.tsv f989d276e0eb0e20 (D2 S02, S03, S04 basic, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_D2_v2.py c497655d54510ff0 (CARD_D2_V3 edition 3), driver work_CLK/drivers/drive_l0b_D2_v2_day.py eb03cb25d0e0e0cc"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D2.parquet
+  year_output_columns: "name (12 names: S01 to S05, the quotes copies of S01 to S05, S04.coverage, S05.coverage; J15947 schema), coin (every roster coin for S01 to S03; MARKET for S04, S05), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 4 a value: kind 4 also in value_txt), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'D2', names) or ours.at(D, 'D2', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, binance-futures (Binance USDT-margined perpetuals)"
+  exchange_stream: "bookTicker (the best bid and ask, pushed on any change); the copies: quotes, the top Tardis rebuilds from the depth stream"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz of D (and D-1 when e - 30 s is before 00:00)"
+  columns: "exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price, bid_price, bid_amount"
+  fields:
+    in_force: "the last row in file order stamped at or before e and received by e; seen when a row is stamped in [e - 30 s, e] and received by e, else BOOK_HOLE; a bad row in force: BAD_INPUT [proof: CARD_D2_V3 rules 2 to 6, E2 to E6, E13 to E15; basic_book tests D2 E2, E4 to E6, E13 to E15]"
+    S02: "(wmid - mid) / mid x 10,000, wmid = (Pa qb + Pb qa) / (qb + qa), mid = (Pa + Pb) / 2; by algebra = (half the spread in bps) x (qb - qa) / (qb + qa) [proof: rule 8, E27 to E29; J15947, J15948 d2]"
+    S03: "(Pb qb - Pa qa) / (Pb qb + Pa qa), the dollars at each level's own price [proof: rule 9, O3 A, E27, E30; basic_book tests]"
+    S04: "the median over the roster coins with a value of (Pa - Pb) / mid x 10,000 (the mean of the two middle ones for an even count); S04.coverage the coins counted [proof: rule 11, E15, E31 to E34; basic_book tests D2 E15, E31 to E33]"
+  latency: "book_ticker rows arrive 2.2 to 3.5 ms after their stamp at the median, p99 5.4 to 161.7 ms; the row in force at a minute end is 30 to 178 ms old at the median (MEANING_D2D3_V2, job 15783)"
+  silence: "a coin silent over 30 s: BOOK_HOLE; none on 8 Mar 2026 and 24 Sep 2025 (J15947, J15948 schema: 0 empty)"
+
+reading_rules:
+  - "S02 and S03 read the best bid and ask ONLY (level 0 of Binance's bookTicker); D3 S02, S03 read 25 and 5 levels of the depth-stream book"
+  - "S02 = half the coin's spread x the top's size imbalance: at a 1-step spread it is a fraction of the step (half the spread at the median coin-minute 0.8899 bps on 8 Mar 2026, 0.4100 on 24 Sep 2025, J15947, J15948)"
+  - "S04 is the median COIN's spread, not a dollar-weighted market spread; on a 1-step book it is that coin's step over its price"
+  - "the year also writes S02.quotes_off, S03.quotes_off, S04.quotes_off (the same rules on Tardis's quotes stream, the top of Binance's depth stream). ACCEPTED as the year's cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to the main at 83.26%, 81.82%, 93.82% of values on 8 Mar 2026 and 78.85%, 76.11%, 80.90% on 24 Sep 2025, corr 0.9862 to 0.9960 (S02), 0.9689 to 0.9816 (S03), 0.8596 to 0.9427 (S04), gap p99 0.4229 to 0.4855 bps (S02), 0.5201 to 0.7902 (S03), 0.0769 to 0.1090 bps (S04) (J15849 TWINS); not separate metrics"
+  - "S04.coverage is a count (the coins in the median), not a copy"
+
+values:
+  units: "S02, S04: basis points of the mid; S03: a share from -1 to +1"
+  zero: "S02, S03 0: equal sizes (S02) or equal dollars (S03) at the best bid and ask; S04 never 0 (a spread is at least one step)"
+  empty: "NO_ROSTER, NO_FILE, BOOK_HOLE, BAD_INPUT, ALL_COINS_EMPTY; none on 8 Mar 2026 and 24 Sep 2025 (J15947, J15948 schema)"
+  stale: "true exactly when empty BOOK_HOLE (a market value: every coin BOOK_HOLE)"
+  flags: "BAD_INPUT:<coin> on S04 when a coin is left out by a bad row"
+
+interpret:
+  do:
+    - "read S03 as the queue at the top leaning: the larger |S03|, the more often the next mid change goes its way (52.20%, 59.51%, 65.58%, 74.14% for |S03| below 0.2, 0.2 to 0.5, 0.5 to 0.8, 0.8 or more on 8 Mar 2026, J15947)"
+    - "read S04 against its own day: a rise above the median coin's step is the median coin's book widening (8 Mar 2026 from 1.6987 to 4.7511 bps, J15947 spread)"
+  dont:
+    - "add S02 to S03 as two signals: S02 is S03's sizes times half the spread"
+    - "compare S04 across days without the median coin's step: the step was 1.7584 bps (8 Mar 2026) and 0.8054 bps (24 Sep 2025) at the median minute (J15947, J15948)"
+
+biases:
+  - {what: "one level of the book", direction: "either way", size: "S03 against D3's 5 levels Spearman 0.55676, 0.60937 (the same sign 70.27%, 71.54%), against the 25 levels 0.20759, 0.22658", proof: "J15947, J15948 d2"}
+  - {what: "the price step", direction: "S04 floored at the median coin's step", size: "one-step spreads 98.94% and 97.03% of coin-minutes; S04 over the median step 1.0000 and 1.0172 at the median minute, p90 1.0476 and 1.1004", proof: "J15947, J15948 spread (the step inferred as the coin's smallest positive spread of the day)"}
+  - {what: "Binance's two top-of-book channels", direction: "either way", size: "the depth-stream copy equal at 76.11% to 93.82% of values", proof: "J15849 TWINS; MEANING_D2D3_V2"}
+
+external_checks:
+  - {what: "S02, S03, S04 at every coin-minute of 8 Mar 2026, 24 Sep 2025, 4 Nov 2025 against BED's book base (int_recompute_book B3, exact) and at 5 minute ends x BTC, AVAX, ENA (S04 from every coin) from the Tardis rows by basic_book's own text-exact reader", where: "Tardis book_ticker (recompute, our source)", status: "VERIFIED: BOOK_STAMPS_V1 658b774f: S02 221,805, S03 221,805, S04 4,335 of the same MATCH (J15905 to J15908)"}
+  - {what: "the card's 'lean': the sign of S03 (S02) against the next change of the mid within 60 s", where: "BED's book base MID_1S (the mid every second; the future of the same feed, not the input at e)", status: "MEASURED: to S03's side at 62.80% and 62.34% of the coin-minutes with a move; 74.14% and 73.24% at |S03| 0.8 or more (J15947, J15948)"}
+  - {what: "the names: S02 against half the spread times the size imbalance; S03 against the book's 5 and 25 levels", where: "BED's book base spread (exact), the year's D3", status: "S02 = half spread x size imbalance (corr 0.999999, |S02| within half the spread at 100%): RENAMED; S03 the top only: RENAMED (J15947, J15948)"}
+  - {what: "the spread in price steps", where: "BED's book base spread and mid", status: "MEASURED: one step at 98.94% and 97.03% of coin-minutes (XMR on 24 Sep at 49%) (J15947, J15948 spread)"}
+  - {what: "an outside top of book", where: "none held (Binance publishes no bookTicker history we hold, MEANING_D2D3_V2)", status: "NOT_AVAILABLE: the depth-stream copy only (J15849)"}
+
+tools:
+  - {what: "S02, S03, S04 against the book base at every coin-minute and the Tardis rows at named minute ends", run: "python3 -B -m rawcheck.basic_book base --days <D> --out <dir>; python3 -B -m rawcheck.basic_book tardis --days <D> --coins <C,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_book.py ed1 6160e36b31871abd, tests 12d16de820854eaf: 47 of 47 with 10 mutants)"}
+  - {what: "the names and the lean (d2), the spread in steps (spread), the coverage (cover)", run: "python3 -B -m rawcheck.meaning_bookbasic d2 <D> | spread <D> | cover <D>", where: "team/RAWCHECK/code (meaning_bookbasic.py ed1 576eb0a93b123ff9 for J15947, J15948; ed3 a1b2b25e07ad972a adds cover; tests a741c4980ea5cb58: 6 of 6, 7 mutants)"}
+
+used_by: "S05 spread_z (our rule) reads S04, read by CHAIN_quiet_LONG_fade_4 and D5 liquidity_latch; nobody reads S02, S03 (CARD_D2_V3 'Who reads it today')"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D2_V3.md 80f0a6d271bf5610
+  BUILT_ON: team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml f33f6ba098035767
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/BOOK_STAMPS_V1.tsv 658b774f3febf6d6 (J15905 base, J15906 to J15908 Tardis)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  JOBS: "15905 (basic_book base; log 155fbe2d), 15906 to 15908 (basic_book tardis; 3f5f3b4b, 81642fde, 309bc753), 15947 (8 Mar schema, d2, d3, spread; 96f4cebc), 15948 (24 Sep; 7f83e31d), 15966 (cover, 3 days, meaning_bookbasic ed3 a1b2b25e; 35b5f69f)"
+  S1: https://www.ma.imperial.ac.uk/~ajacquie/Gatheral60/Slides/Gatheral60%20-%20Stoikov.pdf (Stoikov, the weighted mid and the micro-price)
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does"
+
+settings:
+  - {id: D2.S02, name: "size-weighted mid's distance from the mid, bps", renamed_from: "micro_dev_bps", layer: basic, side: none, window: "the row in force at e (seen within 30 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(wmid - mid) / mid x 10,000 = half the spread in bps x (qb - qa) / (qb + qa)", aliases: "EF.ef_micro_dev (the old name)",
+     derived_from: "D2 S01 (the size-weighted mid) and the top's mid; equal to half the coin's spread times the top's size imbalance",
+     means: "how far the size-weighted mid sits from the mid, in bps: + when more of the coin rests at the best bid (qb above qa); at most half the spread",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH (every coin-minute of 3 days against the book base, 15 a day from the Tardis rows; J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d2: |S02| within half the spread at 74,880 and 73,440 of 74,880 and 73,440; S02 / (spread / 2) against S03 corr 0.999999, |gap| p99 3.07e-03 and 5.52e-03 (the largest on BTC, where a 0.0147 bps spread leaves S02 a 4-decimal step of 0.0136 in the imbalance); the lean: to S02's side 62.81% and 62.35%; RENAMED (Stoikov S1: not the micro-price)"},
+     open: "across coins its size is the spread's (half the spread 0.1552 to 4.6620 bps from p10 to p90 on 8 Mar 2026): compare it within a coin; on BTC it is a few steps of its 4th decimal",
+     never: ["S02 as a micro-price or a separate signal from S03"]}
+  - {id: D2.S03, name: "top-of-book dollar imbalance (best bid against best ask)", renamed_from: "ob_imb", layer: basic, side: none, window: "the row in force at e (seen within 30 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(Pb qb - Pa qa) / (Pb qb + Pa qa)", aliases: "EF.ef_ob_imb (the old name)",
+     means: "the dollars at the best bid less those at the best ask, over their sum: +1 all at the bid, -1 all at the ask",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH (J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d2: the next mid change to S03's side at 62.80% and 62.34% of 68,316 and 72,111 coin-minutes with a move, rising with |S03| (52.20%, 59.51%, 65.58%, 74.14% on 8 Mar 2026; 51.65%, 58.38%, 65.36%, 73.24% on 24 Sep 2025); against D3 S03 (5 levels) Spearman 0.55676, 0.60937, against D3 S02 (25 levels) 0.20759, 0.22658: the top only, RENAMED"},
+     open: "a lean, not a forecast (the other way at 37.20% and 37.66%); one level of one channel (bookTicker sizes differ from the depth stream's in 12 to 45% of seconds, MEANING_D2D3_V2)",
+     never: ["S03 as the order book's imbalance (D3 S02, S03 are the book's)"]}
+  - {id: D2.S04, name: "spread of the median roster coin, bps", layer: basic, side: none, window: "the rows in force at e (seen within 30 s)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the median over the roster coins with a value of (Pa - Pb) / mid x 10,000", aliases: "spread",
+     means: "the median coin's best ask less best bid over its mid, in bps",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 4,335 of 4,335 MATCH (every minute of 3 days from every coin's book base spread; 5 a day from all 52 coins' Tardis rows; J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 spread: equal to the median of the coins' spreads at 100% of minutes; 98.94% and 97.03% of the coin spreads are one price step (the step inferred: the coin's smallest positive spread of the day); S04 over the median coin's step 1.0000 and 1.0172 at the median minute (p90 1.0476, 1.1004); Spearman with the median coin's step over the day 0.6854 and 0.4874"},
+     open: "mostly the median coin's step over its price: a liquidity reading only where it rises above the step (8 Mar 2026 max 4.7511 bps against a median of 1.7692; 24 Sep 2.0578 against 0.8194); the step is inferred, not read from Binance's exchange rules",
+     never: ["S04 alone as market stress: one-step spreads 98.94% and 97.03% of coin-minutes"]}
+  - {id: D2.S04.coverage, name: "roster coins in S04's median", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the count of roster coins with a spread at e", aliases: "none (a count beside S04, CARD_D2_V3 V-COV)",
+     means: "how many coins S04's median is over",
+     computation: {status: RELIABLE, proof: "J15966 cover: equal to the count of roster coins with a D2 S02 value at 1,440 of 1,440 minutes of 8 Mar 2026, 24 Sep 2025, 4 Nov 2025 (52, 51, 51 at every minute)"},
+     meaning: {status: DEFINED, proof: "it is the count of the coins in the median (CARD_D2_V3 V-COV); J15966"},
+     open: none}
+
+could_build:
+  - {id: D2.CB2, intended: "the micro-price's distance from the mid: Stoikov's expected mid after the book's next moves, what the old name micro_dev says", was_name_of: "D2.S02",
+     formula: "(Stoikov micro-price - mid) / mid x 10,000, the micro-price a fitted function of the top's imbalance and the spread per coin (D2.CB1 of MEANING_D2D3_V2)",
+     needs: "D2.CB1 (the fitted micro-price, not built) and the mid",
+     adds: "unknown until fitted: S02 today is the size imbalance times half the spread (J15947, J15948)",
+     status: NOT_BUILT}
+  - {id: D2.CB3, intended: "an order-book imbalance over more than the top, what the old name ob_imb says", was_name_of: "D2.S03",
+     formula: "D3 S03 (the first 5 levels' dollars) and D3 S02 (the 25 levels'), from the depth stream's book",
+     needs: "nothing new",
+     adds: "they rank otherwise than the top (Spearman 0.55676 to 0.60937 and 0.20759 to 0.22658, J15947, J15948)",
+     status: BUILT}

@@ -1,0 +1,71 @@
+# 05_Profile: the files copied from the dev tree: tree/ holds the byte copies in the dev layout (relative to team/RESEARCH); <tool>/README.md are copies shown at the top (sync: cd Alarm && python3 -B _tools/sync_from_dev_v1.py <dev forensics root> 05_Profile)
+repo_path	dev_path	role
+tree/tools/alarm_profile/alarm_profile.py	team/RESEARCH/tools/alarm_profile/alarm_profile.py	edition 1 code (QUANT 22 Oct; RELEASE_profile_V1_8)
+tree/tools/alarm_profile/episode_blocks.py	team/RESEARCH/tools/alarm_profile/episode_blocks.py	edition 1 episode logic (VERSION 3), shared by every edition
+tree/tools/alarm_profile/episode_twin.py	team/RESEARCH/tools/alarm_profile/episode_twin.py	edition 1 second computation (its tests compare)
+tree/tools/alarm_profile/test_alarm_profile.py	team/RESEARCH/tools/alarm_profile/test_alarm_profile.py	edition 1 tests
+tree/tools/alarm_profile/mutants_alarm_profile.py	team/RESEARCH/tools/alarm_profile/mutants_alarm_profile.py	edition 1 planted bugs
+tree/tools/alarm_profile/test_epi_output_proofs.py	team/RESEARCH/tools/alarm_profile/test_epi_output_proofs.py	edition 1 output proof tests
+tree/tools/alarm_profile/test_proof_plan_v1.py	team/RESEARCH/tools/alarm_profile/test_proof_plan_v1.py	edition 1 proof plan tests
+tree/tools/alarm_profile/proof_alarm_profile.py	team/RESEARCH/tools/alarm_profile/proof_alarm_profile.py	edition 1 proof runner
+tree/tools/alarm_profile/profile_split.py	team/RESEARCH/tools/alarm_profile/profile_split.py	edition 1 profile split helper
+tree/tools/alarm_profile/draw_eye_run.py	team/RESEARCH/tools/alarm_profile/draw_eye_run.py	edition 1 eye check charts
+tree/tools/alarm_profile/eye_charts_v1.py	team/RESEARCH/tools/alarm_profile/eye_charts_v1.py	edition 1 eye check charts
+tree/tools/alarm_profile/score_eye_run.py	team/RESEARCH/tools/alarm_profile/score_eye_run.py	edition 1 eye check scoring
+tree/tools/alarm_profile/README.md	team/RESEARCH/tools/alarm_profile/README.md	edition 1 manual (every definition)
+tree/tools/alarm_profile/DESIGN_GENERIC_V1.md	team/RESEARCH/tools/alarm_profile/DESIGN_GENERIC_V1.md	QUANT's design for any alarm (30 Oct 07:40Z)
+tree/tools/alarm_profile/CTX_INPUTS_V1.tsv	team/RESEARCH/tools/alarm_profile/CTX_INPUTS_V1.tsv	context inputs table
+tree/tools/alarm_profile/EPI_CATALOG_V1.tsv	team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv	the catalog (from the docstrings)
+tree/tools/alarm_profile/EPI_OUTPUT_PROOFS_V1.tsv	team/RESEARCH/tools/alarm_profile/EPI_OUTPUT_PROOFS_V1.tsv	output proofs
+tree/tools/alarm_profile/PROFILES_V1.tsv	team/RESEARCH/tools/alarm_profile/PROFILES_V1.tsv	named groupings
+tree/tools/alarm_profile/PROOFS_V1.tsv	team/RESEARCH/tools/alarm_profile/PROOFS_V1.tsv	proof plan
+tree/tools/alarm_profile/PROOF_RESULTS_V1.tsv	team/RESEARCH/tools/alarm_profile/PROOF_RESULTS_V1.tsv	proof results
+tree/tools/alarm_profile/RELEASE_profile_V1.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1.json	edition 1 release _0
+tree/tools/alarm_profile/RELEASE_profile_V1_1.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_1.json	edition 1 release _1
+tree/tools/alarm_profile/RELEASE_profile_V1_2.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_2.json	edition 1 release _2
+tree/tools/alarm_profile/RELEASE_profile_V1_3.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_3.json	edition 1 release _3
+tree/tools/alarm_profile/RELEASE_profile_V1_4.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_4.json	edition 1 release _4
+tree/tools/alarm_profile/RELEASE_profile_V1_5.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_5.json	edition 1 release _5
+tree/tools/alarm_profile/RELEASE_profile_V1_6.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_6.json	edition 1 release _6
+tree/tools/alarm_profile/RELEASE_profile_V1_7.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_7.json	edition 1 release _7
+tree/tools/alarm_profile/RELEASE_profile_V1_8.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/05_Profile/tree/tools/alarm_profile/RELEASE_profile_V1_8.json	edition 1 release _8
+tree/tools/alarms/a01_onset_v2.py	team/RESEARCH/tools/alarms/a01_onset_v2.py	A01 onset definition (episode_blocks imports it)
+tree/tools/alarms/a02_climax_v3.py	team/RESEARCH/tools/alarms/a02_climax_v3.py	A02 climax definition (episode_blocks imports it)
+tree/tools/alarm_context/alarm_context.py	team/RESEARCH/tools/alarm_context/alarm_context.py	context values (the profile command reads them)
+tree/tools/alarm_context/CTX_CATALOG_V1.tsv	team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv	context catalog (profiles check it)
+tree/tools/alarm_context/context_blocks.py	team/RESEARCH/tools/alarm_context/context_blocks.py	context values logic (alarm_context imports it)
+tree/tools/alarm_context/COIN_TYPES_V1.tsv	team/RESEARCH/tools/alarm_context/COIN_TYPES_V1.tsv	coin types (context)
+tree/tools/alarm_context/README.md	team/RESEARCH/tools/alarm_context/README.md	alarm_context edition 1 manual
+tree/tools/alarm_context/test_alarm_context.py	team/RESEARCH/tools/alarm_context/test_alarm_context.py	alarm_context tests
+tree/tools/alarm_context/test_ctx_output_proofs.py	team/RESEARCH/tools/alarm_context/test_ctx_output_proofs.py	alarm_context output proofs tests
+tree/tools/alarm_context/test_p09_v1.py	team/RESEARCH/tools/alarm_context/test_p09_v1.py	alarm_context P09 test
+tree/tools/alarm_context/RELEASE_context_V1.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_1.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_1.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_2.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_2.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_3.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_3.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_4.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_4.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_5.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_5.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_6.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_6.json	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_7.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/05_Profile/tree/tools/alarm_context/RELEASE_context_V1_7.json	alarm_context release
+tree/tools/alarms/alarm_view_v1.py	team/RESEARCH/tools/alarms/alarm_view_v1.py	alarm view (alarm_context imports it)
+tree/QUANT/receipts/COSTS_PER_COIN_V4.tsv	team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V4.tsv	cost per coin (alarm_context reads ../../QUANT/receipts)
+tree/tools/alarm_context/CTX_OUTPUT_PROOFS_V1.tsv	team/RESEARCH/tools/alarm_context/CTX_OUTPUT_PROOFS_V1.tsv	context output proof cards (test_ctx_output_proofs reads them)
+alarm_profile/README.md	team/RESEARCH/tools/alarm_profile/README.md	the tool's own README (a copy of tree/tools/alarm_profile/README.md, shown at the top)
+alarm_context/README.md	team/RESEARCH/tools/alarm_context/README.md	the tool's own README (a copy of tree/tools/alarm_context/README.md, shown at the top)
+tree/tools/alarm_context/alarm_context_ed1_1.py	team/RESEARCH/tools/alarm_context/alarm_context_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_context/test_alarm_context_ed1_1.py	team/RESEARCH/tools/alarm_context/test_alarm_context_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_context/test_ctx_output_proofs_ed1_1.py	team/RESEARCH/tools/alarm_context/test_ctx_output_proofs_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_context/test_p09_v1_ed1_1.py	team/RESEARCH/tools/alarm_context/test_p09_v1_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/alarm_profile_ed1_1.py	team/RESEARCH/tools/alarm_profile/alarm_profile_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/test_alarm_profile_ed1_1.py	team/RESEARCH/tools/alarm_profile/test_alarm_profile_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/mutants_alarm_profile_ed1_1.py	team/RESEARCH/tools/alarm_profile/mutants_alarm_profile_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/test_epi_output_proofs_ed1_1.py	team/RESEARCH/tools/alarm_profile/test_epi_output_proofs_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/test_proof_plan_v1_ed1_1.py	team/RESEARCH/tools/alarm_profile/test_proof_plan_v1_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/proof_alarm_profile_ed1_1.py	team/RESEARCH/tools/alarm_profile/proof_alarm_profile_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/profile_split_ed1_1.py	team/RESEARCH/tools/alarm_profile/profile_split_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+tree/tools/alarm_profile/draw_eye_run_ed1_1.py	team/RESEARCH/tools/alarm_profile/draw_eye_run_ed1_1.py	edition 1.1 by SCOUT for the clean release (owner QUANT; context with LEAD/LAYERS): out root RESEARCH_STORE, fills HL_FILLS (K8)
+MACHINE_PATHS_KNOWN.tsv	team/RESEARCH/tools/alarm_package/parts/05_Profile/MACHINE_PATHS_KNOWN.tsv	the part's kept machine paths, each with its reason (machine_paths_v2 reads it; SCOUT V1_5, team/SCOUT/devpaths)
+tree/tools/alarm_profile_v2/alarm_profile_v2_3.py	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/05_Profile/tree/tools/alarm_profile_v2/alarm_profile_v2_3.py	alarm_profile_v2_2, paths from settings
+tree/tools/alarm_profile_v2/episode_blocks.py	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/05_Profile/tree/tools/alarm_profile_v2/episode_blocks.py	exact copy
+tree/tools/alarm_profile_v2/EPI_CATALOG_V1.tsv	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/05_Profile/tree/tools/alarm_profile_v2/EPI_CATALOG_V1.tsv	exact copy
+tree/tools/alarm_profile_v2/TOOL_CARD.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/05_Profile/tree/tools/alarm_profile_v2/TOOL_CARD.md	card

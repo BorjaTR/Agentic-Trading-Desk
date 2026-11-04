@@ -1,0 +1,18 @@
+# _vendor: LAB1's lab3 reader/writer, as pinned by RELEASE_profile_V1_8 / V2_0 / V2_1 (the tools take this folder as <lab3 code dir>)
+repo_path	dev_path	role
+LAB3_code/lab3/__init__.py	team/LAB3/code/lab3/__init__.py	lab3 (LAB1), pinned
+LAB3_code/lab3/asof.py	team/LAB3/code/lab3/asof.py	lab3 (LAB1), pinned
+LAB3_code/lab3/binfmt.py	team/LAB3/code/lab3/binfmt.py	lab3 (LAB1), pinned
+LAB3_code/lab3/bins.py	team/LAB3/code/lab3/bins.py	lab3 (LAB1), pinned
+LAB3_code/lab3/days.py	team/LAB3/code/lab3/days.py	lab3 (LAB1), pinned
+LAB3_code/lab3/labgroups.py	team/LAB3/code/lab3/labgroups.py	lab3 (LAB1), pinned
+LAB3_code/lab3/law.py	team/LAB3/code/lab3/law.py	lab3 (LAB1), pinned
+LAB3_code/lab3/rows.py	team/LAB3/code/lab3/rows.py	lab3 (LAB1), pinned
+LAB3_code/lab3/write.py	team/LAB3/code/lab3/write.py	lab3 (LAB1), pinned
+home_kit/isolation/sitecustomize.py	team/RESEARCH/tools/alarm_package/_kept/volat_release/Strategy/home_kit/HOME_KIT_V1_3_3/isolation/sitecustomize.py	home_kit V1.2 start-up hook (STRATEGY, HOME_KIT_V1_3_3): logs any file opened under a forbidden root, in every Python process (run_all_tests puts it on PYTHONPATH); with the test cache on (run_all_tests_v4 --cache-out) also every file a test opens and each child it cannot watch (NONPY)
+home_kit/README.md	team/RESEARCH/tools/alarm_package/_kept/volat_release/Strategy/home_kit/HOME_KIT_V1_3_3/README.md	home_kit README (HOME_KIT_V1_3_3)
+home_kit/archive/RELEASE_HOME_KIT_V1_1.json	team/RESEARCH/tools/alarm_package/_kept/team/RESEARCH/tools/home_kit/RELEASE_HOME_KIT_V1_1.json	home_kit release record (V1.1, STRATEGY) (past edition, archived)
+LAB3_code/lab3/evt.py	team/LAB3/code/lab3/evt.py	lab3 evt1 layout (D2)
+LAB3_code/tests/test_evt_reader_home_v1.py	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/_vendor/LAB3_code/tests/test_evt_reader_home_v1.py	D2 install test: an old root reads byte-identical through the new days.py (CONDUCTOR landing-order must)
+LAB3_code/tests/test_parts_cache_v1.py	team/LAB3/code/tests/test_parts_cache_v1.py	D2.1 parts() cache tests (8)
+home_kit/RELEASE_HOME_KIT_V1_3_3.json	team/RESEARCH/tools/alarm_package/_kept/volat_release/Strategy/home_kit/HOME_KIT_V1_3_3/RELEASE_HOME_KIT_V1_3_3.json	home_kit release record (V1.3.3, STRATEGY): the hook and README here are its bytes

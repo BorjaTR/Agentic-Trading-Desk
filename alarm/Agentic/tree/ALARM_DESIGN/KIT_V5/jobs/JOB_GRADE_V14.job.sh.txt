@@ -1,0 +1,69 @@
+# JOB @@JOBNUM@@_@@SEAT@@_GRADE_@@IDEA@@ -- @@RUNTAG@@ (ALARM_DESIGN KIT_V5 JOB_GRADE_V14, template @@TPLSHA@@; JOB_GRADE_V13 plus PERFIRE_SEAL.tsv, nothing else; JOB_GRADE_V10 with chain v2_0_7 (ONE process from Outcomes to the menu and the card; perfire and the hand-off from the kept rows; V2_0 stage 2 D1); V10: JOB_GRADE_V9 with chain v2_0_5 (the Outcomes runs, then the menu and the card, at the same time) and each perfire in the background beside the next step, its STAGES lines in V9's order (V2_0 stage 1, SCOUT 31 Oct, SPEED_V2_0_DESIGN_V1.md Q1-Q3; 6 cores declared); V9: JOB_GRADE_V8 with chain v2_0_4 (v2_0_3 with Outcomes in 3 worker processes, K16 T5), 3 cores declared (# CORES 3) and one du at the end (K16 T8), SCOUT K16, 31 Oct): 10 Sep-31 Dec 2025 grade of @@IDEA@@, variants @@ITEMS_LIST@@, against 3 matched random moments per fire (alarm_grade_chain_v2_0_4_to20251231: v2_0_3 with Outcomes in 3 worker processes; v2_0_3: v2_0_2 with Outcomes event_outcomes_rel1, the feed gate from FEED_GATE and the research days from RESEARCH_STORE, SCOUT K12; v2_0_2: v2_0_1 with the clean grader idea_to_grade_rel1, its relative pins I2G_PINS_V2_REL1.json and detect_v2, SCOUT K12), the per-fire file, then the hand-off test (lead_null_v1_1_to20251231, 10,000 day-block flips); every code file from the Alarm folder @@ALARM@@, every machine path from the settings file, the feed gate FEED_GATE and the research days RESEARCH_STORE included (JOB_GRADE_V7 with only its chain changed and RESEARCH_STORE given to it; V7: JOB_GRADE_V6 with only its chain changed, CLEAN_RELEASE_V1; V6 was refused UNPINNED_MODULE from the install, job 20264797). PREREG @@PREREG_REL@@ @@PREREG_SHA@@. TEST, NOT REVIEWED. Never deletes. Stops when SCRATCH_DISK has under 60 GB free. The quiet window was removed by the owner 30 Oct 2026 23:32 Berlin ("All jobs can be queued. Please do not stop queueing jobs").
+# WRITES @@SCRATCH@@/work_@@RUNTAG@@/@@JOBNUM@@_GRADE_@@IDEA@@/ and @@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_GRADE_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# CORES 3
+# DRIVE: SCRATCH_DISK
+set -u
+AL=@@ALARM@@; F=$AL/01_Detection/tree; R=$F/team/RESEARCH; AP=$R/tools/alarm_process; CH=$AL/03_Grading/tree/tools/alarm_process; PY=@@PYTHON@@
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+RD=@@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@; T=$AL/Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools; J=@@JOBNUM@@_GRADE_@@IDEA@@
+W=@@SCRATCH@@/work_@@RUNTAG@@/$J; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+mkdir -p $W $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
+isdone(){ awk -F'\t' '$1=="done" && $2=="0" {f=1} END {exit !f}' $W/STATUS_$1.tsv 2>/dev/null; }
+seal(){ local P=$W/PERFIRE_$1.tsv x; x=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++){if($i=="kind")k=i;if($i=="t")c=i};next}{n[$k]++;v=$c+0;if(a==""||v<a)a=v;if(v>b)b=v}END{printf "%d\t%d\t%d\t%d\t%d",n["A"],n["R"],a,b,NR-1}' $P) && printf '%s\t%s\t%s\t%s\n' $1 "$(shasum -a 256 $P | cut -c1-16)" "$x" $J >> $DV/PERFIRE_SEAL.tsv; }
+ck $CH/alarm_grade_chain_v2_0_7_to20251231.sh adda8139e495ab71; ck $CH/d1_reports_v3.py 0b1717ba35a12b95; ck $CH/d1_mem_v2.py 3cd95039ba6e1a70; ck $AP/alarm_card_gm1.py e71a0241a147f497
+ck $T/perfire_v1_1_to20260430.py 4e77b228d71bdae4; ck $T/test_perfire_v1.py 12996df3af189030; ck $T/lead_null_v1_1_to20251231.py fb3992d00ecfc810
+ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@
+for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; done
+G8=@@FEED_GATE@@                                                    # V1_12 F4
+[ -z "$G8" ] || [ -f "$G8" ] || { st gate 8 0 "FEED_GATE $G8: no such file (gate_wait would wait forever)"; st end 8 0 "gate"; exit 8; }   # V1_12 F4
+f=$(fmb); st start 0 0 "SCRATCH_DISK free ${f} MB"
+PF=(); PV=; PI=
+# V2_0 stage 1 Q3: pf_done V i waits for variant V's perfire (run in the background), then writes its STAGES lines, its FIRES row and
+# its logs: V9's order, before the next grade line, the hand-off line or a disk stop
+pf_done(){ local V=$1 i=$2 r s n; wait ${PF[$i]}
+  read r s < $W/perfire_$V.rc || { r=9; s=0; }; st perfire_$V $r $s ""
+  read r s < $W/perfire_test_$V.rc || { r=9; s=0; }; st perfire_test_$V $r $s "$(tail -n 1 $W/perfire_test_$V.log | tr '\t' ' ' | cut -c1-200)"
+  [ "$r" = 0 ] && { seal $V; st perfire_seal_$V $? 0 ""; }
+  n=$(( $(grep -c . $W/${V}_FIRES_V1_LIST.tsv) - 1 )); s=$(shasum -a 256 $W/${V}_FIRES_V1_LIST.tsv | cut -c1-16)
+  printf '%s\t%s\t%s\t%s\n' $V $n $s $W/${V}_FIRES_V1_LIST.tsv >> $DV/FIRES.tsv
+  for x in perfire_$V.log perfire_test_$V.log; do [ -f $W/$x ] && cp -n $W/$x $DV/; done; }
+cd $AL
+for i in "${!VS[@]}"; do V=${VS[$i]}; D=$RD/${DEFS[$i]}; L=${LEANS[$i]}
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then [ -n "$PV" ] && pf_done $PV $PI; st disk_$V 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; wait; st end 7 0 "disk"; exit 7; fi
+  t0=$(date +%s); AL=$AL PY=$PY LAB_DAYS=@@LAB_DAYS@@ FEED_GATE=@@FEED_GATE@@ RESEARCH_STORE=@@RESEARCH_STORE@@ LEAN=$L bash $CH/alarm_grade_chain_v2_0_7_to20251231.sh $V $D $W < /dev/null > $W/$V.out 2>&1; r=$?
+  [ -n "$PV" ] && pf_done $PV $PI; PV=
+  st grade_$V $r $(( $(date +%s)-t0 )) "chain v2_0_7 Sep-Dec, lean $L"
+  if isdone $V; then                # V2_0 stage 1 Q3: perfire and its test in the background (they read the two roots, write their own files)
+    ( t0=$(date +%s); $PY -B $CH/d1_reports_v3.py perfire $F $T/perfire_v1_1_to20260430.py $W $V < /dev/null > $W/perfire_$V.log 2>&1; echo "$? $(( $(date +%s)-t0 ))" > $W/perfire_$V.rc
+      t0=$(date +%s); $PY -B $T/test_perfire_v1.py $W $V $L < /dev/null > $W/perfire_test_$V.log 2>&1; echo "$? $(( $(date +%s)-t0 ))" > $W/perfire_test_$V.rc ) &
+    PF[$i]=$!; PV=$V; PI=$i
+  fi
+  for x in CARD_$V.txt SUM_$V.tsv STATUS_$V.tsv INPUTS_$V.txt MENU_${V}_om.txt $V.out; do [ -f $W/$x ] && cp -n $W/$x $DV/; done
+done
+MF=$W/HANDOFF_MANIFEST.tsv; printf 'V\tlean\tW\tsubj_alarm\tsubj_rnd\n' > $MF
+for i in "${!VS[@]}"; do V=${VS[$i]}; isdone $V && printf '%s\t%s\t%s\tIDEA2%sMENU\tIDEA2%sRNDMENU\n' $V ${LEANS[$i]} $W $V $V >> $MF; done
+n=$(( $(wc -l < $MF) - 1 ))
+if [ $n -gt 0 ]; then
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then [ -n "$PV" ] && pf_done $PV $PI; st disk_handoff 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; wait; st end 7 0 "disk"; exit 7; fi
+  t0=$(date +%s); nice -n 10 $PY -B $CH/d1_reports_v3.py handoff $F $T/lead_null_v1_1_to20251231.py --manifest $MF --out $W/HANDOFF --flips 10000 < /dev/null > $W/lead_null.out 2>&1 & HO=$!
+  [ -n "$PV" ] && pf_done $PV $PI; PV=          # the last perfire ran beside the hand-off; its lines first (V9's order)
+  wait $HO; r=$?
+  st handoff $r $(( $(date +%s)-t0 )) "$n variants"
+  mkdir -p $DV/HANDOFF/REAL_SEALED
+  for x in $W/HANDOFF/*.tsv $W/HANDOFF/*.json $MF $W/lead_null.out; do [ -f $x ] && cp -n $x $DV/HANDOFF/; done
+  for x in $W/HANDOFF/REAL_SEALED/*.tsv; do [ -f $x ] && cp -n $x $DV/HANDOFF/REAL_SEALED/; done
+else [ -n "$PV" ] && pf_done $PV $PI; st handoff 5 0 "no variant finished its grade"; fi
+WMB=$(du -sm $W | cut -f1); FMB=$(fmb); printf 'du_mb_W\t%s\nfree_mb_end\t%s\n' "$WMB" "$FMB" > $DV/DISK.tsv   # K16 T8: one du, one df
+(cd $DV && shasum -a 256 *.tsv *.txt HANDOFF/*.tsv HANDOFF/REAL_SEALED/*.tsv 2>/dev/null | grep -v ' SHA16.txt$') > $DV/SHA16.txt
+E=$(awk -F'\t' 'NR>1 && $2!="0" {print $2; exit}' $ST); E=${E:-0}   # V1_12 F3: the first failed stage's code (V6 and V12 ended 0)
+st end $E 0 "SCRATCH_DISK free $FMB MB; W $WMB MB"   # V1_12 F3
+exit $E   # V1_12 F3

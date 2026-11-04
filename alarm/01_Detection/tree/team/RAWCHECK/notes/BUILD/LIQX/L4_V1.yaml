@@ -1,0 +1,215 @@
+# L4_V1.yaml: LIQX minutes since the last wave, by side (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2, the 5 s
+# grid, section 5 rule 3; ADDON_ARCHITECTURE_V4 edit 3 0591d181). S05, S06 by PRODUCER_LIQX_V1.yaml.
+# Edition 2 (before review): the PHASES line and the empty_order (what TREE's VOLX review taught, REVIEW_VOLX_TREE_V1 404b9dcd).
+# Edition 3: EDGE1's lead review section 0 (REVIEW_LEAD_EDGE1_V1 8dd9867d): X7 Binance, X3 the 00:00:00 point (B's own row), X11 the
+# roster file; E8 a stale minute (an outage), E9 both sides in one minute; the PILOT point. X1, X2, X4, X8: not met (B only).
+# Edition 4: BED's lead review (REVIEW_LEAD_BED_LIQX_V1 a395b964): NO_HISTORY after a missing B day (a wave found later than it), B's file
+# of D missing (NO_FILE), NO_HISTORY's own case and mutant, the 100,000 edge and the 10,080-minute cap planted, the stale and coverage
+# differences from A4 said (coverage: OPEN C).
+kind: build_metric
+id: L4
+producer: LIQX
+item: 'minutes since the last wave, by side'
+tier: BUILD
+name: the minutes from the end of the Binance futures market's last long (S05) and short (S06) liquidation wave minute (A4's rule, 100,000 dollars or more in a clock minute) to the 5 s point, looking back up to 7 days
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  How long ago the market last had a minute of forced selling (longs, S05) or forced buying (shorts, S06) of 100,000 dollars or
+  more: 0.5 says the wave minute ended 30 seconds ago; 1,440 that the last one was a day ago. A4 stops counting at 14 minutes; this
+  does not. Binance futures only, never Hyperliquid.
+example: >-
+  The market's long liquidations (A1 S12) were 120,000 dollars in the minute ending 10:03 and under 100,000 in every minute since: at
+  10:07:00 S05 = 4.0, at 10:07:35 S05 = 275 s / 60 = 4.583333333333333. A minute of 99,999 is no wave (A4 rule 2).
+formula: >-
+  The wave minutes of side s: the minute ends m of D-7 to D whose A1 market value (S12 long, S13 short; whole dollars as A1 writes
+  them, rounded once half up) is 100,000 or more (CARD_A4_V6 fe39709c rule 2; a raw 99,999.50 is A1's 100,000, a wave); a minute whose
+  A1 value is empty is no wave minute (A4 rule 3). At a 5 s point u of D: m(u) = the last minute end at or before u; when A1's value at
+  m(u) is empty, the value is empty with A1's reason (A4 rule 4); else m_w = the latest wave minute end at or before m(u) within the
+  10,080 minutes before it, and S = (u - m_w) / 60 s in minutes (multiples of 1/12), float64; none in 7 days gives NO_WAVE.
+source:
+  kind: ours
+  ref: >-
+    A4's wave minute (CARD_A4_V6 rules 2 to 4; A4 S03 is 'minutes since the last wave' inside a 15-minute window, long side only,
+    capped at 14, our rule NOT_CHECKED in LAYER_REGISTER_V32) without its cap and by side; RESEARCH_TOOLS_V1 aad3cc38 row L4 and
+    section 3.4 (minutes since the last wave; a per-coin p99 threshold there: OPEN for the owner, A the market's 100,000 dollars of A4,
+    applied, B a per-coin trailing 30-day p99 with a floor, a later BUILD_TEST). No tool: BUILD.
+inputs:
+  - kind: year
+    ref: A1 S12, S13 (the market's long and short liquidation dollars of the minute, the sum of the roster coins seen)
+    card: MEANING_A1_V4 63ff333d (CARD_A1_V5 7d0fff50 rules 1 to 16)
+    verdict: CLEAN
+    rule_in_force: B's rows at the minute ends as written (whole dollars, A1's stale stamp by rule 16)
+    stale_rule: an empty A1 minute is no wave minute; the minute at m(u) empty makes the value empty with A1's reason, stale as A1's
+    days: D-7 to D (8 B day files, each checked against its MANIFEST_L0BIN parquet_sha16); no CARRY (B holds every day)
+overlaps:
+  - setting: A4 S03
+    kind: copy
+    why: "A4 S03 is m less the last long wave minute of the 15 minutes m - 14 to m (CARD_A4_V6 rule 8): at a minute end where A4 S03 is valued, S05 equals it; A4 S03 empty NO_WAVE where S05 is over 14. A cross-check: A4 is our rule, NOT_CHECKED, so S05 rests on A1 (CLEAN) and A4 rule 2's threshold, not on A4's values. Differences: L4's stale is A1's minute's on valued rows too, A4's only on a value empty for A1's reason (CARD_A4_V6 rule 11), so the copy compares values only; A4 writes the coverage beside, L4 none (a long empty stretch of A1 grows S05 with no sign: OPEN C for the owner, a coverage or a flag)."
+per_coin: >-
+  MARKET only (the roster's sum, A1 S12, S13: a market reading). The 100,000-dollar floor is fixed: a big week of BTC alone can make
+  waves while a broad flush of small coins may not (OPEN B). The roster changes weekly: A1's market is that week's coins.
+time: >-
+  Every 5 s of D; the value grows by 1/12 every 5 s and drops at each wave minute's end. The look-back reads B of the 7 days before D
+  (no CARRY). The point 00:00:00 of D reads B's minute end 00:00 of D (the year's row of (23:59, 24:00] of D-1, in B's file of D):
+  no fit or table. The year starts 10 Sep 2025: before the first wave of the year S05, S06 are NO_WAVE; a crash minute (10 Oct 2025
+  evening) resets both sides.
+output:
+  group_file: X1/day=<D>/LIQX.parquet
+  grid: 5s
+  names:
+    - name: S05
+      label: min_since_long_wave_mkt
+      units: minutes (multiples of 1/12)
+      value_kind: float
+      decimals: none
+      means: the minutes from the end of the market's last long wave minute (A1 S12 >= 100,000) to u
+    - name: S06
+      label: min_since_short_wave_mkt
+      units: minutes (multiples of 1/12)
+      value_kind: float
+      decimals: none
+      means: the same for the short side (A1 S13)
+  cadence: every 5 s (minute ends included) (17,280 rows per day, MARKET only, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: "known_at = the known_at of A1's minute at m(u) (at or before m(u), so at or before u); an empty row known_at = u; so known_at <= as_of on every row"
+  empty_reasons:
+    - reason: NO_FILE
+      when: "B's file of D missing or failing its MANIFEST_L0BIN parquet_sha16 (no A1 row at m(u)): every point of D (X1)"
+    - reason: NO_WAVE
+      when: no wave minute of the side in the full 10,080 minutes up to m(u), every day of the look-back held
+    - reason: NO_HISTORY
+      when: "no wave found later than the look-back's last missing stretch: the year's first days before 17 Sep 2025 (no day before 10 Sep 2025), or a B day of D-7 to D-1 missing (or failing its manifest) with no wave found after it; a wave found later than the last missing day is a value (one before it could hide a later wave: NO_HISTORY)"
+    - reason: ALL_COINS_EMPTY
+      when: "A1's market value at m(u) is empty ALL_COINS_EMPTY (A1 rule 8); A1's other market reasons pass the same way: NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (the coins' common reason)"
+    - reason: NO_ROSTER
+      when: "A1's market value at m(u) is empty NO_ROSTER (no roster file, the year root's ROSTER_<monday>.csv as L2, A1 rule 8)"
+    - reason: NO_FILE
+      when: "A1's market value at m(u) is empty with the coins' common reason NO_FILE"
+    - reason: TRADES_HOLE
+      when: "the same with TRADES_HOLE"
+    - reason: THIN_FEED
+      when: "the same with THIN_FEED"
+    - reason: BAD_INPUT
+      when: "the same with BAD_INPUT"
+  empty_order: the first that applies, in this order, NO_FILE (B's file of D), A1's own reason at m(u) (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT, ALL_COINS_EMPTY), then NO_HISTORY, NO_WAVE
+  stale_rule: stale as A1's minute at m(u) (A1 rule 16)
+  max_staleness_s: 120
+  window_days: 7
+  no_history: "the 7-day look-back is full from 17 Sep 2025 (D-7 = 10 Sep 2025); before, a wave found in the days held is a value and none found is NO_HISTORY (not NO_WAVE)"
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the example
+    input: 'A1 S12 = 120,000 at 10:03, under 100,000 at 10:04 to 10:07'
+    answer: 'S05 at 10:07:00 = 4.0; at 10:07:35 = 4.583333333333333'
+  - case: E2 the threshold
+    input: 'A1 S12 = 99,999 at 10:03 (no wave) and the last wave at 09:00'
+    answer: 'S05 at 10:07:00 = 67.0'
+  - case: E3 the wave minute itself
+    input: 'A1 S12 = 150,000 at 10:07'
+    answer: 'S05 at 10:07:00 = 0.0; at 10:07:05 = 0.08333333333333333'
+  - case: E4 an empty A1 minute inside the span
+    input: 'A1 S12 empty at 10:05, wave at 10:03'
+    answer: 'S05 at 10:07:00 = 4.0 (the empty minute is no wave)'
+  - case: E5 the minute at m(u) empty
+    input: 'A1 S12 empty ALL_COINS_EMPTY at 10:07'
+    answer: 'S05 empty ALL_COINS_EMPTY at 10:07:00 to 10:07:55'
+  - case: E6 no wave in 7 days
+    input: 'every A1 S12 of D-7 to D under 100,000'
+    answer: S05 empty NO_WAVE
+  - case: E7 across days
+    input: 'the last long wave at 23:58 of D-1'
+    answer: 'S05 at 00:00:00 of D = 2.0; at 00:10:30 = 12.5'
+  - case: E8 an outage (a stale minute)
+    input: 'the last long wave at 10:03; A1 S12 at 10:07 valued (0) with stale 1 (A1 rule 16: the stream silent over 960 s)'
+    answer: 'S05 at 10:07:00 = 4.0 with stale 1 (stale as A1''s minute at m(u))'
+  - case: E9 both sides in one minute
+    input: 'A1 S12 = 150,000 and S13 = 200,000 at 10:07'
+    answer: 'S05 0.0 and S06 0.0 at 10:07:00; 0.08333333333333333 each at 10:07:05'
+  - case: E10 a missing B day after the wave
+    input: 'a long wave on D-5 at 12:00; B''s file of D-3 missing; no wave after'
+    answer: 'S05 empty NO_HISTORY at every point of D (D-3 could hold a later wave); a wave on D-2 at 12:00 gives a value'
+  - case: E11 B's file of D missing
+    input: "B's file of D missing"
+    answer: 'S05, S06 empty NO_FILE at every point of D'
+  - case: E12 the year's first day
+    input: '10 Sep 2025: no wave before 10:03, the first long wave minute ends 10:03'
+    answer: 'S05 empty NO_HISTORY at 00:00:00 to 10:02:55 (not NO_WAVE); 0.0 at 10:03:00, 0.08333333333333333 at 10:03:05'
+  - case: E13 the threshold edges
+    input: 'A1 S12 = 100,000 exactly at 10:03 (as A1 writes a raw 99,999.50, rule 2), under 100,000 after'
+    answer: 'S05 at 10:07:00 = 4.0 (a wave)'
+  - case: E14 the cap
+    input: 'the last long wave minute ends exactly 10,080 minutes before m(u) = 12:00 of D (12:00 of D-7)'
+    answer: 'S05 10080.0 at 12:00:00, 10080.916666666666 at 12:00:55; NO_WAVE from 12:01:00 (10,081 minutes)'
+unit_tests:
+  - test: U1 (E1 to E4, E7)
+    planted: '8 B days of A1 S12, S13 for MARKET with the minutes of each case'
+    expect: 'S05, S06 at the named points exactly (multiples of 1/12)'
+  - test: U2 (E5, E6)
+    planted: 'an empty minute at m(u); 8 days under the floor'
+    expect: 'ALL_COINS_EMPTY at the 12 points of that minute; NO_WAVE'
+  - test: U4 (E8, E9)
+    planted: 'the U1 days with a stale minute at 10:07 and a two-sided wave minute'
+    expect: 'S05 4.0 stale 1; S05, S06 0.0 then 1/12'
+  - test: U5 (E10 to E14)
+    planted: 'the 8 B days per case: a missing D-3, a missing D, 10 Sep 2025 alone, the 100,000 minute, the wave at 12:00 of D-7'
+    expect: 'each answer exactly as written'
+  - test: U3 against A4 and the stamps
+    planted: 'the U1 days'
+    expect: 'S05 at every minute end equals A4 S03 where A4 S03 is valued (the A4 oracle oracle_A4_v2 on the same rows); MARKET rows only, 17,280 a day; known_at <= as_of'
+mutants:
+  - mutant: M1 the 15-minute cap of A4 kept
+    caught_by: 'U1 (E2 gives NO_WAVE)'
+  - mutant: M2 the threshold strict (over 100,000)
+    caught_by: 'U1 (a minute of exactly 100,000 planted gives no wave)'
+  - mutant: M3 whole minutes at the 5 s points (m(u) - m_w)
+    caught_by: 'U1 (E1 at 10:07:35 gives 4.0)'
+  - mutant: M4 an empty minute read as a wave or as 0 dollars at m(u)
+    caught_by: 'U2 (E5 gives a value)'
+  - mutant: M5 the stale of A1's minute dropped
+    caught_by: 'U4 (E8 gives stale 0)'
+  - mutant: M6 NO_HISTORY written as NO_WAVE
+    caught_by: 'U5 (E12 gives NO_WAVE before 10:03)'
+  - mutant: M7 a wave before a missing day kept as a value
+    caught_by: 'U5 (E10 gives a value)'
+  - mutant: M8 the cap open (since_event uncapped over the 11,520 minutes of 8 days)
+    caught_by: 'U5 (E14 gives 10081.0 at 12:01:00)'
+real_check:
+  points:
+    - point: 2025-10-10, MARKET, every 5 s of 20:00 to 23:59
+      why: the crash evening (waves both sides)
+    - point: 2026-03-08, MARKET, 00:00:00 to 00:10:00 and 12:00:00 to 12:30:00 every 5 s
+      why: a look-back across 00:00 and a plain hour
+    - point: 2025-09-12, MARKET, 12:00:00
+      why: the year's first week (the look-back on the days held)
+    - point: 2025-09-10 to 2025-09-12 (THE PILOT), MARKET, every 5 s of 00:00 to 01:00 and 12:00 to 13:00
+      why: "what the pilot shows: the look-back holds 1 to 3 days of B, so a value after the year's first wave minute of the side and NO_HISTORY before it (not NO_WAVE)"
+  pass: >-
+    The tester recomputes S05, S06 and the reasons from this card's words on B's A1 S12, S13 rows (rawcheck/check_liqx.py, never the
+    producer's code): floats exact (multiples of 1/12), words equal; and S05 against A4 S03 at every minute end of those days.
+meaning_check:
+  pass_lines:
+    - "S05 equals A4 S03 at every minute end of 2026-03-08 and 2025-10-10 where A4 S03 is valued (the copy)"
+    - "after the crash: at 12:00 of 11 Oct 2025 both S05 and S06 are under 1,440 (a wave on each side within the day before)"
+  report_only:
+    - the distribution of S05, S06 per month; the count of wave minutes per day by side
+conclude:
+  may:
+    - "how many minutes ago the whole Binance futures roster last had a minute of 100,000 dollars or more of forced long (short) closes"
+  never:
+    - "a per-coin wave (MARKET only; the per-coin threshold is OPEN B)"
+    - "S05 large as calm in dollars (minutes of 99,999 count as no wave)"
+    - "a wave count or size (that is A4 S01, A1 S12)"
+    - "Hyperliquid's liquidation waves (Binance futures only; the owner trades on Hyperliquid)"
+readers: none yet (planned in the forced-flow labels after A4 lands)
+implementation:
+  how: "MARKET only: the 8 days of A1 S12, S13 as one array of minute ends, the wave mask, the last wave index by np.maximum.accumulate (since_event), the 17,280 points by the minute index plus the seconds into the minute; the 10,080-minute cap applied after since_event (8 days hold 11,520 minutes). PHASES: none (B only, B holds every day)."
+  kernel: addon_grid_v2.since_event (minutes since the last true flag, on minute ends, served at 5 s)
+  memory_mb: 10
+  seconds_share: 0.05
+data_checks: none

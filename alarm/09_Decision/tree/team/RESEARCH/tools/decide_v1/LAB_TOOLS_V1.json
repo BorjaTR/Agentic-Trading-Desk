@@ -1,0 +1,33 @@
+{
+ "schema": "DECIDE_LAB_TOOLS_V1",
+ "note": "the only entry and exit names a rulebook may use; every fill, exit and cost is computed by the named tool, never by decide_v1",
+ "entry": {
+  "idea_to_grade_V3_1": {
+   "release": "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json",
+   "sha16": "69df7350a98e9681",
+   "ids": [
+    "TT",
+    "RT",
+    "RR"
+   ],
+   "meaning": "TT taker in and out; RT resting entry at the decision price (strict trade-through within 60 s), taker out; RR resting entry and resting target, taker stop and time exit"
+  }
+ },
+ "exit": {
+  "idea_to_grade_V3_1": {
+   "release": "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json",
+   "sha16": "69df7350a98e9681",
+   "ids": [
+    "V1_15m",
+    "V1_1h",
+    "V1_4h",
+    "V2_15m",
+    "V2_1h",
+    "V2_4h",
+    "C2C1_1h",
+    "C4C2_4h"
+   ],
+   "meaning": "i2g_rules_v1.EXITS: V1/V2 = target and stop at 1x/2x the 5 min volatility with a 15 min, 1 h or 4 h limit; C2C1_1h = +2c before -1c in 1 h; C4C2_4h = +4c before -2c in 4 h"
+  }
+ }
+}

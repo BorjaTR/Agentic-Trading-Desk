@@ -1,0 +1,237 @@
+# R3_V1.yaml: RETX BTC-led share, the rebuild of C2 S09 (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181; BUILD_ITEMS_V4 9d424de3 row R3, worded per EDGE2 17:25:48Z; REVIEW_LEAD_EDGE1_V1 section 0).
+# Worked examples recomputed with exact fractions by team/TREE/proposals/verify_retx_timex_examples_tree_v2.py.
+# Edition 2: METRIC_AUDIT2's LEAD REVIEW RETX (REVIEW_LEAD_METRIC_AUDIT2_RETX_V1 27ebac9c) nits: m_B written to the fit table
+# X1/fit/RETX/<D>.parquet (X5), U1's m_B made from planted BTC rows of D-3 to D-1.
+# Edition 3: METRIC_AUDIT's CROSSED REVIEW RETX ED2 (20:13:44Z) after the signing: (3) BTCUSDT's own S05 empty IS_LEADER, a reason in the list (E10, U5, M6).
+kind: build_metric
+id: R3
+producer: RETX
+item: "BTC-led share: the share of the coin's move explained by BTC's move in the same minute, conditioned on BTC's move (the rebuild of C2 S09)"
+tier: REBUILD
+rebuilds: >-
+  C2 S09, renamed 'relative move, our rule S09 (the share of the roster coins but BTC within 0.5 points of BTC over 1 h)'
+  (OUR_RULE_C2_V1 7f9f4081): with a fixed 0.5-point floor it is high in quiet hours, not when BTC leads (24 Sep 2025: at 0.85 or more
+  at 23.89 percent of minutes, BTC's own 1 h move under 0.5 points at 99.42 percent of them; Spearman -0.40387 with BTC's |1 h move|,
+  J15999 c2fire). R3 asks the label's question directly and only when BTC moved.
+name: how much of each coin's last Binance minute BTC's same minute explains with the coin's beta, a bounded share from -1 to 1, valued only in minutes when BTC moved, and its median over the coins
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 3
+  signed: true
+  signed_by: 'EDGE1 2026-10-18T20:58:08Z'
+means: >-
+  In a minute when BTC moved (more than its own 80th percentile minute of the last 3 days), did the coins move as their betas to BTC
+  say? S05 per coin: 1 when the coin moved exactly beta times BTC's move, about 0 when it barely moved or moved alone, negative when it
+  moved against BTC. S06 the median coin's S05 (a BTC-led minute is one where most coins followed), S07 the coins counted. Binance
+  USDT-M mids, not Hyperliquid's.
+example: >-
+  BTC rose 0.50 percent in the minute, above its 3-day 80th percentile; a coin with beta 1.2 should have risen 0.60 percent. It rose
+  0.40 percent: S05 = 2 x 0.60 x 0.40 / (0.60^2 + 0.40^2) = 0.923076923077 (it followed). Had it risen 0.001 percent, S05 =
+  0.003333324074 (it did not); had it fallen 0.40 percent, S05 = -0.923076923077. The raw share beta x BTC / coin would read 1.5, 600
+  and -1.5: unbounded as the coin's move goes to 0 (RESEARCH_TOOLS_V1 8.3).
+formula: >-
+  At each minute end u of D: r_B = BTCUSDT's C1 S25 at u (its 60 s Binance mid return, a fraction); m_B = the nearest-rank 80th
+  percentile (rank ceil(0.8 n)) of |BTCUSDT's C1 S25| over its valued minute ends of D-3 to D-1 (n of 4,320; fixed for the day before
+  00:00 of D; at least 3,456 values, else NO_HISTORY); BTC moved when |r_B| >= m_B (else every coin's S05 and the MARKET S06 are empty
+  BTC_QUIET). Per roster coin c other than BTCUSDT: r_c = c's C1 S25 at u, beta = R1's S01 at u, p = beta x r_B (BTC's move as the coin
+  should follow it); S05 = 2 p r_c / (p^2 + r_c^2), in [-1, 1]; NO_MOVE when p = r_c = 0. S06 (MARKET) = the median of the coins'
+  valued S05 (the mean of the two middle ones at an even count), with at least 10 coins, else FEW_COINS; S07 (MARKET) = the count of
+  coins with a valued S05. BTCUSDT's own S05 is empty IS_LEADER (no BTC-led share of
+  the leader). The first failing reason: NO_ROSTER, IS_LEADER (S05 on BTCUSDT's row), NO_HISTORY (m_B's or R1's), FEW_VALUES and FIT_SINGULAR (R1's), NO_INPUT
+  (a C1 S25 empty at u), BTC_QUIET, NO_MOVE; for S06: NO_ROSTER, NO_HISTORY, NO_INPUT (BTC's r_B empty), BTC_QUIET, FEW_COINS. Exact
+  on the C1 decimals (Fraction), written as float64.
+source:
+  kind: ours
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 row R3 and section 8.3 (the bounded share s = 2 (beta r_B) r_c / ((beta r_B)^2 + r_c^2), its planted
+    numbers: beta 1.2, r_B 0.50, r_c 0.40 gives 0.923077; r_c 0.001 gives 0.003333; r_c -0.40 gives -0.923077); EDGE2 17:25:48Z's
+    wording (BUILD_ITEMS_V4 row R3: 'conditioned on BTC's move'); the condition by BTC's own 3-day 80th percentile is ours (opinion: a
+    fixed floor is what broke C2 S09). The catch-up form CB3 (beta r_B - r_c over sigma) of 8.3 is R2's residual over 60 s: not built
+    here.
+inputs:
+  - kind: year
+    ref: C1 S25 of every roster coin and of BTCUSDT at u, and BTCUSDT's of D-3 to D-1 (m_B)
+    card: BASIC_C1_V5 95244119 (LAYER_REGISTER_V32 e249ce94 C1 S25 CLEAN)
+    verdict: CLEAN
+    rule_in_force: B's C1 rows at the minute ends as written
+    stale_rule: an empty C1 S25 at u gives NO_INPUT; in m_B's days it is not a value
+    days: D-3 to D (B; no CARRY)
+  - kind: addon
+    ref: RETX S01 (R1) at u, from the same pass
+    card: RETX/R1_V1
+    rule_in_force: R1's value at the same minute end
+    stale_rule: R1's empty reason passes through
+    days: D
+  - kind: file
+    ref: the roster file of D's week, knowledge/roster/ROSTER_<monday>.csv
+    rule_in_force: the coins of the week's roster
+    stale_rule: no roster file gives NO_ROSTER
+    sha16_rule: the roster file's sha16 goes into D's manifest
+    days: D
+overlaps:
+  - setting: C2 S09
+    kind: other_metric
+    why: >-
+      C2 S09 is the share of coins within 0.5 points of BTC over 1 h (our rule, OUR_RULE_C2_V1): high when the hour was quiet. S06 is
+      the median coin's bounded share in the same minute, empty when BTC did not move: the label's question, rebuilt (tier REBUILD).
+per_coin: >-
+  A thin coin whose mid did not move in the minute has r_c = 0: S05 = 0 (it did not follow). A coin with a beta near 0 has p near 0:
+  S05 near 0 whatever it did (opinion: no following without a beta). 1000-coins: scale free. BTCUSDT has no S05 (it is the leader).
+time: >-
+  Valued in about one minute in five (the 80th percentile), more in volatile hours; m_B is the day's, from the 3 days before D. A
+  crash day lifts m_B for 3 days (fewer minutes valued after it). The first year days: NO_HISTORY on 10 to 12 Sep 2025.
+output:
+  group_file: X1/day=<D>/RETX.parquet
+  names:
+    - name: S05
+      label: binance_btc_explained_share_60s
+      units: a share from -1 to 1
+      value_kind: float
+      decimals: none
+      means: the bounded share of the coin's 60 s move that beta times BTC's same 60 s move explains, in minutes when BTC moved
+    - name: S06
+      label: binance_btc_led_share_median
+      units: a share from -1 to 1
+      value_kind: float
+      decimals: none
+      means: the median of the coins' S05 at u (MARKET)
+      never: ['S06 as BTC leading when S07 is small (few coins counted)']
+    - name: S07
+      label: binance_btc_led_coins
+      units: coins
+      value_kind: whole
+      decimals: 0
+      means: the coins with a valued S05 at u (MARKET)
+  grid: minute
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D; S06, S07 on MARKET only)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    S05: the later of the coin's and BTC's C1 S25 known_at at u and R1's known_at at u; S06, S07: the latest of the coins counted (BTC's
+    when none); an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (every coin and MARKET)
+    - reason: IS_LEADER
+      when: S05 on BTCUSDT's own row (BTC is the leader; R1's BTCUSDT S01 is 1 by definition), stale 0
+    - reason: NO_HISTORY
+      when: m_B has fewer than 3,456 values in D-3 to D-1, or R1's S01 is NO_HISTORY (10 to 12 Sep 2025)
+    - reason: FEW_VALUES
+      when: S05 when R1's S01 is FEW_VALUES
+    - reason: FIT_SINGULAR
+      when: S05 when R1's S01 is FIT_SINGULAR
+    - reason: NO_INPUT
+      when: the coin's or BTC's C1 S25 empty at u (S06, S07 when BTC's is)
+    - reason: BTC_QUIET
+      when: "|r_B| < m_B: BTC did not move enough in the minute (S05 of every coin, S06, S07)"
+    - reason: NO_MOVE
+      when: S05 when p = r_c = 0
+    - reason: FEW_COINS
+      when: S06 when fewer than 10 coins have a valued S05 (S07 is still written)
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 3
+  no_history: "first fills on 13 Sep 2025 (m_B and R1 from 10 to 12 Sep 2025); NO_HISTORY on 10 to 12 Sep 2025; valued on 178 of the 181 year days, in the minutes BTC moved"
+  fit_rule: "m_B, the nearest-rank 80th percentile of |BTCUSDT's C1 S25| over D-3 to D-1, before D (once a day before 00:00 of D), written to THE FIT TABLE X1/fit/RETX/<D>.parquet (B's schema; name R3.m_B on BTCUSDT's row with its count; as_of 00:00 of D; known_at the latest known_at of its rows, at or before 24:00 of D-1; its sha16 in D's manifest and seal: ADDON_ARCHITECTURE_V4 edit 3 section 5, REVIEW_LEAD_EDGE1_V1 X5); R1's beta as R1"
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the research numbers (RESEARCH 8.3)
+    input: 'beta 1.2, r_B 0.005 (0.50 percent, above m_B), r_c 0.004'
+    answer: S05 0.923076923077
+  - case: E2 a coin that did not follow
+    input: 'the same with r_c 0.00001'
+    answer: S05 0.003333324074
+  - case: E3 against BTC
+    input: 'the same with r_c -0.004'
+    answer: S05 -0.923076923077
+  - case: E4 BTC quiet
+    input: '|r_B| 0.0002 with m_B 0.0003'
+    answer: S05, S06, S07 empty BTC_QUIET
+  - case: E5 the threshold
+    input: '|BTCUSDT C1 S25| of the 3 days = 1, 2, ..., 4320 (x 1e-6)'
+    answer: 'm_B = the value at rank 3,456 = 0.003456; r_B = 0.003456 is BTC moved (>=)'
+  - case: E6 the market median
+    input: '11 coins with S05 = -0.2, 0.1, 0.3, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.92, 0.95; 2 coins empty'
+    answer: 'S06 0.7, S07 11'
+  - case: E7 few coins
+    input: '9 coins valued'
+    answer: S06 empty FEW_COINS, S07 9
+  - case: E8 no move
+    input: 'beta 0, r_c 0'
+    answer: S05 empty NO_MOVE
+  - case: E9 the year start
+    input: 'D = 11 Sep 2025'
+    answer: S05, S06, S07 empty NO_HISTORY
+  - case: E10 BTC's own row
+    input: 'E1''s minute with BTCUSDT on the roster'
+    answer: BTCUSDT's S05 empty IS_LEADER, stale 0; the other coins as E1
+unit_tests:
+  - test: U1 (E1 to E3, E8)
+    planted: 'B C1 S25 at u for BTCUSDT and four coins with the case values; R1''s S01 1.2 (0 for E8); BTCUSDT''s C1 S25 of D-3 to D-1 planted at |r_B| = 0.003 at every minute end, so m_B = 0.003'
+    expect: 'S05 0.923076923077, 0.003333324074, -0.923076923077 within 1e-9 relative; NO_MOVE'
+  - test: U2 (E4, E5, E9)
+    planted: 'BTC''s C1 S25 of 3 planted days with the E5 values; the E4 minute; D = 11 Sep 2025'
+    expect: 'BTC_QUIET everywhere; m_B 0.003456 and the >= edge valued; NO_HISTORY'
+  - test: U3 (E6, E7)
+    planted: the coins' S05 of each case
+    expect: 'S06 0.7, S07 11; FEW_COINS with S07 9'
+  - test: U5 (E10) BTC's own row
+    planted: U1's rows with BTCUSDT on the roster
+    expect: 'BTCUSDT S05 empty IS_LEADER, stale 0, known_at = u; the four coins as U1'
+  - test: U4 the stamps
+    planted: U1 to U3
+    expect: 'as_of = u, known_at <= u; 1,440 rows per coin for S05 and 1,440 MARKET rows for S06, S07; empty never 0'
+mutants:
+  - mutant: M1 the raw share p / r_c
+    caught_by: 'U1 (E1 gives 1.5)'
+  - mutant: M2 BTC's move without the beta (p = r_B)
+    caught_by: 'U1 (E1 gives 2 x 0.005 x 0.004 / (0.005^2 + 0.004^2) = 0.975609756098)'
+  - mutant: M3 m_B with D itself in its days (look-ahead)
+    caught_by: U2 with D's planted |r_B| all 0.01 (m_B moves)
+  - mutant: M4 the strict > at the threshold
+    caught_by: U2 (E5's edge gives BTC_QUIET)
+  - mutant: M5 the mean in place of the median
+    caught_by: 'U3 (E6 gives 0.583636363636)'
+  - mutant: M6 BTC's own S05 written (r_c = r_B and p = r_B, a share of 1)
+    caught_by: U5 (BTCUSDT valued 1.0 in place of IS_LEADER)
+real_check:
+  points:
+    - point: 2026-03-08, every roster coin and MARKET, the 20 minute ends of the day with the largest |BTCUSDT C1 S25|
+      why: BTC moved; the coins' shares
+    - point: 2025-09-24, MARKET, every minute end
+      why: "C2 S09's day of J15999: S06 against C2 S09 (OUR_RULE_C2_V1)"
+    - point: 2025-09-13, MARKET, u = 12:00
+      why: the first valued day
+  pass: >-
+    The tester recomputes m_B, S05, S06, S07 and the empties from this card's words on B's C1 rows and R1's recomputed S01
+    (rawcheck/check_retx.py), with Fraction: floats within 1e-9 relative, whole numbers and words equal.
+meaning_check:
+  pass_lines:
+    - "R3 is not C2 S09's quiet-hour artifact: over the valued minute ends of 2025-09-24, the Spearman correlation of S06 with BTC's |1 h move| (C1 S18) is not below -0.2 (C2 S09's was -0.40387, J15999; it can fail)"
+    - "on 2026-03-08, S06 is above 0.3 at more than half of its valued minute ends (when BTC moves the coins mostly follow: it can fail)"
+  report_only:
+    - the share of minute ends valued per day (about one in five by the threshold)
+    - S06 against C2 S09 on 2025-09-24 at the minutes both are valued
+conclude:
+  may:
+    - in a minute when BTC moved, how far each coin's Binance minute followed BTC's with its own beta (S05), and the median coin's (S06)
+  never:
+    - BTC leading in a quiet minute (S05, S06 are empty there by design)
+    - a share on Hyperliquid's prices
+    - causation (the same minute moves together; who moved first is R5's question)
+    - S06 with few coins (read S07)
+readers: "none yet (planned: the label WHY-SCOPE/BTC-LED in place of C2 S09's floor, RR1)"
+implementation:
+  how: >-
+    Array arithmetic on the [coin x 1,440] grids of C1 S25 and R1's S01 of the same pass; m_B from BTCUSDT's [3 x 1,440] C1 S25 of
+    D-3 to D-1 by nearest_rank (addon_grid_v2 85c8ece1) before the day; the median across coins with numpy.nanmedian per minute end (a
+    brute twin by sorting in U3). PHASES (ADDON_ARCHITECTURE_V4 section 4): year inputs only, every point final in one pass, days in
+    parallel, no CARRY.
+  kernel: 'addon_grid_v2.nearest_rank (85c8ece1) for m_B; the share and the median by numpy on the grids'
+  memory_mb: 50
+  seconds_share: 0.3
+data_checks:
+  - what: "how often BTC's |60 s return| passes m_B per day and hour (expected about 20 percent by construction; read-only, from B)"
+    who: TREE

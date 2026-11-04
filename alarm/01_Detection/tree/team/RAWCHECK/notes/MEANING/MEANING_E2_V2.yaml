@@ -1,0 +1,210 @@
+# MEANING_E2_V2.yaml: the meaning register of E2 open interest, EDITION 2 (EDGE1, 2026-10-18, closed with the owner 15:4x Berlin)
+# = MEANING_E2_V1 (3fc2176f27ebc83e, kept) + EDGE2's facts (jobs 15734 to 15736, 15740: alignment, ours fresher in a crash), conclude (may,
+# never), every limit with its effect on decisions, module sha16s.
+group: E2
+name: open_interest (raw rows)
+summary: 'How many contracts of one coin''s perpetual are open (each contract is one long and one short), in COINS of the contract: Binance (S01 at a fire second, S02 at the minute end)
+  and Hyperliquid (S05). A 1000-prefixed contract counts in thousands of coins.'
+read_as: 'Binance S02 is Binance''s own open interest: within 1% of Binance''s published 5-minute figure in 98.3 to 99.8% of marks (median ratio 1.0000). Hyperliquid S05 is in coins
+  too (typically 0.2 to 0.3 of Binance''s for the same coin; HYPE, Hyperliquid''s own coin, 3.6 to 5.5 times). Compare levels only within one coin and venue; compare changes in percent.'
+where:
+  card: testbed/value_audit/registers/CARD_E2_V1.md
+  settings_register: testbed/value_audit/registers/SETTINGS_E2_V1.tsv
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_derivative_ticker_V2.md; SOURCE_SPEC_hl_derivative_ticker_V2.md
+  producer: prod_E2 with the derivative_ticker readers (testbed/value_audit/code/)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E2.parquet
+  year_output_columns: 'name (S01 to S07 and twins), coin, as_of_us (e), value_kind (0 = EMPTY: its value_f64 holds NaN, not null; read emptiness from value_kind, job 15786), value_f64,
+    value_txt, known_at_us, stale, empty_reason, flags'
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'E2', settings, coins, moments)
+source:
+  vendor: 'Tardis.dev: exchange binance-futures (Binance USDT-margined perpetuals) and exchange hyperliquid'
+  exchange_stream: 'Binance: the open interest REST snapshot, polled about every 6 s per instrument, folded into derivative_ticker. Hyperliquid: ctx.openInterest of the activeAssetCtx
+    message, a row whenever a value changes'
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/derivative_ticker_<COIN>USDT_<YYYY-MM-DD>.csv.gz; .../tardis/hyperliquid/derivative_ticker_<COIN>_<YYYY-MM-DD>.csv.gz
+    (1000PEPE is kPEPE)
+  columns: exchange, symbol, timestamp, local_timestamp, funding_timestamp, funding_rate, predicted_funding_rate, open_interest, last_price, index_price, mark_price
+  fields:
+    binance.open_interest: 'Binance openInterest, in coins of the contract: equals Binance''s metrics sum_open_interest (coins) with median ratio 1.0000, not sum_open_interest_value
+      (dollars) [proof: SOURCE_SPEC_derivative_ticker Q-B3 (unit assumed there); job 15785, 44,352 coin-marks on 3 days]'
+    binance.cadence: 'a new snapshot about every 6 s (6.0 to 6.25 s); known at its arrival; the row''s timestamp is an earlier message''s [proof: SOURCE_SPEC_derivative_ticker F3, F9,
+      O1]'
+    hyperliquid.open_interest: 'ctx.openInterest, in coins: Hyperliquid''s docs give no unit; against Binance''s coins the ratio is 0.03 to 5.5 per coin (dollars would put it near the
+      coin''s price) [proof: SOURCE_SPEC_hl Q-M4; Hyperliquid docs H1 (no unit); job 15785]'
+    hyperliquid.cadence: 'a row only when a value changes; a coin can be silent up to 261 s [proof: SOURCE_SPEC_hl F6]'
+    hyperliquid.listing: 'a coin not listed on Hyperliquid has no file: S05 empty NO_FILE (XMR, ZEC, DASH, ICP on 24 Sep; 3 coins on 4 Nov; none on 8 Mar) [proof: job 15786]'
+  latency: 'Binance: arrival lag middle 0.066 to 0.072 s; the snapshot itself is up to about 6 s old (F3, F4). Hyperliquid: one row per change'
+  silence: '61.0 s on Binance, 261.3 s on Hyperliquid: older is STALE_VALUE (card rule 5)'
+reading_rules:
+- 'the value at e: the last good row received by e that carries it, the day''s file, else the day before (card rule 1)'
+- 'older than 61.0 s (Binance) or 261.3 s (Hyperliquid): empty STALE_VALUE; .any_age_off without that rule (rule 5)'
+- 'reasons, first failing: NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE (rule 6)'
+- S01, S02, S05 = the value as the file gives it, exact, no rounding (rule 7)
+- S01 is read at the fire second, S02 and S05 at the minute end (settings register)
+values:
+  units: coins of the contract (thousands of coins for a 1000-prefixed contract); not dollars
+  zero: 'no open position (not seen on Binance; Hyperliquid spec: no open interest is 0)'
+  empty: 'NO_ROSTER, NO_FILE (Hyperliquid: coin not listed), BAD_INPUT, NO_VALUE, STALE_VALUE. Stored as value_kind 0 with NaN in value_f64. Never read empty as 0'
+  stale: 1 with STALE_VALUE
+  flags: DUPLICATE_ROW
+interpret:
+  do:
+  - read a rise as positions being opened, a fall as positions closed, within one coin and venue
+  - use percent changes to compare coins (the levels are in each coin's own unit)
+  - multiply by the mark price when you need dollars
+  dont:
+  - compare the level of two coins, or read it as dollars
+  - read Binance S02 as exact to the second; it is a snapshot about every 6 s
+  - read a NaN in value_f64 as a number; check value_kind
+biases:
+- what: snapshot timing (about every 6 s) against Binance's 5-minute figure
+  direction: either way
+  size: within 0.1% in 53 to 80% of marks, within 1% in 98.3 to 99.8%, at most 5.1%; decisions unchanged
+  proof: job 15785
+- what: Hyperliquid unit not documented
+  direction: none
+  size: coins by magnitude, not by a stated unit; decisions unchanged
+  proof: job 15785; Hyperliquid docs H1
+- what: Binance's own 5-minute OI figure lags ours in a crash
+  direction: theirs late, not ours
+  size: '10 Oct 2025 21 to 23 UTC: the 5-minute figure trails ours by 15 min or more; a 5-minute record cannot check a value to the minute (no margin gives 98% within and a 1-minute
+    shift caught, job 15740); decisions unchanged'
+  proof: EDGE2 jobs 15734 to 15736, 15740 (HANDOVER_EDGE2_V5 section C)
+external_checks:
+- what: Binance open interest, unit and level
+  where: Binance metrics 5m files from data.binance.vision (sum_open_interest, sum_open_interest_value), held at <SCRATCH_DISK>/realcheck/outside/binance/metrics
+  status: 'VERIFIED: 44,352 coin-marks on 3 days, job 15785'
+- what: Hyperliquid open interest
+  where: no history published by Hyperliquid; Coinalyze aggregates it (key at <DEV>/edge1_cloudkit/secrets/coinalyze.key)
+  status: 'NOT_RUN: Coinalyze'
+tools:
+- what: our raw values equal Tardis
+  run: python3 -B -m rawcheck --days <D> --coins <C,..> --at busiest --part raw --out <dir>
+  where: team/LAB/code
+- what: every coin and 5-minute mark against Binance metrics; Hyperliquid against Binance
+  run: python3 -B -m rawcheck.meaning_oi <D>
+  where: team/LAB/code
+- what: module versions of this edition
+  run: meaning_oi.py e704395f49f28806, rawcheck raw code 84454de7fac2e458 (RAW_STAMPS_V1); EDGE2 k3_outside_v1.py d54715ef7af43748 (jobs 15733 to 15736)
+  where: team/LAB/code/rawcheck; team/EDGE2/proposed/k3
+used_by: S02 -> A7 oi_since_wave (m1_oi, m5_oi); S01 -> S04 (10 min change); S05 -> S06; the 60 s change of S02 -> S07 oi_vel (the forced SHORT chains) (CARD_E2_V1, SETTINGS_E2_V1)
+references:
+  H1: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint/perpetuals
+  T1: https://docs.tardis.dev/downloadable-csv-files/data-types
+  K1: https://data.binance.vision (metrics 5m)
+settings:
+- id: E2.S01
+  layer: raw
+  side: none
+  window: value in force, 61 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the value at e
+  aliases: EF.ef_oi_bn_level
+  means: Binance open interest in coins, read at a fire second
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: 'J15785 (unit and level, as S02); EDGE2: the ruled alignment (ours at T against Binance''s 5-minute row labelled T - 300 s) is the best of -15 to +15 min on both test days
+      (jobs 15734, 15735); in a crash ours is the fresher record: our OI''s steepest 5-minute fall comes a median 3.0 min after the coin''s liquidation peak, Binance''s 5-minute figure
+      23.0 min after (51 coins, 10 Oct 2025, job 15736)'
+  open: none
+- id: E2.S01.any_age_off
+  layer: raw
+  side: none
+  window: value in force, any age
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the value at e
+  aliases: none
+  means: as S01 without the 61 s staleness rule (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: as S01
+  open: none
+- id: E2.S02
+  layer: raw
+  side: none
+  window: value in force, 61 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the value at e
+  aliases: m1_oi, m5_oi
+  means: Binance open interest in coins at the minute end
+  computation:
+    status: RELIABLE
+    proof: 'RAW_STAMPS Tardis 9 of 9; J15785: within 1% of Binance metrics in 98.3 to 99.8% of 44,352 marks'
+  meaning:
+    status: DEFINED
+    proof: 'J15785: unit = coins; EDGE2: the ruled alignment (ours at T against Binance''s 5-minute row labelled T - 300 s) is the best of -15 to +15 min on both test days (jobs 15734,
+      15735); in a crash ours is the fresher record: our OI''s steepest 5-minute fall comes a median 3.0 min after the coin''s liquidation peak, Binance''s 5-minute figure 23.0 min after
+      (51 coins, 10 Oct 2025, job 15736)'
+  open: none
+- id: E2.S02.any_age_off
+  layer: raw
+  side: none
+  window: value in force, any age
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: the value at e
+  aliases: none
+  means: as S02 without the 61 s staleness rule (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED
+    proof: as S02
+  open: none
+- id: E2.S05
+  layer: raw
+  side: none
+  window: value in force, 261.3 s at most
+  clock: minute end
+  scope: coin
+  contracts: USDC (Hyperliquid)
+  aggregate: the value at e
+  aliases: CUBE.hl_oi
+  means: Hyperliquid open interest in coins at the minute end; empty NO_FILE when the coin is not listed there
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: J15785 (coins by magnitude); job 15786 (NO_FILE for unlisted coins)
+  open: no outside check of the level (Coinalyze not run); unit not documented by Hyperliquid; decisions unchanged when read as percent changes within the coin
+- id: E2.S05.any_age_off
+  layer: raw
+  side: none
+  window: value in force, any age
+  clock: minute end
+  scope: coin
+  contracts: USDC (Hyperliquid)
+  aggregate: the value at e
+  aliases: none
+  means: as S05 without the staleness rule (switched off)
+  computation:
+    status: RELIABLE
+    proof: RAW_STAMPS Tardis 9 of 9
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: as S05
+  open: as S05; decisions unchanged when read as percent changes within the coin
+conclude:
+  may:
+  - 'Binance open interest for a coin and its percent change (S01, S02: within 1% of Binance''s 5-minute record in 98.3 to 99.8% of marks)'
+  - Hyperliquid open interest changes within a coin (S05)
+  - that in a crash ours is fresher than Binance's 5-minute figure (3 min against 23 min after the liquidation peak)
+  never:
+  - 'open interest compared across coins, or read as dollars: it is in coins'
+  - 'Binance open interest exact to the second: it is a snapshot about every 6 s'
+  - 'a Hyperliquid level against a Binance level as the same unit: Hyperliquid does not document its unit'
+  - 'a NaN in value_f64 as a number: read emptiness from value_kind'

@@ -1,0 +1,7 @@
+code	step_s	kind	dtype	inputs	card	store	clock	exact_k	scope	meaning	unit	level	block
+A01	5	ROWS	fire	A1.S01,A1.S02	cc22a745e126fbc6	ROWS	event	0	coin			live	alarms
+A02	5	ROWS	fire	A1.S01,A1.S02,A01	5ac4318af95d7805	ROWS	event	0	coin			live	alarms
+A1.S01	5	CLOCK	<f8	forceOrder S3, trades S2 (seen rule)		CLOCK	5	0	coin	prod_A1_v3 98349a4fa1c99f12 re-coded as a stream (DEVIATION, proof pending)		live	engine
+A1.S02	5	CLOCK	<f8	forceOrder S3, trades S2 (seen rule)		CLOCK	5	0	coin	prod_A1_v3 98349a4fa1c99f12 re-coded as a stream (DEVIATION, proof pending)		live	engine
+C0	3.2	ROWS	fire	PRICE	77a1bcd5c4ef398e	ROWS	event	0	coin			live	alarms
+PRICE	3	CLOCK	te,tl:<i8;px,hi,lo,buy,sell:<f8;n:<i4	trades S2		BIN		0	coin	px3s_v2.bins_3s_v2 c835e40ae004cdd2 (make_price_past_v1 7271bdff18991347)		live	engine

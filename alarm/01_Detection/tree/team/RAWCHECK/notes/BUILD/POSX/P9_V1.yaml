@@ -1,0 +1,226 @@
+# POSX P9 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P9_V1.md 4837beb7) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Fixed from the draft: the midnight window count (29 minute ends of D-1 and 31 of D at 00:30, METRIC_AUDIT2 17:38:04Z) and the
+# quiet minute (B1 S01, S02 are empty TRADES_HOLE without a trade, never 0: CARD_B1_V7 rule 9).
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel name of ADDON_ARCHITECTURE_V4 b5fcc859 9.4 (roll_minutes, head from B); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): kernel cite to addon_grid_v2 85c8ece1 (roll_points, edition 1's roll_minutes); values unchanged
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P9 nits: the first-hole reason's order within a minute (B1 S01, B1 S02, C13 S01), NO_ROW as P1 and P11, Binance in conclude
+# Signed by BED's REVIEW OK of edition 4, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P9
+producer: POSX
+item: 'open interest change over volume in [-1, 1] (BUILD_ITEMS_V3 3dbb747a line 15, P9)'
+tier: BUILD
+name: change of Binance open interest over the coins traded by takers, over the last 5 and 60 minutes
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 4
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  Of the coins traded in the last 5 (S09) or 60 (S10) minutes, the share that opened new positions (above 0) or closed old ones
+  (below 0): the change of open interest over the traded volume, both in coins. One trade of q coins changes open interest by at
+  most q, so the true value lies in [-1, 1] (CME, RESEARCH_TOOLS_V1 4.5); the conversion and the poll timing below can put it outside.
+example: >-
+  Open interest went from 1,000 to 1,030 coins while 100 coins traded: 0.3 (30 percent of the volume opened positions). From 1,000 to
+  900 on 80 coins traded: -1.25, written as it is (the open interest poll and the conversion, not a law broken).
+formula: >-
+  P9_W(u) = (OI(u) - OI(u - W)) / V_W(u), W = 5 minutes (S09) or 60 minutes (S10). OI(t) = E2 S02 at the minute end t (Binance
+  open interest in coins, exact as the file gives it, CARD_E2_V1 rule 7, line 108). V_W(u) = the sum over the W minute ends m in
+  (u - W, u] of (B1 S01(m) + B1 S02(m)) / C13 S01(m): each minute's taker buy and sell dollars (whole dollars, CARD_B1_V7 rule 2,
+  line 154) over its close, the coins traded to within the minute's price spread. Float64, decimals none (the draft's 12 decimals
+  dropped, V2 rule 4.2). The window holds exactly W minute ends: at u = 00:30 the 60 minute window (23:30 of D-1, 00:30 of D] holds 29
+  minute ends of D-1 (23:31 to 23:59) and 31 of D (00:00 to 00:30), and OI(u - W) is E2 S02 at 23:30 of D-1 (a day holds the minute
+  ends 00:00 to 23:59). Empty, first reason in this order - NO_HISTORY when a read falls before 10 Sep 2025; E2 S02's reason at u;
+  at u - W; the first minute of the window in time order with B1 S01, B1 S02 or C13 S01 empty (that row's reason, B1 S01 before B1 S02 before
+  C13 S01 within one minute; a window is never read with a hole); NO_TRADES when V_W = 0. OPEN O1 (reviewer, then EDGE1) - A, APPLIED here, the coins from B1 dollars over each
+  minute's close (no raw read; V_W off the true coin count by the minute's price spread and the dollar rounding); B, the exact coin
+  amounts from prod_reader_trades_v1 (a raw read with the raw check). Under A a value just over 1 can come from the conversion; no
+  DATA_FAULT is written, the meaning check counts them.
+source:
+  kind: paper
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 section 4.5 ((OI_e - OI_(e - W)) / volume in coins; CME on open interest: one trade changes it by at
+    most its size); the volume from B1's taker dollars as ADDON_ARCHITECTURE_V3 line 74 names it (P9 OI change over volume, B1 taker
+    dollars). No tool computes it on our data (RESEARCH_TOOLS_V1 row P5).
+inputs:
+  - kind: year
+    ref: E2 S02 (Binance open interest in coins at the minute end)
+    card: CARD_E2_V1 (testbed/value_audit/registers, 65b57ca4) rules 1 to 7 / SETTINGS_E2_V1 row S02 / MEANING_E2_V2.md line 15
+    verdict: CLEAN
+    rule_in_force: the year's row at the minute end t itself (the last good row received by t carrying the open interest, CARD_E2_V1 rule 1, line 102)
+    stale_rule: STALE_VALUE when the row is older than 61.0 s at t (CARD_E2_V1 rule 5, line 106), stale 1; passes through
+    days: D, and D-1 for OI(u - W) when u - W falls before 00:00 of D (B of D-1 is read directly; no CARRY needed for year rows)
+  - kind: year
+    ref: B1 S01 and B1 S02 (taker buy and taker sell dollars of the 60 s ending at each minute end)
+    card: CARD_B1_V7 (4a44d707) rules 1 to 3, 9, 10, 22 / SETTINGS_B1_V2 rows S01, S02 / MEANING_B1_V4
+    verdict: LIMITS
+    rule_in_force: the year's rows at each minute end m of the window (rows stamped in (m - 60 s, m] and received by m, CARD_B1_V7 rule 1, line 153)
+    stale_rule: >-
+      empty TRADES_HOLE when the coin has no trade in [m - 60 s, m] received by m, THIN_FEED when thin (CARD_B1_V7 rule 9, line
+      161; case E4, line 199); stale true for those two (rule 22, line 174); passes through
+    days: D, and D-1 for the window's minute ends before 00:00 of D (B of D-1 read directly)
+  - kind: year
+    ref: C13 S01 (close, the price of the minute's last trade)
+    card: CARD_C13_V4 (69ff088d) rules 5 to 8 / SETTINGS_C13_V1 row S01 / MEANING_C13_V4
+    verdict: LIMITS
+    rule_in_force: the year's row at each minute end m of the window
+    stale_rule: C13 S01's own empty reasons (NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT, CARD_C13_V4 rule 6, lines 101 to 105) and stale pass through
+    days: D, and D-1 for the window's minute ends before 00:00 of D
+overlaps:
+  - setting: E2 S04
+    kind: other_metric
+    why: 'E2 S04 is the percent change of open interest over 600 s (CARD_E2_V1 rule 8): the numerator''s cousin without the volume; compared in the meaning check'
+per_coin: >-
+  Every coin of D's roster. E2 S02 is the ticker's open interest as polled every few seconds (RESEARCH_TOOLS_V1 4.5): at W = 5 minutes
+  with little volume the poll timing alone can put |P9| over 1. A minute without a trade is not 0 volume in the year: B1 S01, S02 are
+  empty TRADES_HOLE when the coin has no trade in [m - 60 s, m] (CARD_B1_V7 rule 9, line 161), so one quiet minute empties every window
+  that holds it (thin coins lose whole hours of S10). The 1000x coins: open interest and volume in the same contracts, the ratio
+  unchanged.
+time: >-
+  00:00 to 00:59 of D read D-1's rows for S10 (00:00 to 00:04 for S09). The first year day, 10 Sep 2025, has no D-1 in B: S10 empty
+  NO_HISTORY at 00:00 to 00:59, S09 at 00:00 to 00:04. Funding settles and crash minutes (10 Oct 2025) bring large volume and open
+  interest swings; no rule changes with the hour.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S09
+      label: oi_change_over_volume_5m
+      units: share, coins over coins (true value in [-1, 1])
+      value_kind: float
+      decimals: none
+      means: open interest change over the taker coins traded, last 5 minutes
+      never: [a value whose |size| over 1 is a fault of the market (it is the poll timing or the conversion)]
+    - name: S10
+      label: oi_change_over_volume_60m
+      units: share, coins over coins (true value in [-1, 1])
+      value_kind: float
+      decimals: none
+      means: open interest change over the taker coins traded, last 60 minutes
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the latest known_at of the year rows read (every one known by its own as_of <= u); empty rows known_at = u; so known_at <= as_of
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: a read falls before 10 Sep 2025, the year's first day (S10 at 00:00 to 00:59, S09 at 00:00 to 00:04 of 10 Sep 2025)
+    - reason: NO_ROSTER
+      when: the first empty input row (in the formula's order) is NO_ROSTER
+    - reason: NO_FILE
+      when: the first empty input row is NO_FILE
+    - reason: BAD_INPUT
+      when: the first empty input row is BAD_INPUT
+    - reason: NO_VALUE
+      when: E2 S02 empty NO_VALUE at u or u - W
+    - reason: STALE_VALUE
+      when: E2 S02 empty STALE_VALUE at u or u - W (older than 61.0 s), stale 1
+    - reason: TRADES_HOLE
+      when: a minute of the window with B1 S01, B1 S02 or C13 S01 empty TRADES_HOLE (no trade in [m - 60 s, m]), stale 1
+    - reason: THIN_FEED
+      when: a minute of the window with B1 S01, B1 S02 or C13 S01 empty THIN_FEED, stale 1
+    - reason: NO_TRADES
+      when: every input valued and V_W = 0
+    - reason: NO_ROW
+      when: no year row of E2 S02, B1 S01, B1 S02 or C13 S01 for the coin at a minute read (a roster coin the year did not write), as P1 and P11; never read as 0
+  stale_rule: stale = the stale of the year row whose reason empties the value (1 for STALE_VALUE, TRADES_HOLE, THIN_FEED); else 0
+  max_staleness_s: 61
+  window_days: 1
+  no_history: >-
+    The window reaches D-1 for u before 01:00 (S10) or 00:05 (S09); the year's first day 10 Sep 2025 (ADDON_ARCHITECTURE_V3 line 32)
+    has no D-1, so those minute ends are empty NO_HISTORY; full from 11 Sep 2025.
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 positions opened
+    input: 'OI(u - W) = 1,000, OI(u) = 1,030 coins; V_W = 100 coins'
+    answer: P9 = 0.3 exactly
+  - case: E2 over 1 in size
+    input: 'OI 1,000 to 900; V_W = 80'
+    answer: P9 = -1.25, written (no flag; the meaning check counts |P9| over 1)
+  - case: E3 no volume
+    input: 'every input valued, B1 S01 + S02 = 0 at every minute of the window (only trades exactly at m - 60 s); OI 1,000 to 1,002'
+    answer: empty NO_TRADES, stale 0
+  - case: E4 one minute's coins
+    input: B1 S01 = 5,000 and B1 S02 = 5,000 dollars, C13 S01 = 100
+    answer: the minute adds 100 coins to V_W
+  - case: E5 two minutes at two prices
+    input: 'W covers two valued minutes (the rest planted 0 dollars): 10,000 dollars at close 100, then 10,100 dollars at close 101; OI +50'
+    answer: V_W = 100 + 100 = 200 coins; P9 = 0.25 exactly
+  - case: E6 the 60 minute window across midnight
+    input: u = 00:30 of D, W = 60
+    answer: OI(u - W) = E2 S02 at 23:30 of D-1; V_W sums 29 minute ends of D-1 (23:31 to 23:59) and 31 of D (00:00 to 00:30)
+  - case: E7 the 5 minute window across midnight
+    input: u = 00:02 of D, W = 5
+    answer: OI(u - W) = E2 S02 at 23:57 of D-1; V_W sums 23:58, 23:59 of D-1 and 00:00, 00:01, 00:02 of D
+  - case: E8 a quiet minute in the window
+    input: 'S10 at 12:00; B1 S01 empty TRADES_HOLE stale 1 at 11:20 (no trade in [11:19, 11:20])'
+    answer: S10 empty TRADES_HOLE, stale 1, known_at = u; S09 at 12:00 valued if its 5 minutes are whole
+  - case: E9 the year's first day
+    input: u = 00:30 of 10 Sep 2025
+    answer: S10 empty NO_HISTORY; S09 valued (its window 00:26 to 00:30 lies in D)
+unit_tests:
+  - test: U1 (E1, E2, E4, E5)
+    planted: E2 S02, B1 S01, B1 S02, C13 S01 year rows of two coins over the 61 minute ends 10:59 to 11:59, the values of E1, E2, E4, E5
+    expect: S09 and S10 at the planted minute ends 0.3, -1.25, 0.25 within 1e-9 relative; V_W of E4's minute 100 coins
+  - test: U2 (E6, E7)
+    planted: the same rows over 23:00 of D-1 to 00:59 of D (two days of B)
+    expect: S10 at 00:30 and S09 at 00:02 equal the hand sums over exactly 60 and 5 minute ends; no minute end counted twice or left out
+  - test: U3 (E3, E8, E9)
+    planted: a window with zero dollars; a window with one TRADES_HOLE minute; a first-day file with no D-1
+    expect: NO_TRADES stale 0; TRADES_HOLE stale 1; NO_HISTORY at 00:00 to 00:59 for S10 and 00:00 to 00:04 for S09
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per name and coin for a full planted day
+mutants:
+  - mutant: M1 the window [u - W, u] (W + 1 minute ends)
+    caught_by: U1 with 1,000,000 dollars planted at the minute end u - W (V_W changes)
+  - mutant: M2 the dollars not divided by the close
+    caught_by: U1 (E5 gives 50 / 20,100 = 0.0024875622 in place of 0.25)
+  - mutant: M3 the window's dollars over the close at u only
+    caught_by: U1 (E5 gives 50 / (20,100 / 101) = 0.2512437811 in place of 0.25)
+  - mutant: M4 the open interest change over W + 1 minutes
+    caught_by: U1 with E2 S02 at u - W - 1 minute planted 990 (E1 gives 0.4 in place of 0.3)
+  - mutant: M5 an empty minute read as 0 dollars
+    caught_by: U3 (E8 valued in place of empty TRADES_HOLE)
+  - mutant: M6 D-1 not read
+    caught_by: U2 (S10 empty at 00:00 to 00:59)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 00:02, 00:30, 12:10
+      why: both windows across midnight, and an ordinary minute
+    - point: 2025-09-24, all coins, minute ends 00:00, 00:02, 00:30, 12:10
+      why: the same on an early year day
+    - point: 2026-03-08, the coin-minute with the largest |S09| of the day and one coin-minute with S10 empty TRADES_HOLE (the tester picks them from B before the job)
+      why: the poll timing's tail and the quiet-minute rule
+  pass: >-
+    The tester recomputes S09, S10 from B with Fraction on the same inputs, never the builder's code: floats within 1e-9 relative
+    (V2 rule 5), empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'S10: |value| over 1 on under 1 percent of the valued coin-minutes of each day (level proposed; the conversion and the poll timing allow a few, a large share means a unit fault)'
+  report_only:
+    - the share of coin-minutes with |S09| over 1 (if large, the poll timing dominates 5 minutes and S09 gets a never line)
+    - the share of coin-minutes with S10 empty TRADES_HOLE, per coin (the quiet-minute rule on thin coins)
+    - S10 against E2 S04 and B1's taker net (B1 S01 - S02) of the same hour
+conclude:
+  may:
+    - over the last 5 or 60 minutes on Binance, whether the taker volume mostly opened positions (above 0) or closed them (below 0), and roughly what share
+  never:
+    - who opened (longs or shorts; open interest has both sides of every position)
+    - a price direction
+    - an exact share (the coins are converted from dollars at each minute's close, OPEN O1 A)
+readers: none yet
+implementation:
+  how: >-
+    Per coin, the minute grid of D-1's last hour and D: coins per minute = (B1 S01 + S02) / C13 S01, a hole mask from the three
+    inputs; cumulative sums of coins and of holes give V_W and the hole count for every u at once; OI(u) - OI(u - W) by a shift;
+    reasons by masks; no loop over rows or minutes in Python.
+  kernel: 'addon_grid_v2.roll_points(grid, n, how=sum, min_count=n, head=the n - 1 minute ends of D-1 from B) (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 186; ADDON_ARCHITECTURE_V4 9.4): min_count = n keeps the no-hole rule; the head is B''s D-1 rows, not a CARRY'
+  memory_mb: 150
+  seconds_share: 1.5
+data_checks:
+  - what: 'OPEN O1: the volume from B1 dollars over the close (A, applied) or the trades reader''s exact coin amounts (B, a raw read with its raw check, and a quiet minute could be 0 coins there)'
+    who: BED (review), then EDGE1
+  - what: the share of hours S10 loses to TRADES_HOLE on thin coins (24 Sep 2025, 8 Mar 2026); if large, O1 B or a named quiet-minute rule
+    who: the builder (a read-only runner job on B1)

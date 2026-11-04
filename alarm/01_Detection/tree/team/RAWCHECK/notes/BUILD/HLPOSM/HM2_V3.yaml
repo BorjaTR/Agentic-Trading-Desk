@@ -1,0 +1,260 @@
+{
+  "kind": "build_metric",
+  "id": "HM2",
+  "producer": "HLPOSM",
+  "item": "Hyperliquid share of a side liquidated (HL_DATA_LIST C02)",
+  "tier": "BUILD",
+  "name": "Liquidation dollars over prior side open-interest dollars, last60s",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 3,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "A nonnegative turnover ratio, potentially greater than one; not the fraction of old positions liquidated.",
+  "example": "SOL, u = 21:16: HLLIQX S01 summed over its 12 points in (21:15, 21:16] = 1,800,000 dollars of longs force-closed; HM1 S01 at the previous minute end 21:15 = 2,000,000 SOL long, HLPX S01 at 21:15 = 180: open longs 360,000,000 dollars. S05 = 1,800,000 / 360,000,000 = 0.005.",
+  "formula": "For snapshot selection t_k=max(funding_time_us, containing block_time_us); known time=t_k+1s. Age=u-known time;3900s inclusive. This is MODEL_AVAILABLE_AT, not an observed receipt. For coin c and minute end u: L = the sum of HLLIQX S01 over its 5 s points in (u - 60 s, u]; S = the same for HLLIQX S02. S05 = L / (HM1 S01 at u - 60 s x HLPX S01 at u - 60 s). S06 = S / (HM1 S02 at u - 60 s x HLPX S01 at u - 60 s). EMPTY when the denominator is EMPTY or 0.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 row C02"
+  },
+  "inputs": [
+    {
+      "kind": "addon",
+      "ref": "HLLIQX S01, S02",
+      "card": "HLLIQX/HL1_V3",
+      "grid": "5s",
+      "stream": "liquidated dollars by side every 5 s",
+      "rule_in_force": "the 12 points in (u - 60 s, u]",
+      "stale_rule": "HLLIQX's HOLE gives EMPTY HOLE",
+      "days": "D",
+      "verdict": "LIMITS",
+      "waits_for": "Candidate dependency has bounded evidence; independent approval pending",
+      "exists": true,
+      "data_check": "Dependency computed by the same candidate workflow; per-code raw comparisons in the bounded evidence. Independent approval pending."
+    },
+    {
+      "kind": "addon",
+      "ref": "HLPOSM S01, S02 (HM1)",
+      "card": "HLPOSM/HM1_V3",
+      "stream": "the rebuilt open coins at the previous minute end",
+      "rule_in_force": "HM1 at u - 60 s",
+      "stale_rule": "HM1's own",
+      "days": "D; the CARRY of D-1 for u = 00:00",
+      "verdict": "LIMITS",
+      "waits_for": "Candidate dependency has bounded evidence; independent approval pending",
+      "exists": true,
+      "data_check": "Dependency computed by the same candidate workflow; per-code raw comparisons in the bounded evidence. Independent approval pending."
+    },
+    {
+      "kind": "addon",
+      "ref": "HLPX S01",
+      "card": "HLPX/HP1_V3",
+      "grid": "5s",
+      "stream": "the price at the previous minute end",
+      "rule_in_force": "Latest eligible HLPX grid point at or before the required modeled snapshot/minute clock; empty price stays NO_PRICE.",
+      "stale_rule": "HLPX's own; EMPTY gives EMPTY NO_PRICE",
+      "days": "D",
+      "verdict": "LIMITS",
+      "waits_for": "Candidate dependency has bounded evidence; independent approval pending",
+      "exists": true,
+      "data_check": "Dependency computed by the same candidate workflow; per-code raw comparisons in the bounded evidence. Independent approval pending."
+    }
+  ],
+  "overlaps": "none",
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim. Replay snapshot-block fills inclusively through u-1s; missing fills since snapshot invalidate rebuilt stock.",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLPOSM/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S05",
+        "label": "hl_long_liq_to_prior_oi_ratio_60s",
+        "units": "ratio, nonnegative and unbounded",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "dollars of longs force-closed in the last minute over the dollars of longs open a minute ago",
+        "never": [
+          "a share bounded by one",
+          "fraction of the same starting position cohort liquidated"
+        ]
+      },
+      {
+        "name": "S06",
+        "label": "hl_short_liq_to_prior_oi_ratio_60s",
+        "units": "ratio, nonnegative and unbounded",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "the same for shorts",
+        "never": [
+          "a share bounded by one",
+          "fraction of the same starting position cohort liquidated"
+        ]
+      }
+    ],
+    "grid": "minute",
+    "cadence": "minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at=as_of=u; known_at <= as_of on every row. Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim.",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "HOLE",
+        "when": "an input is EMPTY HOLE"
+      },
+      {
+        "reason": "NO_POSITIONS",
+        "when": "the denominator is 0"
+      },
+      {
+        "reason": "NO_PRICE",
+        "when": "HLPX S01 is EMPTY at u - 60 s"
+      },
+      {
+        "reason": "STALE_SNAPSHOT",
+        "when": "HM1 is EMPTY STALE_SNAPSHOT at u - 60 s"
+      }
+    ],
+    "stale_rule": "none (stale = 0 always)",
+    "max_staleness_s": 60,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": "none",
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLPOSM.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        },
+        {
+          "code": "X1.HLPOSM.Q02",
+          "kind": "NUMBER",
+          "meaning": "Source age in seconds; unavailable age is EMPTY NO_SOURCE_AGE"
+        },
+        {
+          "code": "X1.HLPOSM.Q05",
+          "kind": "WHOLE",
+          "meaning": "Active reconstructed account count; unknown stock remains EMPTY"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1 the example",
+      "input": "as in the example",
+      "answer": "S05 0.005"
+    },
+    {
+      "case": "E2 no open shorts",
+      "input": "HM1 S02 = 0 at u - 60 s",
+      "answer": "S06 EMPTY NO_POSITIONS"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1 (E1)",
+      "planted": "the example inputs",
+      "expect": "S05 0.005"
+    },
+    {
+      "test": "U2 (E2)",
+      "planted": "zero shorts",
+      "expect": "S06 EMPTY NO_POSITIONS"
+    },
+    {
+      "test": "U3 (HOLE)",
+      "planted": "an HLLIQX HOLE point in the window",
+      "expect": "S05, S06 EMPTY HOLE"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "M1 the denominator at u instead of u - 60 s (the flush shrinks it)",
+      "caught_by": "U1 (a different turnover ratio)"
+    },
+    {
+      "mutant": "M2 0 for an empty denominator",
+      "caught_by": "U2"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-10-10, BTC and SOL, 20:00 to 23:00 minute ends",
+          "why": "the crash, large shares"
+        },
+        {
+          "point": "2025-10-15, BTC, 09:00 to 12:00 minute ends",
+          "why": "an ordinary day, mostly 0"
+        }
+      ],
+      "pass": "QUANT recomputes from this card's words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read's converted tables, never the builder's code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Valued ratios are nonnegative; do not cap at one.",
+      "Denominator100 and liquidation250 gives2.5."
+    ],
+    "report_only": [
+      "S05 and S06 by month"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "how big the last minute's flush was relative to the open side"
+    ],
+    "never": [
+      "anything after u"
+    ]
+  },
+  "readers": "none yet",
+  "implementation": {
+    "how": "NumPy account-state replay from global native-PERP snapshots through u-1s; prior-state ratios and fixed cohorts; independent next-snapshot reconciliation refuses unexplained error. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_ratio_1m",
+    "memory_mb": 300,
+    "seconds_share": 2,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HM2_V3"
+}

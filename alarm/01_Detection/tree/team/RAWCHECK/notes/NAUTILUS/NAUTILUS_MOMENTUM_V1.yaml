@@ -1,0 +1,284 @@
+# NAUTILUS_MOMENTUM_V1.yaml: the card of the NAUTILUS momentum settings (S26, S27, S28, S29, S30, S31, S32, S33, S34, S35), EDITION 1, edit 3 (METRIC_AUDIT3, 2026-10-18, NR2 of NAUTILUS_REVIEW_WORKPACKAGES_V3 6cbc336659882871;
+# edit 1: group NAUTILUS as the NR1 cards, a name on every setting, S41's open names case E17 and S07 (METRIC_AUDIT2 15:33:23Z); the twins .pre_METRIC_AUDIT3_<stamp> hold the first text.
+# edit 2 (METRIC_AUDIT2 REVIEW 15:37:57Z E2 to E4): value_kind 4 in the columns; the largest kline gaps beside the medians (biases); the counts as 34 settings x the per-setting MATCH line.
+# edit 3 (EDGE1 RULING 3 15:40:56Z; METRIC_AUDIT2 REVIEWS 15:40:01Z, 15:43:31Z): renamed by formula S26 rsi, S28 stoch D, S41 er, S48 atr, S49 rvi with could_build NAUTILUS.CB15 to CB19 (CB9 to CB14 renumbered after NR1's CB1 to CB8); S46, S47 aggregate as EMA_5(t) against EMA_5(t-5); S51 derived_from; S56 means; the 24 Sep volume MISS counted against B1CHECK (job 15997, the edition 2 count; 15996 the first).
+# the smart check of section 0c). Made as BASIC_E2_V1.yaml a0147fa4 / BASIC_C1_V5.yaml 95244119. Computation: nautilus_osc ed3 50355898be2efb74 (tests 83c9bb58def3a959 47 of 47, 7 mutants caught),
+# jobs J15975 (8 Mar, every minute end, with the base), J15976 (24 Sep, every minute end), J15941 (3 days x 5 minute ends, ed1); meaning: meaning_nautilus_osc ed2 ef476c0e22b3516e (tests 61a566c05519d5bc 27 of 27, 3 mutants caught), jobs J15977 (ref, name 8 Mar), J15978 (klines, empty, schema 8 Mar), J15979 (ref, name 24 Sep). Written by team/METRIC_AUDIT3/make_cards_np2_v1.py from the job logs (no number typed).
+group: NAUTILUS
+name: momentum oscillators (nautilus, built on our 1-minute candles)
+summary: 'Ten momentum numbers of NautilusTrader 1.231.0 on our 1-minute candles (C13 close, high, low; the chain from 00:00 of D-2): rsi (0 to 1, EMA_14), stoch K and D (Lane), cci, cmo (Wilder), macd (12, 26, no signal), roc and bias (fractions), psl (percent up closes over 12) and vidya''s |cmo| (0 to 1). Every value Decimal, rounded once to 12 decimals; empty WARMUP, NO_RANGE or NO_MOVE by rule 9. Two RENAMED by RULING 3 (the formula differs from the standard the name calls up): rsi (EMA_14, not Wilder) and stoch D (Lane''s ratio of sums, not the SMA_3 of K).'
+read_as: 'How stretched or how strong the last minutes'' move is, on one coin. Each value equals the card''s formula on the year''s own C13 candles at every coin-minute of 8 Mar 2026 and 24 Sep 2025 (J15975 and J15976: 34 settings x 74,880 coin-minutes on 8 Mar, 34 settings x 73,440 on 24 Sep, 0 MISS). cci, cmo, macd, psl, stoch K and |cmo| are the textbook forms to 1e-8 (J15977 ref). rsi is an RSI with a faster smoothing on 0 to 1: against Wilder''s RSI (0 to 100) ours x 100 is 4.625 points off at the median, 10.360 at p90, 22.739 at most (J15977 name): a 70 / 30 rule on 0.7 / 0.3 fires earlier. stoch D is Lane''s ratio of sums, 0.079 points off TA-Lib''s SMA_3 of K at the median, 37.827 at most. roc and bias are FRACTIONS (0.01 = 1 percent) and roc spans 9 steps for its period 10.'
+conclude:
+  may:
+  - 'how stretched the close is in its 14-candle range (stoch K, D) or against its 20-candle mean (cci, bias)'
+  - 'whether the last 14 moves were mostly up (rsi above 0.5, cmo above 0) and how one-sided (|cmo| S35 near 1)'
+  - 'the fast against the slow average of the close (macd sign) and the 9-step change (roc)'
+  - 'that each value is the card''s formula on our candles: 34 settings x 74,880 coin-minutes (8 Mar) and 34 settings x 73,440 (24 Sep) equal at 12 decimals, the per-setting MATCH lines of J15975, J15976'
+  never:
+  - 'rsi as Wilder''s RSI / 100 (renamed): the EMA_14 smoothing (a = 2/15, not 1/14) moves it 10.360 points at p90, 22.739 at most (J15977 name)'
+  - 'roc or bias as percent: 0.01 is 1 percent; roc as a 10-step change: it is 9 steps (C(t-9))'
+  - 'stoch D as the average of 3 K values: it is the ratio of two 3-candle sums (Lane), 37.827 points apart at most'
+  - 'a value where the year is empty (WARMUP, NO_RANGE, NO_MOVE): never 0, never the last value'
+  - 'a cross-coin comparison of macd: it is in USDT of the coin; use the oscillators (0 to 1, 0 to 100, -100 to 100) across coins'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_NAUTILUS_V4.md (60f66fc848dda3cd; rules 1 to 18, cases N1 to E88)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_NAUTILUS_V2.tsv (e82d7319899be9ea)
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S01 close, S02 high, S03 low, S04 no trade: raw, RELIABLE, LIMITS); the open and the volume: the shared
+    candle base rawcheck/nautilus_candles.py (METRIC_AUDIT2, 0571dec26778f46d) from the same Tardis trade rows as C13, proven row by row against C13 and B1 (job 15946)'
+  producer: testbed/value_audit/code/L0_y52f12/value_audit/code/prod_NAUTILUS_v4.py (2ad9df92f9f4f82f; edition 4 rules)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/NAUTILUS.parquet
+  year_output_columns: name (S01 to S84), coin, as_of_us (the minute end e), value_kind (0 empty, 1 float, 2 int, 4 a decimal with value_f64 and its text), value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'NAUTILUS', settings, coins, moments); rawcheck/nautilus_osc.py year_rows (empty by value_kind only)
+source:
+  vendor: 'none new: built on our 1-minute candles of Binance USDT perpetual trades through Tardis (C13 S01 to S04, MEANING_C13_V4; the open and the volume from the same rows, the
+    candle base)'
+  exchange_stream: trades (Binance USD-M futures trade channel through Tardis.dev)
+  files: '<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<SYM>_<YYYY-MM-DD>.csv.gz (D-2, D-1 and D: the chain of rule 13)'
+  columns: timestamp (the trade time, exchange), local_timestamp (arrival), side, price, amount
+  fields:
+    candle: 'close, high, low of the trades stamped in (e - 60 s, e] and received by e (C13 rules 1, 3, 4); open = the first such row''s price, volume = the sum of the amounts; a
+      minute with no trade is flat at the carried price with volume 0 [proof: CARD_NAUTILUS_V4 rules 1, 2; nautilus_candles job 15946: Tardis C, H, L = C13 at every valued minute]'
+    chain: 'the candles from 00:00 of D-2 up to e, one step per candle; an empty candle (C13 reason) is skipped and every value at that minute end carries the reason
+      [proof: CARD_NAUTILUS_V4 rules 3, 13; case E25; test_nautilus_osc T21]'
+    arithmetic: 'Decimal at 40 digits, each value rounded once to 12 decimals half up [proof: rule 6; nautilus_osc rnd; the year values equal at 12 decimals, jobs 15975, 15976]'
+  latency: 'known_at = the latest C13 known_at of the candles stepped (the latest trade arrival); at a minute end every value is the last full minute (rule 14); max_staleness 60 s'
+reading_rules:
+- 'the chain: the candles from 00:00 of D-2 to e, one step per valued candle; a candle with an empty reason is skipped and every value at that minute end carries the reason (CARD_NAUTILUS_V4 rules 3, 13)'
+- 'the value at a minute end is the last full minute (rule 14); every period counts candles stepped, so after a feed hole a window spans more clock minutes (rule 3)'
+- 'WARMUP while the chain has stepped fewer candles than the Need (rule 8); NO_RANGE, NO_MOVE, NO_VOLUME, NO_SWING for a zero denominator or no swing yet (rules 9, 10): empty is never 0'
+- 'Decimal at 40 digits, rounded once to 12 decimals half up (rule 6); the integers S46, S47, S56, S57, S61 to S63 exact'
+values:
+  units: 'S26 0 to 1, S27 0 to 100, S28 0 to 100, S29 number, S30 -100 to 100, S31 USDT, S32 fraction, S33 fraction, S34 0 to 100, S35 0 to 1'
+  empty: 'C13''s reason (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT), WARMUP, NO_RANGE, NO_MOVE, NO_VOLUME, NO_SWING; value_kind 0 (NaN in value_f64). Never read empty as 0. 8 Mar 2026: S29 NO_RANGE 1, S35 NO_MOVE 12, S41 NO_MOVE 33 of 2,845,440 values (J15978 empty)'
+  stale: 'with C13''s TRADES_HOLE or THIN_FEED (the candle at e empty)'
+  flags: 'the candle''s (DUPLICATE_ROW:<coin>, NO_RATE_BASE:<coin>); none on an empty value'
+interpret:
+  do:
+  - 'how stretched the close is in its 14-candle range (stoch K, D) or against its 20-candle mean (cci, bias)'
+  - 'whether the last 14 moves were mostly up (rsi above 0.5, cmo above 0) and how one-sided (|cmo| S35 near 1)'
+  dont:
+  - 'rsi as Wilder''s RSI / 100 (renamed): the EMA_14 smoothing (a = 2/15, not 1/14) moves it 10.360 points at p90, 22.739 at most (J15977 name)'
+  - 'roc or bias as percent: 0.01 is 1 percent; roc as a 10-step change: it is 9 steps (C(t-9))'
+biases:
+- what: our candle against Binance's kline of the same minute
+  direction: 'either way, rarely (a trade stamped in the last ms received after e, or stamped exactly on the minute end: MEANING_C13_V4, BASIC_C8)'
+  size: 'corr 0.9995 to 1.0000, |gap| median 2.161e-13 to 1.962e-09 over 10 settings, every coin-minute of 8 Mar (the candles are the same minute almost always: C13 against the kline, BASIC_C8); the largest gaps where one candle differs: cci.value max 64.71, stoch.value_k max 50, cmo.value max 22.94, stoch.value_d max 16.67'
+  proof: J15978 klines (our formulas on Binance's OHLCV chain of 6 to 8 Mar against the year, 52 coins, every minute end)
+external_checks:
+- what: the textbook form of each name (TA-Lib's documented definitions, Wilder, Lane, Kaufman, Chande, White; talib itself is not in the analyst venv) coded apart in float64 on the same chain
+  where: team/LAB/code/rawcheck/meaning_nautilus_osc.py ref (every coin-minute of 8 Mar 2026 and 24 Sep 2025, 52 and 51 coins)
+  status: 'MEASURED on every coin-minute of 8 Mar (J15977) and 24 Sep (J15979): equal to 1e-8 for stoch.value_k, cci.value, cmo.value, macd.value, psl.value; the differences named per setting (smoothing, scale, window, sign)'
+- what: our formulas on Binance's own 1 minute klines (OHLCV, data.binance.vision) against the year's values
+  where: <SCRATCH_DISK>/realcheck/outside/binance/klines_1m (runner job J15978)
+  status: 'AGREES: corr 0.9995 to 1.0000, |gap| median 2.161e-13 to 1.962e-09 over 10 settings, every coin-minute of 8 Mar (the candles are the same minute almost always: C13 against the kline, BASIC_C8); the largest gaps where one candle differs: cci.value max 64.71, stoch.value_k max 50, cmo.value max 22.94, stoch.value_d max 16.67'
+tools:
+- what: every setting recomputed from the year's C13 candles (and the candle base's open and volume) at the minute ends asked, the year's value beside, MATCH or MISS
+  run: python3 -B -m rawcheck.nautilus_osc --days D1,D2 --at 0100,0400,1210,1600,2206 | all --families momentum,trend,volvol,swings [--base <dir with CANDLES_<D>.parquet>] --out <dir>
+  where: 'team/LAB/code (nautilus_osc.py ed3 50355898be2efb74, tests 83c9bb58def3a959 47 of 47; runner job: the year store)'
+- what: the textbook forms, the klines, the name claims, the empties, one coin-minute
+  run: python3 -B -m rawcheck.meaning_nautilus_osc schema|ref|klines|name|empty D; look D COIN HHMM
+  where: 'team/LAB/code (meaning_nautilus_osc.py ed2 ef476c0e22b3516e, tests 61a566c05519d5bc 27 of 27; runner job: the year store and the klines)'
+used_by: 'nobody yet (CARD_NAUTILUS_V4 ''Who reads it''): candidates for the fifths (O6) and the labels'
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_NAUTILUS_V4.md (60f66fc848dda3cd)
+  SCOUT: 'testbed/software_scout/NAUTILUS_METRICS_V1.tsv (8342dd7047c24e63: Nautilus 1.231.0''s files and lines per column)'
+  TEXTBOOK: TA-Lib function documentation (RSI, STOCHF, CCI, CMO, MACD, ROC, AROON, PLUS_DM, MINUS_DM, LINEARREG_SLOPE, ATR, TRANGE, OBV); Wilder 1978; Lane; Kaufman 1995; Chande; White (VHF); Klinger
+  KLINES: https://data.binance.vision (USD-M futures klines 1m), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+settings:
+- id: NAUTILUS.S26
+  layer: nautilus
+  side: none
+  window: 14 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'G / (G + L), G and L the EMA_14 (a = 2/15) of the gains and of the losses, starting at the first input; the first candle''s change 0'
+  aliases: rsi.value
+  means: 'the share of the last moves that were up, 0 to 1 (0.5 = balanced); an RSI with a faster, exponential smoothing'
+  name: 'rsi with EMA_14 smoothing (a = 2/15), 0 to 1'
+  renamed_from: rsi.value
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against RSI_wilder_0_100: corr 0.9448, Spearman 0.9369, |gap| median 4.625 p90 10.36 max 22.74, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 0.9391, median 0.9453) (J15977 ref); our formula on Binance klines: corr 0.9999, Spearman 0.9999, |gap| median 3.266e-13 p90 1.211e-06 max 0.2643, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 0.9966, median 1.0000) (J15978); name test: |gap| median 4.625 p90 10.360 max 22.739 points at 74880 coin-minutes (J15977 name)'
+  open: 'renamed (RULING 3): EMA_14 smoothing, not Wilder''s; could_build NAUTILUS.CB15; the 70 / 30 thresholds of Wilder''s RSI do not carry over (x 100 is 10.4 points off at p90)'
+- id: NAUTILUS.S27
+  layer: nautilus
+  side: none
+  window: 14 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '100 x (C - LL_14) / (HH_14 - LL_14); NO_RANGE when HH_14 = LL_14'
+  aliases: stoch.value_k
+  means: 'where the close sits in the range of the last 14 candles, 0 (at the low) to 100 (at the high)'
+  name: 'stochastic K (14)'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against STOCHF_K: corr 1.0000, Spearman 0.9999, |gap| median 8.065e-13 p90 2.775e-12 max 6.202e-11, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 0.9999, |gap| median 8.1e-13 p90 2.8e-12 max 50, same sign 99.99% at 74,880 coin-minutes (per coin corr lowest 0.9995, median 1.0000) (J15978)'
+  open: 'none'
+- id: NAUTILUS.S28
+  layer: nautilus
+  side: none
+  window: 16 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '100 x (the sum of the last 3 (C - LL_14)) / (the sum of the last 3 (HH_14 - LL_14)); NO_RANGE when the 3 ranges sum to 0'
+  aliases: stoch.value_d
+  means: 'the same over 3 candles as a ratio of sums (Lane''s original %D), not the average of the 3 %K'
+  name: 'stochastic D as the ratio of two 3-candle sums (Lane), 0 to 100'
+  renamed_from: stoch.value_d
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against STOCHF_D_sma3_of_K: corr 0.9992, Spearman 0.9991, |gap| median 0.07916 p90 1.337 max 37.83, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 0.9971, median 0.9992) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 5.969e-13 p90 2.089e-12 max 16.67, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 0.9997, median 1.0000) (J15978); name test: |gap| median 0.079 p90 1.337 max 37.827 points at 74880 (J15977 name)'
+  open: 'renamed (RULING 3): Lane''s ratio of sums, not TA-Lib''s SMA_3 of K; could_build NAUTILUS.CB16'
+- id: NAUTILUS.S29
+  layer: nautilus
+  side: none
+  window: 20 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '(TP - SMA_20(TP)) / (0.015 x the mean of the last 20 |TP - SMA_20(TP)|), TP = (H + L + C) / 3, the current SMA in every deviation; NO_RANGE when the mean deviation is 0'
+  aliases: cci.value
+  means: 'how far the typical price sits from its 20-candle mean, in units of 0.015 mean deviations (Lambert''s CCI: 100 is a usual stretch)'
+  name: 'cci (20)'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against CCI: corr 1.0000, Spearman 1.0000, |gap| median 1.79e-09 p90 7.447e-09 max 1.241e-07, same sign 99.86% at 74,879 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 1.962e-09 p90 1.052e-08 max 64.71, same sign 99.85% at 74,879 coin-minutes (per coin corr lowest 0.9999, median 1.0000) (J15978)'
+  open: 'none'
+- id: NAUTILUS.S30
+  layer: nautilus
+  side: none
+  window: 14 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '100 x (G - L) / (G + L), G and L the Wilder_14 (a = 1/14) of the gains and of the losses, starting at the first input'
+  aliases: cmo.value
+  means: 'net up moves over all moves, -100 to 100 (Chande''s momentum oscillator with Wilder smoothing, as TA-Lib)'
+  name: 'cmo (Wilder 14)'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against CMO_wilder_sma_seed: corr 1.0000, Spearman 1.0000, |gap| median 4.654e-13 p90 1.402e-12 max 2.358e-11, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 1.002e-12 p90 0.002464 max 22.94, same sign 99.99% at 74,880 coin-minutes (per coin corr lowest 0.9984, median 1.0000) (J15978)'
+  open: 'none'
+- id: NAUTILUS.S31
+  layer: nautilus
+  side: none
+  window: 26 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'EMA_12(C) - EMA_26(C), each starting at the first close (no signal line)'
+  aliases: macd.value
+  means: 'the fast average less the slow average of the close, in USDT: above 0 the price is above its longer trend'
+  name: 'macd line (12, 26)'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against MACD_sma_seeded: corr 1.0000, Spearman 1.0000, |gap| median 2.547e-13 p90 4.61e-13 max 4.212e-11, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 3.565e-13 p90 9.317e-07 max 0.3849, same sign 99.99% at 74,880 coin-minutes (per coin corr lowest 0.9999, median 1.0000) (J15978)'
+  open: 'none'
+- id: NAUTILUS.S32
+  layer: nautilus
+  side: none
+  window: 10 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '(C - C(t-9)) / C(t-9)'
+  aliases: roc.value
+  means: 'the close''s change over the last 9 steps, as a FRACTION (0.01 = 1 percent); Nautilus''s period 10 holds 10 closes = 9 steps'
+  name: 'change over 9 candles, fraction'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against ROC_pct_10_steps: corr 0.9383, Spearman 0.9146, |gap| median 0.04686 p90 0.1722 max 1.859, same sign 84.93% at 74,880 coin-minutes (per coin corr lowest 0.7902, median 0.9466) (J15977 ref); against ROC_pct_9_steps: corr 1.0000, Spearman 1.0000, |gap| median 2.292e-11 p90 4.458e-11 max 5e-11, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 0.9999, |gap| median 2.308e-13 p90 4.486e-13 max 0.004219, same sign 99.98% at 74,880 coin-minutes (per coin corr lowest 0.9994, median 1.0000) (J15978)'
+  open: 'a fraction over 9 steps (Nautilus''s period 10)'
+- id: NAUTILUS.S33
+  layer: nautilus
+  side: none
+  window: 20 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'C / SMA_20(C) - 1'
+  aliases: bias.value
+  means: 'the close against its 20-candle mean, as a FRACTION (0.01 = 1 percent above)'
+  name: 'close over SMA_20 less 1, fraction'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against BIAS_pct: corr 1.0000, Spearman 1.0000, |gap| median 2.475e-11 p90 4.548e-11 max 8.246e-11, same sign 99.66% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 0.9999, |gap| median 2.592e-13 p90 4.832e-13 max 0.003999, same sign 99.65% at 74,880 coin-minutes (per coin corr lowest 0.9996, median 1.0000) (J15978)'
+  open: 'a fraction, not percent'
+- id: NAUTILUS.S34
+  layer: nautilus
+  side: none
+  window: 12 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '100 x SMA_12(1 when C > C(t-1), else 0); the first candle counts 0'
+  aliases: psl.value
+  means: 'the share of the last 12 candles that closed up, in percent (the psychological line)'
+  name: 'share of up closes over 12, percent'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against PSL: corr 1.0000, Spearman 1.0000, |gap| median 3.268e-13 p90 3.34e-13 max 3.411e-13, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 0.9995, Spearman 0.9995, |gap| median 3.268e-13 p90 3.34e-13 max 8.333, same sign 99.99% at 74,880 coin-minutes (per coin corr lowest 0.9954, median 1.0000) (J15978)'
+  open: 'none'
+- id: NAUTILUS.S35
+  layer: nautilus
+  side: none
+  window: 14 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '|G - L| / (G + L), G and L the SMA_14 of the gains and of the losses; NO_MOVE when G + L = 0'
+  aliases: vidya.cmo_pct
+  means: 'how one-sided the last 14 moves were, 0 (balanced) to 1 (all one way): |Chande''s CMO| / 100 with simple sums (VIDYA''s k); a FRACTION despite cmo_pct'
+  name: 'abs cmo over 14, fraction (vidya k)'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); against abs_CMO_chande_sums: corr 1.0000, Spearman 0.9999, |gap| median 2.109e-13 p90 4.308e-13 max 8.228e-13, same sign 100.00% at 74,868 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15977 ref); our formula on Binance klines: corr 0.9996, Spearman 0.9997, |gap| median 2.161e-13 p90 4.398e-13 max 0.6667, same sign 98.74% at 74,868 coin-minutes (per coin corr lowest 0.9771, median 1.0000) (J15978)'
+  open: 'a fraction 0 to 1 despite the name cmo_pct'
+could_build:
+- id: NAUTILUS.CB15
+  intended: 'Wilder''s RSI (14), 0 to 100'
+  was_name_of: NAUTILUS.S26
+  formula: '100 x G / (G + L), G and L Wilder''s averages (a = 1/14) of the gains and losses, seeded by the first 14'
+  needs: 'the closes (the chain already keeps the gains and losses)'
+  adds: 'the smoothing: ours x 100 is 4.625 points off Wilder''s at the median, 10.360 at p90, 22.739 at most, every coin-minute of 8 Mar (J15977 name); the 70 / 30 flips at named points not counted (no new run, RULING 3)'
+  status: NOT_BUILT
+- id: NAUTILUS.CB16
+  intended: 'TA-Lib''s fast %D: the 3-candle average of %K'
+  was_name_of: NAUTILUS.S28
+  formula: 'SMA_3 of S27'
+  needs: 'S27 (in the year)'
+  adds: 'the form: ours is 0.079 points off at the median, 37.827 at most, every coin-minute of 8 Mar (J15977 name)'
+  status: NOT_BUILT

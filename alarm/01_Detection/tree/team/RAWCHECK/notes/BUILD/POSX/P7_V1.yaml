@@ -1,0 +1,292 @@
+# POSX P7 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P7_V1.md 77ef1fb9) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): ADDON_ARCHITECTURE_V4 b5fcc859 section 4 CARRY wording (00:00 = D-1's 24:00 row), flag FIRST_DAY_NO_CARRY, kernel in_force (9.4); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): the 5 s grid (BUILD_ITEMS_V4 9d424de3 line P7; ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4;
+# build_register 5a7144a3): the mid now comes from the raw book_ticker by C13 S05's own rules at every 5 s point (the year's C13 S05 is
+# a minute group and would repeat one number 12 times); C13 S05 and E3 S01 are read only for the raw checks at the minute ends.
+# Edition 4 (METRIC_AUDIT2, 18 Oct 2026): kernel cites to addon_grid_v2 85c8ece1 in_force (the mid by CARD_C13_V4 rules 9, 11, 12; the index by arrival, CARD_E3_V1 rules 1, 3, 5); both data checks closed (the 00:00:00.000000 row by ADDON_ARCHITECTURE_V4 edit 3 section 4, planted test U7; the mid kernel by addon_grid_v2 K2); values unchanged
+# Edition 5 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P7 fixes: X8 (the numerator exact in integers, one division), the bad mask is the reader's bad only (a row lacking a field is not bad), a bad book row (E11) and a bad ticker row (E12) planted with mutants, X3a (E14); nits: reason order, D-1's file status in the CARRY, the U7 ticker case, memory unmeasured, X7 (Binance in name, label, conclude); X2 (E13), X4 wording; BED G1: no RAW_DIFFERS (E10, U5)
+# Edition 6 (METRIC_AUDIT2, 18 Oct 2026): no flag on an empty row (CARD_B1_V7 rule 18 and CARD_C13_V4 rule 7: an empty value carries no flag; REVIEW_LEAD_EDGE1_V1 6.2 for V4 edit 4; METRIC_AUDIT2's own FF found on FLOWX): FIRST_DAY_NO_CARRY dropped, the first year day's reads that need D-1's missing file are empty NO_FILE; values unchanged
+# Edition 7 (METRIC_AUDIT2, 18 Oct 2026): TREE's FIX CHECK POSX (REVIEW_LEAD_TREE_POSX_V1 edc52324): E13's stampless book row never stands and raises no flag (CARD_C13_V4 rule 12; the year's prod_C13_v3 50cb8805 line 142): +100; U8; M12 now 'allowed to stand', M14 a flag on it; U7's second run expects 0.0. Other values unchanged
+# Signed by BED's REVIEW OK of edition 7, 2026-10-18T19:57:45Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P7
+producer: POSX
+item: 'instant premium, book mid against index (E3.CB1) (BUILD_ITEMS_V4 9d424de3 line P7, every 5 s)'
+tier: BUILD
+name: instant premium of the Binance USDT-M perpetual, its book mid against Binance's spot index, bp of the index, every 5 s
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 7
+  signed: true
+  signed_by: 'BED 2026-10-18T19:57:45Z'
+means: >-
+  How far the coin's perpetual stands above (premium) or below (discount) its spot index at each 5 s point (minute ends included),
+  in basis points of the index, taken from the order book's mid, not from Binance's smoothed mark (that is E3 S01, the mark premium).
+example: >-
+  Book mid 101, index 100: +100 bp. Mid 99.5, index 100: -50 bp. Mid 101 with the index at 101.2: -5000 / 253 = -19.7628458498 bp,
+  where Binance's own premium index would read 0 (the index lies inside the impact bid 100.5 and impact ask 101.5).
+formula: >-
+  P7(u) = 10,000 x (mid(u) - index(u)) / index(u) at every 5 s point u of D, float64, decimals none (V2 rule 4.2), computed exactly:
+  mid and index as the readers' integers brought to one common scale, the numerator 10,000 x (mid - index) taken exactly in integers,
+  then one float division by the index (a float difference of two close prices fails rule 4.5's 1e-9 relative near 0:
+  REVIEW_LEAD_EDGE1_V1 X8). mid(u) = (best bid + best ask) / 2, exact, of the top in force at u by CARD_C13_V4 69ff088d rules 9 to 12 (lines 108 to 111) applied at u: the last
+  good row of the coin's book_ticker file, in file order, stamped at or before u and received by u (read only through
+  prod_reader_book_ticker_v2); BOOK_HOLE (stale) when no row stands at u or the row in force was stamped more than 30 s before u; a
+  bad row (the reader's bad) never stands and the earlier good row does, flagged SKIPPED_BAD_ROW (rule 12); a book row with no stamp
+  (t = arr = -1, prod_reader_book_ticker_v2 lines 18, 135: the reader's why 2, a bad row) never stands and raises no flag (CARD_C13_V4
+  rule 12; the year's prod_C13_v3 50cb8805 line 142 keeps only rows with t >= 0 and arr >= 0, for the row in force and for the skip flag). At a minute end this is the year's C13 S05 (raw check d). index(u) = index_price of the row of CARD_E3_V1 rule
+  1 (line 87): the last good row of the coin's Binance derivative_ticker received by u that carries both mark_price and index_price
+  (one markPrice message sets both, Q-M1), read only through prod_reader_derivative_ticker_v2 (columns index_price, mark_price: lines
+  39 to 40), by CARD_E3_V1 rules 2 to 6 (lines 88 to 92): NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE in that order, the level 61.0 s,
+  an age of exactly 61.0 s not over it; a bad ticker row later in the file than the row read and received by u makes the read
+  BAD_INPUT (rule 3), while a good row that merely lacks mark_price or index_price is not bad (the bad mask is the reader's bad only).
+  Reason order: NO_ROSTER; the mid's (NO_FILE, BOOK_HOLE); then the index read's (NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE). A
+  stream's file of D missing (or only .part) gives NO_FILE at every point of D, 00:00:00 included even when D-1's file is there
+  (phase B sets that point: the year reads D's file at 00:00, X3a). u =
+  00:00:00 of D is D-1's 24:00:00 point, computed by POSX of D-1 and handed in X1/carry/POSX/<D-1>.npz (ADDON_ARCHITECTURE_V4 section
+  4); for 00:00:05 to 24:00:00 a D file with no row standing yet leaves in force the CARRY's rows in force at 24:00 of D-1. The raw
+  checks (a), (d) name a differing coin-minute and refuse the seal; they never empty P7 (BED G1).
+source:
+  kind: ours
+  ref: >-
+    MEANING_E3_V2 6c805d28 line 35, could_build E3.CB1 'the instant basis: (C13 S05 book mid - index in force at e) / index x 10,000';
+    RESEARCH_TOOLS_V1 aad3cc38 section 4.4. Reference only, another quantity: Binance's premium index uses the impact bid and ask
+    against the index, is 0 inside the impact spread and is sampled every 5 s (Binance funding FAQ; RESEARCH_TOOLS_V1 4.4).
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: 'Binance USDT-M book_ticker (book_ticker_<SYM>_<day>.csv.gz), the year''s reader, the pack shared with COST and BOOKX (ADDON_ARCHITECTURE_V4 9.3 rule 1)'
+    rule_in_force: >-
+      the last good row in file order stamped at or before u and received by u (CARD_C13_V4 rule 9, line 108); its arrival is the
+      mid's known_at (rule 13, line 112)
+    stale_rule: 'BOOK_HOLE, stale 1, when no row stands at u or the row in force was stamped more than 30 s before u (CARD_C13_V4 rule 11, line 110)'
+    days: >-
+      D (u = 00:00:05 to 24:00:00 from D's file) and THE CARRY of D-1 (X1/carry/POSX/<D-1>.npz): D-1's 24:00:00 rows (D's 00:00:00
+      rows of S06), the book row in force at 24:00 of D-1, the rows not in force at 24:00 (max(t, arr) > 24:00), the latest stamp read
+      and D-1's file status (files are cut by arrival, X4); the first year day reads 9 Sep 2025's file once (if it is missing, the reads that need it are empty NO_FILE by the year's file rule, and no flag is written on an empty row: CARD_B1_V7 rule 18, REVIEW_LEAD_EDGE1_V1 6.2)
+  - kind: reader
+    ref: prod_reader_derivative_ticker_v2
+    exists: true
+    stream: >-
+      Binance USDT-M derivative_ticker (derivative_ticker_<SYM>_<day>.csv.gz, store binance-futures), the year's own reader
+      (day_build_v58 bcaa5140 RDIR line 457, PACK_PLAN line 463)
+    rule_in_force: the last good row received by u carrying both mark_price and index_price (CARD_E3_V1 rule 1, line 87)
+    stale_rule: older than 61.0 s at u gives STALE_VALUE, stale 1 (CARD_E3_V1 rule 5, line 91)
+    days: >-
+      D (u = 00:00:05 to 24:00:00 from D's file) and THE CARRY of D-1: per coin the ticker row in force at 24:00 of D-1 (index_price,
+      mark_price, arrival), the rows not in force at 24:00 (max(t, arr) > 24:00), the latest stamp read and D-1's file status (files
+      are cut by arrival, X4); the first year day reads 9 Sep 2025's file once
+  - kind: year
+    ref: C13 S05 (book mid), read only for raw check (d) at the minute ends
+    card: CARD_C13_V4 (testbed/value_audit/registers, 69ff088d) rules 9 to 13 / SETTINGS_C13_V1 row S05 / MEANING_C13_V4
+    verdict: LIMITS
+    rule_in_force: the year's row at each minute end of D
+    stale_rule: C13 S05's own (30 s, CARD_C13_V4 line 77)
+    days: D
+  - kind: year
+    ref: E3 S01 (mark premium), read only for raw check (a) at the minute ends
+    card: CARD_E3_V1 / MEANING_E3_V2
+    verdict: CLEAN
+    rule_in_force: the year's row at each minute end of D
+    stale_rule: E3 S01's own (61.0 s, CARD_E3_V1 line 91)
+    days: D
+overlaps:
+  - setting: E3 S01
+    kind: other_metric
+    why: >-
+      E3 S01 is the mark premium (10,000 x (mark - index) / index, CARD_E3_V1 rule 7), Binance's smoothed mark against the same index
+      row: another quantity, 0.1 to 0.9 bp apart on BTC, ETH and 4.6 to 8.3 bp on CRV, ASTER, DASH at the median, sign agreeing 91 to
+      97 percent (MEANING_E3_V2.md line 7, job 15788). The meaning check compares them; never a copy.
+per_coin: >-
+  Every coin of D's roster by its Binance symbol (1000PEPE stays 1000PEPE, CARD_E3_V1 rule 13). Thin coins: the mid moves by the
+  tick, so P7 jumps by one tick over the price (CRV, ASTER, DASH: 4.6 to 8.3 bp from the mark premium, MEANING_E3_V2.md line 7). A wide
+  spread puts the mid away from the last trade; an empty book side or a silence over 30 s empties the mid (BOOK_HOLE). A coin with
+  no derivative_ticker or book_ticker file: empty NO_FILE.
+time: >-
+  Funding settles (00:00, 08:00, 16:00 UTC; every 4 h for 4 h coins): the premium drives the funding rate (Binance FAQ), so P7 often
+  moves before a settle. The index changes about once a second on Binance's markPrice stream and the book many times a second, so the
+  5 s points differ from each other. 00:00:00 of D is D-1's 24:00:00 point from the CARRY. Crash minutes (10 Oct 2025) can empty the
+  mid (BOOK_HOLE) or stale the index (a ticker silence over 61.0 s).
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S06
+      label: bn_instant_premium_bps
+      units: bp of the index (1 bp = 0.01 percent)
+      value_kind: float
+      decimals: none
+      means: the book mid against Binance's spot index at each 5 s point, bp of the index
+      never: [Binance's mark premium (E3 S01), Binance's premium index (impact prices, 5 s samples), a funding forecast, Hyperliquid's premium]
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the later of the book row's arrival and the index row's arrival (both received by u); empty rows known_at = u; so
+    known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: the coin not in D's roster, or no roster file for D's week
+    - reason: NO_FILE
+      when: the coin's book_ticker or derivative_ticker file of D (or D-1's for the first year day) missing or only a .part file (every point of D, 00:00:00 included, X3a)
+    - reason: BOOK_HOLE
+      when: no book row stands at u, or the row in force was stamped more than 30 s before u (CARD_C13_V4 rule 11), stale 1
+    - reason: BAD_INPUT
+      when: a ticker file the read touches cannot be read whole; or a bad ticker row later in the file than the row read and received by u (CARD_E3_V1 rule 3)
+    - reason: NO_VALUE
+      when: no good ticker row carrying both mark and index received by u in D's file and the CARRY
+    - reason: STALE_VALUE
+      when: the index row older than 61.0 s at u, stale 1
+  stale_rule: stale = 1 with BOOK_HOLE or STALE_VALUE; else 0
+  max_staleness_s: 61
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: SKIPPED_BAD_ROW
+      when: a bad book row stamped and received by u comes after the row in force in the file (CARD_C13_V4 rule 12)
+edge_cases:
+  - case: E1 a premium
+    input: 'book row in force bid 100.9, ask 101.1 (mid 101); index 100'
+    answer: P7 = +100 exactly
+  - case: E2 a discount
+    input: mid 99.5; index 100
+    answer: P7 = -50 exactly
+  - case: E3 the index inside the impact spread
+    input: mid 101; index 101.2 (impact bid 100.5, impact ask 101.5, not read)
+    answer: P7 = -5000 / 253 = -19.7628458498 (exact fraction; Binance's premium index would be 0)
+  - case: E4 a small premium with many digits
+    input: mid 300.001; index 300
+    answer: P7 = 1 / 30 = 0.0333333333 (exact fraction, written in full; 4-decimal rounding would give 0.0333)
+  - case: E5 the 61.0 s level
+    input: E1's prices; the index row received 61.0 s before u, then again with it received 61.000001 s before u
+    answer: valued +100 at 61.0 s; empty STALE_VALUE, stale 1, known_at = u at 61.000001 s
+  - case: E6 the book's 30 s level
+    input: 'u = 12:10:00; the book row in force stamped 12:09:29.999999 (30.000001 s before u); a fresh index row'
+    answer: P7 empty BOOK_HOLE, stale 1, known_at = u; with the row stamped 12:09:30 exactly, valued
+  - case: E7 the CARRY at 00:00:00
+    input: 'D-1''s 24:00:00 point: book row in force (bid 100.9, ask 101.1) stamped and received 23:59:50, ticker row received 23:59:40 with index 100'
+    answer: P7(00:00:00 of D) = +100, known_at 23:59:50 of D-1, handed in the CARRY
+  - case: E8 a 5 s point between minute ends
+    input: 'E1 at 12:10:00; a book row stamped 12:10:02, received 12:10:03 (bid 101.9, ask 102.1); the index still 100'
+    answer: P7(12:10:00) = +100; P7(12:10:05) = +200, known_at 12:10:03 (a minute value repeated 12 times would give +100)
+  - case: E9 a row stamped after u, received by u
+    input: 'u = 12:10:05; E8''s row in force; a book row stamped 12:10:05.2, received 12:10:04.9 (clock skew) with bid 102.9, ask 103.1'
+    answer: P7(12:10:05) = +200 (the skew row does not stand at u, CARD_C13_V4 rule 9); P7(12:10:10) = +300
+  - case: E10 the raw check fails on D
+    input: the mid at one minute end of D differs from the year's C13 S05; or the re-read's E3 S01 differs from the year's
+    answer: P7 written as computed; the coin-minute named in MANIFEST_X1_<D>_POSX.tsv with both values; the day not sealed (BED G1)
+  - case: E11 a bad book row (CARD_C13_V4 rule 12)
+    input: 'u = 12:10:00; book rows (12:09:50, bid 100.9, ask 101.1) good, then (12:09:55, crossed: bid 101.2, ask 101.0) bad; index 100'
+    answer: P7 = +100 from the earlier good row, flag SKIPPED_BAD_ROW, stale 0
+  - case: E12 a bad ticker row (CARD_E3_V1 rule 3)
+    input: 'u = 12:10:00; mid 101; ticker rows (12:09:40, index 100) good, then (12:09:50, index not a number) bad, received by u'
+    answer: P7 empty BAD_INPUT, stale 0, known_at = u; a good row at 12:09:50 carrying mark_price only (no index) instead gives +100 (not bad)
+  - case: E13 a book row with no stamp (X2)
+    input: 'book rows (12:09:50, bid 100.9, ask 101.1), then a row with t = arr = -1 (bid 101.9, ask 102.1) next in the file; index 100'
+    answer: 'the stampless row is bad (why 2) and never stands, with no flag (CARD_C13_V4 rule 12; prod_C13_v3 line 142): the 12:09:50 row stands, P7(12:10:00) = +100 (mid 101, index 100)'
+  - case: E14 D's ticker file missing, D-1's there
+    input: the coin's derivative_ticker file of D missing; D-1's there
+    answer: P7 empty NO_FILE at all 17,280 points, 00:00:00 included (X3a), stale 0
+unit_tests:
+  - test: U1 (E1 to E4)
+    planted: a book_ticker file and a derivative_ticker file (read through the readers in a sandbox) for four coins at three 5 s points
+    expect: P7 floats 100.0, -50.0, -19.76284584980237 (the float of -5000/253), 0.03333333333333333 (the float of 1/30) within 1e-9 relative; stale 0
+  - test: U2 (E5, E6)
+    planted: an index row received 61.0 s before u and one 61.000001 s before u; book rows stamped 30.000001 s and 30 s before u
+    expect: valued at 61.0 s; empty STALE_VALUE stale 1; BOOK_HOLE stale 1 at 30.000001 s; valued at 30 s; known_at = u on the empties
+  - test: U3 (E7)
+    planted: D-1's files ending as E7 and D's first rows at 00:00:07; phase A of D-1 then the assembly of D
+    expect: P7(00:00:00 of D) = 100.0 from the CARRY, known_at 23:59:50 of D-1; P7(00:00:05) the same row in force (age 15 s); P7(00:00:10) from D's rows
+  - test: U4 (E8, E9)
+    planted: E8's and E9's book rows
+    expect: 100.0 at 12:10:00, 200.0 at 12:10:05, 300.0 at 12:10:10
+  - test: U5 (E10)
+    planted: a planted year C13 S05 differing at one minute end; then a planted year E3 S01 differing at one minute end
+    expect: P7 written as computed in both runs; the manifest line with both values; the seal refused
+  - test: U8 (E11 to E14)
+    planted: the rows of each case, each coin alone
+    expect: 'E11 100.0 with SKIPPED_BAD_ROW; E12 BAD_INPUT (and 100.0 for the mark-only row); E13 100.0 with no flag; E14 NO_FILE at 17,280 points'
+  - test: U6 the row stamps
+    planted: U1 to U5
+    expect: every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 17,280 rows per coin for a full planted day; the minute-end rows equal a minute-grid run
+  - test: U7 the row at exactly 00:00:00.000000 (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4)
+    planted: 'D''s book_ticker with a good row stamped and received at exactly 00:00:00.000000 (bid 101.9, ask 102.1) after the CARRY''s row in force (mid 101); index 100; a second run with the book from the CARRY (mid 101) and a ticker row of D at exactly 00:00:00.000000 with index 101'
+    expect: 'P7(00:00:00) = 200.0 (D''s phase B adds the row, V4 edit 3 section 4), not 100.0; the second run P7(00:00:00) = 0.0 (mid 101 against D''s index 101 at 00:00:00.000000), not 100.0 (the CARRY''s index 100)'
+mutants:
+  - mutant: M1 mark in place of mid (the mark premium)
+    caught_by: U1 with a planted mark 101.1 against index 100 (110 in place of 100)
+  - mutant: M2 divided by the mid in place of the index
+    caught_by: U1 (E2 gives -50.2512562814 in place of -50)
+  - mutant: M3 Binance's impact premium (impact bid and ask against the index)
+    caught_by: U1 (E3 gives 0 in place of -19.7628458498)
+  - mutant: M4 the 61.0 s level read as strict (exactly 61.0 s stale)
+    caught_by: U2 (empty STALE_VALUE in place of 100 at 61.0 s)
+  - mutant: M5 rounded to 4 decimals (E3's precision kept)
+    caught_by: U1 (E4 gives 0.0333 in place of 0.0333333333, a move of 1e-3 relative)
+  - mutant: M6 the CARRY not read
+    caught_by: U3 (00:00:00 empty NO_VALUE in place of 100)
+  - mutant: M7 the year's minute C13 S05 used at the 5 s points
+    caught_by: U4 (100 at 12:10:05 in place of 200)
+  - mutant: M8 the book row in force by arrival only (a row stamped after u stands)
+    caught_by: U4 (E9 gives 300 at 12:10:05 in place of 200)
+  - mutant: M9 a bad book row stands (C13 rule 12 dropped)
+    caught_by: U8 (E11 gives +110 from the crossed mid 101.1 in place of +100)
+  - mutant: M10 a later bad ticker row ignored (CARD_E3_V1 rule 3 dropped)
+    caught_by: U8 (E12 gives +100 in place of BAD_INPUT)
+  - mutant: M11 a row lacking index counted as bad
+    caught_by: U8 (E12's mark-only row gives BAD_INPUT in place of +100)
+  - mutant: M12 a stampless book row allowed to stand (at the row before's stamp and arrival)
+    caught_by: U8 (E13 gives +200 in place of +100)
+  - mutant: M14 a stampless book row raising SKIPPED_BAD_ROW
+    caught_by: U8 (E13 carries the flag)
+  - mutant: M13 the CARRY's 00:00:00 point kept when D's file is missing
+    caught_by: U8 (E14 gives a value at 00:00:00 in place of NO_FILE)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, the 5 s points 00:00:00 to 00:00:55, 07:59:00 to 07:59:55, 12:10:00 to 12:10:55
+      why: the CARRY at 00:00:00, the last minute before a settle, an ordinary minute, at every 5 s point
+    - point: 2025-09-24, all coins, the same 5 s points
+      why: the same on an early year day
+    - point: 2026-03-08, BTCUSDT and CRVUSDT, the 12 points of the minute of the day's widest D2 spread of each (the tester picks it from D2 before the job)
+      why: a liquid and a thin coin at a wide book
+  pass: >-
+    The tester recomputes P7 from the raw book_ticker and ticker read through the same readers, with Fraction, never the builder's
+    code: floats within 1e-9 relative (V2 rule 5), empty reasons, stale and known_at equal; at the minute ends the mid equals the
+    year's C13 S05. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'On 2026-03-08, the sign of P7 agrees with E3 S01 on 85 percent or more of the minute-end points where both are valued (J15788 measured 91 to 97 percent, MEANING_E3_V2.md line 7; level proposed)'
+    - 'On 2026-03-08, the median |P7 - E3 S01| of BTCUSDT and ETHUSDT at the minute ends is under 2 bp (J15788 0.1 to 0.9 bp; level proposed): a larger gap means a definition fault, not a new meaning'
+  report_only:
+    - the median |P7 - E3 S01| per coin on both days (thin coins expected near 4.6 to 8.3 bp)
+    - the share of 5 s points whose value differs from the minute end before (how much the 5 s grid adds)
+    - P7 against Binance's premium index klines (held to Jul 2026, HANDOVER_EDGE1_V103 line 41), a reference only, another quantity
+conclude:
+  may:
+    - how far the Binance perpetual's book stood above or below Binance's spot index at a 5 s point, in bp of the index
+    - a coin against its own history of P7, and against the mark premium E3 S01 (how far Binance's smoothing moves it)
+  never:
+    - Binance's mark premium or its premium index (other quantities, MEANING_E3_V2.md line 7)
+    - a funding forecast (funding uses the 8 h average of the impact premium, Binance FAQ)
+    - Hyperliquid's premium or what a Hyperliquid position pays (another venue)
+    - a 1 to 2 bp move on a thin coin as a real move (one tick is several bp there)
+readers: none yet (P8 reads it in the same producer)
+implementation:
+  how: >-
+    Per coin, the book pack's good rows (shared with COST and BOOKX) and the ticker pack's good rows with both mark and index; the
+    row in force at each of the 17,280 points by np.searchsorted (book on stamp and arrival with the 30 s stamp level, ticker on
+    arrival with the 61.0 s level), the CARRY's rows first; one vectorised expression; reasons by masks; no loop over rows or points in
+    Python. Each pack is read once per day (ADDON_ARCHITECTURE_V4 9.3 rule 1); the raw checks take the minute-end columns.
+  kernel: >-
+    addon_grid_v2.in_force (team/BED/seats/EDGE1/proposals/addon/addon_grid_v2.py 85c8ece1 line 68; ADDON_ARCHITECTURE_V4 9.4) twice: for the mid in_force(t, arr, mid, good, u, cap 30 s),
+    the year's row in force by CARD_C13_V4 rules 9, 11, 12 (eff = max(t, arr) <= u, file order, fresh_stamp on u - t, skipped_bad the
+    SKIPPED_BAD_ROW flag), shared with COST K1; for the index in_force(t = arr, arr, index, good = a good row carrying mark and index, bad = the reader's bad only, u, cap 61.0 s),
+    CARD_E3_V1 rules 1 and 5 by arrival (age u - known_at), skipped_bad read as BAD_INPUT (CARD_E3_V1 rule 3)
+  memory_mb: 600
+  memory_note: P7's own arrays beyond the shared book and ticker packs (BTC's book_ticker is 27.1 M rows a day, peak 2 GB with v2, EDGE1 17:49:00Z); unmeasured, T5 measures
+  seconds_share: 6
+data_checks: none

@@ -1,0 +1,173 @@
+# BASIC_A2_V2.yaml: the card of the basic settings of A2 liq_breadth (BED, 2026-10-18, BR4 = WP4 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8).
+# EDITION 2 = edition 1 (BASIC_A2_V1.yaml 93920dca2b71c416, kept; the owner's review OK, EDGE1 14:12:22Z) with the owner's copies rule as
+# BASIC_C1_V5 95244119: the 4 .strict_off copies are no rows of their own, read as the year's ACCEPTED cross-check (one reading rule, one
+# never line). No other change but the rewordings that rule needs: the summary's last sentence (V2 lines 16, 17), the third may line (line
+# 30: '.coverage equals the roster' for '.strict_off has a value') and the strict field (line 57: 'the copy').
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR4 (hb/EDGE2.txt 14:31:04Z): (1) the count from the liquidation files labelled
+# a recompute from our own source in read_as, the 4 meaning proofs and external_checks (not an outside record); (2) the outside record:
+# Coinalyze daily totals per coin (MEANING_A1_V4, EDGE2 jobs 15739, 15740), daily only; (3) 0.50 dollars 'summed in the window' (A1 rule
+# 2 sums, then rounds once); (4) this header lists the V2 rewordings; (5) the .coverage proofs cite J15849 (min 49, median 51) and J15840
+# (why coins are out); A1's verdicts by setting (S03, S04 LIMITS; S08, S09 CLEAN; LAYER_REGISTER_V19 b38bf075) at both places.
+# Made the way BASIC_C8_V3 was (METRIC_REVIEW_METHOD_V1 da211e1d section 5; the owner's rename rule, 14:1x Berlin; conclude, 15:0x Berlin).
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py (edition 5 6223b1ad) checks it and writes .md, .flat.jsonl, .agent.jsonl.
+# Layer of every setting here: basic (a count of roster coins over a proven raw value, A1). S03, S04 (a z against 6 hours of counts) and
+# their variants (.w60_off, .e_inside_off, .n1_off, .own_roster_off, .flat0_off) are our rules (WORKPACKAGES_V3 BR4 'Leave'): not in this card.
+
+group: A2
+name: liq_breadth, how many roster coins had liquidations (basic, built on A1)
+summary: >-
+  Four counts of the week's roster coins, each from A1's dollars of the coin at the same moment: S01 the coins with long liquidations
+  (longs forced out, forced selling) in the 30 s ending at e, S02 with short liquidations, both every 30 s; S05 and S06 the same over the
+  60 s ending at each minute end. A coin counts when A1's value, its dollars of the side summed in the window and rounded once (A1 rule
+  2), is 1 dollar or more (0.50 dollars or more summed, exact).
+  Beside each: .coverage, the roster coins A1 could see at e. The year also writes .strict_off copies (the same count, empty unless every
+  roster coin is seen): its accepted cross-check, not metrics of their own.
+read_as: >-
+  How wide forced selling or buying is right now across the roster. Counted again from the liquidation files themselves (not from A1's
+  values; a recompute from our own source, not an outside record) it is the coins seen with 0.50 dollars or more of the side summed in the
+  window at 100% of the steps of 8 Mar 2026 and 24 Sep 2025 (J15872, J15873 a2). Against the plain words 'coins with a liquidation' it is
+  equal at 99.72% to 99.93% of steps: a coin whose rows of the window sum to under 0.50 dollars (dust) is not counted, at most 5 coins (24 Sep 17:33: 3 against 8). The renamed names say so. A1 is a floor in
+  dollars (Binance sends the last liquidation of each coin each second), but a count loses little to it: a coin with any liquidation in a
+  second has a print. Breadth reaches the whole roster: 51 of 52 coins in 30 s and 52 in a minute on 8 Mar, 51 of 51 on 24 Sep.
+
+conclude:
+  may:
+    - "how many roster coins had long (short) liquidations summing to 0.50 dollars or more, published in the last 30 s (S01, S02) or the last minute (S05, S06), among the coins A1 could see (.coverage)"
+    - "that forced selling or buying was broad (many coins at once) or narrow (one or two), on the coins seen"
+    - "how many roster coins A1 could see at e (.coverage); every roster coin was seen when .coverage equals the roster"
+  never:
+    - "that a coin had no liquidation because it is not counted: a coin whose rows of the window sum to under 0.50 dollars is left out (up to 5 coins, 24 Sep 2025 17:33, J15873), a coin not seen is not counted (.coverage), and a print received after e counts only at the next step"
+    - "how many dollars were liquidated: a count says nothing of size (read A1)"
+    - "the breadth of all of Binance: the roster coins seen only (52 and 51 on these days)"
+    - "a copy (.strict_off) as a metric of its own: it is the year's cross-check of the same count on a full roster; read the four counts and their coverages"
+    - "anything from S03, S04 (the z: our rules) or their variants (not in this card)"
+
+where:
+  card: testbed/value_audit/registers/CARD_A2_V6.md 72aa3914fea654d6 (rules 1 to 22, part 2 variants V1 to V8; edition 6, CLK 6 Oct 2026)
+  settings_register: testbed/value_audit/registers/SETTINGS_A2_V3.tsv 7e98f965a56c7deb
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6 (A1 S03, S04: raw, LIMITS; A1 S08, S09: raw, CLEAN (LAYER_REGISTER_V19 b38bf075); A1 a floor in dollars, one print per coin per second; closed with the owner, LAYER_REGISTER_V7)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (A2 S01, S02, S05, S06 basic, NOT_CHECKED before this card; S03, S04 our rules)"
+  producer: "testbed/value_audit/code prod_A2_v5.py 754a40ba11fd6248 (CARD_A2_V6 part 5, CLK 6 Oct 2026), reading A1's day call of D and D-1"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A2.parquet
+  year_output_columns: "name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 .strict_off, S03, S04 .e_inside_off, .flat0_off, .n1_off, .own_roster_off, .w60_off; J15840 schema), coin (MARKET), as_of_us (S01 to S04 every 30 s: 2,880 a day; S05, S06 1,440), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_a2.py year(D, 'A2', names) or ours.at(D, 'A2', settings, ['MARKET'], moments)"
+
+source:
+  vendor: "Binance USD-M futures through Tardis, by way of our A1 (raw)"
+  exchange_stream: "forceOrder (liquidation snapshots: the last liquidation of each symbol each second), USDT and USDC contracts"
+  files: "A1's own rows of D and D-1 (the year output A1.parquet); A1 reads <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/liquidations_<SYM>_<YYYY-MM-DD>.csv.gz and trades_<SYM>USDT_ for its seen state"
+  columns: "A1 S03, S04 (30 s long and short dollars at every 30 s step), A1 S08, S09 (60 s at every minute end): each a whole number of dollars or empty with its reason"
+  fields:
+    seen: "a coin is seen at e when its A1 value at e is not empty; a coin not seen is neither counted nor in the coverage [proof: CARD_A2_V6 rule 3; basic_a2 tests T1, T7; A2_STAMPS_V1]"
+    counts: "a seen coin counts when its A1 value is 1 dollar or more (its dollars of the side summed in the window, 0.50 or more exact before A1's one rounding, A1 rule 2); 0 when coins are seen and none counts [proof: CARD_A2_V6 rules 4, 7; basic_a2 T1, T5; J15872, J15873 a2 (a recompute from our own source): equal to the coins with 0.50 dollars or more summed in the liquidation files at 100% of steps]"
+    empty: "no coin seen: empty with the coins' common reason, else ALL_COINS_EMPTY; coverage 0 [proof: CARD_A2_V6 rule 8; basic_a2 T2, T3]"
+    strict: "the copy .strict_off: empty unless every roster coin is seen, with the reason of the coins out when they share one, else ALL_COINS_EMPTY [proof: CARD_A2_V6 part 2 V1; basic_a2 T1, T4]"
+  latency: "known at e: an A1 value at e counts rows received by e (A1 rule 1); Binance's liquidation prints arrive 1.01 s after their stamp at the median (MEANING_A1_V4 source latency), so a coin liquidated in the last second before e is counted at the next step"
+
+reading_rules:
+  - "the year also writes 4 copies as its own cross-check: S01, S02, S05, S06 .strict_off (the same count, empty unless every roster coin is seen). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to the count wherever it has a value; empty where a coin is not seen: never on 8 Mar 2026, at 220 of 2,880 steps (S01, S02) and 104 of 1,440 minutes (S05, S06) on 24 Sep 2025 (J15849 TWINS, q_15849, a9bc9402, 0ea4c5c8; A2_STAMPS_V1 equal to the recompute); not separate metrics"
+  - "S01, S02 are read every 30 s (rule 22); S05, S06 at the minute ends; at a fire S05, S06 give the last full minute"
+  - "a count is a whole number of roster coins, from 0 to the roster size; read it beside .coverage (the coins it could count)"
+  - "empty is never 0: empty = no coin could be seen"
+
+values:
+  units: "a number of roster coins (52 on 8 Mar 2026, 51 on 24 Sep 2025)"
+  zero: "coins were seen and none had 0.50 dollars or more of that side summed in the window: S01 above 0 at 27.5% (8 Mar) and 45.8% (24 Sep) of steps, S05 at 41.0% and 62.8% (J15872, J15873 a2)"
+  empty: "no roster coin seen; none on these days (J15840 schema); .strict_off empty at 0 (8 Mar) and 104 (24 Sep) of 1,440 minutes for S05"
+  stale: "true when empty and every roster coin is out for TRADES_HOLE or THIN_FEED (CARD_A2_V6 rule 18)"
+  flags: "A1's flags of the coins seen (USDC_MISSING, DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT), each naming its coin (CARD_A2_V6 rule 9)"
+
+interpret:
+  do:
+    - "read S05 = 30 of 52 as forced selling on more than half the roster in the same minute: a market-wide flush (the maximum, 52, came on 8 Mar 2026)"
+    - "read S01 against S02 as which side is forced more broadly"
+    - "read .coverage first: a count of 3 of 49 seen is not a count of 3 of 52"
+  dont:
+    - "read a coin not counted as one with no liquidation (dust, not seen, or printed after e)"
+    - "read the count as a size: one coin can carry most of the dollars (BTC and ETH are 63.5 to 68.9% of A1's long dollars, MEANING_A1_V4)"
+
+biases:
+  - {what: "a coin whose rows sum to under 0.50 dollars in the window (dust) is not counted", direction: "S01, S02, S05, S06 at or below 'coins with any liquidation row'", size: "equal at 99.86% (S01) and 99.72% (S05) of steps on 8 Mar, 99.93% and 99.86% on 24 Sep; at most 2 coins short on 8 Mar, 5 on 24 Sep (17:33: 3 against 8)", proof: "J15872, J15873 a2 (meaning_flowbasic ed3 bd355d8c)"}
+  - {what: "a print received after e is not known at e", direction: "a count at e can miss a coin liquidated in the last second or two", size: "not measured here; liquidation prints arrive 1.01 s after the stamp at the median, p99 2.8 s (MEANING_A1_V4, BTC's year)", proof: "MEANING_A1_V4 source latency; CARD_A2_V6 rule 16"}
+
+external_checks:
+  - {what: "every count, coverage and strict twin at every step of 8 Mar 2026 and 24 Sep 2025 recomputed from our A1 rows by CARD_A2_V6's words", where: "our A1 (raw: S03, S04 LIMITS, S08, S09 CLEAN; LAYER_REGISTER_V19 b38bf075)", status: "VERIFIED: A2_STAMPS_V1 51,840 of 51,840 MATCH (J15861, merged J15874)"}
+  - {what: "the counts again from the liquidation files themselves (USDT + USDC, D-1 and D; a row counts at e when received by e and stamped in (e - W, e]), not from A1's values: coins seen with 0.50 dollars or more summed in the window; and with any row", where: "Tardis liquidations by exact path (our own source; the coins seen from A1)", status: "RECOMPUTE, our source, not an outside record: 100% of steps both days for the rule; the name 'coins with a liquidation' at 99.72% to 99.93% (J15872, J15873 a2)"}
+  - {what: "an outside count of coins liquidating", where: "Coinalyze daily liquidation totals per coin (MEANING_A1_V4 external_checks; Binance keeps no forceOrder history)", status: "DAILY ONLY (EDGE2 jobs 15739, 15740: 179 days, median gap 1.5% and 1.9%, ours larger on crash days): a day's total per coin cannot test a count over 30 s or 60 s; not run for A2"}
+
+tools:
+  - {what: "every A2 count, coverage and strict twin against the recompute from A1", run: "python3 -B -m rawcheck.basic_a2 --days <D1,D2> --out <dir>", where: "team/RAWCHECK/code (basic_a2.py acd7e3c9bee8d062, tests 89487310d5f53fa3 6 of 6, mutants 6 of 6)"}
+  - {what: "the counts against the liquidation files (the rule and any row)", run: "python3 -B -m rawcheck.meaning_flowbasic a2 <D>", where: "team/RAWCHECK/code (meaning_flowbasic.py ed4 e9a12b7eb7a2b7f5; the part a2 is unchanged since ed3 bd355d8c, which ran J15872, J15873)"}
+
+used_by: >-
+  S01 (long_liq_coins_30s) by CHAIN_trend_SHORT_ride_4 condition 3 (SKIP in fifth 2 or 3); S02 (short_liq_coins_30s) by
+  CHAIN_trend_SHORT_ride_4 condition 3 (SKIP in fifth 2) and CHAIN_trend_SHORT_fade_2 condition 4 (ENTER in fifth 2); nobody reads S05,
+  S06 or the twins (CARD_A2_V6 'Who reads it today')
+
+references:
+  CARD: testbed/value_audit/registers/CARD_A2_V6.md 72aa3914fea654d6
+  BUILT_ON: team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/A2_STAMPS_V1.tsv b7dcf6ec4f2c55da (J15874 from the rows of J15861: 12 settings, every step of 8 Mar 2026 and 24 Sep 2025, 51,840 MATCH)"
+  JOBS: "15840 (schema), 15861 (basic_a2 ed1, both days), 15872 (8 Mar a2), 15873 (24 Sep a2), 15874 (merged stamps)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+settings:
+  - {id: A2.S01, name: "roster coins with long liquidations summing to 0.50 dollars or more in the last 30 s", renamed_from: "long_liq_coins_30s", layer: basic, side: long, window: "30 s ((e - 30 s, e], received by e)", clock: "every 30 s", scope: market, contracts: "USDT+USDC (A1 S03)",
+     aggregate: "count of the roster coins seen whose A1 S03 at e is 1 dollar or more", aliases: "long_liq_coins_30s (the old name, read by CHAIN_trend_SHORT_ride_4)",
+     derived_from: "A1 S03 of every roster coin at e",
+     means: "how many roster coins had longs forced out (forced selling) summing to at least 0.50 dollars in the last 30 s",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 5,760 of 5,760 (every 30 s of both days, J15861, basic_a2 acd7e3c9)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a2 (a recompute from our own source, the same Tardis liquidation files with the coins seen from A1, not an outside record): the coins seen with 0.50 dollars or more long in the liquidation files at 100% of steps; 'coins with a long liquidation' at 99.86% (8 Mar), 99.93% (24 Sep); max 51 coins (8 Mar)"},
+     open: "a coin whose window held only dust rows is not counted (at most 2 coins on 8 Mar, 5 on 24 Sep); a print received after e counts at the next step; A1 is a floor in dollars (the last print a coin a second), which a count barely feels"}
+  - {id: A2.S01.coverage, name: "roster coins A1 could see at e (for S01)", layer: basic, side: none, window: "at e", clock: "every 30 s", scope: market, contracts: "USDT+USDC (A1 S03)",
+     aggregate: "count of the roster coins whose A1 S03 at e is not empty", aliases: "none (a twin, CARD_A2_V6 part 2)",
+     means: "how many roster coins S01 could count at e",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 5,760 of 5,760"},
+     meaning: {status: DEFINED, proof: "it is A1's own seen state counted (CARD_A2_V6 rule 3): equal to the recompute at every step (A2_STAMPS_V1); J15849 TWINS: S01, S02, S05, S06 .coverage min 52, median 52 (8 Mar), min 49, median 51 (24 Sep); the coins out on 24 Sep are A1's empties: A1 S03, S04 at 222 of 146,880 coin-steps, S08, S09 at 105 of 73,440 coin-minutes, THIN_FEED or TRADES_HOLE, none on 8 Mar (J15840 schema)"},
+     open: none}
+  - {id: A2.S02, name: "roster coins with short liquidations summing to 0.50 dollars or more in the last 30 s", renamed_from: "short_liq_coins_30s", layer: basic, side: short, window: "30 s ((e - 30 s, e], received by e)", clock: "every 30 s", scope: market, contracts: "USDT+USDC (A1 S04)",
+     aggregate: "count of the roster coins seen whose A1 S04 at e is 1 dollar or more", aliases: "short_liq_coins_30s (the old name, read by CHAIN_trend_SHORT_ride_4 and CHAIN_trend_SHORT_fade_2)",
+     derived_from: "A1 S04 of every roster coin at e",
+     means: "how many roster coins had shorts forced out (forced buying) summing to at least 0.50 dollars in the last 30 s",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 5,760 of 5,760"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a2 (a recompute from our own source, the same Tardis liquidation files with the coins seen from A1, not an outside record): the rule at 100% of steps; 'coins with a short liquidation' at 99.86% (8 Mar), 99.90% (24 Sep); max 28 and 25 coins"},
+     open: "as S01: dust rows (at most 1 coin short on either day), prints after e, the A1 floor"}
+  - {id: A2.S02.coverage, name: "roster coins A1 could see at e (for S02)", layer: basic, side: none, window: "at e", clock: "every 30 s", scope: market, contracts: "USDT+USDC (A1 S04)",
+     aggregate: "count of the roster coins whose A1 S04 at e is not empty", aliases: "none (a twin, CARD_A2_V6 part 2)",
+     means: "how many roster coins S02 could count at e",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 5,760 of 5,760"},
+     meaning: {status: DEFINED, proof: "A1's own seen state counted (CARD_A2_V6 rule 3), equal to the recompute at every step (A2_STAMPS_V1); J15849 TWINS: S01, S02, S05, S06 .coverage min 52, median 52 (8 Mar), min 49, median 51 (24 Sep); the coins out on 24 Sep are A1's empties: A1 S03, S04 at 222 of 146,880 coin-steps, S08, S09 at 105 of 73,440 coin-minutes, THIN_FEED or TRADES_HOLE, none on 8 Mar (J15840 schema)"},
+     open: none}
+  - {id: A2.S05, name: "roster coins with long liquidations summing to 0.50 dollars or more in the last minute", renamed_from: "m9_mkt_long_liq_coins", layer: basic, side: long, window: "60 s ((e - 60 s, e], received by e)", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S08)",
+     aggregate: "count of the roster coins seen whose A1 S08 at the minute end is 1 dollar or more", aliases: "m9_mkt_long_liq_coins (the old name; no reader)",
+     derived_from: "A1 S08 of every roster coin at the minute end",
+     means: "how many roster coins had longs forced out summing to at least 0.50 dollars in the last minute",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 2,880 of 2,880 (every minute end of both days)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a2 (a recompute from our own source, the same Tardis liquidation files with the coins seen from A1, not an outside record): the rule at 100% of minutes; 'coins with a long liquidation' at 99.72% (8 Mar), 99.86% (24 Sep); max 52 (8 Mar) and 51 (24 Sep): the whole roster"},
+     open: "as S01: dust rows (at most 2 coins on 8 Mar, 5 on 24 Sep 17:33), prints after e, the A1 floor"}
+  - {id: A2.S05.coverage, name: "roster coins A1 could see at the minute end (for S05)", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S08)",
+     aggregate: "count of the roster coins whose A1 S08 at e is not empty", aliases: "none (a twin, CARD_A2_V6 part 2)",
+     means: "how many roster coins S05 could count",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 2,880 of 2,880"},
+     meaning: {status: DEFINED, proof: "A1's own seen state counted: 52 of 52 at every minute of 8 Mar, median 51, min 49 of 51 on 24 Sep (J15872, J15873 a2); J15849 TWINS: S01, S02, S05, S06 .coverage min 52, median 52 (8 Mar), min 49, median 51 (24 Sep); the coins out on 24 Sep are A1's empties: A1 S03, S04 at 222 of 146,880 coin-steps, S08, S09 at 105 of 73,440 coin-minutes, THIN_FEED or TRADES_HOLE, none on 8 Mar (J15840 schema)"},
+     open: none}
+  - {id: A2.S06, name: "roster coins with short liquidations summing to 0.50 dollars or more in the last minute", renamed_from: "m9_mkt_short_liq_coins", layer: basic, side: short, window: "60 s ((e - 60 s, e], received by e)", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S09)",
+     aggregate: "count of the roster coins seen whose A1 S09 at the minute end is 1 dollar or more", aliases: "m9_mkt_short_liq_coins (the old name; no reader)",
+     derived_from: "A1 S09 of every roster coin at the minute end",
+     means: "how many roster coins had shorts forced out summing to at least 0.50 dollars in the last minute",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 2,880 of 2,880"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a2 (a recompute from our own source, the same Tardis liquidation files with the coins seen from A1, not an outside record): the rule at 100% of minutes; 'coins with a short liquidation' at 99.72% (8 Mar), 99.79% (24 Sep); max 28 and 30 coins"},
+     open: "as S01: dust rows (at most 1 coin short on either day), prints after e, the A1 floor"}
+  - {id: A2.S06.coverage, name: "roster coins A1 could see at the minute end (for S06)", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: "USDT+USDC (A1 S09)",
+     aggregate: "count of the roster coins whose A1 S09 at e is not empty", aliases: "none (a twin, CARD_A2_V6 part 2)",
+     means: "how many roster coins S06 could count",
+     computation: {status: RELIABLE, proof: "A2_STAMPS_V1: 2,880 of 2,880"},
+     meaning: {status: DEFINED, proof: "A1's own seen state counted, equal to the recompute at every minute (A2_STAMPS_V1); J15849 TWINS: S01, S02, S05, S06 .coverage min 52, median 52 (8 Mar), min 49, median 51 (24 Sep); the coins out on 24 Sep are A1's empties: A1 S03, S04 at 222 of 146,880 coin-steps, S08, S09 at 105 of 73,440 coin-minutes, THIN_FEED or TRADES_HOLE, none on 8 Mar (J15840 schema)"},
+     open: none}
+
+could_build:
+  - {id: A2.CB1, intended: "the roster coins with a liquidation of the side in the window, of any size (what the old names say)", was_name_of: "A2.S01, A2.S02, A2.S05, A2.S06",
+     formula: "count of the roster coins seen with at least one liquidation row of the side stamped in (e - W, e] and received by e (USDT + USDC), any dollars",
+     needs: "the A1 rows of each coin (raw): the row count beside the dollars, which A1 does not write today (CARD_A2_V6 'Not carried': ruling A option 2)",
+     adds: "LITTLE: equal to ours at 99.72% to 99.93% of steps; at most 5 coins more (24 Sep 2025 17:33: 8 against 3), J15872, J15873 a2",
+     status: NOT_BUILT}

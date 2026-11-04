@@ -1,0 +1,143 @@
+# OUR_RULE_B1_V1.yaml: the card of B1's OUR RULES S13 taker_drift and S14 taker_shift (the median coin's taker buy over sell ratio, its last 5
+# minutes against its last 2 hours in robust units, and that squared), EDITION 1 (BED, 2026-10-18; OR4 of OUR_RULES_REVIEW_WORKPACKAGES_V1
+# 6c2fdf72b7646f86, EDGE1 15:54:31Z; reviewer EDGE2). Made as OUR_RULE_C9_V1 66c345c9 (EDGE2); ONE SOURCE OF TRUTH; rawcheck/meaning_register.py
+# edition 5 checks it. Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (B1 S13, S14 our_rule, NOT_CHECKED before this
+# card; BASIC_B1_V3 07a6b887 left them out as our rules). The four switched-off twins S04 to S07 .seen_at_e_off are the owner's copies:
+# their accepted copies block is here with J16008's proof (EDGE1 16:51:33Z (1): CURRENT lists OUR_RULE after MEANING_B1_V4 d3275871, so the
+# register takes these rows; that card is not edited).
+# The smart check (section 1): the input cited by what it is, planted tests and mutants first, ONE small job (J16008: S12 exact from the
+# Tardis trades at 145 minute ends a day, S13, S14 exact at 26 named minute ends a day; the year replay at every minute end; the twins), one
+# look (J16011: 22:44 of 24 Sep 2025), how often they fire, readers to TREE's RR1. Pass lines: hb/BED.txt 2026-10-18T16:34:41Z, before J16008.
+
+# Edit 2 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.B1 OK with nits 16:53:37Z and EDGE1's ANSWER 16:51:33Z (1)): the twins'
+# accepted copies block (4 rows); 26 a day and 22:44, not 27; E320, E326, E330 listed as not planted; S12 exact is in doubles; the exact
+# points' limits in an open line; the ratio cause marked an opinion; the stamps' 14 rows a twin explained; S13 named as means over a MAD.
+# No verdict changed.
+group: B1
+name: taker flow, our rules (S13 the drift of the median coin's taker ratio over 5 minutes against 2 hours; S14 its square)
+summary: >-
+  At a minute end m: x_j = the exact B1 S12 (the median roster coin's taker buy dollars over taker sell dollars of 300 s) at m - j min, j = 0
+  to 119; S13 = (the mean of x_0 to x_4 - the mean of the 120) / (1.4826 x the median of |x_j - their median|), 4 decimals; x_0 empty: its
+  reason; another x_j empty: SHORT_HISTORY; a spread of 0: NO_SPREAD (CARD_B1_V7 rule 13). S14 = the exact S13 squared, 4 decimals, empty as
+  S13 (rule 14).
+read_as: >-
+  The year writes both exactly: S12 recomputed from the Tardis trades of every roster coin equals the year's at 145 of 145 minute ends a day,
+  and S13, S14 from it equal the year's at 26 of 26 named minute ends of 8 Mar 2026 and 24 Sep 2025 and at 22:44 of 24 Sep (RULE_B1_STAMPS_V1,
+  J16008, J16011). S13 leans up: 2 or more at 1.53% and 3.33% of minutes, -2 or less at 0.00% and 0.83%; the cause, that S12 is a median of RATIOS
+  (above 1 unbounded, below 1 bounded by 0; BASIC_B1_V3 reads ln(S08) for a symmetric scale), is an opinion here, not measured (a ln twin
+  would test it). S14 squares the sign away (4 or more at 1.53% and
+  4.17%): the chains' taker_shift fifths read a buying and a selling drift alike.
+
+conclude:
+  may:
+    - "how far the median coin's taker buy over sell ratio of the last 5 minutes sits from its last 2 hours, as (mean of 5 - mean of 120) over 1.4826 MAD (S13: the year's value equals our exact recompute at 26 named minute ends a day (02:05 to 02:30) of 8 Mar 2026 and 24 Sep 2025 and at 22:44 of 24 Sep 2025; RULE_B1_STAMPS_V1, J16008, J16011)"
+    - "how large that drift is, either way (S14 = S13 squared)"
+  never:
+    - "S13 as symmetric: on a ratio scale it reaches 2 or more at 1.53% and 3.33% of minutes, -2 or less at 0.00% and 0.83% (8 Mar 2026, 24 Sep 2025, J16008)"
+    - "S14 as a direction: it is S13 squared; a buying and a selling drift give the same S14"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_B1_V7.md 4a44d707cd2440fe (rules 13, 14, 19, O-B1-6 to O-B1-8; edge cases E312 to E314 planted; E320 (a fire), E326 (x_119 2.99) and E330 (the 2 h in D-1) not planted; the year's minute ends and the replay at 00:00 to 01:59 hold the D-1 reach)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_B1_V2.tsv b408ba789fbe9674 (S13 taker_drift, S14 taker_shift)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml 658f558c6a930d72 (B1 S12, the median roster coin's taker buy over sell dollars of 300 s: basic, RELIABLE, LIMITS: a ratio, read ln for symmetry); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (B1 S13, S14 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code/prod_B1_v3.py efc2bc5223eb88e8 with prod_reader_trades_v1.py (CARD_B1_V7 edition 7)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/B1.parquet
+  year_output_columns: "name (S13, S14 for MARKET; S12 and S08 the inputs), coin (MARKET for S13, S14), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 4 a value), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'B1', ['S12', 'S13', 'S14'], coins=['MARKET'])"
+
+source:
+  vendor: "Tardis.dev, binance-futures trades, through B1 S08 and S12 (BASIC_B1_V3)"
+  exchange_stream: "trades as Tardis records them (the taker side), read by B1; S13 reads S12's minute values"
+  files: "the year's B1 output of D-1 and D; for the check, <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<SYM>_<YYYY-MM-DD>.csv.gz of every roster coin (by exact path)"
+  columns: "timestamp, local_timestamp, side, price, amount (the check); B1 S08 (which coins have a ratio), S12, S13, S14 of the year"
+  fields:
+    S13: "x_j the exact S12 at m - j min (j = 0 to 119); (mean5 - mean120) / (1.4826 x MAD); x_0 empty: its reason; another empty: SHORT_HISTORY; spread 0: NO_SPREAD [proof: CARD_B1_V7 rule 13; planted E312 (-0.1349), E313, E314, B1 to B3, B5 in tests/test_rule_b1.py; mutants w119, empty_skip, mean_from_1, no_1.4826, drift_sign; RULE_B1_STAMPS_V1]"
+    S14: "the exact S13 squared, rounded once [proof: rule 14; planted E312 (0.0182), B3, B4 (1.00005 gives 1.0001); mutant s14_from_rounded]"
+    S12_exact: "per coin with a year S08 at e: the taker buy dollars over the taker sell dollars of the rows stamped in (e - 300 s, e] and received by e, in doubles (price x amount, a median of floats; the year's S12 is written to 4 decimals); their median [proof: planted B6 on a trades file (a row at e - 300 s outside, a row received after e out); J16008: equal to the year's S12 at 145 of 145 minute ends a day]"
+  latency: "known_at = x_0's (CARD_B1_V7 rule 22); not checked here"
+  silence: "x_0 empty: S13, S14 empty with its reason; none on the two days (J16008: empty 0)"
+
+reading_rules:
+  - "S13 compares the median coin's last 5 minutes with its own last 2 hours; it is a drift of a ratio, not of dollars"
+  - "S14 = S13 squared: always 0 or more, no sign"
+  - "the inputs are S12 at the minute ends, so S13 at a fire gives the last full minute (CARD_B1_V7 E320)"
+
+values:
+  units: "S13: (mean5 - mean120) over 1.4826 MAD, no unit: means over a robust spread, not the median-centred robust z (+ = more taker buying than the last 2 hours); S14: its square"
+  zero: "S13 0: the last 5 minutes at the 2-hour mean"
+  empty: "S12's reasons (x_0), SHORT_HISTORY, NO_SPREAD, NO_ROSTER; value_kind 0. Never read empty as 0"
+  stale: "as x_0 (CARD_B1_V7 rule 22)"
+  flags: "S12's"
+
+interpret:
+  do:
+    - "read S13 with its sign and S12 beside it; read S14 only with S13 (or S12) for the side"
+  dont:
+    - "read S14's fifths as a side of the flow"
+
+biases:
+  - {what: "a drift of a ratio", direction: "S13 larger upward than downward", size: "2 or more at 1.53% and 3.33%, -2 or less at 0.00% and 0.83% of minutes (8 Mar 2026, 24 Sep 2025); |S13| median 0.5818 and 0.5744", proof: "J16008"}
+
+external_checks:
+  - {what: "S12 recomputed exactly from the Tardis trades of every roster coin with a year S08 (52 and 51 coins) at the 145 minute ends 00:06 to 02:30 of 8 Mar 2026 and 24 Sep 2025, then S13, S14 at the 26 minute ends 02:05 to 02:30", where: "Tardis trades (a recompute, our source)", status: "VERIFIED: RULE_B1_STAMPS_V1 118c420944dc3135: S13, S14 52 of 52 MATCH each; S12 145 of 145 a day (J16008 log 18b9f24ffb476fe8, rule_b1 ed1 555da114f98c1b91, tests 7cbf20c58ba451c1 15 of 15: 9 cases, 6 mutants)"}
+  - {what: "S13, S14 at 22:44 of 24 Sep 2025 (the one replay value outside the first bound) from S12 exact at its 120 minute ends 20:45 to 22:44", where: "Tardis trades", status: "VERIFIED: 2 of 2 MATCH, S12 120 of 120 (J16011 log 4e582ec207f48b49, rule_b1 ed2 89c53b08c7bc1066)"}
+  - {what: "S13, S14 at every minute end from the year's own S12 (written to 4 decimals)", where: "the year's B1 rows of D-1 and D", status: "MEASURED: equal or within the rounding of the inputs at 2,880 of 2,880 values of 8 Mar 2026 (S13 700 equal, 740 within) and 2,879 of 2,880 of 24 Sep 2025 (S13 544 equal, 896 within); the one S14 outside ed1's bound (22:44, half a unit where two rounded values can differ by one) is exact in J16011 (J16008)"}
+  - {what: "the twins S04 to S07 .seen_at_e_off (the copies block below) against their mains at every coin-minute, and recomputed from the Tardis trades where the main is empty", where: "the year's B1 rows; Tardis trades (basic_b1.coin_values: the window's rows)", status: "VERIFIED: equal to the main wherever the main has a value (8 Mar 2026: 74,860, 74,860, 74,815, 74,840; 24 Sep 2025: 73,091, 73,091, 72,591, 72,924), the main never valued alone; valued alone at 20, 20, 65, 40 and 244, 244, 744, 346 coin-minutes (the main TRADES_HOLE or THIN_FEED); 6 such coin-minutes a day recomputed: 24 of 24 MATCH a day (XMR, LIT; DASH; the stamps count 14 rows a twin: 12 coin-minutes and 2 ALL rows, one a day); both empty with another reason at 71, 71, 89, 90 coin-minutes of 24 Sep (not explained here) (J16008, RULE_B1_STAMPS_V1)"}
+
+tools:
+  - {what: "S12 exact, S13, S14 at named minute ends; the year replay; the twins", run: "python3 -B -m rawcheck.rule_b1 --days <D,..> [--parts year,exact,twins] [--exact-range <first>,<last>] --out <dir>", where: "team/RAWCHECK/code (rule_b1.py ed2 89c53b08c7bc1066; ed1 555da114 ran J16008)"}
+
+used_by: "S13 by CHAIN_quiet_SHORT_fade_3 (condition 3: taker_drift fifth 1 or 2 -> ENTER); S14 by CHAIN_forced_SHORT_fade (condition 3: taker_shift fifth 4 -> ENTER), CHAIN_forced_SHORT_ride (condition 3), CHAIN_chop_LONG_fade_3 (condition 2: fifth 1 or 2 -> ENTER, fifth 4 -> SKIP), CHAIN_chop_SHORT_ride_2 (condition 5: fifth 4 -> ENTER) (CARD_B1_V7 'Who reads it today'). To TREE's RR1 (hb/BED.txt 16:39:50Z): S14's fifths have no side; S13's upper tail is longer than its lower"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_B1_V7.md 4a44d707cd2440fe
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml 658f558c6a930d72 (S12, S08, the inputs)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_B1_STAMPS_V1.tsv 118c420944dc3135 (J16008)"
+  JOBS: "16008 (tests, rule_b1 ed1 on 8 Mar 2026 and 24 Sep 2025; log 18b9f24ffb476fe8), 16011 (rule_b1 ed2, 22:44 of 24 Sep 2025; log 4e582ec207f48b49: its first S12 line keeps a fixed label '00:06 to 02:30', the true span 20:45 to 22:44 is printed under it)"
+  PASS_LINES: "hb/BED.txt 2026-10-18T16:34:41Z 'BED PASS LINES OR4.B1', posted before J16008 ran; P1b's one value outside my first bound owned at 16:39:50Z"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): taker_drift and taker_shift call up no standard formula; the drift's skew and the square's lost sign in never lines: no rename"
+
+settings:
+  - {id: B1.S13, name: "drift of the median coin's taker buy over sell ratio: the last 5 minutes' mean less the last 2 hours' mean, over 1.4826 MAD", layer: our_rule, side: both, window: "the 120 minute ends m - 119 min to m", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "(the mean of S12 at m to m - 4 min - the mean of S12 at the 120 minute ends) / (1.4826 x MAD of the 120); 4 decimals; SHORT_HISTORY, NO_SPREAD", aliases: "taker_drift",
+     derived_from: "B1 S12 (BASIC_B1_V3) at the 120 minute ends up to m",
+     means: "how far the median coin's taker buying (over selling) of the last 5 minutes runs above (below) its last 2 hours",
+     computation: {status: RELIABLE, proof: "RULE_B1_STAMPS_V1 118c4209: 52 of 52 (02:05 to 02:30 of 8 Mar 2026 and 24 Sep 2025, S12 exact from the Tardis trades; J16008) and 22:44 of 24 Sep 2025 (J16011)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16008: 2 or more at 0.0153 and 0.0333 of minutes, -2 or less at 0.0000 and 0.0083 (8 Mar 2026, 24 Sep 2025); |S13| median 0.5818 and 0.5744; the drift the card's rule 13 says (no rename)"},
+     open: "a ratio's drift: skewed up (the cause not measured); the exact points are 26 consecutive minutes a day (02:05 to 02:30) and 22:44, none with S13 at 2 or more, none across 00:00, none empty: those rest on the replay of the year's rounded S12; two days",
+     never: ["S13 as symmetric (2 or more at 1.53% and 3.33%, -2 or less at 0.00% and 0.83%)"]}
+  - {id: B1.S14, name: "the taker drift squared (S13 squared)", layer: our_rule, side: none, window: "as S13", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the exact S13 squared, rounded once to 4 decimals; empty as S13", aliases: "taker_shift",
+     derived_from: "B1 S13 (exact)",
+     means: "how large the median coin's taker drift is, either way",
+     computation: {status: RELIABLE, proof: "RULE_B1_STAMPS_V1 118c4209: 52 of 52 (J16008) and 22:44 of 24 Sep 2025 (J16011)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16008: 4 or more at 0.0153 and 0.0417 of minutes (8 Mar 2026, 24 Sep 2025); the square the card's rule 14 says (no rename)"},
+     open: "no sign: read by 4 chains by fifths",
+     never: ["S14 as a direction of the flow"]}
+
+  # the accepted copies block (EDGE1 16:51:33Z (1)): the owner's copies, the switched-off twins of MEANING_B1_V4's S04 to S07
+  - {id: B1.S04.seen_at_e_off, name: "net taker dollars in single fills of 25,000 dollars or more, last 5 minutes (switched off: empty only when the coin is not seen at e)", layer: our_rule, side: net, window: "300 s", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "as B1 S04 with the coin seen at e only (CARD_B1_V7 rule 9, O-B1-1 A, beside)", aliases: "whale net flow (25k fills), switched-off twin (the old name)", copy_of: "B1.S04",
+     means: "as B1 S04, with a value also where a dead stretch inside the window empties the main",
+     computation: {status: RELIABLE, proof: "RULE_B1_STAMPS_V1 118c4209 (J16008): equal to B1 S04 at every coin-minute where it has a value (74,860 and 73,091 of 8 Mar 2026 and 24 Sep 2025), the main never valued alone; 6 coin-minutes a day where only the twin is valued recomputed from the Tardis trades, MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16008: valued alone at 20 and 244 coin-minutes (the main TRADES_HOLE 20; THIN_FEED 38, TRADES_HOLE 206); the copy the owner's rule names (MEANING_B1_V4)"},
+     open: "switched off; read by FIFTHS cuts named after it (MEANING_B1_V4: 1,175 FIFTHS names in a year day, job 15782); both empty with another reason than the main's at some coin-minutes of 24 Sep 2025, not explained here"}
+  - {id: B1.S05.seen_at_e_off, name: "net taker dollars in fills under 25,000 dollars, last 5 minutes (switched off: empty only when the coin is not seen at e)", layer: our_rule, side: net, window: "300 s", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "as B1 S05 with the coin seen at e only (CARD_B1_V7 rule 9, O-B1-1 A, beside)", aliases: "retail net flow (fills under 25k), switched-off twin (the old name)", copy_of: "B1.S05",
+     means: "as B1 S05, with a value also where a dead stretch inside the window empties the main",
+     computation: {status: RELIABLE, proof: "RULE_B1_STAMPS_V1 118c4209 (J16008): equal to B1 S05 at every coin-minute where it has a value (74,860 and 73,091 of 8 Mar 2026 and 24 Sep 2025), the main never valued alone; 6 coin-minutes a day where only the twin is valued recomputed from the Tardis trades, MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16008: valued alone at 20 and 244 coin-minutes (the main TRADES_HOLE 20; THIN_FEED 38, TRADES_HOLE 206); the copy the owner's rule names (MEANING_B1_V4)"},
+     open: "switched off; read by FIFTHS cuts named after it (MEANING_B1_V4: 1,175 FIFTHS names in a year day, job 15782); both empty with another reason than the main's at some coin-minutes of 24 Sep 2025, not explained here"}
+  - {id: B1.S06.seen_at_e_off, name: "net taker dollars in same-millisecond slices of 25,000 dollars or more, last 1,000 trades (switched off: empty only when the coin is not seen at e)", layer: our_rule, side: net, window: "the last 1,000 rows", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "as B1 S06 with the coin seen at e only (CARD_B1_V7 rule 9, O-B1-1 A, beside)", aliases: "whale block flow, switched-off twin (the old name)", copy_of: "B1.S06",
+     means: "as B1 S06, with a value also where a dead stretch inside the window empties the main",
+     computation: {status: RELIABLE, proof: "RULE_B1_STAMPS_V1 118c4209 (J16008): equal to B1 S06 at every coin-minute where it has a value (74,815 and 72,591 of 8 Mar 2026 and 24 Sep 2025), the main never valued alone; 6 coin-minutes a day where only the twin is valued recomputed from the Tardis trades, MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16008: valued alone at 65 and 744 coin-minutes (the main TRADES_HOLE 65; THIN_FEED 18, TRADES_HOLE 726); the copy the owner's rule names (MEANING_B1_V4)"},
+     open: "switched off; read by FIFTHS cuts named after it (MEANING_B1_V4: 1,175 FIFTHS names in a year day, job 15782); both empty with another reason than the main's at some coin-minutes of 24 Sep 2025, not explained here"}
+  - {id: B1.S07.seen_at_e_off, name: "5-minute change of S04 (single fills of 25,000 or more) (switched off: empty only when the coin is not seen at e)", layer: our_rule, side: net, window: "300 s change", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "as B1 S07 with the coin seen at e only (CARD_B1_V7 rule 9, O-B1-1 A, beside)", aliases: "whale flow change, switched-off twin (the old name)", copy_of: "B1.S07",
+     means: "as B1 S07, with a value also where a dead stretch inside the window empties the main",
+     computation: {status: RELIABLE, proof: "RULE_B1_STAMPS_V1 118c4209 (J16008): equal to B1 S07 at every coin-minute where it has a value (74,840 and 72,924 of 8 Mar 2026 and 24 Sep 2025), the main never valued alone; 6 coin-minutes a day where only the twin is valued recomputed from the Tardis trades, MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16008: valued alone at 40 and 346 coin-minutes (the main TRADES_HOLE 40; THIN_FEED 25, TRADES_HOLE 321); the copy the owner's rule names (MEANING_B1_V4)"},
+     open: "switched off; read by FIFTHS cuts named after it (MEANING_B1_V4: 1,175 FIFTHS names in a year day, job 15782); both empty with another reason than the main's at some coin-minutes of 24 Sep 2025, not explained here"}

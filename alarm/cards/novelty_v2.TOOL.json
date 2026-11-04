@@ -1,0 +1,159 @@
+{
+ "tool": "novelty_v2",
+ "file": "08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/novelty_v2.py",
+ "file_sha16": "4f8b9d4888ca5c79",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "step 8 NOVELTY of ALARM_PIPELINE_V1 section 1: before an idea is called new",
+ "question": "Is this fire list a new alarm, a copy of one in the registry, its mirror, or a known trigger given a side?",
+ "usage_from_code": "python3 -B <Alarm>/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/novelty_v2.py --settings <settings file> <FIRE_LIST.tsv> --lean FADE|FOLLOW [--registry <ALARM_REGISTRY.tsv>] [--self <SEAT>_<IDEA>]",
+ "settings_keys": [
+  "RESEARCH_ROOT"
+ ],
+ "code_options": [
+  "--lean",
+  "--registry",
+  "--self",
+  "--settings"
+ ],
+ "code_exits": [
+  0,
+  2
+ ],
+ "commands": [
+  {
+   "name": "check",
+   "does": "compares one fire list with every registry alarm that has a fire list on dev and prints the 3 nearest and a VERDICT",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "FIRE_LIST.tsv",
+     "required": true,
+     "meaning": "a tab file with coin, t (whole epoch seconds) and side when the alarm has one; relative paths are under RESEARCH_ROOT/ALARM_DESIGN",
+     "example": "runs/AD1_20261029/receipts/20263757_GRADE_FORCEDBREAK/FB5_FIRES_V1_LIST.tsv"
+    },
+    {
+     "name": "--lean",
+     "required": true,
+     "meaning": "FADE or FOLLOW: the trading side (without it the side cannot be told and same fires stand in for same side)",
+     "example": "FADE"
+    },
+    {
+     "name": "--registry",
+     "required": false,
+     "meaning": "the registry (default REGISTRY/ALARM_REGISTRY_V1.tsv under RESEARCH_ROOT/ALARM_DESIGN)",
+     "example": "REGISTRY/ALARM_REGISTRY_V1.tsv"
+    },
+    {
+     "name": "--self",
+     "required": false,
+     "meaning": "<SEAT>_<IDEA>: leave out that idea's own rows",
+     "example": "AD1_FORCEDBREAK"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/novelty_v2.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env runs/AD1_20261029/receipts/20263757_GRADE_FORCEDBREAK/FB5_FIRES_V1_LIST.tsv --lean FADE --self AD1_FORCEDBREAK",
+   "writes": "nothing (read-only: prints lines)",
+   "refuses": [
+    {
+     "exit": 2,
+     "when": "REFUSED: <reason> on stderr: no --settings or twice, a settings file refused, RESEARCH_ROOT empty, a lean other than FADE or FOLLOW, a file without coin and t columns or without fire rows, a t or side that is not a whole number, a registry without its columns"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "runs/AD1_20261029/receipts/20263700_GRADE_FLOWX/V2_FIRES_V1_LIST.tsv",
+      "--lean",
+      "FOLLOW",
+      "--self",
+      "AD1_FLOWX"
+     ],
+     "exit": 0,
+     "prints": "VERDICT NEW"
+    },
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "runs/AD1_20261029/receipts/20263700_GRADE_FLOWX/V2_FIRES_V1_LIST.tsv",
+      "--lean",
+      "FOLLOW"
+     ],
+     "exit": 0,
+     "prints": "VERDICT COPY of AD1_FLOWX_V2"
+    }
+   ]
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "--settings <file> IS NEEDED ONCE"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "runs/AD1_20261029/receipts/20263700_GRADE_FLOWX/V2_FIRES_V1_LIST.tsv",
+    "--lean",
+    "SIDEWAYS"
+   ],
+   "exit": 2,
+   "prints": "LEAN 'SIDEWAYS'"
+  }
+ ],
+ "rules": [
+  "reads files only; writes nothing",
+  "SYNTHETIC rows are never compared",
+  "NEW means every overlap under 40 pct (the owner 30 Oct 2026 06:20 Berlin)"
+ ],
+ "outputs": [
+  {
+   "file": "printed: NOVELTY line",
+   "where": "stdout, first line",
+   "columns": [
+    "fire_list",
+    "fire_list_sha16",
+    "lean",
+    "fires",
+    "waves",
+    "registry_alarms",
+    "registry",
+    "registry_sha16"
+   ]
+  },
+  {
+   "file": "printed: nearest lines",
+   "where": "stdout: the 3 nearest registry alarms",
+   "columns": [
+    "rank",
+    "alarm",
+    "kind",
+    "state",
+    "lean",
+    "same_fires",
+    "same_side",
+    "other_side",
+    "waves_near",
+    "baseline"
+   ]
+  },
+  {
+   "file": "printed: VERDICT line",
+   "where": "stdout, last line",
+   "columns": [
+    "verdict"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/novelty_v2_COLUMNS.tsv",
+ "reads": [],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; run AD1_20261029, idea FLOWX"
+}

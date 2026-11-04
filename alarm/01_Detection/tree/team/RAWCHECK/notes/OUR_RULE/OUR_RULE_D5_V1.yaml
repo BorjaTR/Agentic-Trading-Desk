@@ -1,0 +1,108 @@
+# OUR_RULE_D5_V1.yaml: the card of D5's OUR RULE S01, the liquidity latch (set on the spread or top-dollars z, released after 30 calm
+# minutes), EDITION 1 (BED, 2026-10-18; OR4 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1 15:54:31Z; reviewer EDGE2). Made as
+# OUR_RULE_C9_V1 66c345c9 (EDGE2); ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it. Register of the day: team/RAWCHECK/
+# notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65 (D5 S01 our_rule, NOT_CHECKED before this card; its built_on 'liquidations (latch)'
+# is wrong: CARD_D5_V6 rule 1 reads D2 S05 and D3 S17, corrected at EDGE1's next register edit, EDGE1 16:12:07Z). The smart check (section 1):
+# the inputs cited by what they are, planted tests and mutants first, ONE small job (J16001: the latch replayed at every minute end of 2
+# days), the meaning on the year's own rows (J16003), readers to TREE's RR1. Pass lines: hb/BED.txt 2026-10-18T16:15:55Z, before J16001 ran.
+
+# Edit 1 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.D5 OK with 3 nits and 1, hb/EDGE2.txt 16:42:50Z): the rename withdrawn
+# (liq is liquidity, the card's own name; D5.CB1 dropped; EDGE1 may rule otherwise); (1) 'held by the spread leg' on 24 Sep only, both legs
+# on 8 Mar; (2) the releases cited to J16001's replay; (3) tests ed2 1c3eca97 plants N1b, N1d to N1f, the cases not planted listed; the
+# stamps written out. No verdict changed.
+group: D5
+name: liquidity latch, our rule S01 (set when the median spread z or the top-dollars thin z reaches 3, released after 30 minutes with both under 1)
+summary: >-
+  Stepped over the minute ends from 00:00 of D-1 to e (then e at a fire): set when released and D2 S05 >= 3 or D3 S17 >= 3; calm when both
+  have values and both are under 1; released when set and the calm run that reaches the step is 30 minutes long (31 calm minute ends); the
+  value 1 when set, 0 when released and both inputs have values, else empty with S05's reason first (CARD_D5_V6 rules 2 to 7).
+read_as: >-
+  The year writes the latch exactly (2,880 of 2,880 minute ends, replayed on the year's own S05 and S17 of D-1 and D, RULE_D5_STAMPS_V1,
+  J16001). But it is on nearly all the time: 1 at 1,440 of 1,440 minutes of 8 Mar 2026 (never released) and 1,379 of 1,440 of 24 Sep 2025
+  (released only 17:15 to 17:45 and 19:48 to 20:17). What breaks the calm: on 24 Sep 2025 the spread leg (S05 under 1 at 76.04% of minutes, S17 at 92.43%), on 8 Mar 2026 both legs (S05
+  under 1 at 57.71%, S17 at 65.62%); S05 is a z of a one-step spread whose MAD is about 1% of the median (OUR_RULE_D2_V1). The calm (both
+  under 1) covers 70.49% and 39.44% of minutes but its longest run is 50 and 18 minute ends (J16003), so the replay released it 2 and 0
+  times in D (J16001). Its four
+  readers therefore see a near-constant 1: CHAIN_forced_LONG_ride skips on it, the two quiet chains enter on it, AIR-POCKET's 'or' is true.
+
+conclude:
+  may:
+    - "whether the latch was set at e by the card's rules (S01: the year's value equals our replay at 2,880 of 2,880 minute ends of 8 Mar 2026 and 24 Sep 2025; RULE_D5_STAMPS_V1, J16001)"
+    - "a release as a rare calm half hour of the median spread and top dollars both: 2 releases on 24 Sep 2025, none on 8 Mar 2026 (J16001)"
+  never:
+    - "S01 = 1 as a rare stress of the book: 1 at 100% (8 Mar 2026) and 95.76% (24 Sep 2025) of minutes (J16001)"
+    - "S01 = 1 as a liquidation event: it reads the spread (D2 S05) and the top dollars (D3 S17), no liquidations (CARD_D5_V6 rule 1); two chains' words say 'no liquidation latch' while their rule enters on 1"
+    - "S01 = 1 as set by thin books: S17 is 3 or more at 0.07% and 0.14% of minutes; what keeps the calm from lasting 30 minutes is S05 at 1 or more (23.96%, 42.29% of minutes) and, on 8 Mar 2026, S17 at 1 or more (34.38%) too (J16003)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D5_V6.md 54ebb10481720298 (rules 1 to 13, O1 to O5; edge cases N1 to N8, E1 to E21)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_D5_V1.tsv 5f112d9711f541e2 (S01 liq_latch, 0 decimals)
+  built_on_register: "team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D2_V1.yaml (D2 S05, the median coin's spread z: our rule, RELIABLE, the never line on 3) and team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml (D3 S17, the median coin's top-of-book dollars thin z: our rule, RELIABLE, RENAMED from depth_thin_z); the inputs of the same package"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65 (D5 S01 our_rule, NOT_CHECKED before this card; built_on to read 'D2 S05, D3 S17 (the book latch)', EDGE1 16:12:07Z)"
+  producer: "testbed/value_audit/code/prod_D5_v6.py a09a53ce9f37e842 (CARD_D5_V6 edition 6; = prod_D5_v5.py 05d4c0c8ed014b3d with the editions list only)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D5.parquet
+  year_output_columns: "name (S01 and its quotes copy S01.quotes_off), coin (MARKET), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; else a value, 0 or 1), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'D5', ['S01'])"
+
+source:
+  vendor: "Tardis.dev, binance-futures bookTicker and book_snapshot_25, through D2 S05 and D3 S17"
+  exchange_stream: "none of its own: D5 takes D2's and D3's rows as arguments (the JUDGE's ruling)"
+  files: "the year's D2 and D3 output of D-1 and D (D2.parquet S05, D3.parquet S17), D5.parquet of D"
+  columns: "D2 S05 and D3 S17 (MARKET) at every minute end of D-1 and D, value_kind, value_f64, empty_reason"
+  fields:
+    steps: "the minute ends from 00:00 of D-1 to e, then e at a fire; released before the first step [proof: CARD_D5_V6 rule 2, O1 A; planted N4a, N4b (across 00:00), N5, E10, E13, E14, E17 in tests/test_rule_book.py]"
+    set_calm_release: "set at S05 >= 3 or S17 >= 3 when released (3 itself sets; a negative z never sets); calm = both values under 1 (1 is not calm; an empty input is not calm); released at a step whose calm run began 30 minutes before or more [proof: rules 3 to 6, O2 A, O3 A, O5 A; planted N3a to N3f, E1 to E8, E21; mutants calm_le1, release_31, empty_calm, abs_set, set_gt3]"
+    value: "1 when set; 0 when released and both inputs have values; else empty with S05's reason first [proof: rule 7, O4 A; planted N1a to N1h, N6, E9, E18 to E20; mutant s17_reason_first; tests ed2 1c3eca97 adds N1b, N1d to N1f; E11, E12 (known_at), E15 (the quotes beside), E16 (a full day: the job's 1,440 rows) not planted]"
+  latency: "known_at = the latest known_at of the input values read (CARD_D5_V6 rule 8); not checked here"
+  silence: "an input empty while latched holds the 1 (rule 6); none empty on the two days (J16001: empty 0)"
+
+reading_rules:
+  - "the latch is a state carried from 00:00 of D-1: a value at e can come from a set the day before (8 Mar 2026: set before 00:00, never released)"
+  - "a release needs 31 calm minute ends in a row; one minute with S05 at 1 or more restarts the count"
+  - "the year also writes S01.quotes_off (the same rules on the quotes copies of S05, S17): not checked in this card (the owner's copies rule)"
+
+values:
+  units: "a flag: 1 set, 0 released"
+  zero: "0: released, both inputs with values"
+  empty: "the inputs' reasons (S05's first): NO_FILE, BOOK_HOLE, BAD_INPUT, ALL_COINS_EMPTY, THIN_HISTORY, FLAT_HISTORY, NO_ROSTER; value_kind 0. Never read empty as 0"
+  stale: "true when empty and the input row whose reason it carries is stale (CARD_D5_V6 rule 9)"
+  flags: "none of its own"
+
+interpret:
+  do:
+    - "read S01 with S05 beside it: on these days a 1 says the median spread has not stayed calm for 30 minutes"
+  dont:
+    - "read S01 = 1 as rare, as a liquidation, or as thin books"
+
+biases:
+  - {what: "a one-step spread z in the calm test", direction: "the latch stays set", size: "1 at 100% and 95.76% of minutes; the calm 39.44% and 70.49% of minutes in runs of at most 18 and 50 (8 Mar 2026, 24 Sep 2025); S05 under 1 at 57.71% and 76.04%, S17 at 65.62% and 92.43%", proof: "J16001, J16003 book"}
+
+external_checks:
+  - {what: "S01 replayed by the card's rules on the year's own S05 and S17 at every minute end of D-1 and D (2,880 steps), compared at every minute end of D, 8 Mar 2026 and 24 Sep 2025; the first set (24 Sep 17:46) and the first release (24 Sep 17:15, after 31 calm steps from 16:45) named", where: "the year's D2 S05, D3 S17 rows (a replay, our source; the inputs RELIABLE by OUR_RULE_D2_V1, OUR_RULE_D3_V1)", status: "VERIFIED: RULE_D5_STAMPS_V1 4bf460c57736227b: 2,880 of 2,880 MATCH (J16001 log 64667d98ea8d4bbf, rule_book ed1 3d92d58bd3a0a0c7, tests 4e7edbe9053e12b5 80 of 80)"}
+  - {what: "how often the latch is on, the calm share and its runs, which input keeps it on", where: "the year's own D2 S05, D3 S17, D5 S01 rows of 23, 24 Sep 2025 and 7, 8 Mar 2026", status: "MEASURED: J16003 book (meaning_rule_or4 ed1 9ca04a65083e956d, tests b12c0c3953d92952 12 of 12; log 98a99d46fb98baf6)"}
+  - {what: "an outside record", where: "none: our rule on our z's", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "the latch replayed at every minute end of D", run: "python3 -B -m rawcheck.rule_book --days <D,..> --parts latch --out <dir>", where: "team/RAWCHECK/code (rule_book.py 3d92d58bd3a0a0c7)"}
+  - {what: "the calm runs and the share latched on one day", run: "python3 -B -m rawcheck.meaning_rule_or4 book <D>", where: "team/RAWCHECK/code (meaning_rule_or4.py 9ca04a65083e956d)"}
+
+used_by: "CHAIN_forced_LONG_ride (condition 8: liq_latch = 1 -> SKIP), CHAIN_quiet_LONG_fade_4 (condition 4: liq_latch = 1 -> ENTER), CHAIN_quiet_SHORT_ride_2 (condition 3: liq_latch = 1 -> ENTER), WHY-DRIVER/AIR-POCKET (dial_5m at or over air_range_pct and (depth fifth 2 or less, or liq_latch = 1)) (CARD_D5_V6 'Who reads it today'). To TREE's RR1 (hb/BED.txt 16:29:05Z): at 1 on 95.76 to 100% of minutes, the forced LONG ride is skipped and the quiet chains' latch condition passes nearly always"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D5_V6.md 54ebb10481720298
+  BASIC: "none: built on our rules D2 S05 (OUR_RULE_D2_V1) and D3 S17 (OUR_RULE_D3_V1)"
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_D5_STAMPS_V1.tsv 4bf460c57736227b (J16001)"
+  JOBS: "16001 (tests, rule_book on 8 Mar 2026 and 24 Sep 2025; log 64667d98ea8d4bbf), 16003 (meaning_rule_or4 book, both days; log 98a99d46fb98baf6)"
+  PASS_LINES: "hb/BED.txt 2026-10-18T16:15:55Z 'BED PASS LINES OR4.BOOK', posted before J16001 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): liq_latch is the liquidity latch its card names (CARD_D5_V6 lines 1, 20) and the formula is what that name calls up: no rename (EDGE2's review 16:42:50Z; EDGE1 may rule otherwise); the misreading is the readers' (two chains' words, the register's built_on), in never"
+
+settings:
+  - {id: D5.S01, name: "liquidity latch: set at the median spread z or the top-dollars thin z of 3 or more, released after 30 minutes with both under 1", layer: our_rule, side: none, window: "the minute ends from 00:00 of D-1 to e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the latch of CARD_D5_V6 rules 2 to 7 over D2 S05 and D3 S17: 1 set, 0 released with both values, else S05's reason first", aliases: "liq_latch (liq = liquidity, CARD_D5_V6 lines 1, 20; two chains' words read it as liquidations: a never line)",
+     derived_from: "D2 S05 (OUR_RULE_D2_V1) and D3 S17 (OUR_RULE_D3_V1) at every minute end of D-1 and D",
+     means: "whether the median spread or the median top dollars stretched (z 3 or more) and have not yet stayed calm (both under 1) for 30 minutes",
+     computation: {status: RELIABLE, proof: "RULE_D5_STAMPS_V1 4bf460c5: 2,880 of 2,880 (every minute end of 8 Mar 2026 and 24 Sep 2025, replayed on the year's S05, S17 of D-1 and D; J16001, rule_book 3d92d58b)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16001: 1 at 1.0000 (8 Mar 2026) and 0.9576 (24 Sep 2025) of minutes; J16003 book: the calm 0.3944 and 0.7049 of minutes in runs of at most 18 and 50, 0 and 2 releases; S05 >= 1 at 0.4229 and 0.2396, S17 >= 3 at 0.0014 and 0.0007; no rename (RULING 3: the liquidity latch its card names; EDGE2's review 16:42:50Z)"},
+     open: "on at nearly every minute of the two days, held by the spread leg on 24 Sep 2025 and by both legs on 8 Mar 2026; a quieter day not measured; S01.quotes_off not checked",
+     never: ["S01 = 1 as a rare stress (100% and 95.76% of minutes)", "S01 as a liquidation latch (it reads the spread and the top dollars)", "S01 = 1 as thin books (S17 >= 3 at 0.07 to 0.14%)"]}
+

@@ -1,0 +1,17 @@
+repo_path	dev_path	sha16	bytes	role
+LAB3_code/lab3/__init__.py	team/LAB3/code/lab3/__init__.py	e3b0c44298fc1c14	0	lab3 (LAB1), pinned
+LAB3_code/lab3/asof.py	team/LAB3/code/lab3/asof.py	d511d6af57eb9d3a	6296	lab3 (LAB1), pinned
+LAB3_code/lab3/binfmt.py	team/LAB3/code/lab3/binfmt.py	ebc5f60e969069e9	11969	lab3 (LAB1), pinned
+LAB3_code/lab3/bins.py	team/LAB3/code/lab3/bins.py	f5c0f9a5f9cb8537	13092	lab3 (LAB1), pinned
+LAB3_code/lab3/days.py	team/LAB3/code/lab3/days.py	ecf85ffb7bc0fa69	22087	lab3 (LAB1), pinned
+LAB3_code/lab3/labgroups.py	team/LAB3/code/lab3/labgroups.py	6d59a8d98274ef2f	1150	lab3 (LAB1), pinned
+LAB3_code/lab3/law.py	team/LAB3/code/lab3/law.py	f777c329396b6190	5633	lab3 (LAB1), pinned
+LAB3_code/lab3/rows.py	team/LAB3/code/lab3/rows.py	747414c711bbd499	6871	lab3 (LAB1), pinned
+LAB3_code/lab3/write.py	team/LAB3/code/lab3/write.py	99e43dc0bc01f55a	28273	lab3 (LAB1), pinned
+home_kit/isolation/sitecustomize.py	team/RESEARCH/tools/alarm_package/_kept/volat_release/Strategy/home_kit/HOME_KIT_V1_3_3/isolation/sitecustomize.py	4bd03302ac81bdff	7188	home_kit V1.2 start-up hook (STRATEGY, HOME_KIT_V1_3_3): logs any file opened under a forbidden root, in every Python process (run_all_tests puts it on PYTHONPATH); with the test cache on (run_all_tests_v4 --cache-out) also every file a test opens and each child it cannot watch (NONPY)
+home_kit/README.md	team/RESEARCH/tools/alarm_package/_kept/volat_release/Strategy/home_kit/HOME_KIT_V1_3_3/README.md	c194104ab21c3fc5	5902	home_kit README (HOME_KIT_V1_3_3)
+home_kit/archive/RELEASE_HOME_KIT_V1_1.json	team/RESEARCH/tools/alarm_package/_kept/team/RESEARCH/tools/home_kit/RELEASE_HOME_KIT_V1_1.json	6938ed964662709b	498	home_kit release record (V1.1, STRATEGY) (past edition, archived)
+LAB3_code/lab3/evt.py	team/LAB3/code/lab3/evt.py	e371b1f812d51889	11623	lab3 evt1 layout (D2)
+LAB3_code/tests/test_evt_reader_home_v1.py	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/_vendor/LAB3_code/tests/test_evt_reader_home_v1.py	7ce6d06d80d0c591	6204	D2 install test: an old root reads byte-identical through the new days.py (CONDUCTOR landing-order must)
+LAB3_code/tests/test_parts_cache_v1.py	team/LAB3/code/tests/test_parts_cache_v1.py	f9794665abc81a35	4882	D2.1 parts() cache tests (8)
+home_kit/RELEASE_HOME_KIT_V1_3_3.json	team/RESEARCH/tools/alarm_package/_kept/volat_release/Strategy/home_kit/HOME_KIT_V1_3_3/RELEASE_HOME_KIT_V1_3_3.json	de8ba53e21cb1631	753	home_kit release record (V1.3.3, STRATEGY): the hook and README here are its bytes

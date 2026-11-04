@@ -1,0 +1,296 @@
+# F16 (BED, 18 Oct 2026; the 5 s grid edition of BRIEF_FLOWX_V4_DELTA, twin F16_V1.yaml.pre_BED_20261018T183501Z). Facts from
+# FLOWX_WORK_V0 F16 (O-FLOWX-5 A), BRIEF_FLOWX_DRAFTERS and BRIEF_FLOWX_V4_DELTA (F16 stays on the last 1,000 trades, now at each 5 s
+# point), ADDON_ARCHITECTURE_V4 edit 3 (0591d18171f2d21f; V3's rules stand unless V4 changes them). Every worked answer computed
+# exactly with fractions.Fraction (the square root last, as a float). Checked with:
+#   cd <VM_HOME>/br2/flowx/kit && python3 -B -m rawcheck.build_register notes/BUILD/FLOWX/F16_V1.yaml --check
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): the plants seen from
+# before t of p_0 (E5, E9, U2, U6: the year's alive_all over the span); one row rule, repeats counted (DUPLICATE_ROW, E15) and the
+# difference from B1 rule 5's bad rows named; ties across files D-1 first; the pass line's proposed level; Y1 the PHASES and the CARRY,
+# reader v6 as the seen-state input, NO_RATE_BASE; X1 (E4: D-1 held empty SHORT_HISTORY, not held NO_FILE; the empty-file sentence);
+# a bad row in the span (E12), a 1000-coin (E13), a stampless row (E14), U9, M3 to M6; trades only; Y8.
+kind: build_metric
+id: F16
+producer: FLOWX
+item: 'Roll autocovariance'
+tier: BUILD
+name: >-
+  Binance Roll's spread estimate from the last 1,000 trades' price changes, in bps: 2 sqrt(-cov) of consecutive changes (sample
+  covariance), empty when cov >= 0
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  The bid-ask bounce in the coin's trade prices, written every 5 s: when consecutive price changes of the last 1,000 trades reverse
+  (up then down), twice the root of minus their covariance estimates the spread, in bps; when they do not reverse on average there is
+  no estimate.
+example: >-
+  A toy of 6 trades (the card uses 1,000): prices 100, 101, 100, 101, 100, 101 give the changes 100, -10000/101 = -99.00990099, 100,
+  -99.00990099, 100 bps; the 4 pairs of consecutive changes have the sample covariance -134670000/10201 = -13201.64690 bps^2, so
+  F16 = 2 sqrt(134670000/10201) = 229.7968398 bps (the population covariance -101002500/10201 would give 199.0099010). Prices 100,
+  101, 103, 106, 110 have a covariance of +8578.020132 bps^2 (+1 in price units): empty NONNEG_COV.
+formula: >-
+  For one coin and the 5 s point u (00:00:00, 00:00:05, ..., 23:59:55 of D): the good trades of the trades reader (bad false; a repeated row counted each time, flagged DUPLICATE_ROW: B1 rules 5
+  and 17, Y6; a row with no stamp in no window, Y5) with t <= u and arr <= u (received by u), in (t, file, line) order (ties on t: D-1's
+  file first, then by file line: prod_B1_v3 line 104); the last 1,000 of them, prices p_0, ..., p_999 (px). dp_i
+  = 10^4 (p_i / p_(i-1) - 1) bps, i = 1 to 999, exact on px (a ratio: a 1000-coin's px per 1,000 coins changes nothing). The 998 pairs
+  (a, b) = (dp_i, dp_(i-1)), i = 2 to 999; mean a over dp_2 to dp_999, mean b over dp_1 to dp_998; cov = sum (a - mean a)(b - mean
+  b) / 997 (the sample covariance, denominator n - 1). cov < 0: F16 = 2 sqrt(-cov), exact up to the square root, no rounding (float64,
+  decimals none). Empty, the first that applies in this order: NO_FILE (D's trades file missing, or the last 1,000 reach D-1, fewer than 1,000 of D
+  received by u, and D-1's file is not held, on any day: X1, prod_B1_v3 lines 160 to 162); SHORT_HISTORY (fewer than 1,000 such trades
+  in D-1 and D, both held: B1 rule 5's count, never D-2); TRADES_HOLE, THIN_FEED, BAD_INPUT (the coin not seen by
+  B1 rule 9 somewhere in [t of p_0, u], the span of the 1,000, as B1 S06's window and F6: the reason the rule gives; a bad trade row stamped in the
+  span and received by u makes the coin unseen, BAD_INPUT; DIFFERS from B1 rule 5, whose 1,000 rows hold the bad rows too, prod_B1_v3
+  lines 154 to 172: a bad row has no price here, so the 1,000 are good rows); NONNEG_COV (cov >= 0: pinned as a reason, where Roll 1984 reports it as is, GHT 2009 set 0 and Easley
+  et al. 2024 take 2 sqrt(|cov|)). The coin is seen by B1 rule 9 (CARD_B1_V7 rule 9, O-B1-1 B: a window over 60 s needs the coin seen at every moment of [the window's start, u]: its trades file of every day the span reaches, a trade in [e - 60 s, e] received by e at every moment e of the span, no thin minute in it (the thin states of the minutes from the one before the span's start to the last full one before u: prod_B1_v3 line 135), no bad trade row stamped in the window and received by u); the alive and thin inputs from reader v6 (inputs). Here the span is [t of p_0, u].
+  THE 00:00 POINTS (REVIEW_LEAD_EDGE1_V1 X3): when D's file is missing and D-1's is there, phase B writes the 00:00:00 row NO_FILE too (the year reads D's file there); the 00:00:00 point is completed in phase B after D's rows at exactly 00:00:00.000000 are added.
+source:
+  kind: paper
+  ref: >-
+    Roll 1984 (J. Finance 39(4)): the effective spread = 2 sqrt(-cov) of consecutive price changes; RESEARCH_TOOLS_V1 6.5 (BUILD; its
+    worked example in price units, ours in bps); screamer RollSpread (sample covariance, NaN at cov >= 0) as the oracle in the real
+    check. Named differences: ours is on the last 1,000 trades of the coin received by each 5 s point (a count window), changes in
+    bps, cov >= 0 empty NONNEG_COV (O-FLOWX-5 A; B, 61 minute closes of C13 S01 over 60 minutes, is not this card: minute moves swamp
+    the bounce).
+inputs:
+  - kind: reader
+    ref: prod_reader_trades_v1
+    exists: true
+    stream: Tardis binance-futures trades (the year's trades stream)
+    fields: t, arr, side, px, units, bad, dup, line (prod_reader_trades_v1 926b7ff5 lines 11 to 13, as the hand work cites); prod_reader_trades_v2, when it lands, gives the same rows (tested equal to v1 packs)
+    rule_in_force: the good trades with t <= u and arr <= u (received by the 5 s point u; repeats counted, Y6), in (t, file, line) order; the last 1,000 of them
+    stale_rule: B1 rule 22 (stale = 1 on a row empty TRADES_HOLE or THIN_FEED)
+    days: >-
+      D. PHASES (ADDON_ARCHITECTURE_V4 edit 3 section 4; Y1): phase A of D, days in parallel and without the CARRY, makes only the point-local records of D's raw: D's good trade rows (t, arr, line, px, repeat marks) in order, D's minute trade counts, live spans and bad trade rows (reader v6). Phase B, day after day with the CARRY of D-1, makes every value: the seen state over each span (alive from D-1's live spans; thin from D-1's counts and thin(D-1, 0)'s end), the points whose last 1,000 reach into D-1 (a covariance is not additive), the 00:00:00 point (NO_FILE when D's file is missing, X3). No value is final in phase A. THE CARRY (X1/carry/FLOWX/<D-1>.npz): D-1's last 1,000 good trades (t, arr, line, px; a trades file is cut by arrival, so no row of D-1's file is received after 24:00: X4); over their reach D-1's live spans, bad trade rows (stamp, arrival) and the thin states of its minutes; D-1's 1,440 minute trade counts and thin(D-1, 0)'s end (on, good); whether D-1's trades file exists (X1). The first year day reads 9 Sep 2025's raw once for the first CARRY (R2); if it is not held, the rows whose last 1,000 reach into 9 Sep 2025 are empty NO_FILE.
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: "the trades files' two stamp columns, as B1 reads them for its seen state (CARD_B1_V7 line 150: alive and thin through prod_reader_liquidations_v6.py; prod_B1_v3 efc2bc52 line 117): the minute counts (a trade counted in its minute when received by the minute's end) and the live spans (a trade stamped t, received a, makes the coin alive at every moment from max(t, a) to t + 60 s), 8566228f lines 98 to 116"
+    rule_in_force: "B1 rule 9's alive (a trade in [e - 60 s, e] received by e) and thin (R8: the base the median of D-1's 1,440 minute counts; a minute under 1 percent turns it on; while on, 5 minutes in a row at 20 percent or more end it; D's start is thin(D-1, 0)'s end, B1 rule 19)"
+    stale_rule: "B1 rule 22 (TRADES_HOLE, THIN_FEED: stale 1); D-1's trades file missing or a base of 0: thin off, flagged NO_RATE_BASE (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    days: "D-2, D-1 and D (D's base is D-1's counts; D's start is thin(D-1, 0)'s end, whose base is D-2's counts). Measured on 8 Mar 2026 (J16034, log f7a76cb05e789815): BTC 3.24 s, DOGE 1.03 s, CRV 0.10 s a pack. It parses each trades file a second time beside the trades reader (ADDON_ARCHITECTURE_V4 9.3 rule 1): FOR EDGE1, a seen-state kernel on the shared trades pack, tested equal to v6"
+overlaps:
+  - setting: D2 S04
+    kind: other_metric
+    why: >-
+      D2 S04 is the quoted spread of the median coin, bps, at the minute end, from the book_ticker stream (CARD_D2_V3 lines 48, 59, as
+      the K1 format example cites); F16 estimates a spread from the bounce of trade prices: the same idea on another row and another rule.
+per_coin: >-
+  Every roster coin of D (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters: knowledge/roster/ starts at
+  ROSTER_20251006, J16034; Y8, X11). BTC's 1,000 trades span seconds, a thin coin's hours: a count window, not a time window
+  (empty with stale 1 when B1 rule 9 finds the coin unseen in the span: no trade in [u - 60 s, u] is unseen, TRADES_HOLE). A taker
+  order sweeping k levels gives same-side moves (positive autocorrelation): Roll is biased low and NONNEG_COV comes more often.
+  1000-coins: px per 1,000 coins, the bps changes unchanged. A wide-step coin's changes are a few steps over the price, so dp takes
+  few values. Between two 5 s points a thin coin often has no new trade: F16 repeats with a growing age.
+time: >-
+  The 00:00 start: the 00:00:00 row is D-1's 24:00:00 row from the CARRY; until 1,000 of D's trades are received the last 1,000 reach
+  into D-1's last 1,000 (the CARRY, phase B). The first year day (10 Sep 2025) reads 9 Sep 2025's raw once if held; without it, NO_FILE (X1) until 1,000 trades of D are received. Crash days (10 Oct 2025 evening): many trades, the 1,000
+  span seconds, wide bounces. Funding settles and quarter hours are ordinary points.
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S16
+      label: bn_roll_spread_bps_1000t
+      units: bps of the trade price
+      value_kind: float
+      decimals: none
+      means: 2 sqrt(-cov) of consecutive price changes (bps) of the coin's last 1,000 trades received by the 5 s point u, the sample covariance; empty when cov >= 0
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per coin per day, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arr of the 1,000 trades counted (each arr <= u); an empty row has known_at = as_of = u; so known_at <= as_of
+    on every row, empty rows too
+  empty_reasons:
+    - reason: NO_FILE
+      when: "D's trades file is missing, or the last 1,000 reach D-1 (fewer than 1,000 of D received by u) and D-1's file is not held, on any day (X1; prod_B1_v3 lines 160 to 162); a header-only or 20-byte file is there with no rows (no trade gives TRADES_HOLE, CARD_B3_V4 line 116)"
+    - reason: SHORT_HISTORY
+      when: "fewer than 1,000 good trades with t <= u and arr <= u in D-1 and D, both held (D-1 held with no rows has none there; the count never reaches D-2: B1 rule 5's count)"
+    - reason: TRADES_HOLE
+      when: the coin not seen by B1 rule 9 in the span [t of p_0, u] for this reason
+    - reason: THIN_FEED
+      when: the coin not seen by B1 rule 9 in the span [t of p_0, u] for this reason
+    - reason: BAD_INPUT
+      when: the coin not seen by B1 rule 9 in the span [t of p_0, u] for this reason (a bad row in the span)
+    - reason: NONNEG_COV
+      when: the 1,000 counted, the coin seen, and cov >= 0 (all prices equal gives cov 0)
+  stale_rule: stale = 1 on a row empty TRADES_HOLE or THIN_FEED (B1 rule 22, CARD_B1_V7 line 174), else 0; a valued row is never stale (METRIC_AUDIT2 FS)
+  max_staleness_s: 3600
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: NO_RATE_BASE
+      when: "on a valued row when the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0): the coin is read as not thin (B1 rule 19; CARD_B3_V4 rule 8, E51)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row that counts a repeated row (an agg id or a trade id seen before in its file): it counts each time (B1 rule 17, A1 rule 10)"
+edge_cases:
+  - case: E1 the hand work's 6 prices in bps (the Roll kernel alone)
+    input: 'prices 100, 101, 100, 101, 100, 101 handed to the kernel'
+    answer: >-
+      dp = 100, -10000/101, 100, -10000/101, 100; 4 pairs; mean a = mean b = 50/101; every product of deviations -(10050/101)^2;
+      cov = -134670000/10201 = -13201.64690; F16 = 2 sqrt(134670000/10201) = 229.7968398 (= 40200 / (101 sqrt 3))
+  - case: E2 a rising series, cov > 0
+    input: 'the kernel on 100, 101, 103, 106, 110; and 1,000 trades: 996 at 100.00 then 101.00, 103.00, 106.00, 110.00'
+    answer: >-
+      kernel: dp = 100, 20000/101 = 198.0198020, 30000/103 = 291.2621359, 20000/53 = 377.3584906; 3 pairs; cov =
+      147605106500000/17207363031 = 8578.020132 (in price units +1, the hand work): NONNEG_COV. The 1,000: cov =
+      534700139417615000/2853571576670531 = 187.3792632: empty NONNEG_COV, known_at = u, stale 0
+  - case: E3 all prices equal
+    input: 1,000 trades at 100.00
+    answer: 'every dp 0, cov 0: empty NONNEG_COV'
+  - case: E4 fewer than 1,000
+    input: "999 trades in D, D-1's trades file there with no rows (header-only); again with D-1's file not held"
+    answer: 'empty SHORT_HISTORY (D-1 held and empty: the count never reaches D-2); then empty NO_FILE (the 1,000 reach into D-1, not held: X1, prod_B1_v3 line 161); known_at = u; stale 0'
+  - case: E5 the 1,000 alternating trades (the plant A) at the minute end 12:00:00
+    input: >-
+      u = 12:00:00 of D; 1,000 trades at 100.00 and 101.00 by turns from 100.00 (p_999 = 101.00), t_i = u - 100 s + i x 0.1 s (i = 0 to
+      999), arr = t + 5 ms, lines in order; nothing else in D-1 or D; the coin's seen state planted alive from before t of p_0 and thin off (reader v6's
+      arrays, as F14 U2)
+    answer: >-
+      999 changes (500 of +100, 499 of -10000/101), 998 pairs, means 50/101; cov = -100800495000/10170397 = -9911.166201 (= -998
+      (10050/101)^2 / 997); F16 = 199.1096803; known_at = u - 0.095 s; stale 0
+  - case: E6 a trade stamped before u, received after u
+    input: 'A plus a trade at 102.00 with t = u - 0.05 s and arr = u + 0.002 s'
+    answer: >-
+      at u it is not counted: F16 = 199.1096803 (A's 1,000); counted (no arrival rule) it would give 198.9110652; at the next 5 s point
+      u + 5 s it is received: the last 1,000 are A's last 999 and it, cov = -100599495000/10170397 = -9891.402961, F16 = 198.9110652
+  - case: E7 the 00:00 start with the CARRY, and the first year day without it
+    input: >-
+      A placed as D-1's last 1,000 at t = 23:58:20.000 to 23:59:59.900 of D-1 (arr = t + 5 ms); D: 101.00 at 00:00:20 and 100.00 at
+      00:00:40 (arr = t + 5 ms); u = 00:00:00, 00:00:05 and 00:01:00 of D; again with no CARRY (10 Sep 2025, 9 Sep 2025 not held)
+    answer: >-
+      with the CARRY: 00:00:00 (D-1's 24:00:00 row) and 00:00:05 (phase B) F16 = 199.1096803, known_at 23:59:59.905 of D-1; 00:01:00
+      the CARRY's last 998 and D's 2, cov = -50198596010000/5075028103 = -9891.294194, F16 = 198.9099715, known_at 00:00:40.005;
+      without: NO_FILE at 00:00:00, 00:00:05 and 00:01:00 (the last 1,000 reach into 9 Sep 2025's trades, not held; X1, no flag)
+  - case: E8 two trades with one t
+    input: 'A with p_998 (100.00) and p_999 (101.00) both at t = u - 0.1 s, file lines in that order'
+    answer: 'in line order: F16 = 199.1096803; the other order (101.00 then 100.00) would give 198.9099715'
+  - case: E9 the seen edge (a thin coin)
+    input: 'A moved back in time so its latest trade is at t = arr = u - 60 s exactly, the live spans from A''s own trades plus one trade received by t of p_0 (1 s before p_0, not among the 1,000); again at u - 60.001 s'
+    answer: 'u - 60 s: seen (a trade in [u - 60 s, u], B1 rule 9), F16 = 199.1096803, stale 0; u - 60.001 s: unseen, empty TRADES_HOLE, stale 1, known_at = u'
+  - case: E10 the coin unseen inside the span
+    input: 'A with the coin planted not seen by B1 rule 9 (THIN_FEED) at u - 50 s; again with it not seen only at u - 101 s (before t of p_0 = u - 100 s)'
+    answer: 'empty THIN_FEED, known_at = u, stale 1 (B1 rule 22); the second: F16 = 199.1096803 (outside the span)'
+  - case: E11 5 s points that are not minute ends (12:00:05 and 12:00:10, which rows enter and leave)
+    input: 'E6''s rows (A, the 102.00 at t 11:59:59.950 received 12:00:00.002) plus 100.00 at t 12:00:03.000 received 12:00:05.004; u = 12:00:05 and 12:00:10'
+    answer: >-
+      12:00:05: the 102.00 enters (received), p_0 (100.00 at t 11:58:20.000) leaves, the 100.00 of 12:00:03 is not yet received: F16 =
+      198.9110652, known_at 12:00:00.002; 12:00:10: the 100.00 enters and p_1 leaves (A's last 998, 102.00, 100.00): cov =
+      -2562608446010000/258826433253 = -9900.876096, F16 = 199.0062923, known_at 12:00:05.004; stale 0 both
+  - case: E12 a bad trade row in the span (BAD_INPUT)
+    input: "A plus a trade row whose price is not a number (bad), stamped u - 50 s, received u - 49.995 s"
+    answer: 'empty BAD_INPUT, stale 0, known_at = u (stamped in [t of p_0, u] and received by u)'
+  - case: E13 a 1000-coin
+    input: "A on 1000PEPEUSDT at px 0.012500 and 0.012625 by turns (p per 1,000 coins)"
+    answer: 'the same ratios as 100.00 and 101.00: F16 = 199.1096803 (the bps changes unchanged)'
+  - case: E14 a trade row with no stamp (Y5)
+    input: "A plus a trade row with timestamp and local_timestamp empty (t = arr = -1, bad), px 150.00"
+    answer: 'in no window and no BAD_INPUT: F16 = 199.1096803 as E5, no flag'
+  - case: E15 a repeated trade row (Y6)
+    input: "A with p_999 (101.00) twice in the file (the same trade id, the same t)"
+    answer: 'counted each time: the last 1,000 are A''s p_1 to p_999 and the repeat (a last change of 0): cov = -100699995000/10170397 = -9901.284581, F16 = 199.0103975, flag DUPLICATE_ROW'
+unit_tests:
+  - test: U1 (E1) the Roll kernel
+    planted: the 6 prices of E1 handed to the kernel
+    expect: 'cov -134670000/10201; F16 229.7968398 within 1e-9 relative'
+  - test: U2 (E5) the plant A end to end
+    planted: the 1,000 trades of E5 as a trades pack (t, arr, px, line; dup false, bad false); the seen state planted alive from before t of p_0 and thin off (reader v6's arrays, as F14 U2)
+    expect: 'F16 = 199.1096803 at u = 12:00:00; known_at u - 0.095 s; stale 0; empty_reason none'
+  - test: U3 (E2, E3) cov >= 0
+    planted: the kernel on the 5 rising prices; the 1,000 rising trades of E2; the 1,000 equal trades of E3
+    expect: 'NONNEG_COV in all three (cov 8578.020132, 187.3792632, 0); known_at = u, stale 0, value NaN (value_kind 0)'
+  - test: U4 (E4, E6, E8) the count, the arrival and the ties
+    planted: the rows of E4, E6, E8
+    expect: 'E4 SHORT_HISTORY, then NO_FILE (D-1 not held); E6 199.1096803 at u and 198.9110652 at u + 5 s; E8 199.1096803'
+  - test: U5 (E7) the 00:00 start and the first year day
+    planted: the E7 CARRY and D rows; again with no CARRY
+    expect: 'with: 199.1096803 at 00:00:00 and 00:00:05, 198.9099715 at 00:01:00; without: NO_FILE at all three'
+  - test: U6 (E9, E10) stale and the seen rule
+    planted: "the rows of E9 and E10 with their live spans (E9: A's own trades and the trade received by t of p_0)"
+    expect: 'E9 199.1096803 stale 0 at u - 60 s, empty TRADES_HOLE stale 1 at u - 60.001 s; E10 THIN_FEED stale 1, then 199.1096803'
+  - test: U7 (E11) the points 12:00:05 and 12:00:10
+    planted: the E11 rows
+    expect: 'F16(12:00:05) = 198.9110652, known_at 12:00:00.002; F16(12:00:10) = 199.0062923, known_at 12:00:05.004'
+  - test: U8 the row stamps
+    planted: U2 to U7
+    expect: 'every row as_of = u and known_at <= as_of; 17,280 rows per coin for a full day; value_kind 1 or 0 (empty)'
+  - test: U9 (E12 to E15) a bad row, a 1000-coin, a stampless row, a repeat
+    planted: "the rows of each case through the trades reader's pack, the seen state as U2"
+    expect: "each answer exactly as written"
+mutants:
+  - mutant: M1 population_cov (the covariance over n = 998, not n - 1 = 997)
+    caught_by: 'U2 (2 x 10050/101 = 20100/101 = 199.0099010 against 199.1096803, a move of 5.0e-4 relative); U1 (199.0099010 against 229.7968398)'
+  - mutant: M2 abs_cov (2 sqrt(|cov|) when cov >= 0, a value in place of NONNEG_COV)
+    caught_by: 'U3 (the 1,000 rising trades: 27.37730908, the kernel on 5 prices: 185.2352033, the equal trades: 0.0, all in place of NONNEG_COV)'
+  - mutant: M3 dup_dropped (a repeated row left out)
+    caught_by: 'U9 E15 (199.1096803 against 199.0103975)'
+  - mutant: M4 stampless_bad (a trade row with no stamp gives BAD_INPUT)
+    caught_by: 'U9 E14 (BAD_INPUT against 199.1096803)'
+  - mutant: M5 seen_at_u_only (alive at u, not over the span)
+    caught_by: 'U6 E10 (199.1096803 against THIN_FEED)'
+  - mutant: M6 d1_empty_as_missing (D-1 held with no rows read as NO_FILE)
+    caught_by: 'U4 E4 (NO_FILE against SHORT_HISTORY)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT and one thin coin (the tester names it), the 5 s points 00:00:00, 00:00:05, 12:00:00 and 23:59:55
+      why: >-
+        the year's checked day; 00:00:00 is 7 Mar 2026's 24:00:00 row and 00:00:05 reads the CARRY (its last 1,000 trades); the trades
+        stream is the year's (held on year days), so D4 (aggTrades held) does not bind this card
+    - point: 2026-03-08, BTCUSDT, 12:00:05 to 12:01:00 every 5 s
+      why: 5 s points that are not minute ends (which trades enter and leave the 1,000 by arrival)
+    - point: 2025-09-24, BTCUSDT and the thin coin, the 5 s points 00:00:00, 00:00:05, 12:00:00 and 23:59:55
+      why: >-
+        the year's checked day, a second day; the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's
+        B1 has (ADDON_ARCHITECTURE_V4 section 6, V3 section 6 standing) are found before the job
+    - point: 2025-10-10 evening, BTCUSDT and the thin coin, 3 minute ends the tester picks before the job
+      why: the crash (many trades, wide bounces)
+  pass: >-
+    The tester recomputes F16, its empty reasons, flags, stale and known_at at every point from this card's words with Fraction on the
+    trades pack's rows (never the producer's code), the square root last: floats within 1e-9 relative of the recompute (V2 4.5),
+    words equal; screamer RollSpread on the same 1,000 prices beside (NaN at cov >= 0, the tool against ours). With F12's job,
+    one small read-only runner job.
+meaning_check:
+  pass_lines:
+    - >-
+      F16 near D2's quoted spread: the median over D2's coins of F16 against D2 S04 (the quoted spread of the median coin, bps) at
+      the minute ends of 2026-03-08, and F16 of BTC and wide coins against their quoted spreads (the hand work); near = F16 / D2 S04 within [1/2, 2] at more than half of the valued minute ends
+      (proposed level, EDGE1 or the owner sets it); if far, the card says F16 does not mean a spread here.
+  report_only:
+    - the share of 5 s points NONNEG_COV, SHORT_HISTORY and stale per coin on the checked days
+    - the time span of the 1,000 trades per coin and hour
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - the bid-ask bounce in this coin's last 1,000 trade prices as a spread estimate in bps, when consecutive changes reverse on average
+    - a coin against itself across hours and days, with the span of its 1,000 trades beside
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - the quoted spread (that is the book, D2 S04)
+    - a spread of 0 when empty (NONNEG_COV is no estimate)
+    - 'a cost per order: the rows are trades (fills), not orders; one taker order sweeping k levels gives same-side moves that bias Roll low (RULING 3, the name says what the value is)'
+    - a time window (the 1,000 span seconds on BTC, hours on a thin coin)
+readers: none yet
+implementation:
+  how: >-
+    Per coin, vectorised over the day: the good rows of the CARRY and D (repeats kept, Y6) sorted by (t, file, line), D-1's file first on a tie of t (prod_B1_v3 line 104), stable; for each of the 17,280 points the
+    index of the last row with t <= u by searchsorted; the rows with t <= u < arr masked out in a small (17,280, k) block, k the most
+    such rows at any u (searchsorted on arrival); the 1,000 prices per point gathered (only the points where a new row was received
+    since the previous point are recomputed, the others repeat with their known_at); dp, the pairs and the centered sample covariance
+    per row in numpy (not differences of cumulative sums: the 1e-9 check); D-1's part from the CARRY in phase B for the points whose
+    1,000 reach into D-1. Dense [coin x 17,280] grids for the writer (ADDON_ARCHITECTURE_V4 section 2). No loop over rows or points in
+    Python. The trades pack is read once per day with F11, F12, F13, F14, F15.
+  kernel: 'new: last_n_rows (the last N rows received by u: searchsorted on arrival; not in addon_grid_v2 85c8ece1, to be added with its tests)'
+  memory_mb: 800
+  seconds_share: 3
+data_checks:
+  - what: the CARRY of the first year day (are 9 Sep 2025's trades held?)
+    who: BED (a read-only runner job, with F14's)

@@ -1,0 +1,285 @@
+{
+  "kind": "build_metric",
+  "id": "HO3",
+  "producer": "HLPOSX",
+  "item": "Hyperliquid positions of every account per coin, hourly: the biggest accounts (MISSING_INFO_BACKLOG M01; top-trader long/short, M04)",
+  "tier": "BUILD",
+  "name": "Hyperliquid long share of the 100 largest positions, and the net position of positions over 1 million dollars and its change since the previous hour",
+  "status": {
+    "drafter": "OX-DATA",
+    "reviewer": "UNASSIGNED independent research and LAB1",
+    "edition": 3,
+    "signed": false,
+    "changes": "Owner-authorized correctness successor. Tests and evidence are in producer_build_20261024; no inherited approval."
+  },
+  "means": "At the last hourly funding known at u: of the 100 largest positions in the coin, what share (by size) is long, Hyperliquid's own top-trader long/short. And how many coins positions worth over 1 million dollars hold net, and how that changed since the hour before.",
+  "example": "SOL, the 10:00 snapshot: the 100 largest |szi| positions hold 600,000 SOL long and 400,000 SOL short: S07 = 0.6. Positions over 1 million dollars (|szi| x 180 >= 1,000,000, i.e. |szi| >= 5,556 SOL): +500,000 long and -300,000 short: S08 = +200,000 SOL; at 09:00 the same group netted +250,000: S09 = -50,000 SOL.",
+  "formula": "For snapshot selection t_k=max(funding_time_us, containing block_time_us); known time=t_k+1s. Age=u-known time;3900s inclusive. This is MODEL_AVAILABLE_AT, not an observed receipt. Snapshot k of coin c with price p_k (HLPX S01 at or before t_k + 1 s): rank rows by |szi| descending (ties by account address ascending); TOP = the first 100 (all if fewer). S07 = sum(szi for rows in TOP with szi > 0) / sum(|szi| in TOP). BIG_k = rows with |szi| x p_k >= 1,000,000. S08 = sum(szi) over BIG_k (signed coins). S09 = S08 at snapshot k minus S08 at snapshot k-1 (the previous hour's snapshot, each with its own price and group); EMPTY NO_PREVIOUS when k-1 is missing or older than 3,900 s before t_k. Minute end u: the snapshot in force as in HO1. If the preceding snapshot has no positions, S09 is EMPTY NO_PRICE because its preceding large-account reading is undefined.",
+  "source": {
+    "kind": "ours",
+    "ref": "PRODUCERS_HL_PLAN_V1 (LEAD), HL_DATA_LIST_V1 rows P03, P04; Hyperliquid node misc_events Funding deltas"
+  },
+  "inputs": [
+    {
+      "kind": "reader",
+      "ref": "team/RESEARCH/tools/hl_node_read/hl_node_read.py:read",
+      "exists": true,
+      "stream": "positions table of hl_node_read V1; containing block_time_us is required",
+      "rule_in_force": "Snapshot available at max(funding_time_us, containing block_time_us)+1s, MODEL_AVAILABLE_AT. Use the latest available snapshot; age<=3900s, flag stale after3600s. Snapshot-block fills replay inclusively through u-1s for minute reconstruction.",
+      "stale_rule": "Per-output card limits; actual missing-hour and manifest-tail spans remain missing. Snapshot availability uses containing block time.",
+      "days": "D's 24 hour files; the CARRY of D-1 (its last two snapshots)",
+      "data_check": "Exact source manifest/part hashes and independent raw reconstruction at the declared sampled points; not whole-history proof",
+      "verdict": "LIMITS",
+      "waits_for": "Independent release approval; source is available and bounded raw comparisons passed"
+    },
+    {
+      "kind": "addon",
+      "ref": "HLPX S01",
+      "card": "HLPX/HP1_V3",
+      "grid": "5s",
+      "stream": "the last Hyperliquid trade price at the funding time (for the 1 million edge)",
+      "rule_in_force": "Latest eligible HLPX grid point at or before the required modeled snapshot/minute clock; empty price stays NO_PRICE.",
+      "stale_rule": "HLPX's own; EMPTY gives EMPTY NO_PRICE on S08, S09",
+      "days": "D",
+      "verdict": "LIMITS",
+      "waits_for": "Candidate dependency has bounded evidence; independent approval pending",
+      "exists": true,
+      "data_check": "Dependency computed by the same candidate workflow; per-code raw comparisons in the bounded evidence. Independent approval pending."
+    }
+  ],
+  "overlaps": [
+    {
+      "setting": "POSX top-trader long/short (Binance)",
+      "kind": "other_metric",
+      "why": "Binance's own top-trader ratio; a cross-check of direction, never merged"
+    }
+  ],
+  "per_coin": "The public workflow accepts explicit native Hyperliquid PERP coin names and preserves their price/size units; it performs no roster rename or 1000-coin rescaling. Spot and HIP3 excluded. Absence or thin activity follows each output's explicit empty/zero rule. ",
+  "time": "Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim. Hourly snapshot held to minute grid.",
+  "output": {
+    "group_file": "<root>/day=<YYYYMMDD>/X1.HLPOSX/ (lab3 canonical part directory)",
+    "names": [
+      {
+        "name": "S07",
+        "label": "hl_top100_long_share",
+        "units": "share 0 to 1",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "the long share, by size, of the 100 largest positions at the snapshot in force",
+        "never": [
+          "the share of accounts (that is HO2)",
+          "the best traders (largest is not best)"
+        ]
+      },
+      {
+        "name": "S08",
+        "label": "hl_big_net_coins",
+        "units": "coins (signed, + = net long)",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "net coins held by positions worth at least 1 million dollars at the snapshot in force",
+        "never": [
+          "whales across all coins (this coin only)"
+        ]
+      },
+      {
+        "name": "S09",
+        "label": "hl_big_net_change_1h_coins",
+        "units": "coins (signed)",
+        "value_kind": "float",
+        "decimals": "none",
+        "means": "S08 now minus S08 at the previous hourly snapshot",
+        "never": [
+          "a trade flow (the group membership can change between hours)",
+          "fixed-cohort position change; membership can change with price"
+        ]
+      }
+    ],
+    "grid": "minute",
+    "cadence": "minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)",
+    "as_of_rule": "as_of = u",
+    "known_at_rule": "known_at=as_of=u; known_at <= as_of on every row. Snapshot identity is the pair (max(funding_time_us, containing block_time_us), block_number), across all native PERP coins. Availability is that time plus1s, MODEL_AVAILABLE_AT. At u use the last available snapshot; age<=3900s is admissible, age>3600s is flagged stale. No observed-arrival claim.",
+    "known_at_kind": "MODEL_AVAILABLE_AT",
+    "empty_reasons": [
+      {
+        "reason": "STALE_SNAPSHOT",
+        "when": "no snapshot known within 3,900 s before u"
+      },
+      {
+        "reason": "NO_POSITIONS",
+        "when": "the snapshot holds no position in the coin"
+      },
+      {
+        "reason": "NO_PRICE",
+        "when": "S08, S09 when HLPX S01 is EMPTY at the funding time"
+      },
+      {
+        "reason": "NO_PREVIOUS",
+        "when": "S09 when the previous snapshot is missing or more than 3,900 s older"
+      },
+      {
+        "reason": "NO_HISTORY",
+        "when": "before the first snapshot of 27 Sep 2025"
+      }
+    ],
+    "stale_rule": "stale = 1 when the snapshot in force is older than 3,600 s",
+    "max_staleness_s": 3900,
+    "window_days": 0,
+    "no_history": "none",
+    "fit_rule": "none",
+    "fifths": "none",
+    "flags": [
+      {
+        "flag": "SNAPSHOT_AGE",
+        "when": "always"
+      },
+      {
+        "flag": "FEWER_THAN_100",
+        "when": "the coin has fewer than 100 positions"
+      }
+    ],
+    "quality_companion": {
+      "codes": [
+        {
+          "code": "X1.HLPOSX.Q01",
+          "kind": "WORD",
+          "meaning": "Categorical JSON flags and pair_quality only"
+        },
+        {
+          "code": "X1.HLPOSX.Q02",
+          "kind": "NUMBER",
+          "meaning": "Source age in seconds; unavailable age is EMPTY NO_SOURCE_AGE"
+        }
+      ],
+      "writer": "write_hl_v2.py",
+      "scope": "Diagnostic companions in the same family part and clock; never additional trading readings. Reconciliation receipts become known at the next snapshot, not earlier."
+    }
+  },
+  "edge_cases": [
+    {
+      "case": "E1 the example",
+      "input": "as in the example",
+      "answer": "S07 0.6, S08 200000, S09 -50000"
+    },
+    {
+      "case": "E2 a tie at rank 100",
+      "input": "ranks 100 and 101 with the same |szi|",
+      "answer": "the lower account address is in TOP"
+    },
+    {
+      "case": "E3 a position exactly at 1 million dollars",
+      "input": "|szi| x p_k = 1,000,000.00",
+      "answer": "in BIG"
+    },
+    {
+      "case": "E4 a missing previous hour",
+      "input": "snapshots at 08:00 and 10:00 only",
+      "answer": "S09 at 10:00 EMPTY NO_PREVIOUS"
+    }
+  ],
+  "unit_tests": [
+    {
+      "test": "U1 (E1)",
+      "planted": "the example snapshots at 09:00 and 10:00",
+      "expect": "S07 0.6, S08 200000, S09 -50000"
+    },
+    {
+      "test": "U2 (E2, E3)",
+      "planted": "a tie at rank 100; a position at exactly 1,000,000 dollars",
+      "expect": "the lower address in TOP; the position in BIG"
+    },
+    {
+      "test": "U3 (E4)",
+      "planted": "snapshots at 08:00 and 10:00",
+      "expect": "S09 EMPTY NO_PREVIOUS while the 10:00 snapshot is in force"
+    }
+  ],
+  "mutants": [
+    {
+      "mutant": "M1 S07 by account count instead of size",
+      "caught_by": "U1 (another share)"
+    },
+    {
+      "mutant": "M2 S09 against a snapshot two hours back",
+      "caught_by": "U3"
+    },
+    {
+      "mutant": "M3 BIG with a strict > edge",
+      "caught_by": "U2"
+    }
+  ],
+  "real_check": {
+    "points": [
+      {
+        "point": "2025-09-28 BTC 10:01 UTC",
+        "why": "ordinary completed conversion window"
+      },
+      {
+        "point": "2025-09-28 BTC 06:09 UTC",
+        "why": "first eligible forced event after warmup, chosen from source only"
+      },
+      {
+        "point": "2025-09-29 ETH 10:01 UTC",
+        "why": "different coin and completed BUILD day, same executable"
+      }
+    ],
+    "pass": "Exact counts, row keys, clocks, flags and empty reasons. Float absolute difference<=1e-9+1e-9*abs(expected), in each declared unit; fixed before checks. An all-empty sample cannot prove the valued meaning branch.",
+    "historical_trial_plan_not_run": {
+      "points": [
+        {
+          "point": "2025-10-10, BTC and SOL, all snapshots",
+          "why": "the crash day, big accounts moving"
+        },
+        {
+          "point": "2025-10-15, BTC and one thin coin, all snapshots",
+          "why": "an ordinary day, fewer than 100 positions on the thin coin"
+        }
+      ],
+      "pass": "QUANT recomputes from this card's words with its own code straight from the RAW node lz4 files (its own parser; never hl_node_read's converted tables, never the builder's code), so a conversion error cannot hide (owner 09:24Z); floats within 1e-9 relative"
+    },
+    "limits": "Candidate bounded cases replace the initial development examples, not the deferred stress/thin-coin trials or independent review. Those remain unclaimed; no outcomes were used for selection."
+  },
+  "meaning_check": {
+    "pass_lines": [
+      "Every valued output obeys its stated formula, units and population; missing data is never zero.",
+      "No input whose modeled availability is after u changes a value at u."
+    ],
+    "report_only": [
+      "S07 and S08 per coin by month"
+    ]
+  },
+  "conclude": {
+    "may": [
+      "how the largest Hyperliquid positions leaned at the last funding, and how the big accounts changed over the last hour"
+    ],
+    "never": [
+      "that the largest accounts are skilled",
+      "anything after u"
+    ]
+  },
+  "readers": "none yet",
+  "implementation": {
+    "how": "Global native-PERP snapshot clocks, NumPy account sums/top ranks and minute as-of selection; funding stays attached to source rows; missing funding remains empty. Public entry point: build_hl_day_v2.py; admission before canonical lab3 write.",
+    "kernel": "new: hl_snapshot_asof",
+    "memory_mb": 1000,
+    "seconds_share": 5,
+    "performance_evidence": "Measured whole workflow, not per-card allocation: BTC Sept28 17.47s; BTC+ETH Sept29 33.59s and2.69GB peak RSS. Not a full-roster/month capacity guarantee."
+  },
+  "data_checks": [
+    {
+      "what": "Raw/card arithmetic and canonical stored-value comparison for each reading at declared sample points",
+      "who": "OX-DATA separate reference implementation; not independent-person review",
+      "evidence": [
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_first/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_active/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_stored/receipt.json",
+        "team/OUTSIDE/DATA/producer_build_20261024/raw_eth_second_day/receipt.json"
+      ]
+    },
+    {
+      "what": "Independent design/release approval remains unassigned; exact final-version acceptance pending",
+      "who": "Research peer and LAB1 plus outside reviewer"
+    }
+  ],
+  "card": "HO3_V3"
+}

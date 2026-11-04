@@ -1,0 +1,129 @@
+# BASIC_A1_V2.yaml: EDITION 2 = edition 1 (BASIC_A1_V1.yaml 1d082849ec608382, kept; the owner's review OK, EDGE1 14:10:45Z) with the owner's
+# copies rule as BASIC_C1_V5 95244119: S07.seen_at_e_off is no row of its own, read as the year's ACCEPTED cross-check (one reading rule, one
+# never line); S07.grid_off stays a setting (another reading of the same rule, below S07 at 4.40% and 4.21% of the steps above 0; BED's
+# proposal FOR EDGE1 14:14Z). No other change.
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR4 (hb/EDGE2.txt 14:31:04Z, 14:31:24Z): (1) the outside record: MEANING_A1_V4
+# checks daily totals against Coinalyze (EDGE2 jobs 15739, 15740), which cannot test a 30 s burst; (2) 'every compared 30 s', the 78 steps
+# of 24 Sep not compared named (THIN_FEED: DASH 68, RENDER 10, J15860); (3) the row field: one print a coin a second is Binance's rule, the
+# files hold two rows in 9 file-seconds on 24 Sep (J15873); (4) latency: MEANING_A1_V4's OPEN restored (J15775: 6 to 20 ms on the 6
+# largest of 8 Mar); (5) why S07.grid_off is kept, in its row; (6) the seen proof from J15859, J15860's own rows: 84 TRADES_HOLE on 8 Mar,
+# 993 TRADES_HOLE MATCH and 78 THIN_FEED NOT_COMPARABLE on 24 Sep (the 1,071 empties), not '349' (B1 S03's, J15840).
+# (V1:) BASIC_A1_V1.yaml: the card of A1's one basic setting, S07 (the largest 30 s long liquidation sum of the last 600 s), and its twins
+# (BED, 2026-10-18, BR4 = WP4 of BASIC_REVIEW_WORKPACKAGES_V3 075b96c8). S07 left the raw card MEANING_A1_V4 (63ff333d, its header: 'S07
+# moved to BASIC_A1_V1'). Made the way BASIC_C8_V3 was (METRIC_REVIEW_METHOD_V1 da211e1d section 5; the rename rule; conclude).
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py (edition 5 6223b1ad) checks it and writes .md, .flat.jsonl, .agent.jsonl.
+# Layer: basic (the largest of A1's own 30 s sums over a window: a maximum of a proven raw value).
+
+group: A1
+name: liq_dollars, the largest 30 s long burst of the last 600 s (basic, built on A1 raw)
+summary: >-
+  Per coin, every 30 s: the largest long liquidation sum of 30 s (longs forced out, forced selling, USDT and USDC contracts) that could be
+  known at any moment of the 600 s ending at e. A row counts in the 30 s sum at a moment t when it is stamped in (t - 30 s, t] and was
+  received by t; S07 is the largest such sum over every t in [e - 600 s, e], in whole dollars. It is empty unless the coin was seen at
+  every moment of the 630 s ending at e. Beside: S07.grid_off, the same rule read at 200 moments e, e - 3 s, ..., e - 597 s.
+  The year also writes S07.seen_at_e_off (the same sum, empty only when the coin is not seen at e): its accepted cross-check, a copy.
+read_as: >-
+  The biggest burst of forced selling this coin had in the last ten minutes, AT LEAST (A1 is a floor: Binance sends the last liquidation
+  of each coin each second; the files never hold two rows of one file-second on 8 Mar 2026, and two in 9 file-seconds of 12,878 on 24 Sep
+  2025, J15872, J15873). Recomputed from the Tardis rows it equals ours at every compared 30 s of 7 coins a day on both days (A1S07_STAMPS_V1; 78 steps of
+  24 Sep not compared, THIN_FEED, the thin state not recomputed: DASH 68, RENDER 10, J15860). It
+  is never below the 30 s now (A1 S03) and equals it at 5.3% and 4.9% of the steps where it is above 0: the burst is usually older than
+  the last 30 s. Its window reaches further back than its name: the 30 s sum known at e - 600 s holds rows stamped up to 630 s before e
+  (DOGE 8 Mar 12:26:30: S07 80,842 is a burst stamped 12:16:01.8, 628 s before e). The 3 s grid twin misses those first 3 s and the sums
+  between samples: equal at 95.60% and 95.79% of the steps with S07 above 0.
+
+conclude:
+  may:
+    - "the largest 30 s burst of long liquidations published for this coin in the last ten minutes, at least this many dollars (a floor)"
+    - "whether the burst is now (S07 = A1 S03) or older (S07 above S03), on the coins seen through the 630 s"
+    - "how big it was against this coin's own history (A1's reading rule: its percentage over the coin's own 14 days)"
+  never:
+    - "the total liquidated in that burst on Binance: one print per coin per second (MEANING_A1_V4's never)"
+    - "that the burst happened in the last 600 s: the sum known at e - 600 s holds rows stamped up to 630 s before e (DOGE 8 Mar 2026 12:26:30, J15875 a1look)"
+    - "that no coin was liquidated when S07 is empty: empty = the coin was not seen through the 630 s (a trade gap over 60 s or a thin minute)"
+    - "a copy (S07.seen_at_e_off) as a metric of its own: it is the year's cross-check of the same sum, read through a trade gap; read S07"
+    - "anything from S07.grid_off without its gap: it can miss a burst that counts only between its 3 s samples or in [e - 600 s, e - 597 s)"
+
+where:
+  card: testbed/value_audit/registers/CARD_A1_V5.md 7d0fff501e319c2a (rules 1 to 5, 9, 13, 17; edge cases E41 to E43, E52, E79, E80)
+  settings_register: testbed/value_audit/registers/SETTINGS_A1_V4.tsv 5814b51211138ae5
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6 (A1 raw: LIMITS, a floor; closed with the owner, LAYER_REGISTER_V7)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (A1 S07 basic, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_A1_v3.py 98349a4fa1c99f12 (CARD_A1_V5 part 5, edition 5), with prod_reader_liquidations_v6.py and prod_reader_trades_v1.py"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A1.parquet
+  year_output_columns: "name (S07, S07.grid_off, S07.seen_at_e_off among A1's 21 names; J15840 schema), coin (every roster coin), as_of_us (every 30 s: 2,880 a coin-day), value_kind (0 = EMPTY, NaN in value_f64), value_f64 (whole dollars), known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_a1s07.py year(D, coins) or ours.at(D, 'A1', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, binance-futures (Binance USDT-margined perpetuals), through our raw A1"
+  exchange_stream: "forceOrder (the liquidation order snapshot: the last liquidation of each symbol each second); trades only for the seen state"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/liquidations_<COIN>USDT_<YYYY-MM-DD>.csv.gz and liquidations_<COIN>USDC_ (D-1 and D); trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz (D-1 and D) for rule 5"
+  columns: "exchange, symbol, timestamp, local_timestamp, id, side, price, amount (liquidations); timestamp, local_timestamp (trades)"
+  fields:
+    row: "one liquidation order, filled; Binance sends at most one a coin a second (MEANING_A1_V4), the files hold one row a file-second at most on 8 Mar 2026 (9,001 rows) and two in 9 of 12,878 file-seconds on 24 Sep 2025 (J15872, J15873 floor); dollars = the order's limit price x the filled amount, exact from the file's text [proof: MEANING_A1_V4 fields row, price, amount; basic_a1s07 parse_liq, tests T1, T12]"
+    burst: "S07 = the largest 30 s sum (rows stamped in (t - 30 s, t], received by t, side sell) over every t in [e - 600 s, e], rounded once to the whole dollar half up; a row counts while max(stamp, arrival) <= t < stamp + 30 s [proof: CARD_A1_V5 rule 9, E41 to E43, E79, E80; basic_a1s07 best30, tests T2 to T5, T13; A1S07_STAMPS_V1]"
+    seen: "S07 empty unless every moment of [e - 630 s, e] had a USDT trade in its last 60 s received by then (TRADES_HOLE) and no thin minute (THIN_FEED); the copy .seen_at_e_off empty only when not seen at e [proof: CARD_A1_V5 rules 5, 9, E52; basic_a1s07 cover, tests T6, T7; the empties in A1S07_STAMPS_V1: 84 TRADES_HOLE MATCH on 8 Mar (LIT 42, ICP 21, XMR 21, J15859 rows), 993 TRADES_HOLE MATCH (DASH 949, RENDER 22, XMR 22) and 78 THIN_FEED NOT_COMPARABLE (DASH 68, RENDER 10) on 24 Sep (J15860 rows), the 1,071 empties of that day]"
+    grid: "S07.grid_off: the same rule at t = e, e - 3 s, ..., e - 597 s (200 samples) [proof: CARD_A1_V5 rule 9, E42; basic_a1s07 tests T3, T13; A1S07_STAMPS_V1]"
+  latency: "OPEN (MEANING_A1_V4 latency): SOURCE_SPEC F4 measured a print arriving 1.01 s after its stamp at the median, p99 2.8 s, max 5.1 s (BTC's year), while job 15775 saw 6 to 20 ms on the 6 largest of 8 Mar 2026; not measured on one whole day. A late row counts only from its arrival, and never when it arrives after its 30 s (E43)"
+
+reading_rules:
+  - "the year also writes S07.seen_at_e_off as its own cross-check (the same sum, empty only when the coin is not seen at e). ACCEPTED as a cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to S07 wherever S07 has a value (149,676 and 145,809 coin-steps, J15849 TWINS equal 1.0; A1S07_STAMPS_V1 40,129 MATCH, 191 NOT_COMPARABLE THIN_FEED), a value where S07 is empty at 84 (8 Mar 2026) and 849 (24 Sep 2025) coin-steps; not a separate metric"
+  - "S07 and its twins are written every 30 s (rule 17: 2,880 a coin-day); at a fire the window ends at the fire second"
+  - "whole dollars, long side only (longs forced out); USDT and USDC contracts together"
+  - "0 = the coin was seen through the 630 s and no long row counted in any 30 s sum; empty is never 0"
+
+values:
+  units: "US dollars, whole"
+  zero: "no long row counted: S07 0 at 80.05% (8 Mar 2026) and 77.20% (24 Sep 2025) of the coin-steps with a value (J15872, J15873 a1s07)"
+  empty: "TRADES_HOLE, THIN_FEED (and NO_FILE, BAD_INPUT, NO_ROSTER): 84 coin-steps on 8 Mar (LIT 42, ICP 21, XMR 21), 1,071 on 24 Sep (J15858 pick, J15840 schema); .seen_at_e_off empty at 0 and 222"
+  stale: "true when empty TRADES_HOLE or THIN_FEED, or the whole liquidation stream silent over 960 s (CARD_A1_V5 rule 16)"
+  flags: "USDC_MISSING, DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT (CARD_A1_V5 rule 10)"
+
+interpret:
+  do:
+    - "read S07 against A1 S03 (the 30 s now): equal = the burst is now; S07 far above S03 = an older burst, one flush to fade or a run (CARD_A1_V5 'fade or ride')"
+    - "read S07's size against the coin's own history: the largest on 8 Mar was BTC's 3,401,386 dollars, on 24 Sep ETH's 803,803 (J15858 pick)"
+  dont:
+    - "read S07.grid_off as S07: it is below S07 at 4.40% (8 Mar) and 4.21% (24 Sep) of the steps with S07 above 0, down to a few percent of it (DOGE 8 Mar 12:26:30: 1,948 against 80,842)"
+    - "read an empty S07 as calm"
+
+biases:
+  - {what: "A1 is a floor: Binance sends the last liquidation of each coin each second", direction: "S07 at or below the true burst", size: "not measurable here (no full liquidation record); one row a file-second at most on 8 Mar (9,001 rows), two in 9 of 12,878 file-seconds on 24 Sep", proof: "MEANING_A1_V4 read_as; J15872, J15873 a1s07 floor"}
+  - {what: "the 600 s window of moments reaches rows stamped up to 630 s before e", direction: "S07 holds a burst older than 600 s for up to 30 s after it leaves the name's window", size: "DOGE 8 Mar 12:26:30 80,842 (stamped 628 s before e); ADA 24 Sep 03:38:30 174,705 (its largest row stamped 627 s before e)", proof: "J15875, J15876 a1look"}
+  - {what: "the 3 s grid twin samples 200 moments", direction: "S07.grid_off at or below S07, never above", size: "equal at 95.60% and 95.79% of the steps with S07 above 0; where it differs its median is 0.971 and 0.968 of S07, its minimum 0", proof: "J15872, J15873 a1s07"}
+
+external_checks:
+  - {what: "S07 and its twins at every compared 30 s of 7 coins a day (8 Mar 2026: LIT, ICP, XMR, SOL, BTC, ETH, ZEC; 24 Sep 2025: DASH, RENDER, TIA, XMR, ETH, BTC, AVAX), recomputed exactly from the Tardis liquidation rows and the trade stamps", where: "Tardis liquidations and trades by exact path", status: "VERIFIED: A1S07_STAMPS_V1 120,613 MATCH, 0 MISS, 347 NOT_COMPARABLE (THIN_FEED: the thin state not recomputed) (J15859, J15860, J15862, J15863; merged J15874)"}
+  - {what: "what the name and the rule say: S07 at or above A1 S03 at every step; S07 = S03; the grid twin against S07; the seen twin where S07 is empty", where: "our A1 rows, every coin, both days", status: "VERIFIED: S07 >= S03 at 100% of 149,676 and 145,809 coin-steps (J15872, J15873 a1s07)"}
+  - {what: "the floor: rows per file and whole second in the liquidation files of every roster coin", where: "Tardis liquidations", status: "VERIFIED: 1 at most on 8 Mar; 2 in 9 file-seconds on 24 Sep (J15872, J15873)"}
+  - {what: "the gaps at one coin-step", where: "Tardis liquidations", status: "EXPLAINED: J15875 a1look DOGE 8 Mar 12:26:30, J15876 a1look ADA 24 Sep 03:38:30 (the largest sum at e - 600 s exactly, outside the grid)"}
+  - {what: "an outside record of liquidations", where: "Coinalyze daily liquidation totals per coin (MEANING_A1_V4 external_checks; Binance keeps no forceOrder history)", status: "DAILY ONLY (EDGE2 jobs 15739, 15740: 179 days, median gap 1.5% and 1.9%, ours larger on crash days): a day's total cannot test a 30 s burst or its 600 s window"}
+
+tools:
+  - {what: "S07 and its twins against the exact recompute at every 30 s of the named coins", run: "python3 -B -m rawcheck.basic_a1s07 run --days <D> --coins <C1,C2,..> --out <dir>; pick --days <D1,D2>", where: "team/RAWCHECK/code (basic_a1s07.py 30b01451aeabac91, tests 6ee0a179e996b964 13 of 13, mutants 10 of 10)"}
+  - {what: "S07 against S03, the grid and seen twins, the floor", run: "python3 -B -m rawcheck.meaning_flowbasic a1s07 <D>", where: "team/RAWCHECK/code (meaning_flowbasic.py ed4 e9a12b7eb7a2b7f5; the part unchanged since ed3 bd355d8c, which ran J15872, J15873)"}
+  - {what: "one coin-step: every long row of the 630 s, when it counts, the moment of the largest sum continuous and on the grid", run: "python3 -B -m rawcheck.meaning_flowbasic a1look <D> <COIN> <HHMMSS>", where: "team/RAWCHECK/code (ed4, J15875, J15876)"}
+
+used_by: "nobody yet (CARD_A1_V5 'Who reads it today': nobody reads S01 to S11; the decision 'fade or ride' names S07 against S03)"
+
+references:
+  CARD: testbed/value_audit/registers/CARD_A1_V5.md 7d0fff501e319c2a
+  BUILT_ON: team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/A1S07_STAMPS_V1.tsv 908f6ca0786a5c95 (J15874 from the rows of J15859, J15860, J15862, J15863: 3 settings, 40,320 rows each)"
+  JOBS: "15840 (schema), 15858 (pick), 15859, 15860, 15862, 15863 (basic_a1s07 ed1), 15872, 15873 (a1s07), 15874 (merged stamps), 15875, 15876 (a1look)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does"
+
+settings:
+  - {id: A1.S07, name: "largest 30 s long liquidation sum known in the last 600 s", layer: basic, side: long, window: "30 s sums at every moment of [e - 600 s, e] (rows stamped from e - 630 s)", clock: "every 30 s", scope: coin, contracts: "USDT+USDC",
+     aggregate: "max over t in [e - 600 s, e] of the long dollars stamped in (t - 30 s, t] and received by t; empty unless seen through [e - 630 s, e]", aliases: "EF.ef_liq_long_usd_30s_max_600s",
+     derived_from: "A1's own 30 s long sums (A1 S03's rule) at every moment of the 600 s",
+     means: "the biggest 30 s burst of longs forced out on this coin in the last ten minutes, at least this many dollars",
+     computation: {status: RELIABLE, proof: "A1S07_STAMPS_V1: 40,242 MATCH, 0 MISS, 78 NOT_COMPARABLE THIN_FEED (14 coin-days, every 30 s; basic_a1s07 30b01451)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a1s07: at or above A1 S03 at 100% of coin-steps both days, equal to it at 1,576 of 29,857 and 1,621 of 33,251 steps above 0; the floor in the files; J15875, J15876 a1look: the window of moments reaches stamps 630 s back"},
+     open: "a floor (the last print a coin a second); the largest sum can be a burst stamped up to 630 s before e (DOGE 8 Mar 12:26:30, ADA 24 Sep 03:38:30); empty through a trade gap or a thin minute in the 630 s"}
+  - {id: A1.S07.grid_off, name: "S07 on 200 samples 3 s apart", layer: basic, side: long, window: "30 s sums at e, e - 3 s, ..., e - 597 s", clock: "every 30 s", scope: coin, contracts: "USDT+USDC",
+     aggregate: "max over the 200 samples of the 30 s long sum known there; empty as S07", aliases: "none (a twin, switched off)",
+     means: "S07 read on a 3 s grid; kept as a setting, not a copy (BED FOR EDGE1, hb/BED.txt 14:14:15Z): another reading of the same rule, below S07 at 4.40% (8 Mar) and 4.21% (24 Sep) of the steps with S07 above 0 (J15872, J15873 a1s07)",
+     computation: {status: RELIABLE, proof: "A1S07_STAMPS_V1: 40,242 MATCH, 0 MISS, 78 NOT_COMPARABLE THIN_FEED"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a1s07: equal to S07 at 95.60% and 95.79% of the steps with S07 above 0, below it at 1,314 and 1,399, never above; J15875, J15876 a1look: the gap at e - 600 s to e - 597 s"},
+     open: "misses a sum that stands only between two samples or in [e - 600 s, e - 597 s): median 0.971 and 0.968 of S07 where they differ, 0 at the worst (DOGE 8 Mar 12:26:30: 1,948 against 80,842)"}

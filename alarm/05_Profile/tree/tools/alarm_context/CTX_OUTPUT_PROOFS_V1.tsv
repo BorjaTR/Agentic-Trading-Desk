@@ -1,0 +1,31 @@
+# CTX_OUTPUT_PROOFS_V1 (QUANT 23 Oct 2026, ASK STRATEGY-144018; OUTSIDE A09 rule: a context output is PROVEN only with its OWN proof): one card
+# per reading: what it is in one line, when it is known (the clock), what EMPTY means, AT LEAST where the source undercounts, the inputs and the
+# planted test (test_ctx_output_proofs.py, proof O1_PLANT) that proves the arithmetic. The outside recompute P09 (OX-SKEPTIC CORRECTNESS_P09) is
+# proof O2_P09_MATCH. PROVEN in alarm_profile.proof_status only after LAB1's review by diff and both results recorded in PROOF_RESULTS_V1.
+value	definition	known_at	empty_rule	at_least	inputs	test
+hour_utc	UTC hour of the alarm time	the alarm time (decision 0)	never empty (a clock)	no	LIST	Identity.test_hour_weekday_forced_shorts
+decision_hour_utc	UTC hour of the decision time (alarm + decision minutes)	the decision time	never empty	no	LIST	Identity.test_decision_hour_and_weekend
+weekday	weekday of the alarm time, 0 Monday .. 6 Sunday (UTC)	the alarm time	never empty	no	LIST	Identity.test_hour_weekday_forced_shorts
+weekend	1 when the decision time falls on Saturday or Sunday UTC, else 0	the decision time	never empty	no	LIST	Identity.test_decision_hour_and_weekend
+alarms_all_24h	count of alarms of every coin in the alarm list in [alarm - 24 h, alarm)	the alarm time (list rows strictly earlier)	0 = none; never NaN	no	LIST	History.test_counts
+fires_coin_1h	count of this coin's alarms in [alarm - 1 h, alarm)	the alarm time	0 = none	no	LIST	History.test_counts
+fires_coin_4h	count of this coin's alarms in [alarm - 4 h, alarm)	the alarm time	0 = none	no	LIST	History.test_counts
+fires_coin_24h	count of this coin's alarms in [alarm - 24 h, alarm)	the alarm time	0 = none	no	LIST	History.test_counts
+fires_coin_7d	count of this coin's alarms in [alarm - 7 d, alarm)	the alarm time	0 = none	no	LIST	History.test_counts
+fires_coin_since	count of this coin's alarms in (alarm, decision)	the decision time	0 = none (always 0 at decision 0)	no	LIST	History.test_counts
+fires_other_5m	count of OTHER coins' alarms in [alarm - 5 min, alarm)	the alarm time	0 = none	no	LIST	History.test_counts
+fires_other_60m	count of OTHER coins' alarms in [alarm - 60 min, alarm)	the alarm time	0 = none	no	LIST	History.test_counts
+fires_other_since	count of OTHER coins' alarms in (alarm, decision)	the decision time	0 = none (always 0 at decision 0)	no	LIST	History.test_counts
+min_since_prev_fire	minutes from this coin's previous alarm (strictly earlier) to this alarm	the alarm time	NaN = no earlier alarm of the coin in the list, never 0	no	LIST	History.test_empty
+move_5m	100 x side x (p(m) / p(m - 5 min) - 1), m = the decision minute, p = close of the last PRICE bin ending at or before	the decision minute end	NaN when either close is missing or not positive	no	PRICE	Move.test_moves_and_sudden
+move_15m	the same over 15 min	the decision minute end	NaN when either close is missing	no	PRICE	Move.test_empty_price
+move_60m	the same over 60 min	the decision minute end	NaN when either close is missing	no	PRICE	Move.test_moves_and_sudden
+move_240m	the same over 240 min	the decision minute end	NaN when either close is missing	no	PRICE	Move.test_moves_and_sudden
+beyond_dc240	push up: 100 x (p(m) / upper240(m - 1 min) - 1); push down: 100 x (lower240(m - 1 min) / p(m) - 1) (reciprocal form)	the decision minute end (the channel from the minute before)	NaN when the edge is missing or <= 0, or the close is missing	no	NAUTILUS.S79,NAUTILUS.S81,PRICE	Move.test_donchian
+beyond_dc1440	the same on the 24 h channel (NAUTILUS.S82 / S84)	the decision minute end	NaN when the edge is missing or <= 0, or the close is missing	no	NAUTILUS.S82,NAUTILUS.S84,PRICE	Move.test_donchian
+forced_share_15m	OBSERVED forced-side USD / observed both-side USD over 15 minutes; both capped: ratio is not a lower bound of the true share	the decision minute end	NaN when any of the 15 minutes is a hole, or both sums are 0	no bound on ratio: AT LEAST applies to observed dollar totals only	A1.S08,A1.S09	Forcing.test_shares_and_other_side
+forced_shorts	1 when the push is up (shorts forced), 0 when down (longs forced)	the alarm time	never empty	no	LIST	Identity.test_hour_weekday_forced_shorts
+other_log_usd_15m	log10 of the OTHER side's liquidation USD over the same 15 minutes; 0 = none	the decision minute end	NaN when any of the 15 minutes is a hole; 0 = nothing seen	yes: one print per coin per second	A1.S08,A1.S09	Forcing.test_empty_and_nothing
+sudden_share	move_5m over move_60m	the decision minute end	NaN when move_60m is missing or 0	no	PRICE	Move.test_moves_and_sudden
+coin_class	1 major (BTC, ETH), 2 alt, 3 meme, from the hand list COIN_TYPES_V1.tsv	static (the list's sha16)	NaN when the coin is not in the list	no	TABLE:types	CoinAndBook.test_coin_class
+spread_vs_usual	X1.COST.S01 (half spread now) over X1.COST.S02 (its median at this UTC hour over the 14 days before)	the decision minute end	NaN when either is missing or the usual is 0	no	X1.COST.S01,X1.COST.S02	CoinAndBook.test_spread_vs_usual

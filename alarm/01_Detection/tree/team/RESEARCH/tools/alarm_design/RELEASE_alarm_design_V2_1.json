@@ -1,0 +1,57 @@
+{
+ "by": "BUILD1 (labcore V2_3 cycle, STRATEGY-190912a; owner as in RELEASE_alarm_design_V2.json)",
+ "files": {
+  "team/RESEARCH/ALARM/receipts/null_cal/NULL_CAL_V1.txt": {
+   "role": "S07-04 calibration receipt",
+   "sha16": "7579d1ab883c0fed"
+  },
+  "team/RESEARCH/ALARM/settings/WINDOWS_V1.json": {
+   "role": "BUILD/CHECK month split read by the card (CHECK never opened)",
+   "sha16": "1069473688858fbc"
+  },
+  "team/RESEARCH/tools/alarm_design/README.md": {
+   "role": "design + V2 + V3 contract",
+   "sha16": "58c17d807a53517f"
+  },
+  "team/RESEARCH/tools/alarm_design/alarm_design_v2.py": {
+   "role": "the tool (run, try, card)",
+   "sha16": "4adf69f4eb34c567"
+  },
+  "team/RESEARCH/tools/alarm_design/mutants_alarm_design_v2.py": {
+   "role": "mutants (20, all must fail the tests)",
+   "sha16": "46a2d5142e8cbda9"
+  },
+  "team/RESEARCH/tools/alarm_design/null_calibration_v1.py": {
+   "role": "S07-04 synthetic null calibration",
+   "sha16": "9562a859b2c9038f"
+  },
+  "team/RESEARCH/tools/alarm_design/test_alarm_design_v2.py": {
+   "role": "planted tests (32)",
+   "sha16": "ffad8283c8bd1615"
+  },
+  "team/RESEARCH/tools/alarms/onset_band_v6.py": {
+   "role": "reused: own 14-day band (edges)",
+   "sha16": "9acf9cc8a0b24f53"
+  },
+  "team/RESEARCH/tools/model_v1/matched_controls_v1.py": {
+   "role": "reused: retrospective busy reference (never the verdict)",
+   "sha16": "36313be46daba9a1"
+  }
+ },
+ "landing": "alarm_design_v2 = v1 + OUTSIDE D05 (seal refusals stop, grid_s), S06 (past-only base exclusion, nothing read after the run last day, estimand, balance + unmatched), S07 (typed claims, footprint, verdict order, one tries ledger, null calibration), P02-06 (DETECT needs a present label); LAB1 PASS 14:05:47Z on 2870ff06 + diffs since",
+ "release": "V2_1",
+ "releases": {
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_3.json": "f044fa4c1ad26348"
+ },
+ "replaces": "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V2.json",
+ "rule": "FROZEN: any change to a listed file is a new release; every run checks it first",
+ "run_with": "<PYTHON>",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tests_result": "landing suites 19:25-19:29Z (analyst venv, taskpolicy -b): labcore 78 + R5 (V2_2 refuses on closure, expected; R5 moved to V2_3 after the cut), context 26+8s, profile 28+4s, match 15, cause 68, fairness 38, bucket_proof 51, exit 51+1s + outside 37, alarm_design 59, freeze_judge v1 34+1s v2 70 chain 8, reading_value v2+v3 7",
+ "text_changes": [],
+ "tool": "alarm_design",
+ "written_utc": "2026-10-23T19:29:40Z"
+}

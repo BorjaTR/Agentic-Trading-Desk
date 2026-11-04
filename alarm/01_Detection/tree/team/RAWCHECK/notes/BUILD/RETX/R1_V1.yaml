@@ -1,0 +1,208 @@
+# R1_V1.yaml: RETX rolling BTC beta per coin, Dimson's form with 2 lags (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2
+# ac90daf8; ADDON_ARCHITECTURE_V4 edit 3 0591d181; REVIEW_LEAD_EDGE1_V1 8dd9867d section 0 applied from the start).
+# Worked examples recomputed with exact fractions by team/TREE/proposals/verify_retx_timex_examples_tree_v2.py.
+# Edition 2: METRIC_AUDIT2's LEAD REVIEW RETX (REVIEW_LEAD_METRIC_AUDIT2_RETX_V1 27ebac9c): D-4's last two minute ends read for the
+# lags of the window's first rows (E9, M5), E2 planted on E1's x (y = 1.4 x), C1 S25 at the minute ends (CARD_C1_V11 rule 18).
+# Edition 3: METRIC_AUDIT's CROSSED REVIEW RETX ED2 (20:13:44Z) after the signing: (2) an SSE below 0 from the float64 running sums taken as 0 before the root (M6).
+kind: build_metric
+id: R1
+producer: RETX
+item: rolling BTC beta per coin
+tier: BUILD
+name: the coin's beta to BTC on Binance's 1-minute mid returns over the 3 days before the minute, Dimson's sum of the same-minute and two lagged slopes, and the spread of what BTC does not explain
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 3
+  signed: true
+  signed_by: 'EDGE1 2026-10-18T20:58:08Z'
+means: >-
+  How much the coin moves per unit of BTC's move, minute by minute, learnt from the last 3 days (S01), counting BTC's moves of the
+  minute and of the 2 minutes before it (a coin that follows BTC a minute late still gets its full beta), and how large the coin's
+  minute moves are beyond what BTC explains (S02). Binance USDT-M mids (the year's C1), not Hyperliquid's.
+example: >-
+  BTC's 1-minute returns repeat 1, -1, 2, 0, 1, -2, 1 bp and the coin moves half of BTC's minute plus half of BTC's minute before:
+  the same-minute slope alone says 0.212463556851 (it misses the late half), Dimson's sum of the three slopes says 1.0 (S01), and with
+  nothing else moving the coin S02 = 0.
+formula: >-
+  At each minute end u of D, per roster coin c other than BTCUSDT: y(m) = c's C1 S25 at m (its 60 s Binance mid return, a fraction,
+  8 decimals) and x(m) = BTCUSDT's C1 S25 at m, for the minute ends m of the window W(u) = the 4,320 minute ends u - 4,320 min to
+  u - 1 min (the 3 days before the minute; u itself is never in its own fit). A row m enters when y(m), x(m), x(m - 1 min) and
+  x(m - 2 min) are all valued (each read as the exact decimal it is); at u = 00:00 and 00:01 of D the lags of the window's first rows
+  are D-4's minute ends 23:58 and 23:59, read from B too (before the year, on 13 Sep 2025, they have no B row and those rows leave the
+  fit as a missing lag does, E8, E9). Ordinary least squares of y on [1, x(m), x(m - 1 min),
+  x(m - 2 min)] over the n rows: coefficients (a, b0, b1, b2); S01 = b0 + b1 + b2 (Dimson 1979, lags only); S02 = sqrt(SSE / (n -
+  4)), SSE the sum of the squared residuals y - a - b0 x(m) - b1 x(m - 1) - b2 x(m - 2), a fraction per minute; an SSE below 0 from the float64
+  running sums (an exact fit: METRIC_AUDIT's twin on E1, 12 of 15 minute ends) is taken as 0 before the root. Needs n >= 3,456 (80
+  percent of 4,320), else FEW_VALUES; FIT_SINGULAR when the smallest eigenvalue of the centred 3 x 3 covariance of the regressors is at
+  or below 1e-12 times the largest (BTC flat or its lags collinear). BTCUSDT's own row: S01 = 1, S02 = 0 by definition (not fitted).
+  The first failing reason, in this order: NO_ROSTER, NO_HISTORY, FEW_VALUES, FIT_SINGULAR. float64 by running sums of the normal
+  equations (ADDON_ARCHITECTURE_V4 9.3 rule 5); the tester solves the same normal equations exactly with Fraction. A rolling
+  least-squares statistic, not a parameter fitted before D (fit_rule none): its window is the 4,320 minute ends before u.
+source:
+  kind: paper
+  ref: >-
+    Dimson 1979, 'Risk measurement when shares are subject to infrequent trading', J. Financial Economics 7(2) 197-226 (beta = the
+    sum of the slopes on the market's leads and lags; ours lags only: RESEARCH_TOOLS_V1 aad3cc38 row R1 and section 8.1, its planted
+    numbers). statsmodels 0.15.0 RollingOLS (BSD-3) includes row t in row t's fit: the shift of one minute is ours; the tester's
+    oracle in the meaning check only. Departures from 8.1 stated: simple returns as C1 writes them (not log returns: under 1e-7 apart
+    for 60 s moves of 0.03 percent, opinion), the 3-day window (8.1 allows 1 to 3 days), the floor 80 percent (8.1's opinion).
+inputs:
+  - kind: year
+    ref: C1 S25 of every roster coin and of BTCUSDT (the 60 s mid return as a fraction, 8 decimals, half up; CARD_C1_V11 rules 6, 8, 16)
+    card: BASIC_C1_V5 95244119 (LAYER_REGISTER_V32 e249ce94 C1 S25 CLEAN)
+    verdict: CLEAN
+    rule_in_force: "B's C1 S25 rows at the minute ends as written (CARD_C1_V11 rule 18, line 150: S25 is written at the 1,440 minute ends)"
+    stale_rule: an empty C1 S25 (BOOK_HOLE, NO_FILE, any reason) is not a row of the fit; never filled
+    days: "D-4's minute ends 23:58 and 23:59 (the lags of the first rows at u = 00:00, 00:01) and D-3 to D (B holds every year day: no CARRY, ADDON_ARCHITECTURE_V4 section 4); each B file checked against its MANIFEST_L0BIN parquet_sha16"
+  - kind: file
+    ref: the roster file of D's week, knowledge/roster/ROSTER_<monday>.csv
+    rule_in_force: the coins of the week's roster; a coin off it has no row
+    stale_rule: no roster file gives NO_ROSTER for every coin
+    sha16_rule: the roster file's sha16 goes into D's manifest
+    days: D
+overlaps:
+  - setting: C2 S04, C2 S05
+    kind: other_metric
+    why: >-
+      C2 S04, S05 subtract the median coin with a beta of 1 (BASIC_C2_V3 dc781c7f never line: 'betas run 0.04 to 3.04, J15833
+      c2name'); S01 is each coin's own beta to BTC. Another quantity.
+per_coin: >-
+  Thin coins whose mid often does not move in a minute have many zero returns: their beta is pulled toward 0 (the Epps effect; the
+  lags recover part of it, the reason for Dimson's form). The 1000-coins: returns are scale free. A coin listed late has NO_HISTORY
+  until its 3 B days exist. BTCUSDT: 1 by definition.
+time: >-
+  The window is the 4,320 minute ends before u, so it rolls each minute across the days D-3 to D; a crash enters every beta for 3
+  days. Funding settles and quarter hours are ordinary minutes. The first year days: NO_HISTORY on 10 to 12 Sep 2025 (the pilot
+  shows the reason there by design).
+output:
+  group_file: X1/day=<D>/RETX.parquet
+  names:
+    - name: S01
+      label: binance_beta_btc_dimson_3d
+      units: no unit (the coin's move per unit of BTC's)
+      value_kind: float
+      decimals: none
+      means: Dimson's beta of the coin's Binance 60 s mid returns on BTC's, same minute and 2 lags, over the 4,320 minute ends before u
+    - name: S02
+      label: binance_resid_sd_60s_3d
+      units: a fraction per minute (0.001 = 0.1 percent)
+      value_kind: float
+      decimals: none
+      means: the standard deviation of the fit's residuals (n - 4 degrees of freedom)
+  grid: minute
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the latest known_at among the C1 rows of the window read (each at or before its m <= u - 1 min); an empty row: known_at
+    = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (every coin)
+    - reason: NO_HISTORY
+      when: a B day of D-3 to D-1 is missing for the coin (10 to 12 Sep 2025; a coin listed late)
+    - reason: FEW_VALUES
+      when: fewer than 3,456 rows of the window enter the fit
+    - reason: FIT_SINGULAR
+      when: the centred regressor covariance's smallest eigenvalue at or below 1e-12 times its largest
+  stale_rule: never stale (a fit of 3 days)
+  max_staleness_s: 60
+  window_days: 3
+  no_history: "S01, S02 first fill on 13 Sep 2025 (D-3 = 10 Sep 2025, the first year day); NO_HISTORY on 10 to 12 Sep 2025; valued on 178 of the 181 year days; a coin listed late after its 3 B days"
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 Dimson's planted series (RESEARCH 8.1)
+    input: 'x = 1, -1, 2, 0, 1, -2, 1 bp repeated over the 4,322 minute ends before u; y(m) = 0.5 x(m) + 0.5 x(m - 1)'
+    answer: 'fit (0, 0.5, 0.5, 0): S01 1.0, S02 0.0 (within 1e-12); the same-minute slope alone 583/2744 = 0.212463556851'
+  - case: E2 a coin that follows BTC in the same minute
+    input: 'E1''s x over the 4,322 minute ends before u; y(m) = 1.4 x(m)'
+    answer: 'fit (0, 1.4, 0, 0): S01 1.4, S02 0.0 (within 1e-12); RESEARCH 8.1''s simple slope 7 / 5 on four rows is run_dimson''s one-regressor test, not a producer case (four rows are FEW_VALUES)'
+  - case: E3 BTC flat
+    input: 'x = 2 bp at every minute end of the window'
+    answer: S01, S02 empty FIT_SINGULAR
+  - case: E4 the floor
+    input: '3,455 rows enter (the rest of the coin''s C1 S25 empty)'
+    answer: S01, S02 empty FEW_VALUES
+  - case: E5 the year start
+    input: 'D = 12 Sep 2025'
+    answer: S01, S02 empty NO_HISTORY
+  - case: E6 u is not in its own fit
+    input: 'E1 with a planted y(u) = 100 bp at u itself'
+    answer: S01 at u still 1.0 (the spike enters from u + 1 min)
+  - case: E7 BTC's own row
+    input: BTCUSDT
+    answer: 'S01 1, S02 0'
+  - case: E8 a lag missing
+    input: 'E1 with x empty at one minute end m0'
+    answer: 'the rows m0, m0 + 1 min, m0 + 2 min leave the fit (n = 4,317); S01 1.0'
+  - case: E9 the lags at midnight (D-4's last two minute ends)
+    input: 'u = 00:00 and 00:01 of D; E1''s series with D-4''s 23:58 and 23:59 in B; then D = 13 Sep 2025 (D-4 = 9 Sep, not in B)'
+    answer: 'n 4,320 at both (the first rows take their lags from D-4); on 13 Sep 2025 the rows of 10 Sep 00:00 and 00:01 leave the fit at u = 00:00 (n 4,318) and the row of 00:01 at u = 00:01 (n 4,319), valued'
+unit_tests:
+  - test: U1 (E1, E2, E6, E8, E9)
+    planted: 'B C1 S25 rows of 5 planted days (D-4 to D) for BTCUSDT and one coin with the series of each case; for E9 also a planted year start'
+    expect: 'S01 1.0 and S02 0.0 within 1e-12; 1.4 and 0.0; 1.0 at u with the spike; 1.0 with n 4,317; n 4,320, then 4,318 and 4,319'
+  - test: U2 (E3, E4, E5, E7)
+    planted: the rows of each case
+    expect: 'FIT_SINGULAR; FEW_VALUES; NO_HISTORY; 1 and 0'
+  - test: U3 the running sums
+    planted: 'a random walk of 6 planted days for 3 coins (seeded), including a 20 percent crash minute'
+    expect: 'S01, S02 at every minute end equal numpy.linalg.lstsq on each window (the brute twin, lags from D-4 at 00:00 and 00:01) within 1e-9 relative'
+  - test: U4 the stamps
+    planted: U1 to U3
+    expect: 'as_of = u, known_at <= u (empty rows u); 1,440 rows per name and coin; empty never 0'
+mutants:
+  - mutant: M1 the same-minute slope only (no lags)
+    caught_by: 'U1 (E1 gives 0.212463556851)'
+  - mutant: M2 u itself in its own fit (RollingOLS without the shift)
+    caught_by: U1 (E6 moves S01 at u)
+  - mutant: M3 a missing lag filled with 0
+    caught_by: 'U1 (E8: S01 moves, n 4,320)'
+  - mutant: M4 the residual sd over n in place of n - 4
+    caught_by: U3 (S02 differs by sqrt((n - 4) / n), 4.6e-4 relative at n 4,320)
+  - mutant: M5 D-4 not read (the first rows at u = 00:00, 00:01 always leave the fit)
+    caught_by: 'U1 (E9 gives n 4,318 and 4,319 on a day inside the year) and U3 (S01, S02 move at 00:00 and 00:01 of every day)'
+  - mutant: M6 no clamp (the root of a negative float64 SSE)
+    caught_by: 'U1 (E1, E2 give NaN at some minute ends in place of S02 0.0)'
+real_check:
+  points:
+    - point: 2026-03-08, ETHUSDT, SOLUSDT, 1000PEPEUSDT, CRVUSDT and the thinnest coin (named by the tester), u = 00:00, 12:10, 23:59
+      why: liquid and thin coins, a 1000-coin, a coarse step; 00:00 reads 5 to 7 Mar
+    - point: 2025-10-11, ETHUSDT and SOLUSDT, u = 00:00 and 12:00
+      why: the day after the 10 Oct 2025 crash in the window
+    - point: 2025-09-13, ETHUSDT, u = 00:00
+      why: the first valued day (D-3 = 10 Sep 2025)
+  pass: >-
+    The tester recomputes S01, S02 and the empties from this card's words on B's C1 rows (rawcheck/check_retx.py), the normal equations
+    solved with Fraction: floats within 1e-9 relative, words equal. One small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "on 2026-03-08 at 12:00, S01 of at least two thirds of the roster coins with values lies in [0.3, 3.0] (BASIC_C2_V3's betas 0.04 to 3.04 to the median coin; a beta to BTC near 0 for most coins would say the fit is wrong)"
+    - "Dimson's lags matter where trading is thin: the median over coins of S01 minus the same-minute slope alone is above 0 on 2026-03-08 at 12:00 (it can fail: then the lags add nothing and are reported)"
+  report_only:
+    - S01 and S02 per coin at 12:00 of 2026-03-08 and 2025-10-11
+    - the share of minute ends per coin with FEW_VALUES
+conclude:
+  may:
+    - how much the coin's Binance mid moved per unit of BTC's over the last 3 days, the minute's and 2 lagged minutes' moves counted
+    - the size of the coin's own minute moves beyond BTC's (S02)
+  never:
+    - a beta on Hyperliquid's prices (Binance USDT-M mids)
+    - a beta of the next minutes (it is the last 3 days')
+    - the same-minute correlation (S01 sums the lags)
+readers: "none yet (planned: R2's residuals, R3's share, the lab's hedge ratio)"
+implementation:
+  how: >-
+    One [coin x 4 days x 1,440] stack of C1 S25 read from B by name (D-3 to D), with D-4's minute ends 23:58 and 23:59 in front; the lags by a shift of one and two minute ends; the
+    normal equations' 15 running sums per coin over the window of 4,320 rows (added at the new row, dropped at the old, ADDON 9.3
+    rule 5: regressions by running sums), one 4 x 4 solve per coin and minute end (vectorised over coins: numpy.linalg.solve on a
+    stack), the eigenvalue test on the 3 x 3 centred block. PHASES (ADDON_ARCHITECTURE_V4 section 4): a producer on year inputs only:
+    every point final in one pass, days in parallel, no CARRY.
+  kernel: 'new: run_dimson (addon_grid_v2 85c8ece1 run_beta extended to 3 regressors by running sums of the normal equations), its brute twin numpy.linalg.lstsq per window (U3)'
+  memory_mb: 200
+  seconds_share: 1.5
+data_checks:
+  - what: "BTCUSDT's C1 S25 = C1 S15 / 100 at every minute end (the same mid, 8 decimals of a fraction against 6 of a percent: equal as decimals), the producer's raw check"
+    who: the producer (PRODUCER_RETX raw_check)

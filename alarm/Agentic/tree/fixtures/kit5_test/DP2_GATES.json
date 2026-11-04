@@ -1,0 +1,14 @@
+{
+ "A_regrade_saved_values": {
+  "rows": 7200,
+  "differing": 0,
+  "ok": true,
+  "grade": "V3.4 path (the run's own)"
+ },
+ "B_wait0_equals_saved": {
+  "rows": 185728,
+  "cells": 9843584,
+  "differing": 0,
+  "ok": true
+ }
+}

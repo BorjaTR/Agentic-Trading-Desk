@@ -1,0 +1,180 @@
+# V7_V1.yaml: VOLX Parkinson range volatility (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8 section 5 rule 2;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181). S11 by PRODUCER_VOLX_V1.yaml. Examples: team/METRIC_AUDIT/verify_volx_examples_v1.py V7.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): F1 (the first year day: FEW_BARS through 00:53, valued from 00:54), F2
+# (one NO_HISTORY rule), F3 (roll_points: a flat hour after a spike is exactly 0; U5, M6); U1's stepped prices, N2 (the no-trade minute), N3 (the departure), A1 to A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the nits (U2's flat bars at the previous close;
+# 'up to 00:59'), X7 Binance, X11.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+kind: build_metric
+id: V7
+producer: VOLX
+item: 'Parkinson range volatility'
+tier: BUILD
+name: the coin's Parkinson volatility over the last 60 one-minute Binance USDT-M trade candles (each candle's open = the previous minute's close), in percent over the hour, not annualised
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  How much the coin moved over the last hour, read from each minute's highest and lowest trade instead of its close only: a
+  minute that ran up 1 percent and came back counts, though its close did not move. In percent over the hour.
+example: >-
+  Thirty minutes like bar A (high 2 percent and low 1 percent from the open, log terms 0.02 and -0.01) and thirty like bar B (high 1
+  percent, low at the open): per-bar variances 0.00032460638420001736 and 3.606737602222331e-05, S11 = 100 x sqrt(60 x their mean) =
+  10.402025190638225 percent over the hour (a toy far wilder than any real hour).
+formula: >-
+  A bar is the minute (m - 60 s, m] of a minute end m: O = C13 S01 at m - 60 s (the previous minute's close: the year has no open;
+  ADDON_ARCHITECTURE_V4 section 11), H = max(C13 S02 at m, O), L = min(C13 S03 at m, O) (the bar's range holds its open), C = C13
+  S01 at m; the bar is valued when the four inputs are valued. p(m) = (ln(H / L))^2 / (4 ln 2) (natural logs, float64 on value_f64).
+  At u: the 60 bars m = u - 59 min to u; n = the valued ones; with n >= 54, S11 = 100 x sqrt(60 x mean of the valued p(m)), flag
+  SHORT_WINDOW when n < 60; with n < 54 empty FEW_BARS. Not rounded (decimals none), not annualised (x sqrt(8,760) = 93.59487165438073
+  gives a yearly figure from the hour). DEPARTS from RESEARCH_TOOLS_V1 5.4 (the sqrt of the mean, per minute) by x sqrt(60), to the
+  hour: its 1.3429 percent is 10.402 / sqrt(60).
+source:
+  kind: paper
+  ref: >-
+    Parkinson 1980, J. Business 53(1) 61-65 (the extreme value method); RESEARCH_TOOLS_V1 aad3cc38 row V4 and section 5.4 (the
+    formulas with natural logs; sqrt of the mean of the per-bar variances; no Parkinson in TA-Lib, others GPL or AGPL: BUILD).
+inputs:
+  - kind: year
+    ref: C13 S01 (close), S02 (high), S03 (low)
+    card: MEANING_C13_V4 fe5df65ba7680fc8 (CARD_C13_V4 69ff088d rules 4 to 6)
+    verdict: LIMITS
+    rule_in_force: B's rows at the minute ends as written (trade prices of the 60 s ending at m, received by m)
+    stale_rule: an empty row (TRADES_HOLE, THIN_FEED, any reason) makes its bar not valued; never filled
+    days: "D and D-1 (B holds D-1; the bars from 23:01 of D-1 and the close at 23:00 for the windows ending up to 00:59, whose 00:00 bar opens at D-1's 23:59 close; no CARRY needed, ADDON_ARCHITECTURE_V4 section 4)"
+overlaps:
+  - setting: C9 S01
+    kind: other_metric
+    why: >-
+      C9 S01 is the 60-minute high-low width of the same C13 candles in percent of the close (BASIC_C9_V1): one range over the hour;
+      S11 sums the 60 one-minute ranges as a variance. Not a copy.
+per_coin: >-
+  C13's high and low are TRADE prices (CARD_C13_V4 rule 4): a minute that trades at the bid and at the ask has a range of at least
+  one spread though its mid did not move, so S11 carries the bid-ask bounce and overstates on wide-spread and coarse-step coins (the
+  1000-coins, thin coins: the meaning check counts it). A minute with no trade (C13 S04 = 1) carries the last price: H = L = C,
+  and p = 0 when the carried trade is O too (rare: S04 = 1 at 0 of about 221,000 coin-minutes, MEANING_C13_V4). Thin coins lose bars to TRADES_HOLE (DASH on 24 Sep 2025: C13 empty at 33 of the 60 minutes to 10:41, BASIC_C9_V1): FEW_BARS.
+time: >-
+  Funding settles, quarter hours, the US open and crash minutes enter as bars (no seasonal division). The windows ending 00:00 to
+  00:59 read D-1 from B (00:59's 00:00 bar opens at D-1's 23:59 close). The first year day 10 Sep 2025: no D-1 in B, so its 00:00 bar
+  has no open and is never valued: FEW_BARS through 00:53 (53 of 54 bars valued), valued from 00:54 (54, SHORT_WINDOW).
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S11
+      label: parkinson_vol_60m_pct
+      units: percent over the 60 minutes (not annualised)
+      value_kind: float
+      decimals: none
+      means: 100 x sqrt(60 x the mean Parkinson variance of the valued one-minute trade candles of the last hour)
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the latest known_at among the C13 rows read (each at or before its m, so at or before u); an empty row known_at = u; so known_at <= as_of on every row
+  empty_reasons:
+    - reason: FEW_BARS
+      when: fewer than 54 of the 60 bars valued
+    - reason: NO_HISTORY
+      when: "D-1's file of B is missing and the window reaches D-1 (u up to 00:59 of a day after 10 Sep 2025); on 10 Sep 2025, the first year day, those windows are FEW_BARS"
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_HISTORY, FEW_BARS
+  stale_rule: never stale (missing bars give FEW_BARS or SHORT_WINDOW)
+  max_staleness_s: 60
+  window_days: 1
+  no_history: "the window reads D-1's B for u up to 00:59; on the first year day (10 Sep 2025) those windows are FEW_BARS through 00:53 (the 00:00 bar has no open without D-1), valued from 00:54"
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: SHORT_WINDOW
+      when: 54 to 59 of the 60 bars valued (the mean is over the valued bars)
+edge_cases:
+  - case: E1 the toy window
+    input: '30 bars A (log open 0, high 0.02, low -0.01, close 0.01) and 30 bars B (0, 0.01, 0, 0), prices 100 x e^x'
+    answer: 'p(A) 0.00032460638420001736, p(B) 3.606737602222331e-05; S11 10.402025190638225'
+  - case: E2 a short window
+    input: '30 bars A, 25 bars B, 5 bars not valued'
+    answer: 'S11 10.773642547636728, flag SHORT_WINDOW'
+  - case: E3 too short
+    input: '53 bars valued'
+    answer: S11 empty FEW_BARS
+  - case: E4 a flat hour
+    input: 'every bar O = H = L = C'
+    answer: 'S11 = 0 (a value)'
+  - case: E5 a gap down (the open outside the trades)
+    input: 'O 100 (the previous close), high 99.1, low 99, close 99'
+    answer: 'H = 100: p = 3.643138629178957e-05 (the trades alone would give 3.676255283274545e-07)'
+  - case: E6 the day start
+    input: 'u = 00:10 of D'
+    answer: "the bars 23:11 to 23:59 of D-1 and 00:00 to 00:10 of D from B; O of the 23:11 bar = C13 S01 at 23:10 of D-1"
+  - case: E7 all bars A
+    input: '60 bars A'
+    answer: 'S11 13.955781257959385'
+unit_tests:
+  - test: U1 (E1, E2, E3, E7)
+    planted: 'C13 S01, S02, S03 rows of 2 days for one coin, each bar stepped from the previous close C (A: S02 = C e^0.02, S03 = C e^-0.01, S01 = C e^0.01; B: S02 = C e^0.01, S01 = S03 = C), S01 at u - 60 min = 100'
+    expect: 'S11 10.402025190638225; 10.773642547636728 SHORT_WINDOW; FEW_BARS; 13.955781257959385 within 1e-9 relative'
+  - test: U2 (E4, E5)
+    planted: 'a flat hour; the gap-down bar within an otherwise flat hour (the flat bars before it at 100, after it at 99: each bar opens at the previous close)'
+    expect: 'S11 0; S11 = 0.603584180473524 (one gap-down bar, 59 flat)'
+  - test: U3 (E6) the day start
+    planted: 'B days D-1 and D; the D-1 bars planted with A, the D bars flat'
+    expect: 'at u = 00:10 the 49 A bars of D-1 count; with D-1 missing the same u is NO_HISTORY (a day after 10 Sep 2025); on 10 Sep 2025 FEW_BARS'
+  - test: U4 the stamps
+    planted: U1 to U3
+    expect: 'as_of = u, known_at <= u; 1,440 rows per coin; empty never 0'
+  - test: U5 a flat hour after a spike hour
+    planted: '60 bars A then 60 flat bars (O = H = L = C) for one coin'
+    expect: 'S11 exactly 0 at the end of the flat hour (sliding sums; a running sum leaves about 2.2e-7)'
+mutants:
+  - mutant: M1 the open as the minute's own close (no previous close)
+    caught_by: 'U2 (E5 gives the trades-only 3.676255283274545e-07 range)'
+  - mutant: M2 log10 in place of ln
+    caught_by: 'U1 (E1 gives 4.517542140912802)'
+  - mutant: M3 the sum of 60 not scaled by the valued count
+    caught_by: 'U1 (E2 gives 10.31497742438445, not 10.773642547636728)'
+  - mutant: M4 an empty bar as a zero bar
+    caught_by: 'U1 (E2 gives 10.31497742438445 and no SHORT_WINDOW)'
+  - mutant: M5 annualised
+    caught_by: 'U1 (E1 x 93.59487165438073)'
+  - mutant: M6 running sums (a cumulative sum differenced, or bottleneck move_sum)
+    caught_by: 'U5 (a tiny value, about 2.2e-07 for S11 in TREE''s cloud measure, not 0)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 1000PEPEUSDT and a thin coin (named by the tester), u = 00:10, 12:00, 23:59
+      why: the window from D-1's bars, a plain hour, the day's end
+    - point: 2025-09-24, DASHUSDT, u = 10:41
+      why: "C13 empty at 33 of the 60 minutes (BASIC_C9_V1's case), so FEW_BARS"
+    - point: 2025-09-10, BTCUSDT, u = 00:53 and 00:54
+      why: the first year day without D-1 (FEW_BARS through 00:53, valued from 00:54)
+  pass: >-
+    The tester recomputes S11, its flag and reason from this card's words on B's C13 rows (rawcheck/check_volx.py, never the
+    producer's code): floats within 1e-9 relative, words equal. In VOLX's one small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "the bounce: for each coin on 8 Mar 2026, the median over the minute ends of (S11 / 100)^2 over the same hour's mid variance (the sum of V2's 12 S03 rows of the clock hour ending at u, at u = h:00) lies within 0.5 to 2.0 for BTC and ETH (one-step coins with a deep book); a coin over 2.0 is named with its price step (the bounce, not volatility)"
+    - "S11 and 100 x sqrt of that mid variance have a Spearman correlation of 0.8 or more for BTC on 8 Mar 2026"
+  report_only:
+    - the ratio of the first line for every coin, against its price step over its price
+    - the share of SHORT_WINDOW and FEW_BARS per coin
+conclude:
+  may:
+    - how wide the coin's one-minute trade ranges were over the last hour, as a volatility in percent over the hour
+    - the coin against itself across hours
+  never:
+    - "Hyperliquid's ranges (Binance trade candles, X7)"
+    - "a mid volatility: C13's high and low are trade prices with the bid-ask bounce (ADDON_ARCHITECTURE_V4 section 11)"
+    - S11 across coins without their price step (the bounce is a floor that differs per coin)
+    - an annualised volatility
+    - 'a candle open of the exchange: the open is the previous minute''s close'
+readers: none yet (planned with V8, V9 against V2 as the lab's range-against-close test)
+implementation:
+  how: >-
+    One [coin x 1,440] grid per input name for D and for D-1 (B by name filter), the per-bar variance as array operations, the
+    60-minute sum and the valid count by roll_points with D-1's tail (sliding windows, numpy pairwise sums; never running sums,
+    ADDON_ARCHITECTURE_V4 9.3 rule 5); no loop over coins or minutes. PHASES: none (B only, B holds D-1).
+  kernel: addon_grid_v2.roll_points (sum and count over 60 minute ends, the D-1 tail from B)
+  memory_mb: 100
+  seconds_share: 0.3
+data_checks: none

@@ -1,0 +1,260 @@
+{
+ "by": "DECIDE seat (thread Build decision tool V1)",
+ "files": {
+  "team/RESEARCH/tools/decide_v1/ADMITTED_INPUTS_V1.json": "201f878709896eb9",
+  "team/RESEARCH/tools/decide_v1/CARD_DECIDE_V1.md": "198ff797330c6c18",
+  "team/RESEARCH/tools/decide_v1/EDGES_DECIDE_V1.tsv": "6d2a50a0fb9d91aa",
+  "team/RESEARCH/tools/decide_v1/KIT_DECIDE_V1.md": "65423b0fcb39e1bf",
+  "team/RESEARCH/tools/decide_v1/LAB_TOOLS_INVENTORY_V1.md": "5261ca193ad4022e",
+  "team/RESEARCH/tools/decide_v1/LAB_TOOLS_V1.json": "49062c1d502a6c8b",
+  "team/RESEARCH/tools/decide_v1/README_DECIDE_V1.md": "8d075be66d6ae977",
+  "team/RESEARCH/tools/decide_v1/SAFETY_V1.json": "ea84f35ba70c8538",
+  "team/RESEARCH/tools/decide_v1/SCOPE_DECIDE_V1.md": "7db5d40205223886",
+  "team/RESEARCH/tools/decide_v1/SETTINGS_DECIDE_V1.tsv": "af94557363fc7f58",
+  "team/RESEARCH/tools/decide_v1/SPEED_BUDGET_DECIDE_V1.md": "7f84591ea5aae939",
+  "team/RESEARCH/tools/decide_v1/decide_rules_v1.py": "95fc214ed4055afb",
+  "team/RESEARCH/tools/decide_v1/decide_v1.py": "d8cd9acfd7b126d5",
+  "team/RESEARCH/tools/decide_v1/edges_decide_v1.py": "5475d65d8b9263a6",
+  "team/RESEARCH/tools/decide_v1/loop_v1/DECIDE_LOOP_PREREG_V1.md": "facb21709f370d3d",
+  "team/RESEARCH/tools/decide_v1/loop_v1/DECIDE_LOOP_SETTINGS_V1.json": "a86a72d9bc358506",
+  "team/RESEARCH/tools/decide_v1/loop_v1/decide_loop_read_v1.py": "f3697bbcd79365b2",
+  "team/RESEARCH/tools/decide_v1/loop_v1/run_decide_loop_v1.sh": "5aff8df834a298a3",
+  "team/RESEARCH/tools/decide_v1/loop_v1/split_groups_v1.py": "e2252a8b5b9ec304",
+  "team/RESEARCH/tools/decide_v1/loop_v1/test_decide_loop_read_v1.py": "a7257d1de9cd51bc",
+  "team/RESEARCH/tools/decide_v1/make_release_decide_v1.py": "be7f91262070ded9",
+  "team/RESEARCH/tools/decide_v1/meaning_decide_v1.py": "f9d75b5dad90f399",
+  "team/RESEARCH/tools/decide_v1/mutants_decide_v1.py": "969c888231a967fa",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/EDGES.txt": "3ed0fb8cfe74ff8e",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/MUTANTS.txt": "e5fdf8590f256842",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/MUTANTS_FIRST_AFTER_REWRITE.txt": "633f2f696ede98d0",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/PROBE_KIT_OLD_VS_NEW.txt": "5b8c67787a30108c",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/TESTS.txt": "4648a39e4ede685d",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/probe_kit_old_vs_new_v1.py": "eb213a67c0f4edb4",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/split_tamper_old_vs_new.txt": "5ea72a3e25147e21",
+  "team/RESEARCH/tools/decide_v1/receipts_kit_v1/split_uncommitted_v1.txt": "c10097629c98cf72",
+  "team/RESEARCH/tools/decide_v1/rulebooks/RULES_ALM_M_V1.json": "a69227649ff44436",
+  "team/RESEARCH/tools/decide_v1/rulebooks/RULES_ALM_S3W_V1.json": "bb5d67fa7ab3bcf8",
+  "team/RESEARCH/tools/decide_v1/rulebooks/RULES_DEFAULT_V1.json": "8b4a4c6aac99e3c5",
+  "team/RESEARCH/tools/decide_v1/run_decide_all_v1.sh": "5a534ced73b103a6",
+  "team/RESEARCH/tools/decide_v1/tests_decide_v1.py": "994194f69926f901"
+ },
+ "made_utc": "2026-10-26T06:55:24Z",
+ "meaning": {
+  "file": "<VM_SESSION>/mnt/SCRATCH_DISK/judge_scratch/work_DECIDE/run_v1_4/MEANING_DECIDE_V1.txt",
+  "last_line": "67 checks, 0 failed",
+  "sha16": "0e7ff9bcc3f62317"
+ },
+ "release": "DECIDE_V1_CANDIDATE",
+ "runs": {
+  "ALM_C_V1_DEFAULT": {
+   "RUN.json": "9a8baa3b5535aac0",
+   "fires": 1730,
+   "outputs": {
+    "DECISIONS.tsv": "0693048953d55a79",
+    "SKIP_EVENTS.tsv": "6148f12035fdc3ee",
+    "TAKE_EVENTS.tsv": "05c5a4cd66d73529",
+    "VALUE_COUNTS.tsv": "5774dee9805725ae"
+   },
+   "tally": {
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 1730,
+     "weight": 725.0
+    }
+   },
+   "timing_s": {
+    "admission": 0.043,
+    "compute": 0.006,
+    "read": 0.138,
+    "write": 0.048
+   }
+  },
+  "ALM_H0_V1_DEFAULT": {
+   "RUN.json": "ebd6281f0b1b4189",
+   "fires": 864,
+   "outputs": {
+    "DECISIONS.tsv": "cdb53758508d2fba",
+    "SKIP_EVENTS.tsv": "6148f12035fdc3ee",
+    "TAKE_EVENTS.tsv": "269a9ac860e20bc4",
+    "VALUE_COUNTS.tsv": "5774dee9805725ae"
+   },
+   "tally": {
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 864,
+     "weight": 402.0
+    }
+   },
+   "timing_s": {
+    "admission": 0.035,
+    "compute": 0.003,
+    "read": 0.079,
+    "write": 0.03
+   }
+  },
+  "ALM_M_V1_DEFAULT": {
+   "RUN.json": "8bbeca9686c7bce7",
+   "fires": 10764,
+   "outputs": {
+    "DECISIONS.tsv": "f92422cd7df31b37",
+    "SKIP_EVENTS.tsv": "6148f12035fdc3ee",
+    "TAKE_EVENTS.tsv": "17fb2137d6bcae40",
+    "VALUE_COUNTS.tsv": "5774dee9805725ae"
+   },
+   "tally": {
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 10764,
+     "weight": 1441.0
+    }
+   },
+   "timing_s": {
+    "admission": 0.138,
+    "compute": 0.039,
+    "read": 0.731,
+    "write": 0.275
+   }
+  },
+  "ALM_M_V1_OWN": {
+   "RUN.json": "859aa70a561cd684",
+   "fires": 10764,
+   "outputs": {
+    "DECISIONS.tsv": "3d131e6867b8aa9a",
+    "SKIP_EVENTS.tsv": "30c49de918e0e9c6",
+    "TAKE_EVENTS.tsv": "664528eb7535413c",
+    "VALUE_COUNTS.tsv": "34cda28a55c9e05b"
+   },
+   "tally": {
+    "SKIP|1|BAD_DATA": {
+     "fires": 1407,
+     "weight": 193.1875
+    },
+    "SKIP|4|SKIP_RULE": {
+     "fires": 750,
+     "weight": 221.127427
+    },
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 8607,
+     "weight": 1026.685073
+    }
+   },
+   "timing_s": {
+    "admission": 0.153,
+    "compute": 0.056,
+    "read": 0.741,
+    "write": 0.271
+   }
+  },
+  "ALM_S2B0_V1_DEFAULT": {
+   "RUN.json": "e52b875a96571fa2",
+   "fires": 832,
+   "outputs": {
+    "DECISIONS.tsv": "c4346fd069b21096",
+    "SKIP_EVENTS.tsv": "6148f12035fdc3ee",
+    "TAKE_EVENTS.tsv": "c0901cc9e7ae6bc8",
+    "VALUE_COUNTS.tsv": "5774dee9805725ae"
+   },
+   "tally": {
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 832,
+     "weight": 515.0
+    }
+   },
+   "timing_s": {
+    "admission": 0.04,
+    "compute": 0.005,
+    "read": 0.125,
+    "write": 0.211
+   }
+  },
+  "ALM_S2R1_V1_DEFAULT": {
+   "RUN.json": "4bbb3170b9a84236",
+   "fires": 193,
+   "outputs": {
+    "DECISIONS.tsv": "ef84d99b6b0c99a0",
+    "SKIP_EVENTS.tsv": "6148f12035fdc3ee",
+    "TAKE_EVENTS.tsv": "008450c0240de786",
+    "VALUE_COUNTS.tsv": "5774dee9805725ae"
+   },
+   "tally": {
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 193,
+     "weight": 142.0
+    }
+   },
+   "timing_s": {
+    "admission": 0.294,
+    "compute": 0.001,
+    "read": 0.08,
+    "write": 0.111
+   }
+  },
+  "ALM_S3W_V1_DEFAULT": {
+   "RUN.json": "905138c8c904d0d0",
+   "fires": 4357,
+   "outputs": {
+    "DECISIONS.tsv": "9b242b7d3eed9134",
+    "SKIP_EVENTS.tsv": "6148f12035fdc3ee",
+    "TAKE_EVENTS.tsv": "c8252de84c1b1fcb",
+    "VALUE_COUNTS.tsv": "5774dee9805725ae"
+   },
+   "tally": {
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 4357,
+     "weight": 1594.0
+    }
+   },
+   "timing_s": {
+    "admission": 0.33,
+    "compute": 0.015,
+    "read": 0.378,
+    "write": 0.11
+   }
+  },
+  "ALM_S3W_V1_OWN": {
+   "RUN.json": "427594407c331fba",
+   "fires": 4357,
+   "outputs": {
+    "DECISIONS.tsv": "b591eb4859eccfe2",
+    "SKIP_EVENTS.tsv": "fab7cddc70393197",
+    "TAKE_EVENTS.tsv": "1b0a90eae70edcde",
+    "VALUE_COUNTS.tsv": "c0c9dd9aab1a959a"
+   },
+   "tally": {
+    "SKIP|1|BAD_DATA": {
+     "fires": 2,
+     "weight": 2.0
+    },
+    "SKIP|4|SKIP_RULE": {
+     "fires": 1980,
+     "weight": 713.542359
+    },
+    "TAKE|4|NO_SKIP_LINE_TRUE": {
+     "fires": 2375,
+     "weight": 878.457641
+    }
+   },
+   "timing_s": {
+    "admission": 0.072,
+    "compute": 0.022,
+    "read": 0.317,
+    "write": 0.118
+   }
+  }
+ },
+ "runs_folder": "<VM_SESSION>/mnt/SCRATCH_DISK/judge_scratch/work_DECIDE/run_v1_4",
+ "same_bytes": "32 of 32 outputs identical across the two folders",
+ "second_runs_folder": "<VM_SESSION>/mnt/SCRATCH_DISK/judge_scratch/work_DECIDE/run_v1_5",
+ "steps_covered": {
+  "lean step 1 card": "CARD_DECIDE_V1.md (five parts, SETTINGS and EDGES as data)",
+  "lean step 2 build": "decide_rules_v1.py, decide_v1.py",
+  "lean step 3 T1 edges through the tool": "edges_decide_v1.py on EDGES_DECIDE_V1.tsv, 33 of 33",
+  "lean step 3 T2 independent reading": "meaning_decide_v1.py (imports nothing from the tool) and the reviewer recompute",
+  "lean step 3 T3 real data": "the 8 runs on the six frozen alarms",
+  "lean step 3 T4 stamps": "RUN.json: code, inputs, admitting releases, source list, phase times; verify_run()",
+  "lean step 3 T5 same bytes": "the 8 runs made twice, every output identical",
+  "lean step 3 T6 scale": "SPEED_BUDGET_DECIDE_V1.md",
+  "meaning loop": "MEANING_DECIDE_V1.txt in the first runs folder",
+  "outcome loop": "NOT RUN: loop_v1 is ready and waits for the review",
+  "scope and acceptance": "SCOPE_DECIDE_V1.md A1-A13",
+  "speed budget": "SPEED_BUDGET_DECIDE_V1.md (written after the first runs, said so)",
+  "test kit 25 Oct": "KIT_DECIDE_V1.md, one line per row 1-17 and 6b"
+ }
+}

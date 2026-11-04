@@ -1,0 +1,122 @@
+# MEANING_Z2_V1.yaml: the meaning register of Z2 news flow (GDELT) and of the GDELT rows under it (EDGE1, 2026-10-18; the owner 12:07
+# Berlin: "we need proper calendar and news definitions. They should have their own card ... We need to understand their meaning").
+# ONE SOURCE OF TRUTH; rawcheck/meaning_register.py (edition 2) checks it and writes .flat.jsonl and .md.
+
+group: Z2
+name: news flow (GDELT GKG rows, 15-minute batches)
+summary: >-
+  At every minute end, the last finished 15-minute GDELT batch we may read (a batch s is readable from s + 15 min): S01 how many GDELT
+  GKG records in it matched our pull's keyword filter, S02 how many of those GDELT itself tags with the theme ECON_BITCOIN, S03 the mean
+  document tone of the S01 records, S04 how unusual S01 is against the 96 batches before it (z score), S05 OK or why S04 is empty.
+read_as: >-
+  S02 is crypto news: records GDELT classifies as about bitcoin (about 11% of S01 on 29 Oct 2025). S01, S03 and S04 are NOT crypto news:
+  the filter keeps any record whose raw line holds one of 14 lower-case substrings anywhere (themes, names, URLs), and on 29 Oct 2025
+  78% of the kept records were kept only by 'eth ' (names: Elizabeth, Gareth, Beth) or 'defi' (deficit, definitely, definition), so S01
+  is mostly a general news volume (budget-deficit and people-name stories) and S03 is mostly the tone of that general news.
+
+where:
+  card: testbed/value_audit/registers/CARD_Z2_V3.md (14 rules)
+  settings_register: testbed/value_audit/registers/SETTINGS_Z2_V1.tsv (5 settings)
+  source_spec: testbed/value_audit/registers/SOURCE_SPEC_news_V2.md (GDELT, F1 to F7, Q-G1 to Q-G7, Q-P1, Q-P2, OPEN-N3)
+  producer: testbed/value_audit/code/prod_Z2_v2.py through prod_reader_news_v1.py (year copy in code/L0_y52f12/value_audit/code)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/Z2.parquet
+  year_output_columns: "name (S01 to S05 and the .lag30_off twins), coin MARKET, as_of_us (u), value_kind (0 = EMPTY, NaN in value_f64), value_f64, value_txt (S05 words), known_at_us (s_u + 15 min), stale, empty_reason, flags"
+  year_packs: "the year's GDELT packs (SCRATCH_DISK volat_year_20250910/packs/news_v1/gdelt) are gone: the links in work_Z2S and work_DB2 dangle (jobs 15793, 15794); the pull files themselves are kept and give the year values exactly (job 15798)"
+  read_it_with: team/LAB/code/rawcheck/meaning_news.py (day, anatomy)
+
+source:
+  vendor: "GDELT 2.0 Global Knowledge Graph (GKG 2.1), public 15-minute files from data.gdeltproject.org"
+  exchange_stream: "none: a news-processing feed, one gkg.csv.zip every 15 minutes, each record one news document GDELT processed in that batch"
+  files: >-
+    <ARCHIVE_DISK2>/volat_archive/pulled_20261011_year52 (3 to 24 Sep 2025), pulled_20261012_year52 (25 to 30 Sep 2025),
+    pulled_20261014_year52 (Oct and Nov 2025), pulled_20261015_year52 (1 Dec 2025 to 1 Jul 2026): gdelt_raw/gdelt_gkg_filtered_<D>.csv
+    (the kept records, no header, 27 tab fields) and SOURCE_MANIFEST.csv (stamp, OK/MISSING/BADZIP, zip sha256, kept counts). Fetched
+    11 to 15 Oct 2026 by forensics/tools/news_pull/gdelt_raw_v3.py; the zips were deleted after filtering. Beside them, NOT READ by any
+    producer: gdelt_gkg_macro_<D>.csv (13 macro terms; 8,879 lines on 29 Oct 2025) and gdelt_gkg_political_<D>.csv (12 political terms;
+    50,064 lines).
+  columns: "GKG 2.1, 27 fields: 0 GKGRECORDID, 1 V2.1DATE, 3 V2SOURCECOMMONNAME, 7 V1THEMES, 15 V1.5TONE, ... (Q-G1)"
+  fields:
+    GKGRECORDID: "YYYYMMDDHHMMSS-n: the 15-minute batch the record was created in, then a running number; the batch is the record's time [proof: Q-G2]"
+    V2_1DATE: "the same batch time on every row of a file [proof: Q-G3; the reader marks a row bad when it differs]"
+    V1THEMES: "the themes GDELT found in the document; ECON_BITCOIN is GDELT's bitcoin theme [proof: Q-G4]"
+    V1_5TONE: "first value = the average tone of the whole document, -100 (very negative) to +100 (very positive), usually -10 to +10 [proof: Q-G5]"
+    keyword_filter: "a record is kept when its whole lower-cased line holds one of: bitcoin, ethereum, crypto, binance, coinbase, stablecoin, tether, sec crypto, bitcoin etf, liquidation, defi, cryptocurrency, btc, 'eth ' [proof: gdelt_raw_v3.py lines 14 to 15 (= gdelt_raw.py :10-11, Q-P1 ':77 ll=line.lower()', ':78 if any(k in ll)')]"
+    what_the_filter_keeps: "29 Oct 2025: 6,716 records; kept by one keyword only: 'eth ' 2,850, 'defi' 2,352, bitcoin 432, crypto 169, liquidation 82, btc 65; theme ECON_BITCOIN 724 (10.8%). The words: 'eth ' in person names (Elizabeth, Gareth, Beth) in fields 11, 12, 23; 'defi' in the themes ECON_BUDGET_DEFICIT and EPU_POLICY_DEFICIT (fields 7, 8) and in definitely, definition; 'btc' inside random URL strings; 'liquidation' in bankruptcy stories [proof: job 15798 anatomy; job 15799 words]"
+  latency: "GDELT publishes a batch every 15 minutes (Q-G7); when a batch file was first downloadable is in no file we hold: the producer reads batch s from s + 15 min (OPEN-N3 A; V-LAG30 twin at s + 30 min)"
+  silence: "no missing stamp on the 3 days checked (288 of 288 OK each, D-2 to D, job 15798)"
+
+reading_rules:
+  - "a record counts when it has 27 fields, a batch time on its file's day, V2.1DATE equal to that batch, a numeric tone; a repeated GKGRECORDID once (rule 1)"
+  - "at u read s_u, the latest batch with s + 15 min <= u (rules 3, 4)"
+  - "S01 = records of s_u; S02 = of them with theme ECON_BITCOIN; S03 = mean of their first tone values, 6 decimals half up; NO_ROWS when none (rules 5, 6)"
+  - "S04 = (S01 - mean) / population sd of the 96 batches before s_u, 4 decimals half up; BASELINE_HOLE when one is missing, FLAT when sd is 0 (rule 7)"
+  - "S05 = OK or the reason S04 is empty; never empty (rule 8)"
+
+values:
+  units: "records per 15-minute batch (S01, S02); tone points, -100 to +100 (S03); standard deviations (S04); a word (S05)"
+  zero: "S01 = 0 is a known batch with no kept record (none seen); S02 = 0 is common (no bitcoin-themed record in the batch)"
+  empty: "NO_FILE, STAMP_MISSING, NO_ROWS (S03), BASELINE_HOLE, FLAT (S04): value_kind 0 with NaN in value_f64. Never read empty as 0"
+  stale: "1 with STAMP_MISSING"
+  flags: "BAD_INPUT, DUPLICATE_ROW"
+
+interpret:
+  do:
+    - use S02 as the crypto-news count (GDELT's own bitcoin theme)
+    - read S01 and S04 as general news volume and its bursts (deficit, politics, people), useful as a macro-news proxy, not as crypto news
+    - remember a value changes only every 15 minutes (the batch), and reads a batch at least 15 min old
+  dont:
+    - read S01, S03 or S04 as crypto news, crypto attention or crypto sentiment
+    - read S03 as the tone of crypto coverage; at most 11% of its records are bitcoin-themed
+    - compare S01 across the pull editions or keyword sets; the set is fixed by gdelt_raw_v3.py
+
+biases:
+  - {what: "loose substring filter", direction: "S01 inflated by non-crypto records", size: "29 Oct 2025: 78% kept only by 'eth ' or 'defi'; 10.8% carry ECON_BITCOIN", proof: "jobs 15798, 15799"}
+  - {what: "batch read 15 min after its stamp", direction: "late by design", size: "15 to 29 min old at a minute end", proof: "card rules 3, 4"}
+  - {what: "GDELT covers what it processes, not all news", direction: "unknown", size: "not measured", proof: "Q-G7 (feed scope)"}
+
+external_checks:
+  - {what: "our filtered rows against GDELT's own 15-minute files", where: "data.gdeltproject.org/gdeltv2/<stamp>.gkg.csv.zip (the manifest keeps each zip's sha256)", status: "NOT_CHECKED: the zips were deleted; refetching is possible by URL (provenance by reference, Q-P1)"}
+  - {what: "the publication delay of a batch", where: "GDELT lastupdate.txt timing", status: "NOT_CHECKED: only a live fetch could show it, and live fetches of today are closed"}
+  - {what: "field meanings", where: "Q-G1 to Q-G7 (GDELT GKG 2.1 codebook)", status: VERIFIED}
+
+tools:
+  - {what: "Z2 S01 to S04 recomputed from the pull files, against the year output", run: "python3 -B -m rawcheck.meaning_news day <D> [<D> ..]", where: "team/LAB/code (runner job: the pulls are on the Expansion drive)"}
+  - {what: "what the keyword filter keeps on a day", run: "python3 -B -m rawcheck.meaning_news anatomy <D>", where: team/LAB/code}
+
+used_by: "nobody yet (CARD_Z2_V3: no reader for any of the 5 metrics); PRODUCER_REGISTRY_V5 names families.py:news_row as the old consumer"
+
+references:
+  G1: http://data.gdeltproject.org/documentation/GDELT-Global_Knowledge_Graph_Codebook-V2.1.pdf
+  G2: https://blog.gdeltproject.org/gdelt-2-0-our-global-world-in-realtime/
+  PULL: forensics/tools/news_pull/gdelt_raw_v3.py
+
+# J15798 = meaning_news 19ee2b76: 4 settings x 4,320 minute ends of 3 days (one per pull: 24 Sep, 29 Oct 2025, 10 Feb 2026), 0 differ.
+settings:
+  - {id: Z2.S01, layer: basic, side: none, window: "one 15-minute batch, read from its stamp + 15 min", clock: minute end, scope: market, contracts: none, aggregate: "count of kept GDELT records", aliases: "O.gdelt_rows_15m",
+     means: "promised: crypto news rows of the last batch",
+     delivers: "the GDELT records of the last readable batch whose raw line holds one of 14 substrings; mostly general news (29 Oct 2025: 78% kept only by 'eth ' in names or 'defi' in deficit/definitely; 10.8% bitcoin-themed)",
+     read_by: "S04 and S05 (built on it); no producer or chain reads Z2 (CARD_Z2_V3)",
+     computation: {status: RELIABLE, proof: "J15798: 4,320 of 4,320 equal (3 days, one per pull); J15795"}, meaning: {status: DIFFERS_FROM_NAME, proof: "J15798 anatomy; J15799 words; gdelt_raw_v3.py lines 14 to 15"},
+     open: "BUILD: a filter on whole words or on GDELT themes, or rename to news_volume"}
+  - {id: Z2.S02, layer: basic, side: none, window: "one 15-minute batch, read from its stamp + 15 min", clock: minute end, scope: market, contracts: none, aggregate: "count of kept records with theme ECON_BITCOIN", aliases: "O.gdelt_crypto_rows_15m",
+     means: "the records of the last readable batch that GDELT itself tags as about bitcoin (crypto news count); none is lost to the filter (the theme name holds 'bitcoin'); stories about ether or other coins without the bitcoin theme are not counted",
+     computation: {status: RELIABLE, proof: "J15798 4,320 of 4,320"}, meaning: {status: DEFINED, proof: "Q-G4; J15798 (724 of 6,716 on 29 Oct 2025)"},
+     open: none}
+  - {id: Z2.S03, layer: basic, side: none, window: "one 15-minute batch", clock: minute end, scope: market, contracts: none, aggregate: "mean of the first V1.5TONE value, 6 decimals half up", aliases: "O.gdelt_tone_mean",
+     means: "promised: the tone of crypto news",
+     delivers: "the average document tone of all S01 records, mostly general news (deficit, politics, people)",
+     read_by: "nobody (CARD_Z2_V3)",
+     computation: {status: RELIABLE, proof: "J15798 4,320 of 4,320"}, meaning: {status: DIFFERS_FROM_NAME, proof: "Q-G5; J15798, J15799"},
+     open: "BUILD: a tone over the ECON_BITCOIN records (S02's set)"}
+  - {id: Z2.S04, layer: our_rule, side: none, window: "the batch against the 96 batches before it (24 h)", clock: minute end, scope: market, contracts: none, aggregate: "(S01 - mean) / population sd, 4 decimals half up", aliases: "O.gdelt_burst_z",
+     means: "promised: a burst of crypto news",
+     delivers: "how unusual the general-news S01 count is against the last 24 h",
+     read_by: "S05 (its status word); nobody else",
+     computation: {status: RELIABLE, proof: "J15798 4,320 of 4,320"}, meaning: {status: DIFFERS_FROM_NAME, proof: "built on S01 (J15798, J15799)"},
+     open: "BUILD: the same z on S02"}
+  - {id: Z2.S05, layer: our_rule, side: none, window: "as S04", clock: minute end, scope: market, contracts: none, aggregate: "OK, NO_FILE, STAMP_MISSING, BASELINE_HOLE or FLAT", aliases: "O.gdelt_burst_status",
+     means: "OK when S04 has a value, else the reason it is empty",
+     computation: {status: RELIABLE, proof: "S04 had a value at every minute end of the 3 days (J15798) and S05 says OK at 1,440 of 1,440 minute ends on 6 year days (job 147303)"}, meaning: {status: DEFINED, proof: "card rule 8"}, open: none}
+  - {id: Z2.lag30_off, layer: our_rule, side: none, window: "as each setting, batch read from s + 30 min", clock: minute end, scope: market, contracts: none, aggregate: "as each setting", aliases: ".lag30_off",
+     means: "switched-off twins read one batch later (the old store's conservative 30 min)",
+     computation: {status: NOT_CHECKED, proof: "none"}, meaning: {status: DEFINED, proof: "card rule 3"}, open: "not recomputed"}

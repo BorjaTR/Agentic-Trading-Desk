@@ -1,0 +1,10 @@
+# MACHINE_PATHS_KNOWN.tsv for 05_Profile (SCOUT, 31 Oct 2026, release ALARM_V1_5): released files kept unchanged with a machine
+# path, for _tools/machine_paths_v2.py. A row holds while the file's sha16 is unchanged; any change makes the line CODE again.
+# Source: the STATIC scan of GitHub Trading/Alarm (= ALARM_V1_4), 31 Oct 05:36Z (team/SCOUT/devpaths/
+# scan_GITHUB_V1_4_20261031T053614Z/05_Profile.tsv), less the 0 past editions ALARM_V1_5 moves to archive/; reasons from
+# team/SCOUT/devpaths/KNOWN_REASONS_V1_5.tsv (by known_from_scan_v1.py).
+file	line	path	sha16	reason
+tree/tools/alarm_context/alarm_context.py	29	<DATA_ROOT>/research_days	38bdf42a6bdae4cb	context edition 1, kept beside alarm_context_ed1_1.py: the profile tools of edition 1 import it
+tree/tools/alarm_profile/alarm_profile.py	27	<DATA_ROOT>/research_days	9eb6732a281bf46f	profile edition 1, kept beside edition 1.1 (alarm_profile_ed1_1.py): its tests run from TESTS.tsv; the alarm jobs run neither
+tree/tools/alarm_profile/alarm_profile.py	38	<SCRATCH>/work_SCOUT/hl_fills_npz_dev	9eb6732a281bf46f	profile edition 1, kept beside edition 1.1 (alarm_profile_ed1_1.py): its tests run from TESTS.tsv; the alarm jobs run neither
+tree/tools/alarm_profile/test_proof_plan_v1.py	4	<LAB_REPO>/forensics/team/RESEARCH/tools/alarm_profile	71fc56562ad9ec24	profile edition 1, kept beside edition 1.1 (alarm_profile_ed1_1.py): its tests run from TESTS.tsv; the alarm jobs run neither

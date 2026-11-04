@@ -1,0 +1,298 @@
+# L2_V1.yaml: LIQX the undercount flag (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 rules 4.11, 4.12, the 5 s
+# grid; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4). S01, S02 by PRODUCER_LIQX_V1.yaml.
+# Edition 2 (before review; what TREE's VOLX review taught, REVIEW_VOLX_TREE_V1 404b9dcd): the PHASES line, E9 the row at exactly
+# 00:00:00.000000 (ADDON_ARCHITECTURE_V4 edit 3 line 37) with M6, NO_ROSTER as no roster file, the empty_order, sliding windows.
+# Edition 3: EDGE1's lead review section 0 (REVIEW_LEAD_EDGE1_V1 8dd9867d X1 to X11): X1 A1 rule 5's file rule word for word (the
+# trades file missing is TRADES_HOLE, not NO_FILE; USDC_MISSING), X2 a row with no stamp, X3 the 00:00:00 point NO_FILE, X4 the CARRY's
+# words and D-1's rows stamped after 24:00, X7 Binance, X10 the kernels, X11 the roster file; FIRST_DAY_NO_CARRY dropped (an empty value
+# carries no flag, A1 rule 10, O8). Mine: S02 reads the 5 seconds ending 3 s before u (the 1.01 s median arrival lag, SOURCE_SPEC_liquidations_V3 acbfba9e F4);
+# A1's seen rule needs D-1's trade counts and thin state (reader v6 thin()): phase B at every point. Edge cases E10 to E19.
+# Edition 4: BED's lead review (REVIEW_LEAD_BED_LIQX_V1 a395b964): the dust rows in pass line 2 and the raw check, known_at by A1's
+# rule, NO_RATE_BASE; S02's seconds are floor seconds [s, s + 1) as the cap's evidence; a bad USDC row and S02; USDC_MISSING's look at
+# D+1 to D+3 said; the arrivals of E3, E5, E8 given; E19's last row; E20 to E25 (dust, NO_RATE_BASE, the floor second, a bad USDC row,
+# D's row of D-1's last second, a 1000-coin); a data check of the lag.
+kind: build_metric
+id: L2
+producer: LIQX
+item: 'undercount flag (one print per coin per second saturated)'
+tier: BUILD
+name: the share of the last 60 whole seconds in which the coin printed a liquidation on Binance futures (S01), and whether each of the 5 whole seconds ending 3 s before the point held a print on its Binance USDT contract, the cap of one print a second (S02)
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  Binance sends at most the latest liquidation of a symbol in each 1,000 ms, so in a burst the files hold one print a second and the
+  rest is hidden: S02 = 1 says the cap was hit in each of 5 seconds in a row (ending 3 s before u, so that their prints have arrived)
+  and A1's dollars there are a floor, likely well under the true sum; S01 says how much of the last minute was printing at all.
+  Binance futures only, never Hyperliquid.
+example: >-
+  Five long prints of BTCUSDT at u - 7.6 s, u - 6.2 s, u - 5.9 s, u - 4.5 s and u - 3.1 s, each received 1 s after its stamp: the
+  floor seconds [u - 8 s, u - 7 s), ..., [u - 4 s, u - 3 s) each hold one, S02 = 1; over 60 s with only those five, S01 = 5 / 60 =
+  0.08333333333333333. Three prints in three seconds
+  and nothing else: S01 = 0.05, S02 = 0.
+formula: >-
+  Rows: the liquidation reader's rows of the coin (prod_reader_liquidations_v6, A1's: CARD_A1_V5 7d0fff50 rules 1 to 7), both sides,
+  the USDT and the USDC contract, stamped (exchange time) in the window and received by u; a bad row takes the coin out (A1 rule 4,
+  BAD_INPUT); a repeated row counts once here (one second holds it either way). S01's seconds are the intervals (s - 1 s, s] of whole
+  seconds s (A1's window (u - 60 s, u]): S01 = the number of the 60 seconds of (u - 60 s, u] holding a row received by u, over 60.
+  S02's seconds are floor seconds [s, s + 1), as the cap's evidence counts them (BASIC_A1_V2: one row a file-second; meaning_flowbasic.py
+  line 347, ts // 1 s): S02 = 1 when each of the 5 floor seconds of [u - 8 s, u - 3 s) holds a row of the coin's USDT contract
+  received by u (the cap is per symbol; only USDT rows count for S02, bad ones included: A1 has no USDT-only setting, so the rule of
+  its USDC-only bullet, rule 4, mirrored), else 0: the
+  stream pushes a second's print after the second ends, 1.01 s after the stamp at the median, 2.8 s at p99, 5.1 s at most (SOURCE_SPEC_liquidations_V3 acbfba9e F4),
+  so the window (u - 5 s, u] would miss most prints of its last second at u and no later window holds that second; 3 s covers p99.
+  Values only when the coin is seen at u by A1 rule 5 (word for word: 'its USDT file is there for every day the window touches; it
+  has a USDT trade in [e - 60 s, e] received by e; its thin state is off; no bad row'): then 0 is a real 0 (A1 rule 7). FILES (X1):
+  the USDT liquidation file missing is NO_FILE (prod_A1_v3 line 131, has_usdt); an empty file (20 bytes, no header) or a header-only
+  file is there and has no rows (prod_reader_liquidations_v6 8566228f edition 4 change (1)); the trades file missing leaves no live
+  span, so TRADES_HOLE; a USDC file expected and missing leaves USDT alone, flagged USDC_MISSING (A1 rule 6). A ROW WITH NO STAMP
+  (X2): the reader writes t = -1 for a missing exchange stamp and arr = -1 for a missing arrival, each marked bad (A1 rule 4); A1's
+  windows are by stamp (prod_A1_v3 line 146), so a row with t = -1 is in no window (it neither counts nor gives BAD_INPUT), and a row
+  with a stamp and arr = -1 is received at once (arr <= u, line 147) and gives BAD_INPUT in every window holding its stamp. Float64
+  (S01), whole (S02).
+source:
+  kind: doc
+  ref: >-
+    Binance developer docs, All Market Liquidation Order Streams (read 2026-10-18, RESEARCH_TOOLS_V1 aad3cc38 section 3.2): 'For each
+    symbol, only the latest one liquidation order within 1000ms will be pushed as the snapshot.' and 'If no liquidation happens in the
+    interval of 1000ms, no stream will be pushed.'; Tardis and Coin Metrics document the same cap; BASIC_A1_V2 201dba7e: the files never
+    hold two rows of one file-second on 8 Mar 2026, two in 9 of 12,878 file-seconds on 24 Sep 2025 (J15872, J15873); the arrival lag
+    of the rows, SOURCE_SPEC_liquidations_V3 acbfba9e F4 (median 1.01 s, p99 2.8 s, max 5.1 s). No tool: BUILD.
+inputs:
+  - kind: reader
+    ref: prod_reader_liquidations_v6
+    exists: true
+    stream: liquidations (binance-futures, USDT and USDC contracts), A1's reader (prod_A1_v3; edition 7 the same rules, faster); its alive() and thin() for the seen rule
+    rule_in_force: rows stamped in (u - W, u] and received by u (CARD_A1_V5 rule 1); seen by rule 5
+    stale_rule: "A1 rule 16: every value at a moment when the whole market's liquidation stream has been silent over T = 960 s is stale"
+    days: "D's raw for the points 00:00:05 to 24:00:00 (24:00:00 is D+1's 00:00:00) and D's rows at exactly 00:00:00.000000 for the 00:00:00 point; the CARRY of D-1 (X1/carry/LIQX/<D-1>.npz; files are cut by arrival, REVIEW_LEAD_EDGE1_V1 X4: there are no rows of D-1's file received after 24:00): per coin and contract the seconds of (23:59:00, 24:00] holding a row with its first arrival, the rows of D-1's file not in force at 24:00 (stamped after 24:00, max(t, arr) > 24:00), D-1's live spans reaching past 24:00, D-1's 1,440 minute trade counts and thin(D-1, 0)'s end state (on, good), the USDT file status of D-1, the market's latest row time; the first year day reads 9 Sep 2025's liquidation and trades files and 8 Sep 2025's trades minute counts once (the thin base, reader v6 thin(D, depth=1))"
+overlaps:
+  - setting: A1 S05, S06
+    kind: other_metric
+    why: A1's 60 s long and short dollars at the minute ends from the same rows (CLEAN, LAYER_REGISTER_V32); at a minute end S01 > 0 exactly when A1 S05 + S06 > 0 where both are valued, dust windows (each side under 0.50 dollars, A1's 0) named apart (the raw check of PRODUCER_LIQX_V1).
+per_coin: >-
+  Every roster coin of the week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, run_day_v43 af700286 line 307: B's coins: J16034 log f7a76cb0 finds
+  every Monday checked, 8 Sep 2025 to 9 Mar 2026, with 50 to 52 coins; the repo's knowledge/roster/ holds none before ROSTER_20251006
+  and other files, 50 coins each; A1 rule 14, 1000PEPE as 1000PEPE). BTC and ETH hit the cap in crashes (10 Oct 2025 evening); thin
+  coins print rarely, so S01 is mostly 0 and S02 0. A coin with no USDC contract counts its USDT rows only. A coin not seen (NO_FILE,
+  TRADES_HOLE, THIN_FEED, BAD_INPUT by A1 rule 5's order) is empty, never 0. A thin coin (THIN_FEED, E17) is empty while thin.
+time: >-
+  Every 5 s of D (17,280 points). 00:00:00 is D-1's 24:00:00 point (in D-1's CARRY); D's phase B adds D's rows at exactly
+  00:00:00.000000 (E9) and makes it NO_FILE when D's USDT liquidation file is missing (X3, E13). The windows of S01 at 00:00:05 to
+  00:01:00 and of S02 at 00:00:05 reach into D-1 or hold rows of D-1's file (E14): their D-1 parts come from the CARRY (additive parts
+  split at 00:00, ADDON_ARCHITECTURE_V4 section 4). The seen rule reaches back too: the live spans of D-1's trades (to 00:01:00) and
+  the thin state, whose base is the median of D-1's 1,440 minute trade counts and whose start is thin(D-1, 0)'s end (all day; the points
+  00:00:00 to 00:00:55 read thin(D-1, 0)'s last minute, as the year's run of D does: prod_A1_v3 thin_at with k = -1). Crash
+  evenings saturate; quiet nights hold zeros. The first year day: a missing 9 Sep 2025 file gives NO_FILE where a window touches it
+  (no flag).
+output:
+  group_file: X1/day=<D>/LIQX.parquet
+  grid: 5s
+  names:
+    - name: S01
+      label: liq_print_seconds_share_60s
+      units: share 0 to 1 of the last 60 whole seconds
+      value_kind: float
+      decimals: none
+      means: the share of the 60 seconds of (u - 60 s, u] holding at least one Binance liquidation row of the coin received by u (either side, USDT or USDC)
+    - name: S02
+      label: liq_usdt_saturated_5s
+      units: 0 or 1
+      value_kind: whole
+      decimals: 0
+      means: 1 when each of the 5 floor seconds of [u - 8 s, u - 3 s) holds a Binance liquidation row of the coin's USDT contract received by u (the cap reached), else 0
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: "A1's rule (CARD_A1_V5 section 2's stamps): known_at = the latest arrival among the rows counted (all received by u), else u (reader v6 keeps the trades' live spans only, not one trade's arrival); an empty row known_at = u; so known_at <= as_of on every row"
+  empty_reasons:
+    - reason: NO_FILE
+      when: "the coin's USDT liquidation file is missing (or only .part) for a day the window touches (A1 rule 5; at 00:00:00, D's file: X3)"
+    - reason: TRADES_HOLE
+      when: no USDT trade of the coin stamped in [u - 60 s, u] and received by u (the trades file missing included)
+    - reason: THIN_FEED
+      when: "the coin's thin state is on (A1 rule 5, R8; reader v6 thin(): the minute's trade count under 1% of the median of D-1's minute counts starts it, 5 minutes in a row at 20% or more end it)"
+    - reason: BAD_INPUT
+      when: a bad liquidation row of the coin stamped in the name's window and received by u (A1 rule 4; a row with no arrival is received at once)
+    - reason: NO_ROSTER
+      when: no roster file for the week (the year root's ROSTER_<monday>.csv; every coin, the coin axis is the week's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (A1 rule 5's order)
+  stale_rule: "stale = 1 when the whole market's liquidation stream has been silent over 960 s at u (A1 rule 16), and on TRADES_HOLE and THIN_FEED (A1's stale reasons)"
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: DUPLICATE_ROW
+      when: a repeated row of the coin in the window (A1 rule 10; it counts once here)
+    - flag: USDC_MISSING
+      when: "S01 only: the coin's USDC file expected (one within D-3 to D+3, reader v6 usdc_expected lines 193 to 197: a look at the files of D+1 to D+3, as the year's A1 R5 does; the value does not depend on it) and missing for a day the window touches; S01 counts USDT alone (A1 rule 6, R5)"
+    - flag: NO_RATE_BASE
+      when: "the thin base or start is missing (D-1's trades file missing, or the median of D-1's minute counts 0: reader v6 thin() gives no state): the coin is read as not thin and the value carries the flag (prod_A1_v3 lines 120 to 124, 141 to 142)"
+edge_cases:
+  - case: E1 the cap hit
+    input: 'USDT rows stamped u - 7.6 s, u - 6.2 s, u - 5.9 s, u - 4.5 s, u - 3.1 s, each received 1 s after its stamp, nothing else in 60 s'
+    answer: 'S02 1; S01 0.08333333333333333'
+  - case: E2 a gap of one second
+    input: 'E1 without the row of u - 5.9 s (none in [u - 6 s, u - 5 s))'
+    answer: 'S02 0; S01 0.06666666666666667'
+  - case: E3 three prints
+    input: 'rows at u - 50.5 s, u - 20.5 s, u - 10.5 s, each received 1 s after its stamp'
+    answer: 'S01 0.05, S02 0'
+  - case: E4 the window edges
+    input: 'a row stamped exactly u - 60 s; a row stamped and received exactly at u'
+    answer: 'the first is outside (the window is open at u - 60 s), the second inside: S01 1/60 = 0.016666666666666666'
+  - case: E5 two rows in one second
+    input: 'rows at u - 0.9 s and u - 0.2 s (USDT and USDC), received at u - 0.1 s and u'
+    answer: 'one second: S01 0.016666666666666666'
+  - case: E6 a row received after u
+    input: 'a row stamped u - 2 s received u + 0.3 s'
+    answer: not counted at u; counted at u + 5 s
+  - case: E7 not seen
+    input: 'no USDT trade in [u - 60 s, u]'
+    answer: 'S01, S02 empty TRADES_HOLE, stale 1'
+  - case: E8 the day start
+    input: "u = 00:00:30 of D; D-1's CARRY: rows in the seconds ending 23:59:40 and 23:59:50; a row of D stamped 00:00:10, received 00:00:11"
+    answer: 'S01 3/60 = 0.05'
+  - case: E9 the row at exactly 00:00:00.000000
+    input: "D-1's CARRY: seconds ending 23:59:40 and 23:59:50 held a row; a row of D's file stamped and received at 00:00:00.000000"
+    answer: 'S01 at the 00:00:00 point = 3/60 = 0.05 (the second (23:59:59, 24:00] holds the row; phase B adds it from D''s raw)'
+  - case: E10 a lag over 3 s
+    input: 'E1 with the row of u - 3.1 s received at u + 0.2 s (3.3 s after its stamp, over p99)'
+    answer: 'S02 0 at u and at u + 5 s (that second is in no later S02 window); S01 4/60 = 0.06666666666666667 at u, 5/60 = 0.08333333333333333 at u + 5 s'
+  - case: E11 a row with no exchange stamp (X2)
+    input: 'a USDT row with timestamp empty (t = -1) received at u - 10 s; no other row; a USDT trade every second'
+    answer: 'S01 0.0, S02 0 (in no window: not BAD_INPUT)'
+  - case: E12 a row with a stamp and no arrival
+    input: 'a USDT row stamped u - 5 s with local_timestamp empty (arr = -1); a USDT trade every second'
+    answer: 'S01, S02 empty BAD_INPUT at u (received at once; its stamp is in both windows)'
+  - case: E13 D's file missing at midnight (X3)
+    input: "D's USDT liquidation file missing, D-1's there; D-1's CARRY holds a 24:00 value of S01 0.05"
+    answer: 'S01, S02 empty NO_FILE at 00:00:00 (phase B), not 0.05, and at every point of D'
+  - case: E14 a row of D-1's file stamped after 24:00 (X4)
+    input: "D-1's file: a USDT row stamped 00:00:00.300 of D, received 23:59:59.900 of D-1 (t > arr); no other row; a USDT trade every second"
+    answer: 'S01 1/60 = 0.016666666666666666 at 00:00:05 and at 00:01:00 (phase B from the CARRY), 0.0 at 00:01:05; S02 0'
+  - case: E15 the trades file missing
+    input: "D's USDT trades file missing, its liquidation files there"
+    answer: 'S01, S02 empty TRADES_HOLE, stale 1, at 12:00:00 (not NO_FILE)'
+  - case: E16 an empty file
+    input: "D's USDT liquidation file a 20-byte gzip with no header; a USDT trade every second"
+    answer: 'S01 0.0, S02 0 (seen: a real 0)'
+  - case: E17 a thin coin
+    input: "the median of D-1's minute trade counts 1,000; D's minute 10:00 to 10:01 holds 4 trades (at 10:00:00.5, :20, :40, :59; 0.4%), the minutes before and after 1,000 each"
+    answer: 'S01, S02 empty THIN_FEED, stale 1, at 10:01:00 to 10:05:55 (the state of the last full minute: minutes 600 to 604 thin, 605 the fifth at 20% or more); valued from 10:06:00'
+  - case: E18 thin across midnight
+    input: "D-1's CARRY: thin(D-1, 0) ended thin with 2 good minutes (on, good 2); D's minutes at 1,000 each, the base 1,000"
+    answer: 'S01, S02 empty THIN_FEED at 00:00:00 to 00:02:55; valued from 00:03:00 (minutes 0, 1, 2 of D are the 3rd to 5th good)'
+  - case: E19 an outage
+    input: 'no liquidation row of any roster coin stamped after 10:00:00 (the last one received 10:00:01), this coin''s last row stamped 09:58:00; trades every second'
+    answer: 'S01 0.0, S02 0 from 10:00:00 with stale 0 to 10:16:00 and stale 1 from 10:16:05 (A1 rule 16: P - L(P) over 960 s); values unchanged'
+  - case: E20 a dust row
+    input: 'one long USDT row of 0.30 dollars stamped u - 30 s, received u - 29 s; a USDT trade every second'
+    answer: 'S01 1/60 = 0.016666666666666666 while A1 S05 + S06 = 0 at that minute end (A1 rounds 0.30 to 0, rule 2): named, not a failure'
+  - case: E21 no thin base
+    input: "D-1's trades file missing; D's trades every second; E1's rows"
+    answer: 'S02 1, S01 0.08333333333333333, flag NO_RATE_BASE (read as not thin)'
+  - case: E22 a print at a whole second
+    input: 'E1 with the u - 4.5 s row stamped exactly u - 5.000000 s'
+    answer: 'S02 1 (floor seconds: u - 5.0 s is in [u - 5 s, u - 4 s), u - 5.9 s in [u - 6 s, u - 5 s))'
+  - case: E23 a bad USDC row
+    input: 'E1 plus a USDC row with price 0 (bad) stamped u - 5.5 s, received u - 4.5 s'
+    answer: 'S01 empty BAD_INPUT (both contracts); S02 1 (USDT rows only)'
+  - case: E24 D's row in D-1's last second
+    input: "D-1's CARRY: no row in (23:59:00, 24:00]; D's file: a row stamped 23:59:59.500 of D-1, received 00:00:00.600 of D; a USDT trade every second"
+    answer: 'S01 0.0 at 00:00:00 (not received by 24:00), 1/60 = 0.016666666666666666 at 00:00:05 to 00:00:55 (the second (23:59:59, 24:00], its first arrival the minimum with any CARRY row of that second), 0.0 at 00:01:00'
+  - case: E25 a 1000-coin
+    input: "E1's rows on 1000PEPEUSDT (the roster's binance_symbol)"
+    answer: 'S02 1; S01 0.08333333333333333 on the coin 1000PEPE'
+unit_tests:
+  - test: U1 (E1 to E5)
+    planted: 'a liquidation pack with the rows of each case (side, price, amount, t, arr, contract) and a USDT trade every second'
+    expect: 'S01, S02 of each case exactly as written'
+  - test: U2 (E6, E7, E8, E9)
+    planted: 'the late row; a trades pack with a 61 s gap; the CARRY of D-1 with its seconds; the E9 row in D''s file'
+    expect: 'not counted then counted; TRADES_HOLE stale 1; 0.05; E9 0.05 at 00:00:00'
+  - test: U4 (E10 to E16)
+    planted: 'the late E1 row; the rows with no stamp and no arrival; D''s file missing with D-1''s CARRY; D-1''s row stamped after 24:00; no trades file; a 20-byte gzip'
+    expect: 'each answer exactly as written (the 00:00:00 and the 00:00:05 to 00:01:00 points from phase B)'
+  - test: U5 (E17 to E19) and the thin twin
+    planted: "D-1's and D's minute trade counts per case; the CARRY's (on, good); the market's rows to 10:00:00"
+    expect: "THIN_FEED and stale exactly at the points written; the thin states equal reader v6 thin(D, depth=1)'s on the same counts (the brute twin)"
+  - test: U6 (E20 to E25)
+    planted: "the dust row; no D-1 trades file; the whole-second row; the bad USDC row; D's row of D-1's last second; 1000PEPEUSDT"
+    expect: 'each answer exactly as written'
+  - test: U3 the stamps and the grid
+    planted: U1, U2
+    expect: '17,280 rows per name and coin; known_at <= as_of at every row; S02 written as whole 0 or 1; empty never 0'
+mutants:
+  - mutant: M1 the window closed at u - 60 s ([u - 60 s, u], 61 possible seconds)
+    caught_by: 'U1 (E4 gives 2/60 = 0.03333333333333333)'
+  - mutant: M2 rows counted, not seconds
+    caught_by: 'U1 (E5 gives 2/60)'
+  - mutant: M3 the USDC rows in S02
+    caught_by: 'U1 (a USDC row filling E2''s gap gives S02 1)'
+  - mutant: M4 the stamp only (a row received after u counted)
+    caught_by: 'U2 (E6 counted at u)'
+  - mutant: M5 not seen read as 0
+    caught_by: 'U2 (E7 gives 0)'
+  - mutant: M6 the 00:00:00 point from D-1's run alone (D's raw not read in phase B)
+    caught_by: 'U2 (E9 gives 2/60 = 0.03333333333333333)'
+  - mutant: M7 S02 on (u - 5 s, u] (no lag)
+    caught_by: 'U1 (E1 gives 0: (u - 3 s, u] holds no row)'
+  - mutant: M8 a row with no stamp read as BAD_INPUT
+    caught_by: 'U4 (E11 gives BAD_INPUT)'
+  - mutant: M9 the 00:00:00 point kept from the CARRY when D's file is missing
+    caught_by: 'U4 (E13 gives 0.05)'
+  - mutant: M10 the CARRY's rows stamped after 24:00 dropped
+    caught_by: 'U4 (E14 gives 0.0 at 00:01:00)'
+  - mutant: M11 NO_FILE for a missing trades file
+    caught_by: 'U4 (E15 gives NO_FILE)'
+  - mutant: M12 the thin state started off at 00:00 of D (the CARRY's end state not read)
+    caught_by: 'U5 (E18 gives values from 00:00:00)'
+  - mutant: M13 S02 on seconds (s - 1 s, s]
+    caught_by: 'U6 (E22 gives 0: u - 5.0 s and u - 5.9 s share (u - 6 s, u - 5 s])'
+  - mutant: M14 a bad USDC row empties S02
+    caught_by: 'U6 (E23 gives BAD_INPUT)'
+  - mutant: M15 NO_RATE_BASE not written
+    caught_by: 'U6 (E21 gives no flag)'
+real_check:
+  points:
+    - point: 2025-10-10, BTCUSDT and ETHUSDT, the points of the 10 minute ends with the largest A1 liquidation dollars of the evening and the 11 points after each (named by the tester from A1)
+      why: the crash, the cap hit
+    - point: 2026-03-08, DOGEUSDT, 12:16:00 to 12:17:00 every 5 s
+      why: A1 S07's burst stamped 12:16:01.8 (BASIC_A1_V2)
+    - point: 2026-03-08, every roster coin, 00:00:00 to 00:01:00 every 5 s
+      why: the CARRY of 7 Mar 2026
+    - point: 2025-09-10 to 2025-09-12 (THE PILOT), every roster coin, 00:00:00 to 00:01:00 and 12:00:00 to 12:05:00 every 5 s
+      why: "what the pilot shows: L2 has no window over 60 s, so values from 00:00:00 of 10 Sep 2025 (9 Sep's files read once; the thin base from 8 and 9 Sep's trades counts)"
+  pass: >-
+    The tester recomputes S01, S02, the reasons and stale from this card's words on the reader's rows (rawcheck/check_liqx.py, its own
+    window code, never the producer's): floats within 1e-9 relative, whole values and words equal. One small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "the cap is visible: on 2025-10-10 between 20:00 and 23:59 UTC, BTCUSDT has S02 = 1 at 20 or more points (a burst printing in 5 seconds in a row); fewer is a finding (the 3 s lag or the window to look at again)"
+    - "S01 > 0 exactly when A1 S05 + S06 > 0 at every minute end of 2026-03-08 where both are valued (the same rows), or when each side of the coin's rows in the window sums under 0.50 dollars (A1 rounds them to 0: BASIC_A2_V2 line 13's dust windows); those coin-minutes are named, not failures"
+  report_only:
+    - "the floor: no outside record of Binance's hidden orders is held, so how far under the true sum a saturated second is stays unmeasured (A1's LIMITS line)"
+    - the share of points with S02 = 1 per coin and month; S01's distribution per coin
+conclude:
+  may:
+    - "the coin's Binance futures liquidation stream printed in this share of the last 60 seconds (S01)"
+    - "S02 = 1: Binance's one-print-a-second cap was reached in 5 seconds in a row ending 3 s before u, so A1's dollars of those seconds are a floor with orders likely hidden"
+  never:
+    - "S02 = 0 as nothing hidden (any second with a print may hide others: every A1 sum with a print is a floor)"
+    - S01 as a dollar size
+    - "Hyperliquid's liquidations (Binance futures only; the owner trades on Hyperliquid)"
+    - "the last 3 seconds (S02 reads the 5 seconds ending 3 s before u)"
+    - "a count of liquidation orders (the files hold at most one print a symbol a second)"
+readers: none yet (planned beside A1's dollars as their floor flag)
+implementation:
+  how: "Per coin, phase A: the rows' stamps to second indices (ceil to the second; t = -1 rows dropped, E11), per second and contract the first arrival among its rows (np.minimum.at), the bad rows' stamps and arrivals; a second counts at the points u >= its first arrival whose window holds it, so S01 and S02 are integer counts over intervals of points (a difference array of integers, exact: the float ban of ADDON_ARCHITECTURE_V4 9.3 rule 5 does not bite on integers); D's live spans and 1,440 minute trade counts (reader v6). PHASES (section 4 line 35): phase B, day after day, makes every value: the windows across 00:00 from the CARRY (S01 00:00:05 to 00:01:00, S02 00:00:05, E8, E14), the 00:00:00 point (E9, E13), the seen rule at every point (TRADES_HOLE from D's spans with D-1's reaching past 24:00; THIN_FEED from D-1's counts and thin(D-1, 0)'s end state, E17, E18) and A1 rule 16's stale where it needs the CARRY's latest row time (before D's first row + 960 s). No L2 value is final in phase A."
+  kernel: "card-local numpy steps with brute twins in the producer's tests (X10): the two-condition window (stamped in (u - W, u] and received by u, A1 rule 1) is not in addon_grid_v2 85c8ece1 (per_window sums by arrival alone, line 169): FOR EDGE1; the thin loop is reader v6 thin()'s own rule (1,440 steps per coin)"
+  memory_mb: 200
+  seconds_share: 1
+data_checks:
+  - what: "the arrival lag of the liquidation rows (S02's 3 s offset rests on BTC's median 1.01 s, p99 2.8 s, max 5.1 s, SOURCE_SPEC_liquidations_V3 F4) on 2025-10-10 20:00 to 23:59 (the load when the cap is hit) and on a thin coin"
+    who: "the tester's read-only job (rawcheck/check_liqx.py); pass line 1 already says a shortfall is a finding"

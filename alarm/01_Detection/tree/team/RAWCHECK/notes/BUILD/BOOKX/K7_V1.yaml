@@ -1,0 +1,216 @@
+# K7_V1.yaml: BOOKX price tick rate (C12.CB1) (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8).
+# Worked examples recomputed by team/TREE/proposals/verify_bookx_examples_tree_v3.py.
+# On the owner's 5 s grid (BUILD_ITEMS_V4 9d424de3, ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4, WORKPACKAGES_V2 edit 2 rule 4.11): every 5 s point of D,
+# minute ends included; K7 has no fit.
+# Edition 2: METRIC_AUDIT's REVIEW BOOKX 18:20:25Z (F1 to F5 and the nits) and ADDON_ARCHITECTURE_V4 edit 3 0591d181 (the phases, section 4 line 35; the
+# row at exactly 00:00:00.000000, line 37; the fit table, section 5; the kernels of addon_grid_v2 85c8ece1, section 9.4).
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 2): the tiling line made '<=' (a tick received after its
+# 5 s point counts in S10 only), the files as CARD_C4_V3 rule 5 word for word (X1), arrivals planted, a thin coin's late first row
+# in phase B, Hyperliquid's never line. Values unchanged.
+# Edition 4: METRIC_AUDIT2's FIX CHECK BOOKX (REVIEW_LEAD_METRIC_AUDIT2_BOOKX_V1 3414cef5) nits: a row with no stamp planted
+# mid-window (E10) and its flag settled as the year's C12 producer does (no BAD_ROW: its stamp is -1), E9 at every point, 00:00:00
+# included (X3a). Values unchanged.
+kind: build_metric
+id: K7
+producer: BOOKX
+item: price tick rate (C12.CB1)
+tier: BUILD
+name: how often the best bid or best ask PRICE changed on Binance per second over the last 5 s and 30 s (amount-only changes left out)
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 4
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T19:45:33Z'
+means: >-
+  The rate of price ticks at the top of the book: the count of bookTicker rows whose best bid or best ask price differs from the row
+  before, over the window, per second (S09 over 5 s, S10 over 30 s). What the year's C12 S01, S02 were named for: they count every top
+  update, amounts included (renamed, BASIC_C12_V1 fe16f9ad, could_build C12.CB1 = this item).
+example: >-
+  Over the 5 s before u the top moves: at u - 4.5 s only an amount changes (not a tick), at u - 3 s the ask goes to 102 (a tick), at
+  u - 2 s only an amount, at u - 1 s the bid drops to 99 (a tick), at u the ask returns to 101 (a tick): 3 ticks in 5 s, S09 = 0.6 a
+  second. If nothing else ticked in the 30 s, S10 = 3 / 30 = 0.1 a second.
+formula: >-
+  Good rows (the reader's bad false) of the coin's bookTicker in file order; a row is a tick when its best bid price or its best ask
+  price differs from the good row before it (that row may be stamped before the window, or be D-1's last good row from the CARRY's state at 24:00 of D-1); a row
+  where both change counts once; amounts are not looked at. For the window (u - W, u], W = 5 s (S09) or 30 s (S10): count = the ticks
+  stamped in the window and received by u; S = count / W per second. A bad row is skipped (the next good row is compared with the last
+  good one). The window must have the top known as C12's (CARD_C12_V5 280a1b7f rule 4; C4 rules 3 to 5): at every whole-second sample
+  u, u - 1 s, ..., u - W the last good row in force (stamped and received by the sample) is stamped within 30 s of it, else TOP_HOLE
+  (stale); NO_FILE is checked first; a bad row stamped in the window and received by u flags BAD_ROW (rule 5). An alive book
+  with no tick gives 0. A row of D stamped and received at exactly 00:00:00.000000 is a tick of the 00:00:00 point's windows when its
+  prices differ from the CARRY's last good row (E7). A row with no stamp (why 2, t = arr = -1) is bad and passed over (C12 rule 1); it flags no BAD_ROW, being stamped in no window (C12 rule 5
+  on the reader's own t, as the year's prod_C12_v4.py line 93 tests it), and is never moved to the row before's stamp here (E10). Files as
+  CARD_C4_V3 8bd8accb rule 5 word for word: a window ending at u needs the file of every day from the day of u - W to the day of u,
+  and the file of the day before (here its CARRY) when no row of that day's own file is in force at u - W; a needed file that is
+  missing (no file, or only a .part) makes the value empty NO_FILE, not stale, checked before TOP_HOLE; a file with only its header,
+  or a gzip with nothing in it, is there, with no row. Exact, written as float64.
+source:
+  kind: ours
+  ref: >-
+    C12.CB1 of BASIC_C12_V1 fe16f9ad (the could_build of the renamed C12 S01, S02: 'the count of good rows whose best bid or best ask
+    price differs from the good row before it (amount-only changes left out), stamped in (e - W, e] and received by e, over W', CARD_C12_V5
+    O1 B); RESEARCH_TOOLS_V1 aad3cc38 section 7.4 (O4, its planted rows): no tool, polars diff and shift.
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures), pack book_ticker_v2 (188dc357); the rows C12 reads
+    rule_in_force: the ticks are the good rows stamped in (u - W, u] and received by u; the first is compared with the last good row before the window
+    stale_rule: a whole-second sample of [u - W, u] whose last good row in force is stamped more than 30 s before it gives TOP_HOLE, stale 1 (CARD_C12_V5 rule 4)
+    days: "D's raw for the points 00:00:05 to 24:00:00 (24:00:00 and the tail written to X1/carry/BOOKX/<D>.npz: the ticks of the last 30 s, the last good row and its stamp, the rows not in force at 24:00 with max(t, arr) > 24:00; ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the 00:00:00 point of D is D-1's 24:00 point; the points whose window or seen test reaches before 00:00 take D-1's part from that CARRY: its tick count over (u - W, 24:00] (the tail), its last good row and its stamp (for the samples before 00:00)"
+overlaps:
+  - setting: C12 S01, C12 S02
+    kind: other_metric
+    why: >-
+      C12 S01, S02 count every top update (amounts too) per second over 5 s and 30 s (BASIC_C12_V1, renamed 'top-of-book update rate');
+      K7 counts the price changes only, a subset of the same changes (C12 rule 1 counts a change of any of the four numbers), with C12's
+      window and seen rule: round(S09 x 5) <= round(C12 S01 x 5) at every 5 s point and round(S10 x 30) <= round(C12 S02 x 30) at every
+      point C12 S02 is written (counts, since C12 rounds count / W once to 6 decimals, CARD_C12_V5 rule 3)
+per_coin: >-
+  BTC ticks many times a second; a coarse-step coin (CRV, the 1000-coins) ticks rarely and its amounts change much more often than its
+  prices (the gap between C12 and K7 is largest there). Thin coins: often 0 over 5 s.
+time: >-
+  Bursts at the funding settles, the quarter hours and in crashes (reported); the 00:00:00 point is D-1's 24:00 point; the 30 s windows of 00:00:05 to 00:00:25 add D-1's ticks from the CARRY.
+output:
+  group_file: X1/day=<D>/BOOKX.parquet
+  names:
+    - name: S09
+      label: price_tick_rate_5s
+      units: ticks per second
+      value_kind: float
+      decimals: none
+      means: best bid or ask price changes per second over (u - 5 s, u]
+    - name: S10
+      label: price_tick_rate_30s
+      units: ticks per second
+      value_kind: float
+      decimals: none
+      means: the same over (u - 30 s, u]
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest arrival among the ticks counted and the rows in force at the window's samples (CARD_C12_V5 rule 6), each <=
+    u by the rule; an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "a needed file missing or only a .part (CARD_C4_V3 rule 5; checked first, not stale): D's file at every point (00:00:00 too); D-1's (its CARRY) when no row of D's file is in force at u - W. A header-only file or an empty gzip is there, with no row"
+    - reason: TOP_HOLE
+      when: a whole-second sample of [u - W, u] has no good row in force stamped within 30 s of it (CARD_C12_V5 rule 4)
+  stale_rule: stale = 1 exactly when the value is empty TOP_HOLE
+  max_staleness_s: 30
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: BAD_ROW
+      when: "a bad row stamped in the window and received by u (CARD_C12_V5 rule 5, the year's BAD_ROW:<coin>; on the coin's own row the coin is implied), on the reader's own stamp: a row with no stamp never flags (E10); an empty value carries no flag"
+edge_cases:
+  - case: E1 the research rows
+    input: 'rows 100 / 101 every 10 s before; u - 6 s 100 / 101 (the row before); u - 4.5 s amount only; u - 3 s ask 102; u - 2 s amount only; u - 1 s bid 99; u ask 101; each received 0.01 s after its stamp but the last, received at u'
+    answer: 'S09 0.6 (3 ticks); S10 0.1 when nothing else ticked in the 30 s'
+  - case: E8 a tick received after its 5 s point
+    input: 'one tick stamped u - 6 s received u - 4 s (the only tick in 30 s)'
+    answer: 'S09 0.0 at u - 5 s (not received by it), 0.0 at u (stamped outside (u - 5 s, u]); S10 at u 1 / 30 = 0.033333333333: the sum of the six S09 x 5 is 0 <= 1'
+  - case: E9 the files
+    input: "D's file missing; then D's file with only its header and no CARRY row in force"
+    answer: 'NO_FILE (not stale) at every point of D, 00:00:00 included though the CARRY holds a row (phase B sets it, ADDON_ARCHITECTURE_V4 X3); TOP_HOLE stale 1 (the file is there, with no row)'
+  - case: E2 the edge
+    input: 'a tick stamped exactly u - 5 s'
+    answer: not counted in S09 (the window is open on the left); counted in S10
+  - case: E3 both prices change
+    input: 'one row with a new bid and a new ask'
+    answer: one tick
+  - case: E4 a bad row between
+    input: 'a crossed row (why 6) between two good rows of the same prices'
+    answer: skipped; no tick
+  - case: E5 alive, no tick
+    input: 'amount-only rows every second'
+    answer: S09 0.0, S10 0.0
+  - case: E6 a silence
+    input: 'no row stamped between u - 40 s and u - 6 s (one row at u - 6 s)'
+    answer: 'S10 empty TOP_HOLE (at the sample u - 7 s the last good row was 33 s old); S09 valued (its samples u - 5 s to u see the u - 6 s row)'
+  - case: E7 the row at exactly 00:00:00.000000
+    input: "u = 00:00:00 of D: the CARRY's tail holds D-1's 1 tick in (23:59:55, 24:00) and its last good row 100 / 101; D's first row 100 / 102, stamped and received at 00:00:00.000000"
+    answer: 'S09 = 2 / 5 = 0.4 (phase B adds the tick; D-1''s run alone gives 0.2)'
+  - case: E10 a row with no stamp mid-window (X2, C12 rules 1 and 5)
+    input: 'rows 100 / 101 stamped every second from u - 40 s to u, each received 0.01 s after its stamp but the one at u (received at u); between the rows stamped u - 3 s and u - 2 s, a row 100 / 102 with no stamp (why 2, t = arr = -1)'
+    answer: 'passed over: S09 0.0, S10 0.0, no flag (stamped in no window); taken as good at the row before''s stamp it gives 2 ticks (S09 0.4, S10 0.066666666667); flagged at the row before''s stamp it gives BAD_ROW'
+unit_tests:
+  - test: U1 (E1, E2)
+    planted: 'a book_ticker pack with pp 0: rows 100 / 101 every 10 s before u - 6 s and at u - 6 s; a tick at exactly u - 5 s (bid 100.5 / ask 101); then the E1 rows from u - 4.5 s (the bid 100.5 until u - 1 s)'
+    expect: 'S09 0.6 (the edge tick not in it), S10 0.133333333333 (4 ticks / 30 s)'
+  - test: U2 (E3, E4, E5)
+    planted: the rows of each case
+    expect: 'one tick; no tick; 0.0 and 0.0'
+  - test: U3 (E6)
+    planted: the silence
+    expect: S10 TOP_HOLE stale 1, S09 valued
+  - test: U4 (E7) the 00:00:00 point
+    planted: "the CARRY's tail of E7 and D's row at 00:00:00.000000"
+    expect: S09 0.4
+  - test: U5 (E8, E9) the late tick and the files
+    planted: "the rows of each case; for E9 a CARRY holding D-1's last good row, read at 00:00:00, 00:00:05 and 12:00:00 of D"
+    expect: 'S09 0.0 at u - 5 s and at u; S10 0.033333333333 at u; NO_FILE not stale at all three points; TOP_HOLE stale 1'
+  - test: U6 (E10) a row with no stamp
+    planted: the rows of E10 in one book_ticker pack (the stampless row with the reader's t = arr = -1, bad, why 2)
+    expect: 'S09 0.0, S10 0.0, no BAD_ROW flag at u'
+mutants:
+  - mutant: M1 amount changes counted
+    caught_by: 'U1 (S09 1.0: 5 changes)'
+  - mutant: M2 the window closed on the left
+    caught_by: 'U1 (S09 0.8 with the edge tick)'
+  - mutant: M3 a bad row compared (its prices count as a change and back)
+    caught_by: U2 (E4 gives 2 ticks)
+  - mutant: M4 the 00:00:00 point from D-1's run alone
+    caught_by: U4 (E7 gives 0.2)
+  - mutant: M5 a tick counted at its stamp's 5 s point though received after it
+    caught_by: U5 (E8 gives S09 0.2 at u - 5 s)
+  - mutant: M6 a row with no stamp taken as good at the row before's stamp
+    caught_by: 'U6 (E10 gives S09 0.4, S10 0.066666666667)'
+  - mutant: M7 a row with no stamp flagged at the row before's stamp (a fill for this flag)
+    caught_by: U6 (E10 gives BAD_ROW)
+  - mutant: M8 the 00:00:00 point valued from the CARRY with D's file missing
+    caught_by: U5 (E9 gives a value at 00:00:00)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 12:10
+      why: many ticks a second
+    - point: 2026-03-08, CRVUSDT, 12:10
+      why: a coarse step, amounts change, prices rarely
+    - point: 2026-03-08, every coin, every point C12 S01 and S02 are written
+      why: the counts against C12's (overlaps)
+  pass: >-
+    The tester recomputes S09, S10 and the empties from this card's words through the reader (rawcheck/check_bookx.py): equal within
+    1e-9 relative, words equal.
+meaning_check:
+  pass_lines:
+    - 'on 2026-03-08, round(S09 x 5) <= round(C12 S01 x 5) at every 5 s point and round(S10 x 30) <= round(C12 S02 x 30) at every point C12 S02 is written, where both are valued (price changes are a subset of the changes)'
+    - 'S10 x 30 is within 1e-9 of a whole number at every valued point (a count)'
+    - 'the sum of round(S09 x 5) at u, u - 5 s, ..., u - 25 s <= round(S10 x 30) wherever all seven are valued (the 5 s windows tile the 30 s one; a tick received after its 5 s point counts in S10 only, CARD_C12_V5 rule 2)'
+  report_only:
+    - the ratio of K7 to C12 per coin (how much of the top's churn is amounts only)
+conclude:
+  may:
+    - how often the top's prices moved over the last 5 s or 30 s
+  never:
+    - a count of trades (resting quotes)
+    - the top's update rate with amounts (that is C12 S01, S02)
+    - "Hyperliquid's tick rate (this is Binance's book only; the owner trades on Hyperliquid)"
+readers: none yet
+implementation:
+  how: >-
+    Per coin, vectorised over the day: on the good rows, a tick flag = (bid_px != previous bid_px) | (ask_px != previous ask_px) by
+    np.diff, the counts by grid blocks (never a whole-day cumulative sum, ADDON_ARCHITECTURE_V4 edit 3 0591d181 9.3 rule 5); the samples' top known by
+    addon_grid_v2 85c8ece1 in_force (good rows, cap 30 s) at the whole seconds. Shares the book_ticker pack with COST K1, BOOKX K4, K5. PHASES
+    (section 4): a point is final in phase A from 00:01:00 once its window no longer holds D's first good row (its tick is decided
+    against D-1's last good row); the others in phase B (the CARRY's tail and last good row, E7), a thin coin's points until its
+    late first good row of D is in the window included.
+  kernel: 'new: window_stamped with a 0 or 1 event value (as K5); addon_grid_v2 85c8ece1 in_force for the samples (good rows only); the BAD_ROW test on the reader''s own t (a stampless row never in a window, E10)'
+  memory_mb: 200
+  seconds_share: 3
+data_checks:
+  - what: "C12's own rules read (CARD_C12_V5 280a1b7f rules 1 to 6: a change of any of the four numbers, the window, count / W rounded to 6 decimals, the seen rule): taken here"
+    who: TREE (done, METRIC_AUDIT 18:20:25Z)

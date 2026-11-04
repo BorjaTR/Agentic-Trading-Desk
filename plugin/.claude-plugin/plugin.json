@@ -1,0 +1,9 @@
+{
+  "name": "crypto-alarm-desk",
+  "version": "1.0.0-v1draft",
+  "description": "Crypto Alarm Desk: an agent that designs alarms on crypto perpetual futures and tests each one through a fixed, sealed engine it cannot change (count, grade against matched random moments, a truth check on data the rule does not read, decide, audit), logging and learning from every try. Alarms only: no strategy, no money claims.",
+  "author": {
+    "name": "Crypto Alarm Desk"
+  },
+  "keywords": ["crypto", "alarms", "research-agent", "event-study", "learning-loop"]
+}

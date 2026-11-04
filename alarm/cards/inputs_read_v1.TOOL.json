@@ -1,0 +1,176 @@
+{
+ "tool": "inputs_read_v1",
+ "file": "08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/inputs_read_v1.py",
+ "file_sha16": "65fb16fc82b2e272",
+ "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
+ "step": "step 1 IDEA of AGENTS.md (read its page); SCOUT runs it after registry_build_v2 and scoreboard_v2",
+ "question": "Which metric codes do the registry's alarms read (with their results), and which OK codes does no alarm read yet, per idea family?",
+ "usage_from_code": "python3 -B <Alarm>/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/inputs_read_v1.py --settings <settings file> [--registry REGISTRY/ALARM_REGISTRY_V1.tsv] [--tags REGISTRY/FAMILY_TAGS_V1.tsv] [--out REGISTRY/INPUTS_READ_V1.tsv] [--page REGISTRY/INPUTS_READ_V1.md]",
+ "settings_keys": [
+  "RESEARCH_ROOT"
+ ],
+ "code_options": [
+  "--out",
+  "--page",
+  "--registry",
+  "--settings",
+  "--tags"
+ ],
+ "code_exits": [
+  0,
+  1,
+  2
+ ],
+ "commands": [
+  {
+   "name": "build",
+   "args": [
+    {
+     "name": "--settings",
+     "required": true,
+     "meaning": "this machine's settings file (KEY=VALUE lines read by _tools/settings_v1.py); always named on the command line",
+     "example": "<INSTALL>/settings/SETTINGS_LOCAL.env"
+    },
+    {
+     "name": "--registry",
+     "required": false,
+     "meaning": "the registry (default REGISTRY/ALARM_REGISTRY_V1.tsv; relative: under RESEARCH_ROOT/ALARM_DESIGN)",
+     "example": "REGISTRY/ALARM_REGISTRY_V1.tsv"
+    },
+    {
+     "name": "--tags",
+     "required": false,
+     "meaning": "the family tags, columns alarm_id and family (default REGISTRY/FAMILY_TAGS_V1.tsv)",
+     "example": "REGISTRY/FAMILY_TAGS_V1.tsv"
+    },
+    {
+     "name": "--out",
+     "required": false,
+     "meaning": "the table to write, one row per code (default REGISTRY/INPUTS_READ_V1.tsv); twinned first when it exists",
+     "example": "REGISTRY/INPUTS_READ_V1.tsv"
+    },
+    {
+     "name": "--page",
+     "required": false,
+     "meaning": "the page to write, per family and per group (default REGISTRY/INPUTS_READ_V1.md); twinned first when it exists",
+     "example": "REGISTRY/INPUTS_READ_V1.md"
+    }
+   ],
+   "example": "python3 -B <INSTALL>/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/inputs_read_v1.py --settings <INSTALL>/settings/SETTINGS_LOCAL.env",
+   "writes": "the --out table and the --page page (both outside the Alarm folder, under RESEARCH_ROOT/ALARM_DESIGN by default; a file that exists is twinned first)",
+   "refuses": [
+    {
+     "exit": 1,
+     "when": "an unknown argument (prints USAGE: inputs_read_v1.py ...)"
+    },
+    {
+     "exit": 2,
+     "when": "no --settings; a settings file the reader refuses (RESEARCH_ROOT empty among them); an --out or --page inside the Alarm package; this file outside an Alarm package; a missing metric table or metric_brief_v2.py"
+    }
+   ],
+   "dry_runs": [
+    {
+     "args": [
+      "--settings",
+      "{SETTINGS}",
+      "--out",
+      "REGISTRY/DOCS_TEST_INPUTS_READ.tsv",
+      "--page",
+      "REGISTRY/DOCS_TEST_INPUTS_READ.md"
+     ],
+     "exit": 0,
+     "prints": "WROTE REGISTRY/DOCS_TEST_INPUTS_READ.tsv"
+    }
+   ],
+   "does": "writes the inputs table and its page from the registry, its definitions, the family tags and the metric tables of this Alarm folder"
+  }
+ ],
+ "refusal_probes": [
+  {
+   "args": [],
+   "exit": 2,
+   "prints": "--settings <file> IS NEEDED ONCE"
+  },
+  {
+   "args": [
+    "--settings",
+    "{SETTINGS}",
+    "--bogus",
+    "x"
+   ],
+   "exit": 1,
+   "prints": "USAGE: inputs_read_v1.py"
+  }
+ ],
+ "rules": [
+  "a code is read when an input of a definition names it; how the alarm reads it (window, line, moment) is not compared: a new moment on a read code needs its reason in the card",
+  "a definition missing, changed since its decision (sha16) or not JSON is counted on the page and skipped, never read as reading nothing",
+  "the flags are metric_brief_v2's words (the same table the detector's admission reads in this Alarm folder); the families are SCOUT's classification, an opinion",
+  "no dry mode: the docs test writes only into its planted temp data"
+ ],
+ "outputs": [
+  {
+   "file": "INPUTS_READ_V1.tsv (--out)",
+   "where": "RESEARCH_ROOT/ALARM_DESIGN/REGISTRY/INPUTS_READ_V1.tsv by default (--out)",
+   "columns": [
+    "code",
+    "group",
+    "flag",
+    "status",
+    "unit",
+    "scope",
+    "step_s",
+    "short",
+    "alarms_n",
+    "states",
+    "families",
+    "found",
+    "alarms"
+   ]
+  },
+  {
+   "file": "printed: WROTE line",
+   "where": "stdout, one line when both files are written",
+   "columns": [
+    "out",
+    "out_sha16",
+    "codes",
+    "read",
+    "page",
+    "page_sha16"
+   ]
+  }
+ ],
+ "dictionary": "dictionaries/inputs_read_v1_COLUMNS.tsv",
+ "reads": [
+  {
+   "path": "08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/novelty_v2.py",
+   "sha16": "4f8b9d4888ca5c79"
+  },
+  {
+   "path": "08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/scoreboard_v2.py",
+   "sha16": "9c0d5e2fc0b3ac73"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief_v2.py",
+   "sha16": "0ca9f04bd2181f04"
+  },
+  {
+   "path": "01_Detection/tree/team/LAB3/METRICS_V1.tsv",
+   "sha16": "85b14987d2059cd6"
+  },
+  {
+   "path": "01_Detection/tree/team/LAB3/LAB4/proposals/metric_traps/METRIC_TRAPS_V3.tsv",
+   "sha16": "f71f02f3a8af3e76"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv",
+   "sha16": "f413906feb40c0b4"
+  },
+  {
+   "path": "01_Detection/tree/team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv",
+   "sha16": "d133fea9c7935857"
+  }
+ ],
+ "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py in a new temp folder: {SETTINGS} its settings file, {WORLD} the folder, {ALARM} this Alarm folder; the planted registry's definitions are not there, so they are counted as missing"
+}

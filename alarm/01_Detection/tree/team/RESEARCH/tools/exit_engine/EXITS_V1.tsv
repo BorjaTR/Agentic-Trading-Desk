@@ -1,0 +1,4 @@
+# EXITS_V1 (BUILD1 for STRATEGY/LEAD, 23 Oct 2026; README V2.4 sec 2; frozen by sha16; a new row is a new setting and a TRIES row when outcomes are read with it)
+id	kind	unit	stop	take	arm	give	time_limit_min	min_hold_min	early_stop	early_min	monitor	stop_from	note
+EXIT_T1	T	nm	3		2	1.5	180				none	entry	plan-of-record exit, hb/STRATEGY.txt 2026-10-22T20:00:00Z S3: first stop 3 nm, trail starts at +2 nm, trail width 1.5 nm, max hold 3 h
+FADE_F1	B	nm	1	1			45				none	extreme	fade family F1 (README V2.4, RESEARCH_EXIT_ENGINE.md): take 1 nm; stop 1 nm beyond the run extreme (units extreme_px, from EPI.<alarm>.giveback_pct at the fire, its brief quoted by the caller); 45 min

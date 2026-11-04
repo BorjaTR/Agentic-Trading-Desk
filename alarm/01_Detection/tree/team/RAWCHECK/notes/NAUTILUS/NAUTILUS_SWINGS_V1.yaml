@@ -1,0 +1,230 @@
+# NAUTILUS_SWINGS_V1.yaml: the card of the NAUTILUS swings settings (S56, S57, S58, S59, S60, S61, S62, S63), EDITION 1, edit 3 (METRIC_AUDIT3, 2026-10-18, NR2 of NAUTILUS_REVIEW_WORKPACKAGES_V3 6cbc336659882871;
+# edit 1: group NAUTILUS as the NR1 cards, a name on every setting, S41's open names case E17 and S07 (METRIC_AUDIT2 15:33:23Z); the twins .pre_METRIC_AUDIT3_<stamp> hold the first text.
+# edit 2 (METRIC_AUDIT2 REVIEW 15:37:57Z E2 to E4): value_kind 4 in the columns; the largest kline gaps beside the medians (biases); the counts as 34 settings x the per-setting MATCH line.
+# edit 3 (EDGE1 RULING 3 15:40:56Z; METRIC_AUDIT2 REVIEWS 15:40:01Z, 15:43:31Z): renamed by formula S26 rsi, S28 stoch D, S41 er, S48 atr, S49 rvi with could_build NAUTILUS.CB15 to CB19 (CB9 to CB14 renumbered after NR1's CB1 to CB8); S46, S47 aggregate as EMA_5(t) against EMA_5(t-5); S51 derived_from; S56 means; the 24 Sep volume MISS counted against B1CHECK (job 15997, the edition 2 count; 15996 the first).
+# the smart check of section 0c). Made as BASIC_E2_V1.yaml a0147fa4 / BASIC_C1_V5.yaml 95244119. Computation: nautilus_osc ed3 50355898be2efb74 (tests 83c9bb58def3a959 47 of 47, 7 mutants caught),
+# jobs J15975 (8 Mar, every minute end, with the base), J15976 (24 Sep, every minute end), J15941 (3 days x 5 minute ends, ed1); meaning: meaning_nautilus_osc ed2 ef476c0e22b3516e (tests 61a566c05519d5bc 27 of 27, 3 mutants caught), jobs J15977 (ref, name 8 Mar), J15978 (klines, empty, schema 8 Mar), J15979 (ref, name 24 Sep). Written by team/METRIC_AUDIT3/make_cards_np2_v1.py from the job logs (no number typed).
+group: NAUTILUS
+name: swings (nautilus, built on our 1-minute candles, period 5)
+summary: 'Eight swing numbers of NautilusTrader 1.231.0 on our 1-minute candles, period 5 (rule 10): a swing-high candle has H = HH_5 and L above LL_5, a swing-low candle L = LL_5 and H below HH_5 (both or neither changes only the counts); the direction (+1 after a swing high, -1 after a swing low), whether it flipped at this candle, the last swing high and low prices, their difference, and the candles since each; empty NO_SWING until both a swing high and a swing low have happened.'
+read_as: 'Where the last short-term turns were, on one coin. Each value equals the card''s formula on the year''s own C13 candles at every coin-minute of two days (J15975, J15976: 0 MISS; the rule''s edge cases in test_nautilus_osc T6, T20, T22). The scout''s reading of Nautilus (H >= HH_5 and L >= LL_5) gives the same direction at every coin-minute of both days (J15977, J15979 name: 0 differ): the two rules are one rule once a both-candle cancels. On Binance''s klines the same rule gives the same swings (direction corr 1.0000, J15978). The candles after a dip are swing highs by this rule (card case E6: the flat candles after a low tie the 5-candle high with their low above it), so since_high is often 1 to 3 on a flat stretch.'
+conclude:
+  may:
+  - 'which way the last 5-candle turn went (direction) and when (since_high, since_low; duration = the age of the current leg)'
+  - 'the last swing high and low prices and their gap (length, USDT; below 0 when the low came after a lower high)'
+  - 'that a new leg began at this candle (changed = 1)'
+  never:
+  - 'a swing as a large move: the period is 5 candles; a flat candle after any dip is a swing high (case E6), so since_high of 1 to 3 is common on flat stretches'
+  - 'the direction while NO_SWING: the chain has not yet seen both a high and a low (every day: the chain from D-2 has them within minutes)'
+  - 'changed = 1 at the first swing of a chain: the first swing is not a flip (case E32)'
+  - 'length compared across coins: USDT of the coin; use it against atr or the close'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_NAUTILUS_V4.md (60f66fc848dda3cd; rules 1 to 18, cases N1 to E88)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_NAUTILUS_V2.tsv (e82d7319899be9ea)
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S01 close, S02 high, S03 low, S04 no trade: raw, RELIABLE, LIMITS); the open and the volume: the shared
+    candle base rawcheck/nautilus_candles.py (METRIC_AUDIT2, 0571dec26778f46d) from the same Tardis trade rows as C13, proven row by row against C13 and B1 (job 15946)'
+  producer: testbed/value_audit/code/L0_y52f12/value_audit/code/prod_NAUTILUS_v4.py (2ad9df92f9f4f82f; edition 4 rules)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/NAUTILUS.parquet
+  year_output_columns: name (S01 to S84), coin, as_of_us (the minute end e), value_kind (0 empty, 1 float, 2 int, 4 a decimal with value_f64 and its text), value_f64, value_txt, known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'NAUTILUS', settings, coins, moments); rawcheck/nautilus_osc.py year_rows (empty by value_kind only)
+source:
+  vendor: 'none new: built on our 1-minute candles of Binance USDT perpetual trades through Tardis (C13 S01 to S04, MEANING_C13_V4; the open and the volume from the same rows, the
+    candle base)'
+  exchange_stream: trades (Binance USD-M futures trade channel through Tardis.dev)
+  files: '<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<SYM>_<YYYY-MM-DD>.csv.gz (D-2, D-1 and D: the chain of rule 13)'
+  columns: timestamp (the trade time, exchange), local_timestamp (arrival), side, price, amount
+  fields:
+    candle: 'close, high, low of the trades stamped in (e - 60 s, e] and received by e (C13 rules 1, 3, 4); open = the first such row''s price, volume = the sum of the amounts; a
+      minute with no trade is flat at the carried price with volume 0 [proof: CARD_NAUTILUS_V4 rules 1, 2; nautilus_candles job 15946: Tardis C, H, L = C13 at every valued minute]'
+    chain: 'the candles from 00:00 of D-2 up to e, one step per candle; an empty candle (C13 reason) is skipped and every value at that minute end carries the reason
+      [proof: CARD_NAUTILUS_V4 rules 3, 13; case E25; test_nautilus_osc T21]'
+    arithmetic: 'Decimal at 40 digits, each value rounded once to 12 decimals half up [proof: rule 6; nautilus_osc rnd; the year values equal at 12 decimals, jobs 15975, 15976]'
+  latency: 'known_at = the latest C13 known_at of the candles stepped (the latest trade arrival); at a minute end every value is the last full minute (rule 14); max_staleness 60 s'
+reading_rules:
+- 'the chain: the candles from 00:00 of D-2 to e, one step per valued candle; a candle with an empty reason is skipped and every value at that minute end carries the reason (CARD_NAUTILUS_V4 rules 3, 13)'
+- 'the value at a minute end is the last full minute (rule 14); every period counts candles stepped, so after a feed hole a window spans more clock minutes (rule 3)'
+- 'WARMUP while the chain has stepped fewer candles than the Need (rule 8); NO_RANGE, NO_MOVE, NO_VOLUME, NO_SWING for a zero denominator or no swing yet (rules 9, 10): empty is never 0'
+- 'Decimal at 40 digits, rounded once to 12 decimals half up (rule 6); the integers S46, S47, S56, S57, S61 to S63 exact'
+- 'rule 10, period 5, this candle among the last 5: a swing-high candle has H = HH_5 and L above LL_5, a swing-low candle L = LL_5 and H below HH_5; both or neither changes only the counts; the first swing is not a flip'
+values:
+  units: 'S56 +1 or -1, S57 0 or 1, S58 USDT, S59 USDT, S60 USDT, S61 minutes, S62 minutes, S63 minutes'
+  empty: 'C13''s reason (NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT), WARMUP, NO_RANGE, NO_MOVE, NO_VOLUME, NO_SWING; value_kind 0 (NaN in value_f64). Never read empty as 0. 8 Mar 2026: S29 NO_RANGE 1, S35 NO_MOVE 12, S41 NO_MOVE 33 of 2,845,440 values (J15978 empty)'
+  stale: 'with C13''s TRADES_HOLE or THIN_FEED (the candle at e empty)'
+  flags: 'the candle''s (DUPLICATE_ROW:<coin>, NO_RATE_BASE:<coin>); none on an empty value'
+interpret:
+  do:
+  - 'which way the last 5-candle turn went (direction) and when (since_high, since_low; duration = the age of the current leg)'
+  - 'the last swing high and low prices and their gap (length, USDT; below 0 when the low came after a lower high)'
+  dont:
+  - 'a swing as a large move: the period is 5 candles; a flat candle after any dip is a swing high (case E6), so since_high of 1 to 3 is common on flat stretches'
+  - 'the direction while NO_SWING: the chain has not yet seen both a high and a low (every day: the chain from D-2 has them within minutes)'
+biases:
+- what: our candle against Binance's kline of the same minute
+  direction: 'either way, rarely (a trade stamped in the last ms received after e, or stamped exactly on the minute end: MEANING_C13_V4, BASIC_C8)'
+  size: 'corr 1.0000 to 1.0000, |gap| median 0 to 2.385e-17 over 8 settings, every coin-minute of 8 Mar (the candles are the same minute almost always: C13 against the kline, BASIC_C8); the largest gaps where one candle differs: swings.high_price max 5.2, swings.length max 5.2, swings.since_high max 3, swings.duration max 1'
+  proof: J15978 klines (our formulas on Binance's OHLCV chain of 6 to 8 Mar against the year, 52 coins, every minute end)
+external_checks:
+- what: the textbook form of each name (TA-Lib's documented definitions, Wilder, Lane, Kaufman, Chande, White; talib itself is not in the analyst venv) coded apart in float64 on the same chain
+  where: team/LAB/code/rawcheck/meaning_nautilus_osc.py ref (every coin-minute of 8 Mar 2026 and 24 Sep 2025, 52 and 51 coins)
+  status: 'MEASURED on every coin-minute of 8 Mar (J15977) and 24 Sep (J15979): equal to 1e-8 for none here; the differences named per setting (smoothing, scale, window, sign)'
+- what: our formulas on Binance's own 1 minute klines (OHLCV, data.binance.vision) against the year's values
+  where: <SCRATCH_DISK>/realcheck/outside/binance/klines_1m (runner job J15978)
+  status: 'AGREES: corr 1.0000 to 1.0000, |gap| median 0 to 2.385e-17 over 8 settings, every coin-minute of 8 Mar (the candles are the same minute almost always: C13 against the kline, BASIC_C8); the largest gaps where one candle differs: swings.high_price max 5.2, swings.length max 5.2, swings.since_high max 3, swings.duration max 1'
+tools:
+- what: every setting recomputed from the year's C13 candles (and the candle base's open and volume) at the minute ends asked, the year's value beside, MATCH or MISS
+  run: python3 -B -m rawcheck.nautilus_osc --days D1,D2 --at 0100,0400,1210,1600,2206 | all --families momentum,trend,volvol,swings [--base <dir with CANDLES_<D>.parquet>] --out <dir>
+  where: 'team/LAB/code (nautilus_osc.py ed3 50355898be2efb74, tests 83c9bb58def3a959 47 of 47; runner job: the year store)'
+- what: the textbook forms, the klines, the name claims, the empties, one coin-minute
+  run: python3 -B -m rawcheck.meaning_nautilus_osc schema|ref|klines|name|empty D; look D COIN HHMM
+  where: 'team/LAB/code (meaning_nautilus_osc.py ed2 ef476c0e22b3516e, tests 61a566c05519d5bc 27 of 27; runner job: the year store and the klines)'
+used_by: 'nobody yet (CARD_NAUTILUS_V4 ''Who reads it''): candidates for the fifths (O6) and the labels'
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_NAUTILUS_V4.md (60f66fc848dda3cd)
+  SCOUT: 'testbed/software_scout/NAUTILUS_METRICS_V1.tsv (8342dd7047c24e63: Nautilus 1.231.0''s files and lines per column)'
+  TEXTBOOK: TA-Lib function documentation (RSI, STOCHF, CCI, CMO, MACD, ROC, AROON, PLUS_DM, MINUS_DM, LINEARREG_SLOPE, ATR, TRANGE, OBV); Wilder 1978; Lane; Kaufman 1995; Chande; White (VHF); Klinger
+  KLINES: https://data.binance.vision (USD-M futures klines 1m), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+settings:
+- id: NAUTILUS.S56
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '+1 from a swing-high candle on, -1 from a swing-low candle on (rule 10); NO_SWING until both have happened'
+  aliases: swings.direction
+  means: '+1: the last 5-candle extreme was a high (an up leg: the candle that made the high sets +1, case E6); -1: it was a low'
+  name: 'swing direction'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 0, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15978); name test: differ at 0 of 74880 coin-minutes (J15977 name); the scout''s reading of Nautilus (H >= HH_5, L >= LL_5; both cancel) gives the same direction at every coin-minute of both days (J15977, J15979 name: 0 differ)'
+  open: 'a flat candle after any dip is a swing high (case E6)'
+- id: NAUTILUS.S57
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: '1 in the candle a set direction flips, else 0, from the first candle (the first swing is not a flip)'
+  aliases: swings.changed
+  means: 'a new leg began at this candle'
+  name: 'swing changed'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 0, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'the first swing is not a flip (case E32)'
+- id: NAUTILUS.S58
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'H of the last swing-high candle'
+  aliases: swings.high_price
+  means: 'the last swing high, in USDT'
+  name: 'last swing high'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 5.2, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'empty NO_SWING until both swings exist'
+- id: NAUTILUS.S59
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'L of the last swing-low candle'
+  aliases: swings.low_price
+  means: 'the last swing low, in USDT'
+  name: 'last swing low'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 0.8, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'as S58'
+- id: NAUTILUS.S60
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'S58 - S59'
+  aliases: swings.length
+  means: 'the size of the last leg (the last swing high less the last swing low), in USDT; below 0 when the low came after a lower high'
+  name: 'swing length'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 0.9999, |gap| median 2.385e-17 p90 8.882e-15 max 5.2, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'below 0 when the low came after a lower high'
+- id: NAUTILUS.S61
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'S63 when the direction is +1, S62 when -1'
+  aliases: swings.duration
+  means: 'the age of the current leg: candles since the swing it started from'
+  name: 'leg duration'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 1, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 1.0000, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'as S58'
+- id: NAUTILUS.S62
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'candles since the last swing-high candle'
+  aliases: swings.since_high
+  means: 'how many candles ago the last swing high was'
+  name: 'candles since the swing high'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 3, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 0.9999, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'often 1 to 3 on a flat stretch (case E6)'
+- id: NAUTILUS.S63
+  layer: nautilus
+  side: none
+  window: 5 candles
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 'candles since the last swing-low candle'
+  aliases: swings.since_low
+  means: 'how many candles ago the last swing low was'
+  name: 'candles since the swing low'
+  computation:
+    status: RELIABLE
+    proof: 'J15975, J15976: equal to the formula on the year''s C13 candles at 74,880 of 74,880 (8 Mar 2026, 52 coins) and 73,440 of 73,440 (24 Sep 2025, 51 coins) coin-minutes, every minute end, at 12 decimals; 4 Nov 2025 at 5 minute ends x 52 coins J15941 (ed1; editions 2, 3 changed only the --at all window and S29''s residue rule, test T23)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'an independent float of the formula agrees with the year at corr 1.0000 (J15977 ref); our formula on Binance klines: corr 1.0000, Spearman 1.0000, |gap| median 0 p90 0 max 1, same sign 100.00% at 74,880 coin-minutes (per coin corr lowest 0.9999, median 1.0000) (J15978); the rule''s cases planted with their card answers: test_nautilus_osc T6 (E6), T20 (E32, E33), T22'
+  open: 'as S58'

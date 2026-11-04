@@ -1,0 +1,181 @@
+# R2_V1.yaml: RETX residual return over 15 and 60 minutes (TREE, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181; REVIEW_LEAD_EDGE1_V1 8dd9867d section 0 applied from the start).
+# Worked examples recomputed with exact fractions by team/TREE/proposals/verify_retx_timex_examples_tree_v2.py.
+# Edition 2: METRIC_AUDIT2's LEAD REVIEW RETX (REVIEW_LEAD_METRIC_AUDIT2_RETX_V1 27ebac9c) nit: a planted midnight case (E6, U4, M4).
+# Edition 3: METRIC_AUDIT's CROSSED REVIEW RETX ED2 (20:13:44Z) after the signing: (1) C1 S16, S18 are scope BTC, read on the one BTC row (CARD_C1_V11 rule 10) for every coin; U1 planted so, M5.
+kind: build_metric
+id: R2
+producer: RETX
+item: residual return over 15 and 60 minutes
+tier: BUILD
+name: the coin's Binance mid return over the last 15 and 60 minutes less its BTC beta times BTC's return over the same window, in percent
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 3
+  signed: true
+  signed_by: 'EDGE1 2026-10-18T20:58:08Z'
+means: >-
+  What the coin did over the last 15 minutes (S03) and the last hour (S04) beyond what BTC's move explains with the coin's own beta
+  (R1's S01): plus, the coin rose more than its beta to BTC says; minus, less. The rebuild of C2 S01's idea (BTC's 60 s return less
+  the coin's, a beta of 1) with each coin's own beta, over longer windows. Binance USDT-M mids, not Hyperliquid's.
+example: >-
+  A coin with beta 1.4 rose 0.10 percent in 15 minutes while BTC rose 0.05 percent: S03 = 0.10 - 1.4 x 0.05 = 0.03 percent (3 bp of
+  its own); with beta 1 (C2's view) it would read 0.05.
+formula: >-
+  At each minute end u of D, per roster coin c: S03 = C1 S12(c, u) - S01(c, u) x C1 S16(BTC, u), S04 = C1 S13(c, u) - S01(c, u) x C1
+  S18(BTC, u), in percent points: C1 S12, S13 the coin's 15 and 60 minute mid returns, C1 S16, S18 BTC's 15 and 60 minute returns,
+  scope BTC: written on the one row with coin BTC only and read there for every coin (CARD_C1_V11 b421aa7d rule 10; prod_C1_v5
+  0164fa25 line 286, who = 'BTC'; percent, 6 decimals, rules 6, 8), S01 = R1's Dimson beta at u (its window ends at u - 1 min; the fit's
+  last 14 (59) minutes overlap the residual window: 0.3 (1.4) percent of its rows, opinion). The beta-scaled form (RESEARCH_TOOLS_V1
+  8.1's approximate form, named): it leaves out BTC's moves of the 1 to 2 minutes before the window that the Dimson lags price.
+  BTCUSDT's own row: S03 = S04 = 0 exactly (S01 = 1; BTCUSDT's S12 = the BTC row's S16, its S13 = the BTC row's S18). Empty with the first failing reason: NO_ROSTER, then
+  S01's reason (NO_HISTORY, FEW_VALUES, FIT_SINGULAR), then NO_INPUT (a C1 return empty at u). float64, not rounded.
+source:
+  kind: paper
+  ref: >-
+    The market-model residual with a lagged (Dimson 1979) beta; RESEARCH_TOOLS_V1 aad3cc38 row R1 ('residual over W = r_coin,W - beta
+    r_BTC,W') and section 8.1 (planted: beta 1.4, r_coin 10 bp, r_BTC 5 bp, residual 3 bp). No tool needed (one product and one
+    difference). C2 S01's never line (BASIC_C2_V3 dc781c7f): 'S04 or S05 ... subtracts the median coin with a beta of 1; betas run 0.04
+    to 3.04'.
+inputs:
+  - kind: year
+    ref: C1 S12, S13 (the coin's 15 and 60 minute mid returns), S16, S18 (BTC's, scope BTC, the one row with coin BTC, CARD_C1_V11 rule 10, read for every coin), percent, 6 decimals, minute-end settings
+    card: BASIC_C1_V5 95244119 (LAYER_REGISTER_V32 e249ce94 C1 S12, S13, S16, S18 CLEAN)
+    verdict: CLEAN
+    rule_in_force: B's C1 rows at the minute end u as written
+    stale_rule: an empty return at u gives NO_INPUT; never filled
+    days: D (B; no CARRY)
+  - kind: addon
+    ref: RETX S01 (R1) at u, from the same pass
+    card: RETX/R1_V1
+    rule_in_force: R1's value at the same minute end
+    stale_rule: R1's empty reason passes through
+    days: D (R1 reads D-3 to D)
+overlaps:
+  - setting: C2 S01
+    kind: other_metric
+    why: >-
+      C2 S01 is BTC's 60 s return less the coin's with a beta of 1 (BASIC_C2_V3, renamed 'BTC 60 s return less the coin's'); S03,
+      S04 are the coin's 15 and 60 minute returns less its own beta times BTC's: another window, another sign, another beta.
+per_coin: >-
+  A coin with a beta near 0 (thin, flat mids) has S03 near its own return. The 1000-coins: percent, scale free. BTCUSDT: 0. A coin
+  listed late is empty with R1's NO_HISTORY for 3 days.
+time: >-
+  The windows end at u; at 00:00 to 00:59 of D they reach into D-1, read from B (no CARRY). Crash minutes enter both the returns and
+  (for 3 days) the beta.
+output:
+  group_file: X1/day=<D>/RETX.parquet
+  names:
+    - name: S03
+      label: binance_resid_ret_15m_pct
+      units: percent points
+      value_kind: float
+      decimals: none
+      means: the coin's 15 minute Binance mid return less its BTC beta times BTC's 15 minute return
+    - name: S04
+      label: binance_resid_ret_60m_pct
+      units: percent points
+      value_kind: float
+      decimals: none
+      means: the same over 60 minutes
+  grid: minute
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: >-
+    known_at = the later of the C1 rows' known_at at u and R1's known_at at u (each at or before u); an empty row: known_at = u. So
+    known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: no roster file for D's week (every coin)
+    - reason: NO_HISTORY
+      when: R1's S01 is NO_HISTORY (10 to 12 Sep 2025; a coin listed late)
+    - reason: FEW_VALUES
+      when: R1's S01 is FEW_VALUES
+    - reason: FIT_SINGULAR
+      when: R1's S01 is FIT_SINGULAR
+    - reason: NO_INPUT
+      when: a C1 return of the window (S12, S16 for S03; S13, S18 for S04) is empty at u (any reason)
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 3
+  no_history: "first fills on 13 Sep 2025 with R1 (D-3 = 10 Sep 2025); NO_HISTORY on 10 to 12 Sep 2025; valued on 178 of the 181 year days"
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the research numbers (RESEARCH 8.1)
+    input: 'S01 1.4; C1 S12 0.100000, C1 S16 0.050000'
+    answer: S03 0.03 (in float64 0.1 - 1.4 x 0.05)
+  - case: E2 an hour against BTC
+    input: 'S01 0.8; C1 S13 -0.500000, C1 S18 -1.000000'
+    answer: 'S04 0.3 (the coin fell less than its beta says)'
+  - case: E3 BTC's own row
+    input: 'BTCUSDT: S01 1, C1 S12 = C1 S16 = 0.250000'
+    answer: S03 0.0
+  - case: E4 a return empty
+    input: 'C1 S16 empty BOOK_HOLE at u'
+    answer: S03 empty NO_INPUT; S04 valued when S13, S18 are
+  - case: E5 the beta empty
+    input: 'S01 FEW_VALUES at u'
+    answer: S03, S04 empty FEW_VALUES
+  - case: E6 midnight
+    input: 'u = 00:00 of D: D''s own B rows at 00:00 (C1 S12 0.100000, C1 S16 0.050000, their 15 minutes reaching into D-1 inside C1) and R1''s S01 1.4 at 00:00; D-1''s 23:59 rows C1 S12 0.200000, C1 S16 0.050000'
+    answer: 'S03 0.03 from D''s 00:00 rows (D-1''s 23:59 row would give 0.13)'
+unit_tests:
+  - test: U1 (E1 to E3)
+    planted: 'B C1 rows at one minute end as the year writes them (S12, S13 on each coin''s row; S16, S18 on the BTC row only) and R1''s S01 of each case'
+    expect: 'S03 0.03, S04 0.3, S03 0.0 within 1e-9 relative (0 exact)'
+  - test: U2 (E4, E5)
+    planted: the rows of each case
+    expect: 'NO_INPUT with S04 valued; FEW_VALUES on both'
+  - test: U3 the stamps
+    planted: U1, U2
+    expect: 'as_of = u, known_at <= u; 1,440 rows per name and coin; empty never 0'
+  - test: U4 (E6) midnight
+    planted: 'B C1 rows of D-1 (23:45 to 23:59) and D (00:00 to 00:15) and R1''s S01 at 00:00'
+    expect: 'S03 0.03 at 00:00 within 1e-9 relative'
+mutants:
+  - mutant: M1 a beta of 1 (C2's form)
+    caught_by: 'U1 (E1 gives 0.05)'
+  - mutant: M2 the 60 minute window paired with BTC's 15 minute return
+    caught_by: 'U1 (E2 with C1 S16 planted at -0.2: gives -0.34)'
+  - mutant: M3 the sign flipped (BTC's less the coin's)
+    caught_by: 'U1 (E1 gives -0.03)'
+  - mutant: M4 the 00:00 point read from D-1's 23:59 rows (a minute off at midnight)
+    caught_by: 'U4 (E6 gives 0.13)'
+  - mutant: M5 C1 S16, S18 read on the coin's own row (scope BTC missed)
+    caught_by: 'U1 (every coin but BTCUSDT empty NO_INPUT in place of 0.03 and 0.3)'
+real_check:
+  points:
+    - point: 2026-03-08, ETHUSDT, SOLUSDT, 1000PEPEUSDT and the thinnest coin, u = 00:00, 12:10, 23:59
+      why: 00:00's windows read 7 Mar from B; liquid, thin, a 1000-coin
+    - point: 2025-10-10, ETHUSDT, u = 21:30
+      why: the crash evening (large residuals)
+  pass: >-
+    The tester recomputes S03, S04 and the empties from this card's words on B's C1 rows and R1's recomputed S01 (rawcheck/check_retx.py):
+    floats within 1e-9 relative, words equal.
+meaning_check:
+  pass_lines:
+    - "the residual removes most of BTC's part: on 2026-03-08 the median over coins of the variance of S03 over the day's minute ends is below the median variance of C1 S12 (it can fail when the betas are wrong)"
+  report_only:
+    - the share of coins whose S03 and C2 S01 have the same sign at 12:00 of 2026-03-08 (with C2 S01's sign flipped)
+    - S04 per coin at the crash evening 2025-10-10 21:30
+conclude:
+  may:
+    - how much the coin moved over 15 or 60 minutes beyond what BTC's move and the coin's own 3-day beta explain, on Binance mids
+  never:
+    - a residual on Hyperliquid's prices
+    - the lag-exact residual (the beta-scaled form leaves out BTC's moves of the 2 minutes before the window)
+    - a forecast (R4 tests whether it reverts)
+readers: "none yet (planned: R4's signal, the lab's relative-value labels)"
+implementation:
+  how: >-
+    Array arithmetic on the [coin x 1,440] grids of C1 S12, S13 and the [1 x 1,440] BTC rows of S16, S18 (broadcast over the coins) read from B by name and R1's S01 grid of the same pass.
+    PHASES (ADDON_ARCHITECTURE_V4 section 4): year inputs only, every point final in one pass, days in parallel, no CARRY.
+  kernel: none (one product and one difference on the grids)
+  memory_mb: 50
+  seconds_share: 0.2
+data_checks:
+  - what: "BTCUSDT's C1 S12 = the BTC row's C1 S16 and its S13 = the BTC row's S18 at every minute end (the same mids), so S03 = S04 = 0 there: the producer's raw check"
+    who: the producer (PRODUCER_RETX raw_check)

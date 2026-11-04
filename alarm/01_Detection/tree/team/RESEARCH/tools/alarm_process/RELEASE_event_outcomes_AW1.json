@@ -1,0 +1,21 @@
+{
+ "release": "event_outcomes_AW1",
+ "status": "TEST, NOT REVIEWED (STRATEGY, ALARM_DESIGN kit)",
+ "by": "STRATEGY mk_aw1.py, 2026-10-28T07:24:56Z",
+ "reason": "the owner 28 Oct 2026: Mar-May for the alarm agents only. event_outcomes.py 7332c1f005e958ef copied with the alarm kit window classes; everything else is V3_CANDIDATE, named below",
+ "replaces": "none (the team keeps V3_CANDIDATE)",
+ "files": {
+  "team/RESEARCH/tools/alarm_process/event_outcomes_aw1.py": {
+   "role": "event_outcomes V3 with the alarm kit window classes (aw1)",
+   "sha16": "a66240b3332ddf00"
+  },
+  "team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv": {
+   "role": "the alarm kit window table read by event_outcomes_aw1",
+   "schema_sha16": "a89a97ec67af40b0",
+   "sha16": "37decf0075649f69"
+  }
+ },
+ "releases": {
+  "team/RESEARCH/tools/event_outcomes/RELEASE_event_outcomes_V3_CANDIDATE.json": "2dd498a3b2c1a61e"
+ }
+}

@@ -1,0 +1,17 @@
+# Python packages the Alarm tools import (pip install -r settings/PYTHON_PACKAGES.txt), pinned to the versions the tests were run with:
+# the owner's analyst venv (Python 3.11.3: <VENV>) and SCOUT's Linux VM (Python 3.10.12) have the same numpy
+# and pyarrow; pytest (01 Detection's tests) is 9.1.1 on the Mac and 8.3.3 in the VM, both pass.
+# Everything else the tools import is in Python's standard library or inside Alarm (_vendor/LAB3_code for lab3).
+numpy==2.2.6
+pyarrow==25.0.1
+pytest>=8.3.3
+# scipy (SCOUT K7, 30 Oct 2026): the lab engine's max, prior_max and prior_min ops (alarm_design_v2.py roll_max imports
+# scipy.ndimage.maximum_filter1d), so detect, the COUNT job and the hand check need it (LEARNINGS_V6 V6-07: the hand check failed on
+# the VM without it); the owner's analyst venv has 1.16.3, SCOUT's VM 1.15.3 (the hand check's same-output proof ran on 1.15.3).
+scipy>=1.15.3
+# orjson (SCOUT, 31 Oct 2026, from K6): the ENTRY chain's grader writes its JSON with orjson, with no fallback (07 idea_to_grade_rel1.py
+# _json, as the V3.2 grader it comes from); the owner's analyst venv has orjson 3.11.9. SCOUT's VM has none (the ENTRY job runs on the Mac).
+orjson>=3.11.9
+# numba is optional, not required: the V3.2 grader's fast rules (07 i2g_rules_fast_v2.py, v3) and BED's ladder_v6.py use it when it
+# imports and give the same results in plain Python without it (test_rules_fast_v2 prints which ran). The analyst venv has numba
+# 0.68.0 with llvmlite 0.50.0: install them for speed only.

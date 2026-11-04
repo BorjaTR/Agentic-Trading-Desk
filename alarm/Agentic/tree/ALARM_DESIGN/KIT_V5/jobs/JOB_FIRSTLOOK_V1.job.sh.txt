@@ -1,0 +1,62 @@
+# JOB @@JOBNUM@@_@@SEAT@@_FIRSTLOOK_@@IDEA@@ -- @@RUNTAG@@ (KIT_V5 JOB_FIRSTLOOK_V1, template @@TPLSHA@@): first look of variant @@ITEMS_LIST@@, mode @@MODE@@, days @@FIRST@@ to @@LAST@@, from job @@FROMJOB@@. Chain, no agent step: the PERFIRE copied to the receipts, the two lists, how busy, the outcome labels of fires and random, the export, the extract, the move spent twice, then the reader named in FIRSTLOOK_SETTINGS and the receipt
+# WRITES @@SCRATCH@@/work_@@RUNTAG@@/@@JOBNUM@@_FIRSTLOOK_@@IDEA@@/ and @@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_FIRSTLOOK_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# CORES 1
+# DRIVE: SCRATCH_DISK
+set -u
+AL=@@ALARM@@; F=$AL/01_Detection/tree; CODE=$F/team/LAB3/code; PY=@@PYTHON@@; LAB=@@LAB_DAYS@@
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM_THREADS=1
+export FEED_GATE=@@FEED_GATE@@ RESEARCH_STORE=@@RESEARCH_STORE@@
+RD=@@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@; J=@@JOBNUM@@_FIRSTLOOK_@@IDEA@@; W=@@SCRATCH@@/work_@@RUNTAG@@/$J; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+V=${VS[0]}; C=$V; ID=@@IDEA@@_$V; LEAN=@@LEAN@@; MODE=@@MODE@@; FIRST=@@FIRST@@; LAST=@@LAST@@; RWIN=@@RWIN@@
+PFSRC=@@PFSRC@@; PFSHA=@@PFSHA@@; LF=@@LF@@
+LISTS=$AL/@@T_LISTS@@; EO=$AL/@@T_OUTCOMES@@; XP=$AL/@@T_EXPORT@@; XT=$AL/@@T_EXTRACT@@; APF=$AL/@@T_PROFILE@@; BZ=$AL/@@T_BUSY@@; RC=$AL/@@T_RECEIPT@@
+OM=$AL/@@T_OUTCOME_SETTINGS@@; COSTS=$AL/@@T_COSTS@@; READER=$AL/@@READER@@
+mkdir -p $W $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST; printf 'stage\tpeak_mb\n' > $DV/PEAKS.tsv
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
+stop(){ st end $1 0 "$2"; exit $1; }
+one(){ S=$1; shift; t0=$(date +%s); /usr/bin/time -l "$@" < /dev/null > $W/$S.log 2> $W/$S.err; r=$?
+  printf '%s\t%s\n' $S "$(awk '/maximum resident/{print int($1/1048576)}' $W/$S.err)" >> $DV/PEAKS.tsv
+  st $S $r $(( $(date +%s)-t0 )) "$(tail -n 1 $W/$S.log | tr '\t' ' ' | cut -c1-200)"
+  if [ $r -ne 0 ]; then tail -n 25 $W/$S.log > $DV/$S.tail.txt; tail -n 25 $W/$S.err >> $DV/$S.tail.txt; stop $r "$S failed"; fi; }
+over(){ printf 'stage\trc\tnote\n%s\tend\t0\tdone\n' "$(date -u +%FT%TZ)" > $1/STAGES.tsv; }
+@@PINS@@
+ck $PFSRC $PFSHA
+G8=$FEED_GATE; [ -z "$G8" ] || [ -f "$G8" ] || { st gate 8 0 "FEED_GATE $G8: no such file"; stop 8 "gate"; }
+f=$(fmb); st start 0 0 "free ${f} MB; mode $MODE; reader @@READER@@"
+if [ -z "$f" ] || [ $f -lt 60000 ]; then st disk 7 0 "free ${f} MB under 60000: stopped"; stop 7 "disk"; fi
+[ -e $DV/PERFIRE_$V.tsv ] || cp -n $PFSRC $DV/PERFIRE_$V.tsv; ck $DV/PERFIRE_$V.tsv $PFSHA; st perfire_copy 0 0 "$PFSRC"
+IN=$DV/inputs; DO=$DV/outcomes; DA=$DV/profile; DB=$DV/busy
+mkdir -p $DO $DA $DB
+one lists $PY -B $LISTS $DV/PERFIRE_$V.tsv $V $LEAN $ID $FIRST $LAST $RD $IN @@FIRESARG@@
+LA=$IN/A_${C}_EVENTS.tsv; LR=$IN/R_${C}_EVENTS.tsv
+one busy $PY -B $BZ build $LAB $CODE $DB/BZ $LA=A_$C $LR=R_$C
+over $DB
+for K in A R; do L=$IN/${K}_${C}_EVENTS.tsv
+  one om_$K nice -n 10 $PY -B $EO run 0 $LAB $CODE $L $OM FL$K$C $FIRST $LAST $W/om_$K --run-window $RWIN
+  cp -n $W/om_$K/RUN_MANIFEST.json $DO/RUN_MANIFEST_$K.json
+  one export_$K $PY -B -W ignore $XP $W/om_$K $CODE $EO FL$K$C $W/X_$K.tsv
+  one extract_$K $PY -B $XT $W/X_$K.tsv $L $DO/$K$C.tsv.gz $LF
+done
+over $DO
+VALS=run_pct,run_age_min,run_capped,run_norm,normal_move_pct,giveback_pct,giveback_share,pre_move_pct,pre_speed_pct_min,max_move_60s_pct,forced_usd_log,oi_chg_burst_pct
+one ap_g nice -n 10 $PY -B $APF build $LAB $CODE $LA G_$C $FIRST $LAST $W/ap_g
+one apx_g $PY -B $APF export $W/ap_g $CODE G_$C $FIRST $LAST $DA/AP_$C.tsv $VALS $LA
+one ap_h nice -n 10 $PY -B $APF build $LAB $CODE $LA H_$C $FIRST $LAST $W/ap_h hour
+one apx_h $PY -B $APF export $W/ap_h $CODE H_$C $FIRST $LAST $DA/APH_$C.tsv $VALS $LA
+over $DA
+one prove $PY -B $BZ prove $DV/PROVE_BZ.tsv $DB/BZ/BZ_A_$C.tsv.gz=$DA/AP_$C.tsv
+@@BAR_STAGE@@
+one reader $PY -B $READER $IN/TARGETS_FL.tsv $RD $COSTS $DV/FL $DO $DA $DB/BZ @@READER_EXTRA@@
+one receipt $PY -B $RC $DV/FL @@RULE_FILE@@ @@LABEL_COL@@ $ID $MODE $DV --source @@SRCAUTH@@ @@FROMJOB@@ $PFSHA
+WMB=$(du -sm $W | cut -f1); FMB=$(fmb); printf 'du_mb_W\t%s\nfree_mb_end\t%s\n' "$WMB" "$FMB" > $DV/DISK.tsv
+(cd $DV && shasum -a 256 *.tsv *.md FL/*.tsv inputs/*.tsv BAR/* 2>/dev/null | grep -v ' SHA16.txt$') > $DV/SHA16.txt
+st end 0 0 "free $FMB MB; W $WMB MB"
+exit 0

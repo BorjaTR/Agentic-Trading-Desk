@@ -1,0 +1,1256 @@
+code	families	price_derived	status	card	meaning
+A1.S01	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	long liquidations published in the last 5 s
+A1.S02	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	short liquidations published in the last 5 s
+A1.S03	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	long liquidations published in the last 30 s
+A1.S04	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	short liquidations published in the last 30 s
+A1.S05	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	long liquidations published in the last 60 s, read at a fire second
+A1.S06	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	short liquidations published in the last 60 s, read at a fire second
+A1.S07	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A1_V2.yaml	the biggest 30 s burst of longs forced out on this coin in the last ten minutes, at least 
+A1.S07.grid_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A1_V2.yaml	S07 read on a 3 s grid; kept as a setting, not a copy (BED FOR EDGE1, hb/BED.txt 14:14:15Z
+A1.S07.seen_at_e_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A1_V2.yaml	seen_at_e_off copy of A1.S07: The year also writes S07.seen_at_e_off (the same sum, empty 
+A1.S08	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	long liquidations published in the minute just ended
+A1.S09	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	short liquidations published in the minute just ended
+A1.S10	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	long liquidations on the coin's USDC contract only, the minute just ended; empty NO_FILE w
+A1.S11	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	short liquidations on the coin's USDC contract only, the minute just ended; empty NO_FILE 
+A1.S12	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	long liquidations published in the minute just ended, summed over the 52 roster coins seen
+A1.S12.arrival_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	as S12, but a row counts in the minute Tardis received it, not the minute it was stamped (
+A1.S12.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	how many of the roster coins were seen at e for S12 (the coins S12 sums)
+A1.S12.strict_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	as S12, but empty unless all 52 roster coins are seen (switched off: no reader uses it)
+A1.S13	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	short liquidations published in the minute just ended, summed over the 52 roster coins see
+A1.S13.arrival_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	as S13, but a row counts in the minute Tardis received it (switched off)
+A1.S13.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	how many of the roster coins were seen at e for S13
+A1.S13.strict_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml	as S13, but empty unless all 52 roster coins are seen (switched off)
+A2.S01	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins had longs forced out (forced selling) summing to at least 0.50 dolla
+A2.S01.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins S01 could count at e
+A2.S01.strict_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	strict_off copy of A2.S01: The year also writes .strict_off copies (the same count, empty 
+A2.S02	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins had shorts forced out (forced buying) summing to at least 0.50 dolla
+A2.S02.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins S02 could count at e
+A2.S02.strict_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	strict_off copy of A2.S02: The year also writes .strict_off copies (the same count, empty 
+A2.S03	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	how many more coins had long liquidations in the last 30 s than over the last 6 hours, in 
+A2.S03.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	coverage of A2.S03: Beside each: .coverage, the roster coins A1 could see at e.
+A2.S03.e_inside_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	e_inside_off copy of A2.S03: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S
+A2.S03.flat0_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	flat0_off copy of A2.S03: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 
+A2.S03.n1_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	n1_off copy of A2.S03: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 .st
+A2.S03.own_roster_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	own_roster_off copy of A2.S03: name (26 names: S01 to S06, their .coverage, S01, S02, S05,
+A2.S03.w60_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	w60_off copy of A2.S03: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 .s
+A2.S04	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	how many more coins had short liquidations in the last 30 s than over the last 6 hours, in
+A2.S04.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	coverage of A2.S04: Beside each: .coverage, the roster coins A1 could see at e.
+A2.S04.e_inside_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	e_inside_off copy of A2.S04: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S
+A2.S04.flat0_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	flat0_off copy of A2.S04: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 
+A2.S04.n1_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	n1_off copy of A2.S04: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 .st
+A2.S04.own_roster_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	own_roster_off copy of A2.S04: name (26 names: S01 to S06, their .coverage, S01, S02, S05,
+A2.S04.w60_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A2_V1.yaml	w60_off copy of A2.S04: name (26 names: S01 to S06, their .coverage, S01, S02, S05, S06 .s
+A2.S05	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins had longs forced out summing to at least 0.50 dollars in the last mi
+A2.S05.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins S05 could count
+A2.S05.strict_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	strict_off copy of A2.S05: The year also writes .strict_off copies (the same count, empty 
+A2.S06	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins had shorts forced out summing to at least 0.50 dollars in the last m
+A2.S06.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	how many roster coins S06 could count
+A2.S06.strict_off	LIQ_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A2_V2.yaml	strict_off copy of A2.S06: The year also writes .strict_off copies (the same count, empty 
+A4.S01	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	how many of the last 15 minutes had 100,000 dollars or more of the market's long liquidati
+A4.S01.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	coverage of A4.S01: The JUDGE ruled beforehand the choice the earlier card left open: a mi
+A4.S02	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	the long wave's band over the last 15 minutes
+A4.S02.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	coverage of A4.S02: The JUDGE ruled beforehand the choice the earlier card left open: a mi
+A4.S03	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	how long ago the last minute of 100,000 dollars or more of long liquidations was
+A4.S03.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	coverage of A4.S03: The JUDGE ruled beforehand the choice the earlier card left open: a mi
+A4.S04	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	how many minutes ago the running long liquidation wave began
+A4.S04.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	coverage of A4.S04: The JUDGE ruled beforehand the choice the earlier card left open: a mi
+A4.S05	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	how many minutes ago the running short liquidation wave (the squeeze) began
+A4.S05.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	coverage of A4.S05: The JUDGE ruled beforehand the choice the earlier card left open: a mi
+A4.S06	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	whether the market liquidated 100,000 dollars or more of longs in this minute
+A4.S06.coverage	LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A4_V1.yaml	coverage of A4.S06: The JUDGE ruled beforehand the choice the earlier card left open: a mi
+A5.S01	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	how many dollars of longs were forced out per dollar of USDT taker selling in the minute (
+A5.S02	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	how many dollars of shorts were forced out per dollar of USDT taker buying in the minute
+A5.S03	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	the market's forced selling per dollar of USDT taker selling in the minute (A1's floor pus
+A5.S04	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	the market's forced buying per dollar of taker buying in the minute
+A5.S05	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	the median coin's long liquidation dollars per dollar of its USDT taker selling: above 0 o
+A5.S05.coverage	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	how many coins S05's median is over
+A5.S06	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	the median coin's short liquidation dollars per dollar of its USDT taker buying: above 0 o
+A5.S06.coverage	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	how many coins S06's median is over
+A5.S07	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	how many dollars of shorts were forced out per dollar of longs, market-wide, in the minute
+A5.S08	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	per coin, shorts forced out per dollar of longs forced out in the minute
+A5.S09	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	0 = only longs forced out, 1 = only shorts, 0.5 even
+A5.S10	LIQ_BN|TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_A5_V1.yaml	per coin, 0 = only longs forced out, 1 = only shorts
+A6.S01	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S02	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S03	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S04	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S05	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S06	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S07	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S08	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S09	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S10	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S11	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S12	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S13	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S14	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S15	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S16	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the estima
+A6.S17	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the share 
+A6.S18	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the number
+A6.S19	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the number
+A6.S20	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the number
+A6.S21	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the number
+A6.S22	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): long units
+A6.S23	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): short unit
+A6.S24	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): units (con
+A6.S25	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S25.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S25: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S26	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S26.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S26: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S27	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S27.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S27: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S28	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S28.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S28: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S29	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S29.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S29: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S30	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S30.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S30: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S31	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S31.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S31: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S32	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S32.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S32: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S33	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S33.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S33: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S34	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S34.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S34: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S35	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S35.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S35: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S36	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S36.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S36: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S37	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S37.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S37: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S38	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S38.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S38: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S39	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S39.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S39: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S40	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S40.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S40: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S41	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S41.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S41: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S42	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S42.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S42: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S43	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S43.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S43: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S44	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S44.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S44: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S45	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S45.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S45: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S46	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the sum ov
+A6.S46.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S46: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S47	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S47.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S47: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S48	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S48.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S48: - Beside, switched off: the coins counted (<market setting>.coverage).
+A6.S49	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_A6_V4.md	NO_CARD (meaning from the producer card CARD_A6_V4 ed. 4, not a reviewed card): the median
+A6.S49.coverage	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_A6_V1.tsv	coverage of A6.S49: - Beside, switched off: the coins counted (<market setting>.coverage).
+A7.S01	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	how much of the coin's open interest has left (negative) or come in since the market's lon
+A7.S02	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	the coins that left or came in since the wave began, at today's price
+A7.S03	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	how much of the coin's open interest has left or come in since the market's short wave (th
+A7.S04	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	the coins that left or came in since the squeeze began, at today's price
+A7.S05	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	how much of the market's open interest has left or come in since the long wave began
+A7.S05.coverage	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	coverage of A7.S05: name (S01 to S10 and the market's .coverage), coin (every roster coin 
+A7.S06	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	the typical coin's open interest change since the long wave began
+A7.S06.coverage	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	coverage of A7.S06: name (S01 to S10 and the market's .coverage), coin (every roster coin 
+A7.S07	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	the coins that left or came in across the market since the long wave began, at today's pri
+A7.S07.coverage	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	coverage of A7.S07: name (S01 to S10 and the market's .coverage), coin (every roster coin 
+A7.S08	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	how much of the market's open interest has left or come in since the short wave began
+A7.S08.coverage	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	coverage of A7.S08: name (S01 to S10 and the market's .coverage), coin (every roster coin 
+A7.S09	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	the typical coin's open interest change since the short wave began
+A7.S09.coverage	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	coverage of A7.S09: name (S01 to S10 and the market's .coverage), coin (every roster coin 
+A7.S10	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	the coins that left or came in across the market since the squeeze began, at today's price
+A7.S10.coverage	OI_BN|LIQ_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_A7_V1.yaml	coverage of A7.S10: name (S01 to S10 and the market's .coverage), coin (every roster coin 
+B1.S01	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	dollars takers bought in the minute ending at e
+B1.S02	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	dollars takers sold in the minute ending at e
+B1.S03	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many dollars takers bought more than they sold in the last 5 minutes (minus: sold more
+B1.S03.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	seen_at_e_off copy of B1.S03: The year also writes .seen_at_e_off copies of S03 and S08 (e
+B1.S04	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	net taker dollars of the last 5 minutes in FILLS of 25,000 dollars or more (named whale)
+B1.S04.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	as B1 S04, with a value also where a dead stretch inside the window empties the main
+B1.S05	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	net taker dollars of the last 5 minutes in FILLS under 25,000 dollars (named retail)
+B1.S05.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	as B1 S05, with a value also where a dead stretch inside the window empties the main
+B1.S06	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	net taker dollars over the last 1,000 trades in BLOCKS (same stamp, side, price) of 25,000
+B1.S06.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	as B1 S06, with a value also where a dead stretch inside the window empties the main
+B1.S07	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	the change of S04 over 5 minutes
+B1.S07.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	as B1 S07, with a value also where a dead stretch inside the window empties the main
+B1.S08	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many dollars takers bought for each dollar they sold in the last 5 minutes: 1 even, 2 
+B1.S08.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	seen_at_e_off copy of B1.S08: The year also writes .seen_at_e_off copies of S03 and S08 (e
+B1.S09	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how hard takers are buying (plus) or selling right now, in dollars a second
+B1.S10	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	dollars takers bought in the minute, summed over the roster coins seen
+B1.S10.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	how many roster coins S10 counted
+B1.S11	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	dollars takers sold in the minute, summed over the roster coins seen
+B1.S11.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	how many roster coins S11 counted
+B1.S12	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	the typical coin's taker balance in the last 5 minutes: above 1 the median coin's takers b
+B1.S12.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many coins S12's median is over
+B1.S13	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	how far the median coin's taker buying (over selling) of the last 5 minutes runs above (be
+B1.S13.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	coverage of B1.S13: Beside: S12.coverage, the coins with a ratio; S15.coverage to S19.cove
+B1.S14	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	how large the median coin's taker drift is, either way
+B1.S14.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_B1_V1.yaml	coverage of B1.S14: Beside: S12.coverage, the coins with a ratio; S15.coverage to S19.cove
+B1.S15	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	how many coins' 25k-fills net buy minus net sell, -1 to +1
+B1.S15.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many coins S15 is over
+B1.S16	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	as S15 but on S06's blocks
+B1.S16.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many coins S16 is over
+B1.S17	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	as S15 but on S07 (the change of the 25k-fill flow)
+B1.S17.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many coins S17 is over
+B1.S18	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	the 10th percentile coin's S06 (how hard the worst-selling coins' blocks sell)
+B1.S18.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many coins S18 is over
+B1.S19	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml	share of coins whose S06 blocks net sold, 0 to 1
+B1.S19.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_B1_V3.yaml	how many coins S19 is over
+B2.S01	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	how one-sided, in dollars, the coin's last 1,000 fills were, in runs of 50 (0 balanced, 1 
+B2.S01.mean_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	mean_off copy of B2.S01: a .mean_off twin as the same metric: it is the mean of the 20 run
+B2.S01.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	seen_at_e_off copy of B2.S01: name (S01, S02, S03, S01.mean_off, S02.mean_off, S01.seen_at
+B2.S02	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	the same as S01 at the minute end
+B2.S02.mean_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	mean_off copy of B2.S02: a .mean_off twin as the same metric: it is the mean of the 20 run
+B2.S02.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	seen_at_e_off copy of B2.S02: name (S01, S02, S03, S01.mean_off, S02.mean_off, S01.seen_at
+B2.S03	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	the share of the roster coins whose one-sided fill share (S02) is 0.60 or more; most coins
+B2.S03.coverage	TRADES_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_B2_V1.yaml	how many roster coins S03's share is taken over
+B3.S01	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B3_V4.yaml	trades in the 60 s ending at e (at a fire: ending at the fire second)
+B3.S02	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B3_V4.yaml	trades in the minute ending at e
+B3.S03	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B3_V4.yaml	blocks of trades with the same millisecond, side and price in the minute (named aggregated
+B3.S03.order_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B3_V4.yaml	blocks of trades with the same millisecond and side at any price (switched off)
+B3.S04	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B3_V4.yaml	mean dollars traded a minute over the last 30 minutes; empty unless seen for all 30
+B3.S04.seen_at_e_off	TRADES_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_B3_V4.yaml	as S04 but empty only when not seen at e (switched off)
+C1.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 5 s; 0 when the top did not move
+C1.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S01: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 30 s
+C1.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S02: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 2 minutes
+C1.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S03: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 15 minutes (at a minute end the same as S12)
+C1.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S04: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 30 minutes
+C1.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S05: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last hour (at a minute end the same as S13)
+C1.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S06: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's move since the UTC day began
+C1.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S07: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 10 s, in bp (named a slope; it is a return)
+C1.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S08: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S09	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 30 s, in bp (S02 in another unit at a minute end)
+C1.S09.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S09: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S10	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last minute
+C1.S10.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S10: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S11	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 5 minutes
+C1.S11.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S11: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S12	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 15 minutes
+C1.S12.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S12: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S13	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last hour
+C1.S13.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S13: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S14	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	the coin's mid move over the last 24 hours (no metric of its own: C5 reads it)
+C1.S14.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S14: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S15	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's mid move over the last minute, whatever the coin (named a lead; it is BTC's own retu
+C1.S15.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S15: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S16	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's move over 15 minutes
+C1.S16.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S16: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S17	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's move over 30 minutes
+C1.S17.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S17: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S18	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's move over 1 hour
+C1.S18.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S18: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S19	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's move over 3 hours
+C1.S19.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S19: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S20	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's move over 6 hours
+C1.S20.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S20: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S21	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	BTC's move since the UTC day began
+C1.S21.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S21: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S22	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	how the typical coin moved over 5 minutes (named drift; it is the median return)
+C1.S22.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	how many roster coins the market median S22 is taken over
+C1.S22.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S22: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S22.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	strict_off copy of C1.S22: The year also writes 28 copies of the same metrics as its own c
+C1.S23	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	how the typical coin moved over 15 minutes
+C1.S23.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	how many roster coins the market median S23 is taken over
+C1.S23.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S23: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S23.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	strict_off copy of C1.S23: The year also writes 28 copies of the same metrics as its own c
+C1.S24	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	how the typical coin moved over 30 minutes
+C1.S24.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	how many roster coins the market median S24 is taken over
+C1.S24.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S24: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C1.S24.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	strict_off copy of C1.S24: The year also writes 28 copies of the same metrics as its own c
+C1.S25	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	S10 as a fraction (0.0025 = 0.25 percent); WORDS calls it BURST at 0.0025 or more either w
+C1.S25.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml	quotes_off copy of C1.S25: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bo
+C10.S01	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	is the coin in an up or a down leg of at least 0.25 dials
+C10.S02	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how long the running leg has lasted since the swing before it was confirmed
+C10.S03	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how far the running leg has gone from its start, in percent
+C10.S04	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of the running leg is undone at m (0 at its extreme, 1 all given back)
+C10.S05	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	does the trend's shape hold (higher highs and higher lows, or lower ones)
+C10.S06	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how busy the coin's legs are today at this swing size
+C10.S07	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how mature the chain is: 0 means the running leg is the cold start's
+C10.S08	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how many legs of at least X dials the coin finished today
+C10.S09	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the typical size of the coin's finished legs today
+C10.S10	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the running leg against the coin's typical leg today
+C10.S11	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how deep the coin's legs pulled back before going on, today
+C10.S12	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the running leg's pullback against today's typical
+C10.S13	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how long since the last higher low
+C10.S14	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how long since the last lower high
+C10.S15	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	is the coin in an up or a down leg of at least 0.5 dials
+C10.S16	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how long the running leg has lasted since the swing before it was confirmed
+C10.S17	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how far the running leg has gone from its start, in percent
+C10.S18	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of the running leg is undone at m (0 at its extreme, 1 all given back)
+C10.S19	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	does the trend's shape hold (higher highs and higher lows, or lower ones)
+C10.S20	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how busy the coin's legs are today at this swing size
+C10.S21	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how mature the chain is: 0 means the running leg is the cold start's
+C10.S22	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how many legs of at least X dials the coin finished today
+C10.S23	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the typical size of the coin's finished legs today
+C10.S24	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the running leg against the coin's typical leg today
+C10.S25	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how deep the coin's legs pulled back before going on, today
+C10.S26	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the running leg's pullback against today's typical
+C10.S27	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how long since the last higher low
+C10.S28	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how long since the last lower high
+C10.S29	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	is the coin in an up or a down leg of at least 1 dials
+C10.S30	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how long the running leg has lasted since the swing before it was confirmed
+C10.S31	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how far the running leg has gone from its start, in percent
+C10.S32	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of the running leg is undone at m (0 at its extreme, 1 all given back)
+C10.S33	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	does the trend's shape hold (higher highs and higher lows, or lower ones)
+C10.S34	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how busy the coin's legs are today at this swing size
+C10.S35	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how mature the chain is: 0 means the running leg is the cold start's
+C10.S36	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how many legs of at least X dials the coin finished today
+C10.S37	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the typical size of the coin's finished legs today
+C10.S38	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the running leg against the coin's typical leg today
+C10.S39	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how deep the coin's legs pulled back before going on, today
+C10.S40	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the running leg's pullback against today's typical
+C10.S41	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how long since the last higher low
+C10.S42	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	how long since the last lower high
+C10.S43	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of their running legs the coins have given back, the middle coin
+C10.S43.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	coverage of C10.S43: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S44	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of the market is in an up leg at this swing size
+C10.S44.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	coverage of C10.S44: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S45	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the share of coins whose running leg is bigger than their median leg completed today
+C10.S45.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S45: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S46	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the middle coin's running leg against its typical leg today
+C10.S46.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S46: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S47	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the middle coin's pullback against its typical today
+C10.S47.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S47: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S48	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of their running legs the coins have given back, the middle coin
+C10.S48.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	coverage of C10.S48: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S49	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of the market is in an up leg at this swing size
+C10.S49.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	coverage of C10.S49: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S50	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the share of coins whose running leg is bigger than their median leg completed today
+C10.S50.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S50: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S51	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the middle coin's running leg against its typical leg today
+C10.S51.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S51: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S52	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the middle coin's pullback against its typical today
+C10.S52.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S52: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S53	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of their running legs the coins have given back, the middle coin
+C10.S53.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	coverage of C10.S53: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S54	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	how much of the market is in an up leg at this swing size
+C10.S54.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_LEGS_V1.yaml	coverage of C10.S54: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S55	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the share of coins whose running leg is bigger than their median leg completed today
+C10.S55.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S55: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S56	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the middle coin's running leg against its typical leg today
+C10.S56.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S56: the market ones with .coverage), coin (every roster coin and MARKET),
+C10.S57	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	the middle coin's pullback against its typical today
+C10.S57.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C10_M11_V1.yaml	coverage of C10.S57: the market ones with .coverage), coin (every roster coin and MARKET),
+C11.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C11_V1.yaml	how far the last price is under today's high, in percent; 0 = at the high
+C11.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C11_V1.yaml	how far the last price is above today's low, in percent; 0 = at the low
+C11.S03	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C11_V1.yaml	how many of today's typical minutes of travel the close is below the day's high
+C11.S04	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C11_V1.yaml	how many of today's typical minutes of travel the close is above the day's low
+C11.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C11_V1.yaml	how far the last price is from the nearer of today's high (+) and low (-)
+C11.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C11_V1.yaml	how far the last price is under yesterday's high (negative: above it)
+C11.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C11_V1.yaml	how far the last price is above yesterday's low (negative: under it)
+C11.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C11_V1.yaml	which side of yesterday's range today has broken (the later break when both)
+C12.S01	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_C12_V1.yaml	how many times a second Binance's bookTicker pushed a new top for the coin in the last 5 s
+C12.S01.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_C12_V1.yaml	quotes_off copy of C12.S01: The year's .quotes_off twins are another metric (EDGE1's rulin
+C12.S02	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_C12_V1.yaml	how many times a second Binance's bookTicker pushed a new top for the coin in the last 30 
+C12.S02.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_C12_V1.yaml	quotes_off copy of C12.S02: The year's .quotes_off twins are another metric (EDGE1's rulin
+C13.S01	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml	the price of the last trade stamped in the minute ending at e and received by e
+C13.S02	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml	the highest trade price in the minute ending at e (received by e)
+C13.S03	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml	the lowest trade price in the minute ending at e (received by e)
+C13.S04	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml	1 when the coin is seen but no trade landed in the minute (price carried); 0 when it trade
+C13.S05	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml	the middle of Binance's best bid and best ask in force at e (bookTicker), empty if the top
+C13.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml	as S05 but from Tardis's top rebuilt from the depth stream (switched off)
+C2.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many points BTC's mid rose more than the coin's over the last 60 s: plus = the coin be
+C2.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S01: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	the typical (middle) coin's 15 minute return, in points
+C2.S02.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many coins S02's median read
+C2.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S02: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S02.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	strict_off copy of C2.S02: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	the typical (middle) coin's 60 minute return, in points
+C2.S03.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many coins S03's median read
+C2.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S03: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S03.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	strict_off copy of C2.S03: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many points the coin beat (plus) or trailed (minus) the middle coin over 15 minutes
+C2.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S04: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many points the coin beat or trailed the middle coin over 60 minutes
+C2.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S05: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	0 to 1: how much of the rest of the market moved the same way as the coin over 15 minutes;
+C2.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S06: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	0 to 1: how much of the rest of the market moved the coin's way over 60 minutes
+C2.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S07: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many points the typical alt beat (plus) or trailed BTC over the hour
+C2.S08.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many alts S08's median read
+C2.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S08: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S08.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	strict_off copy of C2.S08: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S09	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C2_V1.yaml	how many coins' last hour sat within half a point of BTC's
+C2.S09.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C2_V1.yaml	coverage of C2.S09: each market value with its .coverage (coins counted).
+C2.S09.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C2_V1.yaml	quotes_off copy of C2.S09: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S09.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C2_V1.yaml	strict_off copy of C2.S09: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S10	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	0 to 1: how much of the alt market did worse than BTC over the hour
+C2.S10.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	how many alts S10's share read
+C2.S10.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	quotes_off copy of C2.S10: The year also writes .quotes_off and .strict_off copies: its ac
+C2.S10.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C2_V3.yaml	strict_off copy of C2.S10: The year also writes .quotes_off and .strict_off copies: its ac
+C3.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	how far the coin's quoted mid swung in the last minute, in percent of the mid now; 0 = the
+C3.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S01: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	how far the coin's quoted mid swung in the last 5 minutes, in percent of the mid now
+C3.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S02: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	plus = the last minute swung wider than the minute before; minus = narrower
+C3.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S03: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	how far the coin's quoted mid swung in the last 30 s, as a fraction of the mid now
+C3.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S04: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	how far the coin's quoted mid swung in the last 2 minutes, as a fraction of the mid now
+C3.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S05: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	how far the coin's quoted mid swung in the last 30 s, in basis points of the mid now
+C3.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S06: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	near 1: the last minute holds most of the 5-minute swing (the move is now); near 0: the sw
+C3.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S07: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	how much wider the 5-minute swing is than its average minute: 1 = every minute swung the w
+C3.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S08: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S09	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	the typical 1-minute swing of the coin's quoted mid over the last hour, in percent
+C3.S09.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S09: The year also writes the same ten on Tardis quotes (.quotes_off
+C3.S10	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	1 = the mid now is at its 8 h high, 0 = at its low, 0.5 in the middle
+C3.S10.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C3_V3.yaml	quotes_off copy of C3.S10: The year also writes the same ten on Tardis quotes (.quotes_off
+C4.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	how much the coin's quoted mid moved in the last 5 minutes, in percent; 0 = it did not mov
+C4.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	quotes_off copy of C4.S01: The year also writes copies of the six on Tardis quotes (.quote
+C4.S01.step60_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	how much the coin's quoted mid moved over the last 5 minutes from its 1-minute returns (5 
+C4.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	how much the coin's quoted mid moved in the last hour, in percent
+C4.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	quotes_off copy of C4.S02: The year also writes copies of the six on Tardis quotes (.quote
+C4.S02.step60_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	how much the coin's quoted mid moved over the last hour from its 1-minute returns (60), in
+C4.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	how much the coin's quoted mid moved in the last 24 hours, in percent
+C4.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	quotes_off copy of C4.S03: The year also writes copies of the six on Tardis quotes (.quote
+C4.S03.step60_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	how much the coin's quoted mid moved over the last 24 hours from its 1-minute returns (1,4
+C4.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	the last 5 minutes' pace of the mid per second over the last hour's: 1 = the same pace, ab
+C4.S04.plain_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	plain_off copy of C4.S04: The year also writes copies of the six on Tardis quotes (.quotes
+C4.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	quotes_off copy of C4.S04: The year also writes copies of the six on Tardis quotes (.quote
+C4.S04.step60_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	the last 5 minutes' pace per second over the last hour's, from 1-minute returns: 1 = the s
+C4.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	the last hour's pace of the mid per second over the last 24 hours': 1 = the same pace
+C4.S05.plain_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	plain_off copy of C4.S05: The year also writes copies of the six on Tardis quotes (.quotes
+C4.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	quotes_off copy of C4.S05: The year also writes copies of the six on Tardis quotes (.quote
+C4.S05.step60_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	the last hour's pace per second over the last 24 hours', from 1-minute returns
+C4.S06	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	how straight BTC's mid walked over the last 30 minutes (0 chop, 1 a straight line)
+C4.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	quotes_off copy of C4.S06: The year also writes copies of the six on Tardis quotes (.quote
+C4.S06.step1_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	step1_off copy of C4.S06: a .step1_off twin as the same metric: it is ER on the 1 s path (
+C4.S07	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	how straight BTC's mid walked over the last 2 hours
+C4.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	quotes_off copy of C4.S07: The year also writes copies of the six on Tardis quotes (.quote
+C4.S07.step1_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	step1_off copy of C4.S07: a .step1_off twin as the same metric: it is ER on the 1 s path (
+C4.S08	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	how straight BTC's mid walked over the last 3 hours (at a fire the last full minute)
+C4.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	quotes_off copy of C4.S08: The year also writes copies of the six on Tardis quotes (.quote
+C4.S08.step1_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	step1_off copy of C4.S08: a .step1_off twin as the same metric: it is ER on the 1 s path (
+C4.S09	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	how straight BTC's 3 hour walk was, plus for a rise and minus for a fall
+C4.S09.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	quotes_off copy of C4.S09: The year also writes copies of the six on Tardis quotes (.quote
+C4.S09.step1_off	PRICE	1	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_C4_V1.yaml	step1_off copy of C4.S09: a .step1_off twin as the same metric: it is ER on the 1 s path (
+C4.S10	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	BTC's last 30 minutes' pace of the mid per second over its last 6 hours': 1 = the same pac
+C4.S10.plain_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	plain_off copy of C4.S10: The year also writes copies of the six on Tardis quotes (.quotes
+C4.S10.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	quotes_off copy of C4.S10: The year also writes copies of the six on Tardis quotes (.quote
+C4.S10.step60_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C4_V2.yaml	BTC's last 30 minutes' pace per second over its last 6 hours', from 1-minute returns
+C4.S11	PRICE	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_DVOL_V2.yaml	what the card promises: BTC DVOL of the last closed hour. What it delivers today: nothing 
+C5.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how one-sided the last 5 minutes were, without the side: 1 = every coin one way, 0.5 = spl
+C5.S01.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how many coins S01's shares read
+C5.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	quotes_off copy of C5.S01: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S01.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	strict_off copy of C5.S01: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how scattered the coins' 15 minute moves are: 0.002 = a standard deviation of 0.2 points
+C5.S02.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how many coins S02 read
+C5.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	quotes_off copy of C5.S02: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S02.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	strict_off copy of C5.S02: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how scattered the coins' day moves are: 2 = a standard deviation of 2 points
+C5.S03.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how many coins S03 read
+C5.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	quotes_off copy of C5.S03: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S03.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	strict_off copy of C5.S03: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	0 to 1: how many of the alts rose over the last 15 minutes
+C5.S04.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how many alts S04 read
+C5.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	quotes_off copy of C5.S04: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S04.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	strict_off copy of C5.S04: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S05	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	how much of the market rose 0.6 percent or more over the last hour
+C5.S05.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	coverage of C5.S05: each with .coverage (coins counted).
+C5.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	quotes_off copy of C5.S05: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S05.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	strict_off copy of C5.S05: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S06	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	how much of the market fell 0.6 percent or more over the last hour
+C5.S06.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	coverage of C5.S06: each with .coverage (coins counted).
+C5.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	quotes_off copy of C5.S06: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S06.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	strict_off copy of C5.S06: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	-1 to 1: whether the coins leading the last 15 minutes are those that led the 15 minutes e
+C5.S07.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how many coins S07's ranking pairs read
+C5.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	quotes_off copy of C5.S07: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S07.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	strict_off copy of C5.S07: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	-1 to 1: how much the share of alts up changed in 30 minutes
+C5.S08.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	how many alts S08's share at e read
+C5.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	quotes_off copy of C5.S08: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S08.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml	strict_off copy of C5.S08: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S09	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	the side the market took over the last minute when 60 percent of the coins agree, with how
+C5.S09.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	coverage of C5.S09: each with .coverage (coins counted).
+C5.S09.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	quotes_off copy of C5.S09: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S09.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	strict_off copy of C5.S09: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S10	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	the side the market but BTC took over the last 15 minutes when 60 percent of the coins agr
+C5.S10.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	coverage of C5.S10: each with .coverage (coins counted).
+C5.S10.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	quotes_off copy of C5.S10: The year also writes .quotes_off and .strict_off copies: its ac
+C5.S10.strict_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C5_V1.yaml	strict_off copy of C5.S10: The year also writes .quotes_off and .strict_off copies: its ac
+C6.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	how many 30 minute volatilities (of the last 6 hours) BTC's mid moved in the last 30 minut
+C6.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	quotes_off copy of C6.S01: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	whether BTC's 30 minute move in volatility units grew (plus) or shrank against 30 minutes 
+C6.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	quotes_off copy of C6.S02: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S03	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	how far BTC's accel now is from its own last 6 hours, in robust standard deviations
+C6.S03.mad_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	mad_off copy of C6.S03: S03.mad_off, S04.mad_off, S06.first_off, S08.ceil_off, S11.interp_
+C6.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	quotes_off copy of C6.S03: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S04	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	how far BTC's price now is from the middle of its last 6 hours, in robust standard deviati
+C6.S04.mad_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	mad_off copy of C6.S04: S03.mad_off, S04.mad_off, S06.first_off, S08.ceil_off, S11.interp_
+C6.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	quotes_off copy of C6.S04: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	0 = BTC's mid at its 6 hour low, 1 = at its high
+C6.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	quotes_off copy of C6.S05: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	how long ago BTC's mid last stood at its 6 hour low, in minutes (0 = at the low now)
+C6.S06.first_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	how long ago BTC's mid first reached its 6 hour low, in minutes
+C6.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	quotes_off copy of C6.S06: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	how wide the typical coin's last 15 minutes were against its last 2 hours: near 1 the 15 m
+C6.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml	quotes_off copy of C6.S07: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S08	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	how long the most pinned roster coin has stayed among the leaders or the laggards of the l
+C6.S08.ceil_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	ceil_off copy of C6.S08: S03.mad_off, S04.mad_off, S06.first_off, S08.ceil_off, S11.interp
+C6.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	quotes_off copy of C6.S08: a copy (.quotes_off) as a metric of its own: it is the year's c
+C6.S09	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	the raw pos_6h at or above which STRETCH/AT-TOP-6H calls BTC at the top of its 6 hours
+C6.S10	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	the raw pos_6h at or below which STRETCH/AT-BOTTOM-6H calls BTC at the bottom of its 6 hou
+C6.S11	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	the heat that the hottest tenth of the last 62 days' minutes reached: the HEAT/HOT label's
+C6.S11.interp_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	interp_off copy of C6.S11: S03.mad_off, S04.mad_off, S06.first_off, S08.ceil_off, S11.inte
+C6.S12	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	the 2-hour dial that the widest tenth of the last 62 days' minutes reached: the HEAT/HOT l
+C6.S12.interp_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C6_V1.yaml	interp_off copy of C6.S12: S03.mad_off, S04.mad_off, S06.first_off, S08.ceil_off, S11.inte
+C7.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 60 s, in percent of its low; 0 =
+C7.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S01: The year also writes the same seven on Tardis quotes (the top r
+C7.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 5 min, in percent of its low; 0 
+C7.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S02: The year also writes the same seven on Tardis quotes (the top r
+C7.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 10 min, in percent of its low; 0
+C7.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S03: The year also writes the same seven on Tardis quotes (the top r
+C7.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 15 min, in percent of its low; 0
+C7.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S04: The year also writes the same seven on Tardis quotes (the top r
+C7.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 30 min, in percent of its low; 0
+C7.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S05: The year also writes the same seven on Tardis quotes (the top r
+C7.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 1 h, in percent of its low; 0 = 
+C7.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S06: The year also writes the same seven on Tardis quotes (the top r
+C7.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	how far the typical coin's quoted mid moved over the last 2 h, in percent of its low; 0 = 
+C7.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	quotes_off copy of C7.S07: The year also writes the same seven on Tardis quotes (the top r
+C7.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml	nothing yet: empty NO_HISTORY at every minute
+C8.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	where the minute's last trade sits inside its high-low range: 0 = closed on the low, 1 = c
+C8.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	the minute's move from the previous minute's close, in units of this minute's high-low ran
+C8.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	how wide the minute was, in percent of the price; 0 when every trade was at one price
+C8.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	where the typical coin closed inside its minute range
+C8.S04.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	how many coins S04's median read
+C8.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	the typical coin's move from its previous close, in units of its minute range
+C8.S05.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	how many coins S05's median read
+C8.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	how wide the typical coin's minute was, in percent
+C8.S06.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C8_V3.yaml	how many coins S06's median read
+C9.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how wide the coin's trade range of the last 60 minutes is, in percent of its last price
+C9.S02	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many median-coin 2-hour widths the coin moved over the last 60 minutes: 2 = twice the 
+C9.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	0 = the last price is at the 60-minute low, 1 = at its high
+C9.S04	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many separate times the coin's minutes reached the top tenth of its 60-minute range: 1
+C9.S05	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many separate times the coin's minutes reached the bottom tenth of its 60-minute range
+C9.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how fresh the 60-minute high is: 0 = the minute ending at e set it
+C9.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how fresh the 60-minute low is: 0 = the minute ending at e set it
+C9.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how wide the coin's trade range of the last 120 minutes is, in percent of its last price
+C9.S09	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many median-coin 2-hour widths the coin moved over the last 120 minutes: 2 = twice the
+C9.S10	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	0 = the last price is at the 120-minute low, 1 = at its high
+C9.S11	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many separate times the coin's minutes reached the top tenth of its 120-minute range: 
+C9.S12	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many separate times the coin's minutes reached the bottom tenth of its 120-minute rang
+C9.S13	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how fresh the 120-minute high is: 0 = the minute ending at e set it
+C9.S14	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how fresh the 120-minute low is: 0 = the minute ending at e set it
+C9.S15	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how wide the coin's trade range of the last 240 minutes is, in percent of its last price
+C9.S16	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many median-coin 2-hour widths the coin moved over the last 240 minutes: 2 = twice the
+C9.S17	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	0 = the last price is at the 240-minute low, 1 = at its high
+C9.S18	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many separate times the coin's minutes reached the top tenth of its 240-minute range: 
+C9.S19	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	how many separate times the coin's minutes reached the bottom tenth of its 240-minute rang
+C9.S20	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how fresh the 240-minute high is: 0 = the minute ending at e set it
+C9.S21	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	how fresh the 240-minute low is: 0 = the minute ending at e set it
+C9.S22	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	where the typical coin's last price sits in its 60-minute range: 0.5 the middle
+C9.S22.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	coverage of C9.S22: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S23	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	the median coin's 60-minute width over the median coin's 2-hour width at the same minute
+C9.S23.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	coverage of C9.S23: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S24	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	the share of coins whose 60-minute width is under the median coin's 2-hour width at the sa
+C9.S24.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	coverage of C9.S24: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S25	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	where the typical coin's last price sits in its 120-minute range: 0.5 the middle
+C9.S25.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	coverage of C9.S25: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S26	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	the median coin's 120-minute width over the median coin's 2-hour width at the same minute
+C9.S26.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	coverage of C9.S26: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S27	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	the share of coins whose 120-minute width is under the median coin's 2-hour width at the s
+C9.S27.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	coverage of C9.S27: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S28	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	where the typical coin's last price sits in its 240-minute range: 0.5 the middle
+C9.S28.coverage	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml	coverage of C9.S28: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S29	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	the median coin's 240-minute width over the median coin's 2-hour width at the same minute
+C9.S29.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	coverage of C9.S29: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+C9.S30	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	the share of coins whose 240-minute width is under the median coin's 2-hour width at the s
+C9.S30.coverage	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_C9_V1.yaml	coverage of C9.S30: name (S01 to S30 and S22 to S30 .coverage: 39 names, J15895, J15896 c9
+COIN_C1.S01	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1_V6.md	NO_CARD (meaning from the producer card CARD_COIN_C1_V6, not a reviewed card): the coin's 
+COIN_C1.S01.quotes_off	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C1_V1.tsv	quotes_off copy of COIN_C1.S01: | the minute closes (S05, the mid of the top of book in fo
+COIN_C1.S01.whole_window_off	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C1_V1.tsv	whole_window_off copy of COIN_C1.S01: - Beside, switched off: the whole window (120 of 120
+COIN_C1.S02	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1_V6.md	NO_CARD (meaning from the producer card CARD_COIN_C1_V6, not a reviewed card): the high-lo
+COIN_C1.S02.quotes_off	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C1_V1.tsv	quotes_off copy of COIN_C1.S02: | the minute closes (S05, the mid of the top of book in fo
+COIN_C1.S02.whole_window_off	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C1_V1.tsv	whole_window_off copy of COIN_C1.S02: - Beside, switched off: the whole window (120 of 120
+COIN_C1.S03	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1_V6.md	NO_CARD (meaning from the producer card CARD_COIN_C1_V6, not a reviewed card): the heat: t
+COIN_C1.S03.quotes_off	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C1_V1.tsv	quotes_off copy of COIN_C1.S03: | the minute closes (S05, the mid of the top of book in fo
+COIN_C1.S03.whole_window_off	UNKNOWN	0	UNKNOWN	NO_CARD; settings testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C1_V1.tsv	whole_window_off copy of COIN_C1.S03: - Beside, switched off: the whole window (120 of 120
+COIN_C1B.S01	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S02	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S03	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S04	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S05	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S06	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S07	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S08	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S09	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S10	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S11	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S12	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S13	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S14	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S15	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C1B.S16	UNKNOWN	0	UNKNOWN	NO_CARD; producer card testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C1B_V7.md	NO_CARD (meaning from the producer card CARD_COIN_C1B_V7, not a reviewed card): the estima
+COIN_C2.S01	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	the dollars of the coin's long liquidations in the 60 s ending at m
+COIN_C2.S02	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	1: the coin's long liquidations this minute reached its own top quarter of the last 14 day
+COIN_C2.S02.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S02: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S02.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S02: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S03	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how long ago the coin's own long wave last hit; NO_WAVE: quiet on its own clock
+COIN_C2.S03.coverage	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	coverage of COIN_C2.S03: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 to S
+COIN_C2.S03.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S03: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S03.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S03: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S04	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how dense the coin's own long wave is over the last 15 minutes
+COIN_C2.S04.coverage	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	coverage of COIN_C2.S04: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 to S
+COIN_C2.S04.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S04: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S04.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S04: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S05	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how long the coin's own long wave has lasted
+COIN_C2.S05.coverage	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	coverage of COIN_C2.S05: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 to S
+COIN_C2.S05.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S05: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S05.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S05: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S06	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how far the coin's open interest moved since its own long wave began: negative, positions 
+COIN_C2.S06.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S06: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S06.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S06: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S07	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	the contracts gained or lost since the coin's long wave began, at this minute's price
+COIN_C2.S07.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S07: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S07.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S07: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S08	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	the dollars of the coin's short liquidations in the 60 s ending at m
+COIN_C2.S09	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	1: the coin's short liquidations this minute reached its own top quarter of the last 14 da
+COIN_C2.S09.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S09: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S09.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S09: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S10	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how long ago the coin's own short wave last hit; NO_WAVE: quiet on its own clock
+COIN_C2.S10.coverage	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	coverage of COIN_C2.S10: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 to S
+COIN_C2.S10.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S10: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S10.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S10: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S11	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how dense the coin's own short wave is over the last 15 minutes
+COIN_C2.S11.coverage	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	coverage of COIN_C2.S11: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 to S
+COIN_C2.S11.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S11: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S11.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S11: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S12	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how long the coin's own short wave has lasted
+COIN_C2.S12.coverage	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	coverage of COIN_C2.S12: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 to S
+COIN_C2.S12.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S12: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S12.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S12: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S13	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	how far the coin's open interest moved since its own short wave began: negative, positions
+COIN_C2.S13.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S13: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S13.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S13: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C2.S14	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	the contracts gained or lost since the coin's short wave began, at this minute's price
+COIN_C2.S14.few_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	few_off copy of COIN_C2.S14: - Beside, switched off: '<setting>.few_off' (S02 to S07, S09 
+COIN_C2.S14.oi_share_off	LIQ_BN|OI_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C2_V1.yaml	oi_share_off copy of COIN_C2.S14: - Beside, switched off: '<setting>.few_off' (S02 to S07,
+COIN_C3.S01	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much the coin's quoted mid rose (fell) over the last 5 minutes, in percent
+COIN_C3.S01.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S01: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S02	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much the coin's quoted mid rose (fell) over the last 15 minutes, in percent
+COIN_C3.S02.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S02: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S03	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much the coin's quoted mid rose (fell) over the last 60 minutes, in percent
+COIN_C3.S03.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S03: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S04	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much the coin's quoted mid rose (fell) over the last 240 minutes, in percent
+COIN_C3.S04.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S04: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S05	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than BTC over the last 5 minutes
+COIN_C3.S05.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S05: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S06	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than BTC over the last 15 minutes
+COIN_C3.S06.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S06: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S07	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than BTC over the last 60 minutes
+COIN_C3.S07.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S07: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S08	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than BTC over the last 240 minutes
+COIN_C3.S08.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S08: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S09	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than the typical other coin over 5 minutes
+COIN_C3.S09.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how many coins S09's median or rank is over at e (10 or more for a value)
+COIN_C3.S09.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S09: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S10	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than the typical other coin over 15 minutes
+COIN_C3.S10.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how many coins S10's median or rank is over at e (10 or more for a value)
+COIN_C3.S10.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S10: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S11	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than the typical other coin over 60 minutes
+COIN_C3.S11.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how many coins S11's median or rank is over at e (10 or more for a value)
+COIN_C3.S11.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S11: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S12	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how much more (less) the coin moved than the typical other coin over 240 minutes
+COIN_C3.S12.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how many coins S12's median or rank is over at e (10 or more for a value)
+COIN_C3.S12.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S12: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S13	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 5 minutes
+COIN_C3.S13.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S13: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S14	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 15 minute
+COIN_C3.S14.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S14: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S15	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 60 minute
+COIN_C3.S15.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S15: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S16	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 240 minut
+COIN_C3.S16.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S16: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S17	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond the median coin over the la
+COIN_C3.S17.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	cov_off copy of COIN_C3.S17: Computation: 15,400 of 15,400 with the six counts .cov_off (C
+COIN_C3.S17.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S17: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S18	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond the median coin over the la
+COIN_C3.S18.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	cov_off copy of COIN_C3.S18: Computation: 15,400 of 15,400 with the six counts .cov_off (C
+COIN_C3.S18.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S18: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S19	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond the median coin over the la
+COIN_C3.S19.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	cov_off copy of COIN_C3.S19: Computation: 15,400 of 15,400 with the six counts .cov_off (C
+COIN_C3.S19.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S19: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S20	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	how many of its own normal 2-hour ranges the coin moved beyond the median coin over the la
+COIN_C3.S20.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	cov_off copy of COIN_C3.S20: Computation: 15,400 of 15,400 with the six counts .cov_off (C
+COIN_C3.S20.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S20: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S21	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	0 = the worst coin of the roster over 60 minutes, 100 = the best; a tie ranks at the botto
+COIN_C3.S21.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how many coins S21's median or rank is over at e (10 or more for a value)
+COIN_C3.S21.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S21: The year also writes 14 copies .quotes_off (the same setti
+COIN_C3.S22	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	0 = the worst coin of the roster over 240 minutes, 100 = the best; a tie ranks at the bott
+COIN_C3.S22.cov_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	how many coins S22's median or rank is over at e (10 or more for a value)
+COIN_C3.S22.quotes_off	PRICE	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml	quotes_off copy of COIN_C3.S22: The year also writes 14 copies .quotes_off (the same setti
+D1.S01	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	which side the changes of the top of the book helped over the last 1 s, as a share from -1
+D1.S01.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S01: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S01.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S01: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S02	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	which side the changes of the top of the book helped over the last 5 s, as a share from -1
+D1.S02.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S02: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S02.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S02: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S03	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	which side the changes of the top of the book helped over the last 30 s, as a share from -
+D1.S03.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S03: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S03.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S03: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S04	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	which side the changes of the top of the book helped over the last 60 s, as a share from -
+D1.S04.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S04: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S04.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S04: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S05	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	which side the changes of the top of the book helped over the last 120 s, as a share from 
+D1.S05.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S05: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S05.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S05: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S06	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	how many dollars were added to or taken from the best bid and ask over the last 1 s
+D1.S06.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S06: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S06.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S06: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S07	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	how many dollars were added to or taken from the best bid and ask over the last 5 s
+D1.S07.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S07: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S07.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S07: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S08	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	how many dollars were added to or taken from the best bid and ask over the last 30 s
+D1.S08.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S08: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S08.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S08: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S09	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	how many dollars were added to or taken from the best bid and ask over the last 60 s
+D1.S09.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S09: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S09.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S09: a .seen_at_e_off copy as a metric of its own: it is the year
+D1.S10	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	how many dollars were added to or taken from the best bid and ask over the last 120 s
+D1.S10.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	quotes_off copy of D1.S10: a .quotes_off twin as the same metric: it is the same rule on a
+D1.S10.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D1_V1.yaml	seen_at_e_off copy of D1.S10: a .seen_at_e_off copy as a metric of its own: it is the year
+D2.S01	BOOK_BN	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml	named microprice: the best-bid/best-ask mid weighted by the opposite sizes, at e
+D2.S01.quotes_off	BOOK_BN	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml	as D2 S01 on the quotes stream (switched off)
+D2.S02	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	how far the size-weighted mid sits from the mid, in bps: + when more of the coin rests at 
+D2.S02.quotes_off	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	quotes_off copy of D2.S02: a copy (S02.quotes_off, S03.quotes_off, S04.quotes_off) as a me
+D2.S03	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	the dollars at the best bid less those at the best ask, over their sum: +1 all at the bid,
+D2.S03.quotes_off	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	quotes_off copy of D2.S03: a copy (S02.quotes_off, S03.quotes_off, S04.quotes_off) as a me
+D2.S04	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	the median coin's best ask less best bid over its mid, in bps
+D2.S04.coverage	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	how many coins S04's median is over
+D2.S04.quotes_off	BOOK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_D2_V1.yaml	quotes_off copy of D2.S04: a copy (S02.quotes_off, S03.quotes_off, S04.quotes_off) as a me
+D2.S05	BOOK_BN	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D2_V1.yaml	how many robust units the median coin's spread sits above (below) its last 24 hours
+D2.S05.coverage	BOOK_BN	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D2_V1.yaml	coverage of D2.S05: S04 = the spread (ask - bid) / mid in basis points of the median roste
+D2.S05.quotes_off	BOOK_BN	1	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D2_V1.yaml	quotes_off copy of D2.S05: a copy (S02.quotes_off, S03.quotes_off, S04.quotes_off) as a me
+D3.S01	BOOK_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml	dollars resting at the best bid plus the best ask at e, from the depth-stream 25-level boo
+D3.S01.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml	as D3 S01 from the quotes stream (switched off); identical to D3 S01 in every coin-minute 
+D3.S02	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	whether the 25 levels seen hold more bid or ask dollars: +1 all bid, -1 all ask
+D3.S03	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	whether the 5 best levels hold more bid or ask dollars
+D3.S04	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	the imbalance of the near book within 10 bps as far as the 25 levels reach
+D3.S05	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	the imbalance of the book within 30 bps as far as the 25 levels reach
+D3.S06	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	the imbalance of the book within 50 bps as far as the 25 levels reach
+D3.S07	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	a price between the best bid and ask that leans toward the ask when the 5 levels hold more
+D3.S08	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	how far the 5-level weighted mid sits from the mid, in bps
+D3.S09	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how far below the mid the biggest resting bid level of the 25 sits
+D3.S10	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how far above the mid the biggest resting ask level of the 25 sits
+D3.S11	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how many median bid levels the biggest bid level holds
+D3.S12	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how many median ask levels the biggest ask level holds
+D3.S13	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how much the biggest bid level's dollars grew (shrank) over the last minute, wherever it s
+D3.S14	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how much the biggest ask level's dollars grew (shrank) over the last minute, wherever it s
+D3.S15	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	how many times the median coin's top dollars this coin has at its best bid and ask: 2 = tw
+D3.S15.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	quotes_off copy of D3.S15: a copy (S15.quotes_off, S16.quotes_off) as a metric of its own:
+D3.S16	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	the dollars the median coin has at its best bid plus best ask
+D3.S16.coverage	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	how many coins S16's median is over
+D3.S16.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_D3_V1.yaml	quotes_off copy of D3.S16: a copy (S15.quotes_off, S16.quotes_off) as a metric of its own:
+D3.S17	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	how many robust units the median coin's best bid and ask dollars sit under (+) or over (-)
+D3.S17.coverage	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	coverage of D3.S17: S16.coverage the coins in the median.
+D3.S17.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D3_V1.yaml	quotes_off copy of D3.S17: a copy (S15.quotes_off, S16.quotes_off) as a metric of its own:
+D4.S01	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	which side the changes of the first 10 levels of the book helped over the last 1 s, as a s
+D4.S01.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S01: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S02	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	which side the changes of the first 10 levels of the book helped over the last 5 s, as a s
+D4.S02.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S02: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S03	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	which side the changes of the first 10 levels of the book helped over the last 30 s, as a 
+D4.S03.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S03: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S04	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	which side the changes of the first 10 levels of the book helped over the last 60 s, as a 
+D4.S04.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S04: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S05	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	which side the changes of the first 10 levels of the book helped over the last 120 s, as a
+D4.S05.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S05: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S06	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how many dollars were added to or taken from the first 10 levels of the book over the last
+D4.S06.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S06: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S07	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how many dollars were added to or taken from the first 10 levels of the book over the last
+D4.S07.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S07: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S08	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how many dollars were added to or taken from the first 10 levels of the book over the last
+D4.S08.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S08: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S09	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how many dollars were added to or taken from the first 10 levels of the book over the last
+D4.S09.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S09: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S10	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how many dollars were added to or taken from the first 10 levels of the book over the last
+D4.S10.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S10: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S11	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how fast the 10-level gross flow ran in the last 5 s against its pace over the last minute
+D4.S11.seen_at_e_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	seen_at_e_off copy of D4.S11: a copy (.seen_at_e_off) as a metric of its own: it is the ye
+D4.S12	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	which side the books of the typical coin were bought or sold into over the last 30 s, as t
+D4.S12.coverage	BOOK_BN	0	CARD	team/RAWCHECK/notes/FORMULA/FORMULA_D4_V2.yaml	how many coins S12 is the median of
+D5.S01	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D5_V1.yaml	whether the median spread or the median top dollars stretched (z 3 or more) and have not y
+D5.S01.quotes_off	BOOK_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_D5_V1.yaml	quotes_off copy of D5.S01: name (S01 and its quotes copy S01.quotes_off), coin (MARKET), a
+E1.S01	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	Binance's live funding estimate for the next settle, per 8 h
+E1.S01.any_age_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	as S01 without the 61 s staleness rule (switched off)
+E1.S01.own_interval_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	Binance's live funding estimate for the next settle, for the coin's own interval (switched
+E1.S02	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	who pays at the coming settle if the estimate holds: LONGS_PAY, SHORTS_PAY or NONE
+E1.S03	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	the time of the next settle (Binance T), microseconds
+E1.S04	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	the coin's funding interval in hours (8, 4, 1 ...)
+E1.S05	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	where the market's open-interest-weighted funding estimate sits against Binance's default 
+E1.S05.coverage	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	how many coins S05's weighted median is over
+E1.S05.coverage.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	coverage.hl_off copy of E1.S05: S05.coverage and S06.coverage count the coins each is over
+E1.S05.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	hl_off copy of E1.S05: The year also writes S05, S06 and their coverages for Hyperliquid's
+E1.S06	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	the middle coin's current funding estimate for its next settle, per 8 h
+E1.S06.coverage	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	how many coins S06's median is over
+E1.S06.coverage.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	coverage.hl_off copy of E1.S06: S05.coverage and S06.coverage count the coins each is over
+E1.S06.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml	hl_off copy of E1.S06: The year also writes S05, S06 and their coverages for Hyperliquid's
+E1.S07	FUNDING_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_E1_V1.yaml	how many spread units (the larger of 1.4826 MAD and 1.2533 MeanAD) the market's funding de
+E1.S07.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_E1_V1.yaml	hl_off copy of E1.S07: The year also writes S05, S06 and their coverages for Hyperliquid's
+E1.S07.partial_base_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_E1_V1.yaml	partial_base_off copy of E1.S07: name (S07, S07.partial_base_off, S08, and the Hyperliquid
+E1.S07.partial_base_off.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_E1_V1.yaml	partial_base_off.hl_off copy of E1.S07: - **Edition 2's Hyperliquid market is kept beside,
+E1.S08	FUNDING_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_E1_V1.yaml	how long the market's funding has stayed 2 of S07's units or more from its last 3 weeks
+E1.S08.hl_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_E1_V1.yaml	hl_off copy of E1.S08: The year also writes S05, S06 and their coverages for Hyperliquid's
+E1.S09	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	the funding rate PAID at the last settle (S10), for the coin's own interval
+E1.S09.in_force_at_settle_off	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	the live estimate in force at the settle moment (switched off); NOT the paid rate in 60 to
+E1.S10	FUNDING_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml	the time of the last settle, microseconds
+E2.S01	OI_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml	Binance open interest in coins, read at a fire second
+E2.S01.any_age_off	OI_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml	as S01 without the 61 s staleness rule (switched off)
+E2.S02	OI_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml	Binance open interest in coins at the minute end
+E2.S02.any_age_off	OI_BN	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml	as S02 without the 61 s staleness rule (switched off)
+E2.S03	OI_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	whether the coin's open interest at e comes from a row older than a minute (1) or a row ar
+E2.S04	OI_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	how much the coin's Binance open interest changed in the last 10 minutes, percent; plus = 
+E2.S04.any_age_off	OI_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	any_age_off copy of E2.S04: S04.any_age_off and S06.any_age_off are the year's copies (an 
+E2.S05	HL_POS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml	Hyperliquid open interest in coins at the minute end; empty NO_FILE when the coin is not l
+E2.S05.any_age_off	HL_POS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_E2_V2.yaml	as S05 without the staleness rule (switched off)
+E2.S06	HL_POS	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	how much the coin's Hyperliquid open interest changed in the last 10 minutes, percent
+E2.S06.any_age_off	HL_POS	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	any_age_off copy of E2.S06: S04.any_age_off and S06.any_age_off are the year's copies (an 
+E2.S07	OI_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	the mean coin's Binance open interest change over the last minute, percent
+E2.S07.coverage	OI_BN	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_E2_V2.yaml	how many coins S07's mean is over
+E3.S01	MARK_BN	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_E3_V2.yaml	the perpetual's mark premium over its spot index, bp
+E3.S01.any_age_off	MARK_BN	1	CARD	team/RAWCHECK/notes/MEANING/MEANING_E3_V2.yaml	as S01 without the 61 s staleness rule (switched off)
+E3.S02	MARK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_E3_V2.yaml	how fast the typical coin's mark premium over spot moved in the last minute, bp per minute
+E3.S02.coverage	MARK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_E3_V2.yaml	how many coins S02's median is over
+E3.S03	MARK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_E3_V2.yaml	how fast the typical coin's mark premium moved over the last 5 minutes, bp per minute
+E3.S03.coverage	MARK_BN	1	CARD	team/RAWCHECK/notes/BASIC/BASIC_E3_V2.yaml	how many coins S03's median is over
+LAB.BIG_TAKER_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when whale net 5 min (B1.S04) is in its top two fifths the move's way AND open interes
+LAB.BIG_TAKER_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when whale net 5 min (B1.S04) is in its top two fifths the move's way AND open interes
+LAB.BTC_PUSHERS_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when TREND_NOW is the move's way AND BTC's net 5 min (B1.S03 at BTC) is in its top two
+LAB.BTC_PUSHERS_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when TREND_NOW is the move's way AND BTC's net 5 min (B1.S03 at BTC) is in its top two
+LAB.CHOP_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the market dial 15 min (C7.S04) is 0.3 or more AND no COIN_FORCED, no MARKET_FORC
+LAB.CHOP_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the market dial 15 min (C7.S04) is 0.3 or more AND no COIN_FORCED, no MARKET_FORC
+LAB.CLOCK	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	PRINT when a scheduled macro print is 15 min ahead to 30 min past (Z1.S01, S03), US_OPEN o
+LAB.COIN_FORCED_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the coin's own longs were liquidated in the last 60 s (A1.S05 > 0), else NO (the 
+LAB.COIN_FORCED_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the coin's own shorts were liquidated in the last 60 s (A1.S06 > 0), else NO (the
+LAB.MARKET_FORCED_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when in the last full minute OTHER coins' long liquidations were >= 50,000 $ AND >= 50
+LAB.MARKET_FORCED_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when in the last full minute OTHER coins' short liquidations were >= 50,000 $ AND >= 5
+LAB.NEWS	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when a print is within 15 min or the news burst z is 3 or more, else NO; the news feed
+LAB.QUIET_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the market is quiet on this side: no MARKET_FORCED, no WAVE, no other coin forced
+LAB.QUIET_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the market is quiet on this side: no MARKET_FORCED, no WAVE, no other coin forced
+LAB.TREND_HOURS_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the CONTEXT-HOURS word of the market at this moment (the same as context_hours)
+LAB.TREND_HOURS_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the CONTEXT-HOURS word of the market at this moment (the same as context_hours)
+LAB.TREND_NOW	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the BTC-PUSH word now: UP, DOWN or NONE (the same as btc_push)
+LAB.WAVE_LONG	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the last 15 minutes held a wave minute on this side (wave_minutes_15m > 0), else 
+LAB.WAVE_SHORT	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	YES when the last 15 minutes held a wave minute on this side (wave_minutes_15m > 0), else 
+LAB.btc_push	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the BTC-PUSH word: DOWN when BTC fell >= 0.3 pct in 15 min or >= 0.5 pct in 1 h with 2 of 
+LAB.closed_bn	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	who opened or closed open interest by the aggressor, a LEAN: Binance open interest change 
+LAB.closed_hl	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	who opened or closed open interest by the aggressor, a LEAN: Hyperliquid open interest cha
+LAB.context_hours	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the CONTEXT-HOURS word of the market: the trend over hours (layer 0 WORDS)
+LAB.hour_utc	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the minute end's time of day in UTC, HH:MM:SS
+LAB.liq_coin_short_max30s_10m_grid	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	a LOWER BOUND of the largest 30 s of this coin's shorts liquidated in the last 10 min: the
+LAB.net_180m	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	taker buys less taker sells over the last 180 min (B1.S01 less B1.S02, per minute, summed)
+LAB.net_180m_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: the same over 180 min (0 to 360); 0 
+LAB.net_360m	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	taker buys less taker sells over the last 360 min (B1.S01 less B1.S02, per minute, summed)
+LAB.net_360m_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: the same over 360 min (0 to 720); 0 
+LAB.net_60m	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	taker buys less taker sells over the last 60 min (B1.S01 less B1.S02, per minute, summed),
+LAB.net_60m_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: buy and sell minute rows net_60m cou
+LAB.oi_180m_bn	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the change of Binance open interest over the last 180 min, in percent (E2.S02 level at u a
+LAB.oi_360m_bn	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the change of Binance open interest over the last 360 min, in percent (E2.S02 level at u a
+LAB.oi_60m_bn	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the change of Binance open interest over the last 60 min, in percent (E2.S02 level at u ag
+LAB.other_coins_long_1m	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	dollars of longs liquidated on every OTHER coin in the last full minute (this coin left ou
+LAB.other_coins_long_1m_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: the day's other coins with no A1.S08
+LAB.other_coins_long_30s	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many OTHER coins had longs liquidated in the last 30 s (this coin left out)
+LAB.other_coins_long_rest	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	other_coins_long_1m without its largest coin: the broad part of the other coins' long liqu
+LAB.other_coins_long_top	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the largest OTHER coin of other_coins_long_1m and its dollars, as text: "<COIN> <dollars>"
+LAB.other_coins_long_top_coin	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the largest OTHER coin of other_coins_long_1m: the coin part of LAB.other_coins_long_top; 
+LAB.other_coins_long_top_usd	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the dollars of the largest OTHER coin of other_coins_long_1m: the dollar part of LAB.other
+LAB.other_coins_short_1m	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	dollars of shorts liquidated on every OTHER coin in the last full minute (this coin left o
+LAB.other_coins_short_1m_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: the same, A1.S09; 0 = it read every 
+LAB.other_coins_short_30s	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many OTHER coins had shorts liquidated in the last 30 s (this coin left out)
+LAB.other_coins_short_rest	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	other_coins_short_1m without its largest coin: the broad part of the other coins' short li
+LAB.other_coins_short_top	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the largest OTHER coin of other_coins_short_1m and its dollars, as text: "<COIN> <dollars>
+LAB.other_coins_short_top_coin	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the largest OTHER coin of other_coins_short_1m: the coin part of LAB.other_coins_short_top
+LAB.other_coins_short_top_usd	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	the dollars of the largest OTHER coin of other_coins_short_1m: the dollar part of LAB.othe
+LAB.wave_minutes_15m_long	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	MARKET: how many of the last 15 minutes were wave minutes: the market's long side liquidat
+LAB.wave_minutes_15m_long_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: coin-minutes of A1.S08 missing over 
+LAB.wave_minutes_15m_short	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	MARKET: how many of the last 15 minutes were wave minutes: the market's short side liquida
+LAB.wave_minutes_15m_short_missing	UNKNOWN	0	UNKNOWN	team/BED/seats/EDGE1/notes/lab_v3/LAB_READINGS_MEANING_V1.tsv	how many inputs the reading beside it could not read: the same, A1.S09; 0 = it read every 
+NAUTILUS.S01	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	the mean of the last 20 closes
+NAUTILUS.S02	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	the exponential average of the closes, recent minutes weigh more
+NAUTILUS.S03	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	the linearly weighted average of the last 20 closes, the newest heaviest
+NAUTILUS.S04	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	the double exponential average (less lag)
+NAUTILUS.S05	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	Hull's moving average of the closes
+NAUTILUS.S06	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	Wilder's slow average of the closes
+NAUTILUS.S07	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	Kaufman's adaptive average: fast when the closes move in a line, slow in noise
+NAUTILUS.S08	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	Chande's variable index dynamic average: faster when momentum is strong
+NAUTILUS.S09	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	the day's volume-weighted price, on the candles
+NAUTILUS.S10	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	where the 20-candle fitted line stands now
+NAUTILUS.S11	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_PRICE_V1.yaml	the fitted line at x = 0: one candle BEFORE the window
+NAUTILUS.S12	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the upper Bollinger band of the typical price
+NAUTILUS.S13	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the 20-candle mean of the typical price (the Bollinger middle)
+NAUTILUS.S14	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the lower Bollinger band of the typical price
+NAUTILUS.S15	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the upper Keltner channel: the EMA of the typical price plus 2 average true ranges
+NAUTILUS.S16	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the Keltner middle: the EMA of the typical price
+NAUTILUS.S17	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the lower Keltner channel
+NAUTILUS.S18	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the highest high of the last 20 candles (Donchian upper)
+NAUTILUS.S19	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the middle of the 20-candle range
+NAUTILUS.S20	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the lowest low of the last 20 candles (Donchian lower)
+NAUTILUS.S21	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the Ichimoku tenkan sen (conversion line)
+NAUTILUS.S22	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the Ichimoku kijun sen (base line)
+NAUTILUS.S23	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the Ichimoku senkou span A at the current candle: the cloud edge computed 26 candles ago
+NAUTILUS.S24	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the Ichimoku senkou span B at the current candle
+NAUTILUS.S25	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_BANDS_V1.yaml	the close of 26 candles ago: the price Ichimoku's chikou span (the current close drawn 26 
+NAUTILUS.S26	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	the share of the last moves that were up, 0 to 1 (0.5 = balanced); an RSI with a faster, e
+NAUTILUS.S27	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	where the close sits in the range of the last 14 candles, 0 (at the low) to 100 (at the hi
+NAUTILUS.S28	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	the same over 3 candles as a ratio of sums (Lane's original %D), not the average of the 3 
+NAUTILUS.S29	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	how far the typical price sits from its 20-candle mean, in units of 0.015 mean deviations 
+NAUTILUS.S30	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	net up moves over all moves, -100 to 100 (Chande's momentum oscillator with Wilder smoothi
+NAUTILUS.S31	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	the fast average less the slow average of the close, in USDT: above 0 the price is above i
+NAUTILUS.S32	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	the close's change over the last 9 steps, as a FRACTION (0.01 = 1 percent); Nautilus's per
+NAUTILUS.S33	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	the close against its 20-candle mean, as a FRACTION (0.01 = 1 percent above)
+NAUTILUS.S34	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	the share of the last 12 candles that closed up, in percent (the psychological line)
+NAUTILUS.S35	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_MOMENTUM_V1.yaml	how one-sided the last 14 moves were, 0 (balanced) to 1 (all one way): |Chande's CMO| / 10
+NAUTILUS.S36	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	how recent the 26-candle high is: 100 this candle, 0 twenty-five candles ago
+NAUTILUS.S37	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	how recent the 26-candle low is
+NAUTILUS.S38	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the aroon oscillator: plus when the high is more recent than the low
+NAUTILUS.S39	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the smoothed upward push of the highs, in USDT per candle (an EMA, not Wilder's smoothed s
+NAUTILUS.S40	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the smoothed downward push of the lows, in USDT per candle (an EMA, not Wilder's)
+NAUTILUS.S41	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	how straight the path of the last closes was: the net change over 9 steps against the path
+NAUTILUS.S42	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the vertical horizontal filter: the range of the closes over the path of the closes (trend
+NAUTILUS.S43	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the trend of the close in USDT per candle
+NAUTILUS.S44	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	how well a straight line fits the last 20 closes, 0 to 1
+NAUTILUS.S45	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	how far the fitted line sits ABOVE the close, in percent: the NEGATIVE of Chande's forecas
+NAUTILUS.S46	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the fast average is rising; the slow average may be falling
+NAUTILUS.S47	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_TREND_V1.yaml	the fast average is falling; the slow average may be rising
+NAUTILUS.S48	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	the usual size of a candle's move over the last 14, in USDT: a simple mean of the true ran
+NAUTILUS.S49	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	the share of recent volatility that came with up closes, 0 to 100 (Dorsey's relative volat
+NAUTILUS.S50	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	the 30-candle mean true range over the 10-candle one: above 1 the last 10 candles are calm
+NAUTILUS.S51	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	where the close sits against the Keltner channel, in half-widths: +1 at the upper band, -1
+NAUTILUS.S52	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	the volume of up candles less the volume of down candles over the last 1,440 candles (a da
+NAUTILUS.S53	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	a MACD of the volume signed by the typical price's direction, in coins: plus when volume h
+NAUTILUS.S54	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	buying less selling pressure of the candle (the close's place in its range, in units of th
+NAUTILUS.S55	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_VOLVOL_V1.yaml	the pressure of the last 1,440 candles summed (a day), not since the start
+NAUTILUS.S56	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	+1: the last 5-candle extreme was a high (an up leg: the candle that made the high sets +1
+NAUTILUS.S57	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	a new leg began at this candle
+NAUTILUS.S58	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	the last swing high, in USDT
+NAUTILUS.S59	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	the last swing low, in USDT
+NAUTILUS.S60	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	the size of the last leg (the last swing high less the last swing low), in USDT; below 0 w
+NAUTILUS.S61	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	the age of the current leg: candles since the swing it started from
+NAUTILUS.S62	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	how many candles ago the last swing high was
+NAUTILUS.S63	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_SWINGS_V1.yaml	how many candles ago the last swing low was
+NAUTILUS.S64	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the mean of the last 60 closes (a key level)
+NAUTILUS.S65	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the mean of the last 240 closes (a key level)
+NAUTILUS.S66	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the mean of the last 1440 closes (a key level)
+NAUTILUS.S67	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the upper Bollinger band of the typical price over 60 candles
+NAUTILUS.S68	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the 60-candle mean of the typical price
+NAUTILUS.S69	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the lower Bollinger band of the typical price over 60 candles
+NAUTILUS.S70	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the upper Bollinger band of the typical price over 240 candles
+NAUTILUS.S71	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the 240-candle mean of the typical price
+NAUTILUS.S72	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the lower Bollinger band of the typical price over 240 candles
+NAUTILUS.S73	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the upper Bollinger band of the typical price over 1440 candles
+NAUTILUS.S74	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the 1440-candle mean of the typical price
+NAUTILUS.S75	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the lower Bollinger band of the typical price over 1440 candles
+NAUTILUS.S76	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the highest high of the last 60 candles
+NAUTILUS.S77	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the middle of the 60-candle range
+NAUTILUS.S78	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the lowest low of the last 60 candles
+NAUTILUS.S79	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the highest high of the last 240 candles
+NAUTILUS.S80	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the middle of the 240-candle range
+NAUTILUS.S81	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the lowest low of the last 240 candles
+NAUTILUS.S82	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the highest high of the last 1440 candles
+NAUTILUS.S83	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the middle of the 1440-candle range
+NAUTILUS.S84	PRICE	1	CARD	team/RAWCHECK/notes/NAUTILUS/NAUTILUS_KEYLEVEL_V1.yaml	the lowest low of the last 1440 candles
+PCT24.c_0_1	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 0.1 percent edge of the base (the 14 or 30 whole days before D), per metri
+PCT24.c_1	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 1 percent edge of the base (the 14 or 30 whole days before D), per metric,
+PCT24.c_10	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 10 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_15	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 15 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_20	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 20 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_25	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 25 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_30	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 30 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_35	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 35 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_40	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 40 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_45	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 45 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_5	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 5 percent edge of the base (the 14 or 30 whole days before D), per metric,
+PCT24.c_50	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 50 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_55	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 55 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_60	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 60 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_65	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 65 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_70	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 70 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_75	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 75 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_80	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 80 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_85	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 85 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_90	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 90 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_95	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 95 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_99	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 99 percent edge of the base (the 14 or 30 whole days before D), per metric
+PCT24.c_99_9	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the size at the 99.9 percent edge of the base (the 14 or 30 whole days before D), per metr
+PCT24.empty	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the base count field empty of the percent table
+PCT24.min_count	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the base count field min_count of the percent table
+PCT24.n	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the base count field n of the percent table
+PCT24.n_empty	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the base count field n_empty of the percent table
+PCT24.n_none	UNKNOWN	0	UNKNOWN	team/LAB/code/lab/pct_rule_v2.py	the base count field n_none of the percent table
+PCTX.c_0_1	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 0.1 percent edge of an add-on value's base (14 or 30 whole days before D);
+PCTX.c_1	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 1 percent edge of an add-on value's base (14 or 30 whole days before D); C
+PCTX.c_10	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 10 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_15	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 15 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_20	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 20 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_25	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 25 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_30	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 30 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_35	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 35 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_40	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 40 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_45	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 45 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_5	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 5 percent edge of an add-on value's base (14 or 30 whole days before D); C
+PCTX.c_50	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 50 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_55	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 55 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_60	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 60 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_65	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 65 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_70	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 70 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_75	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 75 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_80	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 80 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_85	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 85 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_90	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 90 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_95	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 95 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_99	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 99 percent edge of an add-on value's base (14 or 30 whole days before D); 
+PCTX.c_99_9	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the size at the 99.9 percent edge of an add-on value's base (14 or 30 whole days before D)
+PCTX.empty	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the base count field empty of the add-on percent table
+PCTX.min_count	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the base count field min_count of the add-on percent table
+PCTX.n	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the base count field n of the add-on percent table
+PCTX.n_empty	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the base count field n_empty of the add-on percent table
+PCTX.n_none	UNKNOWN	0	UNKNOWN	NO_CARD (PCT-ADDON-A, B not landed)	the base count field n_none of the add-on percent table
+X1.BOOKX.S01	BOOK_BN	1	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K4_V1.yaml	the mid plus Stoikov's fitted adjustment for the top's state at u
+X1.BOOKX.S02	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K4_V1.yaml	the adjustment G* over the mid, the expected change of the mid in bps
+X1.BOOKX.S03	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K5_V1.yaml	the paper's order flow imbalance at the top over (u - 10 s, u]
+X1.BOOKX.S04	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K5_V1.yaml	S03 over the mean top depth (a side) of the same window's events
+X1.BOOKX.S05	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K5_V1.yaml	the paper's order flow imbalance at the top over (u - 60 s, u]
+X1.BOOKX.S06	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K5_V1.yaml	S05 over the mean top depth (a side) of the same window's events
+X1.BOOKX.S07	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K6_V1.yaml	the 10-level flow over (u - 10 s, u], depth-scaled, combined with the coin's fitted weight
+X1.BOOKX.S08	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K6_V1.yaml	the same over (u - 60 s, u]
+X1.BOOKX.S09	BOOK_BN	1	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K7_V1.yaml	best bid or ask price changes per second over (u - 5 s, u]
+X1.BOOKX.S10	BOOK_BN	1	GUESS	team/RAWCHECK/notes/BUILD/BOOKX/K7_V1.yaml	the same over (u - 30 s, u]
+X1.CALX.S01	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S01 without the expiry (rule 3)
+X1.CALX.S02	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S02 without the expiry
+X1.CALX.S03	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S03 without the expiry (rule 4)
+X1.CALX.S04	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S04 without the expiry
+X1.CALX.S05	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S05 without the expiry (rule 6)
+X1.CALX.S06	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S06 without the expiry (rule 5)
+X1.CALX.S07	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S07 on MACROCAL_V3 (rule 10)
+X1.CALX.S08	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S08 without the expiry (rule 7)
+X1.CALX.S09	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S09 without the expiry (rule 8)
+X1.CALX.S10	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S10 without the expiry (rule 9)
+X1.CALX.S11	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S11 without the expiry (rule 9)
+X1.CALX.S12	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S12 without the expiry (rule 9)
+X1.CALX.S13	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	Z1 S13 without the expiry (rule 9)
+X1.CALX.S14	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	minutes to the next Friday Deribit expiry, rounded up; 2,880 both when it is exactly 2 day
+X1.CALX.S15	CALENDAR	0	GUESS	team/RAWCHECK/notes/BUILD/CALX/T3_V1.yaml	minutes since the last Friday Deribit expiry, rounded down, 2,880 when none within 2 days
+X1.COST.S01	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K1_V1.yaml	half the quoted spread at the 5 s point u, from the bookTicker row in force
+X1.COST.S02	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K1_V1.yaml	the median of S01 at this UTC hour's minute ends over the 14 days before D
+X1.COST.S03	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K1_V1.yaml	the nearest-rank 90th percentile of the same values
+X1.COST.S04	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	cost of a 10,000 USDT market buy walking the ask levels in force
+X1.COST.S05	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	cost of a market sell with 10,000 USDT of proceeds walking the bid levels in force
+X1.COST.S06	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	median of the valued S04 at this UTC hour over the 14 days before D
+X1.COST.S07	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	nearest-rank 90th percentile of the same
+X1.COST.S08	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	median of the valued S05 at this UTC hour over the 14 days before D
+X1.COST.S09	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	nearest-rank 90th percentile of the same
+X1.COST.S10	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	the share of the hour cell's minute ends valued or EXHAUSTED (NO_LEVELS, BAD_INPUT, BOOK_H
+X1.COST.S11	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K2_V1.yaml	the same for the bids
+X1.COST.S12	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	cost of a 50,000 USDT market buy walking the ask levels in force
+X1.COST.S13	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	cost of a market sell with 50,000 USDT of proceeds walking the bid levels in force
+X1.COST.S14	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	median of the valued S12 at this UTC hour over the 14 days before D
+X1.COST.S15	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	nearest-rank 90th percentile of the same
+X1.COST.S16	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	median of the valued S13 at this UTC hour over the 14 days before D
+X1.COST.S17	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	nearest-rank 90th percentile of the same
+X1.COST.S18	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	the share of the hour cell's minute ends valued or EXHAUSTED (NO_LEVELS, BAD_INPUT, BOOK_H
+X1.COST.S19	BOOK_BN	0	GUESS	team/RAWCHECK/notes/BUILD/COST/K3_V1.yaml	the same for the bids
+X1.FLOWX.S01	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F1_V1.yaml	the net taker dollars of the aggTrades at or above F_coin(D) with T in (u - 300 s, u], rec
+X1.FLOWX.S02	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F2_V1.yaml	the net taker dollars of the aggTrades under F_coin(D) with T in (u - 300 s, u], received 
+X1.FLOWX.S03	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F3_V1.yaml	F1 at the 5 s point u less F1 at u - 300 s
+X1.FLOWX.S04	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F4_V1.yaml	(coins with F1 > 0 less coins with F1 < 0) over the coins with an F1 value at u, MARKET
+X1.FLOWX.S05	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F5_V1.yaml	(coins with F3 > 0 less coins with F3 < 0) over the coins with an F3 value at u, MARKET
+X1.FLOWX.S06	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F6_V1.yaml	the net taker dollars of the aggTrades at or above F_coin(D) among the coin's last 1,000 a
+X1.FLOWX.S07	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F7_V1.yaml	(coins with F6 > 0 less coins with F6 < 0) over the coins with an F6 value at u, MARKET
+X1.FLOWX.S08	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F8_V1.yaml	the k-th smallest F6 of the n coins with a value at u, k = ceil(n / 10), MARKET
+X1.FLOWX.S09	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F9_V1.yaml	the coins with F6 < 0 over the coins with an F6 value at u, MARKET
+X1.FLOWX.S10	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F10_V1.yaml	the number of aggTrades with T in (u - 60 s, u], received by u, at the 5 s point u
+X1.FLOWX.S11	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F11_V1.yaml	the net taker dollars (bought minus sold) of the coin's trades with T in (00:00:00 of D, u
+X1.FLOWX.S12	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F12_V1.yaml	the one-sided share of the volume of the last 50 closed buckets of V_D = D-1's volume / 50
+X1.FLOWX.S13	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F13_V1.yaml	(taker bought - taker sold dollars) / their sum over [b, b + 10 s) of the last boundary b 
+X1.FLOWX.S14	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F14_V1.yaml	the slope with intercept of the mid's move (bps) on the net taker dollars ($M) over the 60
+X1.FLOWX.S15	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F15_V1.yaml	the mean over the 60 bars of 60 s ending at the 5 s point u with volume of |the mid's move
+X1.FLOWX.S16	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/FLOWX/F16_V1.yaml	2 sqrt(-cov) of consecutive price changes (bps) of the coin's last 1,000 trades received b
+X1.HLFLOWX.S01	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF1_V3.yaml	dollars bought by takers in the 5 s known at u
+X1.HLFLOWX.S02	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF1_V3.yaml	dollars sold by takers in the 5 s known at u
+X1.HLFLOWX.S03	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF2_V3.yaml	net taker dollars from accounts whose position was under 10 thousand dollars, last 60 s
+X1.HLFLOWX.S04	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF2_V3.yaml	the same for positions of 10 to 100 thousand dollars
+X1.HLFLOWX.S05	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF2_V3.yaml	the same for positions of 100 thousand to 1 million dollars
+X1.HLFLOWX.S06	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF2_V3.yaml	the same for positions over 1 million dollars
+X1.HLFLOWX.S07	HL_FILLS|HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF3_V4.yaml	dollars of long positions opened in the last 60 s
+X1.HLFLOWX.S08	HL_FILLS|HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF3_V4.yaml	dollars of short positions opened in the last 60 s
+X1.HLFLOWX.S09	HL_FILLS|HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF3_V4.yaml	dollars of long positions closed in the last 60 s (liquidations included)
+X1.HLFLOWX.S10	HL_FILLS|HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF3_V4.yaml	dollars of short positions closed in the last 60 s (liquidations included)
+X1.HLFLOWX.S11	HL_FILLS|HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF3_V4.yaml	the share of opened dollars among all opened and closed dollars in the last 60 s
+X1.HLFLOWX.S12	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF4_V3.yaml	single trades of at least 1 million dollars in the last 60 s
+X1.HLFLOWX.S13	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLFLOWX/HF4_V3.yaml	different accounts that traded the coin in the last 60 s
+X1.HLLIQX.S03	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL2_V3.yaml	liquidation trades (distinct trade ids of liquidated-account rows) in the 5 s known at u
+X1.HLLIQX.S04	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL2_V3.yaml	different accounts force-closed in the 5 s known at u
+X1.HLLIQX.S05	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL3_V3.yaml	the largest single liquidation trade (one trade id, one piece) in dollars in the 60 s know
+X1.HLLIQX.S06	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL3_V3.yaml	share of the minute's liquidated dollars closed by the backstop
+X1.HLLIQX.S07	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL4_V1.yaml	Liquidation concentration by account and side; For each side over block times (u-61s,u-1s]
+X1.HLLIQX.S08	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL4_V1.yaml	Liquidation concentration by account and side; For each side over block times (u-61s,u-1s]
+X1.HLLIQX.S09	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL4_V1.yaml	Liquidation concentration by account and side; For each side over block times (u-61s,u-1s]
+X1.HLLIQX.S10	HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLLIQX/HL4_V1.yaml	Liquidation concentration by account and side; For each side over block times (u-61s,u-1s]
+X1.HLPOSM.S01	HL_POS|HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSM/HM1_V3.yaml	coins held long by all accounts at u, rebuilt from the snapshot and the fills since
+X1.HLPOSM.S02	HL_POS|HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSM/HM1_V3.yaml	coins held short by all accounts at u (positive)
+X1.HLPOSM.S03	HL_POS|HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSM/HM1_V3.yaml	the long share, by size, of the 100 largest rebuilt positions at u
+X1.HLPOSM.S04	HL_POS|HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSM/HM1_V3.yaml	net coins of rebuilt positions worth at least 1 million dollars at u
+X1.HLPOSM.S09	HL_POS|HL_FILLS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSM/HM4_V1.yaml	Fixed prior large-account cohort net position change; At u-60s freeze accounts whose absol
+X1.HLPOSX.S01	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO1_V3.yaml	coins held long by all accounts at the snapshot in force
+X1.HLPOSX.S02	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO1_V3.yaml	coins held short by all accounts at the snapshot in force (positive number)
+X1.HLPOSX.S03	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO1_V3.yaml	S01 times the last Hyperliquid price at the snapshot
+X1.HLPOSX.S04	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO1_V3.yaml	S02 times the last Hyperliquid price at the snapshot
+X1.HLPOSX.S05	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO2_V3.yaml	accounts holding a long at the snapshot in force
+X1.HLPOSX.S06	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO2_V3.yaml	accounts holding a short at the snapshot in force
+X1.HLPOSX.S07	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO3_V3.yaml	the long share, by size, of the 100 largest positions at the snapshot in force
+X1.HLPOSX.S08	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO3_V3.yaml	net coins held by positions worth at least 1 million dollars at the snapshot in force
+X1.HLPOSX.S09	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO3_V3.yaml	S08 now minus S08 at the previous hourly snapshot
+X1.HLPOSX.S10	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO4_V3.yaml	the share of all open position size held by the 10 largest accounts at the snapshot in for
+X1.HLPOSX.S11	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO4_V3.yaml	the hourly funding rate Hyperliquid applied at the snapshot in force
+X1.HLPOSX.S12	HL_POS	0	GUESS	team/RAWCHECK/notes/BUILD/HLPOSX/HO4_V3.yaml	dollars longs paid (positive) or received (negative) at the snapshot in force
+X1.HLPX.S01	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/HLPX/HP1_V3.yaml	the last Hyperliquid trade price at or before u, at most 60 s old
+X1.HLPX.S02	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/HLPX/HP1_V3.yaml	the size-weighted average trade price of the 5 s known at u
+X1.HLPX.S03	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/HLPX/HP1_V3.yaml	the number of trades in the 5 s known at u, each trade once
+X1.HLPX.S04	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/HLPX/HP1_V3.yaml	the dollars traded in the 5 s known at u
+X1.LIQX.S01	LIQ_BN	0	GUESS	team/RAWCHECK/notes/BUILD/LIQX/L2_V1.yaml	the share of the 60 seconds of (u - 60 s, u] holding at least one Binance liquidation row 
+X1.LIQX.S02	LIQ_BN	0	GUESS	team/RAWCHECK/notes/BUILD/LIQX/L2_V1.yaml	1 when each of the 5 floor seconds of [u - 8 s, u - 3 s) holds a Binance liquidation row o
+X1.LIQX.S03	LIQ_BN|OI_BN	0	GUESS	team/RAWCHECK/notes/BUILD/LIQX/L3_V1.yaml	long liquidation dollars of the last 60 s over OI x mark at u - 60 s, USDT contract, x 10,
+X1.LIQX.S04	LIQ_BN|OI_BN	0	GUESS	team/RAWCHECK/notes/BUILD/LIQX/L3_V1.yaml	the same for the short side
+X1.LIQX.S05	LIQ_BN	0	GUESS	team/RAWCHECK/notes/BUILD/LIQX/L4_V1.yaml	the minutes from the end of the market's last long wave minute (A1 S12 >= 100,000) to u
+X1.LIQX.S06	LIQ_BN	0	GUESS	team/RAWCHECK/notes/BUILD/LIQX/L4_V1.yaml	the same for the short side (A1 S13)
+X1.POSX.S01	FUNDING_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P1_V1.yaml	Binance funding rate in force, the forecast for the next settle, per hour
+X1.POSX.S02	FUNDING_HL	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P2_V1.yaml	Hyperliquid funding rate in force on the coin's perpetual at the 5 s point, per hour, as g
+X1.POSX.S03	FUNDING_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P3_V1.yaml	robust z of the coin's Binance funding per hour against its 720 clock hours of D-30 to D-1
+X1.POSX.S04	FUNDING_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P4_V1.yaml	the coin's average rank of Binance funding per hour among the roster coins valued at u, sc
+X1.POSX.S05	FUNDING_BN|FUNDING_HL	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P5_V1.yaml	Binance funding per hour less Hyperliquid funding per hour, same coin, rates in force at u
+X1.POSX.S06	MARK_BN	1	GUESS	team/RAWCHECK/notes/BUILD/POSX/P7_V1.yaml	the book mid against Binance's spot index at each 5 s point, bp of the index
+X1.POSX.S07	MARK_BN	1	GUESS	team/RAWCHECK/notes/BUILD/POSX/P8_V1.yaml	the median over the coins of the 60 s change of P7, bp per minute
+X1.POSX.S08	MARK_BN	1	GUESS	team/RAWCHECK/notes/BUILD/POSX/P8_V1.yaml	the median over the coins of the 300 s change of P7 put on one minute, bp per minute
+X1.POSX.S09	OI_BN|TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P9_V1.yaml	open interest change over the taker coins traded, last 5 minutes
+X1.POSX.S10	OI_BN|TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P9_V1.yaml	open interest change over the taker coins traded, last 60 minutes
+X1.POSX.S11	OI_BN|PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/POSX/P10_V1.yaml	the practitioners' word for the last hour from the signs of the Binance open interest chan
+X1.POSX.S12	OI_BN	1	GUESS	team/RAWCHECK/notes/BUILD/POSX/P11_V1.yaml	Binance open interest in dollars at the close over its median at the clock hours of the 30
+X1.POSX.S13	TOPTRADER_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P12_V1.yaml	the one-hour change of Binance's top-trader long/short position ratio, rows known 10 minut
+X1.POSX.S14	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/POSX/P13_V1.yaml	Binance's taker buy over sell volume of its latest 5 minute metrics row known by u
+X1.RETX.S01	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R1_V1.yaml	Dimson's beta of the coin's Binance 60 s mid returns on BTC's, same minute and 2 lags, ove
+X1.RETX.S02	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R1_V1.yaml	the standard deviation of the fit's residuals (n - 4 degrees of freedom)
+X1.RETX.S03	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R2_V1.yaml	the coin's 15 minute Binance mid return less its BTC beta times BTC's 15 minute return
+X1.RETX.S04	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R2_V1.yaml	the same over 60 minutes
+X1.RETX.S05	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R3_V1.yaml	the bounded share of the coin's 60 s move that beta times BTC's same 60 s move explains, i
+X1.RETX.S06	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R3_V1.yaml	the median of the coins' S05 at u (MARKET)
+X1.RETX.S07	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R3_V1.yaml	the coins with a valued S05 at u (MARKET)
+X1.RETX.S08	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R4_V1.yaml	minus R2's S03 when the 15 minute taker share is past 0.3 in the same direction, else empt
+X1.RETX.S09	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/RETX/R4_V1.yaml	the net over the gross taker dollars of the last 15 minutes
+X1.TIMEX.S01	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/TIMEX/T4_V1.yaml	minutes since the coin's last Lee-Mykland jump flag within the last 7 days (0 when it is t
+X1.TIMEX.S02	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/TIMEX/T4_V1.yaml	the sign of that jump
+X1.TIMEX.S03	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/TIMEX/T5_V1.yaml	epoch_seconds(u) mod 900 at the 5 s point u (MARKET)
+X1.VOLX.S01	TRADES_BN	0	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V1_V1.yaml	the slot median of the coin's (MARKET's) taker dollars over its overall median, 28 days be
+X1.VOLX.S02	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V1_V1.yaml	the slot median of the coin's absolute 1-minute mid log return over its overall median, 28
+X1.VOLX.S03	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V2_V1.yaml	the sum of the 20 squared 15 s mid log returns of the 5 minutes ending at u
+X1.VOLX.S04	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V2_V1.yaml	the sum of the 20 fourth powers of the same returns (V3's quarticity)
+X1.VOLX.S05	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V3_V1.yaml	Corsi's HAR forecast, made at H0, of the realised variance of the clock hour [H0, H0 + 1 h
+X1.VOLX.S06	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V3_V1.yaml	the same with the HARQ term (the last hour's weight falls as its quarticity rises)
+X1.VOLX.S07	DVOL	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V4_V1.yaml	the close of Deribit's BTC DVOL hourly candle usable at u
+X1.VOLX.S08	DVOL	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V5_V1.yaml	the mid-rank share of the 90-day hourly DVOL closes below the close in force
+X1.VOLX.S09	DVOL	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V6_V1.yaml	DVOL in force (S07) minus BTC's 30-day realised volatility (S10)
+X1.VOLX.S10	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V6_V1.yaml	BTC's realised volatility of the 43,200 one-minute mid log returns of the last 30 days, an
+X1.VOLX.S11	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V7_V1.yaml	100 x sqrt(60 x the mean Parkinson variance of the valued one-minute trade candles of the 
+X1.VOLX.S12	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V8_V1.yaml	100 x sqrt(60 x the mean Garman-Klass variance of the valued one-minute trade candles of t
+X1.VOLX.S13	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V9_V1.yaml	100 x sqrt(60 x the mean Rogers-Satchell variance of the valued one-minute trade candles o
+X1.VOLX.S14	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V10_V1.yaml	the bipower variation of the 240 15 s mid log returns of the hour ending at u
+X1.VOLX.S15	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V10_V1.yaml	max(0, 1 - BV / RV) of the same hour
+X1.VOLX.S16	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V11_V1.yaml	the deseasonalised 1-minute return at u over the local bipower spread of the 723 minutes b
+X1.VOLX.S17	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V11_V1.yaml	the sign of S16 when the Lee-Mykland statistic passes the 1 percent Gumbel level for n = 1
+X1.VOLX.S18	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V12_V1.yaml	the mid rank of C7 S07 at u among its values of the 30 days before D
+X1.VOLX.S19	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V12_V1.yaml	the mid rank of the coin's C9 S01 at u among its values of the 30 days before D
+X1.VOLX.S20	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V12_V1.yaml	the same of C9 S08
+X1.VOLX.S21	PRICE	1	GUESS	team/RAWCHECK/notes/BUILD/VOLX/V12_V1.yaml	the same of C9 S15
+Y3.S01	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many fires came in the minute before this one
+Y3.S02	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many fires of its own side came in the minute before
+Y3.S03	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many fires of the other side came in the minute before
+Y3.S04	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many other coins fired in the 5 minutes before
+Y3.S05	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	whether the list is crowding its own fades of one side
+Y3.S06	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how busy the day was before this fire
+Y3.S07	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	the how-many-th fire of this coin today
+Y3.S08	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	where the fire sits in its minute
+Y3.S09	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many fires led it in its minute
+Y3.S10	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how late in its minute's wave the fire came
+Y3.S11	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	whether this fire opened its minute
+Y3.S12	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many fires the last minute held
+Y3.S13	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many coins fired in the last minute
+Y3.S14	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how spread the last minute's fires were
+Y3.S15	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	who led the last minute
+Y3.S16	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	when in the last minute the first fire came
+Y3.S17	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many coins the shares are over
+Y3.S18	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how much of the market fired at once (a block)
+Y3.S19	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how much of the market followed within 5 minutes (a rotation)
+Y3.S20	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many coins fired up in the last minute
+Y3.S21	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many coins fired down in the last minute (read by CHAIN_forced_LONG_fade)
+Y3.S22	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	whether the coin fired again within the hour (L43)
+Y3.S22.present_off	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	present_off copy of Y3.S22: name (S01 to S26, S22 to S26 with .present_off), coin (the fir
+Y3.S23	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	whether the coin fired within 45 minutes of a previous alarm (W7)
+Y3.S23.present_off	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	present_off copy of Y3.S23: name (S01 to S26, S22 to S26 with .present_off), coin (the fir
+Y3.S24	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	how many coins fired in the half hour up to this one (L45)
+Y3.S24.present_off	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	present_off copy of Y3.S24: name (S01 to S26, S22 to S26 with .present_off), coin (the fir
+Y3.S25	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	many fires in the last 30 minutes (L50)
+Y3.S25.present_off	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	present_off copy of Y3.S25: name (S01 to S26, S22 to S26 with .present_off), coin (the fir
+Y3.S26	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	0 = the first fire after a quiet hour (L51)
+Y3.S26.present_off	UNKNOWN	0	UNKNOWN	team/RAWCHECK/notes/OUR_RULE/OUR_RULE_Y3_V1.yaml	present_off copy of Y3.S26: name (S01 to S26, S22 to S26 with .present_off), coin (the fir
+Z1.S01	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	minutes until the next calendar row of any kind but funding (US data, FOMC, other BLS/BEA,
+Z1.S01.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S01: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S01.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S01: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S02	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	which kind(s) the next print is (e.g. CPI_AND_OTHER_MACRO, OPEX_DERIBIT); NONE when no row
+Z1.S02.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S02: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S02.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S02: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S03	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	minutes since the last calendar row of any kind but funding (0 in the minute of the print)
+Z1.S03.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S03: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S03.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S03: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S04	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	which kind(s) the last print was
+Z1.S04.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S04: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S04.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S04: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S05	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	PRE_FIVE / PRE_THIRTY before the next print, POST_FIFTEEN / POST_SIXTY after the last, NON
+Z1.S05.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S05: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S05.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S05: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S06	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	which of the two clocks found no print within 48 h
+Z1.S06.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S06: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S06.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S06: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S07	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	the calendar file does not cover this day (0 on every year day)
+Z1.S07.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S07: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S07.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S07: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S08	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	which kind the current window belongs to; NONE outside a window
+Z1.S08.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S08: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S08.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S08: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S09	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	how many calendar rows fall in the window around u (a CPI with its Real Earnings co-releas
+Z1.S09.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S09: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S09.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S09: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S10	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	a print is due within 30 min
+Z1.S10.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S10: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S10.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S10: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S11	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	a print is due within 5 min
+Z1.S11.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S11: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S11.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S11: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S12	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	a print came out in the last 15 min
+Z1.S12.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S12: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S12.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S12: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z1.S13	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	a print came out in the last 60 min
+Z1.S13.noother_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	noother_off copy of Z1.S13: name (S01 to S13 and the .noother_off, .ownday_off, .fire_seco
+Z1.S13.ownday_off	CALENDAR	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z1_V1.yaml	ownday_off copy of Z1.S13: name (S01 to S13 and the .noother_off, .ownday_off, .fire_secon
+Z2.S01	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	promised: crypto news rows of the last batch
+Z2.S01.lag30_off	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	lag30_off copy of Z2.S01: name (S01 to S05 and the .lag30_off twins), coin MARKET, as_of_u
+Z2.S02	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	the records of the last readable batch that GDELT itself tags as about bitcoin (crypto new
+Z2.S02.lag30_off	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	lag30_off copy of Z2.S02: name (S01 to S05 and the .lag30_off twins), coin MARKET, as_of_u
+Z2.S03	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	promised: the tone of crypto news
+Z2.S03.lag30_off	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	lag30_off copy of Z2.S03: name (S01 to S05 and the .lag30_off twins), coin MARKET, as_of_u
+Z2.S04	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	promised: a burst of crypto news
+Z2.S04.lag30_off	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	lag30_off copy of Z2.S04: name (S01 to S05 and the .lag30_off twins), coin MARKET, as_of_u
+Z2.S05	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	OK when S04 has a value, else the reason it is empty
+Z2.S05.lag30_off	NEWS	0	CARD	team/RAWCHECK/notes/MEANING/MEANING_Z2_V1.yaml	lag30_off copy of Z2.S05: name (S01 to S05 and the .lag30_off twins), coin MARKET, as_of_u
+Z3.S01	CALENDAR	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_Z3_V2.yaml	minutes until this coin's next Binance funding payment, by its own interval (8 h or 4 h)
+Z3.S01.clock_8h_off	CALENDAR	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_Z3_V2.yaml	clock_8h_off copy of Z3.S01: the 8 h clock its name meant is the year's twin S01.clock_8h_
+Z3.S02	CALENDAR	0	CARD	team/RAWCHECK/notes/BASIC/BASIC_Z3_V2.yaml	minutes until Hyperliquid's next hourly funding payment, the payment assumed at the whole 

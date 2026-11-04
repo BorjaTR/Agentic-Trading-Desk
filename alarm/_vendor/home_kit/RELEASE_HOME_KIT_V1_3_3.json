@@ -1,0 +1,25 @@
+{
+ "files": {
+  "ARCHITECTURE.md": "f3d4645e0f14c071",
+  "CHANGELOG.md": "635c84aa3ef99c71",
+  "DATA_DICTIONARY.tsv": "7443ab03b1de4baf",
+  "README.md": "c194104ab21c3fc5",
+  "REQUIREMENTS_PY311.txt": "a6e2e0dee3587ade",
+  "SCOPE.md": "c7cbd18aae55ba64",
+  "TOOL.json": "e2870cff80465848",
+  "TOOL_CARD.md": "f78348ecdfc93372",
+  "home_v1.py": "a779e4ca3158b9b4",
+  "isolation/sitecustomize.py": "4bd03302ac81bdff",
+  "path_scan_v1.py": "3251594f48cf61ea",
+  "python_env_v1.py": "50865483895815a3",
+  "setup_python_v1.sh": "91674420df9c23e2",
+  "test_home_kit_v1.py": "68ea9da9da02425f"
+ },
+ "home": "home_kit",
+ "n_files": 14,
+ "name": "HOME_KIT_V1_3_3",
+ "patches_sha16": null,
+ "plan_sha16": null,
+ "utc": "20261031T155513Z",
+ "vendor_sha16": null
+}

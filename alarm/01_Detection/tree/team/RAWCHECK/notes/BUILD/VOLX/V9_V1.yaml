@@ -1,0 +1,161 @@
+# V9_V1.yaml: VOLX Rogers-Satchell range volatility (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8 section 5
+# rule 2; ADDON_ARCHITECTURE_V4 edit 3 0591d181). S13 by PRODUCER_VOLX_V1.yaml. The bars, window and floors are V7's. Examples: verify_volx_examples_v1.py V7.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): F1 (the first year day: FEW_BARS through 00:53, valued from 00:54), F2
+# (one NO_HISTORY rule), F3 (roll_points: a flat hour after a spike is exactly 0; U5, M6); U1's stepped prices (V9 F1), N4 (the TA-Lib line report only: TA-Lib is not installed), A1 to A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): E7 as a stepped rise (each bar opens at the previous close),
+# so M2 is caught; X7 Binance, X11.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+kind: build_metric
+id: V9
+producer: VOLX
+item: 'Rogers-Satchell range volatility'
+tier: BUILD
+name: the coin's Rogers-Satchell volatility over the last 60 one-minute Binance USDT-M trade candles (each candle's open = the previous minute's close), in percent over the hour, not annualised
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  V7's hour of one-minute ranges, read so that a steady drift inside the minutes does not count as volatility (Rogers and
+  Satchell): a coin trending up smoothly reads lower here than in V7 or V8. In percent over the hour.
+example: >-
+  V7's toy hour (30 bars A, 30 bars B): per-bar variances 0.0004000000000000018 and 9.999999999999785e-05, S13 = 100 x sqrt(60 x
+  their mean) = 12.247448713915887 percent over the hour.
+formula: >-
+  V7's bar (O = C13 S01 at m - 60 s, H = max(C13 S02 at m, O), L = min(C13 S03 at m, O), C = C13 S01 at m; valued when the four
+  inputs are). With u' = ln(H / O), d' = ln(L / O), c' = ln(C / O): s(m) = u' (u' - c') + d' (d' - c') (0 or more: u' >= max(0, c')
+  and d' <= min(0, c') because the bar's range holds O and C). At u: the 60 bars m = u - 59 min to u, n valued; with n >= 54 S13 =
+  100 x sqrt(60 x mean of the valued s(m)), flag SHORT_WINDOW when n < 60; n < 54 empty FEW_BARS. float64, not rounded, not
+  annualised.
+source:
+  kind: paper
+  ref: >-
+    Rogers and Satchell 1991, Annals of Applied Probability 1(4) 504-512 (the drift-free estimator u(u - c) + d(d - c));
+    RESEARCH_TOOLS_V1 aad3cc38 row V4 and section 5.4 (bar A 4e-4, bar B 1e-4; TA-Lib 0.8.2 BSD-2 ROGERSSATCHELL floors a negative
+    sum to 0, its exposure in the Python wrapper not confirmed: a reference only, in the meaning check).
+inputs:
+  - kind: year
+    ref: C13 S01 (close), S02 (high), S03 (low)
+    card: MEANING_C13_V4 fe5df65ba7680fc8 (CARD_C13_V4 69ff088d rules 4 to 6)
+    verdict: LIMITS
+    rule_in_force: B's rows at the minute ends as written (trade prices of the 60 s ending at m, received by m)
+    stale_rule: an empty row (any reason) makes its bar not valued; never filled
+    days: "D and D-1 (B holds D-1, as V7; no CARRY)"
+overlaps:
+  - setting: VOLX S11
+    kind: other_metric
+    why: V7's Parkinson and V8's Garman-Klass on the same bars; S13 is the drift-free one. The meaning check compares them.
+per_coin: >-
+  As V7: C13's high, low and close are TRADE prices (CARD_C13_V4 rule 4) with the bid-ask bounce; S13 overstates on wide-spread and
+  coarse-step coins. Without the open in the bar's range a gap minute gives a negative term (E5): the extension keeps every bar at 0
+  or more. A no-trade minute gives 0.
+time: As V7 (D-1 from B for the windows ending up to 00:59; the first year day FEW_BARS through 00:53, valued from 00:54).
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S13
+      label: rogers_satchell_vol_60m_pct
+      units: percent over the 60 minutes (not annualised)
+      value_kind: float
+      decimals: none
+      means: 100 x sqrt(60 x the mean Rogers-Satchell variance of the valued one-minute trade candles of the last hour)
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the latest known_at among the C13 rows read (at or before u); an empty row known_at = u; so known_at <= as_of on every row
+  empty_reasons:
+    - reason: FEW_BARS
+      when: fewer than 54 of the 60 bars valued
+    - reason: NO_HISTORY
+      when: "D-1's file of B is missing and the window reaches D-1 (u up to 00:59 of a day after 10 Sep 2025); on 10 Sep 2025, the first year day, those windows are FEW_BARS"
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_HISTORY, FEW_BARS
+  stale_rule: never stale
+  max_staleness_s: 60
+  window_days: 1
+  no_history: "as V7: on 10 Sep 2025 FEW_BARS through 00:53 (the 00:00 bar has no open), valued from 00:54"
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: SHORT_WINDOW
+      when: 54 to 59 of the 60 bars valued
+edge_cases:
+  - case: E1 the toy window
+    input: "V7's 30 bars A and 30 bars B"
+    answer: 's(A) 0.0004000000000000018, s(B) 9.999999999999785e-05; S13 12.247448713915887'
+  - case: E2 a short window
+    input: '30 bars A, 25 bars B, 5 not valued'
+    answer: 'S13 12.577035349470009, flag SHORT_WINDOW'
+  - case: E3 too short
+    input: '53 bars valued'
+    answer: S13 empty FEW_BARS
+  - case: E4 a flat hour
+    input: 'every bar O = H = L = C'
+    answer: 'S13 = 0'
+  - case: E5 the gap-down bar (V7 E5) in a flat hour
+    input: 'O 100, high 99.1, low 99, close 99; 59 flat bars'
+    answer: 's = 0.0 (the trades alone would give -9.127456254483283e-06, below 0); S13 = 0'
+  - case: E6 all bars A
+    input: '60 bars A'
+    answer: 'S13 15.491933384829704'
+  - case: E7 a steady drift
+    input: 'every bar opens at the previous close C: low = C, high = close = C x 1.001 (a steady stepped rise), 60 bars'
+    answer: "u' = c' = ln(1.001), d' = 0: s = 0 and S13 = 0; V7's S11 = 0.4649602671923263; the c' terms dropped give 0.7742096289121728"
+unit_tests:
+  - test: U1 (E1, E2, E3, E6)
+    planted: "V7's U1 rows (each bar stepped from the previous close, as V7's U1 says: the expected numbers need it)"
+    expect: 'S13 12.247448713915887; 12.577035349470009 SHORT_WINDOW; FEW_BARS; 15.491933384829704 within 1e-9 relative'
+  - test: U2 (E4, E5, E7)
+    planted: "V7's U2 rows; an hour of E7 bars"
+    expect: 'S13 0; 0; 0 (and V7 S11 above 0 on E7)'
+  - test: U3 the stamps and the day start
+    planted: "V7's U3 rows"
+    expect: "as V7's U3 and U4"
+  - test: U5 a flat hour after a spike hour
+    planted: '60 bars A then 60 flat bars (O = H = L = C) for one coin'
+    expect: 'S13 exactly 0 at the end of the flat hour (sliding sums; a running sum leaves about 2.2e-7)'
+mutants:
+  - mutant: M1 the range not extended to the open
+    caught_by: 'U2 (E5 gives a negative sum: S13 not a number)'
+  - mutant: M2 the c' terms dropped (u'^2 + d'^2)
+    caught_by: 'U2 (E7 gives 0.7742096289121728, not 0)'
+  - mutant: M3 the valued sum not scaled to 60
+    caught_by: 'U1 (E2 gives 12.04159457879229)'
+  - mutant: M4 log10 in place of ln
+    caught_by: 'U1 (E1 gives 5.318999393846747)'
+  - mutant: M6 running sums (a cumulative sum differenced, or bottleneck move_sum)
+    caught_by: 'U5 (a tiny value, about 2.2e-07 for S11 in TREE''s cloud measure, not 0)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 1000PEPEUSDT and a thin coin (as V7), u = 00:10, 12:00, 23:59
+      why: the window from D-1, a plain hour, the day's end
+    - point: 2025-09-24, DASHUSDT, u = 10:41
+      why: FEW_BARS (C13 empty at 33 of 60 minutes)
+  pass: >-
+    The tester recomputes S13, its flag and reason from this card's words on B's C13 rows (rawcheck/check_volx.py, never the
+    producer's code): floats within 1e-9 relative, words equal. In VOLX's one small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "S13 >= 0 at every valued coin-minute of 8 Mar 2026"
+    - "the bounce, as V7: the median of (S13 / 100)^2 over the clock hour's mid variance within 0.5 to 2.0 for BTC and ETH on 8 Mar 2026"
+  report_only:
+    - S13 over S11 per coin (how much drift S11 counts)
+    - "TA-Lib's ROGERSSATCHELL against s(m) on our extended bars, once TA-Lib is installed (not installed today, ADDON_ARCHITECTURE_V4 section 1)"
+conclude:
+  may:
+    - how wide the coin's one-minute trade ranges were over the last hour without their steady drift, as a volatility in percent over the hour
+  never:
+    - "Hyperliquid's ranges (Binance trade candles, X7)"
+    - "a mid volatility: C13's high, low and close are trade prices with the bid-ask bounce (ADDON_ARCHITECTURE_V4 section 11)"
+    - S13 across coins without their price step
+    - an annualised volatility
+    - "a candle open of the exchange: the open is the previous minute's close"
+readers: none yet (planned with V7, V8 against V2)
+implementation:
+  how: "V7's grids; the per-bar s as array operations; roll_points for the 60-minute sum and count (shared with V7, V8; sliding windows, never running sums). PHASES: none (B only)."
+  kernel: addon_grid_v2.roll_points
+  memory_mb: 50
+  seconds_share: 0.2
+data_checks: none

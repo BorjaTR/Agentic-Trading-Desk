@@ -1,0 +1,208 @@
+# OUR_RULE_C9_V1.yaml: the card of C9's OUR RULES (the width dials, the touches and the market dials), EDITION 2 (EDGE2, 2026-10-18; edition 1 66c345c9 kept as a twin; edition 2 = BED's
+# review 16:18:17Z nits 1 to 3: the meaning tool's editions named, S24 >= S27 by construction, the empty reason not compared; OR3 of
+# OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86). Made as BASIC_C9_V1 09f7847c (the basic settings of the same group, landed); ONE SOURCE OF
+# TRUTH; rawcheck/meaning_register.py edition 5 checks it. Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65
+# (these 15 our_rule rows NOT_CHECKED before this card). The smart check (section 1): inputs cited, planted tests and mutants first, ONE small
+# job (J15995: the computation at 5 named moments of 2 days; the meaning on the year's own rows of 24 Sep 2025), readers to TREE's RR1.
+# Pass lines: hb/EDGE2.txt 2026-10-18T16:00Z, posted before J15995 ran; its results 16:0xZ.
+
+group: C9
+name: range register, our rules (the width in market dials, the edge touches, the market's median dials and tight share)
+summary: >-
+  For each roster coin at a minute end e over the last W minutes (W = 60, 120, 240; the window of BASIC_C9_V1): the width in dials, the coin's
+  width pct over the DIAL, the median 120-minute width pct of the roster's coins at e (S02, S09, S16); the touches, the runs of consecutive
+  minutes whose high reaches the top tenth of the window's width (S04, S11, S18) or whose low reaches its bottom tenth (S05, S12, S19); and for
+  the market the median of the coins' width dials (S23, S26, S29) and the share of coins whose width dials is under 1 (S24, S27, S30).
+read_as: >-
+  The dial is the median coin's 2-hour width NOW, a cross-section at e, not the market's usual 2 hours over time. So the market dials are
+  bounded by construction: S26 (the median of the 120-minute width dials) is 1 at every minute and S27 (the share under it) 0.47 to 0.50; S23
+  is at most 1 and S30 at most about 0.5 (a 60-minute width is under, a 240-minute one over the coin's own 120-minute width), S29 at least 1
+  (24 Sep 2025: S26 1 at 1,440 of 1,440 minutes; S23 max 0.993451; S29 min 1.000000; J15995 c9fire). A coin's width dials compares it with
+  the median coin: BTC, calmer than the median coin, has S16 under 1 at 95.28% of 24 Sep's minutes, so the card's reading 'under 1: chop
+  territory' says chop for BTC nearly always. The touches count at least 1 by construction (the edge minute itself); both edges touched twice
+  or more at 26.83% (60 min) to 44.76% (240 min) of coin-minutes, not a rare 'range the market respects'. Every value equals our recompute at
+  the named moments (RULE_C9_STAMPS_V1, J15995).
+
+conclude:
+  may:
+    - "how wide a coin's last 60, 120, 240 minutes were against the median roster coin's 2-hour width at that minute (S02, S09, S16: 2 = twice the median coin's 2-hour width; RULE_C9_STAMPS_V1, J15995)"
+    - "how many separate times the coin's minutes reached the top or bottom tenth of the window's width (S04, S05, S11, S12, S18, S19: 1 or more)"
+    - "where the median coin's 60 and 240-minute width sits against the median 2-hour width (S23 at most 1, S29 at least 1: 0.341971 to 0.993451 and 1.000000 to 3.908102 on 24 Sep 2025, J15995 c9fire), and the share of coins under it (S24, S30)"
+  never:
+    - "S26 or S27 as information: S26 is 1 and S27 the share under the median (0.470588 to 0.500000) at every minute, by construction (24 Sep 2025, J15995 c9fire)"
+    - "width dials under 1 as a calm market or as chop: the dial is the median coin now, not the market's usual; BTC's S16 is under 1 at 95.28% and its S02, S09 at 100% of 24 Sep 2025's minutes; every coin's S02 at 77.20% (J15995 c9fire)"
+    - "S23 or S29 against a threshold of 1 as if it could cross: S23 is at most 1 and S29 at least 1 by construction"
+    - "a touch count of 1 as an untested range: the edge minute is itself a touch (at least 1 at every coin-minute, J15995 c9fire)"
+    - "both edges touched twice or more as rare: 26.83%, 36.22%, 44.76% of coin-minutes at 60, 120, 240 minutes (24 Sep 2025, J15995 c9fire)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C9_V4.md 0475da4281e68c35 (rules 1 to 3, 6, 7, 9, 12, O2; edge cases N2, N3, N4, N7, E201, E201b, E203, E204, E206, E207, E210)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C9_V1.tsv b6aabe0d8ce8cfc1 (30 settings, 51 metrics)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml 870571c2386a8d41 (the widths S01, S08, S15: basic, LIMITS: SHORT_WINDOW) and team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01 close, S02 high, S03 low: raw, LIMITS); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65 (C9 S02, S04, S05, S09, S11, S12, S16, S18, S19, S23, S24, S26, S27, S29, S30 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C9_v5.py d8a46ee26caf5f20 (CARD_C9_V4 edition 4)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C9.parquet
+  year_output_columns: "name (S01 to S30 and S22 to S30 .coverage), coin (every roster coin; MARKET for S22 to S30), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 4 a decimal; 2 a count), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_candle.py ours(D, names, group='C9') (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures trades, through our raw C13 (MEANING_C13_V4) and C9's basic widths (BASIC_C9_V1)"
+  exchange_stream: "trades as Tardis records them, read by C13; C9 reads C13's minute rows, never a stream"
+  files: "the year's C13 output of D and D-1 (C13.parquet), the week's roster (the year roster root)"
+  columns: "C13 S01 close, S02 high, S03 low of each minute end, with value_kind, value_f64, value_txt"
+  fields:
+    dial: "the median (exact) of the 120-minute width pct over the roster coins with one at e; width dials = the coin's exact width pct / the dial, rounded once to 12 decimals; NO_DIAL when no coin has a 120-minute width or the dial is 0 [proof: CARD_C9_V4 rule 6, O2 A; RULE_C9_STAMPS_V1; planted R, N2, N7, E210 and 'the dial at every W' in tests/test_rule_c9.py]"
+    touches: "runs of consecutive window minutes (60 s apart; a skipped minute ends a run) whose high is at or above high - 0.10 x (high - low), or whose low is at or below low + 0.10 x (high - low) [proof: CARD_C9_V4 rule 7; planted N3, E203, E204, E206, E207]"
+    market: "the median of the coins' exact width dials, rounded once; the share of the coins with a width dials value whose width dials is under 1 (1 is not under) [proof: CARD_C9_V4 rule 12; planted E210]"
+  latency: "known_at = the latest known_at of the C13 rows read, and of the dial's coins for the width dials (CARD_C9_V4 rule 11)"
+  silence: "a coin is empty with C13's reason when C13's close at e is empty (24 Sep 2025: 105 coin-minutes, J15995 c9fire 'empty 105'); OPEN: rule_c9 compares values only, so an empty against an empty is a MATCH without its reason: C13's reason and NO_DIAL are not proven by J15995 (BED's review 16:18:17Z nit 3)"
+
+reading_rules:
+  - "the dial is the median coin's 120-minute width at e: a cross-section, so a coin's width dials says how it compares with the median coin now, not with the market's usual"
+  - "S23 is at most 1, S26 is 1, S29 is at least 1, S27 is the share under the median, by construction (24 Sep 2025, J15995 c9fire)"
+  - "a touch is a run of minutes in the band, each run counted once; the edge minute itself is one"
+  - "a window with C13 minutes missing reads the minutes it has (BASIC_C9_V1: SHORT_WINDOW); a skipped minute ends a touch run"
+
+values:
+  units: "S02, S09, S16, S23, S26, S29: a ratio (width pct over the dial); S24, S27, S30: a share 0 to 1; S04, S05, S11, S12, S18, S19: a count (1 or more)"
+  zero: "width dials 0: the coin had one price over W; a tight share of 0: no coin under 1"
+  empty: "NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (C13's), NO_DIAL (no dial or a dial of 0), ALL_COINS_EMPTY (market); value_kind 0. Never read empty as 0"
+  stale: "true when empty because a feed went quiet or thin (C13's TRADES_HOLE, THIN_FEED)"
+  flags: "SHORT_WINDOW:<coin>, DUPLICATE_ROW, NO_RATE_BASE, BAD_INPUT (CARD_C9_V4 rules 10, 13)"
+
+interpret:
+  do:
+    - "read width dials as a coin against the median coin of the same minute; for BTC read it as BTC's calm against the median coin"
+    - "read S23 against its own day (0.341971 to 0.993451 on 24 Sep 2025), never against 1"
+  dont:
+    - "read S26 or S27"
+    - "read a touch count of 1 as no test of the edge"
+
+biases:
+  - {what: "the dial is a cross-section of the roster now", direction: "width dials relative to the median coin, not to time", size: "BTC's S16 under 1 at 95.28% of 24 Sep 2025's minutes, S02 and S09 at 100%; every coin's S02 under 1 at 77.20%, S09 at 49.09%, S16 at 20.89%", proof: "J15995 c9fire"}
+  - {what: "a window's width against the 120-minute dial", direction: "60 minutes below, 240 above", size: "S23 at most 0.993451, S29 at least 1.000000, S30 at most 0.490196 (24 Sep 2025)", proof: "J15995 c9fire"}
+
+external_checks:
+  - {what: "the 15 settings recomputed exactly from our C13 S01 to S03 (D-1 too) for every roster coin and the market at 00:30 (windows into D-1), 04:00, 10:41 (24 Sep: DASH SHORT_WINDOW), 12:10, 22:06 of 8 Mar 2026 and 24 Sep 2025", where: "the year's C13 output (a recompute, our source)", status: "VERIFIED: RULE_C9_STAMPS_V1 a48e1c9e694aa874: 4,695 of 4,695 MATCH (515 of 515 each coin setting, 10 of 10 each market setting; J15995 log fc89a03761979a86, rule_c9 ed1 9a2f0a6da2279deb, tests 8bec40cf4770097b 17 of 17: 13 cases, 4 mutants)"}
+  - {what: "how often the rules fire on one day: the width dials cuts (under 1, 1 to 2, over 2), the market dials, the touches (1, 2, 3 or more; both edges twice or more), every coin and BTC", where: "the year's own C9 rows of 24 Sep 2025", status: "MEASURED: J15995 c9fire (meaning_rule_or3 ed1 305d0261924842f0, tests cab4b6f4339b0adf 7 of 7; c9fire unchanged in ed2 92699c335a68398a and ed3 48f953d9ef615135)"}
+  - {what: "an outside record of the rules", where: "none: the dial and the touches are our rules on our candles; their inputs are checked against Binance klines in BASIC_C9_V1 and MEANING_C13_V4", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "the 15 settings recomputed from our C13", run: "python3 -B -m rawcheck.rule_c9 --days <D,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (rule_c9.py 9a2f0a6da2279deb; reads basic_c9.c13_values)"}
+  - {what: "how often the rules fire on the year's own rows of one day", run: "python3 -B -m rawcheck.meaning_rule_or3 c9fire <D>", where: "team/RAWCHECK/code (meaning_rule_or3.py ed3 48f953d9ef615135; c9fire as in ed1 305d0261924842f0, which J15995 ran)"}
+
+used_by: "BTC's S16 by CHAIN_chop_SHORT_fade, CHAIN_trend_SHORT_ride_4, CHAIN_trend_LONG_fade, CHAIN_trend_LONG_ride; BTC's S18 by CHAIN_chop_SHORT_fade and CHAIN_chop_SHORT_ride_2; BTC's S19 by CHAIN_chop_SHORT_ride_2; S29 by CHAIN_chop_LONG_fade_3 (the chains' own cuts in the chain files, CARD_C9_V4 'Who reads it today'); nobody: every coin value but BTC's, BTC's S02, S04, S05, S09, S11, S12, and S23 to S27, S30. To TREE's RR1 (hb/EDGE2.txt 16:0xZ): BTC's S16 under 1 at 95.28%, S29 at least 1 by construction"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C9_V4.md 0475da4281e68c35
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml 870571c2386a8d41
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_C9_STAMPS_V1.tsv a48e1c9e694aa874 (J15995)"
+  JOBS: "15995 (tests, rule_c9 at 00:30, 04:00, 10:41, 12:10, 22:06 of 8 Mar 2026 and 24 Sep 2025, c9fire 24 Sep 2025; log fc89a03761979a86)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T16:00Z, posted before J15995 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): a rename only where the formula differs from the standard one its name calls up; none here"
+
+settings:
+  - {id: C9.S02, name: "60 min width in market dials (the coin's width pct over the median coin's 120 min width pct at e)", layer: our_rule, side: none, window: "60 min and the 120 min dial", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "C9 S01 (exact) / the median of the roster coins' exact 120 min width pct at e; rounded once to 12 decimals; NO_DIAL when there is no dial or it is 0", aliases: "coin.m7w060_width_dials; m7w060_mkt_width_dials (BTC)",
+     derived_from: "C9 S01 (BASIC_C9_V1) and C9 S08 of every roster coin (the dial)",
+     means: "how many median-coin 2-hour widths the coin moved over the last 60 minutes: 2 = twice the median coin's 2-hour width now",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025, every coin): under 1 0.7720, 0.1801, 0.0478 (under 1, 1 to 2, over 2); median 0.735752; BTC under 1 at 1.0000 (median 0.280846); the formula is the card's rule 6 (no rename)"},
+     open: "a 60-minute width is mostly under the median 2-hour width: under 1 at 77.20% of coin-minutes, BTC at 100%; the dial is the median coin now, not the market's usual 2 hours over time",
+     never: ["under 1 as chop or a calm market: it is against the median coin of the same minute"]}
+  - {id: C9.S09, name: "120 min width in market dials (the coin's width pct over the median coin's 120 min width pct at e)", layer: our_rule, side: none, window: "120 min and the 120 min dial", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "C9 S08 (exact) / the median of the roster coins' exact 120 min width pct at e; rounded once to 12 decimals; NO_DIAL when there is no dial or it is 0", aliases: "coin.m7w120_width_dials; m7w120_mkt_width_dials (BTC)",
+     derived_from: "C9 S08 (BASIC_C9_V1) and C9 S08 of every roster coin (the dial)",
+     means: "how many median-coin 2-hour widths the coin moved over the last 120 minutes: 2 = twice the median coin's 2-hour width now",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025, every coin): under 1 0.4909, 0.4246, 0.0846 (under 1, 1 to 2, over 2); median 1.000000; BTC under 1 at 1.0000 (median 0.391541); the formula is the card's rule 6 (no rename)"},
+     open: "half the coins are under 1 at every minute by construction (49.09%); the dial is the median coin now, not the market's usual 2 hours over time",
+     never: ["under 1 as chop or a calm market: it is against the median coin of the same minute"]}
+  - {id: C9.S16, name: "240 min width in market dials (the coin's width pct over the median coin's 120 min width pct at e)", layer: our_rule, side: none, window: "240 min and the 120 min dial", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "C9 S15 (exact) / the median of the roster coins' exact 120 min width pct at e; rounded once to 12 decimals; NO_DIAL when there is no dial or it is 0", aliases: "coin.m7w240_width_dials; m7w240_mkt_width_dials (BTC)",
+     derived_from: "C9 S15 (BASIC_C9_V1) and C9 S08 of every roster coin (the dial)",
+     means: "how many median-coin 2-hour widths the coin moved over the last 240 minutes: 2 = twice the median coin's 2-hour width now",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025, every coin): under 1 0.2089, 0.5378, 0.2533 (under 1, 1 to 2, over 2); median 1.379896; BTC under 1 at 0.9528, 1 to 2 at 0.0472 (median 0.547115); the formula is the card's rule 6 (no rename)"},
+     open: "BTC is under 1 at 95.28% of minutes: BTC is calmer than the median coin; read by 4 chains (used_by); the dial is the median coin now, not the market's usual 2 hours over time",
+     never: ["under 1 as chop or a calm market: it is against the median coin of the same minute"]}
+  - {id: C9.S04, name: "touches high over 60 min (runs of minutes in the top tenth of the window's width)", layer: our_rule, side: none, window: "60 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the number of runs of consecutive window minutes whose high is at or above high - 0.10 x (high - low); a skipped minute ends a run", aliases: "coin.m7w060_touches_high; m7w060_mkt_touches_high (BTC)",
+     means: "how many separate times the coin's minutes reached the top tenth of its 60-minute range: 1 = only the edge itself",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): every coin 1, 2, 3 or more at 0.4241, 0.2972, 0.2788 of coin-minutes (max 9); BTC 0.4160, 0.2847, 0.2993; both edges twice or more 0.2683 of coin-minutes (BTC 0.2333); the count the card's rule 7 says (no rename)"},
+     open: "at least 1 by construction (the edge minute); both edges twice or more is common (0.2683), not a rare 'range the market respects'"}
+  - {id: C9.S05, name: "touches low over 60 min (runs of minutes in the bottom tenth of the window's width)", layer: our_rule, side: none, window: "60 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the number of runs of consecutive window minutes whose low is at or below low + 0.10 x (high - low); a skipped minute ends a run", aliases: "coin.m7w060_touches_low; m7w060_mkt_touches_low (BTC)",
+     means: "how many separate times the coin's minutes reached the bottom tenth of its 60-minute range: 1 = only the edge itself",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): every coin 1, 2, 3 or more at 0.5096, 0.2758, 0.2147 of coin-minutes (max 10); BTC 0.5403, 0.3104, 0.1493; both edges twice or more 0.2683 of coin-minutes (BTC 0.2333); the count the card's rule 7 says (no rename)"},
+     open: "at least 1 by construction (the edge minute); both edges twice or more is common (0.2683), not a rare 'range the market respects'"}
+  - {id: C9.S11, name: "touches high over 120 min (runs of minutes in the top tenth of the window's width)", layer: our_rule, side: none, window: "120 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the number of runs of consecutive window minutes whose high is at or above high - 0.10 x (high - low); a skipped minute ends a run", aliases: "coin.m7w120_touches_high; m7w120_mkt_touches_high (BTC)",
+     means: "how many separate times the coin's minutes reached the top tenth of its 120-minute range: 1 = only the edge itself",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): every coin 1, 2, 3 or more at 0.3240, 0.2843, 0.3916 of coin-minutes (max 11); BTC 0.2799, 0.3160, 0.4042; both edges twice or more 0.3622 of coin-minutes (BTC 0.3979); the count the card's rule 7 says (no rename)"},
+     open: "at least 1 by construction (the edge minute); both edges twice or more is common (0.3622), not a rare 'range the market respects'"}
+  - {id: C9.S12, name: "touches low over 120 min (runs of minutes in the bottom tenth of the window's width)", layer: our_rule, side: none, window: "120 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the number of runs of consecutive window minutes whose low is at or below low + 0.10 x (high - low); a skipped minute ends a run", aliases: "coin.m7w120_touches_low; m7w120_mkt_touches_low (BTC)",
+     means: "how many separate times the coin's minutes reached the bottom tenth of its 120-minute range: 1 = only the edge itself",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): every coin 1, 2, 3 or more at 0.4368, 0.2457, 0.3175 of coin-minutes (max 13); BTC 0.4222, 0.2764, 0.3014; both edges twice or more 0.3622 of coin-minutes (BTC 0.3979); the count the card's rule 7 says (no rename)"},
+     open: "at least 1 by construction (the edge minute); both edges twice or more is common (0.3622), not a rare 'range the market respects'"}
+  - {id: C9.S18, name: "touches high over 240 min (runs of minutes in the top tenth of the window's width)", layer: our_rule, side: none, window: "240 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the number of runs of consecutive window minutes whose high is at or above high - 0.10 x (high - low); a skipped minute ends a run", aliases: "coin.m7w240_touches_high; m7w240_mkt_touches_high (BTC)",
+     means: "how many separate times the coin's minutes reached the top tenth of its 240-minute range: 1 = only the edge itself",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): every coin 1, 2, 3 or more at 0.2494, 0.2372, 0.5134 of coin-minutes (max 16); BTC 0.1021, 0.3451, 0.5528; both edges twice or more 0.4476 of coin-minutes (BTC 0.5271); the count the card's rule 7 says (no rename)"},
+     open: "at least 1 by construction (the edge minute); both edges twice or more is common (0.4476), not a rare 'range the market respects'"}
+  - {id: C9.S19, name: "touches low over 240 min (runs of minutes in the bottom tenth of the window's width)", layer: our_rule, side: none, window: "240 min", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the number of runs of consecutive window minutes whose low is at or below low + 0.10 x (high - low); a skipped minute ends a run", aliases: "coin.m7w240_touches_low; m7w240_mkt_touches_low (BTC)",
+     means: "how many separate times the coin's minutes reached the bottom tenth of its 240-minute range: 1 = only the edge itself",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 515 of 515 (every roster coin x 00:30, 04:00, 10:41, 12:10, 22:06 x 8 Mar 2026, 24 Sep 2025; J15995, rule_c9 9a2f0a6d from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): every coin 1, 2, 3 or more at 0.3778, 0.2383, 0.3839 of coin-minutes (max 18); BTC 0.4153, 0.0917, 0.4931; both edges twice or more 0.4476 of coin-minutes (BTC 0.5271); the count the card's rule 7 says (no rename)"},
+     open: "at least 1 by construction (the edge minute); both edges twice or more is common (0.4476), not a rare 'range the market respects'"}
+  - {id: C9.S23, name: "median over the roster coins of the 60 min width dials", layer: our_rule, side: none, window: "60 min and the 120 min dial", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the median of the coins' exact width dials (C9 S02) over the roster coins with a value, rounded once", aliases: "m7w060_mkt_width_dials_median",
+     derived_from: "C9 S02 of every roster coin",
+     means: "the median coin's 60-minute width over the median coin's 2-hour width at the same minute",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 10 of 10 (the market x 5 moments x 2 days; J15995, rule_c9 9a2f0a6d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): min 0.341971, median 0.749785, max 0.993451: at most 1 by construction (the coins' 60 min widths are under their 120 min widths)"},
+     open: "never above 1: read against its own day"}
+  - {id: C9.S26, name: "median over the roster coins of the 120 min width dials", layer: our_rule, side: none, window: "120 min and the 120 min dial", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the median of the coins' exact width dials (C9 S09) over the roster coins with a value, rounded once", aliases: "m7w120_mkt_width_dials_median",
+     derived_from: "C9 S09 of every roster coin",
+     means: "the median coin's 120-minute width over the median coin's 2-hour width at the same minute",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 10 of 10 (the market x 5 moments x 2 days; J15995, rule_c9 9a2f0a6d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): 1 at 1,440 of 1,440 minutes (1 distinct value): 1 by construction (the median of the width over the median width)"},
+     open: "carries no information: 1 at every minute; the market against its usual 2 hours over time needs the dial's history (C7 S08 REBUILD on BUILD_LIST_V4): not built", never: ["S26 as information (1 at every minute)"]}
+  - {id: C9.S29, name: "median over the roster coins of the 240 min width dials", layer: our_rule, side: none, window: "240 min and the 120 min dial", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the median of the coins' exact width dials (C9 S16) over the roster coins with a value, rounded once", aliases: "m7w240_mkt_width_dials_median",
+     derived_from: "C9 S16 of every roster coin",
+     means: "the median coin's 240-minute width over the median coin's 2-hour width at the same minute",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 10 of 10 (the market x 5 moments x 2 days; J15995, rule_c9 9a2f0a6d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): min 1.000000, median 1.320815, max 3.908102: at least 1 by construction"},
+     open: "never under 1: a cut under 1 never fires (read by CHAIN_chop_LONG_fade_3)"}
+  - {id: C9.S24, name: "share of the roster coins whose 60 min width dials is under 1", layer: our_rule, side: none, window: "60 min and the 120 min dial", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the coins with a C9 S02 value under 1 (exact; 1 is not under) over the coins with a value, rounded once", aliases: "m7w060_mkt_tight_share",
+     derived_from: "C9 S02 of every roster coin",
+     means: "the share of coins whose 60-minute width is under the median coin's 2-hour width at the same minute",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 10 of 10 (the market x 5 moments x 2 days; J15995, rule_c9 9a2f0a6d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): min 0.509804, median 0.784314, max 0.980392"},
+     open: "mostly over one half: a 60-minute width is under the median 2-hour width for most coins",
+     never: ["S24 as information beyond S27: every coin under the dial at 120 minutes is under it at 60 minutes, so S24 >= S27 (about one half) by construction"]}
+  - {id: C9.S27, name: "share of the roster coins whose 120 min width dials is under 1", layer: our_rule, side: none, window: "120 min and the 120 min dial", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the coins with a C9 S09 value under 1 (exact; 1 is not under) over the coins with a value, rounded once", aliases: "m7w120_mkt_tight_share",
+     derived_from: "C9 S09 of every roster coin",
+     means: "the share of coins whose 120-minute width is under the median coin's 2-hour width at the same minute",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 10 of 10 (the market x 5 moments x 2 days; J15995, rule_c9 9a2f0a6d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): 0.470588 to 0.500000 (4 distinct values, median 0.490196): the share under the median, by construction"},
+     open: "carries no information: about one half at every minute", never: ["S27 as information (about one half at every minute)"]}
+  - {id: C9.S30, name: "share of the roster coins whose 240 min width dials is under 1", layer: our_rule, side: none, window: "240 min and the 120 min dial", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the coins with a C9 S16 value under 1 (exact; 1 is not under) over the coins with a value, rounded once", aliases: "m7w240_mkt_tight_share",
+     derived_from: "C9 S16 of every roster coin",
+     means: "the share of coins whose 240-minute width is under the median coin's 2-hour width at the same minute",
+     computation: {status: RELIABLE, proof: "RULE_C9_STAMPS_V1 a48e1c9e: 10 of 10 (the market x 5 moments x 2 days; J15995, rule_c9 9a2f0a6d)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15995 c9fire (24 Sep 2025): min 0.000000, median 0.200000, max 0.490196: at most about one half by construction"},
+     open: "at most about one half by construction"}
+

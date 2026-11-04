@@ -1,0 +1,422 @@
+{
+ "name": "OUTCOMES_ALARM_V1",
+ "about": "ALARM DESIGN MENU (STRATEGY 27 Oct 2026, team/RESEARCH/tools/alarm_process; TEST, NOT REVIEWED): LEAD's OUTCOMES_MENU_LOOP2_V1 labels unchanged (honest cost, gap 0.032, so menu_v2.py reads it as before) PLUS a race grid (offer_before_heat) so an alarm's lean and timing read at several sizes: 1c before 1c (the lean) at 5/15/60 min, 2c before 1c at 5 min, 3c before 1c at 15/60 min, 4c before 1c and 4c before 2c and 2c before 2c at 60 min. New labels only (README ADD A LABEL: a new settings file, no code).",
+ "changes": [
+  "A51-06: MONEY_T1 is kind money_full: EXIT_T1 after the factory's full cost of record (factory_v2 trade_cost: costs V3_5 fee + book + gap + funding on the entry notional, size 10,000 USD as the cost settings). A trade whose funding is missing is EMPTY (FUNDING_MISSING); its fee + book + gap stay in MONEY_T1__<dir>__cost_prefunding. The V1/V2 MONEY_T1 (exit minus static V1 cost + gap, no funding) is not money of record and is not carried.",
+  "A51-06 / B1 / C3: the static cost table is pinned by sha16 and its median fallback is named: fallback 'unknown' makes a c-unit label of a coin missing from the table EMPTY (NO_UNIT:COST_FALLBACK) instead of a median guess; unit__c_fallback flags it.",
+  "A51-04: the V2 run_window (documentary) is removed from this yardstick: the caller's authorized outcome window is a RUN argument (--run-window FIRST:LAST, or a run_window key in a run's own settings), ENFORCED before any read (selection inside it; every label whose window could need a bar at or after its end is EMBARGO_SUPPORT, its row kept). The code holds no date.",
+  "A51-05 / A51-07: exits go through exit_engine.run_frozen (frozen registry row, schema, cost table, module and the run's transitive inventory); the exits path is relative to the forensics folder.",
+  "A51-01 / A51-02: every horizon is a whole number of 3 s bars (unchanged values: 5, 15, 60, 240, 300 min); gap_s stays 60 (LABEL_EWSD convention through label_ewsd_v2.path_first_gap)."
+ ],
+ "entry": {
+  "delay_s": 6,
+  "why": "the factory's entry: taker at the first 3 s bar ending at or after F + 6 s (+ one bar), within 60 s",
+  "gap_s": 60,
+  "gap_why": "LABEL_EWSD_V2's gap (label_ewsd_v2.path_first_gap): a stretch longer than 60 s without a valid bar is a data hole"
+ },
+ "directions": [
+  "FADE",
+  "FOLLOW"
+ ],
+ "cost": {
+  "table": "team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V1.tsv",
+  "sha16": "ff157578098a2f47",
+  "gap_pct": 0.032,
+  "fallback": "unknown",
+  "why": "comparison only: median gap instead of the p75 worst-timing gap"
+ },
+ "money": {
+  "cost_settings": {
+   "path": "team/LAYERS/tools/costs_v2/settings/COSTS_SETTINGS_V1.json",
+   "sha16": "d1fd6b14c80717f8"
+  },
+  "size_usd": 10000,
+  "why": "the factory's money of record (factory_v2.costs_of / trade_cost, costs V3_5), the size the cost settings price"
+ },
+ "units": {
+  "nm": "EPI:A02N.normal_move_pct"
+ },
+ "units_note": "nm = the coin's normal 15 min move (median absolute 15-minute log move over 24 h ending 1 h before the alarm, log-pct), stored only in EPI.A02N (A02 family). An event without its EPI.A02N row is EMPTY (NO_UNIT:<why>), never a default.",
+ "exits": {
+  "path": "team/RESEARCH/tools/exit_engine/EXITS_V1.tsv",
+  "sha16": "db575a2fcb179798"
+ },
+ "labels": [
+  {
+   "name": "REACH_1C_5M",
+   "kind": "reach",
+   "target": 1,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_1C_5M",
+   "kind": "heat_before",
+   "target": 1,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_2C_5M",
+   "kind": "reach",
+   "target": 2,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_2C_5M",
+   "kind": "heat_before",
+   "target": 2,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_4C_5M",
+   "kind": "reach",
+   "target": 4,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_4C_5M",
+   "kind": "heat_before",
+   "target": 4,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_8C_5M",
+   "kind": "reach",
+   "target": 8,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_8C_5M",
+   "kind": "heat_before",
+   "target": 8,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_1C_15M",
+   "kind": "reach",
+   "target": 1,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_1C_15M",
+   "kind": "heat_before",
+   "target": 1,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_2C_15M",
+   "kind": "reach",
+   "target": 2,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_2C_15M",
+   "kind": "heat_before",
+   "target": 2,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_4C_15M",
+   "kind": "reach",
+   "target": 4,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_4C_15M",
+   "kind": "heat_before",
+   "target": 4,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_8C_15M",
+   "kind": "reach",
+   "target": 8,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_8C_15M",
+   "kind": "heat_before",
+   "target": 8,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_1C_60M",
+   "kind": "reach",
+   "target": 1,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_1C_60M",
+   "kind": "heat_before",
+   "target": 1,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_2C_60M",
+   "kind": "reach",
+   "target": 2,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_2C_60M",
+   "kind": "heat_before",
+   "target": 2,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_4C_60M",
+   "kind": "reach",
+   "target": 4,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_4C_60M",
+   "kind": "heat_before",
+   "target": 4,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_8C_60M",
+   "kind": "reach",
+   "target": 8,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_8C_60M",
+   "kind": "heat_before",
+   "target": 8,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_1C_240M",
+   "kind": "reach",
+   "target": 1,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_1C_240M",
+   "kind": "heat_before",
+   "target": 1,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_2C_240M",
+   "kind": "reach",
+   "target": 2,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_2C_240M",
+   "kind": "heat_before",
+   "target": 2,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_4C_240M",
+   "kind": "reach",
+   "target": 4,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_4C_240M",
+   "kind": "heat_before",
+   "target": 4,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "REACH_8C_240M",
+   "kind": "reach",
+   "target": 8,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "HEATB_8C_240M",
+   "kind": "heat_before",
+   "target": 8,
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "BEST_5M",
+   "kind": "best",
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "WORST_5M",
+   "kind": "worst",
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "BEST_15M",
+   "kind": "best",
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "WORST_15M",
+   "kind": "worst",
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "BEST_60M",
+   "kind": "best",
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "WORST_60M",
+   "kind": "worst",
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "BEST_240M",
+   "kind": "best",
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "WORST_240M",
+   "kind": "worst",
+   "horizon_min": 240,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER2C_BEFORE_HEAT1C_15M",
+   "kind": "offer_before_heat",
+   "offer": 2,
+   "heat": 1,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER2C_BEFORE_HEAT1C_60M",
+   "kind": "offer_before_heat",
+   "offer": 2,
+   "heat": 1,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER2C_BEFORE_HEAT1C_5H",
+   "kind": "offer_before_heat",
+   "offer": 2,
+   "heat": 1,
+   "horizon_min": 300,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER4C_BEFORE_HEAT2C_5H",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 2,
+   "horizon_min": 300,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER1C_BEFORE_HEAT1C_5M",
+   "kind": "offer_before_heat",
+   "offer": 1,
+   "heat": 1,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER1C_BEFORE_HEAT1C_15M",
+   "kind": "offer_before_heat",
+   "offer": 1,
+   "heat": 1,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER1C_BEFORE_HEAT1C_60M",
+   "kind": "offer_before_heat",
+   "offer": 1,
+   "heat": 1,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER2C_BEFORE_HEAT1C_5M",
+   "kind": "offer_before_heat",
+   "offer": 2,
+   "heat": 1,
+   "horizon_min": 5,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER3C_BEFORE_HEAT1C_15M",
+   "kind": "offer_before_heat",
+   "offer": 3,
+   "heat": 1,
+   "horizon_min": 15,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER3C_BEFORE_HEAT1C_60M",
+   "kind": "offer_before_heat",
+   "offer": 3,
+   "heat": 1,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER4C_BEFORE_HEAT1C_60M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 1,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER4C_BEFORE_HEAT2C_60M",
+   "kind": "offer_before_heat",
+   "offer": 4,
+   "heat": 2,
+   "horizon_min": 60,
+   "unit": "c"
+  },
+  {
+   "name": "OFFER2C_BEFORE_HEAT2C_60M",
+   "kind": "offer_before_heat",
+   "offer": 2,
+   "heat": 2,
+   "horizon_min": 60,
+   "unit": "c"
+  }
+ ]
+}

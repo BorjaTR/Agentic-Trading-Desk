@@ -1,0 +1,331 @@
+# BASIC_C8_V3.yaml: the card of the basic group C8 candle anatomy, EDITION 3 (= edition 2 0331c7b2e39f69c5 + conclude, the owner 15:0x Berlin). Edition 2 header follows:
+# EDITION 2 (EDGE1, 2026-10-18; edition 1 BASIC_C8_V1.yaml 93d139ce180ddfa5 kept).
+# EDITION 2 = the owner's rename rule (14:1x Berlin): "from now on we need to rename the settings whenever they differ from what they actually
+# do and write the 'could build' as the previous name intended". S01, S02, S04, S05 renamed (old names kept in renamed_from and aliases);
+# the wick share and body share their old names promised are in could_build. Checked by meaning_register edition 3. Numbers unchanged (J15808).
+# Edition 1 header: the owner 13:5x Berlin: "let's do one example
+# together. Take one basic computation group and let's see if you can do the job"). Made the way BASIC_C1_V1 was (METRIC_REVIEW_METHOD_V1
+# section 5). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py checks it and writes .flat.jsonl (one line per setting, grep the id) and .md.
+# Layer of every setting: basic (plain arithmetic on proven raw values, BASIC_LIST_V2).
+# STAMPS = C8_STAMPS_V1 (job 15767): 3 days (24 Sep 2025, 4 Nov 2025, 8 Mar 2026) x 5 minute ends (01:00, 04:00, 12:10, 16:00, 22:06) x every
+# roster coin: S01 to S03 770 of 770 each, S04 to S06 15 of 15 each. J15808 = meaning_candle edition 3 on 8 Mar 2026 and 24 Sep 2025.
+# COULD BUILD: what the old names intended. Built only when an analysis asks for it; each proven on 1 to 3 days first (the owner's plan step 3).
+group: C8
+name: candle anatomy (basic, built on the trade candle)
+summary: 'Three numbers about one coin''s candle of the 60 s ending at a minute end e, from our C13 trade candle (close = last trade, high, low): S01 = (close - low) / (high - low),
+  S02 = (close - previous minute''s close) / (high - low), S03 = 100 x (high - low) / close; and for the market the median of each over the roster coins with a value (S04 to S06), with
+  the count of coins read beside (.coverage).'
+read_as: 'Two new things per coin and as a market median: where the minute closed in its range (S01 close position, S04) and how wide the minute was (S03 range pct, S06), both equal
+  to Binance''s own 1-minute candles on more than 99% of coin-minutes (J15808). S02 (S05 its median) is the move from the previous minute''s close in units of this minute''s range: by
+  its formula the 1-minute return divided by S03, so it adds little of its own; it can pass 1 or -1 (2% of coin-minutes, up to 8 on a tiny range). S01 and S02 were named wick share and
+  body share; they are neither (corr -0.02 and 0.89 to 0.96 with the real ones): renamed in edition 2; the real ones are in could_build. No copy inside C8; a copy check against the other
+  groups is not done yet. The year output still writes S01 to S06 with the old metric names (aliases).'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C8_V4.md (rules 1 to 17; producer prod_C8_v5.py 5980ca1bc6cfc6a3)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C8_V1.tsv (6 settings)
+  built_on_register: 'team/LAB/notes/MEANING/MEANING_C13_V3.yaml (C13 S01 close, S02 high, S03 low, S04 no trade: raw, RELIABLE, DEFINED_WITH_OPEN = LIMITS)'
+  layer_list: team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C8 S01 to S06, 6 basic settings)
+  producer: testbed/value_audit/code/prod_C8_v5.py (CARD_C8_V4), reading C13's built parts of D and D-1
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C8.parquet
+  year_output_columns: 'name (S01 to S06, S04.coverage, S05.coverage, S06.coverage: 9 names, job 15803), coin (or MARKET for S04 to S06 and the coverages), as_of_us (e), value_kind (0
+    = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags'
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'C8', settings, coins, moments)
+source:
+  vendor: 'none new: built on our raw C13 S01 to S04 (Binance trades through Tardis), MEANING_C13_V3'
+  exchange_stream: trades (Binance's trade channel through Tardis), through C13's candle; C8 reads no file of its own
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<SYM>_<YYYY-MM-DD>.csv.gz (through C13; D, and D-1 for the previous close of 00:00)
+  columns: C13's close, high, low and no trade of the 60 s ending at e and of the 60 s ending at e - 60 s (the previous close)
+  fields:
+    candle: 'close = the last trade stamped in (e - 60 s, e] and received by e; high, low = the largest and smallest such price [proof: CARD_C8_V4 section 3 Source; MEANING_C13_V3 S01
+      to S03]'
+    previous_close: 'C13''s close at e - 60 s; for 00:00 the 23:59 close of D-1 [proof: CARD_C8_V4 rule 2]'
+    s01: '(close - low) / (high - low), exact, rounded once to 12 decimals [proof: CARD_C8_V4 rules 3, 6; recompute J15767]'
+    s02: '(close - previous close) / (high - low) [proof: CARD_C8_V4 rules 4, 6; recompute J15767]'
+    s03: '100 x (high - low) / close; 0 when high = low [proof: CARD_C8_V4 rules 5, 6, O2; recompute J15767]'
+    market: 'S04 to S06 = the median of the coin values over the roster coins with a value (even count: the mean of the two middle ones); .coverage = that count [proof: CARD_C8_V4 rule
+      10; J15808 cover: 1,440 of 1,440 minutes both days]'
+  latency: known_at = the latest known_at of the C13 rows read; at most the minute end itself (C13 counts only trades received by e); max_staleness 60 s (CARD_C8_V4 section 2)
+  silence: 'a coin with no trade of its own in the minute is empty NO_TRADE; a feed gone quiet or thin is C13''s TRADES_HOLE or THIN_FEED (stale); 24 Sep 2025: 16 TRADES_HOLE, 89 THIN_FEED
+    coin-minutes; 8 Mar 2026: none (J15808 empty)'
+reading_rules:
+- 'the candle of e is C13''s candle of the 60 s ending at e: trades stamped in (e - 60 s, e] and received by e (no look-ahead); Binance''s own kline is [e - 60 s, e) at any arrival'
+- S01, S02 empty NO_RANGE when high = low (one price); S03 is then 0; all three empty NO_TRADE when the minute has no trade of its own; S02 empty NO_PREV_CLOSE when C13 has no close
+  at e - 60 s (rule 7)
+- a market value is the median over the roster coins with a value, never a mean; .coverage says how many (rule 10)
+- at a fire every setting gives the last full minute (rule 13)
+values:
+  units: 'S01, S02, S04, S05: a share of the minute''s range (S01 from 0 to 1; S02 any sign, can pass 1 or -1); S03, S06: percent of the close'
+  zero: S01 0 = closed on its low; S02 0 = closed where the previous minute closed; S03 0 = one price all minute
+  empty: NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (from C13), NO_TRADE, NO_RANGE, NO_PREV_CLOSE, ALL_COINS_EMPTY (market); value_kind 0 with NaN in value_f64. Never read
+    empty as 0
+  stale: 1 when the value is empty because a feed went quiet or thin (C13's TRADES_HOLE or THIN_FEED)
+  flags: C13's (DUPLICATE_ROW, NO_RATE_BASE), and BAD_INPUT:<coin> on a market value
+interpret:
+  do:
+  - 'read S01 (close position) as the close''s place in the minute''s range: near 1 the minute closed on its high, near 0 on its low'
+  - 'read S01 high with S02 below 0 as a fall bought back inside the minute: the candle''s lower wick is then 0.86 to 0.90 of the range at the median (J15808 name)'
+  - read S02's sign as 'closed up or down from the previous minute's close' (same sign as the real body in 99.75 to 99.87% of coin-minutes)
+  - read S03 and S06 as the width of the minute in percent
+  dont:
+  - 'read S01 by its old name (wick share): it agrees with the real wick share on 20 to 28% of coin-minutes, correlation -0.02 (C8.CB1)'
+  - 'read S02 by its old name (body share): when the open is not the previous close (47 to 52% of minutes) they differ; S02 was 8 at XMR 24 Sep 2025 22:23 (range 0.01) (C8.CB2)'
+  - 'compare S02''s size across coins: a tiny range makes it jump'
+  - 'read empty as 0 (NO_RANGE: S01, S02 empty while S03 is 0)'
+biases:
+- what: trades stamped in the minute's last milliseconds and received after e are left out (no look-ahead); Binance's kline keeps them
+  direction: either way (the close, high or low of ours can differ)
+  size: S01 differs from Binance's candle on 0.23% (8 Mar 2026) and 0.36% (24 Sep 2025) of coin-minutes; S03 on 0.26% and 0.37%; 11 of the 12 coin-minutes looked at were these late rows,
+    the 12th the next bias
+  proof: 'J15808 day and why (ARB 05:11, TRX 09:34, CRV 20:29, NEAR 23:27, HYPE 13:53, SOL 06:09, SEI 11:02; HYPE 04:34, FET 20:11, BTC 21:06, BTC 23:15: late rows 0.2 to 5.9 ms after
+    e)'
+- what: trades missing from the Tardis file
+  direction: the range too small
+  size: 'one case found: PUMP 8 Mar 2026 11:56, 70 of Binance''s 110 trades (one gap of 40 ids), range 0.0525 pct points instead of 0.1050'
+  proof: J15808 why PUMP 1156 and meaning_c13 ids
+- what: a previous close changed by a late row moves S02 one minute later
+  direction: either way
+  size: ARB 8 Mar 05:12, BTC 24 Sep 21:07 (gap 1.0)
+  proof: J15808 look ARB 0513, why BTC 2106
+external_checks:
+- what: S01, S02, S03 of every roster coin at every minute end of 2 days, the same formula on Binance's kline high, low, close
+  where: Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'VERIFIED: J15808 day (exactly equal 99.28 to 99.77%, corr 0.9996 to 1.0000)'
+- what: S04 to S06, the median of the roster coins' kline values
+  where: the same klines
+  status: 'VERIFIED: J15808 market (exactly equal 92.4 to 99.4%, max gap 0.083 share, 0.0073 pct points); every gap looked at named coin by coin (mlook)'
+- what: 'the names: S01 against the textbook wick share, S02 against the textbook body share (close - open) / range'
+  where: the kline open, high, low, close
+  status: 'DIFFERED, RENAMED in edition 2: J15808 name (S01 corr -0.015 and -0.025; S02 corr 0.893 and 0.961, beyond 1 or -1 in 1.91% and 2.30%)'
+- what: the largest gaps, one minute of one coin each
+  where: Tardis trades of that minute under ours, any-arrival and the kline's window
+  status: 'EXPLAINED: late rows (11 minutes), missing Tardis trades (PUMP), the previous close (ARB 05:12, BTC 21:07), coins empty on our side (24 Sep: DASH at 05:03 and 10:29, RENDER
+    at 09:56) (J15808)'
+tools:
+- what: every coin and market value equal to a recompute from our C13 (exact decimals)
+  run: python3 -B -m rawcheck --days <D> --coins BTC --at <HHMM,..> --part c8 --out <dir>
+  where: team/LAB/code (basic_c8.py 09a06c3f8fbe6a38; job 15767)
+- what: every coin-minute against the same formula on Binance klines
+  run: python3 -B -m rawcheck.meaning_candle day <D>
+  where: 'team/LAB/code (meaning_candle.py d457f779ce3e7118; runner job: klines on the SCRATCH_DISK)'
+- what: market medians and coverage
+  run: python3 -B -m rawcheck.meaning_candle market <D> | cover <D>
+  where: team/LAB/code
+- what: the names against the textbook wick and body
+  run: python3 -B -m rawcheck.meaning_candle name <D>
+  where: team/LAB/code
+- what: empties by reason beside the kline
+  run: python3 -B -m rawcheck.meaning_candle empty <D>
+  where: team/LAB/code
+- what: 'one coin-minute or one market minute: the cause of a gap'
+  run: python3 -B -m rawcheck.meaning_candle why <D> <COIN> <HHMM> | mlook <D> <S04|S05|S06> <HHMM> | look <D> <COIN> <HHMM>
+  where: team/LAB/code
+used_by: S04 (m3_mkt_wick_share_median) by CHAIN_chop_SHORT_ride_2 and CHAIN_trend_SHORT_fade_2; S06 (m3_mkt_range_pct_median) by CHAIN_trend_SHORT_ride_4; every setting through the
+  record's fifths (M3); nobody reads S01, S02, S03, S05 as values of their own (CARD_C8_V4 'Who reads it today')
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C8_V4.md
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: team/LAB/notes/RAWCHECK/C8_STAMPS_V1.tsv bbafe177856e2b6d (recompute from our C13, job 15767, 2,355 of 2,355 equal)
+  JOBS: '15803 (first look), 15804 (both days, meaning_candle edition 1), 15805 to 15807 (gaps named, edition 2), 15808 (the proof run, edition 3 d457f779ce3e7118: tests 17 of 17)'
+  EDITION_1: team/LAB/notes/BASIC/BASIC_C8_V1.yaml 93d139ce180ddfa5 (the same numbers; S01, S02, S04, S05 then DIFFERS_FROM_NAME)
+  RULE: 'the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name''s intention goes to could_build'
+settings:
+- id: C8.S01
+  name: close position in range
+  renamed_from: wick share
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (close - low) / (high - low)
+  aliases: m3_wick_share, coin.m3_wick_share, coin.m3_wick_share@m0 (old names, still written by the year)
+  means: 'where the minute''s last trade sits inside its high-low range: 0 = closed on the low, 1 = closed on the high; empty NO_RANGE on one price'
+  computation:
+    status: RELIABLE
+    proof: STAMPS 770 of 770 (J15767)
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15808 name: equals (c - l) / range on Binance klines at 99.64 to 99.77% of coin-minutes; the old name failed: the real wick share agrees on 20.2 to 27.7%, corr -0.015 and
+      -0.025'
+  open: '0.23 to 0.36% of coin-minutes differ from Binance''s candle: trades received after e (no look-ahead), as C13''s open'
+- id: C8.S02
+  name: close move over range
+  renamed_from: body share
+  layer: basic
+  side: none
+  window: 60 s and the minute before
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (close - previous close) / (high - low)
+  aliases: m3_body_share, coin.m3_body_share, coin.m3_body_share@m0 (old names, still written by the year)
+  derived_from: 'the 1-minute close-to-close return and S03: S02 = [100 x (close - previous close) / close] / S03, exact by the formula'
+  means: the minute's move from the previous minute's close, in units of this minute's high-low range; any sign; beyond 1 or -1 when the previous close lies outside the range
+  computation:
+    status: RELIABLE
+    proof: STAMPS 770 of 770 (J15767)
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15808 name: equals (c - prev c) / range on Binance klines at 99.28 to 99.50%; the old name failed: the real body share agrees exactly on 47.8 to 52.5%, corr 0.893 and 0.961'
+  open: 0.50 to 0.72% of coin-minutes differ from Binance's candle (late rows here or in the previous minute); beyond 1 or -1 in 1.91 and 2.30%, up to 8 (XMR 24 Sep 22:23, range 0.01)
+  never:
+  - 'that |S02| above 1 is an error: the previous close lay outside this minute''s range (1.9 to 2.3% of coin-minutes)'
+- id: C8.S03
+  name: range pct
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: 100 x (high - low) / close
+  aliases: m3_range_pct, coin.m3_range_pct, coin.m3_range_pct@m0
+  means: how wide the minute was, in percent of the price; 0 when every trade was at one price
+  computation:
+    status: RELIABLE
+    proof: STAMPS 770 of 770 (J15767)
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15808 day: equal to Binance''s kline range pct on 99.74% (8 Mar) and 99.63% (24 Sep) of coin-minutes, corr 1.00000, max gap 0.0525 pct points'
+  open: '0.26 to 0.37% of coin-minutes differ from Binance''s candle: trades received after e (no look-ahead) and trades missing from the Tardis file (PUMP 8 Mar 11:56, 70 of 110); as
+    C13''s open'
+- id: C8.S04
+  name: market median close position
+  renamed_from: market wick share median
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: median of S01 over the roster coins with a value
+  aliases: m3_mkt_wick_share_median, m3_mkt_wick_share_median@m0 (old names, read by 2 chains)
+  means: where the typical coin closed inside its minute range
+  computation:
+    status: RELIABLE
+    proof: STAMPS 15 of 15 (J15767)
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'as S01; J15808 market: equal to the median of the kline values on 98.33% (8 Mar), 95.21% (24 Sep), max gap 0.045'
+  open: 'CHAIN_chop_SHORT_ride_2 and CHAIN_trend_SHORT_fade_2 read it by its old name; gaps named coin by coin (mlook 06:09: SOL a late row, ETH not looked at; 24 Sep 10:29: DASH empty
+    on our side)'
+- id: C8.S05
+  name: market median close move over range
+  renamed_from: market body share median
+  layer: basic
+  side: none
+  window: 60 s and the minute before
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: median of S02 over the roster coins with a value
+  aliases: m3_mkt_body_share_median, m3_mkt_body_share_median@m0 (old names)
+  means: the typical coin's move from its previous close, in units of its minute range
+  computation:
+    status: RELIABLE
+    proof: STAMPS 15 of 15 (J15767)
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'as S02; J15808 market: equal on 97.08% (8 Mar), 94.10% (24 Sep), max gap 0.083'
+  open: 'gaps named coin by coin (mlook: ARB late row 05:11; 24 Sep 09:56: RENDER empty on our side)'
+- id: C8.S06
+  name: market median range pct
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: median of S03 over the roster coins with a value
+  aliases: m3_mkt_range_pct_median, m3_mkt_range_pct_median@m0 (read by CHAIN_trend_SHORT_ride_4)
+  means: how wide the typical coin's minute was, in percent
+  computation:
+    status: RELIABLE
+    proof: STAMPS 15 of 15 (J15767)
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15808 market: equal to the median kline range pct on 99.44% (8 Mar), 92.43% (24 Sep), corr 0.99997 to 1.00000, max gap 0.0073 pct points'
+  open: 'a median over a different set of coins when a coin is empty on our side (24 Sep 05:03: DASH; THIN_FEED is the only S03 empty kind with a kline range, J15808 empty); single coins''
+    late rows (SEI 11:02; VVV differs too, not looked at)'
+- id: C8.S04.coverage
+  name: coins counted for S04
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of roster coins with a value of S01
+  aliases: none
+  means: how many coins S04's median read
+  computation:
+    status: RELIABLE
+    proof: 'J15808 cover: equal to the count of our coins with an S01 value at 1,440 of 1,440 minutes, both days'
+  meaning:
+    status: DEFINED
+    proof: CARD_C8_V4 rule 10; J15808 cover (8 Mar 50 to 52 coins; 24 Sep 48 to 51)
+  open: none
+- id: C8.S05.coverage
+  name: coins counted for S05
+  layer: basic
+  side: none
+  window: 60 s and the minute before
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of roster coins with a value of S02
+  aliases: none
+  means: how many coins S05's median read
+  computation:
+    status: RELIABLE
+    proof: 'J15808 cover: 1,440 of 1,440 minutes, both days'
+  meaning:
+    status: DEFINED
+    proof: CARD_C8_V4 rule 10; J15808 cover
+  open: none
+- id: C8.S06.coverage
+  name: coins counted for S06
+  layer: basic
+  side: none
+  window: 60 s
+  clock: minute end
+  scope: market
+  contracts: USDT
+  aggregate: count of roster coins with a value of S03
+  aliases: none
+  means: how many coins S06's median read
+  computation:
+    status: RELIABLE
+    proof: 'J15808 cover: 1,440 of 1,440 minutes, both days'
+  meaning:
+    status: DEFINED
+    proof: CARD_C8_V4 rule 10; J15808 cover (8 Mar 52 every minute; 24 Sep 49 to 51)
+  open: none
+could_build:
+- id: C8.CB1
+  intended: 'wick share: the part of the minute''s range outside the body, per coin and as a market median'
+  was_name_of: C8.S01, C8.S04
+  formula: '((high - max(open, close)) + (min(open, close) - low)) / (high - low); the lower and upper wicks apart as options; market: the median over the roster coins with a value'
+  needs: 'the minute''s open (the first trade stamped in (e - 60 s, e] and received by e): C13 has no open today (C13 gives close, high, low, no trade); a new C13 setting or a C8 producer
+    edition'
+  adds: 'NEW information: corr with S01 -0.015 (8 Mar) and -0.025 (24 Sep); lower wick corr 0.45 and 0.38, upper wick -0.46 and -0.41 (J15808 name, on Binance klines)'
+  status: NOT_BUILT
+- id: C8.CB2
+  intended: 'body share: the minute''s open-to-close move over its range, per coin and as a market median'
+  was_name_of: C8.S02, C8.S05
+  formula: '(close - open) / (high - low), always between -1 and 1; market: the median over the roster coins with a value'
+  needs: the minute's open, as C8.CB1
+  adds: 'LITTLE: corr with S02 0.893 (8 Mar) and 0.961 (24 Sep), same sign 99.87 and 99.75%; it differs from S02 only when the open is not the previous close: 47 to 52% of minutes; |open
+    - previous close| p90 5.66 bp (8 Mar) and 2.29 bp (24 Sep) over all minutes (J15808 name)'
+  status: NOT_BUILT
+conclude:
+  may:
+  - where the minute closed in its high-low range (S01 per coin, S04 the market's median) and how wide the minute was (S03, S06), as Binance's own candles show it
+  - 'the sign of S02: the minute closed up or down from the previous minute''s close'
+  never:
+  - 'anything about wicks or candle bodies from S01, S02, S04, S05: they were renamed (close position, close move over range); a real wick share and body share are not built (C8.CB1,
+    C8.CB2)'
+  - 'S02''s size compared across coins or minutes without the range: a tiny range makes it jump (8 at XMR 24 Sep 2025 22:23)'
+  - an EMPTY S01 or S02 (one price all minute, NO_RANGE) as 0; S03 is then 0
+  - 'the minute''s open: C13 gives no open'

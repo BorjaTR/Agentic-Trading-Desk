@@ -1,0 +1,127 @@
+# OUR_RULE_E1_V1.yaml: the card of E1's OUR RULES S07 (funding_z, RENAMED in edit 3) and S08 funding_persist_h (the market's funding against
+# its last 3 weeks, and the run of hours it stays 2 or more away), EDITION 1 (BED, 2026-10-18; OR4 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1
+# 15:54:31Z; reviewer EDGE2). Made as OUR_RULE_C9_V1 66c345c9 (EDGE2); ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it.
+# Register of the day: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (E1 S07, S08 our_rule, NOT_CHECKED before this card). The smart
+# check (section 1): the input cited by what it is, planted tests and mutants first, ONE small job (J16009: S07, S08 replayed at every minute
+# end of 2 days from the year's own S05), how often they fire, readers to TREE's RR1. Pass lines: hb/BED.txt 2026-10-18T16:37:38Z 'BED PASS
+# LINES OR4.E1', posted before J16009 ran. 24 Sep 2025 is not a day here: its 504 hours reach before YEAR_LEARN (4 Nov 2025 instead).
+
+# Edit 2 (BED, 18 Oct 2026, before landing; EDGE2's REVIEW OR4.E1 OK with nits 16:53:37Z; edit 1 was the stamps): (1) 5,760 values, 2,880
+# minute ends; (2) the medians as the mean of the two middle values (J16018); (3) S08's run rule on the planted cases only, an open line; and
+# J16018 (rule_e1 ed2): the spread is the MeanAD floor at every minute end of both days, for EDGE1 by RULING 3. No verdict changed.
+
+# Edit 3 (BED, 18 Oct 2026, before landing; EDGE1 RULING 3 17:11:43Z: RENAME): S07 is renamed (renamed_from funding_z) and could_build E1.CB1
+# (the robust z with the MAD's spread) added. J16022 (rule_e1 ed3 0721656c, log 38ece378f472e875) counted the spread's term with the MAD at
+# exactly 0 apart: MEANAD at 1,440 of 1,440 minute ends of both days, MEANAD_MAD0 at none: the MAD is above 0, the MeanAD term is larger. The
+# rename rests on the formula (the spread is not 1.4826 MAD), not on a MAD of 0. S08 keeps funding_persist_h (it counts hours). No value changed.
+group: E1
+name: funding, our rules (S07 the market's funding deviation from its 504-hour median in units of max(1.4826 MAD, 1.2533 MeanAD); S08 the run of hours at 2 or more)
+summary: >-
+  S07 at e: x = E1 S05 at e (the open-interest weighted lower median of the roster coins' funding rate per 8 h less Binance's default 0.0001);
+  the base = S05 at the 504 clock hours h with e - 504 h < h <= e, VALUED with 479 or more; z = (x - med) / max(1.4826 MAD, 1.2533 MeanAD),
+  4 decimals; NO_BASELINE, ZERO_SPREAD, x's reason when empty (CARD_E1_V9 rule 25). S08 at a minute end: the signed count of clock hours in a
+  row, from the last clock hour back (at most 24), with S07 at 2 or more in size on the side of the last hour's sign; 0 when the last hour's
+  |S07| is under 2 (rules 27, 14).
+read_as: >-
+  The year writes both exactly: 5,760 of 5,760 values (2,880 minute ends x S07, S08) replayed from its own S05 on 8 Mar 2026 and 4 Nov
+  2025 (RULE_E1_STAMPS_V1, J16009, again J16018). The spread was the MeanAD floor (1.2533 MeanAD over 1.4826 MAD) at 1,440 of 1,440 minute
+  ends of both days (J16018), the MAD above 0 at all of them (J16022: MEANAD 1,440, MEANAD_MAD0 0): on these days S07 is (x - median) over
+  1.2533 x the mean absolute deviation, not the MAD's robust z, hence the rename (EDGE1 17:11:43Z). On those days S07 never reached 2 in size (-1.9217 to 1.7773), so S08 was 0 at every minute: the 'persist' setting never fired.
+  S07 kept one sign a day (8 Mar: -1 or less at 36.53% of minutes, never 1 or more; 4 Nov: 1 or more at 62.01%, never -1 or less): it says
+  where the market's funding sits against its own last 3 weeks, and the base moves with the rate; it is not 'above the default' (S05 0 at 12:00
+  of 4 Nov gave S07 1.7001; CARD_E1_V9, BED's finding 3).
+
+conclude:
+  may:
+    - "where the market's funding deviation sits against its own last 504 hours, in units of the spread max(1.4826 MAD, 1.2533 MeanAD), the MeanAD term on both days (S07: the year's value equals our replay at 2,880 of 2,880 minute ends of 8 Mar 2026 and 4 Nov 2025; RULE_E1_STAMPS_V1, J16009)"
+    - "how many hours in a row the market's funding has stayed 2 of S07's units or more from its 3 weeks (S08: equal to our replay at 2,880 of 2,880; 0 at every minute of both days)"
+  never:
+    - "S07 as crowded positioning in itself: it is the funding against its own last 3 weeks; on 4 Nov 2025 the rate at its default (S05 0) read S07 1.7001 (J16009)"
+    - "S08 not 0 as common: it was 0 at every minute of 8 Mar 2026 and 4 Nov 2025, S07 never 2 or more in size (J16009)"
+    - "S07 as the MAD's robust z: the spread was the 1.2533 MeanAD term at 1,440 of 1,440 minute ends of both days (J16018, J16022)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_E1_V9.md 530157c1c90ebb98 (rules 14, 25, 27; part 4's edges)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_E1_V3.tsv 2c3575526423aa5f (S07 funding_z, renamed by this card; S08 funding_persist_h)
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml b2b0205dc45ceec9 (E1 S05, the market's open-interest weighted funding deviation from 0.0001 per 8 h: basic, RELIABLE, LIMITS: a live estimate until each settle); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv (E1 S07, S08 our_rule, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code/prod_E1_v3.py 853f31ca8f4257ef (CARD_E1_V9 edition 3)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E1.parquet
+  year_output_columns: "name (S07, S07.partial_base_off, S08, and the Hyperliquid twins .hl_off), coin (MARKET), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 2, 4 a value, 4 with its exact text), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'E1', ['S05', 'S07', 'S08'], coins=['MARKET'])"
+
+source:
+  vendor: "Tardis.dev, binance-futures derivative_ticker (funding rate, open interest, index price), through E1 S05 (BASIC_E1_V2)"
+  exchange_stream: "markPrice / ticker as Tardis records it, read by E1; S07 and S08 read S05's minute values, never a stream"
+  files: "the year's E1 output of D-22 to D (E1.parquet)"
+  columns: "E1 S05 (MARKET) at every minute end, value_kind, value_txt (the exact decimal), empty_reason; E1 S07, S08 of D"
+  fields:
+    z: "x = S05 at e; the base S05 at the 504 clock hours (e - 504 h, e]; VALUED at 479 or more, else NO_BASELINE; spread = max(1.4826 MAD, 1.2533 MeanAD), 0: ZERO_SPREAD; (x - med) / spread, 4 decimals half away from 0 [proof: CARD_E1_V9 rule 25; planted Z1 to Z8 in tests/test_rule_e1.py (the floor z 1.9713, 479 and 478, ZERO_SPREAD, x empty, the rounding, the hours); mutants need_504, mad_only, hours_from_next, round_even; RULE_E1_STAMPS_V1]"
+    run: "the last clock hour h0 at or before tau; 0 when |S07(h0)| under 2; else the sign times the hours in a row from h0 with a value and the same sign at 2 or more, at most 24 [proof: rule 14; planted R1 to R5; mutants floor_1, run_skips_empty]"
+  latency: "known_at = that of x (S07), of z(h0) (S08) (CARD_E1_V9 rule 13); not checked here"
+  silence: "x empty or the base short: S07 empty (NO_BASELINE in the year's first 3 weeks, the register's open); none on the two days (J16009: 504 of 504 base hours at 00:00)"
+
+reading_rules:
+  - "S07 compares the market's funding with its own last 3 weeks (504 clock hours): the base moves with the rate, so a long stretch at one level reads 0"
+  - "the spread has a floor: max(1.4826 MAD, 1.2533 MeanAD), so a base that sits at one value most hours (the default rate) still gives a value"
+  - "S08 is constant within a clock hour (it reads S07 at the clock hours)"
+  - "the year also writes S07.partial_base_off and the Hyperliquid twins (.hl_off): not checked in this card"
+
+values:
+  units: "S07: units of the spread max(1.4826 MAD, 1.2533 MeanAD), no unit, the MeanAD term at every minute of both days (+ = funding above its 3 weeks); S08: hours, signed (+ above, - below), -24 to 24"
+  zero: "S07 0: at the base's median (12:00 of 8 Mar 2026, S05 at -0.0001); S08 0: |S07| under 2 at the last clock hour"
+  empty: "S05's reasons, NO_BASELINE, ZERO_SPREAD (S07); S07's reasons at h0 (S08); value_kind 0. Never read empty as 0"
+  stale: "as x (S07), as z(h0) (S08)"
+  flags: "S07: MISSING_HOURS=<n> and MISSING=<the hours> when the base is valued with hours missing (not checked here)"
+
+interpret:
+  do:
+    - "read S07 with S05 beside it: the level of the rate tells whether a value of S07 is a real tilt or a quiet base"
+  dont:
+    - "read S08 of 0 as calm funding: on these days S07 never reached 2"
+
+biases:
+  - {what: "a 3-week base of one market number", direction: "S07 holds one sign for a day", size: "8 Mar 2026: -1 or less at 36.53%, 1 or more at 0%; 4 Nov 2025: 1 or more at 62.01%, -1 or less at 0% (J16009)", proof: "J16009"}
+
+external_checks:
+  - {what: "S07 and S08 replayed by the card's rules from the year's own S05 (its exact text) at every minute end of 8 Mar 2026 and 4 Nov 2025, the base from 22 days back", where: "the year's E1 S05 rows (a replay, our source; S05 RELIABLE by BASIC_E1_V2)", status: "VERIFIED: RULE_E1_STAMPS_V1 c1be99e8bbac62e0: 2,880 of 2,880 MATCH each (J16009 log 06c7ac767d4079fd, rule_e1 ed1 c804eea0bf208872, tests f17c778a4bd1a31f 19 of 19: 13 cases, 6 mutants)"}
+  - {what: "how often S07 reaches 2, 1, -1 and S08 is not 0; the clock hours where the exact and the written S07 could cut S08 differently (|S07| within 0.00005 of 2)", where: "the year's own E1 rows of 8 Mar 2026 and 4 Nov 2025", status: "MEASURED: J16009 (none within 0.00005 of 2)"}
+  - {what: "an outside record", where: "none: our rule on our funding median; S05 is checked against Binance in BASIC_E1_V2", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "S07 and S08 replayed at every minute end of D", run: "python3 -B -m rawcheck.rule_e1 --days <D,..> --out <dir>", where: "team/RAWCHECK/code (rule_e1.py ed3 0721656c4b795e4f: also counts which term sets the spread, a MAD of exactly 0 apart (MEANAD_MAD0); ed2 3678ad9f ran J16018, ed1 c804eea0 J16009)"}
+
+could_build:
+  - {id: E1.CB1, intended: "the robust z of the market's funding deviation against its last 504 hours with the MAD's spread (what 'funding_z' reads as)", was_name_of: "E1.S07",
+     formula: "(S05 at e - the median of S05 at the 504 clock hours) / (1.4826 MAD); valued with 479 or more hours; empty when the MAD is 0",
+     needs: "nothing new: S07's inputs (the MAD above 0 at every minute end of both days measured, J16022)",
+     adds: "a z in the MAD's units; at every minute of both days S07's spread was the larger MeanAD term, so E1.CB1 would be larger in size than S07 wherever S07 is not 0; by how much not measured",
+     status: NOT_BUILT}
+
+used_by: "S07 by POSITIONING/CROWDED-LONGS (fifth 5 and raw z of pos_z 1.0 or more), POSITIONING/CROWDED-SHORTS (fifth 1 and -1.0 or less), POSITIONING/FUNDING-MID (else), CHAIN_chop_SHORT_fade (condition 4: fifth 5 enter), CHAIN_forced_LONG_ride (condition 2: fifth 5, or 4 and 5 enter; fifth 1 skip), CHAIN_forced_SHORT_fade (condition 2: fifth 1 skip; fifth 4, or 4 and 5 enter), CHAIN_forced_SHORT_ride (condition 2: fifth 1, or 1 and 2 enter); S08 nobody yet (CARD_E1_V9 'Who reads it today'). To TREE's RR1 (hb/BED.txt 16:40:48Z): S07 keeps one sign a day, so a CROWDED label can hold all day"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_E1_V9.md 530157c1c90ebb98
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_E1_V2.yaml b2b0205dc45ceec9 (S05, the input)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_E1_STAMPS_V1.tsv c1be99e8bbac62e0 (J16009)"
+  JOBS: "16009 (tests, rule_e1 ed1 on 8 Mar 2026 and 4 Nov 2025; log 06c7ac767d4079fd), 16018 (rule_e1 ed2, the same days: 5,760 of 5,760 again, the spread's term; log 6af55cbdb60c96bb), 16022 (rule_e1 ed3, the same days: 5,760 of 5,760, MEANAD 1,440 a day, MEANAD_MAD0 0; log 38ece378f472e875)"
+  PASS_LINES: "hb/BED.txt 2026-10-18T16:37:38Z 'BED PASS LINES OR4.E1', posted before J16009 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z; for E1 S07 EDGE1 17:11:43Z): 'funding_z' calls up a robust z (spread 1.4826 MAD); the MeanAD term set the spread at every minute of both days (J16018; the MAD above 0, J16022), so S07 is the distance from the 504-hour median in floor units: RENAMED (could_build E1.CB1); funding_persist_h counts the hours: no rename"
+
+settings:
+  - {id: E1.S07, name: "market funding deviation's distance from its 504-hour median in units of max(1.4826 MAD, 1.2533 MeanAD) (the MeanAD term at every minute of both days measured)", renamed_from: "funding_z", layer: our_rule, side: none, window: "504 clock hours (e - 504 h, e]", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "(S05 at e - the median of S05 at the 504 clock hours) / max(1.4826 MAD, 1.2533 MeanAD); valued with 479 or more hours; 4 decimals", aliases: "funding_z (the old name: not the MAD's robust z)",
+     derived_from: "E1 S05 (BASIC_E1_V2) at e and at the 504 clock hours before",
+     means: "how many spread units (the larger of 1.4826 MAD and 1.2533 MeanAD) the market's funding deviation sits above (below) its last 3 weeks",
+     computation: {status: RELIABLE, proof: "RULE_E1_STAMPS_V1 c1be99e8: 2,880 of 2,880 (every minute end of 8 Mar 2026 and 4 Nov 2025, replayed from the year's S05 of 22 days; J16009, rule_e1 c804eea0; again J16018, J16022)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16009, J16018: 8 Mar 2026 median -0.8348 (the mean of the two middle values; -1.9217 to 0), -1 or less at 0.3653; 4 Nov 2025 median 1.2077 (-0.4797 to 1.7773), 1 or more at 0.6201; never 2 or more in size; the spread the 1.2533 MeanAD term at 1,440 of 1,440 minute ends a day, the MAD above 0 at all of them (J16022 MEANAD 1,440, MEANAD_MAD0 0); RENAMED (RULING 3, EDGE1 17:11:43Z; could_build E1.CB1)"},
+     open: "two days; one sign a day; the MAD's robust z (E1.CB1) not built, its size against S07 not measured; the year's first 3 weeks NO_BASELINE (the register's open)",
+     never: ["S07 as crowded positioning in itself (the default rate read 1.7001 on 4 Nov 2025)", "S07 as the MAD's robust z (the MeanAD term set the spread at every minute of both days)"]}
+  - {id: E1.S08, name: "signed hours in a row with the market funding deviation (S07) at 2 or more of S07's units in size", layer: our_rule, side: none, window: "24 clock hours back from the last clock hour", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "0 when |S07| at the last clock hour is under 2; else its sign times the clock hours in a row back from it with S07 of that sign at 2 or more, at most 24", aliases: "funding_persist_h",
+     derived_from: "E1 S07 at the clock hours",
+     means: "how long the market's funding has stayed 2 of S07's units or more from its last 3 weeks",
+     computation: {status: RELIABLE, proof: "RULE_E1_STAMPS_V1 c1be99e8: 2,880 of 2,880 (every minute end of 8 Mar 2026 and 4 Nov 2025; J16009)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16009: 0 at every minute of both days (S07 never 2 or more in size); the count the card's rule 14 says (no rename: funding_persist_h names the hours; the 2 it counts at is in S07's units, S07 renamed)"},
+     open: "never fired on the two days measured (|S07| under 2 at every minute); the run rule rests on the planted R1 to R5 only; read by nobody",
+     never: ["S08 not 0 as common (0 at every minute of 8 Mar 2026 and 4 Nov 2025)"]}

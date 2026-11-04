@@ -1,0 +1,54 @@
+{
+ "schema": "DECIDE_RULEBOOK_V1",
+ "alarm_id": "ALM_S3W_V1",
+ "version": 1,
+ "note": "every line is CANDIDATE. The side is UNSET (no side finding). S1 comes from the context loop cell that measured the fade on FASTER fires.",
+ "side": {
+  "value": "UNSET",
+  "status": "DEFAULT",
+  "note": "no side finding exists for S3W: the context loop row is not a side result, and the S3 seat's study of the same mechanism found the push continues (S3_REPORT_V1.md). The grader shows both sides until a side finding exists."
+ },
+ "skip_rules": [
+  {
+   "id": "S1",
+   "field": "ctx.ACT_COIN.PACE_5M_VS_1H",
+   "states": [
+    "SLOWER",
+    "SIMILAR",
+    "FASTER"
+   ],
+   "reasons": [
+    "UNKNOWN*",
+    "NO_HISTORY*",
+    "NOT_READY*",
+    "NOT_APPLICABLE*",
+    "LATER*",
+    "OWN_TRIGGER*",
+    "META*"
+   ],
+   "skip_if": [
+    "FASTER"
+   ],
+   "status": "CANDIDATE",
+   "mechanism": "when the last 5 minutes run faster than the hour, the push is still accelerating and a fade comes too early",
+   "evidence": {
+    "source": "team/RESEARCH/LIBRARY/context_split/runs_loop_v1/LOOP_SUMMARY_V2.md",
+    "sha16": "9615fb3b191bd2ac",
+    "cell": "S3W ACT_COIN.PACE_5M_VS_1H: FASTER, FADE reach +4c within 1 h, -10.4 points after the cell, 1980 fires, 1012 waves, no warning"
+   },
+   "note": "states copied from context_split/library_v4.py field ACT_COIN.PACE_5M_VS_1H; reasons = the context library's typed non-states (library_v4.py TYPED: a word starting with one of them is not a state)"
+  }
+ ],
+ "entry": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "exit": {
+  "value": "UNSET",
+  "status": "DEFAULT"
+ },
+ "size": {
+  "value": 1,
+  "status": "DEFAULT"
+ }
+}

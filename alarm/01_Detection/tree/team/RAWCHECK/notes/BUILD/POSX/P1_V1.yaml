@@ -1,0 +1,184 @@
+# POSX P1 (METRIC_AUDIT2, 18 Oct 2026), edition 1: the V1 .md draft (P1_V1.md 2f9fd423) moved into the keys of
+# TEMPLATE_METRIC_CARD_V1.yaml (BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). Binding now: ADDON_ARCHITECTURE_V4 edit 3 0591d181 (V3 rules stand unless V4 changes them), WORKPACKAGES_V2 edit 2 ac90daf8.
+# Edition 2 (METRIC_AUDIT2, 18 Oct 2026): kernel line against ADDON_ARCHITECTURE_V4 b5fcc859 9.4 (none needed); values unchanged
+# Edition 3 (METRIC_AUDIT2, 18 Oct 2026): REVIEW_LEAD_EDGE1_V1 8dd9867d P1 fixes: both pass lines could not fail (the identity moved to U5, the trap to report_only; a pass line on P1 x the interval before each settle against E1 S09, level proposed), X7 (Binance in may; never Hyperliquid); nits: M5's planted rows, E1 S01 by its register name; BED N1 (the 1 h and back-to-4 h dates)
+# Signed by BED's REVIEW OK of edition 3, 2026-10-18T19:07:55Z (with EDGE1's lead review REVIEW_LEAD_EDGE1_V1 section 4 and TREE's FIX CHECK POSX OK 2026-10-18T19:56:44Z).
+kind: build_metric
+id: P1
+producer: POSX
+item: 'funding per hour, Binance (interval from E1 S04) (BUILD_ITEMS_V3 3dbb747a line P1)'
+tier: BUILD
+name: Binance funding rate in force (the forecast for the next settle), put on one hour
+status:
+  drafter: METRIC_AUDIT2
+  reviewer: BED
+  edition: 3
+  signed: true
+  signed_by: 'BED 2026-10-18T19:07:55Z'
+means: >-
+  The share of the position the longs pay the shorts (above 0) or receive (below 0) per hour, at the rate Binance forecasts now
+  for the coin's next settle. One unit for every coin, whatever its settle interval (8 h, 4 h or 1 h).
+example: >-
+  BTC at the default 0.0001 per 8 h reads 0.0000125 per hour; a 4 h coin at 0.00005 per 4 h also reads 0.0000125; a coin moved to
+  1 h settles after a capped settle, at 0.002 per hour, reads 0.002.
+formula: >-
+  P1(u) = E1 S01(u) / 8, on the year's row of E1 S01 at the minute end u (value_f64, the float of S01's exact text). E1 S01 is the
+  funding rate in force x 8 h / the coin's interval, exact, rounded once to 10 decimals, exact for intervals of 1, 2, 4 and 8 h
+  (CARD_E1_V9 rule 8, line 288; SETTINGS_E1_V3 row S01), so S01 / 8 = the rate / the interval in hours for every interval: the
+  BUILD_ITEMS_V3 item's 'interval from E1 S04' is already inside S01, and S04 is not read. The division by 8 scales by a power of
+  two, so the float of S01 / 8 is the float nearest the exact rate per hour (no rounding added); decimals none. An empty S01 gives an
+  empty P1 with S01's reason and stale. TRAP (RESEARCH_TOOLS_V1 aad3cc38 row P1): S01 / S04 is wrong by 8 / N; never divide S01 by S04.
+source:
+  kind: doc
+  ref: >-
+    Binance funding FAQ (updated 2026-03-06, read 2026-10-18; RESEARCH_TOOLS_V1 aad3cc38 section 4.1): 'Funding Rate (F) = [Average
+    Premium Index (P) + clamp(interest rate - Premium Index (P), 0.05%, -0.05%)] / (8 / N)', N the interval in hours. RESEARCH_TOOLS_V1
+    row P1: no tool computes it (fetch only); build ourselves.
+inputs:
+  - kind: year
+    ref: E1 S01 (live funding estimate for the next settle, scaled to 8 h; its LAYER_REGISTER_V32 name)
+    card: CARD_E1_V9 (team/BED/notes, rules 1 to 8) / SETTINGS_E1_V3 row S01 / MEANING_E1_V2
+    verdict: CLEAN
+    rule_in_force: >-
+      the year's row of E1 S01 at u itself (as_of = u); its known_at is the later of the rate's and the interval's rows (CARD_E1_V9
+      rule 8), received by u
+    stale_rule: E1 S01's own stale and empty_reason pass through (the ticker's 61.0 s level, CARD_E1_V9 rule 5, line 285)
+    days: D only (S01 at 00:00 of D is D's own row; the year read D-1's file for it)
+overlaps:
+  - setting: E1 S01
+    kind: copy
+    why: 'P1 x 8 = E1 S01 at every coin-minute (the same rate on another unit): a cross-check, never a second reading'
+per_coin: >-
+  8 h coins (most of the roster), 4 h coins (15 or 16 roster coins, CARD_E1_V9 line 183) and coins at 1 h after a capped settle
+  (Binance FAQ via RESEARCH_TOOLS_V1 aad3cc38 line 59: the move to 1 h since 2025-05-02; back to 4 h after 16 cycles at or under
+  0.025 percent, on the 17th, since 2026-01-02 12:00 UTC, so year days before 2 Jan 2026 had no way back to 4 h by that rule): S01
+  puts each on 8 h, so P1 is right for each without
+  reading S04. The 1000x coins (1000PEPE, 1000SHIB): the rate is a share of the position, unchanged by the contract's size. A coin
+  of the roster with no Binance ticker file: S01 empty NO_FILE, so P1 empty NO_FILE.
+time: >-
+  The rate moves until each settle (00:00, 08:00, 16:00 UTC for 8 h coins; every 4 h for 4 h coins) and jumps after it; at a
+  settle's minute end S01 is the last forecast, not the rate applied (that is E1 S09, CARD_E1_V9 line 172). 00:00 of D is D's own
+  year row: no CARRY (no raw read). The first year day (10 Sep 2025) has S01 as the year wrote it.
+output:
+  group_file: X1/day=<D>/POSX.parquet
+  names:
+    - name: S01
+      label: funding_bn_per_hour
+      units: fraction of the position per hour (0.0000125 = 0.00125 percent)
+      value_kind: float
+      decimals: none
+      means: Binance funding rate in force, the forecast for the next settle, per hour
+      never: [the rate paid at the last settle (E1 S09 per interval), a rate per 8 h, a rate for the coin's own interval]
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = known_at of E1 S01's year row at u, valued or empty (the year's rows hold known_at <= as_of), so known_at <= as_of
+  empty_reasons:
+    - reason: NO_ROSTER
+      when: E1 S01 empty NO_ROSTER at u (passes through)
+    - reason: NO_FILE
+      when: E1 S01 empty NO_FILE at u (the coin's Binance ticker file of the day read missing)
+    - reason: BAD_INPUT
+      when: E1 S01 empty BAD_INPUT at u
+    - reason: NO_VALUE
+      when: E1 S01 empty NO_VALUE at u
+    - reason: STALE_VALUE
+      when: E1 S01 empty STALE_VALUE at u (its row older than 61.0 s), stale 1
+    - reason: NO_INTERVAL
+      when: E1 S01 empty NO_INTERVAL at u (no earlier funding_timestamp, so the interval unknown)
+    - reason: NO_ROW
+      when: no year row of E1 S01 for the coin at u (a roster coin E1 did not write); never read as 0
+  stale_rule: stale = E1 S01's stale at u (1 only with STALE_VALUE)
+  max_staleness_s: 61
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 an 8 h coin at the default
+    input: E1 S01 text 0.0001 at u
+    answer: P1 = 0.0000125
+  - case: E2 a 4 h coin
+    input: rate 0.00005 per 4 h, so E1 S01 = 0.0001; E1 S04 = 4
+    answer: P1 = 0.0000125 (the trap S01 / S04 = 0.000025 is twice too high)
+  - case: E3 a coin at 1 h after a capped settle
+    input: rate 0.002 per 1 h, so E1 S01 = 0.016; E1 S04 = 1
+    answer: P1 = 0.002 (the trap S01 / S04 = 0.016)
+  - case: E4 a negative rate
+    input: E1 S01 = -0.0003
+    answer: P1 = -0.0000375
+  - case: E5 a zero rate
+    input: E1 S01 = 0 exactly
+    answer: P1 = 0, a value (nobody pays), never empty
+  - case: E6 an empty input
+    input: E1 S01 empty STALE_VALUE, stale 1, known_at k
+    answer: P1 empty STALE_VALUE, stale 1, known_at k
+  - case: E7 no year row
+    input: a roster coin with no E1 S01 row at u
+    answer: P1 empty NO_ROW, stale 0, known_at = u
+  - case: E8 a long text
+    input: E1 S01 = 0.000123456789
+    answer: P1 = 0.000015432098625 exactly, written as the float64 nearest it (float(S01) / 8 is that float)
+unit_tests:
+  - test: U1 (E1 to E5)
+    planted: E1 S01 rows (value_kind 4, the texts above) of five coins at three minute ends, E1 S04 rows 8, 4, 1, 8, 8
+    expect: P1 floats 0.0000125, 0.0000125, 0.002, -0.0000375, 0.0 at each minute end, stale 0, known_at = the planted S01 known_at
+  - test: U2 (E6, E7)
+    planted: one coin with S01 empty STALE_VALUE stale 1; one roster coin with no S01 row; one coin with S01 empty NO_INTERVAL
+    expect: P1 empty STALE_VALUE stale 1; empty NO_ROW stale 0, known_at = u; empty NO_INTERVAL stale 0
+  - test: U3 (E8)
+    planted: E1 S01 text 0.000123456789
+    expect: P1 == float('0.000015432098625') exactly (bit equal)
+  - test: U4 the row stamps
+    planted: U1 to U3
+    expect: every row as_of = u, known_at <= as_of, rows sorted name, coin, as_of; 1,440 rows per coin for a full planted day
+  - test: U5 the identity (moved from the meaning check, REVIEW_LEAD_EDGE1_V1 X6)
+    planted: U1's rows
+    expect: P1 x 8 == float(S01) bit for bit on every valued row (the scaling by a power of two is exact)
+mutants:
+  - mutant: M1 P1 = S01 / S04 (the trap)
+    caught_by: U1 (the 4 h coin gives 0.000025, the 1 h coin 0.016)
+  - mutant: M2 P1 = S01 (no division)
+    caught_by: U1 (0.0001 in place of 0.0000125)
+  - mutant: M3 an empty S01 read as 0
+    caught_by: U2 (P1 = 0 in place of empty STALE_VALUE)
+  - mutant: M4 the reason dropped (every empty written NO_VALUE)
+    caught_by: U2 (NO_VALUE in place of STALE_VALUE and NO_INTERVAL)
+  - mutant: M5 P1 from the rate as given (S01's .own_interval_off), not per hour
+    caught_by: U1 (computed from U1's planted S01 and S04 rows as S01 x S04 / 8, the 4 h coin gives 0.00005)
+real_check:
+  points:
+    - point: 2026-03-08, all coins, minute ends 00:00, 04:00, 07:59, 12:10
+      why: an 8 h settle, a 4 h settle, the last minute before a settle, no settle
+    - point: 2025-09-24, all coins, minute ends 00:00, 04:00, 07:59, 12:10
+      why: the same on an early year day (the 4 h coins of September 2025)
+    - point: 2026-03-08 and 2025-09-24, every coin-minute with E1 S04 = 1 (if any) and every coin-minute with S01 empty
+      why: a 1 h coin and the empty pass-through (the tester picks them from E1 before the job)
+  pass: >-
+    The tester recomputes S01 / 8 from B's text with Fraction, never the builder's code: floats within 1e-9 relative (V2 rule 5),
+    empty reasons, stale and known_at equal. One small runner job.
+meaning_check:
+  pass_lines:
+    - 'At the last minute end before each settle of 2026-03-08 and 2025-09-24, P1 x the coin''s interval in hours lies within 0.00001 of the rate applied at that settle (E1 S09 at the first minute end after it) at 95 percent or more of coin-settles (proposed level, EDGE1 or the owner sets it; J15900, REVIEW_LEAD_EDGE1_V1 P1; the register''s E1 S01 open: 0.00002 to 0.000035 apart an hour before)'
+  report_only:
+    - the same gap one hour before each settle (how far the forecast moves in its last hour)
+    - 'on the 4 h coins of 2026-03-08, P1 against S01 / S04 (the trap''s size, factor 8 / N)'
+    - the share of coin-minutes at the default 0.0000125 on each day
+    - the coins and minutes with S04 = 1
+conclude:
+  may:
+    - what a long pays on Binance (above 0) or receives (below 0) per hour at Binance's rate in force now, comparable across Binance coins of any interval
+  never:
+    - the rate paid at the last settle (that is E1 S09, per the coin's interval)
+    - the rate that will be paid at the next settle (S01 is a forecast that moves until the settle, LAYER_REGISTER_V32 E1 S01 open)
+    - a rate per 8 h or per the coin's own interval
+    - what a long pays on Hyperliquid (that is P2)
+readers: none yet (P3, P4, P5 read it in the same producer)
+implementation:
+  how: >-
+    One column operation over the day: E1's rows of D, name S01, all coins (polars), value_f64 / 8, reasons and stale passed
+    through, known_at copied; no loop over rows or minutes in Python.
+  kernel: 'new: col_map (one column operation on year rows; no ADDON_ARCHITECTURE_V4 9.4 kernel is needed for a division; shared with P5)'
+  memory_mb: 50
+  seconds_share: 0.2
+data_checks: none

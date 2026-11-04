@@ -1,0 +1,274 @@
+# FLOWX F7, edition 1, on ADDON_ARCHITECTURE_V4 and the 5 s grid (BED, 18 Oct 2026; BRIEF_FLOWX_V4_DELTA applied, twin
+# F7_V1.yaml.pre_BED_20261018T181923Z). Facts from FLOWX_WORK_V0.yaml F7 (as F4, on F6), BRIEF_FLOWX_DRAFTERS and
+# BRIEF_FLOWX_V4_DELTA (the briefs override the hand work: no 4-decimal rounding, value float64). Every worked answer computed
+# exactly with fractions.Fraction.
+# Edition 2 (BED, 18 Oct 2026; METRIC_AUDIT2 18:53:59Z PF1 to PF3): kernels that exist in addon_grid_v2 85c8ece1 (per_window,
+# roll_points, run_beta, nearest_rank) or 'new:' with why; max_staleness_s = the bound known_at can lag; the floor through the fit
+# table X1/fit/FLOWX/<D>.parquet (ADDON_ARCHITECTURE_V4 edit 3 section 5). No value changed.
+# Edition 3 (BED, 18 Oct 2026; METRIC_AUDIT2's FLOWX review 19:11:54Z and REVIEW_LEAD_EDGE1_V1 8dd9867d section 0): FX7 Binance in
+# the name, label and conclude; FS stale only on TRADES_HOLE, THIN_FEED empties (B1 rule 22); FF no flag on an empty row (the first
+# year day's reads into D-1 empty NO_FILE, X1); FB the mid by CARD_C13_V4 rules 9, 11, 12 (F14, F15); X2 to X4, X6, X9, X11 as they apply.
+# Edition 6 (BED, 18 Oct 2026; METRIC_AUDIT's lead review REVIEW_LEAD_METRIC_AUDIT_FLOWX_V1 a8558bffc1c9f2ac): U3's times (an edition-2
+# leftover) and the thin-coin case's roster and value; the pass line at the year's rounding (B1 S16 to 4 decimals half up); B1 rule 18's coin flags on valued
+# rows; known_at at or after 00:00:00 of D through F6 (Y7); Y8 roster; E10 and E11 (a mix of TRADES_HOLE and THIN_FEED; the flags, a
+# 1000-coin and a stampless row through F6), U7.
+kind: build_metric
+id: F7
+producer: FLOWX
+item: 'whale block shares (B1 S16 rebuilt)'
+tier: REBUILD
+rebuilds: >-
+  B1 S16 (its V32 name is not in the kit; the hand work rebuilds it as the whale block breadth): the share of coins with the year's
+  B1 S06 (the last 1,000 trades on our same-millisecond slices, one floor 25,000) above 0 less the share below 0; here on F6 (the
+  last 1,000 aggTrades, a floor per coin)
+name: >-
+  Binance whale aggTrade block breadth, MARKET: the share of coins whose whale aggTrade net dollars in their last 1,000 aggTrades (F6) are
+  above 0 less the share below 0, -1 to +1 (B1 S16 rebuilt on F6)
+status:
+  drafter: BED
+  reviewer: METRIC_AUDIT2
+  edition: 6
+  signed: false
+means: >-
+  How many coins' big aggTrades among their own last 1,000 bought on net against sold, each coin counted once: +1 every coin counted
+  net buying, -1 every coin net selling.
+example: >-
+  At 12:00:00 F6 is BTC +49,600, ETH -2,000, SOL -1 and ADA 0: 4 coins counted, one up and two down: F7 = (1 - 2) / 4 = -1/4 =
+  -0.2500000000, COVERAGE=4.
+formula: >-
+  For the 5 s point u (00:00:00, 00:00:05, ..., 23:59:55 of D): over the roster coins of D (one F6 row each at u, valued or empty),
+  n = the coins with an F6 value at u (a measured 0 included), n_pos = those with F6 > 0, n_neg = those with F6 < 0, each by the sign
+  of F6's EXACT sum (integer units of dollars: price and quantity in their own steps, from F6's grids), never of its float64. F7(u) =
+  (n_pos - n_neg) / n, exact, written once as float64 (no rounding). A coin at 0 counts only in n. n = 0: empty, with the common
+  reason when every coin's F6 at u is empty with one reason, else ALL_COINS_EMPTY; no coin row at u: NO_ROSTER. Flag COVERAGE=<n> on
+  every MARKET value. Computed in phase B from the coins' F6 grids (ADDON_ARCHITECTURE_V4 section 7); the 00:00:00 row of D uses
+  F6's 00:00:00 rows, which are D-1's 24:00:00 rows (THE CARRY). As F4 on F6 (the hand work): the form of CARD_B1_V7 rule 15 with F6
+  in place of B1 S06.
+source:
+  kind: ours
+  ref: >-
+    The year's B1 S16 rebuilt on F6 (FLOWX/F6_V1: the last 1,000 aggTrades, a floor per coin); FLOWX_WORK_V0 F7 (BED's hand work,
+    'as F4 on F6'); ADDON_ARCHITECTURE_V4 edit 3 (0591d18171f2d21f) sections 4, 7 and 9.4.
+inputs:
+  - kind: addon
+    ref: FLOWX S06 (F6, whale aggTrade net dollars in the last 1,000 aggTrades, per coin)
+    card: FLOWX/F6_V1
+    rule_in_force: >-
+      F6's row at the 5 s point u (as_of = u) of every roster coin of D (F6 writes one row per roster coin and point, valued or
+      empty), with its exact sum for the sign
+    stale_rule: a coin whose F6 is empty is not counted (its stale, B1 rule 22 on F6's empty row, does not enter)
+    days: >-
+      D, in phase B from the coins' F6 grids; THE CARRY is F6's: the 00:00:00 row of D is D-1's 24:00:00 row, from
+      X1/carry/FLOWX/<D-1>.npz, and F6 carries D-1's last 1,000 aggTrades; F7 has no carry of its own
+  - kind: reader
+    ref: prod_reader_agg_trades_v1
+    exists: false
+    stream: 'Binance USD-M aggTrades (data.binance.vision archive)'
+    data_check: >-
+      D4: which days are held (HANDOVER_EDGE1_V103 901368a5 says the Expansion holds aggtrades to 1 Aug 2026; BUILD_LIST_V4 03c7ed28
+      line 42 says 113 coin-days held); the header row and column order; it refuses JUL_UNSEEN and every day from 1 Aug 2026
+    rule_in_force: through F6
+    stale_rule: through F6 (B1 rule 22 on its empty rows)
+    days: through F6 (D, the days D-30 to D-1 for the floor, and F6's CARRY)
+  - kind: reader
+    ref: prod_reader_trades_v2
+    exists: false
+    stream: "Tardis binance-futures trades (the year's trades stream)"
+    data_check: >-
+      an edition of prod_reader_trades_v1 (926b7ff5) that also keeps the trade id, tested equal to v1 packs (ADDON_ARCHITECTURE_V4
+      edit 3 0591d18171f2d21f, sections 6 and 10; V3 section 6 standing); it gives each aggTrade its arrival (O-FLOWX-1 (a), THE
+      rule: EDGE1 17:49:00Z)
+    rule_in_force: through F6
+    stale_rule: through F6 (the seen reasons of B1 rule 9)
+    days: through F6 (D and F6's CARRY)
+overlaps:
+  - setting: B1 S16
+    kind: other_metric
+    why: >-
+      B1 S16 is the year's block breadth on B1 S06 (the last 1,000 trades on our same-millisecond slices, the year's floor); F7 is the
+      same idea on F6 (the last 1,000 aggTrades, a floor per coin): another row and another floor.
+per_coin: >-
+  MARKET (coin MARKET) over D's roster (the year root's ROSTER_<monday>.csv of D's week, the one command's --year-rosters:
+  knowledge/roster/ starts at ROSTER_20251006, J16034; Y8, X11): every roster coin with an F6 value counts one, with no dollar weight; F6 is a count window, so each coin's
+  value covers its own span (seconds for BTC, hours for a thin coin): the coins counted do not describe the same stretch of time; a
+  coin drops out when F6 is empty (SHORT_HISTORY on a thin coin early on the first day, the seen reasons), so COVERAGE falls; a coin
+  new to the roster is out until its floor exists; 1000-prefixed symbols count as one coin like any other.
+time: >-
+  Every 5 s point of D. The 00:00:00 row of D uses F6's 00:00:00 rows, D-1's 24:00:00 rows (THE CARRY of F6: D-1's last 1,000
+  aggTrades); F7 has no carry of its own. The first year day: F6 reads 9 Sep 2025's raw once if held, else every coin is NO_FILE (X1; no flag), until its 1,000th aggTrade of D is received. Before the first floor (10 Oct 2025 if
+  aggTrades start 10 Sep 2025, earlier if held before: D4) every F6 is empty and F7 is empty. Funding settles, quarter hours and
+  weekends are ordinary points; 10 Oct 2025 evening (the crash) is a real-check point.
+output:
+  group_file: X1/day=<D>/FLOWX.parquet
+  names:
+    - name: S07
+      label: bn_whale_agg_block_breadth
+      units: share of the coins counted, -1 to +1
+      value_kind: float
+      decimals: none
+      means: (coins with F6 > 0 less coins with F6 < 0) over the coins with an F6 value at u, MARKET
+  grid: 5s
+  cadence: 'every 5 s (minute ends included): 17,280 points per day for the coin MARKET, u = 00:00:00, 00:00:05, ..., 23:59:55 of D'
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    known_at = the latest known_at of the coins counted at the 5 s point u (each F6 row's known_at <= u, at or after 00:00:00 of D: F6's Y7), else u (an empty row), so
+    known_at <= as_of
+  empty_reasons:
+    - reason: NO_FILE
+      when: no coin has an F6 value at the 5 s point u and every coin's F6 is empty NO_FILE (the common reason)
+    - reason: SHORT_HISTORY
+      when: no coin has an F6 value at u and every coin's F6 is empty SHORT_HISTORY
+    - reason: TRADES_HOLE
+      when: no coin has an F6 value at u and every coin's F6 is empty TRADES_HOLE
+    - reason: THIN_FEED
+      when: no coin has an F6 value at u and every coin's F6 is empty THIN_FEED
+    - reason: BAD_INPUT
+      when: no coin has an F6 value at u and every coin's F6 is empty BAD_INPUT
+    - reason: NO_HISTORY
+      when: no coin has an F6 value at u and every coin's F6 is empty NO_HISTORY (no floor yet)
+    - reason: NO_ROSTER
+      when: F6 has no coin row at u (no roster for D)
+    - reason: ALL_COINS_EMPTY
+      when: no coin has an F6 value at u and the coins' empty reasons differ
+  stale_rule: stale = 1 when no coin is valued and every coin's reason is TRADES_HOLE or THIN_FEED (B1 rule 22, a market value), else 0; a valued row is never stale (METRIC_AUDIT2 FS)
+  max_staleness_s: 3600
+  window_days: 30
+  no_history: >-
+    the first day with 30 days before it held (10 Oct 2025 if aggTrades start 10 Sep 2025, earlier if held before: D4); before it
+    every row of the names that use the floor is empty NO_HISTORY
+  fit_rule: >-
+    parameters from days before D only: F_coin(D) from the days D-30 to D-1 (each day's aggTrades stamped and received by its 24:00),
+    refit each day at 00:00 of D (through F6)
+  fifths: none
+  flags:
+    - flag: COVERAGE
+      when: every MARKET value, COVERAGE=<n>, n the coins counted (with an F6 value at u)
+    - flag: AGG_IDS_MISSING
+      when: "on a valued row only, written AGG_IDS_MISSING:<coin>=<n> for each coin counted whose F6 carries it (B1 rule 18)"
+    - flag: AGG_NOT_IN_TRADES
+      when: "on a valued row only, written AGG_NOT_IN_TRADES:<coin> for each coin counted whose F6 carries it (B1 rule 18)"
+    - flag: NO_RATE_BASE
+      when: "on a valued row only, written NO_RATE_BASE:<coin> for each coin counted whose F6 carries it (B1 rules 18, 19)"
+    - flag: DUPLICATE_ROW
+      when: "on a valued row only, written DUPLICATE_ROW:<coin> for each coin counted whose F6 carries it (B1 rules 17, 18)"
+    - flag: BAD_INPUT
+      when: "on a valued row only, written BAD_INPUT:<coin> for a coin whose F6 is empty BAD_INPUT while others count (B1 rule 18; prod_B1_v3 efc2bc52 lines 263 to 264)"
+edge_cases:
+  - case: E1 one up, two down, one at 0 (the hand work)
+    input: u = 12:00:00; F6 BTC +49,600, ETH -2,000, SOL -1, ADA 0
+    answer: 'F7 = (1 - 2) / 4 = -1/4 = -0.2500000000, COVERAGE=4'
+  - case: E2 one coin with a value (as F4)
+    input: only BTC valued, at +49,600; then at -2,000; then at 0
+    answer: 'F7 = 1, then -1, then 0; COVERAGE=1'
+  - case: E3 every coin 0 (as F4)
+    input: F6 = 0 for BTC, ETH, SOL, ADA
+    answer: 'F7 = 0, COVERAGE=4'
+  - case: E4 a thin coin short of 1,000 aggTrades
+    input: E1 with ADA's F6 empty SHORT_HISTORY
+    answer: 'ADA out: F7 = (1 - 2) / 3 = -1/3 = -0.3333333333, COVERAGE=3'
+  - case: E5 no coin valued
+    input: every coin's F6 empty SHORT_HISTORY; then BTC NO_HISTORY with ETH SHORT_HISTORY; then every coin NO_HISTORY; then no coin row
+    answer: 'empty SHORT_HISTORY; ALL_COINS_EMPTY; NO_HISTORY; NO_ROSTER; known_at = u and stale 0 on each'
+  - case: E6 two thin coins go unseen
+    input: 'roster = two thin coins (no other coin), both valued until unseen (F6 known_at 09:30:00.000 and 10:00:00.000; the second''s F6 +49,600), their last trades at 09:30:00.000 and 10:00:00.000; no trade after them'
+    answer: 'u = 10:00:30: one coin valued (the other unseen since 09:31:05, TRADES_HOLE): F7 = 1 (49,600 > 0), COVERAGE=1, known_at 10:00:00.000, stale 0; u = 10:01:05: both unseen: empty TRADES_HOLE (the common reason), stale 1, known_at = u'
+  - case: E7 the 00:00:00 start with the CARRY of D-1
+    input: >-
+      u = 00:00:00 of D; F6's rows at 00:00:00 (D-1's 24:00:00 rows, from F6's CARRY: D-1's last 1,000 aggTrades): BTC +49,600, ETH
+      -2,000, SOL +3,000
+    answer: 'F7 = (2 - 1) / 3 = 1/3 = 0.3333333333, COVERAGE=3'
+  - case: E8 the first year day without the carry
+    input: >-
+      10 Sep 2025, no 9 Sep 2025 raw, F_coin = 25,000 planted (the unit tests may fix it); at 00:00:00 no coin has 1,000 aggTrades; at
+      a later u BTC has its 1,000th received, at +49,600, the others still short of 1,000 (NO_FILE: their windows reach into 9 Sep 2025's file, X1)
+    answer: '00:00:00: every F6 empty NO_FILE (X1), F7 empty NO_FILE (the common reason), no flag, known_at = u; the later u: F7 = 1, COVERAGE=1. With aggTrades from 10 Sep 2025 (no floor) coins past 1,000 are NO_HISTORY: ALL_COINS_EMPTY while some are still NO_FILE, NO_HISTORY when none is'
+  - case: E9 a 5 s point that is not a minute end (12:00:05)
+    input: >-
+      E1's coins. BTC: F6's 5 s case (F6 E15): between 12:00:00 and 12:00:05 five aggTrades of D enter its 1,000 (a whale buy 45,000
+      among them) and five leave (the whale buy 30,000 among them): 49,600 to 64,600; ETH: F6 -2,000 from a whale buy 28,000 and a
+      whale sell 30,000, the sell its oldest row; the sell leaves and a retail row enters: +28,000; SOL -1 and ADA 0: no whale enters
+      or leaves
+    answer: 'F7(12:00:05) = (2 - 1) / 4 = 1/4 = 0.2500000000, COVERAGE=4 (at 12:00:00: -1/4 = -0.2500000000)'
+  - case: E10 a mix of TRADES_HOLE and THIN_FEED
+    input: "u = 12:00:00; roster BTC, ETH; BTC's F6 empty TRADES_HOLE, ETH's F6 empty THIN_FEED"
+    answer: 'F7 empty ALL_COINS_EMPTY, stale 1 (every reason TRADES_HOLE or THIN_FEED: B1 rule 22), known_at = u, no flag'
+  - case: E11 the coins' flags on a valued row, a 1000-coin, a stampless row (B1 rule 18; X2)
+    input: "u = 12:00:00; roster BTC, ETH, 1000PEPE, SOL: BTC's F6 -2,000 with NO_RATE_BASE, ETH's F6 empty BAD_INPUT, 1000PEPE's F6 +14,600 (F6's E14: a 1000-coin counts as one coin), SOL's F6 +49,600 with AGG_NOT_IN_TRADES (F6's E17: its stampless trade row passed over)"
+    answer: 'F7 = (2 - 1) / 3 = 1/3 = 0.3333333333 (n = 3: BTC, 1000PEPE, SOL), COVERAGE=3, flags AGG_NOT_IN_TRADES:SOL, BAD_INPUT:ETH, NO_RATE_BASE:BTC'
+unit_tests:
+  - test: U1 (E1, E4)
+    planted: F6 rows at u = 12:00:00 of the E1 coins; then with ADA empty SHORT_HISTORY
+    expect: 'E1: -1/4 = -0.2500000000, COVERAGE=4; E4: -1/3 = -0.3333333333, COVERAGE=3'
+  - test: U2 (E2, E3)
+    planted: the E2 single coin (three values), the E3 zeros
+    expect: '1, -1, 0 with COVERAGE=1; 0 with COVERAGE=4'
+  - test: U3 (E5, E6)
+    planted: the E5 rows; the E6 rows at 10:00:30 and 10:01:05 (roster = these two coins)
+    expect: 'SHORT_HISTORY; ALL_COINS_EMPTY; NO_HISTORY; NO_ROSTER; E6 valued stale 0 (COVERAGE=1) at 10:00:30, then empty TRADES_HOLE stale 1 at 10:01:05'
+  - test: U4 (E7, E8)
+    planted: the E7 rows at 00:00:00 of D; the E8 first year day
+    expect: '1/3 = 0.3333333333 at 00:00:00; first day 00:00:00 NO_FILE, then 1 with COVERAGE=1'
+  - test: U5 (E9, a point that is not a minute end)
+    planted: the E9 F6 rows at 12:00:00 and 12:00:05
+    expect: '12:00:00: -1/4 = -0.2500000000; 12:00:05: 1/4 = 0.2500000000, COVERAGE=4'
+  - test: U6 the row stamps
+    planted: U1 to U5
+    expect: >-
+      17,280 rows per day for the coin MARKET, one per 5 s point; as_of = u, known_at <= as_of (the latest of the coins counted);
+      value_kind 1 or 0; COVERAGE on every valued row
+  - test: UX the identities (moved from the meaning check, X6)
+    planted: U1's planted coins at every planted point
+    expect: 'F7 x COVERAGE = n_pos - n_neg exactly (a whole number), and -1 <= F7 <= 1'
+  - test: U7 (E10, E11) the market's stale and flags
+    planted: "the F6 rows of E10 and E11"
+    expect: 'ALL_COINS_EMPTY stale 1; F7 = 1/3 = 0.3333333333, COVERAGE=3 and the three flags'
+mutants:
+  - mutant: M1 zero_out (a coin at 0 dropped from the denominator)
+    caught_by: 'U1 E1 ((1 - 2) / 3 = -1/3 = -0.3333333333 against -1/4 = -0.2500000000)'
+  - mutant: M2 le_zero (a coin at 0 counted as net selling)
+    caught_by: 'U1 E1 ((1 - 3) / 4 = -1/2 = -0.5000000000 against -0.2500000000)'
+  - mutant: M3 stale_common_only (a mix of TRADES_HOLE and THIN_FEED written stale 0)
+    caught_by: 'U7 (E10 gives stale 0)'
+  - mutant: M4 coin_flags_dropped (only COVERAGE written)
+    caught_by: 'U7 (E11 has no AGG_NOT_IN_TRADES:SOL, BAD_INPUT:ETH, NO_RATE_BASE:BTC)'
+real_check:
+  points:
+    - point: 2026-03-08, MARKET, every minute end, from the tester's F6 recompute of every roster coin (BTCUSDT and one thin coin among them)
+      why: the year's checked day, if aggTrades are held there (D4), else the first held days the tester names
+    - point: 2026-03-08, MARKET, 12:00:05 to 12:01:00 every 5 s
+      why: the 5 s points that are not minute ends (rows entering and leaving the coins' 1,000 between minute ends)
+    - point: 2025-09-24, MARKET, every minute end and the 5 s points 00:00:00 to 00:05:00 (F6's CARRY of 23 Sep 2025)
+      why: the year's checked day, if aggTrades are held there (D4), else the first held days the tester names
+    - point: 2025-10-10 evening (the crash), MARKET, the points the tester names
+      why: a market-wide move, many coins on one side
+  pass: >-
+    The tester recomputes F6 for every roster coin at every point from F6's card's words (Fraction on the reader's p and q, never the
+    producer's code), then F7, its empty reason, known_at, stale and flags from this card's words: floats within 1e-9 relative, words
+    and flags equal; each mutant moves a value by more than 1e-6 relative.
+meaning_check:
+  pass_lines:
+    - 'F7 rounded half up to 4 decimals (B1 S16''s rounding, CARD_B1_V7 rule 15 line 167) differs from B1 S16 at more than half of the valued minute ends of the checked days (proposed level, EDGE1 or the owner sets it); if not, the rebuild does not change the block breadth'
+  report_only:
+    - F7 against the year's B1 S16 at the same minute ends (another row, another floor)
+    - COVERAGE by point, and the spread of the coins' F6 known_at at each point
+conclude:
+  may:
+    - the values are Binance USDT-M's (Binance futures trades and aggTrades; RULING 3, REVIEW_LEAD_EDGE1_V1 X7)
+    - how many coins' big aggTrades (each on its own floor) among their own last 1,000 bought on net against sold, with COVERAGE named
+  never:
+    - Hyperliquid's flow, price impact or cost (another venue, where the owner trades; these are Binance's values)
+    - 'an order count or a share of orders (RULING 3: an aggTrade is a 100 ms same-price same-side group of trades, an ORDER PROXY)'
+    - a dollar weight (every coin counts one)
+    - a time window (each coin's 1,000 aggTrades cover its own span)
+    - the year's B1 S16 (another row, another floor)
+readers: none yet
+implementation:
+  how: >-
+    Phase B: F6's exact sums of D as one array of shape (coins, 17,280 points), 17,280 x 52 x 8 bytes = 7,188,480 bytes (7.2 MB) a
+    grid; per point with numpy over the coin axis: n = the valued count, n_pos and n_neg by np.sign of the exact sums, F7 = (n_pos -
+    n_neg) / n; the common reason by comparing the empty reasons along the coin axis; known_at = the max of the valued coins'
+    known_at; no loop over points or coins in Python.
+  kernel: 'new: sign_share (the counts above and below 0 across the coins at each point, from the exact sums)'
+  memory_mb: 300
+  seconds_share: 0.5
+data_checks: none

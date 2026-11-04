@@ -1,0 +1,20 @@
+# KNOWN_TESTS.tsv: rows of alarm/_tools/TESTS.tsv that cannot pass in the clean repo, and why. known_tests_v1.py writes each reason into the
+# row's known column (the runner then prints KNOWN with the reason when the row fails; it still runs). drop_view yes = the row's view copied a
+# private lab table through a settings key; the view is emptied so the row runs and fails visibly instead of refusing the whole run.
+test	reason	drop_view
+tree/team/RESEARCH/tools/decide_v1/tests_decide_v1.py	PRIVATE DATA: reads the lab's alarm universe (LIBRARY/UNIVERSE_ALARMS_V1.tsv) and alarm registry, not shipped	yes
+tree/team/RESEARCH/tools/decide_v1/mutants_decide_v1.py	PRIVATE DATA: reads the lab's alarm universe and alarm registry, not shipped	yes
+tree/tools/idea_to_grade/test_i2g_v3_2.py	REGISTRY: test_17 reads the lab's ALARM_REGISTRY_V1.tsv (not shipped); the other 25 tests of the file pass	no
+tree/ALARM_DESIGN/REGISTRY/tests/test_registry_v2.py	REGISTRY: registry_build_v2, scoreboard_v2 and index_v2 are not shipped (lab registry machinery)	no
+tree/ALARM_DESIGN/REGISTRY/tests/mutants_registry_v2.py	REGISTRY: mutants of registry_build_v2, not shipped	no
+tree/ALARM_DESIGN/KIT_V5/tests/repro_gpt_v119_v1.py	NOT SHIPPED: reproduces an outside model's review round (lab exchange)	no
+tests/test_settings_v1.py	SETTINGS OF OURS: test_the_owners_mac_file_is_complete checks the lab machine's settings file, not shipped; the other 22 tests pass	no
+tests/mutants_settings_v1.py	SETTINGS OF OURS: its unchanged run reads the lab machine's settings file, not shipped	no
+tests/test_agent_docs_v1.py	REGISTRY: the card inventory names registry_build_v2, scoreboard_v2 and index_v2, not shipped	no
+tests/mutants_agent_docs_v1.py	REGISTRY: loads index_v2.py, not shipped	no
+tree/team/RESEARCH/tools/idea_to_grade/test_i2g_v3_2_rel1.py	REGISTRY: one test reads the lab's ALARM_REGISTRY_V1.tsv, not shipped	no
+tree/ALARM_DESIGN/REGISTRY/tests/test_inputs_read_v1.py	REGISTRY: inputs_read_v1 imports scoreboard_v2 (not shipped) and reads the lab registry	no
+tree/ALARM_DESIGN/REGISTRY/tests/mutants_inputs_read_v1.py	REGISTRY: loads scoreboard_v2.py, not shipped	no
+tree/ALARM_DESIGN/REGISTRY/tests/test_tried_search_v1.py	REGISTRY: its fixture (tests/data_tried_search_v1) is the lab's registry rows and claims with a found alarm's definition, not shipped; tried_search_v1.py itself is byte-identical to the release (JUDGE_PARITY.tsv)	no
+tree/ALARM_DESIGN/REGISTRY/tests/mutants_tried_search_v1.py	REGISTRY: needs the same fixture, not shipped	no
+tree/team/RESEARCH/ALARM_DESIGN/KIT_V2/templates/test_def_template_v4.py	PIN RECORD: t_code_table_current compares DEF_TEMPLATE_V4.md's table of release sha16s with code the scrub changed (pages keep the release's sha16 by design); the other 14 tests pass	no

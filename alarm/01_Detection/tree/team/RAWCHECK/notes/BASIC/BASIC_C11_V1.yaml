@@ -1,0 +1,131 @@
+# BASIC_C11_V1.yaml: the card of the basic group C11 level distance (built on the C13 trade candles), EDITION 1 (EDGE2, 2026-10-18; BR3 = WP3 of
+# BASIC_REVIEW_WORKPACKAGES_V3 075b96c8). Made as BASIC_C9_V1; meaning_register edition 5 6223b1ad3de7bb1b checks it. Register of the day:
+# LAYER_REGISTER_V18 b2d8bb81 (C11 NOT_CHECKED before this card). S01, S02, S05 to S08; S03, S04 (the ATR: layer formula) not in this card.
+# Every meaning number is from the BR3 proof run on meaning_minute edition 4 fe27fa1c: J15895 (8 Mar 2026), J15896 (24 Sep 2025); first J15889, J15890.
+# Edit 1 (EDGE2, 18 Oct 2026, before landing): BED's REVIEW BR3.C11 (hb/BED.txt 15:08:44Z): E1 the S01, S02, S05, S06, S07 opens name the close
+# first (the largest kline gaps have the same high and low and a close one tick apart: CRV 20:29; FIL 09:34, 16:00); C13 S01 is the minute's
+# last trade, so the one-tick close is a late or boundary trade (MEANING_C13_V4), not the mid (that is C13 S05); E2 S05's largest gaps are
+# one-tick side flips at a tie (FIL 13:27, 09:34); E3 the jobs of may 2 and never 2, 3.
+
+group: C11
+name: level distance (basic, built on the C13 trade candles)
+summary: >-
+  For each roster coin at a minute end e: how far the close is from the day's high (S01) and low (S02) so far, in percent of the close, from the
+  nearer of the two signed by its side (S05: + the high, - the low), from the prior day's high (S06) and low (S07), and which side of the prior
+  day's range today has crossed (S08: +1 up, -1 down, 0 neither; both: the later). The day is C13's minute ends 00:00 to e of D, the prior day
+  those of D-1 (the producers' day).
+read_as: >-
+  Distances to the day's and yesterday's levels as Binance's own 1-minute candles give them: equal to the same formula on the klines within
+  1e-9 at 99.75% of coin-minutes on 8 Mar 2026 and 99.59 to 99.64% on 24 Sep 2025, Spearman 0.999880 to 1.000000, S08 the same side at 100%
+  (J15895, J15896). S08 is the side crossed today, not where the price is now: it equals 'outside the prior range now' at 53.49% and 39.42% only.
+  Computation: 4,620 of 4,620 (C11_STAMPS_V1).
+
+conclude:
+  may:
+    - "how far the last price is under today's high or above today's low (S01, S02), and from the nearer of them (S05): equal to Binance's candles within 1e-9 at 99.59 to 99.75% of coin-minutes (J15895, J15896)"
+    - "how far the last price is from yesterday's high and low (S06, S07; negative: outside), and which side of yesterday's range today broke (S08, the later when both): S06, S07 equal to the candles within 1e-9 at 99.59 to 99.75%, S08 the same side at 100% (J15895, J15896 c11day)"
+  never:
+    - "S08 as 'outside yesterday's range now': it keeps the side after the price came back inside (46.15% and 60.58% of coin-minutes, J15895, J15896 c11name)"
+    - "S05's sign as a direction near the middle of the day's range: it flips when the two distances tie, and a one-tick close flips it (FIL 8 Mar 13:27: ours +1.810437 at a tie, the kline close one tick lower -1.705757; J15895 c11day; float ties: TIA 22:52, J15889)"
+    - "a distance of a coin whose C13 minute is empty: empty with C13's reason, never 0 (24 Sep: 105 coin-minutes, J15896 c11schema)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C11_V4.md d9b8ee9000c5ab14 (rules 1 to 13, O1 to O4)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C11_V1.tsv 4b2ee29e0bbdeb1b (8 settings)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01 close, S02 high, S03 low: raw, LIMITS)"
+  layer_list: "team/LAB/notes/RAWCHECK/BASIC_LIST_V2.md (C11 S01, S02, S05 to S08 basic; S03, S04 formula); LAYER_REGISTER_V18 b2d8bb81"
+  producer: "testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C11_v5.py 9a3a013dd3f910bd (CARD_C11_V4 edition 4)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C11.parquet
+  year_output_columns: "name (S01 to S08: 8 names, J15895, J15896 c11schema), coin (every roster coin), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "meaning_candle.ours(D, names, group='C11') (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures trades, through our raw C13 (MEANING_C13_V4)"
+  exchange_stream: "trades as Tardis records them, read by C13; C11 reads C13's minute rows of D-1 and D"
+  files: "the year's C13 output of D and D-1 (C13.parquet), the week's roster (the year roster root)"
+  columns: "C13 S01 close, S02 high, S03 low with value_kind, value_f64, value_txt, known_at_us, empty_reason, flags"
+  fields:
+    day: "the day's minutes = C13's valued minute ends 00:00 to e of D; day high, low = the largest high, the smallest low; the prior day's = those of D-1 00:00 to 23:59 [proof: CARD_C11_V4 rules 1 to 3, 7, O3; C11_STAMPS_V1; planted N4, the prior day's first minute in tests/test_basic_c11.py bad3283c]"
+    distances: "S01, S02, S06, S07 = 100 x the level gap / close; S05 = S01 when S01 <= S02 else -S02; exact, 12 decimals half up [proof: CARD_C11_V4 rules 4, 6, 7, 9; C11_STAMPS_V1]"
+    crossed: "S08 = the side of the later first crossing; both in one minute 0; above means strictly above [proof: CARD_C11_V4 rule 8, O4; planted E401, N3a, E408]"
+  latency: "known_at = the latest known_at of the day's minutes read (CARD_C11_V4 rule 10)"
+  silence: "empty with C13's reason when C13's close at e is empty (24 Sep: 105 coin-minutes; 8 Mar 0, J15895, J15896 c11day 'only klines')"
+
+reading_rules:
+  - "the day is the producers' day: C13's minute ends 00:00 to 23:59 (00:00 holds the last minute before midnight, CARD_C11_V4 O3)"
+  - "S06 and S07 below 0 mean the close is outside yesterday's range on that side; S08 says which side today crossed, even if the close came back"
+  - "a tie of S01 and S02 reads + (the high), CARD_C11_V4 O2"
+
+values:
+  units: "S01, S02, S05, S06, S07: percent of the close; S08: +1, -1 or 0"
+  zero: "S01 0 = the close is the day's high (332 and 435 coin-minutes); S02 0 = the day's low (591, 72); S08 0 = neither side crossed, or both in one minute"
+  empty: "NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (C13's), NO_PRIOR_DAY; value_kind 0 with NaN. Never read empty as 0"
+  stale: "true when empty because a feed went quiet or thin"
+  flags: "DUPLICATE_ROW, NO_RATE_BASE (C13's)"
+
+interpret:
+  do:
+    - "read S01, S02 as how much room the price has to today's levels, S06, S07 to yesterday's"
+  dont:
+    - "read S08 as the price's place now"
+    - "read empty as 0"
+
+biases:
+  - {what: "one minute's C13 high, low or close against the kline's", direction: "either way", size: "0.25% (8 Mar) and 0.36 to 0.41% (24 Sep) of coin-minutes not equal within 1e-9; S01 max 0.4255 points", proof: "J15895, J15896 c11day; MEANING_C13_V4"}
+
+external_checks:
+  - {what: "S01, S02, S05 to S08 recomputed exactly from our C13 (D-1 and D) for every roster coin at 5 minute ends of 3 days", where: "the year's C13 output", status: "VERIFIED: C11_STAMPS_V1 c381613805293b5a: 4,620 of 4,620 MATCH (J15888 log 58be9a1f, basic_c11 ed1 ba92c46e38a6712d, tests bad3283c 15 of 15)"}
+  - {what: "every roster coin at every minute end of 2 days against the same formulas on Binance 1m klines (the day's klines and the prior day's 1,440, the one ending 00:00 of D-1 from D-2's file)", where: "Binance 1m klines, <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED (J15895, J15896 c11day: all 1,440 prior klines for 52 and 51 coins)"}
+  - {what: "the names: S01, S02 never negative; S05 its rule; S08 against 'outside now'", where: "our values", status: "VERIFIED (J15895, J15896 c11name)"}
+
+tools:
+  - {what: "recomputed from our C13", run: "python3 -B -m rawcheck.basic_c11 --days <D,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_c11.py ba92c46e38a6712d)"}
+  - {what: "against the klines; the names", run: "python3 -B -m rawcheck.meaning_minute c11day <D> | c11name <D> | c11schema <D>", where: "team/RAWCHECK/code (meaning_minute.py fe27fa1c60137712 edition 4, tests cf7599c3 17 of 17)"}
+
+used_by: "nobody yet (CARD_C11_V4 'Who reads it today')"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C11_V4.md d9b8ee9000c5ab14
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/C11_STAMPS_V1.tsv c381613805293b5a (J15888)"
+  JOBS: "THE PROOF RUN on meaning_minute ed. 4: 15895 (8 Mar 2026; log c614ed0cc165794a), 15896 (24 Sep 2025; log b2cc0ab1d5be3792); first 15889, 15890 (ed. 3: S05 then 99.56%, 99.54%, my kline side's float tie, fixed in ed. 4); 15888 (stamps)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T14:05Z, posted before the code ran"
+
+settings:
+  - {id: C11.S01, name: "distance from the close up to the day high, pct of the close", layer: basic, side: none, window: "the day so far (00:00 to e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (day high - close) / close; exact, 12 decimals", aliases: "S.dist_dayhigh_pct",
+     means: "how far the last price is under today's high, in percent; 0 = at the high",
+     computation: {status: RELIABLE, proof: "C11_STAMPS_V1 c3816138: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_c11 ba92c46e from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c11day against the same formula on the day's klines ending 00:00 to e (and the prior day's 1,440): equal within 1e-9 at 99.75% (8 Mar), 99.59% (24 Sep) of coin-minutes, Spearman 0.999998, 0.999964; c11name: never negative at 100%"},
+     open: "the close at e is one minute's last trade (C13 S01): a close one tick from the kline's (a late or boundary trade, MEANING_C13_V4) moves the distance: the largest gap CRV 8 Mar 20:29, the same high and low, ours 0.840336 against 1.265823 (0.4255), then FIL 16:00, 09:34 (0.1095, 0.1085) (J15895 c11day); the day's extreme is one minute's C13 high or low and can differ the same way (8 Mar 0.25% of coin-minutes differ); 24 Sep: 105 coin-minutes empty where C13 is (THIN_FEED, TRADES_HOLE)"}
+  - {id: C11.S02, name: "distance from the day low up to the close, pct of the close", layer: basic, side: none, window: "the day so far (00:00 to e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (close - day low) / close; exact, 12 decimals", aliases: "S.dist_daylow_pct",
+     means: "how far the last price is above today's low, in percent; 0 = at the low",
+     computation: {status: RELIABLE, proof: "C11_STAMPS_V1 c3816138: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_c11 ba92c46e from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c11day against the same formula on the day's klines ending 00:00 to e (and the prior day's 1,440): equal within 1e-9 at 99.75% (8 Mar), 99.64% (24 Sep) of coin-minutes, Spearman 0.999999, 1.000000; c11name: never negative at 100%"},
+     open: "the close at e is one minute's last trade (C13 S01): a close one tick from the kline's (a late or boundary trade, MEANING_C13_V4) moves the distance: the largest gap CRV 8 Mar 20:29, the same high and low, ours 3.361345 against 2.953586 (0.4078), then FIL 16:00, 09:34 (0.1056, 0.1051) (J15895 c11day); the day's extreme is one minute's C13 high or low and can differ the same way (8 Mar 0.25% of coin-minutes differ); 24 Sep: 105 coin-minutes empty where C13 is (THIN_FEED, TRADES_HOLE)"}
+  - {id: C11.S05, name: "distance to the nearer day extreme, + under the high, - over the low, pct", layer: basic, side: none, window: "the day so far (00:00 to e)", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "+S01 when S01 <= S02 (a tie: +), else -S02; exact, 12 decimals", aliases: "S.dist_extreme_side_pct",
+     means: "how far the last price is from the nearer of today's high (+) and low (-)",
+     computation: {status: RELIABLE, proof: "C11_STAMPS_V1 c3816138: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_c11 ba92c46e from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c11day against the same formula on the day's klines ending 00:00 to e (and the prior day's 1,440): equal within 1e-9 at 99.75% (8 Mar), 99.59% (24 Sep) of coin-minutes, Spearman 0.999880, 0.999965; c11name: equal to its rule on our own S01, S02 at 100%"},
+     open: "the close at e is one minute's last trade (C13 S01): a close one tick from the kline's (a late or boundary trade, MEANING_C13_V4) moves the distance, and at a tie flips the side: the largest gaps FIL 8 Mar 13:27 (ours +1.810437 at a tie, the kline -1.705757, gap 3.5162) and 09:34 (+1.600854 at a tie, -1.495726), then CRV 20:29 (0.840336 against 1.265823) (J15895 c11day); the day's extreme is one minute's C13 high or low and can differ the same way (8 Mar 0.25% of coin-minutes differ); 24 Sep: 105 coin-minutes empty where C13 is (THIN_FEED, TRADES_HOLE); the sign flips at a tie of the two distances (my kline side broke float ties before edition 4: TIA 8 Mar 22:52, J15889)"}
+  - {id: C11.S06, name: "distance from the close up to the prior day high, pct of the close", layer: basic, side: none, window: "the day so far (00:00 to e) and the prior day", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (prior day high - close) / close; below 0 above it; exact, 12 decimals", aliases: "S.dist_pdhigh_pct",
+     means: "how far the last price is under yesterday's high (negative: above it)",
+     computation: {status: RELIABLE, proof: "C11_STAMPS_V1 c3816138: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_c11 ba92c46e from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c11day against the same formula on the day's klines ending 00:00 to e (and the prior day's 1,440): equal within 1e-9 at 99.75% (8 Mar), 99.64% (24 Sep) of coin-minutes, Spearman 0.999999, 1.000000"},
+     open: "the close at e is one minute's last trade (C13 S01): a close one tick from the kline's (a late or boundary trade, MEANING_C13_V4) moves the distance: the largest gap CRV 8 Mar 20:29, the same high and low, ours 2.941176 against 3.375527 (0.4344), then FIL 16:00, 09:34 (0.1126, 0.1121) (J15895 c11day); the day's extreme is one minute's C13 high or low and can differ the same way (8 Mar 0.25% of coin-minutes differ); 24 Sep: 105 coin-minutes empty where C13 is (THIN_FEED, TRADES_HOLE)"}
+  - {id: C11.S07, name: "distance from the prior day low up to the close, pct of the close", layer: basic, side: none, window: "the day so far (00:00 to e) and the prior day", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "100 x (close - prior day low) / close; below 0 under it; exact, 12 decimals", aliases: "S.dist_pdlow_pct",
+     means: "how far the last price is above yesterday's low (negative: under it)",
+     computation: {status: RELIABLE, proof: "C11_STAMPS_V1 c3816138: 770 of 770 (every roster coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep, 4 Nov 2025, 8 Mar 2026; J15888, basic_c11 ba92c46e from our C13)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c11day against the same formula on the day's klines ending 00:00 to e (and the prior day's 1,440): equal within 1e-9 at 99.75% (8 Mar), 99.64% (24 Sep) of coin-minutes, Spearman 0.999999, 1.000000"},
+     open: "the close at e is one minute's last trade (C13 S01): a close one tick from the kline's (a late or boundary trade, MEANING_C13_V4) moves the distance: the largest gap CRV 8 Mar 20:29, the same high and low, ours 2.941176 against 2.531646 (0.4095), then FIL 16:00, 09:34 (0.1080, 0.1075) (J15895 c11day); the day's extreme is one minute's C13 high or low and can differ the same way (8 Mar 0.25% of coin-minutes differ); 24 Sep: 105 coin-minutes empty where C13 is (THIN_FEED, TRADES_HOLE)"}
+  - {id: C11.S08, name: "side of the prior day's range crossed today (the later first crossing)", layer: basic, side: none, window: "the day so far and the prior day", clock: "minute end", scope: coin, contracts: USDT,
+     aggregate: "+1 when only today's high has passed the prior day's high, -1 when only the low has passed its low, 0 neither; both: the side crossed later; both in one minute: 0", aliases: "S.pd_extreme_crossed_side",
+     means: "which side of yesterday's range today has broken (the later break when both)",
+     computation: {status: RELIABLE, proof: "C11_STAMPS_V1 c3816138: 770 of 770 (J15888)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15895, J15896 c11day: the same side as on the klines at 100% of 74,880 and 73,335 coin-minutes (ours +1 5,317, -1 60,191, 0 9,372 on 8 Mar); c11name: equal to 'outside the prior range now' at 53.49% and 39.42% only"},
+     open: "it is the side crossed TODAY, kept after the price came back inside: +1 or -1 while the close is inside the prior range at 46.15% (8 Mar) and 60.58% (24 Sep) of coin-minutes",
+     never: ["S08 as 'the price is now above (below) yesterday's range': it stays +1 (-1) after the price came back (46.15%, 60.58% of coin-minutes)"]}

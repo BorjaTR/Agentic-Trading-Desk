@@ -1,0 +1,72 @@
+{
+ "name": "OUTCOMES_CORE_V3",
+ "about": "OUTCOMES_CORE_V2 labels for event_outcomes code VERSION 3 (A51 successor). V1 and V2 stay as run (never edited); they are refused by VERSION 3 because their MONEY_T1 is the retired static-cost kind 'money'.",
+ "changes": [
+  "A51-06: MONEY_T1 is kind money_full: EXIT_T1 after the factory's full cost of record (factory_v2 trade_cost: costs V3_5 fee + book + gap + funding on the entry notional, size 10,000 USD as the cost settings). A trade whose funding is missing is EMPTY (FUNDING_MISSING); its fee + book + gap stay in MONEY_T1__<dir>__cost_prefunding. The V1/V2 MONEY_T1 (exit minus static V1 cost + gap, no funding) is not money of record and is not carried.",
+  "A51-06 / B1 / C3: the static cost table is pinned by sha16 and its median fallback is named: fallback 'unknown' makes a c-unit label of a coin missing from the table EMPTY (NO_UNIT:COST_FALLBACK) instead of a median guess; unit__c_fallback flags it.",
+  "A51-04: the V2 run_window (documentary) is removed from this yardstick: the caller's authorized outcome window is a RUN argument (--run-window FIRST:LAST, or a run_window key in a run's own settings), ENFORCED before any read (selection inside it; every label whose window could need a bar at or after its end is EMBARGO_SUPPORT, its row kept). The code holds no date.",
+  "A51-05 / A51-07: exits go through exit_engine.run_frozen (frozen registry row, schema, cost table, module and the run's transitive inventory); the exits path is relative to the forensics folder.",
+  "A51-01 / A51-02: every horizon is a whole number of 3 s bars (unchanged values: 5, 15, 60, 240, 300 min); gap_s stays 60 (LABEL_EWSD convention through label_ewsd_v2.path_first_gap)."
+ ],
+ "entry": {
+  "delay_s": 6,
+  "why": "the factory's entry: taker at the first 3 s bar ending at or after F + 6 s (+ one bar), within 60 s",
+  "gap_s": 60,
+  "gap_why": "LABEL_EWSD_V2's gap (label_ewsd_v2.path_first_gap): a stretch longer than 60 s without a valid bar is a data hole"
+ },
+ "directions": [
+  "FADE",
+  "FOLLOW"
+ ],
+ "cost": {
+  "table": "team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V1.tsv",
+  "sha16": "ff157578098a2f47",
+  "gap_pct": 0.144,
+  "fallback": "unknown",
+  "why": "labcore.costs cost_c: the static cost of record for the unit c (label c = gate c = exit c) and the exit engine's frozen cost table"
+ },
+ "money": {
+  "cost_settings": {
+   "path": "team/LAYERS/tools/costs_v2/settings/COSTS_SETTINGS_V1.json",
+   "sha16": "d1fd6b14c80717f8"
+  },
+  "size_usd": 10000,
+  "why": "the factory's money of record (factory_v2.costs_of / trade_cost, costs V3_5), the size the cost settings price"
+ },
+ "units": {
+  "nm": "EPI:A02N.normal_move_pct"
+ },
+ "units_note": "nm = the coin's normal 15 min move (median absolute 15-minute log move over 24 h ending 1 h before the alarm, log-pct), stored only in EPI.A02N (A02 family). An event without its EPI.A02N row is EMPTY (NO_UNIT:<why>), never a default.",
+ "exits": {
+  "path": "team/RESEARCH/tools/exit_engine/EXITS_V1.tsv",
+  "sha16": "db575a2fcb179798"
+ },
+ "labels": [
+  {
+   "name": "MONEY_T1",
+   "kind": "money_full",
+   "exit_id": "EXIT_T1",
+   "why": "THE yardstick: EXIT_T1 after the factory's full cost of record (fee + book + gap + funding); complete funding and a CLEAN path only"
+  },
+  {
+   "name": "EXIT_T1",
+   "kind": "exit",
+   "exit_id": "EXIT_T1",
+   "why": "the booked exit before cost (CLEAN path only; the booking in __booked), what closed it, its evidence and holes"
+  },
+  {"name": "RET_5M", "kind": "return", "horizon_min": 5, "unit": "pct"},
+  {"name": "RET_15M", "kind": "return", "horizon_min": 15, "unit": "pct"},
+  {"name": "RET_60M", "kind": "return", "horizon_min": 60, "unit": "pct"},
+  {"name": "RET_240M", "kind": "return", "horizon_min": 240, "unit": "pct"},
+  {"name": "BEST_60M", "kind": "best", "horizon_min": 60, "unit": "c", "why": "best move in units of the coin's cost"},
+  {"name": "WORST_60M", "kind": "worst", "horizon_min": 60, "unit": "c"},
+  {"name": "REACH_2C_60M", "kind": "reach", "target": 2, "horizon_min": 60, "unit": "c"},
+  {"name": "REACH_4C_240M", "kind": "reach", "target": 4, "horizon_min": 240, "unit": "c", "why": "LABEL_EWSD's offer 4c over its 4 h hold"},
+  {"name": "FIRST_2C_1C_60M", "kind": "first", "up": 2, "down": 1, "horizon_min": 60, "unit": "c", "why": "triple barrier: 2c target, 1c limit, 60 min"},
+  {"name": "HEAT_BEFORE_4C_240M", "kind": "heat_before", "target": 4, "horizon_min": 240, "unit": "c"},
+  {"name": "OFFER2C_BEFORE_HEAT1C_5M", "kind": "offer_before_heat", "offer": 2, "heat": 1, "horizon_min": 5, "unit": "c"},
+  {"name": "OFFER2C_BEFORE_HEAT1C_60M", "kind": "offer_before_heat", "offer": 2, "heat": 1, "horizon_min": 60, "unit": "c"},
+  {"name": "OFFER2C_BEFORE_HEAT1C_5H", "kind": "offer_before_heat", "offer": 2, "heat": 1, "horizon_min": 300, "unit": "c"},
+  {"name": "OFFER4C_BEFORE_HEAT2C_5H", "kind": "offer_before_heat", "offer": 4, "heat": 2, "horizon_min": 300, "unit": "c"}
+ ]
+}

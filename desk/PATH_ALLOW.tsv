@@ -1,0 +1,43 @@
+# PATH_ALLOW.tsv: the only hits path_scan_v1.py allows, each with its reason. Columns: file (fnmatch from the repo folder), kind, a text the line must hold ("" = any), reason.
+# A row that allows nothing fails the scan.
+file	kind	text	reason
+desk/build/scrub_v1.py	OWNER		the scrub rules: the one file that spells out the lab names it replaces (never opened as paths)
+desk/build/scrub_v1.py	USER_PATH	/Users/borja	the scrub rules (patterns, never opened)
+desk/build/scrub_v1.py	MACHINE		the scrub rules (patterns, never opened)
+desk/build/path_scan_v1.py	MACHINE		the scanner's own pattern
+desk/build/path_scan_v1.py	HOST	re.compile	the scanner's own pattern
+desk/build/path_scan_v1.py	HOST	tailscale	the scanner's own docstring
+desk/build/path_scan_v1.py	SEAT_REQ		the scanner's own pattern and docstring
+desk/build/EXCLUDES.tsv	MACHINE	SETTINGS_MAC_MINI	names the lab settings file that is left out
+desk/build/EXCLUDED.tsv	MACHINE	SETTINGS_MAC_MINI	names the lab settings file that was left out
+alarm/*test*	USER_PATH	/Users/x	planted test data of a path checker (a fake path)
+alarm/*test*	USER_PATH	/Users/someone	planted test data of a path checker (a fake path)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/archive/test_kit5_tools.py	MACHINE	wdblack	archived test: a function name, never run (archive)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/*	MACHINE	wdblack	archived code: a parameter name in a docstring, never run (archive)
+alarm/01_Detection/tree/team/LAB3/METRICS_V*.tsv	SEAT_REQ	hb/	provenance column of the metric register: where a ruling was posted; no code opens it
+alarm/01_Detection/tree/team/RAWCHECK/notes/*.yaml	SEAT_REQ	hb/	provenance of a metric proof note; no code opens it
+alarm/01_Detection/tree/team/RESEARCH/tools/exit_engine/*	SEAT_REQ	hb/	provenance of an exit rule in a table, docstring or test name; nothing opens it
+alarm/01_Detection/tree/team/RESEARCH/tools/factory/factory_v2.py	SEAT_REQ	hb/	a docstring naming where a choice was asked; not opened
+alarm/01_Detection/tree/team/LAYERS/tools/costs_v2/README.md	SEAT_REQ	ask STRATEGY	an ask id in a page title (provenance)
+alarm/03_Grading/*month_parts/README.md	SEAT_REQ	hb/	provenance of a rule in a page
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/data_v1_21/TRIES_LEDGER_V1.tsv	SEAT_REQ	hb/	planted test ledger rows (test data)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v*.py	SEAT_REQ	DSK	advice text of the released queue (kept as released); the check behind it is the disk floor, which holds in local mode; README says the disk seat does not exist here
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/queue_job_v4.py	SEAT_REQ	DSK	archived queue, never run
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/*	SEAT_REQ	DSK	tests that check the released queue prints its advice text
+alarm/cards/queue_job_v*	SEAT_REQ	DSK	card of a past queue edition (documents its advice text)
+alarm/cards/first_look.md	SEAT_REQ	DSK	card text on the disk sweep of the lab; README says it does not exist here
+alarm/AGENTS.md	SEAT_REQ	DSK	released agent page: never delete scratch (the rule holds; the seat does not exist here, README says so)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v3.py	SEAT_REQ	no START line on hb/	audit message: the run log line (BOARD/<run prefix>.txt; desk sets BOARD to OUTPUT_ROOT/runlog)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/audit_run_v2.py	SEAT_REQ	hb/	archived code, never run
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/test_kit5_tools_v2.py	SEAT_REQ	hb/AD1.txt	test of the audit message above
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/test_job_entry_v6.py	SEAT_REQ	SEAT =	a test variable: the run prefix of a planted run
+alarm/Agentic/*	SEAT_REQ	<SEAT>	run-prefix placeholder of the kit pages (the part of the run tag before _); the board is the run log
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPT_V5.md	SEAT_REQ	hb/DSK	released kit launch prompt (lab history); the desk start page is README.md
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md	SEAT_REQ	hb/DSK	released kit process page (lab history)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/skills/alarm-design-v5/SKILL.md	SEAT_REQ	hb/DSK	released kit skill (lab history)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V6/*	SEAT_REQ	hb/SCOUT	released kit pages (lab history): the kit owner board; not needed in local mode
+alarm/Agentic/KIT_V6/README.md	SEAT_REQ	hb/SCOUT	released kit page (lab history)
+alarm/*idea_time*	SEAT_REQ	SEAT=	idea_time option: a run prefix and its launch time
+alarm/Agentic/KIT_V6/ARCHITECTURE.md	SEAT_REQ	SEAT=	idea_time option: a run prefix and its launch time
+desk/build/path_scan_v1.py	OWNER		the scanner's own pattern
+alarm/03_Grading/tree/tools/true_gate/SOURCE_FAMILIES_V1.tsv	SEAT_REQ	hb/	provenance column of the source-family table (true_gate reads the family, not this note)

@@ -1,0 +1,124 @@
+# BASIC_C12_V1.yaml: the card of C12's basic settings S01, S02 (the top's update rate over 5 s and 30 s) (BED, 2026-10-18; BR5 book part,
+# the owner in BED's chat 14:3xZ: 'then you can take these cards ... part of EDGE1 packages'; EDGE1 14:33:59Z: yes). Made the way BASIC_C8_V3 was
+# (METRIC_REVIEW_METHOD_V1 section 5; the rename rule; conclude). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it.
+# The year's S01.quotes_off and S02.quotes_off are ANOTHER METRIC beside, not copies (EDGE1's ruling 15:26:12Z): the same count on the depth
+# stream's top, equal to the main at 0.00% to 2.12% only; one block (formula, J15849 numbers, a never line), no meaning work until the owner rules.
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR5 book (hb/EDGE2.txt 15:33:58Z) and EDGE1's ruling 15:26:12Z: (1) the
+# .quotes_off twins are another metric beside, not copies: one block (the header, read_as, the reading rule, never 3, the bias, the external
+# check); (2) read_as gives S01's and S02's equal shares (2.12%, 0.00%; 1.32%, 0.06%). Nothing else changed.
+
+group: C12
+name: top-of-book update rate over 5 s and 30 s (basic, built on the book_ticker rows)
+summary: >-
+  Per coin, the number of changes of Binance's bookTicker top (a good row whose best bid price, bid amount, ask price or ask amount differs
+  from the good row before it in file order) stamped in (e - W, e] and received by e, divided by W: S01 over 5 s (every 5 s), S02 over 30 s
+  (every 30 s), changes a second, 6 decimals. Empty TOP_HOLE when the top is not known at some second of the window.
+read_as: >-
+  How often Binance's bookTicker channel pushed a new top for this coin, nearly all of them SIZE updates: of the changes counted on BTC, SOL
+  and CRV from 00:00 to 01:00, 98.55% to 100.00% changed only an amount, a price in 0.00% to 1.28% at the median step (J15950; J15953 the same). So
+  the name 'tick rate' is not a rate of price ticks: RENAMED to the top's update rate; the price tick rate is C12.CB1. The rate follows the
+  coin's trading: against the trade count of the kline of the same minute Spearman 0.7539 (8 Mar 2026) and 0.8730 (24 Sep 2025) over all
+  coin-minutes (J15950). Recomputed from the Tardis rows it equals ours at every value checked (BOOK_STAMPS_V1). The year's .quotes_off twins are
+  another metric (EDGE1's ruling): the same count on the top of Binance's depth stream, equal to ours at 2.12% (S01) and 0.00% (S02) of the
+  values of 8 Mar 2026, 1.32% and 0.06% of 24 Sep 2025 (J15849 TWINS).
+
+conclude:
+  may:
+    - "how busy the bookTicker top of a coin was in the last 5 s or 30 s, in pushes a second, against the same coin's other minutes (S02 ranks with the minute's trade count: Spearman 0.7421 and 0.7569 within a coin, the median of the coins, J15950)"
+    - "that a coin's top barely changed (S01, S02 near 0), or changed hundreds of times a second (BTC: 4,795 and 16,978 changes in the median 30 s step from 00:00 to 01:00, J15950)"
+  never:
+    - "a rate of price ticks: 98.55% to 100.00% of the changes counted moved only an amount (BTC, SOL, CRV 00:00 to 01:00 of both days, J15950); the price tick rate is C12.CB1, not built"
+    - "a rate from another channel or another feed: the year's .quotes_off (the depth stream's top) equals it at 0.00% to 2.12% of the values, corr 0.6085 to 0.6941 (J15849 TWINS)"
+    - "S01.quotes_off or S02.quotes_off as S01's or S02's rate: they are another metric beside (the depth stream's top changes), not copies; not tested for meaning until the owner rules (EDGE1 15:26:12Z)"
+    - "a count of trades: it counts book pushes; trades and pushes rank together only at Spearman 0.7539 and 0.8730 over coin-minutes (J15950)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C12_V5.md 280a1b7f4998e57e (rules 1 to 13; edge cases E1 to E88)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C12_V3.tsv 1378d2bf4f85cb14 (S01 step 5 s, S02 step 30 s)
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml f33f6ba098035767 (the book_ticker top: raw, RELIABLE by RAW_STAMPS_V1; the two Binance channels disagree on sizes in some seconds)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V21.tsv f989d276e0eb0e20 (C12 S01, S02 basic, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_C12_v4.py 2955da51976c9ea4 (CARD_C12_V5 edition 5), driver work_CLK/drivers/drive_l0b_C12_v4_day.py 985747dcc64d6f95"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C12.parquet
+  year_output_columns: "name (4 names: S01, S01.quotes_off, S02, S02.quotes_off; J15947 schema), coin (every roster coin), as_of_us (S01 every 5 s: 17,280 a coin-day; S02 every 30 s: 2,880), value_kind (0 = EMPTY; 1, 2 a value in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'C12', names) or ours.at(D, 'C12', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, binance-futures (Binance USDT-margined perpetuals)"
+  exchange_stream: "bookTicker (the best bid and ask, pushed on any change of a price or an amount, SOURCE_SPEC_book_ticker_V2 Q-B1); the .quotes_off twins: the top Tardis rebuilds from the depth stream"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_<SYM>_<YYYY-MM-DD>.csv.gz of D and D-1 (the first row of D is compared with D-1's last good row, rule 1)"
+  columns: "exchange, symbol, timestamp, local_timestamp, ask_amount, ask_price, bid_price, bid_amount"
+  fields:
+    change: "a good row whose four numbers are not all equal to the good row before it in file order; a bad row (a price 0 or below, an amount below 0, crossed) is never a change and is passed over [proof: CARD_C12_V5 rule 1, E64, E65, E67; basic_book tests C12 E64, E65, E67]"
+    window: "the changes stamped in (e - W, e] and received by e, W = 5 s (S01), 30 s (S02) [proof: CARD_C12_V5 rule 2, E61 to E63, E71; basic_book tests]"
+    rate: "the count over W, changes a second, exact, rounded once to 6 decimals half up, written without trailing zeros [proof: rule 3; BOOK_STAMPS_V1]"
+    known: "the top known at every second of the window (the last good row in force stamped at most 30 s before), else TOP_HOLE [proof: rule 4, E4, E70; basic_book tests C12 E4, E70]"
+  latency: "book_ticker rows arrive 2.2 to 3.5 ms after their stamp at the median, p99 5.4 to 161.7 ms (MEANING_D2D3_V2); a change stamped before e and received after e is not counted (E2)"
+  silence: "a top silent over 30 s at a second of the window: TOP_HOLE; none on 8 Mar 2026 and 24 Sep 2025 (J15947, J15948 schema: 0 empty)"
+
+reading_rules:
+  - "S01 and S02 count the top's changes of ANY of its four numbers: sizes as well as prices (CARD_C12_V5 O1 A); nearly all are size changes (J15950)"
+  - "S01 is written every 5 s, S02 every 30 s (rule 13); at a fire the window ends at the fire second"
+  - "the year also writes S01.quotes_off and S02.quotes_off: ANOTHER METRIC beside, not a copy (EDGE1's ruling 15:26:12Z, on the owner's list): rules 1 to 4 on Tardis's quotes stream, the top of Binance's DEPTH stream (its changes, far fewer than bookTicker's pushes); equal to the main at 2.12% (S01) and 0.00% (S02) of 8 Mar 2026 values, 1.32% and 0.06% of 24 Sep 2025, gap median 6.6 and 8.6 changes a second (8 Mar), 19.6 and 21.37 (24 Sep), corr 0.6085 to 0.6941 (J15849 TWINS); no meaning work on them until the owner rules"
+  - "0 = the top did not change in the window (a value); empty is never 0"
+
+values:
+  units: "changes a second (count / W)"
+  zero: "the top did not change in the window"
+  empty: "TOP_HOLE, NO_FILE, NO_ROSTER; none on 8 Mar 2026 and 24 Sep 2025 (J15947, J15948 schema)"
+  stale: "true when empty TOP_HOLE"
+  flags: "BAD_ROW:<coin> when a bad row was stamped in the window (rule 5)"
+
+interpret:
+  do:
+    - "read S01, S02 against the same coin's own day: BTC's bookTicker pushes thousands of times in 30 s, CRV's hundreds (J15950)"
+    - "read a burst of S01 as Binance re-quoting the top: mostly resting sizes changing"
+  dont:
+    - "read S01 or S02 as price ticks or trades"
+    - "compare S01, S02 with the .quotes_off twins as if they were the same number"
+
+biases:
+  - {what: "amount changes count as changes", direction: "far above a price tick rate", size: "98.55% to 100.00% of the changes counted are amount-only (BTC 8 Mar 98.55%, SOL 99.75%, CRV 100.00%; 24 Sep 99.61%, 99.29%, 99.81%; 00:00 to 01:00)", proof: "J15950 c12 (meaning_bookbasic ed1 576eb0a9)"}
+  - {what: "one Binance channel: bookTicker", direction: "depends on the channel", size: "the depth-stream twin (another metric) differs by 6.6 to 21.37 changes a second at the median value (J15849 TWINS)", proof: "J15849"}
+
+external_checks:
+  - {what: "S01, S02 at every step of every coin of 8 Mar 2026, 24 Sep 2025, 4 Nov 2025 against BED's book base (int_recompute_book B3, a second recompute from the Tardis rows); and at 5 minute ends x BTC, AVAX, ENA from the Tardis rows by basic_book's own text-exact reader", where: "Tardis book_ticker (recompute, our source)", status: "VERIFIED: BOOK_STAMPS_V1 658b774f: S01 2,661,165 of 2,661,165, S02 443,565 of 443,565 MATCH (J15905; J15906 to J15908)"}
+  - {what: "what the name says: price changes among the changes counted", where: "Tardis book_ticker of BTC, SOL, CRV, 00:00 to 01:00 of both days", status: "DIFFERS: 0.00% to 1.28% of changes move a price at the median 30 s step (J15950): RENAMED"}
+  - {what: "the rate against the trading of the same minute", where: "Binance 1m klines (trade count), every coin-minute", status: "MEASURED: Spearman 0.7539 (8 Mar 2026), 0.8730 (24 Sep 2025); within a coin 0.7421, 0.7569 (J15950)"}
+  - {what: "the .quotes_off twins on the depth stream (another metric beside, EDGE1's ruling 15:26:12Z)", where: "the year output (S01.quotes_off, S02.quotes_off)", status: "MEASURED: equal 0.00% to 2.12%, corr 0.6085 to 0.6941 (J15849 TWINS); not a copy"}
+
+tools:
+  - {what: "C12 S01, S02 against the book base at every step and against the Tardis rows at named minute ends", run: "python3 -B -m rawcheck.basic_book base --days <D> --out <dir>; python3 -B -m rawcheck.basic_book tardis --days <D> --coins <C,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_book.py ed1 6160e36b31871abd, tests 12d16de820854eaf: 47 of 47 with 10 mutants)"}
+  - {what: "the changes split into price and amount-only changes; S02 against the kline trades", run: "python3 -B -m rawcheck.meaning_bookbasic c12 <D> <COIN,..> <HH>", where: "team/RAWCHECK/code (meaning_bookbasic.py ed1 576eb0a93b123ff9, tests a741c4980ea5cb58: 6 of 6, 7 mutants; J15950)"}
+
+used_by: "nobody (CARD_C12_V5 'Who reads it today': nobody reads any C12 metric; nothing is built on it)"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C12_V5.md 280a1b7f4998e57e
+  BUILT_ON: team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml f33f6ba098035767
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/BOOK_STAMPS_V1.tsv 658b774f3febf6d6 (J15905 base, J15906 to J15908 Tardis)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  JOBS: "15905 (basic_book base, 3 days; log 155fbe2d), 15906, 15907, 15908 (basic_book tardis 8 Mar, 24 Sep, 4 Nov; 3f5f3b4b, 81642fde, 309bc753), 15947, 15948 (schema; 96f4cebc, 7f83e31d), 15950 (c12; cde01fba), 15953 (c12 again with the step that differs, meaning_bookbasic ed3 a1b2b25e; f862e428)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does"
+
+settings:
+  - {id: C12.S01, name: "top-of-book update rate over 5 s, changes a second", renamed_from: "tick_rate_5s", layer: basic, side: none, window: "5 s (stamped in (e - 5 s, e], received by e)", clock: "every 5 s", scope: coin, contracts: USDT,
+     aggregate: "the count of the top's changes (any of the four numbers) over 5", aliases: "N.tick_rate_5s (the old name, still written by the year)",
+     means: "how many times a second Binance's bookTicker pushed a new top for the coin in the last 5 s, nearly all of them size changes",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 2,661,165 of 2,661,165 MATCH (every step of every coin, 3 days, against the book base; 15 a day from the Tardis rows; J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15950: 98.55% to 100.00% of the changes counted are amount-only (BTC, SOL, CRV 00:00 to 01:00, both days): not a price tick rate, RENAMED; the .quotes_off twin (another metric) equal at 2.12% and 1.32% (J15849 TWINS)"},
+     open: "5 s holds few changes on a quiet coin (CRV 674 a 30 s step at the median, J15950); its relation to trading is shown for S02 at minute ends only (J15950)",
+     never: ["S01 as a price tick rate (C12.CB1)"]}
+  - {id: C12.S02, name: "top-of-book update rate over 30 s, changes a second", renamed_from: "tick_rate_30s", layer: basic, side: none, window: "30 s (stamped in (e - 30 s, e], received by e)", clock: "every 30 s", scope: coin, contracts: USDT,
+     aggregate: "the count of the top's changes (any of the four numbers) over 30", aliases: "N.tick_rate_30s (the old name, still written by the year)",
+     means: "how many times a second Binance's bookTicker pushed a new top for the coin in the last 30 s, nearly all of them size changes",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 443,565 of 443,565 MATCH (J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15950: amount-only 98.55% to 100.00% of the changes (RENAMED); against the kline trade count of the same minute Spearman 0.7539, 0.8730 (within a coin 0.7421, 0.7569); my count / 30 equal to the year at 118 of 119 steps a coin, the 119th (00:00:30, each coin, both days) one change short in MY count: the first row of D is a change against D-1's last good row by rule 1, and my c12 part does not read D-1 (BTC 8 Mar 5,535 against 5,536; J15953)"},
+     open: "the trade count relation is measured at minute ends only (Spearman 0.7539, 0.8730, J15950)",
+     never: ["S02 as a price tick rate or a trade count"]}
+
+could_build:
+  - {id: C12.CB1, intended: "a rate of price ticks: how often the best bid or ask PRICE changed, what the old names tick_rate_5s, tick_rate_30s say", was_name_of: "C12.S01, C12.S02",
+     formula: "the count of good rows whose best bid or best ask price differs from the good row before it (amount-only changes left out), stamped in (e - W, e] and received by e, over W (CARD_C12_V5 O1 B)",
+     needs: "the book_ticker rows C12 already reads",
+     adds: "measured share: 0.00% to 1.28% of today's changes (J15950); a price tick rate is a different, far smaller number that moves with price moves, not with re-quoted sizes",
+     status: NOT_BUILT}

@@ -1,0 +1,39 @@
+# 03_Grading MACHINE_PATHS (H2, 30 Oct 2026): every machine path in the files of MANIFEST.tsv (each tree/ file scanned for /Users/, /Volumes/, /home/,
+# /mnt/, /sessions/, ~/ and $HOME, plus the paths a line builds from F, R, T, L2, AP). The top copies month_parts/*.md
+# (byte copies) and the tree/ README, SCOPE, ARCHITECTURE, REQUIREMENTS, BASELINE and the two tests name no absolute machine path.
+# kind DATA, SCRATCH, CODE, PYTHON. status ARG (an argument: fine), BUILT_IN (a new edition must read it from the settings file or take
+# it from inside Alarm), TEXT (only in a header line or a document). settings_key: the keys of Alarm/settings/SETTINGS_EXAMPLE.env.
+# The GRADE job template and PROCESS_V7 moved with the kit to Alarm/Agentic (30 Oct): their rows are in ../Agentic/MACHINE_PATHS.tsv.
+file	line	path	kind	what	settings_key	status
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	35	<PYTHON>	PYTHON	PY: the interpreter every step runs with	PYTHON	BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	35	<LAB_REPO>/forensics	CODE	F, the dev forensics root (R=$F/team/RESEARCH, T=$R/tools, L2=$R/LEAD/loop2): every step tool and table below is taken from the dev tree by absolute path; they are TEST editions, not in Alarm		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	36	$F/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json	CODE	ROSTER, the 52-coin table: read by the chain for the coin parts and passed to detect and grade as --roster; not in Alarm		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	37	$T/alarm_process/OUTCOMES_MENU_ALARM_V1.json	CODE	G, the menu settings (Outcomes labels, race grid): the 4th argument; this dev file when it is absent		ARG
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	38	$L2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv	CODE	METRIC_TRAPS (env): the metric table the reading gate inside detect checks		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	38	$T/alarm_context/CTX_CATALOG_V1.tsv:$T/alarm_profile/EPI_CATALOG_V1.tsv:$F/team/LAB3/METRICS_HL_ADD_V1.tsv:$L2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv	CODE	CATALOGS (env): the 4 metric catalogs detect reads		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	42-45	$T/alarm_process/ (detect_aw1.py, idea_to_grade_aw1.py, I2G_PINS_AW1.json, event_outcomes_aw1.py, RELEASE_event_outcomes_AW1.json, WINDOWS_ALARM_V1.tsv, alarm_card_v1_3.py)	CODE	AP, DET, I2G, EO and ckf: the step tools and their tables, each checked by sha16 at its dev path before any step		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	32,48	<V> <DEFINITION.json or FIRES.tsv> <W>	DATA	the arguments: the definition (in the agent run folder under RESEARCH_ROOT) and the work folder W (on SCRATCH); every output is written under W	RESEARCH_ROOT, SCRATCH	ARG
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	59	$DET = $T/alarm_process/detect_aw1.py	CODE	step 1, detect on each coin part, run as $PY -B <path>		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	70	$I2G = $T/alarm_process/idea_to_grade_aw1.py	CODE	step 3, the grade from the fire list (matched moments)		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	73	$L2/make_random_v3.py	CODE	step 4, matched random (3 per fire)		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	78	<DATA_ROOT>/lab_days	DATA	the lab days: the <lab_root> argument of the Outcomes run	LAB_DAYS	BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	78	$F/team/LAB3/code	CODE	the lab3 code Outcomes imports (Alarm has a pinned copy: _vendor/LAB3_code)		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	78	$EO = $T/alarm_process/event_outcomes_aw1.py	CODE	step 5, Outcomes on the alarm list and the random list		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	81	$L2/menu_v2.py	CODE	step 6, the menu		BUILT_IN
+tree/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh	83	$AP/alarm_card_v1_3.py	CODE	step 7, the card (CARD_<V>.txt, SUM_<V>.tsv)		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v1.sh	10	<PYTHON>	PYTHON	PY: the interpreter of this runner-job small run (Mac only)	PYTHON	BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v1.sh	10	<LAB_REPO>/forensics	CODE	F, the dev forensics root: the chain, detect_aw1.py, the roster and the tables are taken from the dev tree by absolute path		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v1.sh	11,12,14	$R/tools/... , $F/team/OUTSIDE/.../ROSTER_BUILD.json, $R/LEAD/loop2/defs/...	CODE	what it runs and reads (DET, ROSTER, CH, METRIC_TRAPS, CATALOGS), all at their dev paths		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v1.sh	9	<DEF> ... <W> <OUT>	DATA	the definition, the work folder (on SCRATCH) and the receipts folder (under RESEARCH_ROOT) are arguments	RESEARCH_ROOT, SCRATCH	ARG
+tree/tools/month_parts/tests/smoke_month_parts_v2.sh	10	<PYTHON>	PYTHON	PY: the interpreter of this runner-job small run (Mac only)	PYTHON	BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v2.sh	10	<LAB_REPO>/forensics	CODE	F, the dev forensics root: the chain, detect_aw1.py, the roster and the tables are taken from the dev tree by absolute path		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v2.sh	11,12,14	$R/tools/... , $F/team/OUTSIDE/.../ROSTER_BUILD.json, $R/LEAD/loop2/defs/...	CODE	what it runs and reads (DET, ROSTER, CH, METRIC_TRAPS, CATALOGS), all at their dev paths		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v2.sh	9	<DEF> ... <W> <OUT>	DATA	the definition, the work folder (on SCRATCH) and the receipts folder (under RESEARCH_ROOT) are arguments	RESEARCH_ROOT, SCRATCH	ARG
+tree/tools/month_parts/tests/smoke_month_parts_v3.sh	7	<PYTHON>	PYTHON	PY: the interpreter of this runner-job small run (Mac only)	PYTHON	BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v3.sh	7	<LAB_REPO>/forensics	CODE	F, the dev forensics root: the chain, detect_aw1.py, the roster and the tables are taken from the dev tree by absolute path		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v3.sh	8,10	$R/tools/... , $F/team/OUTSIDE/.../ROSTER_BUILD.json, $R/LEAD/loop2/defs/...	CODE	what it runs and reads (DET, ROSTER, CH, METRIC_TRAPS, CATALOGS), all at their dev paths		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v3.sh	6	<DEF> ... <W> <OUT>	DATA	the definition, the work folder (on SCRATCH) and the receipts folder (under RESEARCH_ROOT) are arguments	RESEARCH_ROOT, SCRATCH	ARG
+tree/tools/month_parts/tests/smoke_month_parts_v4.sh	16	<PYTHON>	PYTHON	PY: the interpreter of this runner-job small run (Mac only)	PYTHON	BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v4.sh	16	<LAB_REPO>/forensics	CODE	F, the dev forensics root: the chain, detect_aw1.py, the roster and the tables are taken from the dev tree by absolute path		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v4.sh	17	$R/tools/... , $F/team/OUTSIDE/.../ROSTER_BUILD.json, $R/LEAD/loop2/defs/...	CODE	what it runs and reads (DET, ROSTER, CH, METRIC_TRAPS, CATALOGS), all at their dev paths		BUILT_IN
+tree/tools/month_parts/tests/smoke_month_parts_v4.sh	15	<DEF> ... <W> <OUT>	DATA	the definition, the work folder (on SCRATCH) and the receipts folder (under RESEARCH_ROOT) are arguments	RESEARCH_ROOT, SCRATCH	ARG

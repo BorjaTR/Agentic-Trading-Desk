@@ -1,0 +1,18 @@
+# MANIFEST_SHA16 of ALARM_DESIGN KIT_V6, round 6 edition (SCOUT, 2026-10-29T23:23:03Z from the clock). TEST, NOT REVIEWED. Twins (.pre_*) are not listed. Job tools and templates: KIT_V5 (its own MANIFEST: forward-only route and NO ENTRY from round 4).
+52c57f1cdd394612  README.md
+887dd197b03d83ca  PROCESS_V8.md
+f8b361f28a996101  LEARNINGS_V6.tsv
+4ec5503c9411888a  ROUNDS.tsv
+f2610d4c0c75ae57  LAUNCH_PROMPT_V6.md
+33bf65b4de8f2741  LAUNCH_PROMPTS_29OCT_R2.md
+935a0ff692ad877b  LAUNCH_PROMPTS_29OCT_R3.md
+7ab6eac4da5251d3  LAUNCH_PROMPTS_29OCT_R4.md
+7ec95e80dad90d1f  LAUNCH_PROMPTS_29OCT_R5.md
+85cb31f76ad78c4d  LAUNCH_PROMPTS_30OCT_R6.md
+8896f2d50dd2121d  IDEA_GUIDE_V1.md
+c0ddd1ea59906e54  IDEA_GUIDE_V2.md
+1c6089056e5b35dd  IDEA_GUIDE_V3.md
+9db60aeef12aab58  IDEA_GUIDE_V4.md
+dd7b640b2fd3e57f  skills/alarm-design-v6/SKILL.md
+1df0cab7716611a8  templates/CARD_V6.md
+243faa19f9507be1  templates/REPORT_V6.md

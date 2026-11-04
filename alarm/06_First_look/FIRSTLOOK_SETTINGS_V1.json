@@ -1,0 +1,144 @@
+{
+ "about": "SCOUT 2 Nov 2026, ALARM_V1_19_1: what KIND FIRSTLOOK runs. queue_job_v14 --reader names a block of readers; no argument = default_reader (v11, GPT d7f4868861ae2366: edition 11 stays the queue default). A reader takes <TARGETS_FL.tsv> <H> <costs> <out> <outcomes dir> <profile dir> <BZ dir>, then extra_args; bar_tool: the chain builds the BAR tables inside the job and adds --bar.",
+ "default_reader": "v11",
+ "labels": [
+  "BEST_1M",
+  "WORST_1M",
+  "OBH4_1M",
+  "BEST_2M",
+  "WORST_2M",
+  "OBH4_2M",
+  "BEST_3M",
+  "WORST_3M",
+  "OBH4_3M",
+  "BEST_5M",
+  "WORST_5M",
+  "OBH4_5M",
+  "BEST_10M",
+  "WORST_10M",
+  "OBH4_10M",
+  "BEST_15M",
+  "WORST_15M",
+  "OBH4_15M",
+  "BEST_20M",
+  "WORST_20M",
+  "OBH4_20M",
+  "BEST_30M",
+  "WORST_30M",
+  "OBH4_30M",
+  "BEST_60M",
+  "WORST_60M",
+  "OBH4_60M",
+  "BEST_90M",
+  "WORST_90M",
+  "OBH4_90M",
+  "BEST_120M",
+  "WORST_120M",
+  "OBH4_120M",
+  "BEST_180M",
+  "WORST_180M",
+  "OBH4_180M",
+  "REACH4_180M",
+  "RET_15M",
+  "RET_60M",
+  "RET_180M"
+ ],
+ "months": {
+  "design_last": "20251231",
+  "first": "20250910",
+  "full_last": "20260430",
+  "run_first": "20250901"
+ },
+ "pins": [
+  {
+   "rel": "05_Profile/tree/tools/alarm_profile_v2/episode_blocks.py",
+   "sha16": "150dc80c8e681efe"
+  },
+  {
+   "rel": "05_Profile/tree/tools/alarm_profile_v2/EPI_CATALOG_V1.tsv",
+   "sha16": "d133fea9c7935857"
+  },
+  {
+   "rel": "06_First_look/tree/tools/money_direction/md_v1.py",
+   "sha16": "323adc895fc8cf10"
+  },
+  {
+   "rel": "06_First_look/tree/tools/labcore/waves.py",
+   "sha16": "f61b22c588ee6b9a"
+  },
+  {
+   "rel": "01_Detection/tree/team/LAB3/code/lab3/law.py",
+   "sha16": "f777c329396b6190"
+  },
+  {
+   "rel": "01_Detection/tree/team/LAB3/code/lab3/days.py",
+   "sha16": "ecf85ffb7bc0fa69"
+  }
+ ],
+ "readers": {
+  "v11": {
+   "extra_args": [],
+   "label_column": "RULE_9",
+   "rel": "06_First_look/tree/tools/alarm_first_look/fl_read_v11.py",
+   "rule_file": "FL_RULE9.tsv",
+   "sha16": "a2e764accef55078"
+  },
+  "v12": {
+   "about": "fl_read_v12 runs fl_read_v11 unchanged first and prints RULE_12 and RULE_9 side by side; the chain builds its BAR tables inside the job (GPT d7f4868861ae2366); mem_mb = bar_v1 tree peak 2529 MB on 48 lists, job 20266502, + 20 percent",
+   "bar_tool": {
+    "rel": "06_First_look/tree/tools/alarm_first_look/bar_v1.py",
+    "sha16": "f83282239e1d31f8"
+   },
+   "extra_args": [],
+   "label_column": "RULE_12",
+   "mem_mb": 3035,
+   "pins": [
+    {
+     "rel": "06_First_look/tree/tools/alarm_first_look/fl_read_v11.py",
+     "sha16": "a2e764accef55078"
+    }
+   ],
+   "rel": "06_First_look/tree/tools/alarm_first_look/fl_read_v12.py",
+   "rule_file": "FL_RULE12.tsv",
+   "sha16": "eb7e9069da5b79d6"
+  }
+ },
+ "tools": {
+  "busy": {
+   "rel": "06_First_look/tree/tools/alarm_first_look/busy_v2.py",
+   "sha16": "fa844bfbad7e7e92"
+  },
+  "costs": {
+   "rel": "01_Detection/tree/team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V1.tsv",
+   "sha16": "ff157578098a2f47"
+  },
+  "export": {
+   "rel": "06_First_look/tree/tools/alarm_first_look/night_export_v4.py",
+   "sha16": "870a7578dafc725e"
+  },
+  "extract": {
+   "rel": "06_First_look/tree/tools/alarm_first_look/fl_extract_v1.py",
+   "sha16": "e19190f41bafe04b"
+  },
+  "lists": {
+   "rel": "06_First_look/tree/tools/alarm_first_look/fl_lists_v3.py",
+   "sha16": "f8e9ba0cab345c13"
+  },
+  "outcome_settings": {
+   "rel": "06_First_look/tree/tools/alarm_first_look/OUTCOMES_FIRSTLOOK_V1.json",
+   "sha16": "6983ca1ba1db40b1"
+  },
+  "outcomes": {
+   "rel": "01_Detection/tree/team/RESEARCH/tools/alarm_process/event_outcomes_aw1_rel1.py",
+   "sha16": "3dff0aa8fdda0d75"
+  },
+  "profile": {
+   "rel": "05_Profile/tree/tools/alarm_profile_v2/alarm_profile_v2_3.py",
+   "sha16": "cfcc853f2f994ebe"
+  },
+  "receipt": {
+   "rel": "06_First_look/tree/tools/alarm_first_look/fl_receipt_v1.py",
+   "sha16": "beefdcca7110d23f"
+  }
+ }
+}

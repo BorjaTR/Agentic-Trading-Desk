@@ -1,0 +1,153 @@
+# OUR_RULE_C6_V1.yaml: the card of C6's OUR RULES (BTC's robust z of accel and of the mid, the longest stay at an extreme, the label
+# floors), EDITION 1, edit 2 (EDGE2, 2026-10-18; edit 2 = BED's review 16:50:05Z nit, '|z|' in read_as; edit 1 b4e8e994 kept as a twin; OR3 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86). Made as OUR_RULE_C5_V1 638b08cf;
+# meaning_register checks it. Register of the day: LAYER_REGISTER_V32 e249ce941c5cdb16 (C6 S03, S04, S08 to S12 our_rule, NOT_CHECKED before
+# this card). The smart check: inputs cited, planted tests and mutants first, ONE small job J16006 (the computation at 6 named minutes and at
+# the first 2 minutes where S03, S04 reach 2 or -2 and S08 24 or under 1, of 8 Mar 2026 and 24 Sep 2025; S08 to S12 at every minute end;
+# how often each fires on the year's own rows of both days), readers to TREE's RR1.
+# Pass lines: hb/EDGE2.txt 2026-10-18T16:34:10Z, posted before J16006 ran; results 2026-10-18T16:4xZ.
+
+group: C6
+name: market motion, our rules (BTC's accel_z and stretch_z, persist_h, the label floors pos_top, pos_bottom, hot_heat, hot_dial_2h)
+summary: >-
+  S03 accel_z and S04 stretch_z are robust z scores of BTC: accel (S02's rule) and the mid now against their own 361 samples 60 s apart over
+  the last 6 hours, (now less the median) over 1.4826 x the median absolute deviation. S08 persist_h is the longest stay, in hours (at most
+  24), of any roster coin among the top or the bottom tenth of the coins ranked by their 24 h return. S09 0.9 and S10 0.1 are RULED floors of
+  the STRETCH labels. S11 hot_heat and S12 hot_dial_2h are TOP 10 percent floors: the k-th highest (k = ceil(n / 10)) of C6 S07 heat and of
+  C7 S07 dial_2h at the minute ends of the 62 days before D, empty in the year's first 62 days.
+read_as: >-
+  Every value equals our recompute at the named and the firing minutes, and S08 to S12 at every minute end of both days (RULE_C6_STAMPS_V1,
+  J16006). The z scores are not rare at 2: BTC's S04 was 2 or more, or -2 or less, at 25.76% (8 Mar 2026) and 24.44% (24 Sep 2025) of
+  minutes and |z| 3 or more at 10.07% and 10.97%, S03 at |z| 2 or more at 8.26% and 10.83%, where a normal law gives 4.55% and 0.27%: the 361 samples are a path,
+  not draws. S08 is a maximum over 51 to 52 coins: 24 at every minute of 24 Sep 2025 (WLFI, then ASTER), never under 4.02 h on 8 Mar 2026.
+  S11 on 8 Mar 2026 is 0.506223 and D's heat was at or above it at 12.15% of minutes; S12 3.114847 and D's dial_2h at 2.64% (J16006 c6fire).
+
+conclude:
+  may:
+    - "how far BTC's accel (S03) or mid (S04) now is from its last 6 hours, in robust standard deviations (RULE_C6_STAMPS_V1, J16006)"
+    - "how long the most pinned roster coin has stayed among the top or the bottom tenth by 24 h return (S08, hours, at most 24)"
+    - "the floors the labels compare raw values with: 0.9 and 0.1 (RULED), the 62 days' top tenth of heat and of dial_2h (S11, S12)"
+  never:
+    - "S04 (or S03) at 2 as unusually high (CARD_C6_V5 line 18): S04 at |z| 2 or more at 25.76% and 24.44% of minutes, S03 at 8.26% and 10.83% (J16006 c6fire)"
+    - "S08 as the fired coin's own stay: it is the longest stay of any roster coin (WLFI, ASTER at the cap all of 24 Sep 2025; RULE_C6_ROWS of J16006)"
+    - "S08 under 1 hour as common: 0 of 2,880 minutes on the two days (J16006 c6fire)"
+    - "S11, S12 as fixed numbers: each is re-measured on the 62 days before D, and empty in the year's first 62 days (NO_HISTORY at every minute of 24 Sep 2025)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C6_V5.md 961767ab40b1bd39 (rules 1 to 6, 9, 11 to 13, 19 to 21; edge cases E4, E21, E28, E30, E38, E60, E64, E72, E81 to E85, E87, E100, E103 to E118)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C6_V2.tsv ca847d981b0838f6
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml b2e20a666f08f5ce (C6 S02 accel's rule and S07 heat: basic, LIMITS; BED's book base MID_1S, KILL proven); team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05, the mid of the top in force: raw, LIMITS); team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml 7be2f177208996c1 (C7 S07 dial_2h); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv e249ce941c5cdb16 (C6 S03, S04, S08 to S12 our_rule)"
+  producer: "testbed/value_audit/code (C6's producer of CARD_C6_V5), reading book_ticker and C7's rows of D, and the built days for S11, S12"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C6.parquet
+  year_output_columns: "name (S01 to S12 and their twins), coin (BTC for S01 to S06, MARKET for S07 to S12), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_candle.py ours(D, names, group='C6') (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures book_ticker: BTC's mids through BED's book base MID_1S (S03, S04), every roster coin's mid through our C13 S05 (S08); the year's own C6 and C7 rows (S11, S12)"
+  exchange_stream: "bookTicker as Tardis records it"
+  files: "BOOK_BASE_<D-1>, BOOK_BASE_<D>/BTC.parquet; the year's C13.parquet of D-2, D-1, D; C6.parquet and C7.parquet of D-62 to D-1; the week's roster file"
+  columns: "MID_1S value_txt, why; C13 S05 of every roster coin; C6 S07 and C7 S07 of the coin MARKET"
+  fields:
+    robust_z: "S03 = (a_0 - med) / (1.4826 x MAD) of a_k = accel(e - 60 k s), k = 0 to 360, doubles; S04 = ((x_0 - med) / MAD, exact, to its nearest double) / 1.4826 of x_k = mid(e - 60 k s); NO_MOVE when MAD is 0 or a vel is [proof: CARD_C6_V5 rules 5, 6; planted E28, E60, E64 (the card's -65.4964 and 1.341487), E72, E4, E38 in tests/test_rule_c6.py; RULE_C6_STAMPS_V1]"
+    persist: "at each minute end a coin is ranked when its mid is known then and 24 h before; the top and bottom tenth are floor(n / 10) coins, a tie in the roster's order; S08 = the longest stay of any coin over 60, at most 1,440 minute ends [proof: CARD_C6_V5 rules 11, 12; planted E21, E81 to E85, E87, a coin from the top to the bottom; RULE_C6_STAMPS_V1 and 1,440 of 1,440 a day]"
+    floors: "S09 0.9, S10 0.1 at every minute end; S11, S12 the k-th highest of the 62 days' non-empty values, k = ceil(n / 10), NO_HISTORY when a window day is not built [proof: CARD_C6_V5 rules 19 to 21; planted E100, E103 to E118]"
+  latency: "S03, S04: the latest arrival among the samples' rows (rule 14); S08: the latest arrival of the ranked coins' rows at e; S11, S12: the latest known_at of the values counted (rule 21f)"
+  silence: "S03, S04 empty TOP_HOLE (NO_FILE first) when a second of the window is not known; S08 FEW_COINS under 10 ranked coins; none at the points checked (J16006)"
+
+reading_rules:
+  - "S03, S04 are z scores of a path: their samples overlap, so their tails are heavy; read their own fifths, not a normal law's"
+  - "S08 belongs to the market: the coin that sets it is any roster coin, not the coin read"
+  - "S11, S12 change once a day; empty in the year's first 62 days"
+
+values:
+  units: "S03, S04: robust standard deviations; S08: hours, 0 to 24; S09, S10: a position 0 to 1; S11 heat (a ratio), S12 percent of price"
+  zero: "S03, S04 0: at the 6 hours' median; S08 0 never (a coin in a tenth has a stay of at least 1 minute end)"
+  empty: "NO_MOVE, TOP_HOLE, NO_FILE (S03, S04); FEW_COINS, NO_ROSTER (S08); NO_HISTORY, NO_VALUES (S11, S12); value_kind 0. Never read empty as 0"
+  stale: "S03, S04 when TOP_HOLE (rule 1); the floors never"
+  flags: "BAD_ROW:BTC on S03, S04 when a bad row was skipped (rule 15)"
+
+interpret:
+  do:
+    - "read S04 at 3 or more as BTC's mid well above its 6 hours' middle, a state of about one minute in ten (J16006)"
+    - "read S08 at 24 as 'some coin has led or lagged the roster all day'"
+  dont:
+    - "compare S03, S04 with a normal law's tail"
+    - "read S08 as the persistence of the coin a chain fires on"
+
+biases:
+  - {what: "the z of a path (361 overlapping samples)", direction: "|z| 2 or more far more often than a normal law", size: "S04 25.76% and 24.44%, S03 8.26% and 10.83% of minutes (4.55% normal)", proof: "J16006 c6fire"}
+  - {what: "a maximum over the roster", direction: "S08 near its cap whenever one coin trends for a day", size: "24 at 100% of 24 Sep 2025's minutes; 6 to 24 h at 91.32% of 8 Mar 2026's", proof: "J16006 c6fire"}
+
+external_checks:
+  - {what: "S03, S04, S08 to S12 recomputed at 00:00, 01:00, 04:00, 12:10, 16:00, 22:06 and at the first 2 minutes where S03, S04 reach 2 or -2 and S08 24 or under 1, of 8 Mar 2026 and 24 Sep 2025", where: "BED's book base (KILL proven), our C13 S05, the year's own C6, C7 S07 of D-62 to D-1 (a recompute, our sources)", status: "VERIFIED: RULE_C6_STAMPS_V1 a2cbd3e7cf6c10c1: 203 of 203 MATCH at 29 points (J16006 log e8c61ebfd903a22a, rule_c6 ed1 d077b703b205e32f, tests ece64dc051bd0866 42 of 42: 36 cases, 6 mutants)"}
+  - {what: "S08 to S12 at every minute end", where: "the same", status: "VERIFIED: 1,440 of 1,440 each, both days (J16006); empty against empty counts as a MATCH, the reason not compared (24 Sep 2025 S11, S12 NO_HISTORY)"}
+  - {what: "how often each rule fires on one day", where: "the year's own C6 and C7 rows of 8 Mar 2026 and 24 Sep 2025", status: "MEASURED: J16006 c6fire (meaning_rule_or3 ed3 48f953d9ef615135, tests f3cf43e7937e2344 13 of 13)"}
+  - {what: "an outside record of the rules", where: "none: our rules on our inputs; the inputs are checked in BASIC_C6_V4, MEANING_C13_V4, BASIC_C7_V3", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "the seven settings recomputed, at named minutes and where they fire, and S08 to S12 at every minute end", run: "python3 -B -m rawcheck.rule_c6 --days <D,..> --at <HHMM,..> --fires <N> --out <dir>", where: "team/RAWCHECK/code (rule_c6.py d077b703b205e32f; BED's basic_c6 81c5b43222ef2be6 base, samples imported, never edited)"}
+  - {what: "how often the rules fire on one day", run: "python3 -B -m rawcheck.meaning_rule_or3 c6fire <D>", where: "team/RAWCHECK/code (meaning_rule_or3.py 48f953d9ef615135)"}
+
+used_by: "S03 by CHAIN_chop_LONG_fade_3 (fifth 2 ENTER), CHAIN_chop_LONG_ride (2 SKIP), CHAIN_forced_SHORT_ride (4 SKIP); S04 by CHAIN_chop_LONG_fade_3, CHAIN_chop_LONG_ride, CHAIN_trend_LONG_fade (1+2 SKIP, 3+4 ENTER), CHAIN_trend_LONG_ride, CHAIN_trend_SHORT_ride_4; S08 by CHAIN_forced_LONG_fade (1+2 ENTER), CHAIN_forced_LONG_ride (1 SKIP, 'the coin not persisting'), CHAIN_quiet_SHORT_ride_2 (3 ENTER); S09, S10 by STRETCH/AT-TOP-6H, AT-BOTTOM-6H; S11, S12 by HEAT/HOT, PATH-HEAT/HEAT-GONE (CARD_C6_V5 'Who reads it today'). To TREE's RR1 (hb/EDGE2.txt 2026-10-18T16:4xZ): S08 is any coin's stay"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C6_V5.md 961767ab40b1bd39
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml b2e20a666f08f5ce (the basic settings of C6; C6_STAMPS_V1 95ef605bc06f4153)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_C6_STAMPS_V1.tsv a2cbd3e7cf6c10c1 (J16006)"
+  JOBS: "16006 (tests, rule_c6 at named and firing minutes of 8 Mar 2026 and 24 Sep 2025, S08 to S12 every minute, c6fire both days; log e8c61ebfd903a22a)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T16:34:10Z, posted before J16006 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): no rename here (S03, S04 are the standard robust z; S08 says its rule; S09 to S12 are floors)"
+
+settings:
+  - {id: C6.S03, name: "accel_z: robust z of BTC's accel against its last 6 hours", layer: our_rule, side: none, window: "45,000 s (361 accel samples 60 s apart, each over 23,400 s of 1 s mids)", clock: "fire second (the year: every minute end)", scope: BTC, contracts: USDT,
+     aggregate: "(a_0 - median) / (1.4826 x MAD) of a_k = accel(e - 60 k s), k = 0 to 360, doubles; rounded once to 6 decimals", aliases: "accel_z",
+     derived_from: "C6 S02's accel rule on BED's book base MID_1S of BTC",
+     means: "how far BTC's accel now is from its own last 6 hours, in robust standard deviations",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29 (00:00, 01:00, 04:00, 12:10, 16:00, 22:06 and the minutes where a rule fires, 8 Mar 2026 and 24 Sep 2025; J16006, rule_c6 d077b703 from BED's book base); planted E64 gives the card's -65.4964"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16006 c6fire: 2 or more at 3.75% and 6.11%, -2 or less at 4.51% and 4.72% of minutes (8 Mar 2026, 24 Sep 2025), |z| 3 or more at 0.83% and 2.08%: the standard robust z (no rename), its tails heavier than a normal law's"},
+     open: "the chains read its fifths, not its raw value; two days measured",
+     never: ["S03 at 2 as a normal law's 2.3 percent a side: 3.75% and 6.11% of minutes at 2 or more (J16006)"]}
+  - {id: C6.S04, name: "stretch_z: robust z of BTC's mid against its last 6 hours", layer: our_rule, side: none, window: "21,600 s (361 mid samples 60 s apart; every whole second known)", clock: "fire second (the year: every minute end)", scope: BTC, contracts: USDT,
+     aggregate: "((x_0 - median) / MAD, exact, to its nearest double) / 1.4826 of x_k = BTC's mid at e - 60 k s, k = 0 to 360; rounded once to 6 decimals", aliases: "stretch_z",
+     derived_from: "BED's book base MID_1S of BTC",
+     means: "how far BTC's price now is from the middle of its last 6 hours, in robust standard deviations",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29 (the same points; J16006, rule_c6 d077b703); planted E64 gives the card's 1.341487"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16006 c6fire: |z| 2 or more at 25.76% (8 Mar 2026) and 24.44% (24 Sep 2025) of minutes, 3 or more at 10.07% and 10.97% (a normal law 4.55%, 0.27%): the mid's samples are a path, so 2 is a common state; the standard robust z (no rename)"},
+     open: "two days measured; the chains read its fifths",
+     never: ["S04 at 2 as unusually high (CARD_C6_V5 line 18): 25.76% and 24.44% of minutes at |z| 2 or more (J16006)"]}
+  - {id: C6.S08, name: "persist_h: the longest stay of any roster coin among the top or the bottom tenth by 24 h return", layer: our_rule, side: none, window: "up to 1,440 minute ends, each ranking on mid(tau) / mid(tau - 86,400 s)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the largest count of consecutive minute ends (at most 1,440) a coin stayed in the same tenth (floor(n / 10) coins, a tie in the roster's order), over 60, exact; FEW_COINS under 10 ranked", aliases: "persist_h",
+     derived_from: "C13 S05 (the mid of the top in force) of every roster coin, D-2 to D",
+     means: "how long the most pinned roster coin has stayed among the leaders or the laggards of the last 24 hours, in hours",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29; every minute end 1,440 of 1,440 of 8 Mar 2026 and 24 Sep 2025 (J16006, rule_c6 d077b703 from our C13 S05: the same state as the card's book_ticker top)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16006 c6fire: 24 (the cap) at 100% of 24 Sep 2025's minutes (WLFI, then ASTER), 4.016667 to 19.516667 h on 8 Mar 2026 (median 10.8); a maximum over 51 and 52 ranked coins; the rule its name says (no rename)"},
+     open: "its readers' fifths are cut on minutes (min_count 2016): a day at the cap gives ties; two days measured",
+     never: ["S08 as the fired coin's own stay (CHAIN_forced_LONG_ride: 'the coin not persisting'): it is any roster coin's", "S08 under 1 hour as common: 0 of 2,880 minutes of the two days (J16006)"]}
+  - {id: C6.S09, name: "pos_top: the STRETCH label's top floor", layer: our_rule, side: up, window: none, clock: minute end, scope: market, contracts: USDT,
+     aggregate: "0.9 at every minute end (RULED, the owner's ruling 7 A of 5 Oct 2026)", aliases: "pos_top",
+     derived_from: "none (a RULED number, E1_LABEL_DIALS_V2)",
+     means: "the raw pos_6h at or above which STRETCH/AT-TOP-6H calls BTC at the top of its 6 hours",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29; 1,440 of 1,440 every minute end of both days (J16006)"},
+     meaning: {status: DEFINED, proof: "a constant: one distinct value, 0.9, on both days (J16006 c6fire); rule 19"},
+     open: "none: it moves only by the owner's word"}
+  - {id: C6.S10, name: "pos_bottom: the STRETCH label's bottom floor", layer: our_rule, side: down, window: none, clock: minute end, scope: market, contracts: USDT,
+     aggregate: "0.1 at every minute end (RULED, the owner's ruling 7 A of 5 Oct 2026)", aliases: "pos_bottom",
+     derived_from: "none (a RULED number, E1_LABEL_DIALS_V2)",
+     means: "the raw pos_6h at or below which STRETCH/AT-BOTTOM-6H calls BTC at the bottom of its 6 hours",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29; 1,440 of 1,440 every minute end of both days (J16006)"},
+     meaning: {status: DEFINED, proof: "a constant: one distinct value, 0.1, on both days (J16006 c6fire); rule 20"},
+     open: "none: it moves only by the owner's word"}
+  - {id: C6.S11, name: "hot_heat: the top tenth of the last 62 days' heat", layer: our_rule, side: up, window: "the 62 days before D (5,356,800 s of minute ends)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the k-th highest of the non-empty C6 S07 heat values at the minute ends of D-62 to D-1, k = ceil(n / 10), exact; NO_HISTORY when a window day is not built, NO_VALUES when none", aliases: "hot_heat",
+     derived_from: "C6 S07 heat of the coin MARKET, the year's days D-62 to D-1",
+     means: "the heat that the hottest tenth of the last 62 days' minutes reached: the HEAT/HOT label's floor",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29; 1,440 of 1,440 every minute end of both days (J16006; 24 Sep 2025 empty NO_HISTORY both sides, the reason not compared)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16006 c6fire: 0.506223 on 8 Mar 2026, D's heat at or above it at 12.15% of minutes (the top tenth, as meant); empty in the year's first 62 days"},
+     open: "one day with a floor measured"}
+  - {id: C6.S12, name: "hot_dial_2h: the top tenth of the last 62 days' dial_2h", layer: our_rule, side: up, window: "the 62 days before D (5,356,800 s of minute ends)", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the k-th highest of the non-empty C7 S07 dial_2h values at the minute ends of D-62 to D-1, k = ceil(n / 10), exact; NO_HISTORY when a window day is not built, NO_VALUES when none", aliases: "hot_dial_2h",
+     derived_from: "C7 S07 dial_2h of the coin MARKET, the year's days D-62 to D-1",
+     means: "the 2-hour dial that the widest tenth of the last 62 days' minutes reached: the HEAT/HOT label's other floor",
+     computation: {status: RELIABLE, proof: "RULE_C6_STAMPS_V1 a2cbd3e7: 29 of 29; 1,440 of 1,440 every minute end of both days (J16006; 24 Sep 2025 empty NO_HISTORY both sides, the reason not compared)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16006 c6fire: 3.114847 on 8 Mar 2026, D's dial_2h at or above it at 2.64% of minutes (a calmer day than its 62); empty in the year's first 62 days"},
+     open: "one day with a floor measured; a 62-day floor follows the market slowly"}

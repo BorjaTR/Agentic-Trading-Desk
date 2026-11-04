@@ -1,0 +1,34 @@
+file	sha16	landed_utc	status	test_receipt
+alarms/alarm_offer_v1.py	dc3fab0a06b07537	2026-10-20T17:08Z	DRAFT, waits QUANT	test_alarm_offer_v1.py: OK 2 tests; J32277 (CUSUM, 3 days), J32314 (A01)
+alarms/a01_onset_v1.py	2487519b3adb5fc1	2026-10-20T17:15Z	DRAFT, waits QUANT	test_a01_onset_v1.py 37398f5c: OK 5 tests, 2 mutants caught; P2 39 of 39 coin-days same (J32314)
+alarms/alarm_offer_v1.py	dc3fab0a06b07537	2026-10-20T17:4xZ	SUPERSEDED by tools/alarm_check/alarm_bench_v1.py (one computation; QUANT 17:27:16Z, proof J32487); kept for J32277, J32314	-
+alarms/a01_onset_v2.py	ffe90db285aa85c5	2026-10-20T17:38Z	DRAFT (QUANT review a93bd78c items fixed)	test_a01_onset_v2.py ef968b17: OK 8 tests; J32601 P2 39 of 39, meaning M1 80, M2 97.6 pct
+alarms/a03_wave_v1.py	31e6a7c43b5c12fc	2026-10-20T17:4xZ	DRAFT, waits QUANT	test_a03_wave_v1.py f41ac90e: OK 3 tests, 2 mutants caught; J32620 D1 6 of 6 SAME
+alarms/a03_inwave_v1.py	30a475e5ed8bfe35	2026-10-20T17:45Z	DRAFT, waits QUANT	test_a03_inwave_v1.py f08e5a0a: OK 1 test; inwave_20261020T174506Z (322 in the wave, 260 alone); J32672
+alarms/a02_climax_v3.py	ded5b36195f4b1b5	2026-10-20T17:5xZ	DRAFT, detection proven on DEV, waits QUANT sign	test_a02_climax_v3.py 4dc8e7c8: 7 planted tests, growth mutant caught; J32828, J32858 to J32861 D1 2,886 of 2,886
+alarms/a02_grid_v1.py	0f5ecc2fed8c8528	2026-10-20T18:0xZ	DRAFT	test_a02_grid_v1.py 8e758c91; J32923 to J32926
+alarms/a02_grid_read_v1.py	0a99e05c1403d22d	2026-10-20T18:0xZ	SUPERSEDED before use by a02_grid_read_v2 (QUANT MUST 18:11:36Z)	test_a02_grid_read_v1.py 4da84cb0
+alarms/a02_grid_read_v2.py	552968a05d791d8a	2026-10-20T18:1xZ	DRAFT; limit: CHECK formed for every setting	test_a02_grid_read_v2.py 30ed8b29: 4 tests, 3 planted mutants caught; J32994
+alarms/onset_band_v4.py	af9b49e682aad028	2026-10-20T20:15Z	LANDED (QUANT, SCOUT delegation 20:13:03Z); N5, N2 V2, N3 V2, N9 V2 PROVEN; N4 V2 not	test_onset_band_v4.py 88c53387: OK; reproduces N5 sealed rows (made by v2 fb10ced9) byte for byte, J33410; catalogue rerun rows to follow
+alarms/test_onset_band_v4.py	88c53387d9e818d1	2026-10-20T20:15Z	LANDED with onset_band_v4	its own run (unit tests, planted rule lines, two computations)
+alarms/n1_busy_burst_v2.py	9c511bd0bdbafe08	2026-10-20T20:15Z	LANDED (QUANT, as above); N1 v2 PROVEN	test_n1_busy_burst_v2.py 67d774aa: OK; catalogue rows N1-* REPRODUCED J33358, J33359 (proposals copy, same sha16)
+alarms/test_n1_busy_burst_v2.py	67d774aa529e25bc	2026-10-20T20:15Z	LANDED with n1_busy_burst_v2	its own run
+alarms/k0_busy_now_v1.py	9869be3abb4829ad	2026-10-20T20:40Z	LANDED (QUANT); K0 PRICE SWING PROVEN	test_k0_busy_now_v1.py b07c91df: OK; rows K0-* REPRODUCED J33418 to J33420 (proposals copy, same sha16); SCOUT blind rebuild J36044, J36045
+alarms/test_k0_busy_now_v1.py	b07c91dfee9e7d3d	2026-10-20T20:40Z	LANDED with k0_busy_now_v1	its own run
+alarms/onset_band_v6.py	9acf9cc8a0b24f53	2026-10-21T00:10:31Z	LANDED (QUANT); Q1 OFI BURST and Q4 BASIS JUMP PROVEN (proof 4 rows pending run); v4 alarms unchanged	test_onset_band_v6.py da64fbd1a2ecd975: OK; prefix J33451, J33474 all SAME; SCOUT blind rebuild J36089 31,275 and 7,780 equal
+alarms/test_onset_band_v6.py	da64fbd1a2ecd975	2026-10-21T00:10:31Z	LANDED with onset_band_v6	its own run
+alarms/b8_roll_v1.py	991d0eedc6893fd7	2026-10-21T01:11:13Z	LANDED (QUANT); B8 ROLL SPREAD (proof 4 rows pending run)	test_b8_roll_v1.py 7c54fba5c72c2dd5: OK; prefix J33508 4,031 SAME; SCOUT blind rebuild J36103-04 14,480 of 14,480
+alarms/test_b8_roll_v1.py	7c54fba5c72c2dd5	2026-10-21T01:11:13Z	LANDED with b8_roll_v1	its own run
+alarms/b7_wide_pressed_v1.py	eee6434571d63f45	2026-10-21T01:54:09Z	LANDED (QUANT); B7 WIDE AND PRESSED (proof 4 rows pending run)	test_b7_wide_pressed_v1.py d3dd58f2c63521ed: OK; prefix J33450 11,268 SAME; SCOUT blind rebuild J36116-17 116,866 of 116,866
+alarms/test_b7_wide_pressed_v1.py	d3dd58f2c63521ed	2026-10-21T01:54:09Z	LANDED with b7_wide_pressed_v1	its own run
+alarms/o1_flush_v2.py	4f0f2121deda5414	2026-10-21T02:24:05Z	LANDED (QUANT); O1 LONG FLUSH / O2 SHORT SQUEEZE (proof 4 rows pending run)	test_o1_flush_v2.py 3a61c4eacf0835ca: OK; prefix J33473 2,988 SAME; SCOUT blind rebuild J36120-21 9,851 of 9,851
+alarms/test_o1_flush_v2.py	3a61c4eacf0835ca	2026-10-21T02:24:05Z	LANDED with o1_flush_v2	its own run
+alarms/alarm_view_v1.py	f22497ccd7db7644	2026-10-21T07:07:14Z	LANDED (QUANT, AV1): the alarm layer, lookahead proof once	test_alarm_view_v1.py 74bcf483: OK 21 tests on pandas 2.3.3 (J33572); 4 ports equal on every DEV line (J33572)
+alarms/test_alarm_view_v1.py	74bcf4835523fe88	2026-10-21T07:07:14Z	LANDED with alarm_view_v1	its own run
+alarms/o5_both_v1.py	d1a1c9b084c392d9	2026-10-21T07:07:14Z	LANDED (QUANT): O5 reference, per-day loop and prefix proof	its prefix proof J33537
+alarms/o5_both_v2.py	3a99d5ca112c52fd	2026-10-21T07:07:14Z	LANDED (QUANT): O5 on alarm_view (proof 4 rows pending)	test_o5_both_v2.py 43fe9534: OK; equal to v1 on 1,515 DEV lines (J33569, J33572); SCOUT rebuild J36168
+alarms/test_o5_both_v2.py	43fe95340f394691	2026-10-21T07:07:14Z	LANDED with o5_both_v2	its own run
+alarms/alarm_view_v1.py	6e25ccaf52f736c8	2026-10-21T07:56:09Z	LANDED (QUANT, AV1): + bin_minutes (supersedes f22497cc)	test_alarm_view_v1.py 05a2d0e6: OK (19 tests on pandas 2.3.3 here; J33579)
+alarms/test_alarm_view_v1.py	05a2d0e6b25d580b	2026-10-21T07:56:09Z	LANDED with alarm_view_v1	its own run
+alarms/q16_vwap_v1.py	2ca92bb9a8d970af	2026-10-21T07:56:09Z	LANDED (QUANT): Q16 TAKER VWAP PRESSURE (proof 4 rows pending)	test_q16_vwap_v1.py 85423878: OK; SCOUT rebuild J36221 equal
+alarms/test_q16_vwap_v1.py	854238785c8ca406	2026-10-21T07:56:09Z	LANDED with q16_vwap_v1	its own run

@@ -1,0 +1,121 @@
+# OUR_RULE_C5_V1.yaml: the card of C5's OUR RULES (the 1 h participation shares and the two tides), EDITION 1 (EDGE2, 2026-10-18; OR3 of
+# OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86). Made as OUR_RULE_C9_V1 66c345c9; meaning_register edition 5 checks it. Register of the day:
+# LAYER_REGISTER_V29 3ada04c1de934f65 (C5 S05, S06, S09, S10 our_rule, NOT_CHECKED before this card). The smart check: inputs cited, planted
+# tests and mutants first, ONE small job J15999 (the computation at 5 named minutes and at the first 3 minutes where each rule fires, of 8 Mar
+# 2026 and 24 Sep 2025; how often each fires on the year's own rows of 24 Sep 2025), readers to TREE's RR1.
+# Pass lines: hb/EDGE2.txt 2026-10-18T16:08Z, posted before J15999 ran; results 16:1xZ (one of my expectations was wrong: the tides fire most minutes).
+
+group: C5
+name: market breadth, our rules (the shares of coins up or down 0.6 percent or more over 1 h; the tides over 60 s and 15 min)
+summary: >-
+  From the roster coins' C1 returns at a minute end: S05 the share of the coins with a 1 h return of 0.6 percent or more, S06 of -0.6 or
+  less; the tide, the share up when 60 percent or more rose, minus the share down when 60 percent or more fell, else 0: S09 on the 60 s returns
+  (every roster coin), S10 on the 15-minute returns, BTC out. Every counted coin, flat ones too, is in the denominator; rounded once to 6 decimals.
+read_as: >-
+  The tides are not rare events: on 24 Sep 2025 S09 was not 0 at 79.58% of minutes (an up tide 40.07%, a down tide 39.51%) and S10 at 86.25%,
+  because most minutes 60 percent or more of the coins move the same way (C1 S10's larger side at 0.6 or more at 79.58% of minutes; flat
+  coins a median 5.88%) (J15999 c5fire). A tide is the sign of the market's minute (or quarter hour) more than a surge. S05 and S06 reach 0.4,
+  the floor at which the label WHY-SCOPE/MARKET-WIDE calls a move market-wide, at 11.53% and 8.26% of minutes. Every value equals our exact
+  recompute at the named and the firing minutes (RULE_C5_STAMPS_V1, J15999).
+
+conclude:
+  may:
+    - "how many of the roster's coins rose (fell) 0.6 percent or more over the last hour (S05, S06: a share 0 to 1; RULE_C5_STAMPS_V1, J15999)"
+    - "the side most coins took over the last minute (S09) or quarter hour, BTC out (S10): plus up, minus down, 0 when no side had 60 percent of the coins"
+  never:
+    - "a tide as a rare surge: S09 is not 0 at 79.58% and S10 at 86.25% of 24 Sep 2025's minutes (J15999 c5fire)"
+    - "a tide of 0 as a calm market: it is 0 when neither side had 60 percent of the coins, flat coins counted"
+    - "S05 or S06 as all coins moving: 0.4 or more at 11.53% and 8.26% of minutes; at 0 at 10.69% and 17.78% (24 Sep 2025, J15999 c5fire)"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C5_V9.md 7facfdc31d0d369d (rules 2, 3, 8, 11, 14, 15, O5, O9; edge cases N2, N3, E2 to E5, E17 to E19)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C5_V3.tsv 7df86c88da2040dc
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C1_V5.yaml 965e482ed18e3e2b (C1 S10, S12, S13, the 60 s, 15 min, 1 h mid returns: basic, CLEAN); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V29.tsv 3ada04c1de934f65 (C5 S05, S06, S09, S10 our_rule)"
+  producer: "testbed/value_audit/code (C5's producer of CARD_C5_V9), reading C1's built part of D"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C5.parquet
+  year_output_columns: "name (S01 to S10 and their twins), coin (MARKET), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_candle.py ours(D, names, group='C5') (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures book_ticker, through our C1 mid returns (BASIC_C1_V5)"
+  exchange_stream: "bookTicker as Tardis records it, read by C1; C5 reads C1's returns"
+  files: "the year's C1 output of D (C1.parquet), the week's roster"
+  columns: "C1 S10, S12, S13 of every roster coin, value_kind, value_f64, value_txt"
+  fields:
+    shares: "S05 = the coins with C1 S13 at 0.6 or more over the coins with a value; S06 = at -0.6 or less [proof: CARD_C5_V9 rules 2, 3, 8, O5; planted N3, E2 in tests/test_rule_c5.py; RULE_C5_STAMPS_V1]"
+    tide: "up share u, down share d over the coins with a value (flat ones counted): u when u is 0.6 or more, minus d when d is 0.6 or more, else 0; S09 on C1 S10 of every coin, S10 on C1 S12 with BTC out [proof: CARD_C5_V9 rule 11, O9, the owner's ruling 5 of 5 Oct 2026; planted E2 to E5, E17 to E19]"
+  latency: "known_at = the latest known_at of the C1 values used (CARD_C5_V9 rule 16)"
+  silence: "no coin counted: empty with the coins' common reason, else ALL_COINS_EMPTY (rule 15); none on the two days at the points checked (J15999)"
+
+reading_rules:
+  - "a flat coin is in the denominator and on neither side"
+  - "the tide is one number: plus the up share, minus the down share, or 0; a side needs 60 percent of the coins counted"
+  - "S10 leaves BTC out, S09 counts it"
+
+values:
+  units: "S05, S06: a share 0 to 1; S09, S10: -1 to +1 (0, or a share of at least 0.6 with its sign)"
+  zero: "S05, S06 0: no coin moved 0.6 percent that way over the hour; S09, S10 0: no side had 60 percent of the coins"
+  empty: "NO_ROSTER, ALL_COINS_EMPTY or the coins' common reason; value_kind 0. Never read empty as 0"
+  stale: "true when every coin left out is BOOK_HOLE (rule 15)"
+  flags: "none of its own"
+
+interpret:
+  do:
+    - "read the tide's sign as the market's side of the minute; read its size (0.6 to 1) as how one-sided"
+  dont:
+    - "read a tide as an event: it is present at most minutes"
+
+biases:
+  - {what: "a fixed floor of 60 percent of the coins", direction: "the tide fires most minutes on a busy day", size: "S09 not 0 at 79.58%, S10 at 86.25% of 24 Sep 2025's minutes", proof: "J15999 c5fire"}
+
+external_checks:
+  - {what: "S05, S06, S09, S10 recomputed exactly from our C1 S10, S12, S13 at 00:00, 04:00, 12:10, 16:00, 22:06 and at the first 3 minutes where each year value is above 0 (S09, S10 also below 0), of 8 Mar 2026 and 24 Sep 2025", where: "the year's C1 output (a recompute, our source)", status: "VERIFIED: RULE_C5_STAMPS_V1 2f9dc5519018bf28: 128 of 128 MATCH, 32 points (J15999 log af3a5cac5c0546aa, rule_c5 ed1 ecbe07c195a03cd3, tests c36560e1ff166267 16 of 16: 12 cases, 4 mutants)"}
+  - {what: "how often each rule fires on one day", where: "the year's own C5 and C1 rows of 24 Sep 2025", status: "MEASURED: J15999 c5fire (meaning_rule_or3 ed2 92699c335a68398a, tests 9def5008fc9e7a24 11 of 11)"}
+  - {what: "an outside record of the rules", where: "none: our rules on our returns; C1's returns are checked in BASIC_C1_V5", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "the four settings recomputed from our C1, at named minutes and at the minutes where each fires", run: "python3 -B -m rawcheck.rule_c5 --days <D,..> --at <HHMM,..> --fires <N> --out <dir>", where: "team/RAWCHECK/code (rule_c5.py ecbe07c195a03cd3; basic_c5's frac, rnd, verdict imported)"}
+  - {what: "how often the rules fire on one day", run: "python3 -B -m rawcheck.meaning_rule_or3 c5fire <D>", where: "team/RAWCHECK/code (meaning_rule_or3.py 92699c335a68398a)"}
+
+used_by: "S05, S06 by the label WHY-SCOPE/MARKET-WIDE (a fire's side: in fifth 4 or more and at or over scope_wide_share 0.4); S05 by CHAIN_forced_LONG_fade (skips on fifths 3, 4); S09 by CHAIN_forced_SHORT_ride (waits on fifths 2, 3); S10 nobody yet (CARD_C5_V9 'Who reads it today'). To TREE's RR1 (hb/EDGE2.txt 16:1xZ): the tide present at most minutes"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C5_V9.md 7facfdc31d0d369d
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_C5_V3.yaml 9317d3a866b63a9b (the basic settings of C5)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_C5_STAMPS_V1.tsv 2f9dc5519018bf28 (J15999)"
+  JOBS: "15999 (tests, rule_c5 at named and firing minutes of 8 Mar 2026 and 24 Sep 2025, c5fire and c2fire 24 Sep 2025; log af3a5cac5c0546aa)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T16:08Z, posted before J15999 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): no rename here (the names say the rules)"
+
+settings:
+  - {id: C5.S05, name: "share of roster coins up 0.6 percent or more over 1 h", layer: our_rule, side: up, window: "3,600 s", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the coins with C1 S13 at 0.6 or more over the coins with a value, rounded once to 6 decimals", aliases: "part_up_1h",
+     derived_from: "C1 S13 of every roster coin",
+     means: "how much of the market rose 0.6 percent or more over the last hour",
+     computation: {status: RELIABLE, proof: "RULE_C5_STAMPS_V1 2f9dc551: 32 of 32 (00:00, 04:00, 12:10, 16:00, 22:06 and the minutes where a rule fires, 8 Mar 2026 and 24 Sep 2025; J15999, rule_c5 ecbe07c1 from our C1)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15999 c5fire (24 Sep 2025): median 0.058824, p90 0.490196, max 0.980392; at 0 10.69%, at 0.4 or more (WHY-SCOPE/MARKET-WIDE) 11.53%; the share rule 8 says (no rename)"},
+     open: "one fixed floor of 0.6 percent for every coin (a wild coin passes it more easily than BTC); one day measured"}
+  - {id: C5.S06, name: "share of roster coins down 0.6 percent or more over 1 h", layer: our_rule, side: down, window: "3,600 s", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the coins with C1 S13 at -0.6 or less over the coins with a value, rounded once to 6 decimals", aliases: "part_dn_1h",
+     derived_from: "C1 S13 of every roster coin",
+     means: "how much of the market fell 0.6 percent or more over the last hour",
+     computation: {status: RELIABLE, proof: "RULE_C5_STAMPS_V1 2f9dc551: 32 of 32 (00:00, 04:00, 12:10, 16:00, 22:06 and the minutes where a rule fires, 8 Mar 2026 and 24 Sep 2025; J15999, rule_c5 ecbe07c1 from our C1)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15999 c5fire (24 Sep 2025): median 0.058824, p90 0.333333, max 0.980392; at 0 17.78%, at 0.4 or more 8.26%; the share rule 8 says (no rename)"},
+     open: "as S05: one fixed floor for every coin; one day measured"}
+  - {id: C5.S09, name: "tide over 60 s (the share up when 60 percent or more rose, minus the share down when 60 percent or more fell)", layer: our_rule, side: none, window: "60 s", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "u = up / n, d = down / n over the coins with C1 S10 (flat ones counted): u when u is 0.6 or more, minus d when d is 0.6 or more, else 0; rounded once", aliases: "tide_60s; CUBE.tide (its twin, O6)",
+     derived_from: "C1 S10 of every roster coin",
+     means: "the side the market took over the last minute when 60 percent of the coins agree, with how many",
+     computation: {status: RELIABLE, proof: "RULE_C5_STAMPS_V1 2f9dc551: 32 of 32 (00:00, 04:00, 12:10, 16:00, 22:06 and the minutes where a rule fires, 8 Mar 2026 and 24 Sep 2025; J15999, rule_c5 ecbe07c1 from our C1)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15999 c5fire (24 Sep 2025): not 0 at 79.58% of minutes (up 40.07%, down 39.51%); C1 S10's larger side at 0.6 or more at 79.58%, flat coins a median 5.88% a minute; the rule 11 says (no rename)"},
+     open: "present at most minutes of a busy day: a sign of the minute, not a surge; one day measured (a quiet day not yet)",
+     never: ["a tide as a rare surge (not 0 at 79.58% of 24 Sep 2025's minutes)"]}
+  - {id: C5.S10, name: "tide over 15 min, BTC out", layer: our_rule, side: none, window: "900 s", clock: "fire second (the year: every minute end)", scope: market, contracts: USDT,
+     aggregate: "the tide of rule 11 on C1 S12 of the roster coins but BTC; rounded once", aliases: "EF.ef_tide_fix (O7, the owner's ruling 5 of 5 Oct 2026)",
+     derived_from: "C1 S12 of every roster coin but BTC",
+     means: "the side the market but BTC took over the last 15 minutes when 60 percent of the coins agree, with how many",
+     computation: {status: RELIABLE, proof: "RULE_C5_STAMPS_V1 2f9dc551: 32 of 32 (00:00, 04:00, 12:10, 16:00, 22:06 and the minutes where a rule fires, 8 Mar 2026 and 24 Sep 2025; J15999, rule_c5 ecbe07c1 from our C1)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15999 c5fire (24 Sep 2025): not 0 at 86.25% of minutes (up 41.94%, down 44.31%); the rule 11 says with BTC out (no rename)"},
+     open: "present at most minutes of a busy day; read by nobody yet",
+     never: ["a tide as a rare surge (not 0 at 86.25% of 24 Sep 2025's minutes)"]}

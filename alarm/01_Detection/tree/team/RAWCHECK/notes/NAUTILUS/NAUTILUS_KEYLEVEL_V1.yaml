@@ -1,0 +1,578 @@
+# NAUTILUS_KEYLEVEL_V1.yaml: the card of the NAUTILUS key levels S64 to S84 (nautilus layer, on OUR 1-minute candles), EDITION 1 (METRIC_AUDIT2, 2026-10-18, NR1 of NAUTILUS_REVIEW_WORKPACKAGES_V3 6cbc3366: the smart check, section 0c).
+# EDIT 1 (METRIC_AUDIT2, after METRIC_AUDIT3 REVIEW NR1 OK 15:36:21Z, E1): the volume clauses (S09 only) kept in NAUTILUS_PRICE_V1 alone; nothing else changed.
+# EDIT 2 (METRIC_AUDIT2, EDGE1 RULING 3 15:40:56Z: a formula that differs from the standard its name calls up is RENAMED, the standard as could_build): S07, S08, S09, S11 (PRICE) and S15 to S17 (BANDS) renamed, could_build NAUTILUS.CB4 to CB8; sizes from J15981 (step 3 points); no new run.
+# Written by team/METRIC_AUDIT2/gen_nr1_cards_v1.py from the logs of J15926, J15933, J15946, J15958, J15965, J15974, J15981 (numbers read, never typed). Form as BASIC_E2_V1.
+group: NAUTILUS
+name: NAUTILUS key levels S64 to S84 (nautilus layer, on OUR 1-minute candles)
+summary: 'Twenty-one key levels of a coin at each minute end, in USDT: the SMA of the close, the Bollinger bands of the typical price and the Donchian channel, each over 60, 240 and
+  1,440 candles (the formulas of S01, S12 to S14 and S18 to S20 on longer windows, OPEN O2 of CARD_NAUTILUS_V4). The chain from 00:00 of D-2 fills a 1,440-candle window even after empty
+  minutes of D-1.'
+read_as: 'The year equals the card''s formula exactly: 770 of 770 coin-minutes per setting (J15933), and at LIT 8 Mar 18:00, 19:00 where the 1,440-candle windows span its 45-minute C13
+  gap of 7 Mar (J15974). The SMA and Donchian levels equal TA-Lib SMA, MAX, MIN, MIDPRICE at step 3 points (J15981). The Bollinger levels are on the typical price: renamed with S12 to
+  S14; the difference from Bollinger of the close shrinks with the window (opens).'
+conclude:
+  may:
+  - the coin's hourly, 4-hour and daily mean (S64 to S66) and range (S76 to S84) as levels against the close
+  - S64 to S66, S76 to S84 as TA-Lib SMA, MAX, MIN, MIDPRICE (equal at step 3 points, J15981)
+  never:
+  - 'S67 to S75 as Bollinger bands of the close (renamed: on the typical price)'
+  - 'a 1,440-candle level as the calendar day: it counts candles stepped, skipping empty minutes, so after gaps it reaches into D-2'
+  - a level compared across coins in USDT
+  - 'a value read at an EMPTY minute end: empty is never 0'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_NAUTILUS_V4.md (60f66fc848dda3cd; V3 4983e448 carried)
+  settings_register: registers/SETTINGS_NAUTILUS_V2.tsv (e82d7319899be9ea); edge cases testbed/value_audit/registers/EDGES_NAUTILUS_V2.tsv (6dc7a051710644e4)
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_C13_V4 (C13 S01 close, S02 high, S03 low: raw, LIMITS)'
+  producer: testbed/value_audit/code/L0_y52f12/value_audit/code/prod_NAUTILUS_v4.py 2ad9df92 (Nautilus 1.231.0 formulas on OUR 1-minute candles, Decimal 40 digits)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/NAUTILUS.parquet
+  year_output_columns: name (S01 to S84), coin, as_of_us (e), value_kind (0 empty, 1 float, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us, stale, empty_reason,
+    flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, NAUTILUS, settings, coins, moments) (value_kind 0 = empty)
+source:
+  vendor: 'none new: OUR 1-minute candles: C13 S01 to S03 (Tardis.dev binance-futures trades, MEANING_C13_V4)'
+  exchange_stream: trades (Binance futures trade channel through Tardis), the rows stamped in (e - 60 s, e] and received by e (C13 rule 1)
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<SYM>_<YYYY-MM-DD>.csv.gz (read by C13)
+  columns: exchange, symbol, timestamp, local_timestamp, id, side, price, amount
+  fields:
+    close_high_low: 'C13 S01, S02, S03 of each minute end of D-2, D-1, D, as the year wrote them [proof: MEANING_C13_V4; J15946 base: Tardis C, H, L equal at 74880, 74825, 74868 minute
+      ends of 8 Mar, 7 Mar, 6 Mar]'
+    chain: 'every indicator stepped on the valued candles from 00:00 of D-2 (rule 13); an empty candle is skipped (rule 3) [proof: CARD_NAUTILUS_V4 rules 3, 13; J15974 LIT, DASH]'
+  latency: 'as the candle at e: the latest arrival among its rows, received by e (C13 known_at); a value at e uses only candles up to e'
+reading_rules:
+- 'the candle at a minute end e: C13 close, high, low of the 60 s ending at e (trades stamped in (e - 60 s, e], received by e); a candle C13 leaves empty is skipped and every value at
+  e is empty with its reason; periods count candles stepped, so after a gap a window spans more clock minutes (CARD_NAUTILUS_V4 rules 1, 3, 18)'
+- 'the chain of each coin starts at the first valued candle of 00:00 of D-2 (rule 13); an EMA-type average starts at its first input (rule 4), forgotten at 12 decimals after the two
+  days (card part 6; J15981: equal to the TA-Lib seeded forms)'
+- each value exact (Decimal, 40 digits), rounded once to 12 decimals, half up; value_kind 4 carries the written text (rule 6)
+- a window of w candles counts candles stepped (the empty minutes skipped), so it can reach into D-2 (rule 13)
+values:
+  units: USDT (a price level of the coin)
+  empty: NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (C13 reasons of the candle at e), WARMUP (the chain has fewer candles than the Need), no formula empty in S64 to S84 (no
+    denominator); value_kind 0. Never read empty as 0
+  stale: true when the candle at e is empty for TRADES_HOLE or THIN_FEED (C13)
+  flags: DUPLICATE_ROW:<coin>, NO_RATE_BASE:<coin> (C13, on valued answers)
+interpret:
+  do:
+  - read each level against the close at e of the same coin
+  dont:
+  - read a 1,440-candle level as midnight to midnight
+biases:
+- what: our candle (trades by exchange stamp, received by e) against Binance's 1m kline (trade time in [e - 60 s, e))
+  direction: a late or boundary trade moves a close by one tick; every level built on it follows by up to one tick on a wide-tick coin
+  size: 'S01 to S25 on klines: median gap 0 bp, the largest one CRV tick (CRV 8 Mar 20:29 close 0.2376 against 0.23755; up to 43.0 bp through the adaptive averages)'
+  proof: J15965 klines (BTC, CRV, every minute of 8 Mar 2026; before the ruling of 15:19:36Z, not repeated)
+external_checks:
+- what: the card's formula on Binance 1m klines against the year (BTC, CRV, every minute of 8 Mar 2026)
+  where: <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'AGREES: S64 median 0.000000 p99 0.700280 max 0.7092 bp; S65 median 0.000062 p99 0.178827 max 0.1812 bp; S66 median 0.000454 p99 0.029804 max 0.0302 bp; S67 median 0.000000
+    p99 0.145534 max 0.3983 bp; S68 median 0.000000 p99 0.233427 max 0.2364 bp; S69 median 0.000000 p99 0.506638 max 0.6535 bp; S70 median 0.000021 p99 0.167877 max 0.1911 bp; S71 median
+    0.000021 p99 0.059609 max 0.0604 bp; S72 median 0.000036 p99 0.050229 max 0.0739 bp; S73 median 0.000061 p99 0.044509 max 0.0472 bp; S74 median 0.000178 p99 0.009935 max 0.0101 bp;
+    S75 median 0.000120 p99 0.025056 max 0.0277 bp; S76 median 0.000000 p99 0.000000 max 0.0000 bp; S77 median 0.000000 p99 0.000000 max 0.0000 bp; S78 median 0.000000 p99 0.000000 max
+    0.0000 bp; S79 median 0.000000 p99 0.000000 max 0.0000 bp; S80 median 0.000000 p99 0.000000 max 0.0000 bp; S81 median 0.000000 p99 0.000000 max 0.0000 bp; S82 median 0.000000 p99
+    0.000000 max 0.0000 bp; S83 median 0.000000 p99 0.000000 max 0.0000 bp; S84 median 0.000000 p99 0.000000 max 0.0000 bp (J15965, before the ruling of 15:19:36Z; an outside record
+    is no longer asked at this level: WP V3 0c)'
+tools:
+- what: every NR1 setting recomputed exactly (Decimal 40) from the year C13 candles of D-2 to D, and the volume base, at named minute ends
+  run: python3 -B -m rawcheck.nautilus_levels --days D,.. --at HHMM,.. [--coins A,B] [--family price|bands|keylevel] [--candles <base dir>] --out <dir>
+  where: 'team/LAB/code (nautilus_levels a325b47e6f5676d9, tests 061b0451fc098260: 61 of 61; runner job: the year store)'
+- what: 'the candle base: C13 C, H, L, notrade, reason and the Tardis open, volume, count, taker dollars of D-2 to D, checked against C13 and B1'
+  run: python3 -B -m rawcheck.nautilus_candles base D --out <dir> [--coins A,B]
+  where: 'team/LAB/code (nautilus_candles df272ac9a132c610, tests 374d0a125ca5f093: 9 of 9; runner job: the year store, the Tardis files)'
+- what: the year against the textbook form and the card in float at named points (and edition 1 parts schema, talib, klines, name, empty, look)
+  run: python3 -B -m rawcheck.meaning_nautilus_levels points --days D,.. --coins A,B --at HHMM,.. [--candles D=<dir>,..]
+  where: 'team/LAB/code (meaning_nautilus_levels 3e049f30cc342ed9, tests 7c3bc0a8fabce3e6: 9 of 9; runner job: the year store)'
+used_by: 'nobody yet (CARD_NAUTILUS_V4 part 1: new numbers, candidates for the fifths and the labels)'
+references:
+  K_card: registers/CARD_NAUTILUS_V4.md part 1 (formulas), part 3 (rules 1 to 18), part 4 (cases)
+  K_scout: testbed/software_scout/NAUTILUS_METRICS_V1.tsv 8342dd70 (Nautilus files and lines per column)
+  K_talib: 'TA-Lib documented functions (SMA, EMA, WMA, DEMA, KAMA, LINEARREG, LINEARREG_INTERCEPT, BBANDS, MAX, MIN, MIDPRICE): not installed in the analyst venv (J15926), coded from
+    the definitions in meaning_nautilus_levels'
+settings:
+- id: NAUTILUS.S64
+  layer: nautilus
+  side: none
+  window: 60 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_60(C)
+  aliases: sma.value.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S64)
+  means: the mean of the last 60 closes (a key level)
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook SMA(close, 60) (TA-Lib SMA), coded apart on our candles,
+      equals the year (gap max 0.0000 bp; the float control max 1.8e-06 bp)'
+  open: none
+- id: NAUTILUS.S65
+  layer: nautilus
+  side: none
+  window: 240 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_240(C)
+  aliases: sma.value.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S65)
+  means: the mean of the last 240 closes (a key level)
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook SMA(close, 240) (TA-Lib SMA), coded apart on our candles,
+      equals the year (gap max 0.0000 bp; the float control max 1.8e-06 bp)'
+  open: none
+- id: NAUTILUS.S66
+  layer: nautilus
+  side: none
+  window: 1440 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_1440(C)
+  aliases: sma.value.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S66)
+  means: the mean of the last 1440 closes (a key level)
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook SMA(close, 1440) (TA-Lib SMA), coded apart on our candles,
+      equals the year (gap max 0.0000 bp; the float control max 2.4e-06 bp)'
+  open: none
+- id: NAUTILUS.S67
+  layer: nautilus
+  side: none
+  window: 60 candles, 2 sd
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_60(TP) + 2 x sd_60(TP)
+  aliases: bb.upper.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S67)
+  means: the upper Bollinger band of the typical price over 60 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook BBANDS(close, 60, 2, 2) upper the year differs
+      by median 0.9506 bp, p90 6.5206 bp, max 30.5965 bp (CRV 01:00: year 0.2338564489, textbook 0.2345693466), the float control max 1.6e-06 bp; at step 3 points (n 125) the band edges
+      differ from the textbook by median 0.0262, p90 0.0759, max 2.1690 of our half-width; the close above the upper: ours 3, textbook 3 (differ 0); below the lower: ours 32, textbook
+      30 (differ 2); J15965 (BTC, CRV, every minute of 8 Mar 2026, before the ruling of 15:19:36Z): the close above the upper band 10.07% of minutes against 5.14% textbook (differ 4.93%),
+      below 12.78% against 7.53% (differ 5.24%)'
+  open: 'on the typical price, not the close: renamed with S12 to S14 (one naming for one formula); the effect shrinks with the window (proof)'
+  name: Bollinger upper band of the typical price, 60 candles, 2 sd
+  renamed_from: bb.upper.w60 (Bollinger upper band, key level)
+  never:
+  - 'a "close beyond the band" signal tested as TA-Lib BBANDS(close): the band is on the typical price, so the close sits beyond it more often'
+- id: NAUTILUS.S68
+  layer: nautilus
+  side: none
+  window: 60 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_60(TP)
+  aliases: bb.middle.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S68)
+  means: the 60-candle mean of the typical price
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook SMA(close, 60) the year differs by median 0.4502
+      bp, p90 1.8519 bp, max 9.6200 bp (CRV 04:00: year 0.2313222222, textbook 0.2311), the float control max 2.4e-06 bp'
+  open: the mean of the typical price, not of the close
+  name: SMA of the typical price, 60 candles (Bollinger middle)
+  renamed_from: bb.middle.w60 (Bollinger middle band, key level)
+- id: NAUTILUS.S69
+  layer: nautilus
+  side: none
+  window: 60 candles, 2 sd
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_60(TP) - 2 x sd_60(TP)
+  aliases: bb.lower.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S69)
+  means: the lower Bollinger band of the typical price over 60 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook BBANDS(close, 60, 2, 2) lower the year differs
+      by median 1.4249 bp, p90 5.9557 bp, max 25.8278 bp (CRV 01:00: year 0.2331991067, textbook 0.23259732), the float control max 2.6e-06 bp; see S67 for the band test'
+  open: 'on the typical price, not the close: see S67'
+  name: Bollinger lower band of the typical price, 60 candles, 2 sd
+  renamed_from: bb.lower.w60 (Bollinger lower band, key level)
+  never:
+  - 'a "close beyond the band" signal tested as TA-Lib BBANDS(close): the band is on the typical price, so the close sits beyond it more often'
+- id: NAUTILUS.S70
+  layer: nautilus
+  side: none
+  window: 240 candles, 2 sd
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_240(TP) + 2 x sd_240(TP)
+  aliases: bb.upper.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S70)
+  means: the upper Bollinger band of the typical price over 240 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook BBANDS(close, 240, 2, 2) upper the year differs
+      by median 0.4764 bp, p90 3.5680 bp, max 13.9437 bp (CRV 22:06: year 0.2404169925, textbook 0.2407404856), the float control max 1.7e-06 bp; at step 3 points (n 125) the band edges
+      differ from the textbook by median 0.0074, p90 0.0275, max 0.4606 of our half-width; the close above the upper: ours 4, textbook 4 (differ 0); below the lower: ours 23, textbook
+      22 (differ 1); J15965 (BTC, CRV, every minute of 8 Mar 2026, before the ruling of 15:19:36Z): the close above the upper band 9.06% of minutes against 8.23% textbook (differ 0.83%),
+      below 8.61% against 7.26% (differ 1.35%)'
+  open: 'on the typical price, not the close: renamed with S12 to S14 (one naming for one formula); the effect shrinks with the window (proof)'
+  name: Bollinger upper band of the typical price, 240 candles, 2 sd
+  renamed_from: bb.upper.w240 (Bollinger upper band, key level)
+  never:
+  - 'a "close beyond the band" signal tested as TA-Lib BBANDS(close): the band is on the typical price, so the close sits beyond it more often'
+- id: NAUTILUS.S71
+  layer: nautilus
+  side: none
+  window: 240 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_240(TP)
+  aliases: bb.middle.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S71)
+  means: the 240-candle mean of the typical price
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook SMA(close, 240) the year differs by median
+      0.2275 bp, p90 1.0638 bp, max 7.9023 bp (CRV 22:06: year 0.2362875, textbook 0.2364708333), the float control max 2.4e-06 bp'
+  open: the mean of the typical price, not of the close
+  name: SMA of the typical price, 240 candles (Bollinger middle)
+  renamed_from: bb.middle.w240 (Bollinger middle band, key level)
+- id: NAUTILUS.S72
+  layer: nautilus
+  side: none
+  window: 240 candles, 2 sd
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_240(TP) - 2 x sd_240(TP)
+  aliases: bb.lower.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S72)
+  means: the lower Bollinger band of the typical price over 240 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook BBANDS(close, 240, 2, 2) lower the year differs
+      by median 0.5896 bp, p90 2.9544 bp, max 20.5948 bp (CRV 01:00: year 0.2320818926, textbook 0.231602034), the float control max 2.2e-06 bp; see S70 for the band test'
+  open: 'on the typical price, not the close: see S70'
+  name: Bollinger lower band of the typical price, 240 candles, 2 sd
+  renamed_from: bb.lower.w240 (Bollinger lower band, key level)
+  never:
+  - 'a "close beyond the band" signal tested as TA-Lib BBANDS(close): the band is on the typical price, so the close sits beyond it more often'
+- id: NAUTILUS.S73
+  layer: nautilus
+  side: none
+  window: 1440 candles, 2 sd
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_1440(TP) + 2 x sd_1440(TP)
+  aliases: bb.upper.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S73)
+  means: the upper Bollinger band of the typical price over 1440 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook BBANDS(close, 1440, 2, 2) upper the year differs
+      by median 0.2346 bp, p90 1.1824 bp, max 11.0484 bp (CRV 22:06: year 0.2382242933, textbook 0.2384806152), the float control max 2.5e-06 bp; at step 3 points (n 125) the band edges
+      differ from the textbook by median 0.0016, p90 0.0072, max 0.0838 of our half-width; the close above the upper: ours 4, textbook 4 (differ 0); below the lower: ours 20, textbook
+      19 (differ 1); J15965 (BTC, CRV, every minute of 8 Mar 2026, before the ruling of 15:19:36Z): the close above the upper band 3.61% of minutes against 2.78% textbook (differ 0.83%),
+      below 6.91% against 6.74% (differ 0.17%)'
+  open: 'on the typical price, not the close: renamed with S12 to S14 (one naming for one formula); the effect shrinks with the window (proof)'
+  name: Bollinger upper band of the typical price, 1440 candles, 2 sd
+  renamed_from: bb.upper.w1440 (Bollinger upper band, key level)
+  never:
+  - 'a "close beyond the band" signal tested as TA-Lib BBANDS(close): the band is on the typical price, so the close sits beyond it more often'
+- id: NAUTILUS.S74
+  layer: nautilus
+  side: none
+  window: 1440 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_1440(TP)
+  aliases: bb.middle.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S74)
+  means: the 1440-candle mean of the typical price
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook SMA(close, 1440) the year differs by median
+      0.1207 bp, p90 0.5664 bp, max 7.0847 bp (CRV 04:00: year 0.2362101852, textbook 0.2360465278), the float control max 2.6e-06 bp'
+  open: the mean of the typical price, not of the close
+  name: SMA of the typical price, 1440 candles (Bollinger middle)
+  renamed_from: bb.middle.w1440 (Bollinger middle band, key level)
+- id: NAUTILUS.S75
+  layer: nautilus
+  side: none
+  window: 1440 candles, 2 sd
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: SMA_1440(TP) - 2 x sd_1440(TP)
+  aliases: bb.lower.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S75)
+  means: the lower Bollinger band of the typical price over 1440 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): against the textbook BBANDS(close, 1440, 2, 2) lower the year differs
+      by median 0.3868 bp, p90 1.6442 bp, max 12.6710 bp (CRV 16:00: year 0.2299769294, textbook 0.229681696), the float control max 2e-06 bp; see S73 for the band test'
+  open: 'on the typical price, not the close: see S73'
+  name: Bollinger lower band of the typical price, 1440 candles, 2 sd
+  renamed_from: bb.lower.w1440 (Bollinger lower band, key level)
+  never:
+  - 'a "close beyond the band" signal tested as TA-Lib BBANDS(close): the band is on the typical price, so the close sits beyond it more often'
+- id: NAUTILUS.S76
+  layer: nautilus
+  side: none
+  window: 60 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: HH_60
+  aliases: dc.upper.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S76)
+  means: the highest high of the last 60 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MAX(high, 60), coded apart on our candles, equals the
+      year (gap max 0.0000 bp; the float control max 0 bp)'
+  open: none
+- id: NAUTILUS.S77
+  layer: nautilus
+  side: none
+  window: 60 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: (HH_60 + LL_60) / 2
+  aliases: dc.middle.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S77)
+  means: the middle of the 60-candle range
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MIDPRICE(high, low, 60), coded apart on our candles,
+      equals the year (gap max 0.0000 bp; the float control max 2.2e-12 bp)'
+  open: none
+- id: NAUTILUS.S78
+  layer: nautilus
+  side: none
+  window: 60 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: LL_60
+  aliases: dc.lower.w60 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S78)
+  means: the lowest low of the last 60 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MIN(low, 60), coded apart on our candles, equals the
+      year (gap max 0.0000 bp; the float control max 0 bp)'
+  open: none
+- id: NAUTILUS.S79
+  layer: nautilus
+  side: none
+  window: 240 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: HH_240
+  aliases: dc.upper.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S79)
+  means: the highest high of the last 240 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MAX(high, 240), coded apart on our candles, equals
+      the year (gap max 0.0000 bp; the float control max 0 bp)'
+  open: none
+- id: NAUTILUS.S80
+  layer: nautilus
+  side: none
+  window: 240 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: (HH_240 + LL_240) / 2
+  aliases: dc.middle.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S80)
+  means: the middle of the 240-candle range
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MIDPRICE(high, low, 240), coded apart on our candles,
+      equals the year (gap max 0.0000 bp; the float control max 2.2e-12 bp)'
+  open: none
+- id: NAUTILUS.S81
+  layer: nautilus
+  side: none
+  window: 240 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: LL_240
+  aliases: dc.lower.w240 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S81)
+  means: the lowest low of the last 240 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MIN(low, 240), coded apart on our candles, equals the
+      year (gap max 0.0000 bp; the float control max 0 bp)'
+  open: none
+- id: NAUTILUS.S82
+  layer: nautilus
+  side: none
+  window: 1440 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: HH_1440
+  aliases: dc.upper.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S82)
+  means: the highest high of the last 1440 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MAX(high, 1440), coded apart on our candles, equals
+      the year (gap max 0.0000 bp; the float control max 0 bp)'
+  open: none
+- id: NAUTILUS.S83
+  layer: nautilus
+  side: none
+  window: 1440 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: (HH_1440 + LL_1440) / 2
+  aliases: dc.middle.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S83)
+  means: the middle of the 1440-candle range
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MIDPRICE(high, low, 1440), coded apart on our candles,
+      equals the year (gap max 0.0000 bp; the float control max 2.2e-12 bp)'
+  open: none
+- id: NAUTILUS.S84
+  layer: nautilus
+  side: none
+  window: 1440 candles
+  clock: minute end (each candle of the chain, CARD_NAUTILUS_V4 rule 3)
+  scope: coin
+  contracts: USDT
+  aggregate: LL_1440
+  aliases: dc.lower.w1440 (NautilusTrader 1.231.0 column; SETTINGS_NAUTILUS_V2 S84)
+  means: the lowest low of the last 1440 candles
+  computation:
+    status: RELIABLE
+    proof: 'J15933 (nautilus_levels ab680821bc71ad06, tests 061b0451 61 of 61: 56 cases of EDGES_NAUTILUS_V2 6dc7a051, 677 answers read from the file, 13 mutants caught): every roster
+      coin x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026: 770 of 770 MATCH exact (the written 12 decimals); J15974 named points: DASH, RENDER 24 Sep 09:55
+      to 10:33 (empty with C13 reason 3, exact 5), LIT 8 Mar 18:00, 19:00 (windows over its 45-minute C13 gap of 7 Mar): exact 2'
+  meaning:
+    status: DEFINED
+    proof: 'J15981 (meaning_nautilus_levels 3e049f30cc342ed9, tests 9 of 9) at step 3 points (BTC, ETH (liquid), CRV (wide tick), PUMP (lowest price), DASH (thin), LIT, XMR (C13 gaps),
+      PENGU, BONK (id-gap minutes) x 01:00, 04:00, 12:10, 16:00, 22:06 x 24 Sep 2025, 4 Nov 2025, 8 Mar 2026; n 125): the textbook MIN(low, 1440), coded apart on our candles, equals
+      the year (gap max 0.0000 bp; the float control max 0 bp)'
+  open: none
+could_build:
+- id: NAUTILUS.CB3
+  intended: Bollinger bands of the close over 60, 240 and 1,440 candles (what the names bb.*.w<n> say to a reader of TA-Lib)
+  was_name_of: NAUTILUS.S67, NAUTILUS.S68, NAUTILUS.S69, NAUTILUS.S70, NAUTILUS.S71, NAUTILUS.S72, NAUTILUS.S73, NAUTILUS.S74, NAUTILUS.S75
+  formula: SMA_w(C) +- 2 x sd_w(C), sd dividing by n, w = 60, 240, 1,440 (TA-Lib BBANDS(close, w, 2, 2))
+  needs: C13 S01 of the last w candles (in the year)
+  adds: 'measured: edges move by median 0.0262, 0.0074, 0.0016 of our half-width at 60, 240, 1,440 candles (J15981 step 3 points)'
+  status: NOT_BUILT

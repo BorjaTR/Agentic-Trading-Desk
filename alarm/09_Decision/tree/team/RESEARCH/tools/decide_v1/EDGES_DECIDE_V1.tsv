@@ -1,0 +1,34 @@
+case	title	targets	values	push_side	day	variant	expect	note
+E01	every used field valued, no line true	S03	ctx.SPREAD=ABOUT;prof.SHAPE=UP	1	20000101	-	TAKE|4|NO_SKIP_LINE_TRUE||-1	FADE trades against the push
+E02	the first line true	S03	ctx.SPREAD=TIGHT;prof.SHAPE=UP	1	20000101	-	SKIP|4|SKIP_RULE|S1:ctx.SPREAD=TIGHT|-1	a skip keeps the trade side it would have had
+E03	two lines true, the first in file order decides	S03	ctx.SPREAD=TIGHT;prof.SHAPE=DOWN	1	20000101	-	SKIP|4|SKIP_RULE|S1:ctx.SPREAD=TIGHT|-1	
+E04	the second line true only	S03	ctx.SPREAD=WIDE;prof.SHAPE=DOWN	-1	20000101	-	SKIP|4|SKIP_RULE|S2:prof.SHAPE=DOWN|1	
+E05	a declared exact reason on a used field	S03	ctx.SPREAD=NO_HISTORY;prof.SHAPE=UP	1	20000101	-	SKIP|1|BAD_DATA|ctx.SPREAD=NO_HISTORY|0	
+E06	a declared reason family on a used field	S03	ctx.SPREAD=UNKNOWN:HOLE;prof.SHAPE=UP	1	20000101	-	SKIP|1|BAD_DATA|ctx.SPREAD=UNKNOWN:HOLE|0	UNKNOWN* matches
+E07	no card row	S03;S11	prof.SHAPE=UP	1	20000101	-	SKIP|1|BAD_DATA|ctx.SPREAD=NO_CARD_ROW|0	the field is absent from the values
+E08	an empty cell	S03;S11	ctx.SPREAD=NO_VALUE;prof.SHAPE=UP	1	20000101	-	SKIP|1|BAD_DATA|ctx.SPREAD=NO_VALUE|0	
+E09	a word neither state nor reason	S03	ctx.SPREAD=NOT_HISTORY;prof.SHAPE=UP	1	20000101	-	REFUSED	near a reason in spelling, but not declared
+E10	a state spelled like a reason (NOT_)	S03	ctx.SPREAD=NOT_TIGHT;prof.SHAPE=UP	1	20000101	S1.states=TIGHT,NOT_TIGHT	TAKE|4|NO_SKIP_LINE_TRUE||-1	the review blocker: a declared state is a state
+E11	a reason on a field no active line uses	S03	ctx.SPREAD=ABOUT;prof.SHAPE=UP;pmm.K2=UNKNOWN:HOLE	1	20000101	-	TAKE|4|NO_SKIP_LINE_TRUE||-1	never blocks
+E12	push side 0	S10	ctx.SPREAD=ABOUT;prof.SHAPE=UP	0	20000101	off_days=20000101	SKIP|1|BAD_DATA|push_side=0|0	slot 1 before the regime gate
+E13	an off day	S04	ctx.SPREAD=ABOUT;prof.SHAPE=UP	1	20000101	off_days=20000101	SKIP|2|OFF_STATE|off_day=20000101|0	
+E14	the day after an off day	S04	ctx.SPREAD=ABOUT;prof.SHAPE=UP	1	20000102	off_days=20000101	TAKE|4|NO_SKIP_LINE_TRUE||-1	
+E15	bad data on an off day: the data gate first	S03;S04	ctx.SPREAD=UNKNOWN:HOLE;prof.SHAPE=UP	1	20000101	off_days=20000101	SKIP|1|BAD_DATA|ctx.SPREAD=UNKNOWN:HOLE|0	
+E16	an off state true	S05	ctx.SPREAD=TIGHT;prof.SHAPE=UP;ctx.RANGE=HIGH	1	20000101	off_state=O1	SKIP|2|OFF_STATE|O1:ctx.RANGE=HIGH|0	before the skip lines
+E17	an off state field with a reason	S05	ctx.SPREAD=ABOUT;prof.SHAPE=UP;ctx.RANGE=NO_HISTORY	1	20000101	off_state=O1	SKIP|1|BAD_DATA|ctx.RANGE=NO_HISTORY|0	an off state field is a used field
+E18	paper mode, a CANDIDATE line true	S01	ctx.SPREAD=TIGHT;prof.SHAPE=UP	1	20000101	mode=paper;side.status=FROZEN	TAKE|4|NO_SKIP_LINE_TRUE||-1	only FROZEN lines act in paper
+E19	paper mode, an inactive line's field holds a reason	S01	ctx.SPREAD=UNKNOWN:HOLE;prof.SHAPE=UP	1	20000101	mode=paper;side.status=FROZEN	TAKE|4|NO_SKIP_LINE_TRUE||-1	an inactive line never blocks
+E20	paper mode, a CANDIDATE side	S01;S02	ctx.SPREAD=ABOUT;prof.SHAPE=UP	1	20000101	mode=paper	SKIP|3|SIDE_NOT_ACTIVE|side status CANDIDATE in paper mode|0	
+E21	FOLLOW side	S02	ctx.SPREAD=ABOUT;prof.SHAPE=UP	-1	20000101	side=FOLLOW	TAKE|4|NO_SKIP_LINE_TRUE||-1	trade with the push
+E22	UNSET side	S02	ctx.SPREAD=ABOUT;prof.SHAPE=UP	1	20000101	side=UNSET	TAKE|4|NO_SKIP_LINE_TRUE||0	the grader shows both sides
+E23	a FAILED line never decides	S03	ctx.SPREAD=TIGHT;prof.SHAPE=UP	1	20000101	S1.status=FAILED	TAKE|4|NO_SKIP_LINE_TRUE||-1	and its field stops being read
+E24	the default rulebook takes everything	S02;S03	ctx.SPREAD=UNKNOWN:HOLE	1	20000101	default	TAKE|4|NO_SKIP_LINE_TRUE||0	no field read, side UNSET
+E25	a state that is also a declared reason	S03	ctx.SPREAD=ABOUT	1	20000101	S1.states=TIGHT,UNKNOWN:X	RULEBOOK_REFUSED	
+E26	a line without reasons	S03	ctx.SPREAD=ABOUT	1	20000101	S1.reasons=MISSING	RULEBOOK_REFUSED	reasons must be declared, even as an empty list
+E27	four active lines	S03	ctx.SPREAD=ABOUT	1	20000101	lines=4	RULEBOOK_REFUSED	at most 3
+E28	an entry the lab does not have	S06;S09	ctx.SPREAD=ABOUT	1	20000101	entry=grader:RR	RULEBOOK_REFUSED	
+E29	skip_if equal to all states	S03	ctx.SPREAD=ABOUT	1	20000101	S1.skip_if=ALL	RULEBOOK_REFUSED	a line must leave something to take
+E30	a CANDIDATE line without evidence	S03	ctx.SPREAD=ABOUT	1	20000101	S1.evidence=MISSING	RULEBOOK_REFUSED	
+E31	an exit the lab does not have	S07;S09	ctx.SPREAD=ABOUT	1	20000101	exit=made_up:X1	RULEBOOK_REFUSED	
+E32	a size of 0	S08	ctx.SPREAD=ABOUT	1	20000101	size=0	RULEBOOK_REFUSED	size must be a positive number
+E33	a listed exit and entry pass through to the row	S06;S07;S08	ctx.SPREAD=ABOUT;prof.SHAPE=UP	1	20000101	entry=grader:RT;exit=grader:X1;size=2	TAKE|4|NO_SKIP_LINE_TRUE||-1|grader:RT|grader:X1|2	the row names the lab settings; nothing is computed

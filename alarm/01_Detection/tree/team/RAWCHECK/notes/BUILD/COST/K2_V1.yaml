@@ -1,0 +1,358 @@
+# K2_V1.yaml: COST walk-the-book cost of 10,000 USDT, every 5 s and by hour of day (TREE, 18 Oct 2026;
+# BUILD_DEFINITION_WORKPACKAGES_V2 ef29966d). The content of TREE's .md draft moved into the template's keys.
+# Worked examples recomputed with exact fractions by team/TREE/proposals/verify_cost_examples_tree_v3.py.
+# Edition 2: METRIC_AUDIT's review 17:46:31Z: N1 (seen by any row read, CARD_D3_V4 rule 3), N2 (meaning line 2 at a level), N3
+# (NO_LEVELS out of S10, S11), the CARRY for 00:00 only; F1 max_staleness_s 86400 on S06 to S11 (build_register edition 3).
+# Edition 3: the owner's 5 s grid (BUILD_ITEMS_V4 9d424de3, ADDON_ARCHITECTURE_V4 edit 1 05665220 section 4, WORKPACKAGES_V2 edit 2 rule 4.11):
+# output.grid 5s; the values at every 5 s point; the hour tables built from the minute ends as in edition 2 and written at every
+# point; the CARRY state for the points whose seen window crosses 00:00. Nothing else changed. Signed by METRIC_AUDIT's REVIEW COST EDITION 3 OK 18:11:15Z.
+# Edition 4: the owner's OK of K1 with the fix, the same check for K2 (EDGE1 18:19:46Z): the kernel cited is addon_grid_v2 85c8ece1 (in_force with
+# bad_ends=True for CARD_D2_V3 rule 4 and its seen output for rule 3), not edition 1; and ADDON_ARCHITECTURE_V4 edit 3 0591d181's binding lines: the
+# phases (section 4 line 35) and the row at exactly 00:00:00.000000 (line 37) as a case. Values unchanged. Signed by METRIC_AUDIT's REVIEW COST EDITION 4 OK 18:36:48Z (its nit taken: the days lines cite edit 3).
+# Edition 5: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d sections 0, 1): a one-sided book NO_LEVELS on both sides, the rows,
+# files and rules as CARD_D3_V4 rules 1 to 6 word for word (X1, X2), the walk exact on int64 dollars (walk_book_exact, owed by
+# EDGE1's kernels edition 3), bookDepth held for BTC, SOL, CRV only, pass lines that can fail (X6), the M9 case, X4. Values unchanged.
+# Edition 6: METRIC_AUDIT2's FIX CHECK COST (REVIEW_LEAD_METRIC_AUDIT2_COST_V1 f426be58): OPEN 1, D's file missing planted (E20) with the empty
+# gzip (E21) and their mutants. Values unchanged.
+kind: build_metric
+id: K2
+producer: COST
+item: 'cost table: walk-the-book cost for 10k USDT'
+tier: BUILD_FIRST
+name: cost in bps of the mid of a 10,000 USDT market buy and sell walking Binance's 25 visible levels every 5 s, and its hour-of-day median, 90th percentile and exhausted share over the 14 days before D
+status:
+  drafter: TREE
+  reviewer: METRIC_AUDIT
+  edition: 6
+  signed: true
+  signed_by: 'METRIC_AUDIT2 2026-10-18T20:05:34Z'
+means: >-
+  What a 10,000 USDT market order would pay against the mid if it ate the resting Binance book at every 5 s point, per coin and side
+  (S04 buy, S05 sell), with this UTC hour's usual and bad-minute cost over the 14 days before D (S06 to S09) and how often the 25
+  levels could not fill it (S10, S11). Never extrapolated past the 25 levels: an order they cannot fill is EXHAUSTED.
+example: >-
+  A book with asks 11 x 200, 12 x 300, 14 x 1,000 and bids 9 x 500, 8 x 250, 7 x 500 (mid 10). Buying for 10,000 USDT takes 2,200
+  USDT at 11 (200 coins), 3,600 at 12 (300 coins) and the last 4,200 at 14 (300 coins): 800 coins for 10,000, an average of 12.5,
+  25% above the mid: S04 = 2,500 bps. Selling for 10,000 USDT of proceeds takes 4,500 at 9, 2,000 at 8 and 3,500 at 7: 1,250 coins
+  at 8 on average, S05 = 2,000 bps; those bids hold exactly 10,000, so the sell is filled, not exhausted. On a BTC-like book (asks
+  67,000.1 x 0.10, 67,000.2 x 0.30, 67,000.5 x 2) the buy costs 0.012388030606 bps; the top bid alone (0.40 BTC = 26,800 USDT)
+  fills the sell at 0.007462680998 bps, K1's half spread.
+formula: >-
+  The rows, the row in force, seen, BAD_INPUT, the files and the order are CARD_D3_V4 9e404ff4 rules 1 to 6 word for word: (1) the
+  coin's book rows of D-1 (its CARRY) and D in file order, a row bad when the reader marks it, a row with no stamp (t = arr = -1)
+  standing at the stamp and arrival of the row before it; (2) the row in force at u: the last row read in file order (good or bad)
+  stamped at or before u and received by u; (3) seen: a row read (good or bad) stamped in [u - 15 s, u] and received by u, else
+  BOOK_HOLE (the row in force may be older; a row received by u but stamped after u is neither); (4) BAD_INPUT when the row in force is
+  bad; (5) D's file is always needed, D-1's (its CARRY) when u - 15 s is before 00:00 of D; a needed file missing or only a .part
+  makes the value NO_FILE; a file with only its header or an empty gzip has no rows; (6) the first failing in the order NO_FILE,
+  BOOK_HOLE, BAD_INPUT, then NO_LEVELS (either side with no filled level: no mid), EXHAUSTED.
+  Levels of a side best first, filled only (the reader's nb, na), price p_i and amount q_i as the reader's integers (px at 10^pp, qty
+  at 10^qp), dollars d_i = p_i x q_i as int64 at 10^(pp + qp) against N x 10^(pp + qp) (an overflow guard: a cumulative sum at or
+  over 2^62 is taken in Python integers), the last level's partial coins R / p_i a Fraction: exact. M = (best ask +
+  best bid) / 2 of the SAME row. Buy for N = 10,000 USDT: over the ask levels in order with R = N left: if d_i >= R take R / p_i
+  coins and stop, else take q_i coins and R = R - d_i; if the levels end with R > 0 the value is EXHAUSTED (the levels hold less than
+  N, strict); else VWAP = N / coins and S04 = (VWAP - M) / M x 10,000 bps. Sell: the same down the bid levels with N the proceeds,
+  S05 = (M - VWAP) / M x 10,000 bps. Fees are not in it. Exact (Fraction on the integers), written as float64. Hour cells of the UTC
+  hour h of u over the 840 minute ends of hour h on D-14 to D-1 (the 5 s points between them not in the table, as K1): S06, S07 (S08, S09) = the median and the nearest-rank 90th
+  percentile of the valued S04 (S05), at least 600 valued; S10 (S11) = the EXHAUSTED count over the count of minute ends valued or
+  EXHAUSTED (NO_FILE, BOOK_HOLE, BAD_INPUT and NO_LEVELS left out), at least 600 such.
+source:
+  kind: doc
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 section 7.1 (O1): 'walk for notional N: take ask levels in order, filled_i = min(q_i, remaining/p_i),
+    VWAP = sum(p_i filled_i)/sum(filled_i), cost bp = (VWAP - mid)/mid x 10,000 for a buy and (mid - VWAP)/mid x 10,000 for a sell,
+    exhausted = the 25 levels hold less than N (strict <), never extrapolate'; the notional-sell convention named here (proceeds);
+    the cost table of BUILD_PLAN_V2 14ccbcd5 line 76. Oracles in the meaning check only: NautilusTrader 1.231.0 (LGPL-3.0)
+    OrderBook.get_avg_px_for_quantity (a quantity, a silent partial average when the book runs out) and orderflow-metrics 0.40.0
+    (MIT) simulate_market_order (avg_price, slippage_bps, remaining_size).
+inputs:
+  - kind: reader
+    ref: prod_reader_book_snapshot_25_v1
+    exists: true
+    stream: book_snapshot_25 (binance-futures, the 25 best levels a side as Tardis rebuilt them), pack book_snapshot_25_v1 (dc08ebf5)
+    rule_in_force: CARD_D3_V4 rules 1 and 2 (a row with no stamp stands at the row before's stamp and arrival; the last row read in file order, good or bad, stamped and received by u)
+    stale_rule: "not seen (no row read, good or bad, stamped in [u - 15 s, u] and received by u; rule 3) gives BOOK_HOLE, stale 1; a bad row in force (any why bit) gives BAD_INPUT; either side with no filled level gives NO_LEVELS on S04 and S05; files by CARD_D3_V4 rule 5 (missing or .part: NO_FILE; header-only or empty gzip: no rows)"
+    days: "D's raw for the points 00:00:05 to 24:00:00 (24:00:00 written to X1/carry/COST/<D>.npz with the state at 24:00 (the row in force, the latest stamp read, the rows not in force at 24:00: max(t, arr) > 24:00), ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4); the 00:00:00 point of D is D-1's 24:00 point, completed in D's phase B by any row of D's file stamped and received at exactly 00:00:00.000000 (ADDON_ARCHITECTURE_V4 edit 3 0591d181 line 37), and 00:00:05, 00:00:10 (u - 15 s before the day, CARD_D3_V4 rule 5) take the row in force and the seen rule from that state with D's rows; the first year day reads 9 Sep 2025's file once"
+  - kind: addon
+    ref: COST S04, S05 of D-14 to D-1 (and their EXHAUSTED rows)
+    card: COST/K2_V1
+    rule_in_force: the S04, S05 rows of the 14 days before D at the minute ends of hour h
+    stale_rule: a missing COST day of the 14 gives NO_HISTORY
+    days: D-14 to D-1
+overlaps:
+  - setting: D3 S01
+    kind: copy
+    why: >-
+      D3 S01 is the snapshot's top dollars (the best bid and ask, raw, RELIABLE: MEANING_D2D3_V2 759626f6, BASIC_D3_V1 1e6fbe1e line
+      45) of the same row in force: p_bid0 x q_bid0 + p_ask0 x q_ask0 of the walk's row equals it (the raw check of
+      PRODUCER_COST_V1). A cross-check of the rows, not of the cost.
+per_coin: >-
+  The 25 levels may not hold 10,000 USDT on a thin coin (S10, S11 count it: REVIEW_AR2 D2); on BTC the top level alone usually
+  holds 10,000 USDT a side, and then the cost is the snapshot's own half spread. The 1000-coins: amounts in thousands of coins and
+  prices per thousand, dollars p x q unchanged (MEANING_D2D3_V2 line 33). Coarse-step coins move in steps. Hidden orders are not in
+  the snapshot (MEANING_D2D3_V2 line 29): the cost of the visible book only. A new coin has no hour cells for 14 days (NO_HISTORY).
+time: >-
+  As K1: the hour cells hold the hour-of-day profile (night, the funding settles 00:00, 08:00, 16:00 UTC, the quarter hours); the 14
+  days mix weekends and weekdays; a crash day lifts S07, S09, S10, S11 for 14 days. The 00:00:00 point is D-1's 24:00 point; 00:00:05 and 00:00:10 read the CARRY's state. The first
+  year days: S06 to S11 NO_HISTORY.
+output:
+  group_file: X1/day=<D>/COST.parquet
+  names:
+    - name: S04
+      label: walk_buy_10k_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: cost of a 10,000 USDT market buy walking the ask levels in force
+    - name: S05
+      label: walk_sell_10k_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: cost of a market sell with 10,000 USDT of proceeds walking the bid levels in force
+    - name: S06
+      label: walk_buy_10k_hour_median_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: median of the valued S04 at this UTC hour over the 14 days before D
+      max_staleness_s: 86400
+    - name: S07
+      label: walk_buy_10k_hour_p90_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: nearest-rank 90th percentile of the same
+      max_staleness_s: 86400
+    - name: S08
+      label: walk_sell_10k_hour_median_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: median of the valued S05 at this UTC hour over the 14 days before D
+      max_staleness_s: 86400
+    - name: S09
+      label: walk_sell_10k_hour_p90_bps
+      units: bps of the mid
+      value_kind: float
+      decimals: none
+      means: nearest-rank 90th percentile of the same
+      max_staleness_s: 86400
+    - name: S10
+      label: walk_buy_10k_hour_exhausted_share
+      units: share 0 to 1
+      value_kind: float
+      decimals: none
+      means: the share of the hour cell's minute ends valued or EXHAUSTED (NO_LEVELS, BAD_INPUT, BOOK_HOLE, NO_FILE out) whose asks could not fill 10,000 USDT
+      max_staleness_s: 86400
+    - name: S11
+      label: walk_sell_10k_hour_exhausted_share
+      units: share 0 to 1
+      value_kind: float
+      decimals: none
+      means: the same for the bids
+      max_staleness_s: 86400
+  grid: 5s
+  cadence: every 5 s (minute ends included) (17,280 rows per coin per day, u = 00:00:00 to 23:59:55 of D)
+  as_of_rule: as_of = u, the 5 s point
+  known_at_rule: >-
+    S04, S05: known_at = the arrival of the snapshot row in force (arr <= u by the rule in force); S06 to S11: known_at = 00:00 of D;
+    an empty row: known_at = u. So known_at <= as_of on every row.
+  empty_reasons:
+    - reason: NO_FILE
+      when: "S04, S05 when a needed file is missing or only a .part (CARD_D3_V4 rule 5): D's file at every point (00:00:00 too: phase B sets it NO_FILE though the CARRY holds a row, ADDON_ARCHITECTURE_V4 X3); D-1's CARRY at 00:00:05, 00:00:10. A header-only file or an empty gzip is there and has no rows"
+    - reason: BOOK_HOLE
+      when: S04, S05 when no row read (good or bad) is stamped in [u - 15 s, u] and received by u (CARD_D3_V4 rule 3)
+    - reason: BAD_INPUT
+      when: S04, S05 when the row in force is bad (any why bit)
+    - reason: NO_LEVELS
+      when: S04 and S05 when either side of the row in force has no filled level (no mid; a mid of half one side would give about -10,000 bps)
+    - reason: EXHAUSTED
+      when: S04 (S05) when the filled ask (bid) levels hold less than 10,000 USDT (strict; holding exactly 10,000 fills)
+    - reason: NO_HISTORY
+      when: S06 to S11 when any of the 14 COST days before D is missing
+    - reason: FEW_VALUES
+      when: S06 to S09 with fewer than 600 valued of the cell's 840; S10, S11 with fewer than 600 valued or EXHAUSTED
+  stale_rule: stale = 1 exactly when S04, S05 are empty BOOK_HOLE; S06 to S11 are never stale (fixed for the day)
+  max_staleness_s: 15
+  window_days: 14
+  no_history: >-
+    S06 to S11 first fill on 24 Sep 2025: empty NO_HISTORY from 10 Sep to 23 Sep 2025, valued on 167 of the 181 year days; S04, S05
+    have no history.
+  fit_rule: >-
+    the hour table: S06 to S11 from COST S04, S05 of the 14 days before D only, refit once a day before 00:00 of D
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the plain buy
+    input: 'asks 11 x 200, 12 x 300, 14 x 1000; bids 9 x 500, 8 x 250, 7 x 500'
+    answer: 'S04 2500.0 (VWAP 12.5, 800 coins)'
+  - case: E2 the plain sell
+    input: the same book
+    answer: 'S05 2000.0 (VWAP 8, 1,250 coins)'
+  - case: E3 exactly enough
+    input: 'the same book: the bids hold 10,000 USDT exactly'
+    answer: S05 filled (E2), not EXHAUSTED
+  - case: E4 seven dollars short
+    input: 'the same book with the last bid level 7 x 499 (the bids hold 9,993 USDT)'
+    answer: S05 empty EXHAUSTED
+  - case: E5 BTC-like
+    input: 'bids 67000.0 x 0.40, 66999.9 x 0.25; asks 67000.1 x 0.10, 67000.2 x 0.30, 67000.5 x 2'
+    answer: 'S04 0.012388030606 (VWAP 67000.132999867000); S05 0.007462680998 (the top bid alone)'
+  - case: E6 one level enough
+    input: 'asks 11 x 1000; the bids of E1 (mid 10)'
+    answer: 'S04 1000.0 (VWAP 11, 909.090909090909 coins)'
+  - case: E7 no asks
+    input: 'na = 0 (bids filled)'
+    answer: S04 and S05 empty NO_LEVELS
+  - case: E8 a bad row in force
+    input: 'why bit 16 (asks not rising)'
+    answer: S04, S05 empty BAD_INPUT
+  - case: E9 not seen
+    input: 'the last row stamped u - 15.001 s'
+    answer: S04, S05 empty BOOK_HOLE, stale 1
+  - case: E10 the exhausted share
+    input: 'a cell of 840: 30 BOOK_HOLE, 81 EXHAUSTED, 729 valued'
+    answer: 'S10 0.1 (81 / 810); S06, S07 over the 729 valued'
+  - case: E11 the cell short
+    input: '599 valued of 840'
+    answer: S06 to S09 empty FEW_VALUES
+  - case: E15 the 5 s CARRY
+    input: "u = 00:00:10 of D, no snapshot row of D read by then; the CARRY's state: D-1's last row, the E1 book, stamped 23:59:58, received 23:59:58.05"
+    answer: 'in force and seen: S04 2500.0, S05 2000.0, known_at 23:59:58.05 of D-1'
+  - case: E16 the row at exactly 00:00:00.000000
+    input: "the CARRY's 24:00 state of D-1: the E1 book stamped 23:59:58; then D's first snapshot row, asks 11 x 1000 and the E1 bids, stamped and received at 00:00:00.000000"
+    answer: "in force at the 00:00:00 point though not in D-1's raw: S04 1000.0 (E6's walk), known_at 00:00:00 of D (phase B adds it)"
+  - case: E12 seen by another row (CARD_D3_V4 rule 3)
+    input: 'in file order: A (any book) stamped u - 5 s received u - 4.9 s; then B, the E1 book, stamped u - 20 s received u - 4 s'
+    answer: 'B is in force, the book seen by A: S04 2500.0, S05 2000.0, known_at u - 4 s'
+  - case: E13 a skew row
+    input: 'the row before stamped u - 16 s; then a row stamped u + 0.2 s received u - 0.1 s (arr <= u < t)'
+    answer: 'neither in force nor seen: S04, S05 empty BOOK_HOLE, stale 1'
+  - case: E13b a skew row beside a seen row (EDGE1's M9 case)
+    input: 'A, the E1 book, stamped u - 5 s received u - 4.9 s; then a skew row, asks 11 x 1000 and the E1 bids, stamped u + 0.2 s received u - 0.1 s'
+    answer: 'A is in force and seen: S04 2500.0 (by arrival only the skew row: 1000.0)'
+  - case: E17 a row with no stamp
+    input: 'A, the E1 book, stamped u - 5 s received u - 4.9 s; then B, asks 11 x 1000 and the E1 bids, with no stamp (t = arr = -1, a bad row)'
+    answer: 'B stands at u - 5 s and u - 4.9 s and is in force, bad: S04, S05 empty BAD_INPUT'
+  - case: 'E19 the exact edge (EDGE1, the walk must be exact)'
+    input: 'bids 70.002 x 100, 20.025 x 100, 9.973 x 100 (exactly 10,000 USDT: 7,000.2 + 2,002.5 + 997.3), asks 70.004 x 1000; pp 3, qp 0'
+    answer: 'S05 filled: 300 coins, VWAP 100 / 3, mid 70.003, S05 5238.299310981910'
+  - case: E20 D's file missing, D-1's there (ADDON_ARCHITECTURE_V4 X3)
+    input: "no snapshot file of D (or only a .part); D-1's CARRY with its 24:00 row the E1 book"
+    answer: 'every point of D, 00:00:00 included, S04, S05 empty NO_FILE, not stale'
+  - case: E21 an empty gzip of D
+    input: "D's snapshot file a gzip with nothing in it (CARD_D3_V4 rule 5); the CARRY's last row stamped 23:59:58 of D-1"
+    answer: 'there, with no rows: S04, S05 empty BOOK_HOLE, stale 1 at u = 12:00 (not NO_FILE)'
+  - case: E18 a header-only file of D
+    input: "u = 12:00; D's file holds only its header"
+    answer: 'S04, S05 empty BOOK_HOLE, stale 1 (not NO_FILE)'
+  - case: E14 NO_LEVELS out of the share (N3)
+    input: 'a cell of 840: 20 NO_LEVELS, 10 BAD_INPUT, 81 EXHAUSTED, 729 valued'
+    answer: 'S10 0.1 (81 / 810)'
+unit_tests:
+  - test: U1 (E1, E2, E3, E6)
+    planted: 'a snapshot pack with pp 0, qp 0: the E1 book (and the E6 asks) as bid_px, bid_qty, ask_px, ask_qty rows x 25, nb 3, na 3 (1)'
+    expect: 'S04 2500.0, S05 2000.0 (filled, not EXHAUSTED), E6 S04 1000.0'
+  - test: U2 (E4, E5, E19)
+    planted: 'the E4 book; the E5 book with pp 1, qp 2; the E19 book'
+    expect: 'E4 S05 EXHAUSTED; E5 S04 0.012388030606, S05 0.007462680998 within 1e-9 relative; E19 S05 5238.299310981910 (filled)'
+  - test: U3 (E7 to E9, E12, E13)
+    planted: the rows of each case
+    expect: 'NO_LEVELS on both; BAD_INPUT; BOOK_HOLE stale 1; E12 2500.0 and 2000.0, known_at u - 4 s; E13 BOOK_HOLE stale 1; E13b 2500.0; E17 BAD_INPUT; E18 BOOK_HOLE'
+  - test: U7 the files (E20, E21)
+    planted: "no file of D with the CARRY; an empty gzip of D with the CARRY"
+    expect: 'E20 NO_FILE at every point, 00:00:00 included; E21 BOOK_HOLE stale 1'
+  - test: U6 the meaning lines made tests
+    planted: 'every valued planted book of U1 to U3'
+    expect: 'S04 and S05 at or above the same snapshot''s half spread (true by construction: a test, not a pass line)'
+  - test: U4 (E10, E11, E14)
+    planted: 'COST S04, S05 rows of 14 planted days at hour h with the counts of each case'
+    expect: 'S10 0.1, S06 the median of the 729; FEW_VALUES; E14 S10 0.1'
+  - test: U5 the grid (E15, E16)
+    planted: 'the CARRY state of E15; a day of planted rows; the E16 CARRY and the snapshot row of D at 00:00:00.000000'
+    expect: 'E15 2500.0 and 2000.0 with known_at of D-1; E16 1000.0 known_at 00:00:00 of D; 17,280 rows per name and coin; the minute-end rows equal edition 2 (a filter on whole minutes)'
+mutants:
+  - mutant: M1 the partial average returned when exhausted
+    caught_by: U2 (E4 gives a value)
+  - mutant: M2 exhausted when the levels hold N or less (<= in place of <)
+    caught_by: U1 (E3, the sell of E2, gives EXHAUSTED)
+  - mutant: M3 the last level taken whole
+    caught_by: 'U1 (E1 gives 1,500 coins, VWAP 13.2: 3,200 bps)'
+  - mutant: M4 the quantity convention on the sell (N / M coins)
+    caught_by: 'U1 (E2 gives VWAP 8.25: 1,750 bps)'
+  - mutant: M5 the mid from the bookTicker row instead of the same snapshot
+    caught_by: U2 (E5 with a planted bookTicker top 67000.0 / 67000.3 moves S04)
+  - mutant: M6 the sell sign flipped
+    caught_by: U1 (S05 -2000.0)
+  - mutant: M7 NO_LEVELS (or BAD_INPUT) counted in the share's books
+    caught_by: 'U4 (E14 gives 81 / 830 = 0.097590361446 or 81 / 840)'
+  - mutant: M8 seen from the row in force's own stamp
+    caught_by: U3 (E12 gives BOOK_HOLE)
+  - mutant: M9 the row in force by arrival only (t <= u dropped)
+    caught_by: U3 (E13b gives 1000.0)
+  - mutant: M10 the CARRY state dropped for 00:00:05 and 00:00:10
+    caught_by: U5 (E15 gives NO_FILE or BOOK_HOLE)
+  - mutant: M11 the 00:00:00 point taken from D-1's run alone
+    caught_by: U5 (E16 gives 2500.0)
+  - mutant: M12 a one-sided book walked with half a mid
+    caught_by: U3 (E7 gives S05 about -10,000 bps, not NO_LEVELS)
+  - mutant: M13 the walk in float64 (v2's walk_book)
+    caught_by: 'U2 (E19: the float cumulative sum is 9999.999999999998, so EXHAUSTED in place of 5238.299310981910)'
+  - mutant: M14 a row with no stamp left out
+    caught_by: U3 (E17 gives A's 2500.0)
+  - mutant: M15 the 00:00:00 point valued from the CARRY when D's file is missing
+    caught_by: U7 (E20 gives 2500.0 at 00:00:00)
+  - mutant: M16 an empty gzip read as NO_FILE
+    caught_by: U7 (E21 gives NO_FILE)
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 00:00:00, 00:00:05, 00:00:10, 12:10:00 and 12:10:05
+      why: the top level alone fills; 00:00:00 is 7 Mar's 24:00 point, 00:00:05 and 00:00:10 its CARRY state; a point between minute ends
+    - point: 2026-03-08, the thinnest coin of the day (named by the tester from D3 before the job), 12:10
+      why: the walk goes deep
+    - point: 2026-03-08, the coin with the most EXHAUSTED minute ends, one of them
+      why: EXHAUSTED
+    - point: 2026-03-08, 1000PEPEUSDT, 08:00
+      why: a 1000-coin at a funding settle
+    - point: 2026-03-08, those coins, S06 to S11 at 00:00 and 12:00
+      why: the hour table from 22 Feb to 7 Mar 2026
+  pass: >-
+    The tester recomputes S04 to S11, the empty reasons and stale from this card's words through the reader, with Fraction on the
+    pack's integers (rawcheck/check_cost.py, never the producer's code): floats within 1e-9 relative, words equal. One small
+    read-only runner job (with K1's and K3's points).
+meaning_check:
+  pass_lines:
+    - "BTCUSDT's S04 and S05 are within 0.05 bps of K1's S01 at the same point at 95 percent or more of the points of 2026-03-08 where both are valued (its top level alone fills 10,000 USDT: per_coin; it fails when the snapshot and the bookTicker disagree)"
+    - "for BTCUSDT, SOLUSDT and CRVUSDT (the coins whose bookDepth is held: BASIC_D3_V1 line 133, J15949, J15954), at 99 percent or more of the coin-minutes of 2026-03-08 where Binance's bookDepth notional within 0.2% is at least 10,000 USDT a side, our 25 levels fill 10,000 (not EXHAUSTED) at an S04 (S05) of 20 bps or less; the rest are listed (the 25-level cut, the bookDepth clock)"
+    - "on the same snapshot, our VWAP equals orderflow-metrics simulate_market_order's avg_price and NautilusTrader's get_avg_px_for_quantity for the quantity our walk bought, within 1e-12 relative, on books not exhausted"
+  report_only:
+    - per coin, how often the top level alone fills 10,000 USDT
+    - S10, S11 per coin and hour
+conclude:
+  may:
+    - what a 10,000 USDT market order would have paid against the mid on Binance's visible book at the 5 s point, per side
+    - this coin's usual and bad-minute 10,000 USDT cost for this hour of day over the 14 days before D, read with the exhausted share
+  never:
+    - "Hyperliquid's cost (Binance's visible book, a proxy until the Hyperliquid book exists: BUILD_PLAN_V2 lines 8, 13)"
+    - the cost of a fill after u (the book moves) or of a bigger size (K3 is 50,000)
+    - an EXHAUSTED minute filled with the partial average or a guess
+    - S06 to S09 without S10, S11 (a cell with many EXHAUSTED minutes has a median of its easy minutes)
+readers: "none yet (planned: the test bed's fill model, X2's take-or-skip filter, R4 net of cost)"
+implementation:
+  how: >-
+    Per coin, vectorised over the day: the snapshot row in force at the 17,280 points (addon_grid_v2.in_force with bad_ends=True,
+    CARD_D3_V4 rule 2; the rows with no stamp filled from the row before, X2); per side a cumulative dollars array over the 25 levels
+    (int64 at 10^(pp + qp), exact, with the overflow guard), the first level where it reaches
+    N by one argmax per row, the last level's partial coins as an exact fraction; the same arrays read at 50,000 for K3. The snapshot
+    pack is read once per coin per day and shared with K3 and BOOKX K6. PHASES (ADDON_ARCHITECTURE_V4 edit 3 0591d181 section 4): S04, S05 point-local,
+    final in phase A at 00:00:15 to 24:00:00; 00:00:00 to 00:00:10 phase B (the CARRY state, the 00:00:00.000000 row, E16); S06 to
+    S11 the table pass.
+  kernel: 'walk_book_exact (int64 dollars, the partial a Fraction: owed by EDGE1''s kernels edition 3, REVIEW_LEAD_EDGE1_V1 section 6; v2''s walk_book is float64) on the snapshot rows from addon_grid_v2.in_force (85c8ece1) with bad_ends=True and its seen output (CARD_D3_V4 rules 1 to 6), cap 15 s'
+  memory_mb: 600
+  seconds_share: 5
+data_checks:
+  - what: per coin, the share of minute ends where the 25 levels hold 10,000 USDT a side and where the top level alone does (one read-only runner job)
+    who: TREE
+  - what: the Hyperliquid book source (ADDON_ARCHITECTURE_V3 section 12, question 2)
+    who: the owner

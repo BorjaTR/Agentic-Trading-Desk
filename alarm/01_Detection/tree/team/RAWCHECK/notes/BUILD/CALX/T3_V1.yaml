@@ -1,0 +1,177 @@
+kind: build_metric
+id: T3
+producer: CALX
+item: 'Friday Deribit expiry as its own event type (BUILD_ITEMS_V4 line T3)'
+tier: FIX
+name: the macro print clocks of Z1 on the fixed calendar with the Friday Deribit expiry taken out of the prints, and the expiry's own two clocks
+status:
+  drafter: EDGE1
+  reviewer: EDGE2
+  edition: 3
+  signed: false
+means: >-
+  Z1 counts the Friday 08:00 UTC Deribit options expiry (OPEX_DERIBIT) as a macro print like a CPI, so every Friday morning its clocks say a
+  print is coming when no macro news is due (BUILD_LIST_V5 line 28; MEANING_Z1_V1 O1; .noother_off drops OTHER_MACRO, nothing drops OPEX).
+  CALX S01 to S13 are Z1 S01 to S13 by CARD_Z1_V2's rules on MACROCAL_V3 (T1 on T2) with OPEX_DERIBIT not a print; S14 and S15 are the
+  minutes to the next and since the last Friday expiry, by the same rules on the expiry rows alone. Like Z1, the clocks count the FOMC
+  meeting's first day (09:00 ET, nothing released) as a print.
+example: >-
+  A PLANTED Friday (dated 6 Mar 2026 for the arithmetic; the real 5 Mar 13:30 rows are OTHER_MACRO) at 07:00 UTC, with the expiry at 08:00,
+  an NFP at 13:30 and the last print a CPI on Thursday 13:30: Z1 says the next
+  print is in 60 minutes (OPEX_DERIBIT); CALX S01 says 390 minutes (NFP), S03 1,050 minutes since the CPI, S14 60 minutes to the expiry,
+  S15 2,880 (the last expiry, a week ago, is beyond the 2-day cap).
+formula: >-
+  CARD_Z1_V2 rules 1 to 13 and 16 (testbed/value_audit/registers, the year's card), word for word, at the 1,440 minute ends u of D, with
+  two changes: (a) the calendar is MACROCAL_V3.csv (T1), read through prod_reader_news_v1 as NewsReader(calendar='V3', for_root pinned,
+  packs = the job's temporary folder), sha16 fixed in the settings (rule 17); (b) rule 1's prints leave out every row of kind OPEX_DERIBIT.
+  The expiry rows are rule 1's filters applied to kind OPEX_DERIBIT (not bad, confidence not REFUSED, a repeated row once; rule 13 flags a
+  repeated expiry row inside a span DUPLICATE_ROW:OPEX_DERIBIT). S14 = rule 3 on those expiry rows (the
+  earliest expiry t with u < t <= u + 2,880 min; S14 = t - u in minutes rounded up; 2,880 when none). S15 = rule 4 on those rows (the latest
+  expiry t with u - 2,880 min <= t <= u, an expiry at u is the last; S15 = u - t in minutes rounded down; 2,880 when none). Coverage as
+  rule 11: S14's span (u, t] or (u, u + 2,880 min], S15's [t, u] or [u - 2,880 min, u]. The beside twins of Z1 (rules 14, 15) are not built.
+source:
+  kind: ours
+  ref: 'CARD_Z1_V2 (the year''s Z1 card, rules 1 to 17); BUILD_LIST_V5 line 28 and MEANING_Z1_V1 O1 (the finding); OUR_RULE_Z1_V1 (b059704a): the opens'
+inputs:
+  - kind: reader
+    ref: prod_reader_news_v1
+    exists: true
+    stream: the macro calendar FOR/knowledge/MACROCAL_V3.csv, NewsReader(calendar='V3').calendar() (prod_reader_news_v1 lines 14, 253, 301)
+    rule_in_force: every row of the file (a schedule is known before its time, CARD_Z1_V2 rule 16)
+    stale_rule: none (known_at = as_of, max_staleness 0 s, rule 16)
+    days: the rows of D - 2 to D + 2 a value's span touches (rule 11)
+  - kind: file
+    ref: FOR/knowledge/MACROCAL_V3.csv (T1_V1)
+    sha16_rule: fixed in SETTINGS_CALX_V1 from T1's edition 2; a changed file stops the run, nothing written (rule 17)
+    rule_in_force: as above
+    stale_rule: none
+    days: D - 2 to D + 2
+overlaps:
+  - setting: Z1 S01 to S13
+    kind: copy
+    why: >-
+      on a day with no OPEX_DERIBIT row within 2 days either side and away from 9 and 10 Dec 2025, CALX S01 to S13 equal Z1 S01 to S13 (the
+      same rules on the same rows): a cross-check (meaning_check line 1); they differ only where the fix applies
+per_coin: market values (coin MARKET), one per name per minute end; no coin enters
+time: >-
+  Fridays (the expiry at 08:00 UTC, UTC-anchored with no daylight saving: the file's own notes); 9 and 10 Dec 2025 (the 2 new rows); weekends
+  (S01, S03 often 2,880); days the calendar does not cover (rule 10: S07 1, the values whose span touches them empty NOT_COVERED); the 00:00
+  start reads D - 2 to D + 2 from the file (no CARRY: the calendar is one file for every day)
+output:
+  group_file: X1/day=<D>/CALX.parquet
+  names:
+    - {name: S01, label: min_to_next_print, units: minutes, value_kind: whole, means: 'Z1 S01 without the expiry (rule 3)'}
+    - {name: S02, label: next_print_kinds, units: word, value_kind: word, means: 'Z1 S02 without the expiry'}
+    - {name: S03, label: min_since_last_print, units: minutes, value_kind: whole, means: 'Z1 S03 without the expiry (rule 4)'}
+    - {name: S04, label: last_print_kinds, units: word, value_kind: word, means: 'Z1 S04 without the expiry'}
+    - {name: S05, label: window_word, units: word, value_kind: word, means: 'Z1 S05 without the expiry (rule 6)'}
+    - {name: S06, label: cap_word, units: word, value_kind: word, means: 'Z1 S06 without the expiry (rule 5)'}
+    - {name: S07, label: day_not_covered, units: 0 or 1, value_kind: whole, means: 'Z1 S07 on MACROCAL_V3 (rule 10)'}
+    - {name: S08, label: window_print_kinds, units: word, value_kind: word, means: 'Z1 S08 without the expiry (rule 7)'}
+    - {name: S09, label: prints_in_windows, units: count, value_kind: whole, means: 'Z1 S09 without the expiry (rule 8)'}
+    - {name: S10, label: print_due_30m, units: 0 or 1, value_kind: whole, means: 'Z1 S10 without the expiry (rule 9)'}
+    - {name: S11, label: print_due_5m, units: 0 or 1, value_kind: whole, means: 'Z1 S11 without the expiry (rule 9)'}
+    - {name: S12, label: print_hit_15m, units: 0 or 1, value_kind: whole, means: 'Z1 S12 without the expiry (rule 9)'}
+    - {name: S13, label: print_hit_60m, units: 0 or 1, value_kind: whole, means: 'Z1 S13 without the expiry (rule 9)'}
+    - {name: S14, label: min_to_next_friday_expiry, units: minutes, value_kind: whole, means: 'minutes to the next Friday Deribit expiry, rounded up; 2,880 both when it is exactly 2 days ahead (Wednesday 08:00) and when none is within 2 days (S01''s convention, no cap word for the expiry)'}
+    - {name: S15, label: min_since_last_friday_expiry, units: minutes, value_kind: whole, means: 'minutes since the last Friday Deribit expiry, rounded down, 2,880 when none within 2 days'}
+  grid: minute
+  cadence: minute end (1,440 rows per name per day, u = 00:00 to 23:59 of D; market only)
+  as_of_rule: as_of = u
+  known_at_rule: 'known_at = as_of on every row, valued or empty (a schedule is known before its time, rule 16), so known_at <= as_of'
+  empty_reasons:
+    - {reason: NOT_COVERED, when: 'a day the value''s span touches is not covered (rule 11; S14, S15 by their spans above)'}
+    - {reason: NO_FILE, when: 'no MACROCAL_V3.csv or only a .part (rule 12)'}
+  stale_rule: never stale (rule 16)
+  max_staleness_s: 0
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - {flag: DUPLICATE_ROW, when: 'a repeated print row inside a value''s span, as DUPLICATE_ROW:<kind> (rule 13)'}
+edge_cases:
+  - case: E1 a Friday morning before the expiry
+    input: 'D = 2026-03-06 (Friday), u = 07:00; prints OPEX_DERIBIT 08:00, NFP 13:30, CPI on Thu 2026-03-05 13:30, OPEX_DERIBIT on Fri 2026-02-27 08:00; every day 2026-03-03 to 2026-03-09 covered'
+    answer: 'S01 390, S02 NFP, S03 1,050, S04 CPI, S05 NONE, S06 NONE, S09 0, S10 to S13 0; S14 60, S15 2,880 (10,020 minutes is beyond the cap). Z1 on the same rows: S01 60, S02 OPEX_DERIBIT'
+  - case: E2 the press conference added (T1)
+    input: 'D = 2025-12-10, u = 19:10; FOMC_STMT 19:00, FOMC_PRESS 19:30, CPI 2025-12-11 13:30; 8 to 12 Dec covered'
+    answer: 'S01 20, S02 FOMC_PRESS, S03 10, S04 FOMC_STMT, S05 POST_FIFTEEN (the nearer is the last, 10 minutes), S08 FOMC_STMT, S09 2, S10 1, S11 0, S12 1, S13 1. Without the PRESS row: S01 1,100, S02 CPI, S09 1, S10 0'
+  - case: E3 the meeting day 1 row added (T1)
+    input: 'D = 2025-12-09, u = 13:50; FOMC_MEET 14:00; no print in the 60 minutes before u; 7 to 11 Dec covered'
+    answer: 'S01 10, S02 FOMC_MEET, S05 PRE_THIRTY, S10 1, S11 0'
+  - case: E4 at the expiry itself
+    input: 'D = 2026-03-06, u = 08:00; OPEX_DERIBIT 08:00, the next on 2026-03-13 08:00; D - 2 to D + 2 covered'
+    answer: 'S14 2,880 (the next expiry is 7 days away: none in (u, u + 2,880 min]); S15 0 (an expiry at u is the last)'
+  - case: E5 an expiry and a macro print at the same time
+    input: 'D = 2026-03-06, u = 07:30; OPEX_DERIBIT 08:00 and a planted PPI 08:00; D - 2 to D + 2 covered'
+    answer: 'S01 30, S02 PPI; S14 30. Z1 on the same rows: S02 OPEX_DERIBIT_AND_PPI'
+  - case: E6 an uncovered day in the span
+    input: 'as E1 with 2026-03-07 not covered'
+    answer: 'at u = 07:00 S01 is valued 390 (its span (07:00, 13:30] stays in 6 Mar) and S14 60; at u = 23:00 of 6 Mar S14 is empty NOT_COVERED (no expiry in (u, u + 2,880 min], a span that touches 7 Mar), S07 0 (6 Mar itself is covered)'
+  - case: E7 no expiry in the calendar at all
+    input: 'a planted week, covered from 2 days before to 2 days after, with no OPEX_DERIBIT row'
+    answer: 'S14 2,880 and S15 2,880 at every minute end of the week''s middle days; S01 to S13 equal Z1''s'
+  - case: E8 exactly 2 days before an expiry
+    input: 'D = 2026-03-04 (Wednesday), u = 08:00; OPEX_DERIBIT 2026-03-06 08:00; D - 2 to D + 2 covered'
+    answer: 'S14 2,880 (t - u = 2,880 min, inside (u, u + 2,880 min]): the same number as none; at 08:01 S14 2,879'
+unit_tests:
+  - test: U1 (E1)
+    planted: the E1 calendar (CARD_Z1_V2's plant_Y_v1 style, the funding grid at every hour)
+    expect: the E1 answers, Z1's oracle (oracle_Z1_v2.real, the plant also written under the name MACROCAL_V2.csv it reads) giving S01 60 on the same rows
+  - test: U2 (E2, E3)
+    planted: the E2 and E3 rows, and again without the PRESS and MEET rows
+    expect: the E2 and E3 answers; without the rows S01 1,100 at 19:10 of 10 Dec
+  - test: U3 (E4)
+    planted: the E4 rows
+    expect: S14 2,880, S15 0 at 08:00; S14 10,080 is never written (capped)
+  - test: U4 (E5, E6, E7)
+    planted: the rows of each case
+    expect: the answers written in edge_cases, empty reasons equal
+  - test: U5 equal to Z1 where nothing changes
+    planted: a covered week with no OPEX_DERIBIT row and no FOMC row
+    expect: CALX S01 to S13 equal oracle_Z1_v2.real() (the plant also as MACROCAL_V2.csv) at all 1,440 minute ends of each middle day
+mutants:
+  - mutant: M1 the expiry kept as a print
+    caught_by: U1 (S01 60 against 390)
+  - mutant: M2 the press row read at 14:30 UTC
+    caught_by: U2 (S01 1,100 against 20 at 19:10)
+  - mutant: M3 an expiry at u counted as the next
+    caught_by: U3 (S14 0 against 2,880)
+  - mutant: M4 S15 not capped
+    caught_by: U1 (S15 10,020 against 2,880)
+real_check:
+  points:
+    - point: 2025-12-09, the minute ends 13:00 to 15:00
+      why: the added FOMC_MEET row (14:00)
+    - point: 2025-12-10, the minute ends 18:30 to 20:30
+      why: the statement and the added press conference (19:00, 19:30)
+    - point: '2026-03-06, the minute ends 07:00 to 09:00 (covered, its OPEX_DERIBIT row at 08:00, as the lead review read the year''s file; T2''s job confirms before the real check)'
+      why: 'a Friday expiry (08:00) taken out of the prints, S14 and S15 around it (EDGE2 18:11:12Z: an uncovered Friday checks nothing)'
+  pass: the tester recomputes S01 to S15 from this card's words and CARD_Z1_V2's rules on MACROCAL_V3.csv (never the producer's code); every value and empty reason equal
+meaning_check:
+  pass_lines:
+    - 'On two covered days D with no expiry within 2 days on either side and with D - 2 to D + 2 holding neither 9 nor 10 Dec 2025 (so 7 to 12 Dec 2025 are out; picked by the tester from T2''s coverage count), CALX S01 to S13 equal the year''s Z1 S01 to S13 in B at every minute end.'
+    - 'On the real-check Friday and the Wednesday and Thursday before it (S14 below 2,880 there), at every valued minute end S14 equals the minutes to that Friday 08:00 UTC from the clock alone (rounded up, capped at 2,880).'
+  report_only:
+    - 'per expiry week of 10 Sep 2025 to 9 Mar 2026: how many minute ends Z1 and CALX differ on (they differ from Wednesday 08:00 to Sunday 08:00 around each expiry)'
+conclude:
+  may:
+    - 'CALX S01 to S13: how far the next and the last scheduled macro print are, with the Friday expiry left out'
+    - 'S14, S15: how far the next and the last Friday Deribit expiry are'
+  never:
+    - 'S14, S15 as every Deribit expiry: Deribit settles every day at 08:00 UTC; the calendar holds the Friday expiries only'
+    - 'the FOMC_PRESS time as confirmed: the 14:30 ET standing practice, DERIVED in the file'
+    - 'CALX as the year''s Z1: Z1 stays sealed as built (with the expiry as a print and without the 2 rows)'
+readers: none yet (Z1 itself is read by nobody, CARD_Z1_V2; a chain or the lab names it when it reads it)
+implementation:
+  how: >-
+    The calendar is read once per job (13,706 rows in the year's file, plus T1's 2); print times and expiry times as two sorted int64 arrays; for all 1,440 minute ends
+    at once np.searchsorted gives the next and the last (rules 3, 4, S14, S15), window counts by searchsorted differences (rules 8, 9),
+    coverage as a per-day boolean array indexed by each span's days; words joined by a small table of distinct kinds per print time.
+  kernel: 'addon_grid_v2.next_last_event (CARD_Z1_V2 rules 3, 4; its test in test_addon_grid_v2)'
+  memory_mb: 50
+  seconds_share: 0.5
+data_checks:
+  - what: 'the covered days of 10 Sep 2025 to 9 Mar 2026 in the year''s calendar (T2 step 5): the real-check and meaning-check days are picked from them'
+    who: EDGE1 (T2's job)

@@ -1,0 +1,75 @@
+{
+ "by": "BUILD1 (recut for STRATEGY-161519; owner as in RELEASE_context_V1.json)",
+ "changed": [
+  "team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv",
+  "team/RESEARCH/tools/alarm_context/context_blocks.py"
+ ],
+ "files": {
+  "team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V4.tsv": {
+   "role": "cost table: RETROSPECTIVE values only (A09-02)",
+   "schema_sha16": "6b27800ca63908ca",
+   "sha16": "7c393e6b5e8505f7"
+  },
+  "team/RESEARCH/tools/alarm_context/COIN_TYPES_V1.tsv": {
+   "role": "coin class table (COIN level)",
+   "schema_sha16": "8795b2d515c0c6db",
+   "sha16": "5dc4dee58c135fbd"
+  },
+  "team/RESEARCH/tools/alarm_context/CTX_CATALOG_V1.tsv": {
+   "role": "the catalogue (generated from context_blocks docstrings)",
+   "schema_sha16": "1cc2b66193910365",
+   "sha16": "ddba46e11886df5c"
+  },
+  "team/RESEARCH/tools/alarm_context/README.md": {
+   "role": "design note and contract",
+   "sha16": "370cf8b114631c47"
+  },
+  "team/RESEARCH/tools/alarm_context/alarm_context.py": {
+   "role": "tool module",
+   "sha16": "1acde93ac4744c42"
+  },
+  "team/RESEARCH/tools/alarm_context/context_blocks.py": {
+   "role": "tool module",
+   "sha16": "8637bd41fc212f59"
+  },
+  "team/RESEARCH/tools/alarm_context/test_alarm_context.py": {
+   "role": "test",
+   "sha16": "84f8bf3122e443d2"
+  },
+  "team/RESEARCH/tools/alarm_context/test_ctx_output_proofs.py": {
+   "role": "test",
+   "sha16": "142b792f95aef839"
+  },
+  "team/RESEARCH/tools/alarm_context/test_p09_v1.py": {
+   "role": "test",
+   "sha16": "490f1d61b169517c"
+  }
+ },
+ "landing": "P04 + A09 + P09 (+ P03 context, P05 profile)",
+ "release": "V1_1",
+ "releases": {},
+ "replaces": "RELEASE_context_V1.json 8495307b3913a575",
+ "rule": "FROZEN until both outside approvals and STRATEGY sign-off; any change to a listed file is a new release (V1_1, V2)",
+ "run_with": "<PYTHON>",
+ "runtime": {
+  "numpy": "2.2.6",
+  "python": "3.11.3"
+ },
+ "tests_result": "analyst venv: test_alarm_context 26 passed, 8 skipped (BUILD1 rerun 16:2xZ, as on disk after LAYERS' stale-price + V02 landing)",
+ "tool": "alarm_context",
+ "unpinned_other_tools": {
+  "team/LAB3/code/lab3/__init__.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/asof.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/binfmt.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/bins.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/days.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/labgroups.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/law.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/rows.py": "another tool: pinned by its own release once it has one",
+  "team/LAB3/code/lab3/write.py": "another tool: pinned by its own release once it has one",
+  "team/RESEARCH/tools/alarms/a01_onset_v2.py": "another tool: pinned by its own release once it has one",
+  "team/RESEARCH/tools/alarms/a02_climax_v3.py": "another tool: pinned by its own release once it has one",
+  "team/RESEARCH/tools/alarms/alarm_view_v1.py": "another tool: pinned by its own release once it has one"
+ },
+ "written_utc": "2026-10-23T16:18:45Z"
+}

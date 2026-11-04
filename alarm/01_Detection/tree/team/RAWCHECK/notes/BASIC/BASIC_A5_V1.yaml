@@ -1,0 +1,206 @@
+# BASIC_A5_V1.yaml: the card of A5 liq_vs_flow, its basic settings S01 to S10 and the coverages of S05, S06 (BED, 2026-10-18, BR4 = WP4 of
+# BASIC_REVIEW_WORKPACKAGES_V3 075b96c8). Made the way BASIC_C8_V3 was (METRIC_REVIEW_METHOD_V1 da211e1d section 5; the rename rule;
+# conclude). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py (edition 5 6223b1ad) checks it and writes .md, .flat.jsonl, .agent.jsonl.
+# Layer of every setting here: basic (a quotient of proven raw values: A1's liquidation dollars over B1's taker dollars, or over A1's other side).
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR4 A5 (hb/EDGE2.txt 14:31:04Z): (1) no 'at least' (read_as, may 1, do 1, S01
+# and S03 means): A1's floor pushes S01 to S04 down, the USDC prints and the Tardis trade holes push them up (FET 8 Mar 11:56, J15872 a5,
+# J15875 a5look); (2) S06 was not checked against the klines (a5() compares S05 only): now checked by the new part a5med of meaning_flowbasic
+# ed6 98dc3550a9bfe5da (J15918: S05 and S06 against the median of the kline quotients, both days); (3) S05, S06 RENAMED (the old names say 'share', which fails there as for S01), in A5.CB1's was_name_of; 'half or more',
+# not 'over half'; (4) the gaps say only what J15872, J15873 and J15877 show: no 'late rows'; S03's largest is 8 Mar 16:33; CB1's adds
+# without 'about that much below'; (5) J15877's inline script is now the part a5mkt of meaning_flowbasic ed5 53ce3742240bc18a (tests
+# a6dc3688c9022cdb 13 of 13, mutants 16 of 16), rerun J15909: its lines equal J15877's byte for byte; cited with J15877, tool row added.
+
+group: A5
+name: liq_vs_flow, liquidations against taker flow and short against long (basic, built on A1 and the taker dollars)
+summary: >-
+  At each minute end, from A1's liquidation dollars of the minute (USDT and USDC contracts, valued at each order's limit price) and the
+  coin's USDT taker dollars of the same 60 s (Tardis trades, exact): S01 a coin's long liquidation dollars over its taker sell dollars, S02
+  its short liquidation dollars over its taker buy dollars; S03, S04 the same for the market (A1's sums over the taker dollars of the coins
+  A1 counts); S05, S06 the median of the coins' S01, S02 (with .coverage, the coins in the median); S07 the market's short over long
+  liquidation dollars, S08 a coin's; S09 the market's short share of all liquidation dollars, S10 a coin's. Every value rounded once to 6
+  significant digits.
+read_as: >-
+  How many forced dollars there were per dollar of USDT taker selling (buying) in the minute: a ratio, not a bound either way. Three
+  things move S01 to S04, one down and two up. A1 is a floor (the last print a coin a second), valued at the order's limit price: it pushes
+  them down. The numerator holds the USDC contract's liquidations (16.98% and 14.60% of A1's long dollars on 8 Mar 2026 and 24 Sep 2025,
+  J15877) while the denominator is USDT taker dollars only: it pushes them up, and the three values above 1 (all 8 Mar: BCH 07:00 S02 75.09,
+  ENA 07:00 5.10, SHIB 19:38 S01 1.028) are USDC prints over USDT flow (J15875 a5look). A Tardis trade hole shrinks the denominator: it
+  pushes them up too (FET 8 Mar 11:56: S01 0.171241 against 0.0788642 with the kline's taker selling; our taker sell 3,427.91 against the
+  kline's 7,443.18; J15872 a5, J15875 a5look). Recomputed exactly it matches ours at every value checked (A5_STAMPS_V1); with Binance's
+  kline taker dollars as the denominator S01 and S02 agree to 6 digits at 97.68% to 98.86% of coin-minutes with A1 above 0; the largest
+  gaps of 8 Mar (S01 FET 11:56 and ZEC 22:31, S02 ADA and ZEC 11:56, J15872 a5) are in the two minutes where the most coins' Tardis taker
+  dollars are off the kline by over 1% (29 and 18 coins, J15875 census); those of 24 Sep (at most 1.87e-02, J15873 a5) not looked at. Most minutes have no liquidation: S05 (the median coin's S01)
+  is 0 at 98.8% and 99.0% of minutes. The six that the old names call shares (S01 to S06) are renamed to say what they divide.
+
+conclude:
+  may:
+    - "the long (short) liquidation dollars Binance published for a coin or the market in the last minute against the USDT taker selling (buying) of the same minute, as a ratio, not a bound: A1's floor pushes it down, the USDC prints and the Tardis trade holes push it up (J15877; FET 8 Mar 11:56, J15872 a5, J15875 a5look)"
+    - "which side was forced more, short against long (S07, S08) or the short share of all forced dollars (S09, S10, from 0 to 1)"
+    - "whether forced selling reached the median coin (S05 above 0, rare: 1.2% and 1.0% of minutes)"
+  never:
+    - "a share of 1 or more as 'all the taker selling was forced': the numerator holds USDC contract liquidations, the denominator USDT trades only (BCH 8 Mar 2026 07:00 S02 75.09: a 10,658 dollar BCHUSDC print over 142 dollars of USDT taker buying, J15875 a5look)"
+    - "the exact forced share: A1 keeps one print a coin a second and values it at the order's limit price, below the fills for a long, above them for a short (MEANING_A1_V4 fields)"
+    - "that S07 or S08 is the ratio of the dollars that traded: both sides are floors at limit prices, the short side valued high and the long side low"
+    - "that nothing was forced when S05 is 0: it is the median coin, 0 in about 99% of minutes"
+
+where:
+  card: testbed/value_audit/registers/CARD_A5_V5.md b30d9b29d34e677d (rules 1 to 17; edition 5)
+  settings_register: testbed/value_audit/registers/SETTINGS_A5_V2.tsv a4d177d9b30eea10
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6 (A1 S08, S09, S12, S13: raw, LIMITS: a floor); team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml 633a0e1ac7698361 (the taker dollars of B1 S01, S02: raw, LIMITS), recomputed here from the same Tardis trades by A5's rules 2 to 6"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V14.tsv 4170fe2d27aa7e31 (A5 S01 to S10 basic, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_A5_v3.py 703f6b4de58e3994 (CARD_A5_V5 part 5, A1E 6 Oct 2026)"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/A5.parquet
+  year_output_columns: "name (12 names: S01 to S10, S05.coverage, S06.coverage; J15840 schema), coin (every roster coin for S01, S02, S08, S10; MARKET for the others), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY, NaN in value_f64), value_f64, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_a2.py year(D, 'A5', names) or ours.at(D, 'A5', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, binance-futures, through our raw A1 (liquidations) and the trades (B1's stream)"
+  exchange_stream: "forceOrder (A1) and trades"
+  files: "A1's rows (the year output A1.parquet); <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/trades_<COIN>USDT_<YYYY-MM-DD>.csv.gz"
+  columns: "A1 S08, S09 (coin, 60 s long and short dollars), S12, S13 (market); trades: id, timestamp, local_timestamp, side, price, amount"
+  fields:
+    taker: "a coin's taker dollars: its USDT trade rows stamped in (e - 60 s, e] and received by e, exact from the text; sell for the long settings, buy for the short ones; a repeated id not counted; a bad row in the window: BAD_INPUT; no file: NO_FILE [proof: CARD_A5_V5 rules 2 to 6; basic_a5 taker, usd, tests T2 to T4, T8; A5_STAMPS_V1]"
+    shares: "S01 (S02) = A1 S08 (S09) / taker sell (buy); S03 (S04) = A1 S12 (S13) / the taker dollars of the coins A1 counts; 6 significant digits, half up; empty in order: A1's reason, NO_FILE, BAD_INPUT, NO_TAKER_SELL (NO_TAKER_BUY) [proof: CARD_A5_V5 rules 7 to 9; basic_a5 tests T1, T5, T8; A5_STAMPS_V1]"
+    median: "S05 (S06) = the median of the exact coin shares, rounded once; .coverage the coins in it [proof: CARD_A5_V5 rule 10; basic_a5 T6, T8; A5_STAMPS_V1]"
+    ratios: "S07 = S13 / S12, S08 = a coin's S09 / S08 (NO_LONG_LIQ when the long side is 0); S09 = S13 / (S12 + S13), S10 the coin's (NO_LIQ when both 0) [proof: CARD_A5_V5 rules 11, 12; basic_a5 T7; A5_STAMPS_V1 every minute end]"
+  latency: "known at e: A1's rows received by e, the trade rows received by e; liquidation prints arrive 1.01 s after their stamp at the median (MEANING_A1_V4)"
+
+reading_rules:
+  - "every value at a minute end (at a fire, the last full minute; the fire-second twins are not written in the year)"
+  - "a share or ratio to 6 significant digits; S01 to S06 can pass 1 (never clipped); S09, S10 lie in [0, 1]"
+  - "empty is never 0: NO_TAKER_SELL, NO_TAKER_BUY, NO_LONG_LIQ, NO_LIQ, and A1's reasons"
+
+values:
+  units: "ratios, no unit"
+  zero: "no liquidation of that side in the minute (most coin-minutes): S01 above 0 at 2,501 of 74,842 coin-minutes (8 Mar) and 3,251 of 73,184 (24 Sep) with a value (J15872, J15873 a5)"
+  empty: "S08 empty at 72,379 (8 Mar) and 70,189 (24 Sep) of the coin rows, mostly NO_LONG_LIQ; S10 at 71,180 and 68,171, mostly NO_LIQ; S07 at 849 and 536 minutes, S09 at 527 and 171 (J15840 schema)"
+  stale: "true when the value is empty and every reason behind it is TRADES_HOLE or THIN_FEED (CARD_A5_V5 rule 14)"
+  flags: "A1's flags pass through; DUPLICATE_TRADE names a coin with a repeated trade id in the window (CARD_A5_V5 rules 6, 13)"
+
+interpret:
+  do:
+    - "read S01 = 0.17 as 'forced long dollars equal to 17% of the coin's USDT taker selling in that minute', with the floor (down) and the USDC prints and Tardis trade holes (up) in mind"
+    - "read S09 above 0.5 as more short than long liquidation dollars in the minute, market-wide"
+  dont:
+    - "read a share above 1 as an impossibility or as a full flush: it is a USDC print over USDT flow"
+    - "compare S07 across days without its floor: its median coin-minute is empty"
+
+biases:
+  - {what: "the numerator holds USDT and USDC liquidations, the denominator USDT taker dollars", direction: "S01 to S04 too high where a coin has USDC liquidations", size: "USDC is 16.98% (8 Mar) and 14.60% (24 Sep) of A1's long dollars, 16.12% and 10.45% of its short; coin-minutes with only USDC long liquidations 47 and 47; the 3 values above 1 (8 Mar) are all USDC prints", proof: "J15877 (A1 S10, S11 over S08, S09), the same lines from the part a5mkt (meaning_flowbasic ed5 53ce3742, J15909); J15875 a5look BCH 0700, ENA 0700, SHIB 1938"}
+  - {what: "A1 is a floor at the limit price (one print a coin a second; the order's worst price)", direction: "long shares low; short shares partly offset (the buy limit is above the fills)", size: "not measurable here (no full liquidation record)", proof: "MEANING_A1_V4 read_as and fields price"}
+  - {what: "the taker dollars are Tardis's trades: a Tardis hole shrinks the denominator", direction: "the share too high", size: "FET 8 Mar 11:56: S01 0.171241 against 0.0788642 on the kline's taker selling (our taker sell 3,427.91 against 7,443.18); S03 0.0142194 against 0.0140921", proof: "J15872 a5, J15875 a5look FET 1156; J15877 and J15909 a5mkt"}
+
+external_checks:
+  - {what: "every value recomputed by the card's words: S07 to S10 at every minute end of 8 Mar 2026 and 24 Sep 2025 for every coin, S01 to S06 at 7 minute ends a day from A1 and the exact Tardis taker dollars", where: "our A1 (raw) and the Tardis trades by exact path", status: "VERIFIED: A5_STAMPS_V1 303,926 of 303,926 MATCH (J15870, J15871; merged J15874)"}
+  - {what: "S01, S02 with Binance's kline taker dollars (quote_volume - taker_buy_quote, taker_buy_quote) as the denominator, every coin-minute; shares above 1 on both", where: "Binance 1m klines, <SCRATCH_DISK>/realcheck/outside/binance/klines_1m", status: "VERIFIED with named gaps: equal to 6 significant digits at 97.68% and 98.86% (S01), 97.84% and 98.36% (S02) of the coin-minutes with A1 above 0, median |ours / kline - 1| 6.7e-07; shares above 1: 3 on both (8 Mar), 0 (24 Sep) (J15872, J15873 a5)"}
+  - {what: "S03, S04 with the kline taker dollars of the coins A1 counts", where: "the klines", status: "VERIFIED with named gaps: equal to 6 digits at 91.54% and 89.71% (S03), 89.75% and 89.38% (S04) of minutes with A1 above 0, median |ours / kline - 1| 7.5e-07 to 9.2e-07; the largest gaps: S03 8 Mar 16:33 (1.04e-02: ours 0.000285361, kline 0.000282416) and 11:56, S04 8 Mar 11:56 (1.18e-01, the minute of the Tardis shortfall, J15875 census) and 22:50; 24 Sep S03 13:44 (8.22e-02) and 16:17, S04 19:07 (3.58e-03) and 03:13, not looked at (J15877; the part a5mkt of meaning_flowbasic ed5 53ce3742, rerun J15909: the same lines byte for byte)"}
+  - {what: "S05 against the median of the coins' kline quotients; S09 against S07 / (1 + S07)", where: "the klines; our values", status: "VERIFIED: S05 |gap| median 0, p99 4.7e-10 and 3.6e-11; S09 = S07 / (1 + S07) within 9.3e-07 and 1.6e-06 (the 6-digit rounding), S09 in [0, 1] (J15872, J15873 a5)"}
+  - {what: "S05 and S06 against the median of the coins' kline quotients over the same coins (the coins with our S01, S02)", where: "the klines", status: "VERIFIED: J15918 a5med (meaning_flowbasic ed6 98dc3550): S06 at 1,440 of 1,440 minutes a day, 0 on both sides at 1,438 (99.86%) on 8 Mar and 24 Sep; at the 2 minutes a day with a value |ours / kline - 1| at most 5.20e-07 (8 Mar) and 1.34e-05 (24 Sep); S05 both 0 at 1,422 and 1,425, the 18 and 15 others |ours / kline - 1| median 1.17e-06 and 6.11e-07 (a5() compared S05 only, J15872, J15873)"}
+  - {what: "an outside record of liquidations", where: "none (MEANING_A1_V4)", status: "NOT AVAILABLE"}
+
+tools:
+  - {what: "every A5 value against the exact recompute", run: "python3 -B -m rawcheck.basic_a5 --days <D1,D2> --out <dir> [--at HHMM,..]", where: "team/RAWCHECK/code (basic_a5.py 11f637c0ae645a07, tests 0f48a545ba0808d6 8 of 8, mutants 9 of 9)"}
+  - {what: "S01, S02 against A1 over the kline taker dollars; values above 1; S05 against the kline median; S09 = S07 / (1 + S07)", run: "python3 -B -m rawcheck.meaning_flowbasic a5 <D>", where: "team/RAWCHECK/code (meaning_flowbasic.py ed5 53ce3742240bc18a; the part unchanged since ed3 bd355d8c, which ran J15872, J15873)"}
+  - {what: "S03, S04 against A1 S12, S13 over the kline taker dollars of the coins A1 counts; the USDC part of A1 S08, S09 over the day", run: "python3 -B -m rawcheck.meaning_flowbasic a5mkt <D>", where: "team/RAWCHECK/code (meaning_flowbasic.py ed5 53ce3742240bc18a, tests a6dc3688c9022cdb: 13 of 13, mutants 16 of 16; J15909, whose lines equal J15877's byte for byte)"}
+  - {what: "S05 and S06 against the median of the kline quotients over the same coins", run: "python3 -B -m rawcheck.meaning_flowbasic a5med <D>", where: "team/RAWCHECK/code (meaning_flowbasic.py ed6 98dc3550a9bfe5da, tests 97e9536747d4d9a6: 14 of 14, mutants 18 of 18; J15918)"}
+  - {what: "one coin-minute: the liquidation rows beside our, the kline's and aggTrades' taker dollars", run: "python3 -B -m rawcheck.meaning_flowbasic a5look <D> <COIN> <HHMM>", where: "team/RAWCHECK/code (J15875)"}
+
+used_by: "nobody yet (CARD_A5_V5 'Who reads it today': READERS_A5_V1.tsv, no reader for any of the 14 metrics)"
+
+references:
+  CARD: testbed/value_audit/registers/CARD_A5_V5.md b30d9b29d34e677d
+  BUILT_ON: "team/RAWCHECK/notes/MEANING/MEANING_A1_V4.yaml 4484098a83845fb6; team/RAWCHECK/notes/MEANING/MEANING_B1_V4.yaml 633a0e1ac7698361"
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/A5_STAMPS_V1.tsv a1c0f8eeb437e26c (J15874 from the rows of J15870, J15871: 12 settings, 303,926 MATCH)"
+  JOBS: "15840 (schema), 15870 (basic_a5 ed1 24 Sep; log cc09b0c8), 15871 (8 Mar; ee0c5ad4), 15872 (8 Mar a5; 8d75ddc3), 15873 (24 Sep a5; 30cc7b51), 15874 (merged stamps; ab38d747), 15875 (a5look BCH, ENA, SHIB, FET; 7fa71c74), 15877 (S03, S04 on klines, the USDC part, an inline script; ecf8a8c3), 15909 (the same as the part a5mkt of meaning_flowbasic ed5 53ce3742: tests 13 of 13, mutants 16 of 16, lines equal J15877's byte for byte; log 90f5c294), 15918 (the part a5med of meaning_flowbasic ed6 98dc3550, tests 97e95367: 14 of 14, mutants 18 of 18: S05 and S06 against the median of the kline quotients, both days; log 5e7cd0ed)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does; the old name's intention goes to could_build"
+
+settings:
+  - {id: A5.S01, name: "long liquidation dollars (USDT + USDC) over the coin's USDT taker sell dollars, 60 s", renamed_from: "m9_long_liq_share", layer: basic, side: long, window: "60 s ((e - 60 s, e], received by e)", clock: minute end, scope: coin, contracts: "USDT+USDC over USDT",
+     aggregate: "A1 S08 / the coin's USDT taker sell dollars, 6 significant digits", aliases: "m9_long_liq_share, coin.m9_long_liq_share (the old names)",
+     derived_from: "A1 S08 and the coin's taker sell dollars (B1 S02's rows, exact)",
+     means: "how many dollars of longs were forced out per dollar of USDT taker selling in the minute (A1's floor pushes it down; the USDC prints and the Tardis trade holes push it up)",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 721 of 721 (52 and 51 coins x 7 minute ends a day, J15870, J15871)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a5: with the kline taker selling equal to 6 digits at 97.68% and 98.86% of 2,501 and 3,251 coin-minutes with A1 above 0; FET 8 Mar 11:56 (Tardis hole) the largest; above 1 once (SHIB 8 Mar 19:38: 1.02819, a 1000SHIBUSDC print, J15875); the old name 'share' fails there"},
+     open: "USDC liquidations over USDT flow; A1's floor at the limit price; Tardis holes in the denominator"}
+  - {id: A5.S02, name: "short liquidation dollars (USDT + USDC) over the coin's USDT taker buy dollars, 60 s", renamed_from: "m9_short_liq_share", layer: basic, side: short, window: "60 s", clock: minute end, scope: coin, contracts: "USDT+USDC over USDT",
+     aggregate: "A1 S09 / the coin's USDT taker buy dollars, 6 significant digits", aliases: "m9_short_liq_share, coin.m9_short_liq_share (the old names)",
+     derived_from: "A1 S09 and the coin's taker buy dollars",
+     means: "how many dollars of shorts were forced out per dollar of USDT taker buying in the minute",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 721 of 721"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a5: with the kline taker buying equal to 6 digits at 97.84% and 98.36% of 1,297 and 2,255 coin-minutes with A1 above 0; above 1 twice (BCH 8 Mar 07:00 75.0908: BCHUSDC 10,658.27 over 142.44; ENA 07:00 5.10051: ENAUSDC 4,600.86, J15875 a5look)"},
+     open: "as S01; the short side is valued at the buy limit price, above the fills"}
+  - {id: A5.S03, name: "market long liquidation dollars (USDT + USDC) over the USDT taker sell dollars of the coins A1 counts, 60 s", renamed_from: "m9_mkt_long_liq_share", layer: basic, side: long, window: "60 s", clock: minute end, scope: market, contracts: "USDT+USDC over USDT",
+     aggregate: "A1 S12 / the sum of the taker sell dollars of the roster coins whose A1 S08 has a value", aliases: "m9_mkt_long_liq_share (the old name)",
+     derived_from: "A1 S12 and the coins' taker sell dollars",
+     means: "the market's forced selling per dollar of USDT taker selling in the minute (A1's floor pushes it down; the USDC prints and the Tardis trade holes push it up)",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 14 of 14"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15877: with the kline taker selling of the same coins equal to 6 digits at 91.54% (8 Mar) and 89.71% (24 Sep) of the 591 and 904 minutes with A1 above 0, median |ours / kline - 1| 8.3e-07 and 7.5e-07; median 0.000296 and 0.000187, max 0.0567 and 0.0594; the largest gaps 8 Mar 16:33 (1.04e-02) and 24 Sep 13:44 (8.22e-02), not looked at (J15909, the part a5mkt: the same lines)"},
+     open: "as S01: USDC liquidations over USDT flow, the floor, the Tardis holes (8 Mar 11:56)"}
+  - {id: A5.S04, name: "market short liquidation dollars (USDT + USDC) over the USDT taker buy dollars of the coins A1 counts, 60 s", renamed_from: "m9_mkt_short_liq_share", layer: basic, side: short, window: "60 s", clock: minute end, scope: market, contracts: "USDT+USDC over USDT",
+     aggregate: "A1 S13 / the sum of the taker buy dollars of the roster coins whose A1 S08 has a value", aliases: "m9_mkt_short_liq_share (the old name)",
+     derived_from: "A1 S13 and the coins' taker buy dollars",
+     means: "the market's forced buying per dollar of taker buying in the minute",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 14 of 14"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15877: equal to 6 digits at 89.75% and 89.38% of the 478 and 904 minutes with A1 above 0, median |ours / kline - 1| 9.2e-07 and 8.2e-07, max 0.118 (8 Mar 11:56, the minute of the Tardis shortfall); median 0.000178 and 0.000157 (J15909, the part a5mkt: the same lines)"},
+     open: "as S02"}
+  - {id: A5.S05, name: "median over the roster coins of long liquidation dollars (USDT + USDC) over the coin's USDT taker sell dollars (S01), 60 s", renamed_from: "m9_mkt_long_liq_share_median", layer: basic, side: long, window: "60 s", clock: minute end, scope: market, contracts: "USDT+USDC over USDT",
+     aggregate: "the median of the exact S01 of the roster coins that have one, rounded once", aliases: "m9_mkt_long_liq_share_median (the old name)",
+     derived_from: "A5 S01 of every roster coin",
+     means: "the median coin's long liquidation dollars per dollar of its USDT taker selling: above 0 only when half or more of the coins had long liquidations",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 14 of 14"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a5: the median of the kline shares |gap| median 0, p99 4.7e-10 and 3.6e-11; ours 0 at 98.8% and 99.0% of minutes; the old name 'share' fails as for S01: a median of quotients of USDT + USDC dollars over USDT dollars, which can pass 1 (SHIB 8 Mar 19:38 S01 1.02819, J15872 a5)"},
+     open: "nearly always 0: it moves only in a market-wide flush"}
+  - {id: A5.S05.coverage, name: "roster coins in S05's median", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: "USDT+USDC over USDT",
+     aggregate: "count of the roster coins with an S01 value", aliases: "none (a twin, CARD_A5_V5 rule 10)",
+     means: "how many coins S05's median is over",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 14 of 14"},
+     meaning: {status: DEFINED, proof: "it is the count of S01's values (CARD_A5_V5 rule 10): equal to the recompute at every minute checked (A5_STAMPS_V1)"},
+     open: none}
+  - {id: A5.S06, name: "median over the roster coins of short liquidation dollars (USDT + USDC) over the coin's USDT taker buy dollars (S02), 60 s", renamed_from: "m9_mkt_short_liq_share_median", layer: basic, side: short, window: "60 s", clock: minute end, scope: market, contracts: "USDT+USDC over USDT",
+     aggregate: "the median of the exact S02 of the roster coins that have one, rounded once", aliases: "m9_mkt_short_liq_share_median (the old name)",
+     derived_from: "A5 S02 of every roster coin",
+     means: "the median coin's short liquidation dollars per dollar of its USDT taker buying: above 0 only when half or more of the coins had short liquidations",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 14 of 14"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15918 a5med: against the median of the kline quotients over the same coins, 0 on both sides at 1,438 of 1,440 minutes on 8 Mar and on 24 Sep; the 2 other minutes a day |ours / kline - 1| at most 5.20e-07 and 1.34e-05 (8 Mar 10:24 ours 0.000170892, kline median 0.000170892); the old name 'share' fails as for S02: a median of quotients of USDT + USDC dollars over USDT dollars, which can pass 1 (BCH 8 Mar 07:00 S02 75.0908, J15872 a5)"},
+     open: "nearly always 0: above 0 at 2 of 1,440 minutes on each day (J15918), it moves only when half or more of the coins had short liquidations"}
+  - {id: A5.S06.coverage, name: "roster coins in S06's median", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: "USDT+USDC over USDT",
+     aggregate: "count of the roster coins with an S02 value", aliases: "none (a twin, CARD_A5_V5 rule 10)",
+     means: "how many coins S06's median is over",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 14 of 14"},
+     meaning: {status: DEFINED, proof: "the count of S02's values (CARD_A5_V5 rule 10), equal to the recompute (A5_STAMPS_V1)"},
+     open: none}
+  - {id: A5.S07, name: "market short over long liquidation dollars, 60 s", layer: basic, side: both, window: "60 s", clock: minute end, scope: market, contracts: "USDT+USDC",
+     aggregate: "A1 S13 / A1 S12, 6 significant digits; S12 0: NO_LONG_LIQ", aliases: "m10_short_over_long",
+     derived_from: "A1 S12, S13",
+     means: "how many dollars of shorts were forced out per dollar of longs, market-wide, in the minute",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 2,880 of 2,880 (every minute end of both days)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "a quotient of A1's two sides (MEANING_A1_V4); S09 = S07 / (1 + S07) within the 6-digit rounding at 591 and 904 minutes (J15872, J15873 a5); empty NO_LONG_LIQ at 849 and 536 minutes (J15840 schema)"},
+     open: "both sides floors at limit prices (short valued above its fills, long below), so the ratio leans high by an unmeasured amount"}
+  - {id: A5.S08, name: "a coin's short over long liquidation dollars, 60 s", layer: basic, side: both, window: "60 s", clock: minute end, scope: coin, contracts: "USDT+USDC",
+     aggregate: "the coin's A1 S09 / A1 S08, 6 significant digits; S08 0: NO_LONG_LIQ", aliases: "m10_coin_short_over_long, coin.m10_coin_short_over_long",
+     derived_from: "A1 S08, S09 of the coin",
+     means: "per coin, shorts forced out per dollar of longs forced out in the minute",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 148,320 of 148,320 (every coin-minute of both days)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "a quotient of A1's two sides (MEANING_A1_V4), recomputed at every coin-minute (A5_STAMPS_V1); empty at 72,379 and 70,189 coin-minutes, mostly NO_LONG_LIQ (J15840 schema)"},
+     open: "as S07; empty in 96.7% (8 Mar) and 95.6% (24 Sep) of coin-minutes (no long liquidation)"}
+  - {id: A5.S09, name: "market short share of all liquidation dollars, 60 s", layer: basic, side: both, window: "60 s", clock: minute end, scope: market, contracts: "USDT+USDC",
+     aggregate: "A1 S13 / (A1 S12 + A1 S13), 6 significant digits; both 0: NO_LIQ", aliases: "m10_two_sided_share",
+     derived_from: "A1 S12, S13",
+     means: "0 = only longs forced out, 1 = only shorts, 0.5 even",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 2,880 of 2,880"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15872, J15873 a5: in [0, 1] at every minute; = S07 / (1 + S07) within 9.3e-07 and 1.6e-06; empty NO_LIQ at 527 and 171 minutes (J15840 schema)"},
+     open: "as S07: both sides floors at limit prices"}
+  - {id: A5.S10, name: "a coin's short share of all liquidation dollars, 60 s", layer: basic, side: both, window: "60 s", clock: minute end, scope: coin, contracts: "USDT+USDC",
+     aggregate: "the coin's A1 S09 / (A1 S08 + A1 S09), 6 significant digits; both 0: NO_LIQ", aliases: "m10_coin_two_sided_share, coin.m10_coin_two_sided_share",
+     derived_from: "A1 S08, S09 of the coin",
+     means: "per coin, 0 = only longs forced out, 1 = only shorts",
+     computation: {status: RELIABLE, proof: "A5_STAMPS_V1: 148,320 of 148,320"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "a quotient of A1's two sides, recomputed at every coin-minute (A5_STAMPS_V1); empty NO_LIQ at 71,180 and 68,171 coin-minutes (J15840 schema)"},
+     open: "as S09; empty in 95.1% (8 Mar) and 92.8% (24 Sep) of coin-minutes"}
+
+could_build:
+  - {id: A5.CB1, intended: "the share of the coin's (market's) taker selling or buying that was forced, on the same contracts (what the old names 'share' say)", was_name_of: "A5.S01, A5.S02, A5.S03, A5.S04, A5.S05, A5.S06",
+     formula: "USDT only: (A1 S08 - A1 S10) / USDT taker sell (S01'), (A1 S09 - A1 S11) / USDT taker buy (S02'); the market the same with A1 S12, S13 less the coins' USDC parts; S05', S06' the medians of the coins' S01', S02'; or USDT + USDC on both sides with the USDC trades",
+     needs: "A1 S10, S11 (USDC only, raw A1); for the second form the USDC trades files",
+     adds: "the 3 values above 1 of 8 Mar 2026 go (all USDC prints, J15875); S01' is below S01 by the coin's USDC part of the minute (A1 S10 over A1 S08), measured only over the day: USDC is 16.98% and 14.60% of A1's long dollars, 16.12% and 10.45% of its short, and 47 and 47 coin-minutes had USDC long liquidations only (J15877, J15909); its size per coin-minute not measured",
+     status: NOT_BUILT}

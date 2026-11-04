@@ -1,0 +1,166 @@
+# V10_V1.yaml: VOLX bipower variation and jump share (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8;
+# ADDON_ARCHITECTURE_V4 edit 3 0591d181). S14, S15 by PRODUCER_VOLX_V1.yaml. The grid and its rules are V2's.
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): N1 (U1 at the pack's integer mids, against the Fraction recompute), N2
+# (E6 the 00:00:00.000000 row, M5; the phases), A1 to A3.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): V2's X1, X2, X3 and BAD_ROW apply (V2's grid and
+# rules), FIRST_DAY_NO_CARRY dropped (an empty row carries no flag), X7 Binance, X11.
+# Edition 4: the roster file is the year root's (B's coins; J16034 log f7a76cb05e789815: every Monday 8 Sep 2025 to 9 Mar 2026
+# there; the repo's knowledge/roster/ starts at ROSTER_20251006); no other change.
+kind: build_metric
+id: V10
+producer: VOLX
+item: 'bipower variation and jump share'
+tier: BUILD
+name: the coin's bipower variation of the Binance USDT-M mid over the last 60 minutes from 15 s log returns (S14), and the share of that hour's realised variance it does not explain, the jump share (S15)
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 4
+  signed: false
+means: >-
+  S14 is the hour's variance counted so that one big jump weighs little (each return is multiplied by its neighbour); S15 near 0
+  says the hour moved in many small steps, near 1 that one or a few jumps made most of its variance.
+example: >-
+  An hour of 15 s returns all 0 but five, 0.001, -0.001, 0.010, 0.001, -0.001: the realised variance is 0.00010400000000000001, the
+  bipower variation (pi / 2) x (1e-6 + 1e-5 + 1e-5 + 1e-6) = 3.455751918948773e-05 (S14), the jump share (1.04e-4 - 3.456e-5) /
+  1.04e-4 = 0.6677161616395411 (S15): the 1 percent return is a jump.
+formula: >-
+  V2's 15 s grid (mids by CARD_C4_V3 rules 1 to 3, V2's rows with no stamp and file rules): the samples u, u - 15 s, ..., u - 3,600 s (241), the returns r_k = math.log(mid(u -
+  (k - 1) 15 s) / mid(u - k 15 s)), k = 1 to 240. RV = math.fsum(r_k^2); S14 = BV = (pi / 2) x math.fsum(abs(r_k) x abs(r_(k+1)), k
+  = 1 to 239) (239 products, no n / (n - 1) factor); S15 = max(0, (RV - BV) / RV) when RV > 0, empty NO_MOVE when RV = 0 (S14 then
+  0, a value). A value needs the top known at all 241 samples (CARD_C4_V3 rule 4), else S14, S15 empty TOP_HOLE, stale. float64.
+source:
+  kind: paper
+  ref: >-
+    Barndorff-Nielsen and Shephard 2004, J. Financial Econometrics 2(1) 1-37 (bipower variation, the jump share 1 - BV / RV);
+    RESEARCH_TOOLS_V1 aad3cc38 row V5 and section 5.5 (no maintained Python implementation; R highfrequency BNSjumpTest GPL, a
+    reference offline only: BUILD; its planted r = [.001, -.001, .010, .001, -.001] gives 0.6677).
+inputs:
+  - kind: reader
+    ref: prod_reader_book_ticker_v2
+    exists: true
+    stream: book_ticker (binance-futures), pack book_ticker_v2 (188dc357), the same pass and grid as V2
+    rule_in_force: CARD_C4_V3 rules 1 to 3 (V2's)
+    stale_rule: a sample not known makes the window empty TOP_HOLE, stale 1
+    days: "D's raw for u = 00:01 to 24:00 (24:00 is D+1's 00:00 row); the CARRY of D-1 (X1/carry/VOLX/<D-1>.npz: D's 00:00 rows and D-1's 15 s mids 23:00:00 to 23:59:45, V2's) for u = 00:00 to 00:59"
+overlaps:
+  - setting: VOLX S03
+    kind: other_metric
+    why: V2's 5-minute RV on the same grid; the hour's RV here is the sum of the 12 S03 of the 60 minutes ending at u (equal within 1e-12 relative, a unit test), not written again.
+per_coin: >-
+  Coins whose mid sits on few prices (the 1000-coins, coarse-step coins) have many zero 15 s returns: a zero kills two products, so
+  BV falls and S15 rises with no jump (E3; RESEARCH_TOOLS_V1 5.5). The meaning check counts it per coin; read S15 with the coin's
+  share of zero returns. Thin coins: TOP_HOLE more often (241 samples must be known).
+time: >-
+  The windows ending 00:00 to 00:59 read D-1's last hour from the CARRY (00:00 is D-1's 24:00 row). Funding settles and quarter
+  hours bring bursts that read as jumps here (no seasonal division at 15 s; V11 divides by V1's curve). The first year day reads 9
+  Sep 2025's file once.
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S14
+      label: bv_60m_grid15s
+      units: log return squared (a variance over the 60 minutes)
+      value_kind: float
+      decimals: none
+      means: the bipower variation of the 240 15 s mid log returns of the hour ending at u
+    - name: S15
+      label: jump_share_60m
+      units: share 0 to 1
+      value_kind: float
+      decimals: none
+      means: max(0, 1 - BV / RV) of the same hour
+  cadence: minute end (1,440 rows per coin per day, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = the latest arrival among the good rows in force at the 241 samples (each received by its sample, so by u); an empty row known_at = u; so known_at <= as_of on every row
+  empty_reasons:
+    - reason: NO_FILE
+      when: the coin's file of D (or the CARRY for u = 00:00 to 00:59) is missing, by CARD_C4_V3 rule 5; checked first
+    - reason: TOP_HOLE
+      when: a sample of the 241 not known
+    - reason: NO_MOVE
+      when: S15 when RV = 0 (S14 is then 0)
+    - reason: NO_ROSTER
+      when: no roster file for D's week (the year root's ROSTER_<monday>.csv, the one command's --year-rosters, J16034 log f7a76cb0; every coin, the coin axis is D's roster)
+  empty_order: the first that applies, in this order, NO_ROSTER, NO_FILE, TOP_HOLE, NO_MOVE (S15)
+  stale_rule: stale = 1 exactly when the row is empty TOP_HOLE
+  max_staleness_s: 60
+  window_days: 0
+  no_history: none
+  fit_rule: none
+  fifths: none
+  flags:
+    - flag: RAW_DIFFERS
+      when: "the day's raw check failed for the coin (PRODUCER_VOLX_V1 raw_check)"
+    - flag: BAD_ROW
+      when: "a bad row stamped in the window and received by u (CARD_C4_V3 rule 12); an empty value carries no flag"
+edge_cases:
+  - case: E1 no jump
+    input: 'all 240 returns 0 but 0.001, -0.001, 0.001, -0.001, 0.001 (the last five)'
+    answer: 'RV 4.9999999999999996e-06; S14 6.283185307179586e-06; S15 0 (floored: BV above RV)'
+  - case: E2 one jump (the example)
+    input: 'all 0 but 0.001, -0.001, 0.010, 0.001, -0.001'
+    answer: 'RV 0.00010400000000000001; S14 3.455751918948773e-05; S15 0.6677161616395411'
+  - case: E3 zeros, no jump
+    input: 'all 0 but 0.002, 0, 0.002, 0.002, 0, 0.002'
+    answer: 'RV 1.6e-05; S14 6.283185307179586e-06; S15 0.607300918301276 (the zero returns, not a jump)'
+  - case: E4 a flat hour
+    input: 'all 240 returns 0'
+    answer: 'S14 0 (a value); S15 empty NO_MOVE'
+  - case: E5 a hole
+    input: 'the row in force at u - 1,800 s stamped u - 1,831 s'
+    answer: 'S14, S15 empty TOP_HOLE, stale 1'
+  - case: E6 the row at exactly 00:00:00.000000
+    input: "the CARRY's mids 100 at D-1's samples 23:00:00 to 23:59:45; a row of D's file with mid 101 stamped and received at 00:00:00.000000"
+    answer: 'at u = 00:00 the only return is ln(1.01): RV 9.900908408750885e-05, S14 0 (its one neighbour is 0), S15 1.0 (ADDON_ARCHITECTURE_V4 edit 3 line 37)'
+unit_tests:
+  - test: U1 (E1 to E4)
+    planted: 'book_ticker rows of one hour at pp 8 whose integer mids are the nearest to 10^8 x 100 x e^(cumulative sum of the case''s returns)'
+    expect: 'the RV, S14, S15 of the tester''s Fraction recompute of those integer mids within 1e-9 relative (the cases'' exact numbers within 1e-6); NO_MOVE on E4'
+  - test: U2 (E5, E6) and the day start
+    planted: "a 31 s silence; V2's planted CARRY of D-1 with an hour of mids; the E6 row in D's file"
+    expect: 'TOP_HOLE stale 1; at u = 00:30 of D the 120 returns of D-1 from the CARRY count; E6 RV 9.900908408750885e-05, S14 0, S15 1.0'
+  - test: U3 the hour against V2
+    planted: 'a random hour of good rows'
+    expect: 'the RV of the 240 returns equals the sum of the 12 S03 at u, u - 5 min, ..., u - 55 min within 1e-12 relative'
+mutants:
+  - mutant: M1 the pi / 2 factor dropped
+    caught_by: 'U1 (E2 gives S14 2.2e-05 and S15 0.788)'
+  - mutant: M2 the products of each return with itself (r_k^2, BV = RV pi / 2)
+    caught_by: 'U1 (E2 gives S15 0)'
+  - mutant: M3 the share not floored at 0
+    caught_by: 'U1 (E1 gives -0.2566)'
+  - mutant: M4 a hole filled by the last mid
+    caught_by: 'U2 (E5 gives a value)'
+  - mutant: M5 the 00:00 row from D-1's run alone (D's raw not read in phase B)
+    caught_by: 'U2 (E6 gives S14 0 and S15 empty NO_MOVE, not 1.0)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, 1000PEPEUSDT and a thin coin (named by the tester), u = 00:30, 08:01, 12:00, 23:59
+      why: the window from the CARRY, a funding settle, a plain hour, the day's end
+    - point: 2025-10-10, BTCUSDT and ETHUSDT, the 10 minute ends with the largest A1 liquidation dollars of the evening (named by the tester)
+      why: the crash hour (jump shares near 1 expected)
+  pass: >-
+    The tester recomputes S14, S15 and the reasons from this card's words through the reader (rawcheck/check_volx.py, never the
+    producer's code), the mids as Fractions on the pack's integers: floats within 1e-9 relative, words equal. In VOLX's job.
+meaning_check:
+  pass_lines:
+    - "the zero-return bias: over the coins of 8 Mar 2026, the Spearman correlation of each coin's share of zero 15 s returns with its median S15 is below 0.5; at 0.5 or more S15 reads the price step more than jumps, and the coarse coins are named in a never line of the next edition"
+    - "the crash hour: at the 10 minute ends of 10 Oct 2025's evening named in real_check, BTC's S15 is above its own median of that day at 8 or more"
+  report_only:
+    - S15's distribution per coin and hour of day (funding settles, quarter hours)
+conclude:
+  may:
+    - "how much of the coin's last-hour mid variance came from a few large 15 s returns (S15), and the variance without them (S14)"
+  never:
+    - "Hyperliquid's variance or jumps (the Binance USDT-M mid, X7)"
+    - "a jump test with a level (S15 is a share, not a statistic; V11 is the test)"
+    - "S15 on a coin with many zero 15 s returns as a jump (the zeros raise it)"
+    - "S14 as a percent volatility (a variance; 100 x sqrt(S14) is the percent move)"
+readers: TIMEX T4 (minutes since the last jump) is planned to read V11's flag, not S15; none yet
+implementation:
+  how: "V2's grid of 15 s mids per coin (the same pass); abs returns and adjacent products as arrays; the 60-minute sums of r^2 and of the products by roll_points (sliding windows of 240 returns, the CARRY head first; never a whole-day cumulative sum). PHASES (ADDON_ARCHITECTURE_V4 section 4 line 35): S14, S15 at 00:00 to 00:59 are windowed across 00:00, phase B from the CARRY's tail of D-1's 15 s mids with D's 00:00:00.000000 row (E6); 01:00 to 24:00 final in phase A."
+  kernel: addon_grid_v2.roll_points (sums over 240 returns of the 15 s grid, the CARRY head first), on addon_grid_v2.in_force's mids (V2's)
+  memory_mb: 100
+  seconds_share: 1
+data_checks: none

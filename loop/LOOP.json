@@ -1,0 +1,19 @@
+{
+ "roster": [
+  "1_IDEA",
+  "2_METRICS",
+  "3_DEFINE",
+  "4_HANDCHECK",
+  "5_COUNT",
+  "6_GRADE",
+  "7_TRUE",
+  "8_DECIDE",
+  "9_TOOLS"
+ ],
+ "tools_process": "9_TOOLS",
+ "ledger": "",
+ "ledger_id_col": "",
+ "ledger_from": "",
+ "ledger_result_col": "",
+ "ledger_result_value": ""
+}

@@ -1,0 +1,207 @@
+# BASIC_D3_V1.yaml: the card of D3 book_depth's basic settings S02 to S08, S15, S16 and the coverage S16.coverage (BED, 2026-10-18; BR5
+# book part, the owner in BED's chat 14:3xZ: 'then you can take these cards ... part of EDGE1 packages'; EDGE1 14:33:59Z: yes). D3 S01 (raw)
+# stays in MEANING_D2D3_V2; S09 to S14 and S17 are our rules (not here). Made the way BASIC_C8_V3 was (METRIC_REVIEW_METHOD_V1 section 5; the
+# rename rule; conclude). ONE SOURCE OF TRUTH; rawcheck/meaning_register.py edition 5 checks it. The year's copies S15.quotes_off and
+# S16.quotes_off are no rows of their own (the owner's copies rule, BASIC_C1_V5): one reading rule with their J15849 shares and one never line.
+# Edit 1 (BED, 18 Oct 2026, before landing): EDGE2's REVIEW BR5 book (hb/EDGE2.txt 15:33:58Z): (1) SOL within 20 bps: the NOTIONAL equals
+# Binance's (1.0001), the imbalance ranks only at Spearman 0.7454 (the same sign 81.56%, the cause not named; J15949): read_as, may 2, S05's
+# proof and the bookDepth external check say so; (2) never 5: the other way at 42.28% (24 Sep S03) to 47.06%. Nothing else changed.
+
+group: D3
+name: book depth, basic (the imbalances of 25 levels, 5 levels and the bands; the 5-level weighted mid; the top's dollars against the market)
+summary: >-
+  From the book_snapshot_25 row in force at e (the 25 best levels a side of Binance's depth stream, rebuilt by Tardis; seen within 15 s):
+  S02, S03 the dollar imbalance (bid - ask) / (bid + ask) of the 25 levels and of levels 0 to 4; S04, S05, S06 the same over the levels at
+  most 10, 30, 50 bps from the mid (NO_LEVELS when none); S07 the mid weighted by the first 5 levels' dollars; S08 its distance from the mid
+  in bps; S16 the median roster coin's dollars at the best bid and ask (D3 S01); S15 the coin's D3 S01 over S16; S16.coverage the coins in
+  the median. Every value exact, rounded once.
+read_as: >-
+  The snapshot holds 25 levels a side, and on a liquid coin 25 levels are a sliver of the book: BTC's are 1.43% of Binance's own notional
+  within 0.2% of the price (8 Mar 2026) and 0.27% and 0.53% of it within 1% (J15949, J15954 bookdepth). So the band imbalances are cut by
+  the snapshot: S04, S05, S06 equal the 25-level S02 (every level inside the band) at 15.67%, 38.21%, 55.77% of 8 Mar coin-minutes and
+  30.94%, 61.79%, 76.47% of 24 Sep (J15947, J15948 d3): RENAMED to say 'of the 25 levels seen'. Where the levels reach past a band their notional
+  equals Binance's own (SOL within 20 bps: ours over Binance 1.0001 at the median; CRV within 1%: 1.0000 and 0.9999); the imbalance ranks with
+  Binance's at Spearman 0.9692 and 0.9510 on CRV but only 0.7454 on SOL (the same sign 81.56%, the cause not named). The imbalances lean like D2's top: the next mid change goes to S03's side at 56.80% and 57.72%, 73.75% and
+  72.87% at |S03| 0.8 or more; S02 (25 levels) at 52.94% and 53.27% (J15947, J15948 lean). S08 is half the spread times S03 (by the card's
+  rule 9; 2 S08 / S03 is the bookTicker spread within 1% at 97.93% and 96.22% of coin-minutes). S16, named depth, is the median coin's dollars
+  at the best bid and ask only (11,873 and 13,395 dollars at the median minute): RENAMED. Recomputed every value equals ours (BOOK_STAMPS_V1).
+
+conclude:
+  may:
+    - "whether the first 5 levels (S03) or the 25 levels seen (S02) hold more bid or ask dollars, and that the next mid change went to S03's side at 56.80% and 57.72% of coin-minutes, 73.75% and 72.87% at |S03| 0.8 or more (J15947, J15948 lean)"
+    - "the imbalance of the levels seen within 10, 30, 50 bps (S04 to S06) on a coin whose 25 levels reach past the band (their notional equals Binance's own on SOL and CRV; the imbalance ranks at Spearman 0.9692, 0.9510 on CRV, 0.7454 on SOL, J15949, J15954)"
+    - "how the coin's top-of-book dollars compare with the median coin's (S15), and how many dollars the median coin has at its top (S16)"
+  never:
+    - "S04, S05, S06 as the book within 10, 30, 50 bps on a liquid coin: they hold every one of the 25 levels at 15.67% to 76.47% of coin-minutes (J15947, J15948) and BTC's 25 levels are 1.43% of Binance's notional within 0.2% (J15949)"
+    - "S02 as the whole book's imbalance: 25 levels only; on BTC against Binance's imbalance within 1% Spearman 0.0639 and 0.0506 (J15954)"
+    - "S16 as market depth: it is the median coin's dollars at the best bid and ask only (D3.CB3 is depth within a band)"
+    - "S08 as a separate signal: it is half the spread times S03 (CARD_D3_V4 rule 9; J15947, J15948)"
+    - "a forecast of the next price from any imbalance: the next mid change goes the other way at 42.28% to 47.06% of coin-minutes (S03, S02, J15947, J15948)"
+    - "a copy (S15.quotes_off, S16.quotes_off) as a metric of its own: it is the year's cross-check; read S15, S16"
+
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D3_V4.md 9e404ff4543908ab (rules 1 to 18; edge cases E1 to E50)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_D3_V2.tsv f9187967206f5310
+  built_on_register: "team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml f33f6ba098035767 (D3 S01, the snapshot's top dollars: raw, RELIABLE by RAW_STAMPS_V1, LIMITS)"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V21.tsv f989d276e0eb0e20 (D3 S02 to S08, S15, S16 basic, NOT_CHECKED before this card)"
+  producer: "testbed/value_audit/code prod_D3_v3.py adfde679019d2cf7 (CARD_D3_V4 edition 4), driver drive_l0b_D3v3.py b733fe62bc7ed07b"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/D3.parquet
+  year_output_columns: "name (23 names: S01 to S17, the quotes copies of S01, S15, S16, S17, S16.coverage, S17.coverage; J15947 schema), coin (every roster coin for S01 to S15; MARKET for S16, S17), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY; 1, 2, 4 a value), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/basic_book.py year_frame(D, 'D3', names) or ours.at(D, 'D3', settings, coins, moments)"
+
+source:
+  vendor: "Tardis.dev, binance-futures (Binance USDT-margined perpetuals)"
+  exchange_stream: "Binance's depth stream, rebuilt by Tardis into book_snapshot_25 (the 25 best levels a side, a row each time one of them changes); the copies: Tardis's quotes stream (the same depth stream's top)"
+  files: "<ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_snapshot_25_<SYM>_<YYYY-MM-DD>.csv.gz of D (and D-1 when e - 15 s is before 00:00)"
+  columns: "exchange, symbol, timestamp, local_timestamp, asks[0..24].price, asks[0..24].amount, bids[0..24].price, bids[0..24].amount"
+  fields:
+    in_force: "the last row in file order stamped at or before e and received by e; seen when a row is stamped in [e - 15 s, e] and received by e, else BOOK_HOLE; a bad row in force: BAD_INPUT [proof: CARD_D3_V4 rules 2 to 6, E4 to E6; basic_book tests D3 E4 to E6]"
+    imbalance: "(bid dollars - ask dollars) / their sum over a set of levels, a level's dollars its price x amount [proof: rule 8, E27, E28, E31; basic_book tests]"
+    bands: "S04, S05, S06: the bids at or above mid (1 - x / 10,000) and the asks at or below mid (1 + x / 10,000), x = 10, 30, 50, among the 25 levels of each side; NO_LEVELS when no level of either side is inside [proof: rule 8, O4 A, E28 to E30; basic_book tests D3 E28 to E30]"
+    S07: "(Pa0 B5 + Pb0 A5) / (B5 + A5), B5 and A5 the bid and ask dollars of levels 0 to 4; S08 = (S07 - mid) / mid x 10,000 = half the spread in bps x S03 by algebra [proof: rule 9, O5 A, E31; J15947, J15948 d3]"
+    market: "S16 the median over the roster coins with a value of D3 S01 (the dollars at the best bid and ask), rounded to the whole dollar; S15 the coin's exact D3 S01 over the exact S16 [proof: rules 12, 13, E37 to E39, E50; basic_book tests D3 E37 to E39]"
+  latency: "book_snapshot_25 rows arrive 2 ms after their stamp at the median, p99 5 to 13 ms; the row in force at a minute end is 34 to 109 ms old at the median (MEANING_D2D3_V2, job 15783)"
+  silence: "a coin silent over 15 s: BOOK_HOLE; none on 8 Mar 2026 and 24 Sep 2025 (J15947, J15948 schema: the only empties are CRV's S04 NO_LEVELS at 1,440 coin-minutes of 8 Mar)"
+
+reading_rules:
+  - "every D3 value reads at most 25 levels a side of the depth stream; on a liquid coin they span a few bps (BTC: every one of its 25 levels inside 20 bps at all 2,641 bookDepth moments of 8 Mar 2026; they are 1.43% of Binance's notional within 0.2%, J15949)"
+  - "S04, S05, S06 equal to S02 means the band reaches past the 25 levels seen: then the value is the 25-level imbalance, not the band's"
+  - "S04 empty NO_LEVELS when the half spread is above 10 bps (CRV all day on 8 Mar 2026, J15947 schema)"
+  - "S08 = half the spread x S03, and S07 = mid x (1 + S08 / 10,000)"
+  - "S16 and S15 read the best bid and ask dollars only (D3 S01)"
+  - "the year also writes S15.quotes_off and S16.quotes_off (the top from Tardis's quotes stream). ACCEPTED as the year's cross-check (the owner 18 Oct 2026, BASIC_C1_V5): equal to the main at 100.00% of values on 8 Mar 2026 and 24 Sep 2025 (J15849 TWINS: the same depth stream); not separate metrics"
+  - "S16.coverage is a count (the coins in the median), not a copy"
+
+values:
+  units: "S02 to S06, S15: shares or ratios (S02 to S06 from -1 to +1); S07: USDT per coin; S08: bps of the mid; S16: US dollars, whole"
+  zero: "S02 to S06 0: equal bid and ask dollars in the set; S08 0 when S03 is 0"
+  empty: "NO_ROSTER, NO_FILE, BOOK_HOLE, BAD_INPUT, NO_LEVELS (S04 to S06), ALL_COINS_EMPTY (S16); on 8 Mar 2026 only S04 NO_LEVELS, CRV, 1,440 coin-minutes; none on 24 Sep 2025 (J15947, J15948 schema)"
+  stale: "true exactly when empty BOOK_HOLE (a market value: every coin BOOK_HOLE)"
+  flags: "BAD_INPUT:<coin> on S16 when a coin is left out by a bad row"
+
+interpret:
+  do:
+    - "read S03 (5 levels) and S04 (10 bps) as a lean of the near book: to their side at 73.75% (S03) and 82.79% (S04) of 8 Mar 2026 coin-minutes when 0.8 or more (J15947)"
+    - "read S04 to S06 against Binance's own depth only on coins whose 25 levels pass the band (SOL, CRV); on BTC they are the 25 levels"
+    - "read S16 against its own day: the median coin's top dollars"
+  dont:
+    - "read S02 to S06 as the same quantity on every coin: the 25 levels span a different share of each coin's book (BTC 0.27%, SOL 33.25% of the 1% notional; CRV's 25 levels hold 6.79 times it; 8 Mar 2026, J15954)"
+    - "read S16 or S15 as depth beyond the top"
+
+biases:
+  - {what: "25 levels a side", direction: "the bands and S02 hold less of the book on liquid coins", size: "ours over Binance's notional: BTC 0.0143 within 0.2%, 0.0027 and 0.0053 within 1%; SOL 1.0001 within 0.2%, 0.3325 and 0.1152 within 1%; CRV 1.0000 and 0.9999 within 1% (8 Mar 2026, 24 Sep 2025)", proof: "J15949, J15954 bookdepth"}
+  - {what: "the bands hold every one of the 25 levels", direction: "S04 to S06 = S02", size: "15.67%, 38.21%, 55.77% of 8 Mar coin-minutes (5, 18, 27 coins every minute); 30.94%, 61.79%, 76.47% of 24 Sep (11, 31, 39 coins)", proof: "J15947, J15948 d3"}
+  - {what: "the two Binance channels' tops", direction: "either way", size: "2 S08 / S03 within 1% of the bookTicker spread at 97.93% and 96.22% of coin-minutes, within 0.1% at 86.48% and 79.55%", proof: "J15947, J15948 d3"}
+
+external_checks:
+  - {what: "S02 to S08, S15, S16 at every coin-minute of 8 Mar 2026, 24 Sep 2025, 4 Nov 2025 against BED's book base (int_recompute_book B3, exact) and at 5 minute ends x BTC, AVAX, ENA (S16 from every coin) from the Tardis rows by basic_book's own text-exact reader", where: "Tardis book_snapshot_25 (recompute, our source)", status: "VERIFIED: BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 each coin setting, S16 4,335 of 4,335 MATCH (J15905 to J15908)"}
+  - {what: "our 25 levels against Binance's own depth file at its moments (about every 30 s): the notional and the imbalance within 0.2% (2026 files) and 1%", where: "Binance bookDepth (OUTSIDE_BINANCE/bookDepth), BTC, SOL, CRV", status: "VERIFIED for the notional where the 25 levels pass the band (SOL 0.2%: ratio 1.0001; CRV 1%: 1.0000, 0.9999); the imbalance: CRV Spearman 0.9692, 0.9510, SOL only 0.7454 (the same sign 81.56%, the cause not named); DIFFERS by the snapshot's reach on BTC (0.0143 within 0.2%; Spearman 0.0429): RENAMED (J15949, J15954); CRV within 0.2% on 8 Mar not compared (no finite ratio; its half spread is above 10 bps)"}
+  - {what: "the card's 'lean': the sign of S02, S03, S04, S06, S08 against the next change of the mid within 60 s", where: "BED's book base MID_1S", status: "MEASURED: S03 56.80%, 57.72%; S02 52.94%, 53.27%; S04 57.04%, 55.20%; S06 53.23%, 53.32%; S08 56.80%, 57.73% (J15947, J15948)"}
+  - {what: "S08 against half the spread times S03; S16 against the median of the coins' D3 S01", where: "the year, BED's book base spread", status: "S08 = half the spread x S03 (the bookTicker spread within 1% at 97.93%, 96.22%); S16 = the median of D3 S01 within 0.5 dollars at every minute (J15947, J15948)"}
+
+tools:
+  - {what: "the settings against the book base at every coin-minute and the Tardis rows at named minute ends", run: "python3 -B -m rawcheck.basic_book base --days <D> --out <dir>; python3 -B -m rawcheck.basic_book tardis --days <D> --coins <C,..> --at <HHMM,..> --out <dir>", where: "team/RAWCHECK/code (basic_book.py ed1 6160e36b31871abd, tests 12d16de820854eaf: 47 of 47 with 10 mutants)"}
+  - {what: "the bands, S08, the lean, S16 (d3); our 25 levels against Binance bookDepth (bookdepth); the coverage (cover)", run: "python3 -B -m rawcheck.meaning_bookbasic d3 <D> | bookdepth <D> <COIN,..> [<PCT>] | cover <D>", where: "team/RAWCHECK/code (meaning_bookbasic.py ed1 576eb0a93b123ff9 for J15947 to J15949; ed3 a1b2b25e07ad972a for J15954, J15966; tests a741c4980ea5cb58: 6 of 6, 7 mutants)"}
+
+used_by: "S16 by CHAIN_chop_SHORT_ride_2 (depth fifth 3 -> ENTER) and WHY-DRIVER/AIR-POCKET (depth fifth 2 or less); S17 (our rule) on S16 for the BOOKS labels and D5 liquidity_latch; nobody reads S02 to S15 (CARD_D3_V4 'Who reads it today')"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_D3_V4.md 9e404ff4543908ab
+  BUILT_ON: team/RAWCHECK/notes/MEANING/MEANING_D2D3_V2.yaml f33f6ba098035767
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/BOOK_STAMPS_V1.tsv 658b774f3febf6d6 (J15905 base, J15906 to J15908 Tardis)"
+  TWINS: "team/BED/seats/EDGE1/receipts/q_15849/<D>/TWINS_<D>.tsv (8 Mar a9bc9402dcda74b9, 24 Sep 0ea4c5c8804a3576)"
+  JOBS: "15905 (basic_book base; log 155fbe2d), 15906 to 15908 (basic_book tardis; 3f5f3b4b, 81642fde, 309bc753), 15947 (8 Mar schema, d2, d3, spread; 96f4cebc), 15948 (24 Sep; 7f83e31d), 15949 (bookdepth 0.2% 8 Mar; 99ab7550), 15954 (bookdepth 1% both days; 20e8bc56), 15966 (cover; 35b5f69f)"
+  K1: "Binance bookDepth (data.binance.vision, daily/bookDepth/<SYM>/<SYM>-bookDepth-<D>.zip, fetched by realcheck/fetch.py into OUTSIDE_BINANCE/bookDepth)"
+  RULE: "the owner, 18 Oct 2026 14:1x Berlin: rename a setting whenever it differs from what it does"
+
+settings:
+  - {id: D3.S02, name: "dollar imbalance of the 25 levels seen", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(bid - ask) / (bid + ask) of the 25 levels' dollars", aliases: "CUBE.depth_imb",
+     means: "whether the 25 levels seen hold more bid or ask dollars: +1 all bid, -1 all ask",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH (J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15954 bookdepth: on CRV equal to Binance's own 1% imbalance (Spearman 0.9692, 0.9510), on BTC not (0.0639, 0.0506: its 25 levels are 0.27% and 0.53% of the 1% notional); J15947, J15948 lean: to its side 52.94% and 53.27%"},
+     open: "the 25 levels are a different share of each coin's book (BTC 0.27% of its 1% notional, SOL 33.25%; CRV's 25 levels pass 1%, 6.79 times its notional; 8 Mar 2026, J15954)",
+     never: ["S02 as the book's imbalance on a liquid coin"]}
+  - {id: D3.S03, name: "dollar imbalance of the first 5 levels", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(bid - ask) / (bid + ask) of levels 0 to 4's dollars", aliases: "EF.ef_near_imb",
+     means: "whether the 5 best levels hold more bid or ask dollars",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 lean: the next mid change to S03's side at 56.80% and 57.72% of 68,316 and 72,112 coin-minutes, rising with |S03| (53.75%, 59.37%, 64.83%, 73.75% on 8 Mar 2026); against D2 S03 (the top) Spearman 0.55676, 0.60937"},
+     open: "a lean, not a forecast; 5 levels can be under a tick's width of price on BTC",
+     never: ["S03 as a forecast of the next price"]}
+  - {id: D3.S04, name: "dollar imbalance of the levels seen within 10 bps of the mid (of the 25)", renamed_from: "imb_band_10", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(bid - ask) / (bid + ask) over the bids at or above mid (1 - 0.001) and the asks at or below mid (1 + 0.001) among the 25 levels; NO_LEVELS when none", aliases: "EF.ef_imb_010 (the old name)",
+     means: "the imbalance of the near book within 10 bps as far as the 25 levels reach",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH (NO_LEVELS included)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d3: equal to S02 (all 25 levels inside 10 bps) at 15.67% and 30.94% of coin-minutes, 5 and 11 coins at every minute: the band cut by the snapshot, RENAMED; empty NO_LEVELS on CRV all 8 Mar; lean 57.04% and 55.20%, 82.79% and 79.98% at |S04| 0.8 or more"},
+     open: "the band is cut by the 25 levels on the liquid coins; CRV's half spread passes 10 bps (NO_LEVELS)",
+     never: ["S04 as the book within 10 bps where it equals S02"]}
+  - {id: D3.S05, name: "dollar imbalance of the levels seen within 30 bps of the mid (of the 25)", renamed_from: "imb_band_30", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the same over 30 bps", aliases: "EF.ef_imb_030 (the old name)",
+     means: "the imbalance of the book within 30 bps as far as the 25 levels reach",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d3: equal to S02 at 38.21% and 61.79% of coin-minutes (18 and 31 coins every minute): RENAMED; J15949: where the 25 levels pass 20 bps (SOL) their notional equals Binance's within 0.2% (1.0001); the imbalance ranks with Binance's only at Spearman 0.7454 (the same sign 81.56%, the cause not named)"},
+     open: "cut by the 25 levels on most coins; not tested at 30 bps itself (Binance writes 0.2% and 1%)",
+     never: ["S05 as the book within 30 bps where it equals S02"]}
+  - {id: D3.S06, name: "dollar imbalance of the levels seen within 50 bps of the mid (of the 25)", renamed_from: "imb_band_50", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the same over 50 bps", aliases: "EF.ef_imb_050 (the old name)",
+     means: "the imbalance of the book within 50 bps as far as the 25 levels reach",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d3: equal to S02 at 55.77% and 76.47% of coin-minutes (27 and 39 coins every minute): RENAMED; lean 53.23%, 53.32% (J15947, J15948)"},
+     open: "mostly the 25 levels: on 24 Sep 2025 39 coins at every minute",
+     never: ["S06 as the book within 50 bps where it equals S02"]}
+  - {id: D3.S07, name: "mid weighted by the first 5 levels' dollars, USDT", renamed_from: "mp_depth", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(Pa0 B5 + Pb0 A5) / (B5 + A5)", aliases: "EF.ef_mp_depth (the old name)",
+     derived_from: "the top's prices and S03 (S07 = mid x (1 + S08 / 10,000), S08 = half the spread x S03)",
+     means: "a price between the best bid and ask that leans toward the ask when the 5 levels hold more bid dollars",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "CARD_D3_V4 rule 9 (D2's weighted mid with 5 levels' dollars for weights; Stoikov S1 of MEANING_D2D3_V2: a weighted mid, not the micro-price): RENAMED; J15947, J15948 d3: S07 - mid = half the spread x S03 (the bookTicker spread within 1% at 97.93%, 96.22%)"},
+     open: "carries nothing beyond the top's prices and S03",
+     never: ["S07 as a micro-price (D3.CB2)"]}
+  - {id: D3.S08, name: "5-level weighted mid's distance from the mid, bps", renamed_from: "micro_dev_d", layer: basic, side: none, window: "the snapshot row in force at e (seen within 15 s)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "(S07 - mid) / mid x 10,000 = half the spread in bps x S03", aliases: "EF.ef_micro_dev_d (the old name)",
+     derived_from: "D3 S03 and the snapshot's spread",
+     means: "how far the 5-level weighted mid sits from the mid, in bps",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d3: 2 S08 / S03 against the bookTicker spread: median 1.000000, within 1% at 97.93% and 96.22% of 74,880 and 73,440 coin-minutes, within 0.1% at 86.48% and 79.55% (the two channels' tops); lean as S03 (56.80%, 57.73%): RENAMED"},
+     open: "across coins its size is the spread's",
+     never: ["S08 as a signal apart from S03"]}
+  - {id: D3.S15, name: "coin's top-of-book dollars over the median coin's", renamed_from: "xs_depth", layer: basic, side: none, window: "the rows in force at e", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "the coin's exact D3 S01 over the exact S16", aliases: "EF.ef_xs_depth_usd (the old name: not dollars, a ratio)",
+     derived_from: "D3 S01 and S16",
+     means: "how many times the median coin's top dollars this coin has at its best bid and ask: 2 = twice",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 221,805 of 221,805 MATCH"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "CARD_D3_V4 rule 13; J15947, J15948 d3: the coins' top dollars from 11 to 7,728,128 (8 Mar 2026), 5 to 40,219,796 (24 Sep 2025): the ratio spans about six orders of magnitude; the old name's 'usd' is not its unit: RENAMED"},
+     open: "the top only (D3 S01's limits, MEANING_D2D3_V2: the two channels' sizes differ by up to 35% in a second)",
+     never: ["S15 as depth beyond the top"]}
+  - {id: D3.S16, name: "median roster coin's top-of-book dollars", renamed_from: "depth", layer: basic, side: none, window: "the rows in force at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the median over the roster coins with a value of D3 S01, whole dollars", aliases: "depth; cube_market.mkt_depth (the same setting, the owner's ruling 5 of 5 Oct 2026)",
+     derived_from: "D3 S01 of every roster coin",
+     means: "the dollars the median coin has at its best bid plus best ask",
+     computation: {status: RELIABLE, proof: "BOOK_STAMPS_V1 658b774f: 4,335 of 4,335 MATCH (J15905 to J15908)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J15947, J15948 d3: the median of the coins' D3 S01 within 0.5 dollars at 1,440 of 1,440 minutes; 11,873 and 13,395 dollars at the median minute; the top only, not depth: RENAMED (D3.CB3)"},
+     open: "the top only; read by CHAIN_chop_SHORT_ride_2 and AIR-POCKET as 'depth' fifths",
+     never: ["S16 as market depth"]}
+  - {id: D3.S16.coverage, name: "roster coins in S16's median", layer: basic, side: none, window: "at e", clock: minute end, scope: market, contracts: USDT,
+     aggregate: "the count of roster coins with a D3 S01 at e", aliases: "none (a count beside S16, CARD_D3_V4 V-COV)",
+     means: "how many coins S16's median is over",
+     computation: {status: RELIABLE, proof: "J15966 cover: equal to the count of roster coins with a D3 S01 value at 1,440 of 1,440 minutes of 8 Mar 2026, 24 Sep 2025, 4 Nov 2025 (52, 51, 51 at every minute)"},
+     meaning: {status: DEFINED, proof: "the count of the coins in the median (CARD_D3_V4 V-COV); J15966"},
+     open: none}
+
+could_build:
+  - {id: D3.CB1, intended: "the imbalance of the WHOLE book within 10, 30, 50 bps of the mid, what the old names imb_band_10, _30, _50 say", was_name_of: "D3.S04, D3.S05, D3.S06",
+     formula: "(bid - ask) / (bid + ask) of the full book's notional within x bps; Binance's bookDepth gives the notional within 0.2% and 1% to 5% about every 30 s (2026 files: 0.2%)",
+     needs: "a full-depth book (the diff depth stream rebuilt without the 25-level cut) or Binance bookDepth at its own moments (OUTSIDE_BINANCE/bookDepth, held)",
+     adds: "measured: on BTC the full book within 1% holds 190 to 370 times the 25 levels' dollars (ours 0.27% and 0.53% of it, J15954); where the 25 levels reach, the same (CRV)",
+     status: NOT_BUILT}
+  - {id: D3.CB2, intended: "a depth micro-price and its distance from the mid, what the old names mp_depth and micro_dev_d say", was_name_of: "D3.S07, D3.S08",
+     formula: "Stoikov's micro-price fitted on the 5-level imbalance (as D2.CB1 on the top)",
+     needs: "a fitted model per coin (the model level)",
+     adds: "unknown until fitted: S07, S08 today are the top's prices and S03 (J15947, J15948)",
+     status: NOT_BUILT}
+  - {id: D3.CB3, intended: "the market's depth: the median coin's dollars within a band of the price, what the old name depth says", was_name_of: "D3.S16, D3.S15",
+     formula: "the median over the roster coins of the notional within x% (Binance bookDepth) or of the 25 levels' dollars",
+     needs: "bookDepth of every roster coin (held for the year days fetched) or the snapshot's 25 levels",
+     adds: "a depth number; S16 is the top only (BTC's top is 1.02% of its 0.2% notional on 8 Mar 2026, J15949)",
+     status: NOT_BUILT}

@@ -1,0 +1,643 @@
+# OUR_RULE_C10_LEGS_V1.yaml: the card of C10 price_legs, the legs and swings (27 of its 57 settings), EDITION 1 (TREE, 2026-10-18; OR1 of
+# OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86, EDGE1 15:58:50Z and 16:12:07Z; reviewer METRIC_AUDIT2). Made as OUR_RULE_COIN_C2_V1 (form);
+# written by team/TREE/proposals/gen_our_rule_c10_legs_card_tree_v1.py from the job files (numbers never typed); rawcheck/meaning_register.py edition 5 checks it.
+group: C10
+name: 'price legs, our rules: the legs and swings (TREE''s family of OR1; METRIC_AUDIT3''s OUR_RULE_C10_M11_V1 holds today''s legs, S08 to S14, S22 to S28, S36 to S42, S45 to S47, S50 to S52, S55 to S57)'
+summary: 'For each roster coin at each minute end m of D and for each swing size X of 0.25, 0.5 and 1 dial (the dial: the market''s 2-hour width, the median coin''s 120-minute range in percent, C9 rule 6), the coin''s price is cut into legs by a percent zigzag on its minute highs and lows: a leg ends when a minute''s low (high) reaches the leg''s extreme less (plus) X dials. Per coin: the running leg''s direction, age, size and the share of it the close has given back (S01 to S04, S15 to S18, S29 to S32), the shape of the last two swing highs and lows (S05, S19, S33), the swings confirmed today and since the chain began at 00:00 of D-1 (S06, S07, S20, S21, S34, S35). For the market: the median pullback share and the share of coins in an up leg (S43, S44, S48, S49, S53, S54). The record''s m6x<X>_mkt_* names of the coin settings are BTC''s own values.'
+read_as: 'The swing size is the market''s, the same percent for every coin: on 8 Mar 2026 the swings per coin per day were median 77.5 (7 to 1066) at X 0.25, 27.5 (4 to 162) at X 0.5 and 5.5 (0 to 40) at X 1 (J16004 c10fire on the year rows of 8 Mar 2026). The chain begins cold at 00:00 of D-1 as an up leg: a coin with no swing since then (1 of 52 at X 1 on 8 Mar 2026) shows +1 and an age from the cold start, not a rise. A wick reverses a leg: on the closes alone 3 to 20 of 52 coins would be in the other leg at X 1 at the 7 points (J16004). Every value equals our exact recompute from C13 at 7 points of 8 Mar 2026 named by case (RULE_C10_STAMPS_V1 eeb7b1804ddb67c2).'
+conclude:
+  may:
+  - whether the coin (or BTC) is in an up or a down leg of at least X dials, how old and how big that leg is, and how much of it the close has given back (S01 to S04, S15 to S18, S29 to S32)
+  - whether the coin's last two swing highs and lows both rise (+1) or both fall (-1) at that swing size (S05, S19, S33)
+  - how many swings the coin made today and since 00:00 of D-1 at that swing size (S06, S07, S20, S21, S34, S35); with swings total 0 the leg is the cold start's
+  - the market's middle coin pullback share and the share of coins in an up leg (S43, S44, S48, S49, S53, S54)
+  never:
+  - 'a swing as the coin''s own scale: the size is the market''s dial for every coin; on 8 Mar 2026 one coin made 1066 swings at X 0.25 and one none at X 1 (J16004 c10fire on the year rows of 8 Mar 2026)'
+  - 'leg dir +1 as a rise when swings total (S07, S21, S35) is 0: it is the cold start''s up leg (1 of 52 coins at X 1 at 00:00 and 1 at 12:00 of 8 Mar 2026)'
+  - 'the record''s m6x<X>_mkt_* names of S01 to S07, S15 to S21, S29 to S35 as the market: they are BTC''s values; the market is S43, S44, S48, S49, S53, S54'
+  - 'a leg as the zigzag of the closes: a minute''s wick ends it; at the 7 points of 8 Mar 2026 up to 16, 18 and 20 of 52 coins (X 0.25, 0.5, 1) would be in the other leg on the closes (J16004)'
+  - 'leg age or swings total as of the move''s true start: the chain never reads before 00:00 of D-1'
+  - 'empty as 0: NO_DIAL before the chain''s first dial, C13''s reason when the coin has no close at m, NO_RANGE when the leg has no size'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C10_V4.md 547b306cc4eb09f3 (part 3 rules 1 to 20; edge cases N1 to N8, E1 to E316)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C10_V1.tsv 8d53b17bfa8e6b04 (57 settings; this card 27 of them)
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S01 close, S02 high, S03 low, S04 no trade: raw, LIMITS); team/RAWCHECK/notes/BASIC/BASIC_C9_V1.yaml 870571c2386a8d41 (C9 S08, the 120-minute width pct: basic, LIMITS; the dial is their median, C9 rule 6, recomputed here on the same C13 rows and equal to the median of the year''s C9 S08 at 7 of 7 points, J16004); no input renamed'
+  layer_list: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv e249ce941c5cdb16 (C10 S01 to S57 our_rule, NOT_CHECKED before this card)
+  producer: testbed/value_audit/code/L0_y52f12/value_audit/code/prod_C10_v5.py fbf38a2bed1ee9c1 (CARD_C10_V4 edition 4)
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C10.parquet
+  year_output_columns: name (S01 to S57), coin (every roster coin and MARKET), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, empty_reason
+  read_it_with: team/RAWCHECK/code/rawcheck/ours.py at(D, 'C10', names, coins, moments) (value_kind 0 empty)
+source:
+  vendor: Tardis.dev, Binance USD-M futures trades, through our C13 (the close, high and low of the 60 s ending at each minute end)
+  exchange_stream: trades as Tardis records them, read by C13; C10 reads C13's minute rows of D-1 and D, never a stream
+  files: 'the year''s C13 of D-1 and D (C13.parquet: S01 to S04) for the roster of D''s week'
+  columns: 'C13 S01 close, S02 high, S03 low (decimal text), S04 no trade (1: the price carried, high = low = close); each with empty_reason'
+  fields:
+    dial: 'the median over the roster coins with a close at t of the 120-minute width pct of their valued minutes, never before 00:00 of D-1; empty (no coin, or 0): the chain''s last dial carried; before the first dial nothing steps [proof: CARD_C10_V4 rule 2, C9 rule 6; planted N7, E309, E310; mutants no carry and a 121-minute window caught; J16004: the median of the year''s C9 S08 equal at 7 of 7 points]'
+    chain: 'the cold start at the first minute of D-1 with a close and a dial (an up leg); a leg ends when low <= E (1 - X dial / 100) (high >= E (1 + X dial / 100)), the reversal tested before the extension; the new leg''s extreme the most extreme price after the old extreme up to m [proof: CARD_C10_V4 rules 1, 3, 4; planted N2, N3a, N3b, N4, N6, E301 to E305, E307 and the falling dial (mine); mutants O3 B, a strict floor, the cold start at D, the confirming minute''s low caught; RULE_C10_STAMPS_V1 eeb7b1804ddb67c2]'
+    legs: 'leg dir, age, size pct, pullback share (clipped), swing structure, swings today and in all [proof: CARD_C10_V4 rules 5 to 8, 14; planted E301, E302, E303, E306, E307, N4; mutants no clip, a lower-middle median caught; RULE_C10_STAMPS_V1 eeb7b1804ddb67c2]'
+    market: 'the median and the share over the coins with a value [proof: CARD_C10_V4 rule 16; planted N1a, N7, E306; RULE_C10_STAMPS_V1 eeb7b1804ddb67c2]'
+  latency: known_at = the latest known_at of C13's rows at m of the coin and of the dial's coins (rule 15); not a year column, not checked here
+  silence: 'a coin with no C13 close at m is empty with C13''s reason (TRADES_HOLE, THIN_FEED stale); on 8 Mar 2026 no roster coin was empty at a minute end of D (J16004 named no such point): planted only (N1a, E305)'
+reading_rules:
+- 'the swing size is X times the market''s dial: the same percent for every coin, never the coin''s own range'
+- a leg ends on a minute's low (high), not its close; the reversal is tested against the extreme before the minute (O3 A)
+- the chain begins at 00:00 of D-1 as an up leg; swings total says how mature it is
+- the record's m6x<X>_mkt_* names of the coin settings are BTC's values
+values:
+  units: 'S01, S15, S29: +1 or -1; S02, S16, S30: minutes; S03, S17, S31: percent (12 decimals); S04, S18, S32: a share 0 to 1 (12 decimals); S05, S19, S33: +1, -1 or 0; S06, S07, S20, S21, S34, S35: counts; S43, S48, S53: a share 0 to 1; S44, S49, S54: a share 0 to 1'
+  zero: 'S03 0: the leg has no size (the cold start, or a leg that ended at its start); S04 0: the close at the leg''s extreme; S05 0: no shape, or fewer than two highs or lows; S06 0: no swing today'
+  empty: 'NO_ROSTER, NO_FILE, TRADES_HOLE, THIN_FEED, BAD_INPUT (C13''s), NO_DIAL (before the chain''s first dial), NO_RANGE (the leg with no size: S04 and its twins), ALL_COINS_EMPTY (the market); value_kind 0. Never read empty as 0'
+  stale: true when empty because C13 went quiet or thin (TRADES_HOLE, THIN_FEED); not a year column
+  flags: DUPLICATE_ROW, NO_RATE_BASE (C13's), BAD_INPUT:<coin> (the market); not a year column
+interpret:
+  do:
+  - 'read leg dir with swings total: 0 swings means the cold start''s leg'
+  - compare coins by their swings today only knowing the size is the market's dial
+  dont:
+  - read a leg as the coin's own swing scale
+  - 'read m6x<X>_mkt_* as the market: it is BTC'
+biases:
+- what: the market's dial for every coin
+  direction: a wild coin swings often, a calm one rarely
+  size: 'swings per coin per day on 8 Mar 2026: X 0.25 median 77.5 (7 to 1066), X 1 median 5.5 (0 to 40)'
+  proof: J16004 c10fire on the year rows of 8 Mar 2026
+- what: the cold start at 00:00 of D-1
+  direction: an up leg with no swing
+  size: at X 1, 1 of 52 coins at 00:00 and 1 at 12:00 of 8 Mar 2026; at X 0.25 0 and 0, at X 0.5 0 and 0
+  proof: J16004 c10fire on the year rows of 8 Mar 2026
+- what: highs and lows, not closes
+  direction: a wick ends a leg
+  size: 3 to 20 of 52 coins in the other leg on the closes at X 1 at the 7 points (8 Mar 2026)
+  proof: J16004 FAR lines (rule_c10 and meaning_rule_or1.far)
+external_checks:
+- what: 'the 27 settings recomputed exactly from our C13 S01 to S04 of 7 and 8 Mar 2026 (the dial too) for every roster coin at 7 points of 8 Mar 2026 named by case: 00:00 (the chain from D-1), 00:01, 00:36 (BTC X 0.25: the first swing confirmed in D (fires)), 01:17 (ONDO X 0.5: the closest no-fire (5.08e-07 of the extreme short of the floor)), 12:10, 12:19 (XLM X 0.25: the closest fire (7.64e-08 of the extreme past the floor)), 23:59 (the last minute end)'
+  where: our C13 rows (a recompute, our source)
+  status: 'VERIFIED: RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: this card''s 27 settings 7686 of 7686 values MATCH (all 57 and the dial 15400 of 15400; J16004 log 75e5730ab4797b93)'
+- what: the textbook percent zigzag against the rule on planted inputs
+  where: tests/test_meaning_rule_or1.py ecf3db13fdbe106b (TESTS 3 of 3, MUTANTS 3 of 3 caught)
+  status: 'VERIFIED on planted inputs: the same swings on the path P but the cold start''s first low; a wick (E304) reverses the rule, not the close zigzag'
+- what: how often the rules fire on one day
+  where: the year's own C10 rows of 8 Mar 2026
+  status: 'MEASURED: J16004 c10fire on the year rows of 8 Mar 2026'
+- what: an outside record of the rules
+  where: 'none: our rule on our C13 rows; C13 against outside records in MEANING_C13_V4'
+  status: NOT_AVAILABLE
+tools:
+- what: the 57 settings recomputed, the named points, the closes against highs and lows
+  run: python3 -B -m rawcheck.rule_c10 --day <D> --at auto|HHMM,.. --out <dir>
+  where: 'team/RAWCHECK/code (rule_c10.py df768be16fdb0d50; a runner job: the year store is read)'
+- what: the planted cases and mutants
+  run: python3 -B -m rawcheck.tests.test_rule_c10 ; python3 -B -m rawcheck.tests.test_meaning_rule_or1
+  where: team/RAWCHECK/code (tests 8b447c4624aa489a, ecf3db13fdbe106b; no polars needed)
+- what: how often the rules fire on a day
+  run: python3 -B -m rawcheck.meaning_rule_or1 c10fire <D>
+  where: team/RAWCHECK/code (meaning_rule_or1.py d11acdc3c3a9a438; a runner job)
+used_by: 'S43 (m6x025_mkt_pullback_share_median): CHAIN_trend_LONG_ride; S33 read for BTC (m6x100_mkt_swing_structure): CHAIN_trend_SHORT_fade_2 (CARD_C10_V4 part 1 ''Who reads it today''; their rules are in the chain files); every metric as of the minute before a fire: the record''s fifths (leg dir and swing structure as categories); nobody else. No setting of this card is renamed: nothing for RR1.'
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C10_V4.md 547b306cc4eb09f3
+  STAMPS: team/RAWCHECK/notes/RAWCHECK/RULE_C10_STAMPS_V1.tsv eeb7b1804ddb67c2 (J16004)
+  JOBS: 16004 (tests, rule_c10 at 7 points of 8 Mar 2026, the closes against highs and lows, c10fire; log 75e5730ab4797b93)
+  PASS_LINES: hb/TREE.txt 2026-10-18T16:35:22Z, posted before J16004 ran
+  SPLIT: hb/TREE.txt 2026-10-18T16:28:53Z TREE SPLIT (EDGE1 16:12:07Z)
+  RULE: 'RULING 3 (EDGE1 15:40:56Z): no rename; a percent zigzag on highs and lows with the percent X dials, the retracement share and the higher-highs higher-lows shape are the standard ones'
+settings:
+- id: C10.S01
+  name: 'leg direction of the coin''s running leg at swing size 0.25 dials: +1 up, -1 down'
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: +1 when the running leg is an up leg (its extreme a high), -1 a down leg (CARD_C10_V4 rules 3 to 5); the chain cold at the first minute of D-1 with a close and a dial, an up leg; empty NO_DIAL before it, C13's reason when the coin has no close at m (rule 15)
+  aliases: coin.m6x025_leg_dir; m6x025_mkt_leg_dir
+  derived_from: C13.S01, C13.S02, C13.S03, C9 rule 6 (the dial)
+  means: is the coin in an up or a down leg of at least 0.25 dials
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'on 8 Mar 2026 at X 0.25, 0 of 52 coins at 00:00 and 0 of 52 at 12:00 had no swing since 00:00 of D-1, their leg the cold start''s (J16004 c10fire on the year rows of 8 Mar 2026); at the 7 points 1 to 16 of 52 coins would be in the other leg on the closes alone (J16004 FAR); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (0 of 52 coins at X 0.25 at 00:00 of 8 Mar 2026) the leg is the cold start's
+  never:
+  - '+1 as a rise when swings total is 0: the cold start''s up leg'
+- id: C10.S02
+  name: minutes since the minute that began the coin's running leg (its confirming minute) at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: (m - the minute that began the leg) / 60 s; 0 at the minute that confirmed the swing before it; from the cold start when no swing yet (rule 5)
+  aliases: coin.m6x025_leg_age_min; m6x025_mkt_leg_age_min
+  derived_from: C10.S01 (the chain), C13.S01
+  means: how long the running leg has lasted since the swing before it was confirmed
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (0 of 52 coins at X 0.25 at 00:00 of 8 Mar 2026) the leg is the cold start's
+  never:
+  - 'the age of the move since its true low or high: it counts from the confirming minute, and from 00:00 of D-1 at most'
+- id: C10.S03
+  name: the running leg's size, 100 x |extreme - start| / start, at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: 100 x |E - S| / S, E the leg's extreme so far, S its start (the swing before it), exact, rounded once to 12 decimals half up (rules 5, 14)
+  aliases: coin.m6x025_leg_size_pct; m6x025_mkt_leg_size_pct
+  derived_from: C10.S01 (the chain), C13.S01
+  means: how far the running leg has gone from its start, in percent
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+- id: C10.S04
+  name: the share of the running leg the close has given back, 0 to 1, at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: (E - close) / (E - S) for an up leg, (close - E) / (S - E) for a down leg, clipped to [0, 1]; empty NO_RANGE when E = S (rule 6)
+  aliases: coin.m6x025_pullback_share; m6x025_mkt_pullback_share
+  derived_from: C10.S01 (the chain), C13.S01
+  means: how much of the running leg is undone at m (0 at its extreme, 1 all given back)
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'on 8 Mar 2026 at X 0.25, over 74880 coin-minutes: empty 0, at 0 6650 (8.88%), at 1 551 (0.74%), median 0.166666666667 (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+  never:
+  - 'a deep pullback at X 0.25 as a big retracement in price: the leg ends at X dials from its extreme, so the share is of a leg that may be small'
+- id: C10.S05
+  name: 'the shape of the last two confirmed swing highs and lows at 0.25 dials: +1 both rise, -1 both fall, 0 otherwise'
+  layer: our_rule
+  side: up and down legs
+  window: the last four confirmed swings
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: +1 when the last swing high is above the one before and the last swing low above the one before; -1 when both are below; 0 otherwise or with fewer than two of either (rule 7)
+  aliases: coin.m6x025_swing_structure; m6x025_mkt_swing_structure
+  derived_from: C10.S01 (the chain), C13.S01
+  means: does the trend's shape hold (higher highs and higher lows, or lower ones)
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+- id: C10.S06
+  name: the swings confirmed at the minute ends of D up to m (00:00 included) at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: 00:00 of D to m
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: the number of swings confirmed at minute ends of D up to m (rule 8)
+  aliases: coin.m6x025_swing_n_today; m6x025_mkt_swing_n_today
+  derived_from: C10.S01 (the chain), C13.S01
+  means: how busy the coin's legs are today at this swing size
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'swings per coin on 8 Mar 2026 at X 0.25: median 77.5, min 7, max 1066 over 52 coins (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+  never:
+  - 'the coin''s own volatility: the swing size is the market''s dial for every coin'
+- id: C10.S07
+  name: the swings confirmed since the chain began (the first minute of D-1 with a close and a dial) at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x025_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: the number of swings confirmed since the cold start (rule 8)
+  aliases: coin.m6x025_swings_total; m6x025_mkt_swings_total
+  derived_from: C10.S01 (the chain), C13.S01
+  means: 'how mature the chain is: 0 means the running leg is the cold start''s'
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'at 00:00 of 8 Mar 2026, 0 of 52 coins had no swing since 00:00 of D-1 at X 0.25 (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (0 of 52 coins at X 0.25 at 00:00 of 8 Mar 2026) the leg is the cold start's
+- id: C10.S15
+  name: 'leg direction of the coin''s running leg at swing size 0.5 dials: +1 up, -1 down'
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: +1 when the running leg is an up leg (its extreme a high), -1 a down leg (CARD_C10_V4 rules 3 to 5); the chain cold at the first minute of D-1 with a close and a dial, an up leg; empty NO_DIAL before it, C13's reason when the coin has no close at m (rule 15)
+  aliases: coin.m6x050_leg_dir; m6x050_mkt_leg_dir
+  derived_from: C13.S01, C13.S02, C13.S03, C9 rule 6 (the dial)
+  means: is the coin in an up or a down leg of at least 0.5 dials
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'on 8 Mar 2026 at X 0.5, 0 of 52 coins at 00:00 and 0 of 52 at 12:00 had no swing since 00:00 of D-1, their leg the cold start''s (J16004 c10fire on the year rows of 8 Mar 2026); at the 7 points 3 to 18 of 52 coins would be in the other leg on the closes alone (J16004 FAR); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (0 of 52 coins at X 0.5 at 00:00 of 8 Mar 2026) the leg is the cold start's
+  never:
+  - '+1 as a rise when swings total is 0: the cold start''s up leg'
+- id: C10.S16
+  name: minutes since the minute that began the coin's running leg (its confirming minute) at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: (m - the minute that began the leg) / 60 s; 0 at the minute that confirmed the swing before it; from the cold start when no swing yet (rule 5)
+  aliases: coin.m6x050_leg_age_min; m6x050_mkt_leg_age_min
+  derived_from: C10.S15 (the chain), C13.S01
+  means: how long the running leg has lasted since the swing before it was confirmed
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (0 of 52 coins at X 0.5 at 00:00 of 8 Mar 2026) the leg is the cold start's
+  never:
+  - 'the age of the move since its true low or high: it counts from the confirming minute, and from 00:00 of D-1 at most'
+- id: C10.S17
+  name: the running leg's size, 100 x |extreme - start| / start, at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: 100 x |E - S| / S, E the leg's extreme so far, S its start (the swing before it), exact, rounded once to 12 decimals half up (rules 5, 14)
+  aliases: coin.m6x050_leg_size_pct; m6x050_mkt_leg_size_pct
+  derived_from: C10.S15 (the chain), C13.S01
+  means: how far the running leg has gone from its start, in percent
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+- id: C10.S18
+  name: the share of the running leg the close has given back, 0 to 1, at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: (E - close) / (E - S) for an up leg, (close - E) / (S - E) for a down leg, clipped to [0, 1]; empty NO_RANGE when E = S (rule 6)
+  aliases: coin.m6x050_pullback_share; m6x050_mkt_pullback_share
+  derived_from: C10.S15 (the chain), C13.S01
+  means: how much of the running leg is undone at m (0 at its extreme, 1 all given back)
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'on 8 Mar 2026 at X 0.5, over 74880 coin-minutes: empty 0, at 0 3077 (4.11%), at 1 175 (0.23%), median 0.2 (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+  never:
+  - 'a deep pullback at X 0.25 as a big retracement in price: the leg ends at X dials from its extreme, so the share is of a leg that may be small'
+- id: C10.S19
+  name: 'the shape of the last two confirmed swing highs and lows at 0.5 dials: +1 both rise, -1 both fall, 0 otherwise'
+  layer: our_rule
+  side: up and down legs
+  window: the last four confirmed swings
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: +1 when the last swing high is above the one before and the last swing low above the one before; -1 when both are below; 0 otherwise or with fewer than two of either (rule 7)
+  aliases: coin.m6x050_swing_structure; m6x050_mkt_swing_structure
+  derived_from: C10.S15 (the chain), C13.S01
+  means: does the trend's shape hold (higher highs and higher lows, or lower ones)
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+- id: C10.S20
+  name: the swings confirmed at the minute ends of D up to m (00:00 included) at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: 00:00 of D to m
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: the number of swings confirmed at minute ends of D up to m (rule 8)
+  aliases: coin.m6x050_swing_n_today; m6x050_mkt_swing_n_today
+  derived_from: C10.S15 (the chain), C13.S01
+  means: how busy the coin's legs are today at this swing size
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'swings per coin on 8 Mar 2026 at X 0.5: median 27.5, min 4, max 162 over 52 coins (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+  never:
+  - 'the coin''s own volatility: the swing size is the market''s dial for every coin'
+- id: C10.S21
+  name: the swings confirmed since the chain began (the first minute of D-1 with a close and a dial) at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x050_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: the number of swings confirmed since the cold start (rule 8)
+  aliases: coin.m6x050_swings_total; m6x050_mkt_swings_total
+  derived_from: C10.S15 (the chain), C13.S01
+  means: 'how mature the chain is: 0 means the running leg is the cold start''s'
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'at 00:00 of 8 Mar 2026, 0 of 52 coins had no swing since 00:00 of D-1 at X 0.5 (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (0 of 52 coins at X 0.5 at 00:00 of 8 Mar 2026) the leg is the cold start's
+- id: C10.S29
+  name: 'leg direction of the coin''s running leg at swing size 1 dials: +1 up, -1 down'
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: +1 when the running leg is an up leg (its extreme a high), -1 a down leg (CARD_C10_V4 rules 3 to 5); the chain cold at the first minute of D-1 with a close and a dial, an up leg; empty NO_DIAL before it, C13's reason when the coin has no close at m (rule 15)
+  aliases: coin.m6x100_leg_dir; m6x100_mkt_leg_dir
+  derived_from: C13.S01, C13.S02, C13.S03, C9 rule 6 (the dial)
+  means: is the coin in an up or a down leg of at least 1 dials
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'on 8 Mar 2026 at X 1, 1 of 52 coins at 00:00 and 1 of 52 at 12:00 had no swing since 00:00 of D-1, their leg the cold start''s (J16004 c10fire on the year rows of 8 Mar 2026); at the 7 points 3 to 20 of 52 coins would be in the other leg on the closes alone (J16004 FAR); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (1 of 52 coins at X 1 at 00:00 of 8 Mar 2026) the leg is the cold start's
+  never:
+  - '+1 as a rise when swings total is 0: the cold start''s up leg'
+- id: C10.S30
+  name: minutes since the minute that began the coin's running leg (its confirming minute) at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: (m - the minute that began the leg) / 60 s; 0 at the minute that confirmed the swing before it; from the cold start when no swing yet (rule 5)
+  aliases: coin.m6x100_leg_age_min; m6x100_mkt_leg_age_min
+  derived_from: C10.S29 (the chain), C13.S01
+  means: how long the running leg has lasted since the swing before it was confirmed
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (1 of 52 coins at X 1 at 00:00 of 8 Mar 2026) the leg is the cold start's
+  never:
+  - 'the age of the move since its true low or high: it counts from the confirming minute, and from 00:00 of D-1 at most'
+- id: C10.S31
+  name: the running leg's size, 100 x |extreme - start| / start, at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: 100 x |E - S| / S, E the leg's extreme so far, S its start (the swing before it), exact, rounded once to 12 decimals half up (rules 5, 14)
+  aliases: coin.m6x100_leg_size_pct; m6x100_mkt_leg_size_pct
+  derived_from: C10.S29 (the chain), C13.S01
+  means: how far the running leg has gone from its start, in percent
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'computation as written at the 7 points (J16004); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+- id: C10.S32
+  name: the share of the running leg the close has given back, 0 to 1, at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: the chain from 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: (E - close) / (E - S) for an up leg, (close - E) / (S - E) for a down leg, clipped to [0, 1]; empty NO_RANGE when E = S (rule 6)
+  aliases: coin.m6x100_pullback_share; m6x100_mkt_pullback_share
+  derived_from: C10.S29 (the chain), C13.S01
+  means: how much of the running leg is undone at m (0 at its extreme, 1 all given back)
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'on 8 Mar 2026 at X 1, over 74880 coin-minutes: empty 0, at 0 1115 (1.49%), at 1 645 (0.86%), median 0.235717523637 (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+  never:
+  - 'a deep pullback at X 0.25 as a big retracement in price: the leg ends at X dials from its extreme, so the share is of a leg that may be small'
+- id: C10.S33
+  name: 'the shape of the last two confirmed swing highs and lows at 1 dials: +1 both rise, -1 both fall, 0 otherwise'
+  layer: our_rule
+  side: up and down legs
+  window: the last four confirmed swings
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: +1 when the last swing high is above the one before and the last swing low above the one before; -1 when both are below; 0 otherwise or with fewer than two of either (rule 7)
+  aliases: coin.m6x100_swing_structure; m6x100_mkt_swing_structure
+  derived_from: C10.S29 (the chain), C13.S01
+  means: does the trend's shape hold (higher highs and higher lows, or lower ones)
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'BTC''s S33 (read by CHAIN_trend_SHORT_fade_2 as m6x100_mkt_swing_structure) on 8 Mar 2026: +1 0, -1 909, 0 531 of 1440 minutes (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+- id: C10.S34
+  name: the swings confirmed at the minute ends of D up to m (00:00 included) at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: 00:00 of D to m
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: the number of swings confirmed at minute ends of D up to m (rule 8)
+  aliases: coin.m6x100_swing_n_today; m6x100_mkt_swing_n_today
+  derived_from: C10.S29 (the chain), C13.S01
+  means: how busy the coin's legs are today at this swing size
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'swings per coin on 8 Mar 2026 at X 1: median 5.5, min 0, max 40 over 52 coins (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A)
+  never:
+  - 'the coin''s own volatility: the swing size is the market''s dial for every coin'
+- id: C10.S35
+  name: the swings confirmed since the chain began (the first minute of D-1 with a close and a dial) at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: 00:00 of D-1 to m
+  clock: minute end
+  scope: coin (the record's m6x100_mkt_* name of it is BTC's value)
+  contracts: 'Binance USD-M perpetuals (C13: the trades of each coin, the 60 s ending at each minute end)'
+  aggregate: the number of swings confirmed since the cold start (rule 8)
+  aliases: coin.m6x100_swings_total; m6x100_mkt_swings_total
+  derived_from: C10.S29 (the chain), C13.S01
+  means: 'how mature the chain is: 0 means the running leg is the cold start''s'
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 364 of 364 (every roster coin (52) at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'at 00:00 of 8 Mar 2026, 1 of 52 coins had no swing since 00:00 of D-1 at X 1 (J16004 c10fire on the year rows of 8 Mar 2026); the percent zigzag on highs and lows, X dials from the extreme (CARD_C10_V4 rules 3 to 8), the textbook zigzag on planted inputs (tests/test_meaning_rule_or1: the same swings on the path P but the cold start''s first low; the wick of E304); no rename (RULING 3)'
+  open: the swing size is the market's dial (the median coin's 2-hour range), the same percent for every coin; the chain starts cold at 00:00 of D-1 as an up leg; a wick reverses a leg (highs and lows, the reversal tested first, O3 A); with swings total 0 (1 of 52 coins at X 1 at 00:00 of 8 Mar 2026) the leg is the cold start's
+- id: C10.S43
+  name: the median over the roster coins of their pullback share at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: the coins' chains at m
+  clock: minute end
+  scope: market (the roster coins with a value)
+  contracts: Binance USD-M perpetuals (C13)
+  aggregate: the median (the middle one, or the mean of the two middle ones) of the coins' exact pullback shares at m, over the coins with one, rounded once to 12 decimals (rule 16)
+  aliases: m6x025_mkt_pullback_share_median
+  derived_from: C10 pullback share of every roster coin (the same X)
+  means: how much of their running legs the coins have given back, the middle coin
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 7 of 7 (the market at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'S43 (read by CHAIN_trend_LONG_ride) on 8 Mar 2026: 1440 minutes, empty 0, at 0 10, median 0.175219128082, at or over 0.5 0, at 1 0 (J16004 c10fire on the year rows of 8 Mar 2026); a median or a share of the coin settings above (CARD_C10_V4 rule 16); no rename (RULING 3)'
+  open: over the coins with a value; each coin's legs are cut by the market's dial; empty with the coins' common reason, else ALL_COINS_EMPTY
+  never:
+  - 'S43 near 0.5 or 1 on a normal day: the median coin gave back 0.175219128082 of its X 0.25 leg in the middle minute of 8 Mar 2026 and never 0.5 or over'
+- id: C10.S44
+  name: the share of the roster coins with a leg that are in an up leg at 0.25 dials
+  layer: our_rule
+  side: up and down legs
+  window: the coins' chains at m
+  clock: minute end
+  scope: market (the roster coins with a value)
+  contracts: Binance USD-M perpetuals (C13)
+  aggregate: the number of coins with leg dir +1 over the coins with a leg dir at m, rounded once to 12 decimals (rule 16)
+  aliases: m6x025_mkt_up_leg_share
+  derived_from: C10 leg dir of every roster coin (the same X)
+  means: how much of the market is in an up leg at this swing size
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 7 of 7 (the market at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: computation as written at the 7 points (J16004); a median or a share of the coin settings above (CARD_C10_V4 rule 16); no rename (RULING 3)
+  open: over the coins with a value; each coin's legs are cut by the market's dial; empty with the coins' common reason, else ALL_COINS_EMPTY
+- id: C10.S48
+  name: the median over the roster coins of their pullback share at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: the coins' chains at m
+  clock: minute end
+  scope: market (the roster coins with a value)
+  contracts: Binance USD-M perpetuals (C13)
+  aggregate: the median (the middle one, or the mean of the two middle ones) of the coins' exact pullback shares at m, over the coins with one, rounded once to 12 decimals (rule 16)
+  aliases: m6x050_mkt_pullback_share_median
+  derived_from: C10 pullback share of every roster coin (the same X)
+  means: how much of their running legs the coins have given back, the middle coin
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 7 of 7 (the market at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: computation as written at the 7 points (J16004); a median or a share of the coin settings above (CARD_C10_V4 rule 16); no rename (RULING 3)
+  open: over the coins with a value; each coin's legs are cut by the market's dial; empty with the coins' common reason, else ALL_COINS_EMPTY
+- id: C10.S49
+  name: the share of the roster coins with a leg that are in an up leg at 0.5 dials
+  layer: our_rule
+  side: up and down legs
+  window: the coins' chains at m
+  clock: minute end
+  scope: market (the roster coins with a value)
+  contracts: Binance USD-M perpetuals (C13)
+  aggregate: the number of coins with leg dir +1 over the coins with a leg dir at m, rounded once to 12 decimals (rule 16)
+  aliases: m6x050_mkt_up_leg_share
+  derived_from: C10 leg dir of every roster coin (the same X)
+  means: how much of the market is in an up leg at this swing size
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 7 of 7 (the market at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: computation as written at the 7 points (J16004); a median or a share of the coin settings above (CARD_C10_V4 rule 16); no rename (RULING 3)
+  open: over the coins with a value; each coin's legs are cut by the market's dial; empty with the coins' common reason, else ALL_COINS_EMPTY
+- id: C10.S53
+  name: the median over the roster coins of their pullback share at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: the coins' chains at m
+  clock: minute end
+  scope: market (the roster coins with a value)
+  contracts: Binance USD-M perpetuals (C13)
+  aggregate: the median (the middle one, or the mean of the two middle ones) of the coins' exact pullback shares at m, over the coins with one, rounded once to 12 decimals (rule 16)
+  aliases: m6x100_mkt_pullback_share_median
+  derived_from: C10 pullback share of every roster coin (the same X)
+  means: how much of their running legs the coins have given back, the middle coin
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 7 of 7 (the market at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: computation as written at the 7 points (J16004); a median or a share of the coin settings above (CARD_C10_V4 rule 16); no rename (RULING 3)
+  open: over the coins with a value; each coin's legs are cut by the market's dial; empty with the coins' common reason, else ALL_COINS_EMPTY
+- id: C10.S54
+  name: the share of the roster coins with a leg that are in an up leg at 1 dials
+  layer: our_rule
+  side: up and down legs
+  window: the coins' chains at m
+  clock: minute end
+  scope: market (the roster coins with a value)
+  contracts: Binance USD-M perpetuals (C13)
+  aggregate: the number of coins with leg dir +1 over the coins with a leg dir at m, rounded once to 12 decimals (rule 16)
+  aliases: m6x100_mkt_up_leg_share
+  derived_from: C10 leg dir of every roster coin (the same X)
+  means: how much of the market is in an up leg at this swing size
+  computation:
+    status: RELIABLE
+    proof: 'RULE_C10_STAMPS_V1 eeb7b1804ddb67c2: 7 of 7 (the market at 7 points of 8 Mar 2026 named by case; J16004 log 75e5730ab4797b93, rule_c10 ed1 df768be16fdb0d50 from our C13 S01 to S04 of 7 and 8 Mar 2026; tests 19 of 19, mutants 12 of 12)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: computation as written at the 7 points (J16004); a median or a share of the coin settings above (CARD_C10_V4 rule 16); no rename (RULING 3)
+  open: over the coins with a value; each coin's legs are cut by the market's dial; empty with the coins' common reason, else ALL_COINS_EMPTY

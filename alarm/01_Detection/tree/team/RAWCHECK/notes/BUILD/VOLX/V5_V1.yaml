@@ -1,0 +1,155 @@
+# V5_V1.yaml: VOLX DVOL percentile (METRIC_AUDIT, 18 Oct 2026; BUILD_DEFINITION_WORKPACKAGES_V2 edit 2 ac90daf8; ADDON_ARCHITECTURE_V4
+# edit 3 0591d181). S08 by PRODUCER_VOLX_V1.yaml. Examples: verify_volx_examples_v1.py V5 (and by hand below).
+# Edition 2: TREE's review (REVIEW_VOLX_TREE_V1 404b9dcd): F1 (raw of D only: the window's past closes from the CARRY's tail, S08
+# windowed in phase B), N1 (the window per hour), N2 (fit_rule none), N3 (M4 pinned), A1, A3; the first fill from J16029's coverage.
+# Edition 3: EDGE1's lead review (REVIEW_LEAD_EDGE1_V1 8dd9867d section 3, X1 to X11): the CARRY's tail of 2,162 slots (22:00 of D-91 to 23:00 of D-1)
+# and E7 with M5 (the oldest slot decides the rank at 00:30).
+kind: build_metric
+id: V5
+producer: VOLX
+item: 'DVOL percentile'
+tier: BUILD
+name: where BTC's DVOL close in force (V4's S07) sits among the hourly DVOL closes of the 90 days before its candle, as a mid-rank share 0 to 1
+status:
+  drafter: METRIC_AUDIT
+  reviewer: TREE
+  edition: 3
+  signed: false
+means: >-
+  0.9 says the options market's volatility expectation is higher now than in 90 percent of the hours of the last 90 days; 0.1 that
+  it is near its 90-day low. A level against its own recent history, not a forecast.
+example: >-
+  A window of four closes 50, 60, 55, 70 and the close in force 65: three below, none equal, S08 = 3 / 4 = 0.75. With the window 50,
+  60, 60 and the close 60: one below, two equal, S08 = (1 + 0.5 x 2) / 3 = 0.6666666666666666 (a strict rank would say 0.3333).
+formula: >-
+  x = the close of the candle V4 uses at u (timestamp ts_x); W = the valued closes of the candles with timestamp in [ts_x - 90 days,
+  ts_x) (2,160 hours before the candle in force, never the candle itself); N = their count; with N >= 1,728 (80 percent),
+  S08 = (count of W below x + 0.5 x count of W equal to x) / N (the mid rank: DVOL is written to 2 decimals, so ties are common), a
+  float64; with N < 1,728 empty NO_HISTORY. S08 follows S07: empty with S07's reason when S07 is empty, stale when S07 is stale. The
+  same candles as V4 (BTC only).
+source:
+  kind: ours
+  ref: >-
+    RESEARCH_TOOLS_V1 aad3cc38 row V3 and section 5.3 (the percentile of the last closed hour; 'ties: state strict or mid-rank';
+    nothing computes it: BUILD); the window is 90 days, not 5.3's 365, because the held BTC files start about 29 Sep 2025 (J16028:
+    absent 10 and 20 Sep, present 29 Sep 2025): OPEN for the owner, A 90 days (applied), B 365 days once Deribit's history before
+    the year is fetched (the sources seat).
+inputs:
+  - kind: addon
+    ref: VOLX S07 (V4) at u, D's candles through V4's reader and the CARRY's tail of the hourly closes before D
+    card: VOLX/V4_V1
+    rule_in_force: the candle V4 uses at u; the window's closes (ts, close) from D's file and the CARRY's tail (BAD_INPUT candles left out)
+    stale_rule: S08 is stale when S07 is
+    days: "D's file only (the add-on reads raw of D, ADDON_ARCHITECTURE_V4 edit 3 line 33) and the CARRY of D-1 (X1/carry/VOLX/<D-1>.npz) holding the tail: the (ts, close) of the 2,162 hourly slots 22:00 of D-91 to 23:00 of D-1 (NaN where no candle; the windows of 00:00, ts_x 22:00 of D-1, and of 00:01 to 01:00, ts_x 23:00 of D-1, reach back to them); D's run hands D+1 the tail shifted by its 24 candles"
+overlaps:
+  - setting: C7 S08
+    kind: other_metric
+    why: C7 S08 is the 2 h dial as a 30-day percentile (REBUILD, not built); V12 builds it. Both are percentiles of a level against its own history; different inputs.
+per_coin: BTCUSDT only (V4's scope); a market-wide input for the other coins.
+time: >-
+  The value changes once an hour, at xx:01 with S07. The window slides with the candle, not with the day. The first months: NO_HISTORY
+  until 1,728 closes are held: from 01:01 of 10 Dec 2025 (J16029: the BTC files start 29 Sep 2025 with no hour missing).
+output:
+  group_file: X1/day=<D>/VOLX.parquet
+  names:
+    - name: S08
+      label: dvol_btc_pct_90d
+      units: share 0 to 1 (mid rank)
+      value_kind: float
+      decimals: none
+      means: the mid-rank share of the 90-day hourly DVOL closes below the close in force
+      max_staleness_s: 7200
+  cadence: minute end (1,440 rows per day, BTCUSDT only, u = 00:00 to 23:59 of D)
+  as_of_rule: as_of = u, the minute end
+  known_at_rule: known_at = S07's known_at (the candle in force; every window candle is older); an empty row known_at = u; so known_at <= as_of on every row
+  empty_reasons:
+    - reason: NO_HISTORY
+      when: fewer than 1,728 valued closes in the window
+    - reason: NO_CANDLE
+      when: S07 is empty NO_CANDLE
+    - reason: NO_FILE
+      when: S07 is empty NO_FILE
+  empty_order: the first that applies, in this order, NO_FILE, NO_CANDLE (S07's), NO_HISTORY
+  stale_rule: stale = 1 exactly when S07 is stale
+  max_staleness_s: 7200
+  window_days: 91
+  no_history: >-
+    fills when 1,728 hourly closes are held in the 90 days before the candle in force: 01:01 of 10 Dec 2025 (J16029: the BTC files
+    start 29 Sep 2025 with no hour missing); NO_HISTORY before
+  fit_rule: none
+  fifths: none
+  flags: none
+edge_cases:
+  - case: E1 the plain rank
+    input: 'W = 50, 60, 55, 70; x = 65'
+    answer: 'S08 0.75'
+  - case: E2 ties
+    input: 'W = 50, 60, 60; x = 60'
+    answer: 'S08 0.6666666666666666 (strict 0.3333333333333333)'
+  - case: E3 the top and the bottom
+    input: 'x above every close of W; x below every close'
+    answer: 'S08 1.0; 0.0'
+  - case: E4 the floor
+    input: '1,727 valued closes in the window; then 1,728'
+    answer: 'empty NO_HISTORY; valued'
+  - case: E5 S07 stale
+    input: 'the candle before is missing (V4 E3)'
+    answer: "S08 on the carried candle's close and its own window, stale 1"
+  - case: E6 the candle itself is not in its window
+    input: 'W = 50, 60; x = 60 (the candle in force), the window planted without it'
+    answer: 'S08 0.75 (with x counted in W it would be (1 + 0.5 x 2) / 3)'
+  - case: E7 the oldest slot at 00:30
+    input: 'u = 00:30 of D (ts_x 23:00 of D-1, the window from 23:00 of D-91); the oldest slot 23:00 of D-91 holds 70, the other 2,159 slots 50; x = 60'
+    answer: 'S08 = 2,159 / 2,160 = 0.999537037037037 (a tail of 2,160 slots from 00:00 of D-90 misses the oldest: 1.0)'
+unit_tests:
+  - test: U1 (E1, E2, E3, E6)
+    planted: 'candles with the closes of each case, the candle in force the newest'
+    expect: '0.75; 0.6666666666666666; 1.0, 0.0; 0.75 exactly (small fractions of whole counts)'
+  - test: U2 (E4, E5, E7)
+    planted: '90 days of hourly candles with 1,727 and 1,728 valued; V4 E3''s missing candle'
+    expect: 'NO_HISTORY then valued; stale 1 with S07; E7 0.999537037037037'
+  - test: U3 the stamps
+    planted: U1, U2
+    expect: "BTCUSDT rows only; known_at = S07's; the value constant from xx:01 to xx+1:00"
+mutants:
+  - mutant: M1 the strict rank
+    caught_by: 'U1 (E2 gives 0.3333333333333333)'
+  - mutant: M2 the candle in force counted in its own window
+    caught_by: 'U1 (E6 gives 0.6666666666666666)'
+  - mutant: M3 no floor of 1,728
+    caught_by: 'U2 (1,727 gives a value)'
+  - mutant: M5 a CARRY tail of 2,160 slots
+    caught_by: 'U2 (E7 gives 1.0)'
+  - mutant: M4 the window by u, W = the closes with ts in (u - 90 days, ts_x) (it slides each minute)
+    caught_by: 'U3 (the value changes inside the hour)'
+real_check:
+  points:
+    - point: 2026-03-08, BTCUSDT, u = 00:00, 01:01, 12:00, 23:59
+      why: the window of 7 Dec 2025 to 8 Mar 2026 (full), the serve edges
+    - point: 2025-12-10, BTCUSDT, u = 00:30 and 01:01
+      why: the first fill (NO_HISTORY, then valued) if the coverage holds
+  pass: >-
+    The tester recomputes S08 and its reason from this card's words and the files' text (rawcheck/check_volx.py): floats within 1e-9
+    relative (fractions of whole counts), words equal. In VOLX's one small read-only runner job.
+meaning_check:
+  pass_lines:
+    - "S08 equals scipy.stats.percentileofscore(W, x, kind='mean') / 100 (the mid rank) within 1e-12 at every valued hour of 8 Mar 2026 (the tool cross-check)"
+    - "the tails are reached: over the valued hours of 10 Dec 2025 to 9 Mar 2026 the shares of S08 below 0.1 and above 0.9 each lie within 2 to 30 percent (a rank that never reaches its tails, or lives in them, is mis-built or mis-windowed)"
+  report_only:
+    - the distribution of S08 by month; the share of ties at the close in force
+conclude:
+  may:
+    - where BTC's implied volatility stands against its own last 90 days of hourly closes
+  never:
+    - a forecast of implied or realised volatility
+    - a 365-day or all-history percentile (90 days, the held files)
+    - another coin's implied volatility
+readers: none yet (planned in the HEAT and HOW-BIG labels)
+implementation:
+  how: "Per hour of D: the window [ts_x - 90 days, ts_x) of the CARRY's tail and D's earlier candles, as a sliding window of 2,160 slots (numpy sliding_window_view), the counts (W < x).sum() and (W == x).sum() over the valued slots; served to the hour's 60 minute ends. PHASES: windowed, phase B (day after day: it needs D-1's tail)."
+  kernel: "new: addon_grid_v2.rank_in_window with its brute twin (the mid rank of x in a sliding window of slots), on V4's candles"
+  memory_mb: 5
+  seconds_share: 0.01
+data_checks:
+  - what: "B of the OPEN: Deribit's DVOL history before 29 Sep 2025 for a 365-day window (the first valued day is known: 10 Dec 2025 01:01, J16029)"
+    who: the sources seat (EDGE1 names it)

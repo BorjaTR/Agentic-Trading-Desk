@@ -1,0 +1,59 @@
+# JOB @@JOBNUM@@_@@SEAT@@_COUNT_@@IDEA@@ -- @@RUNTAG@@ (ALARM_DESIGN KIT_V5 JOB_COUNT_V6, template @@TPLSHA@@): fires, waves and coins per month on 10 Sep-31 Dec 2025 for the definitions @@ITEMS_LIST@@ of @@IDEA@@, by detection only (detect.py, the grade chain's own step 1). No outcome is read. TEST, NOT REVIEWED. Never deletes. Stops when SCRATCH_DISK has under 60 GB free.
+# WRITES @@SCRATCH@@/work_@@RUNTAG@@/@@JOBNUM@@_COUNT_@@IDEA@@/ and @@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_COUNT_@@IDEA@@/
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# DRIVE: SCRATCH_DISK
+set -u
+AL=@@ALARM@@; F=$AL/01_Detection/tree; R=$F/team/RESEARCH; PY=@@PYTHON@@
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+L2=$R/LEAD/loop2; TL=$R/tools; ROSTER=$F/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json
+export METRICS_V1=$F/team/LAB3/METRICS_V1.tsv METRIC_TRAPS=$L2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv CATALOGS=$TL/alarm_context/CTX_CATALOG_V1.tsv:$TL/alarm_profile/EPI_CATALOG_V1.tsv:$F/team/LAB3/METRICS_HL_ADD_V1.tsv:$L2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv
+RD=@@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@; J=@@JOBNUM@@_COUNT_@@IDEA@@; W=@@SCRATCH@@/work_@@RUNTAG@@/$J; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+FIRST=20250910; LAST=20251231
+mkdir -p $W $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
+fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
+ck $TL/idea_to_grade/detect_v2.py 97a822a20e08088d; ck $TL/alarm_design/alarm_design_v3.py 4852c9c0f8fbf175; ck $ROSTER b93de33b2a73a56e; ck $METRIC_TRAPS 5383a6bfe4d62680
+ck $TL/alarm_context/CTX_CATALOG_V1.tsv f413906feb40c0b4; ck $TL/alarm_profile/EPI_CATALOG_V1.tsv d133fea9c7935857
+ck $F/team/LAB3/METRICS_HL_ADD_V1.tsv d81727de54e5a5db; ck $L2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv f19ccfbf08c9a5b4; ck $METRICS_V1 85b14987d2059cd6
+for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; done
+f=$(fmb); st start 0 0 "SCRATCH_DISK free ${f} MB"
+HA=$($PY -c "import json,sys;c=json.load(open(sys.argv[1]))['coins'];print(','.join(c[:len(c)//2]))" $ROSTER)
+HB=$($PY -c "import json,sys;c=json.load(open(sys.argv[1]))['coins'];print(','.join(c[len(c)//2:]))" $ROSTER)
+cd $AL
+for i in "${!VS[@]}"; do V=${VS[$i]}; D=$RD/${DEFS[$i]}
+  f=$(fmb); if [ -z "$f" ] || [ $f -lt 60000 ]; then st disk_$V 7 0 "SCRATCH_DISK free ${f} MB under 60000: stopped"; st end 7 0 "disk"; exit 7; fi
+  ok=1
+  for hv in A B; do if [ $hv = A ]; then C=$HA; else C=$HB; fi; t0=$(date +%s)
+    nice -n 10 $PY -B $TL/idea_to_grade/detect_v2.py --definition $D --roster $ROSTER --coins $C --first $FIRST --last $LAST --research-window 20250901:$LAST --lab-root @@LAB_DAYS@@ --gate=@@FEED_GATE@@ --out $W/det_${V}_$hv --workers 3 < /dev/null > $W/det_${V}_$hv.log 2>&1; r=$?
+    st detect_${V}_$hv $r $(( $(date +%s)-t0 )) "$(tail -n 1 $W/det_${V}_$hv.log | tr '\t' ' ' | cut -c1-200)"
+    [ $r -eq 0 ] && [ -f $W/det_${V}_$hv/EVENTS.tsv ] || ok=0
+  done
+  if [ $ok = 1 ]; then
+    { grep -v '^#' $W/det_${V}_A/EVENTS.tsv | head -1; { grep -v '^#' $W/det_${V}_A/EVENTS.tsv | tail -n +2; grep -v '^#' $W/det_${V}_B/EVENTS.tsv | tail -n +2; } | sort -t$'\t' -k2,2n -k1,1; } > $W/${V}_FIRES_COUNT.tsv
+    awk -F'\t' -v V=$V -v J=$J 'BEGIN{split("1757462400 1759276800 1761955200 1764547200 1767225600",b," "); split("2509 2510 2511 2512",m," ")}
+      NR==1{ if ($1!="coin" || $2!="t") { print "BAD HEADER " $0 > "/dev/stderr"; bad=1; exit 3 } next }
+      { t=$2+0; k=0; for (q=1; q<=4; q++) if (t>=b[q] && t<b[q+1]) k=q; if (k==0) { out++; next }
+        n[k]++; nall++; if ($1=="BTC") nb[k]++; if (!((k,$1) in cs)) { cs[k,$1]=1; nc[k]++ } if (!($1 in ca)) { ca[$1]=1; nca++ }
+        if (nall==1 || t-prev>1800) { nw[k]++; wall++; cur=0; wk=k } cur++; if (cur>mx[wk]) mx[wk]=cur; if (cur>mxa) mxa=cur; prev=t }
+      END{ if (bad) exit 3
+        print "# COUNT " V " (job " J ", KIT_V5 JOB_COUNT_V6): detection only, 10 Sep-31 Dec 2025, no outcome read. waves: a fire more than 1800 s after the previous fire (any coin) starts a new wave (labcore.waves); a wave counts in the month of its first fire. TEST, NOT REVIEWED."
+        print "month\tfires\twaves\tcoins\tmax_fires_in_a_wave\tfires_on_BTC"
+        for (q=1; q<=4; q++) printf "%s\t%d\t%d\t%d\t%d\t%d\n", m[q], n[q], nw[q], nc[q], mx[q], nb[q]
+        printf "ALL\t%d\t%d\t%d\t%d\t%d\n", nall, wall, nca, mxa, nb[1]+nb[2]+nb[3]+nb[4]
+        c30=0; for (q=1; q<=4; q++) if (nw[q]>=30) c30++
+        printf "# months with 30 or more waves: %d of 4; rows outside the window: %d\n", c30, out+0 }' $W/${V}_FIRES_COUNT.tsv > $DV/COUNT_$V.tsv; r=$?
+    st count_$V $r 0 "$(grep '^ALL' $DV/COUNT_$V.tsv | tr '\t' ' ')"
+    head -n 21 $W/${V}_FIRES_COUNT.tsv > $DV/FIRST20_$V.tsv
+  else st count_$V 5 0 "detection failed: see det logs"; fi
+  for hv in A B; do [ -f $W/det_${V}_$hv.log ] && tail -n 20 $W/det_${V}_$hv.log > $DV/det_${V}_$hv.log.tail; done
+done
+du -sm $W | awk '{print "du_mb_W\t"$1}' > $DV/DISK.tsv; printf 'free_mb_end\t%s\n' "$(fmb)" >> $DV/DISK.tsv
+(cd $DV && shasum -a 256 COUNT_*.tsv FIRST20_*.tsv 2>/dev/null) > $DV/SHA16.txt
+st end 0 0 "SCRATCH_DISK free $(fmb) MB; W $(du -sm $W | cut -f1) MB"
+exit 0

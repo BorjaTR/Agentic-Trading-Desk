@@ -1,0 +1,169 @@
+# FORMULA_C4_V1.yaml: the card of C4 S06 to S09, BTC's efficiency ratio (formula), EDITION 1 (METRIC_AUDIT, 2026-10-18, FR2 = FP2 of
+# FORMULA_REVIEW_WORKPACKAGES_V3 e5c20e81; made as BASIC_C1_V5 95244119). C4 S01 to S05, S10 are basic (BASIC_C4_V2, EDGE2), S11 is raw (REBUILD).
+# Computation J15919 to J15921 (formula_c4er ed1 9ab86a72), meaning J15955 (meaning_formula2 ed1 d6c62af3), twins J15849 (meaning_twins 74d02bc2).
+group: C4
+name: BTC efficiency ratio (formula, built on the book mid)
+summary: 'How straight BTC''s mid walked over the last 30 minutes (S06), 2 hours (S07) and 3 hours (S08), on 1 minute steps: |mid(e) - mid(e - W)|
+  over the sum of the |1 minute changes| (Kaufman''s efficiency ratio); S09 the 3 hour one with the sign of the net move. 0 = the mid came back
+  where it started, 1 = every minute stepped the same way. Exact, rounded once to 6 decimals half away from 0; a flat path is empty NO_MOVE.'
+read_as: 'Kaufman''s efficiency ratio of BTC, on the book mid instead of the last trade: against Kaufman''s ratio on Binance''s own 1 minute kline
+  closes it is the same number (Pearson 1.0000, |gap| median 0.0000 to 0.0001, p90 0.0001 to 0.0005, J15955) and falls in the same fifth of the
+  day at 99.72 to 100% of minutes (the chains read fifths); S09''s sign agrees at 100%. On a normal day it is small: the middle of S08 is
+  0.055 (8 Mar 2026), 0.055 (24 Sep 2025): for Gaussian steps the median of |net| / path is about 0.845 / sqrt(n) = 0.063 at n = 180 (arithmetic, TREE 15:35:03Z review; not measured), so only the top fifths say ''a leg''.'
+conclude:
+  may:
+  - 'how straight BTC moved over 30 min, 2 h, 3 h (S06 to S08): the same as Kaufman''s ER on Binance klines (Pearson 1.0000, J15955), so its fifths
+    are the kline ER''s fifths at 99.72 to 100% of minutes'
+  - which way a clean 3 hour leg went (S09: same sign as the kline ER at 100% of minutes, J15955)
+  - that a value is exactly the card's rule on our book mid (6,912 of 6,912 values on 3 days, J15919 to J15921)
+  never:
+  - 'a level as ''a trend'' by itself: the middle 3 h value is 0.055, about what Gaussian steps give (0.845 / sqrt(180) = 0.063, arithmetic, not measured); read the fifths, as the chains do'
+  - 'ER of 0 as ''no move'': 0 is a path that came back to its start (a chop); no move at all is empty NO_MOVE'
+  - 'S06 to S09 for a coin other than BTC: they are BTC''s, whatever the coin'
+  - 'a .step1_off twin as the same metric: it is ER on the 1 s path (another metric beside, the owner rules it), corr 0.89 to 0.99 with the main, never equal (J15849)'
+where:
+  card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C4_V3.md (8bd8accbba78d1f8, rules 1 to 5, 8, 14, 16; cases E60 to E69)
+  settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C4_V1.tsv (f8878fc4c602285b; S06 to S09 kind ER, step 60 s)
+  built_on_register: team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml (C13 S05 the bookTicker mid, raw, LIMITS)
+  layer_list: team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V19.tsv (b38bf075fb0c2a65; C4 S06 to S09 formula, RELIABLE, MEANING_NEXT)
+  producer: testbed/value_audit/code/prod_C4_v1.py (9540eb256ac9d200) through prod_reader_book_ticker_v2.py
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C4.parquet
+  year_output_columns: name (S06 to S09, .quotes_off, .step1_off), coin (BTC), as_of_us (e), value_kind (0 = EMPTY, NaN in value_f64), value_f64, value_txt,
+    known_at_us, stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/formula_c4er.py year() (value_kind 0 empty, 3 a word, else value_f64)
+source:
+  vendor: 'none new: built on our raw C13 S05 (the mid of Binance''s bookTicker through Tardis), MEANING_C13_V4'
+  exchange_stream: book_ticker (Binance's own top of book, every change of the best bid or ask); the quotes stream beside as .quotes_off
+  files: <ARCHIVE_DISK2>/volat_archive/pulled_20260910_eramap/tardis/binance-futures/book_ticker_BTCUSDT_<YYYY-MM-DD>.csv.gz (D and D-1)
+  columns: timestamp, local_timestamp, bid_price, ask_price (the reader's)
+  fields:
+    mid: '(best bid + best ask) / 2 of the top in force at a sample: the last good row stamped at or before it and received by it, known when stamped
+      at most 30 s before [proof: CARD_C4_V3 rules 1 to 3; basic_c3c4.path and at, C3C4_STAMPS_V1]'
+    samples: 'e, e - 60 s, ..., e - W (W / 60 + 1 of them); every one known, else empty TOP_HOLE [proof: CARD_C4_V3 rules 4, 8]'
+    ratio: 'path = the sum of |mid(e - (j - 1) 60 s) - mid(e - j 60 s)|; net = mid(e) - mid(e - W); |net| / path (S06 to S08), net / path (S09);
+      exact, rounded once to 6 decimals half away from 0; path 0: NO_MOVE [proof: CARD_C4_V3 rule 8, cases E60 to E65a; J15919 to J15921]'
+  latency: known_at = the latest arrival among the rows in force at the samples (rule 13); S08, S09 at a fire give the last full minute (rule 14)
+  silence: a top older than 30 s at any sample makes the value empty TOP_HOLE; none on 24 Sep 2025, 4 Nov 2025 or 8 Mar 2026 at the 864 minute ends compared (J15919 to J15921)
+reading_rules:
+- 'ER over W ending at e = |mid(e) - mid(e - W)| / sum of the |1 minute changes| of the mid between them (Kaufman); S09 keeps the sign of the net move (rule 8)'
+- 'S06, S07 are read at the fire second; S08, S09 at the minute end (at a fire: the last full minute, rule 14); at a minute end all four end at e'
+- 'a flat path (the mid did not move at any of the W / 60 steps) is empty NO_MOVE, never 0 and never 1; a hole in the top is empty TOP_HOLE'
+- 'COPIES: .quotes_off is the same metric from a second top of book (Tardis quotes): ACCEPTED as the year''s cross-check (the owner 18 Oct), not a metric
+  of its own: Pearson 0.99992 to 0.99999, |gap| p99 0.0009 to 0.0068, equal at 6 to 70% of minutes (J15849 TWINS 0ea4c5c8, a9bc9402)'
+- 'BESIDE, ANOTHER METRIC (EDGE1 15:12:54Z, the owner rules): .step1_off is rule 8 on the 1 s path (samples every second): recomputed exactly (2,304 of
+  2,304 a day with the mains, J15919 to J15921), Pearson 0.89 to 0.99 with the main, |gap| median 0.030 to 0.107, never equal (J15849); no meaning
+  work on it until the owner rules'
+values:
+  units: a ratio in [0, 1] (S06 to S08), [-1, 1] (S09)
+  zero: 'the mid came back to where it started (pure chop); written 0 without a sign'
+  empty: NO_FILE, TOP_HOLE, NO_MOVE; value_kind 0 with NaN in value_f64. Never read empty as 0
+  stale: 1 with TOP_HOLE
+  flags: BAD_ROW:BTC (a bad row skipped, the value kept)
+interpret:
+  do:
+  - read high values (the top fifths) as a straight leg, low as chop, as the chains do
+  - read S09's sign as the direction of the 3 hour leg
+  dont:
+  - read a level as a trend without its fifth (the 3 h middle is 0.055)
+  - compare S06 with S08 as the same scale (a longer window walks more steps, so its ER is smaller)
+biases:
+- what: mid against the last trade (Kaufman on kline closes)
+  direction: either way
+  size: '|gap| median 0.0000 to 0.0001, p90 0.0001 to 0.0005, Pearson 1.0000; the same fifth at 99.72 to 100% of minutes'
+  proof: J15955 er, 8 Mar 2026 and 24 Sep 2025, 1,440 minutes each
+external_checks:
+- what: S06 to S09 against Kaufman's ER (n = 30, 120, 180) on BTCUSDT 1 minute kline closes, every minute of 2 days
+  where: Binance 1m klines (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/klines_1m
+  status: 'AGREES: Pearson 1.0000, Spearman 1.0000 all four both days; S09 same sign 100%; fifths 99.72 to 100% (J15955)'
+- what: the .quotes_off copies against the mains
+  where: the year rows (meaning_twins 74d02bc2)
+  status: 'ACCEPTED cross-check: Pearson 0.99992 to 0.99999 (J15849)'
+- what: the .step1_off metrics beside
+  where: the year rows and the Tardis recompute
+  status: 'RECOMPUTED exactly (J15919 to J15921); another metric, the owner rules (EDGE1 15:12:54Z)'
+tools:
+- what: every S06 to S09 and .step1_off value recomputed from the Tardis book_ticker rows, exact integer mids, at every 5 minute end
+  run: python3 -B -m rawcheck.formula_c4er --days <D,..> --out <dir>
+  where: 'team/LAB/code (formula_c4er.py 9ab86a723a8275ef, tests e63ff034bc05ae63 19 of 19, 4 of 4 mutants caught; runner job: Tardis, the year store)'
+- what: one minute end by hand (the 31 samples of S06, path, net, ours beside)
+  run: python3 -B -m rawcheck.formula_c4er look <D> <HHMM>
+  where: team/LAB/code
+- what: the name test against Kaufman's ER on Binance kline closes, every minute
+  run: python3 -B -m rawcheck.meaning_formula2 er <D>
+  where: 'team/LAB/code (meaning_formula2.py d6c62af37d1152b8, tests 58d259adcd643c8d 11 of 11; runner job: the SCRATCH_DISK klines, the year store)'
+used_by: 'S06 er_30m: CHAIN_chop_SHORT_ride_2, CHAIN_forced_LONG_fade; S07 er_2h: CHAIN_trend_SHORT_fade_2; S08 er_3h: CHAIN_forced_LONG_fade, CHAIN_forced_LONG_ride,
+  CHAIN_trend_LONG_fade, CHAIN_trend_LONG_ride, CHAIN_trend_SHORT_ride_4; S09 er_3h_signed: CONTEXT-HOURS/UPTREND-HOURS, DOWNTREND-HOURS (CARD_C4_V3 part 1, every one through its fifths)'
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C4_V3.md
+  PAPER: 'Perry J. Kaufman, Smarter Trading (McGraw-Hill, 1995): the efficiency ratio ER = |price change over n periods| / sum of the |period changes|, the
+    smoothing ratio of his adaptive moving average (KAMA)'
+  K1: https://data.binance.vision (USD-M futures klines 1m)
+settings:
+- id: C4.S06
+  layer: formula
+  side: none
+  window: 1800 s
+  clock: fire second
+  scope: BTC
+  contracts: USDT
+  aggregate: '|mid(e) - mid(e - 1,800 s)| / sum of the 30 |1 minute changes| of the mid, 6 decimals'
+  aliases: er_30m
+  means: how straight BTC's mid walked over the last 30 minutes (0 chop, 1 a straight line)
+  computation:
+    status: RELIABLE
+    proof: 'J15919, J15920, J15921 formula_c4er 9ab86a72: 288 of 288 minute ends equal at 6 decimals on 8 Mar 2026, 24 Sep 2025, 4 Nov 2025 (team/RAWCHECK/notes/RAWCHECK/C4ER_STAMPS_V1.tsv f78694982ea6618b: 864 of 864 a name, J15970)'
+  meaning:
+    status: DEFINED
+    proof: 'J15955 er: = Kaufman ER(30) on BTCUSDT kline closes: Pearson 1.0000, |gap| median 0.0001, p90 0.0005 (8 Mar), 0.0003 (24 Sep); the same fifth at 99.72%, 99.86%'
+  open: none
+- id: C4.S07
+  layer: formula
+  side: none
+  window: 7200 s
+  clock: fire second
+  scope: BTC
+  contracts: USDT
+  aggregate: '|net| / path of the mid on 1 minute steps over 2 hours, 6 decimals'
+  aliases: er_2h
+  means: how straight BTC's mid walked over the last 2 hours
+  computation:
+    status: RELIABLE
+    proof: 'J15919 to J15921: 288 of 288 minute ends equal on each of 3 days'
+  meaning:
+    status: DEFINED
+    proof: 'J15955 er: = Kaufman ER(120) on kline closes: Pearson 1.0000, |gap| median 0.0000, p90 0.0001 both days; the same fifth at 99.72%, 99.72%'
+  open: none
+- id: C4.S08
+  layer: formula
+  side: none
+  window: 10800 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: '|net| / path of the mid on 1 minute steps over 3 hours, 6 decimals'
+  aliases: er_3h
+  means: how straight BTC's mid walked over the last 3 hours (at a fire the last full minute)
+  computation:
+    status: RELIABLE
+    proof: 'J15919 to J15921: 288 of 288 minute ends equal on each of 3 days'
+  meaning:
+    status: DEFINED
+    proof: 'J15955 er: = Kaufman ER(180) on kline closes: Pearson 1.0000, |gap| median 0.0000, p90 0.0001 both days; the same fifth at 100.00%, 99.72%'
+  open: none
+- id: C4.S09
+  layer: formula
+  side: up or down
+  window: 10800 s
+  clock: minute end
+  scope: BTC
+  contracts: USDT
+  aggregate: 'net / path of the mid on 1 minute steps over 3 hours (signed), 6 decimals half away from 0'
+  aliases: er_3h_signed
+  means: how straight BTC's 3 hour walk was, plus for a rise and minus for a fall
+  computation:
+    status: RELIABLE
+    proof: 'J15919 to J15921: 288 of 288 minute ends equal on each of 3 days (the signed 0 written 0: case E64b, test T8)'
+  meaning:
+    status: DEFINED
+    proof: 'J15955 er: = Kaufman''s signed ER(180) on kline closes: Pearson 1.0000, same sign 100.00% both days; the same fifth at 100.00%, 99.86%'
+  open: none

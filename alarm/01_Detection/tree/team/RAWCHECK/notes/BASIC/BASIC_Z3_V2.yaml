@@ -1,0 +1,136 @@
+# BASIC_Z3_V2.yaml: the card of the basic settings of Z3, EDITION 2 (EDGE1, 2026-10-18, BR5 edit 1) = BASIC_Z3_V1 (kept) with EDGE2's review of 14:58:45Z applied.
+# Made as BASIC_C1_V5 (METRIC_REVIEW_METHOD_V1 section 5). Computation J15897 (basic_deriv 9420f568), meaning J15900 (meaning_deriv 7e89c066, tests 1642b1fb); the 8 h twin J15849.
+group: Z3
+name: funding clock (basic, built on E1 S03 and the clock)
+summary: 'Minutes to the next funding payment. S01, per coin on Binance: (the coin''s next funding time in force at m, E1 S03, less m) / 60 s, rounded once to 4 decimals: 0 to 479 for
+  an 8 h coin, 0 to 239 for a 4 h coin (CARD_Z3_V4 T3), below 0 only after a late settle. S02, for Hyperliquid: the minutes from m to the next whole UTC hour (Hyperliquid pays every
+  hour), one value for the market.'
+read_as: 'How long until the next funding payment. S01 is recomputed exactly from E1 S03 at every coin-minute (J15897) and is within 0.02 minutes of the settle Binance itself recorded
+  next (its fundingRate record) at every coin-minute of 8 Mar 2026 and 24 Sep 2025 (J15900). On these two days that also compares E1 S03 with the settle that followed, the open LAYER_REGISTER_V20
+  keeps for E1 S03 (DEFINED_WITH_OPEN, LIMITS). Its old name said 8h, but a 4 h coin (14 or 15 of the roster) reads its own settle, at most 239: RENAMED; the 8 h clock its name meant
+  is the year''s twin S01.clock_8h_off (could_build Z3.CB1, BUILT). S02 is a clock: Hyperliquid documents an hourly payment, not its minute; the whole hour is the card''s assumption
+  (CARD_Z3_V4 O5, O6).'
+conclude:
+  may:
+  - 'how many minutes until a coin''s next Binance funding payment, by the coin''s own interval (S01: within 0.02 minutes of Binance''s own settle times at every coin-minute of 8 Mar
+    2026 and 24 Sep 2025, J15900)'
+  - whether a planned holding time crosses a payment (S01 against the holding time)
+  never:
+  - 'that every coin settles every 8 h: 14 to 15 roster coins settle every 4 h (S01 at most 240)'
+  - 'a negative S01 as a time to wait: the settle has passed and the feed has not yet moved the next one (CARD_Z3_V4 F10; not seen on the proof days)'
+  - 'S02 as a Binance time: it is Hyperliquid''s hourly clock, its minute assumed'
+  - an EMPTY S01 as 0
+where:
+  card: testbed/value_audit/registers/CARD_Z3_V4.md
+  settings_register: testbed/value_audit/registers/SETTINGS_Z3_V1.tsv
+  built_on_register: 'team/RAWCHECK/notes/MEANING/MEANING_E1_V2.yaml (E1 S03, raw: RELIABLE, DEFINED_WITH_OPEN; LIMITS in LAYER_REGISTER_V20)'
+  producer: testbed/value_audit/code/prod_Z3_v2.py
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/Z3.parquet
+  year_output_columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  read_it_with: team/LAB/code/rawcheck/ours.py at(D, 'Z3', settings, coins, moments)
+source:
+  vendor: 'none new: built on our raw E1 S03 only (basic_deriv z3 reads E1 S03 and nothing else; MEANING_E1_V2); S02 is a clock'
+  exchange_stream: 'E1 S03 is the funding_timestamp of Tardis.dev binance-futures derivative_ticker: Binance''s next funding time from its markPrice stream (MEANING_E1_V2 S03); S02 reads
+    no stream'
+  files: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/E1.parquet (the year rows of E1, name S03; Z3 reads no Tardis file itself)
+  columns: name, coin (roster coin, or MARKET), as_of_us (e), value_kind (0 empty, 1 float, 2 int, 3 word, 4 decimal with value_f64 and its text), value_f64, value_txt, known_at_us,
+    stale, empty_reason, flags
+  fields:
+    next_funding_time: 'E1 S03: Binance''s next funding time T in force at m (microseconds), moved by the feed 1 s after each settle [proof: CARD_Z3_V4 F10; MEANING_E1_V2 S03]'
+    hyperliquid_hour: '"The funding rate on Hyperliquid is paid every hour" [proof: SOURCE_SPEC_hl_derivative_ticker_V1 Q-H2]; Tardis gives no funding time for Hyperliquid [proof: F3]'
+  latency: S01's known_at is E1 S03's (the arrival of the row the time is read from); S02's is m
+reading_rules:
+- S01 = (E1 S03 at m - m) / 60 s, exact, rounded once half away from zero to 4 decimals (CARD_Z3_V4 rules 1, 2)
+- a settle passed and not yet moved by the feed gives S01 below 0 (rule 3)
+- 'S02 = the minutes from m to the first whole UTC hour at or after m: 0 at hh:00, 59 at hh:01 (rule 5; O5, O6)'
+- S01 empty when E1 S03 is (NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE), never 0 (rule 1)
+values:
+  units: minutes
+  range: S01 below 0 only after a late settle (rule 3; CARD_Z3_V4 F10), else 0 to 479 (8 h coins), 0 to 239 (4 h coins) (CARD_Z3_V4 T3); S02 0 to 59
+  empty: NO_ROSTER, NO_FILE, BAD_INPUT, NO_VALUE, STALE_VALUE (from E1 S03); value_kind 0. Never read empty as 0
+  stale: 1 with STALE_VALUE
+  flags: DUPLICATE_ROW (from E1 S03)
+interpret:
+  do:
+  - read S01 as the minutes to this coin's next payment; compare it with a planned holding time
+  - read S02 as the minutes to the next whole hour
+  dont:
+  - 'read S01 as the minutes to the 8 h clock (00:00, 08:00, 16:00): a 4 h coin settles every 4 h'
+  - read S02 for a Binance position
+biases:
+- what: the feed moves the next funding time only after the settle
+  direction: S01 below 0 for a short while after a settle
+  size: not seen on 8 Mar 2026 or 24 Sep 2025 (every coin-minute within 0.02 minutes of Binance's next settle); 42 to 167 s late on 28 Jul 2026 (CARD_Z3_V4 F10)
+  proof: J15900 z3m; CARD_Z3_V4 F10
+external_checks:
+- what: S01 against the next settle Binance recorded
+  where: Binance fundingRate (data.binance.vision), held at <SCRATCH_DISK>/realcheck/outside/binance/fundingRate
+  status: 'VERIFIED: within 0.02 minutes at 74,880 of 74,880 (8 Mar 2026) and 73,440 of 73,440 (24 Sep 2025) coin-minutes (J15900)'
+- what: S02's hour
+  where: Hyperliquid funding docs (SOURCE_SPEC_hl_derivative_ticker_V1 Q-H2)
+  status: 'DOCUMENTED: paid every hour; the minute (hh:00:00) not documented (CARD_Z3_V4 O5); no record held'
+tools:
+- what: every setting recomputed from the year rows at every minute end of 8 Mar 2026 and 24 Sep 2025
+  run: python3 -B -m rawcheck.basic_deriv z3 <D> --out <dir>
+  where: 'team/LAB/code (basic_deriv.py edition 2 d47ad0be25b652a6, tests fe8494593bd921d4 21 of 21, jobs 15922 to 15924; edition 1 9420f5683f1d09b0, tests 245df8fea9f2c2e7 18 of 18,
+    jobs 15897 to 15899; runner job: the year store)'
+- what: against Binance's own records
+  run: python3 -B -m rawcheck.meaning_deriv z3m <D>
+  where: 'team/LAB/code (meaning_deriv.py edition 1 7e89c066ae3366bd with tests 1642b1fb5e4eb3db 9 of 9 for J15900; edition 2 ae69d2fc24c87cf9 with tests 611e429090a63399 10 of 10 for
+    J15901; runner job: the outside files on the SCRATCH_DISK)'
+used_by: nobody yet (CARD_Z3_V4 "Who reads it")
+references:
+  K_funding: https://data.binance.vision (USD-M futures fundingRate monthly)
+  K_metrics: https://data.binance.vision (USD-M futures metrics, 5 minutes)
+  K_mark_index: https://data.binance.vision (USD-M futures markPriceKlines and indexPriceKlines, 1 minute)
+  held_at: <SCRATCH_DISK>/realcheck/outside/binance
+settings:
+- id: Z3.S01
+  layer: basic
+  side: none
+  window: to the next settle
+  clock: minute end
+  scope: coin
+  contracts: USDT
+  aggregate: (E1 S03 at m - m) / 60 s, rounded once to 4 decimals
+  aliases: L.min_to_settle_8h
+  means: minutes until this coin's next Binance funding payment, by its own interval (8 h or 4 h)
+  name: minutes to the coin's next Binance funding settle
+  renamed_from: min_to_settle_8h (L.min_to_settle_8h)
+  computation:
+    status: RELIABLE
+    proof: 'J15897 basic_deriv 9420f568: recomputed from E1 S03 at 74,880 of 74,880 (8 Mar 2026) and 73,440 of 73,440 (24 Sep 2025) coin-minutes, exact. E1 S03 itself is RELIABLE by
+      RAW_STAMPS Tardis 9 of 9 (MEANING_E1_V2), not by this job'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'J15900 meaning_deriv 7e89c066 (tests 1642b1fb, 9 of 9) z3m: within 0.02 minutes of the next settle in Binance''s fundingRate record at every coin-minute of both days (8 Mar:
+      37 coins of 8 h, 15 of 4 h; 24 Sep: 37 and 14); renamed (the owner''s rule): a 4 h coin reads its own settle'
+  open: after a settle the feed can be late to move the next funding time, so S01 reads below 0 for a minute or more (CARD_Z3_V4 F10); not seen on the proof days
+- id: Z3.S02
+  layer: basic
+  side: none
+  window: to the next whole UTC hour
+  clock: minute end
+  scope: market
+  contracts: Hyperliquid perpetuals
+  aggregate: the minutes from m to the first whole UTC hour at or after m
+  aliases: L.min_to_settle_1h
+  means: minutes until Hyperliquid's next hourly funding payment, the payment assumed at the whole hour
+  name: minutes to the next whole UTC hour (Hyperliquid hourly funding)
+  computation:
+    status: RELIABLE
+    proof: 'J15897: recomputed at 1,440 of 1,440 minute ends both days, exact (a clock)'
+  meaning:
+    status: DEFINED_WITH_OPEN
+    proof: 'Hyperliquid docs: "The funding rate on Hyperliquid is paid every hour" (SOURCE_SPEC_hl_derivative_ticker_V1 Q-H2); Tardis gives no Hyperliquid funding time (F3)'
+  open: 'the minute of Hyperliquid''s hourly payment is not documented: hh:00:00 is the card''s assumption (CARD_Z3_V4 O5); no record held to check it'
+could_build:
+- id: Z3.CB1
+  intended: 'minutes to the next 8 h clock settle (00:00, 08:00, 16:00 UTC) whatever the coin''s interval: what the old name min_to_settle_8h says'
+  was_name_of: Z3.S01
+  formula: the minutes from m to the first of 00:00, 08:00, 16:00 UTC at or after m
+  needs: 'nothing: the clock'
+  adds: 'equal to S01 for 8 h coins, different for the 4 h coins: the year writes it as the twin S01.clock_8h_off, equal to S01 on 85.58% (8 Mar) and 86.27% (24 Sep) of coin-minutes
+    (J15849)'
+  status: BUILT

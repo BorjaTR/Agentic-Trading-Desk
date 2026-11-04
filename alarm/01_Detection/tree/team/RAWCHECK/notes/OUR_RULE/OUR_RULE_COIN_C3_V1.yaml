@@ -1,0 +1,156 @@
+# OUR_RULE_COIN_C3_V1.yaml: the card of COIN_C3's OUR RULES (each coin's excess over BTC and over the roster's median, in its own 2-hour
+# dials), EDITION 1, edit 3 (EDGE2, 2026-10-18; edit 3 = BED's review 16:50:05Z optional nit, the median of S17 to S20 by construction; edits c5f9debb, 8dda61ce kept as twins; OR3 of OUR_RULES_REVIEW_WORKPACKAGES_V1 6c2fdf72b7646f86). Made as OUR_RULE_C5_V1 638b08cf;
+# meaning_register checks it. Register of the day: LAYER_REGISTER_V32 e249ce941c5cdb16 (COIN_C3 S13 to S20 our_rule, NOT_CHECKED before this
+# card; COIN_C1 S01, their divisor, layer model, NOT_CHECKED). EDGE1 16:12:07Z ruled (A): COIN_C1 S01 recomputed in the same small module,
+# S13 to S20 judged on it, COIN_C1 S01's meaning left with the models. The smart check: inputs cited, planted tests and mutants first, ONE
+# small job J16007 (5 named minutes and the first 2 minutes where each setting reaches 1 or -1 and the dial 0, of 8 Mar 2026 and 24 Sep
+# 2025, every roster coin; how often on the year's own rows of 24 Sep 2025), readers to TREE's RR1.
+# Pass lines: hb/EDGE2.txt 2026-10-18T16:34:10Z, posted before J16007 ran; results 2026-10-18T16:4xZ.
+
+group: COIN_C3
+name: coin strength against the market, our rules (the excess over BTC and over the roster's median in the coin's own 2-hour dials)
+summary: >-
+  For each roster coin and h = 5, 15, 60, 240 minutes: S13 to S16 its h-minute return less BTC's (COIN_C3 S05 to S08), S17 to S20 less the
+  roster's median return (S09 to S12), each divided by the coin's own 2-hour dial (COIN_C1 S01: 100 x the range of its last 120 minute closes
+  over its close at e, as published to 6 decimals), rounded once. 1 = the coin moved one of its normal 2-hour ranges beyond the market.
+read_as: >-
+  Every value equals our recompute, the dial recomputed too, at the named and the firing minutes of both days (RULE_COINC3_STAMPS_V1, J16007).
+  Over 5 to 60 minutes a coin almost never moves one of its 2-hour ranges beyond the market: |x| 1 or more at 0.00% to 0.80% of 24 Sep
+  2025's coin-minutes; over 240 minutes at 16.62% (against BTC) and 10.67% (against the median). The dial narrows the differences between
+  coins (each coin's p90 of |x| differs 14.96 times in points, 2.40 in dials, at 240 minutes against BTC; 23.58 and 7.31 against the median)
+  but does not make 1 the same move on every coin (J16007 coinc3fire).
+
+conclude:
+  may:
+    - "how many of its own 2-hour ranges a coin moved beyond BTC (S13 to S16) or the roster's median (S17 to S20) over 5, 15, 60, 240 minutes (RULE_COINC3_STAMPS_V1, J16007)"
+  never:
+    - "a 5 to 60 minute excess of 1 or more as a usual move: 0.00% to 0.80% of coin-minutes (24 Sep 2025, J16007 coinc3fire)"
+    - "a value of 1 as the same move on every coin: each coin's p90 of |x| still differs 2.40 and 7.31 times between coins at 240 minutes (J16007)"
+
+where:
+  card: "testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C3_V6.md 457731e44e88010b (rules 2 to 7, 12; edge cases N1e, N2, N3a, N3b, E9, E11 to E13, E16, E20, E22); the dial from CARD_COIN_C1_V6.md 92d128e0a4abb2b3 (rules 1 to 5, 10)"
+  settings_register: "testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_COIN_C3_V1.tsv dd7da09c2cb5033a (the dial in SETTINGS_COIN_C1_V1.tsv fb358e48f420e53a)"
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml 1e9def5548cc2d18 (COIN_C3 S05 to S12, the excesses in points: basic, COINC3_STAMPS_V2 ff89f47f8a7bc90d); team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05 closes); COIN_C1 S01 recomputed here (layer model in LAYER_REGISTER_V32); no input renamed"
+  layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv e249ce941c5cdb16 (COIN_C3 S13 to S20 our_rule; COIN_C1 S01 model)"
+  producer: "testbed/value_audit/code (COIN_C3's producer of CARD_COIN_C3_V6), reading C13's and COIN_C1's built parts of D"
+  year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/COIN_C3.parquet
+  year_output_columns: "name (S01 to S22 and their twins), coin (every roster coin), as_of_us (the 1,440 minute ends), value_kind (0 = EMPTY), value_f64, value_txt, known_at_us, stale, empty_reason, flags"
+  read_it_with: "team/RAWCHECK/code/rawcheck/meaning_candle.py ours(D, names, group='COIN_C3') (value_kind 0 empty, else value_f64)"
+
+source:
+  vendor: "Tardis.dev, Binance USD-M futures book_ticker, through our C13 S05 closes (MEANING_C13_V4)"
+  exchange_stream: "bookTicker as Tardis records it, read by C13"
+  files: "the year's C13.parquet of D and D-1 (the 240-minute horizon and the dial reach D-1 before 04:00), COIN_C1.parquet and COIN_C3.parquet of D, the week's roster"
+  columns: "C13 S05 of every roster coin; COIN_C1 S01; COIN_C3 S13 to S20"
+  fields:
+    dial: "COIN_C1 S01 = 100 x (the largest - the smallest valued close of the 120 minute ends e - 119 min to e) / the close at e, exact, 6 decimals, half up; the close at e empty: empty; under 60 valued closes: SHORT_WINDOW; a range of 0 gives 0 [proof: CARD_COIN_C1_V6 rules 1 to 5, 10; planted N2 to N6b, E2 to E20 in tests/test_rule_coinc3.py; RULE_COINC3_STAMPS_V1 COIN_C1 S01 2,731 of 2,731]"
+    in_dials: "S13 to S20 = the excess (COIN_C3 rules 2 to 6, exact, unrounded) over the dial as published; ZERO_RANGE when the dial is 0; BTC's own row against BTC is 0 [proof: CARD_COIN_C3_V6 rule 7; planted E9 to E22 and the two rule 7 cases, mutants B1, B2; RULE_COINC3_STAMPS_V1]"
+  latency: "known_at = the latest known_at among the closes read and the dial's (CARD_COIN_C3_V6 rule 9)"
+  silence: "the excess's reason first (NO_FILE, BOOK_HOLE, THIN_ROSTER, NO_BTC), then the dial's (SHORT_WINDOW, ZERO_RANGE); none at the points checked but the dial's 0 (ZERO_RANGE: CRV at 01:22, 01:23, 01:31, 01:32 of 8 Mar 2026, 32 coin-setting rows, empty both sides, J16007 RULE_COINC3_ROWS)"
+
+reading_rules:
+  - "the divisor is the coin's own 2-hour range at e, published to 6 decimals: a quiet coin's small dial makes a large value"
+  - "S13 to S16 against BTC, S17 to S20 against the median of the roster but BTC"
+  - "S17 to S20 pooled over coin-minutes have a median of 0 by construction: each minute half the coins are above the roster's median and half below (0.000000 on 24 Sep 2025, J16007 log lines 93 to 96; BED's review 16:50:05Z)"
+
+values:
+  units: "dials: the excess (percent points) over the coin's 2-hour range (percent of its price)"
+  zero: "0: the coin moved as BTC (or the median coin) did over h minutes; BTC against BTC is 0"
+  empty: "the excess's reason or the dial's (SHORT_WINDOW, ZERO_RANGE); value_kind 0. Never read empty as 0"
+  stale: "as the closes read (BOOK_HOLE)"
+  flags: "none of their own"
+
+interpret:
+  do:
+    - "read 1 as 'one of its own 2-hour ranges beyond the market', and compare horizons: 240 minutes reaches it about 1 time in 6 (against BTC), 5 to 60 minutes almost never"
+  dont:
+    - "compare a value across coins as the same size of move without the coin's dial beside it"
+
+biases:
+  - {what: "a 2-hour range as the unit for every horizon", direction: "short horizons rarely reach 1, 240 minutes often", size: "|x| 1 or more 0.00% (5 min) to 16.62% (240 min, against BTC) of coin-minutes", proof: "J16007 coinc3fire, 24 Sep 2025"}
+  - {what: "one coin's own range as the unit", direction: "coins still differ in how far their excess runs in dials", size: "each coin's p90 of |x| differs 2.40 and 7.31 times between coins at 240 minutes", proof: "J16007 coinc3fire"}
+
+external_checks:
+  - {what: "COIN_C3 S13 to S20 and their divisor COIN_C1 S01 recomputed at 00:30, 01:00, 04:00, 12:10, 22:06 and at the first 2 minutes where each setting reaches 1 or -1 and where a dial is 0, every roster coin, of 8 Mar 2026 and 24 Sep 2025", where: "the year's C13 S05 closes (a recompute, our source)", status: "VERIFIED: RULE_COINC3_STAMPS_V1 bb80914cfb90466f: 24,579 of 24,579 MATCH, 2,731 a setting (J16007 log 0a99e1350dc1fd88, rule_coinc3 ed1 6456b49bbe6eff92, tests 13c7e790258f27b4 35 of 35: 31 cases, 4 mutants)"}
+  - {what: "how often each rule fires on one day, and the dial's claim across coins", where: "the year's own COIN_C3 rows of 24 Sep 2025", status: "MEASURED: J16007 coinc3fire (meaning_rule_or3 ed3 48f953d9ef615135, tests f3cf43e7937e2344 13 of 13)"}
+  - {what: "an outside record of the rules", where: "none: our rules on our closes; the closes are checked in MEANING_C13_V4", status: "NOT_AVAILABLE"}
+
+tools:
+  - {what: "the eight settings and the dial recomputed from our C13 S05, at named minutes and where they fire", run: "python3 -B -m rawcheck.rule_coinc3 --days <D,..> --at <HHMM,..> --fires <N> --out <dir>", where: "team/RAWCHECK/code (rule_coinc3.py 6456b49bbe6eff92; basic_coinc3 6d5e7d901dd41071's median and floor, basic_c5's frac, rnd, verdict imported)"}
+  - {what: "how often the rules fire on one day", run: "python3 -B -m rawcheck.meaning_rule_or3 coinc3fire <D>", where: "team/RAWCHECK/code (meaning_rule_or3.py 48f953d9ef615135)"}
+
+used_by: "nobody yet (CARD_COIN_C3_V6 'Who reads it today': the Q6 block reads S07 in points, not S13 to S20). To TREE's RR1 (hb/EDGE2.txt 2026-10-18T16:4xZ): no reader"
+
+references:
+  CARD: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_COIN_C3_V6.md 457731e44e88010b
+  BASIC: team/RAWCHECK/notes/BASIC/BASIC_COIN_C3_V1.yaml 1e9def5548cc2d18 (the basic settings of COIN_C3)
+  STAMPS: "team/RAWCHECK/notes/RAWCHECK/RULE_COINC3_STAMPS_V1.tsv bb80914cfb90466f (J16007)"
+  JOBS: "16007 (tests, rule_coinc3 at named and firing minutes of 8 Mar 2026 and 24 Sep 2025, coinc3fire 24 Sep 2025; log 0a99e1350dc1fd88)"
+  PASS_LINES: "hb/EDGE2.txt 2026-10-18T16:34:10Z, posted before J16007 ran"
+  RULE: "RULING 3 (EDGE1 15:40:56Z): no rename here (the names say the excess in dials); EDGE1 16:12:07Z (A) for the dial"
+
+settings:
+  - {id: COIN_C3.S13, name: "the coin's 5-minute return less BTC's return, in its own 2-hour dials", layer: our_rule, side: none, window: "5 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S05's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_btc_5_dial",
+     derived_from: "COIN_C3 S05's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 5 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 0.00%, max |x| 0.94; the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S13 at 1 or more as a usual move: 0.00% of coin-minutes (J16007)"]}
+  - {id: COIN_C3.S14, name: "the coin's 15-minute return less BTC's return, in its own 2-hour dials", layer: our_rule, side: none, window: "15 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S06's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_btc_15_dial",
+     derived_from: "COIN_C3 S06's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 15 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 0.02%, max |x| 1.44; the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S14 at 1 or more as a usual move: 0.02% of coin-minutes (J16007)"]}
+  - {id: COIN_C3.S15, name: "the coin's 60-minute return less BTC's return, in its own 2-hour dials", layer: our_rule, side: none, window: "60 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S07's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_btc_60_dial",
+     derived_from: "COIN_C3 S07's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 60 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 0.18%, max |x| 1.91; the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S15 at 1 or more as a usual move: 0.18% of coin-minutes (J16007)"]}
+  - {id: COIN_C3.S16, name: "the coin's 240-minute return less BTC's return, in its own 2-hour dials", layer: our_rule, side: none, window: "240 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S08's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_btc_240_dial",
+     derived_from: "COIN_C3 S08's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond BTC over the last 240 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 16.62%, 3 or more 0.40%; each coin's p90 of |x| differs 2.40 times between coins (14.96 in points, S08); the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S16 of 1 as the same move on every coin: the dial narrows the spread between coins but does not remove it (J16007)"]}
+  - {id: COIN_C3.S17, name: "the coin's 5-minute return less the roster's median return, in its own 2-hour dials", layer: our_rule, side: none, window: "5 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S09's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_med_5_dial",
+     derived_from: "COIN_C3 S09's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond the median coin over the last 5 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 0.02%, max |x| 1.73; the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S17 at 1 or more as a usual move: 0.02% of coin-minutes (J16007)"]}
+  - {id: COIN_C3.S18, name: "the coin's 15-minute return less the roster's median return, in its own 2-hour dials", layer: our_rule, side: none, window: "15 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S10's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_med_15_dial",
+     derived_from: "COIN_C3 S10's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond the median coin over the last 15 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 0.18%, max |x| 3.11; the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S18 at 1 or more as a usual move: 0.18% of coin-minutes (J16007)"]}
+  - {id: COIN_C3.S19, name: "the coin's 60-minute return less the roster's median return, in its own 2-hour dials", layer: our_rule, side: none, window: "60 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S11's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_med_60_dial",
+     derived_from: "COIN_C3 S11's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond the median coin over the last 60 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 0.80%, max |x| 2.87; the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S19 at 1 or more as a usual move: 0.80% of coin-minutes (J16007)"]}
+  - {id: COIN_C3.S20, name: "the coin's 240-minute return less the roster's median return, in its own 2-hour dials", layer: our_rule, side: none, window: "240 minutes (the dial: 120 minute ends)", clock: minute end, scope: coin, contracts: USDT,
+     aggregate: "COIN_C3 S12's excess (exact, unrounded) over the coin's dial at e (COIN_C1 S01 as published, 6 decimals), rounded once; the excess's reason first, then the dial's; ZERO_RANGE when the dial is 0", aliases: "c3_x_med_240_dial",
+     derived_from: "COIN_C3 S12's rule on C13 S05 closes, over COIN_C1 S01 recomputed from C13 S05",
+     means: "how many of its own normal 2-hour ranges the coin moved beyond the median coin over the last 240 minutes",
+     computation: {status: RELIABLE, proof: "RULE_COINC3_STAMPS_V1 bb80914c: 2,731 of 2,731 (00:30, 01:00, 04:00, 12:10, 22:06 and the minutes where a rule fires, every roster coin, 8 Mar 2026 and 24 Sep 2025; J16007, rule_coinc3 6456b49b with the dial recomputed)"},
+     meaning: {status: DEFINED_WITH_OPEN, proof: "J16007 coinc3fire (24 Sep 2025, 50 coins, BTC out, 72,000 coin-minutes): |x| 1 or more at 10.67%, 3 or more 0.37%; each coin's p90 of |x| differs 7.31 times between coins (23.58 in points, S12); the excess in dials rule 7 says (no rename)"},
+     open: "no reader today (CARD_COIN_C3_V6 part 1); one day measured",
+     never: ["COIN_C3 S20 of 1 as the same move on every coin: the dial narrows the spread between coins but does not remove it (J16007)"]}

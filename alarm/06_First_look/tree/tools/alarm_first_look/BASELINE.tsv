@@ -1,0 +1,133 @@
+file	sha16	landed_utc	status	test receipt
+fl_read_v2.py	ff592562a0c334c6	2026-10-30T08:42:24Z	DRAFT	tests/test_fl_read_v2.py 28 OK, mutants_fl_read_v2.py 30 of 30 (VM 30 Oct)
+tests/test_fl_read_v2.py	151adae30a87b471	2026-10-30T08:42:24Z	DRAFT	tests/test_fl_read_v2.py 28 OK, mutants_fl_read_v2.py 30 of 30 (VM 30 Oct)
+mutants_fl_read_v2.py	4a8b66def44822c8	2026-10-30T08:42:24Z	DRAFT	tests/test_fl_read_v2.py 28 OK, mutants_fl_read_v2.py 30 of 30 (VM 30 Oct)
+fl_read_v1.py	cea1f8595482168a	2026-10-30T08:42:24Z	DRAFT	tests/test_fl_read_v1.py 18 OK, mutants_fl_read_v1.py 19 of 19 (VM 30 Oct)
+fl_lists_v1.py	388e61e12dd4bfb2	2026-10-30T08:42:24Z	DRAFT	made FL1_20261030 (BUILD.txt)
+fl_lists_v2.py	753d0aba4f9c3129	2026-10-30T08:42:24Z	DRAFT	tests/test_fl_lists_v2.py 3 OK (VM 30 Oct); made FL2_20261030
+tests/test_fl_lists_v2.py	b1eb7e12dd9ee0c9	2026-10-30T08:42:24Z	DRAFT	tests/test_fl_lists_v2.py 3 OK
+fl_extract_v1.py	e19190f41bafe04b	2026-10-30T08:42:24Z	DRAFT	FLOUT jobs 20264242-20264251 rc 0
+fl_jobs_v1.py	be0e6f65df1e6b5d	2026-10-30T08:42:24Z	DRAFT	FLOUT jobs queued, bash -n and word checks
+fl_grade_jobs_v1.py	87dcdd6ac66d708d	2026-10-30T08:42:24Z	DRAFT	FLGRADE G1 20264249 rc 0
+fl_aprof_jobs_v1.py	ba38ea0859a3f926	2026-10-30T08:42:24Z	DRAFT	APROF 20264252-20264259 rc 0
+JOB_FLOUT_V1.job.sh.txt	a37329fe145743fb	2026-10-30T08:42:24Z	DRAFT	FLOUT jobs rc 0
+JOB_FLGRADE_V1.job.sh.txt	642abed49ae05ea5	2026-10-30T08:42:24Z	DRAFT	FLGRADE G1 rc 0
+JOB_APROF_V1.job.sh.txt	471f28432e99aa59	2026-10-30T08:42:24Z	DRAFT	APROF jobs rc 0
+OUTCOMES_FIRSTLOOK_V1.json	6983ca1ba1db40b1	2026-10-30T08:42:24Z	DRAFT	checked by event_outcomes_aw1 load_settings; FLOUT jobs rc 0
+clean_scout_scratch_v2.py	45bb55f91372ed78	2026-10-30T08:42:24Z	DRAFT	tests/test_clean_scout_scratch_v2.py 19 OK, mutants 23 of 23 (VM 30 Oct); v1 FAIL by reviews A, B
+tests/test_clean_scout_scratch_v2.py	a8fe0a214d0b28b7	2026-10-30T08:42:24Z	DRAFT	see clean_scout_scratch_v2.py
+mutants_clean_scout_scratch_v2.py	ec1fe46c27c5b455	2026-10-30T08:42:24Z	DRAFT	see clean_scout_scratch_v2.py
+JOB_SCOUTCLEAN_V2.job.sh.txt	ae45543178bc7fa0	2026-10-30T08:42:24Z	DRAFT	not run yet
+mk_clean_job_v2.py	3248fecfc4b8e34f	2026-10-30T08:42:24Z	DRAFT	not run yet
+README.md	e1b3b08ca104e2d0	2026-10-30T08:42:24Z	DRAFT	-
+ARCHITECTURE.md	038467b02b428058	2026-10-30T08:42:24Z	DRAFT	-
+SCOPE.md	bcdf61cc97cce969	2026-10-30T08:42:24Z	DRAFT	-
+REQUIREMENTS.md	5ab283a5bcdf5755	2026-10-30T08:42:24Z	DRAFT	-
+fl_read_v3.py	8e2d0dfe44b39bdd	2026-10-30T09:44:45Z	DRAFT	tests/test_fl_read_v3.py 48 OK, mutants_fl_read_v3.py 51 of 51 (VM 30 Oct)
+tests/test_fl_read_v3.py	8517bf3833ccb34f	2026-10-30T09:44:45Z	DRAFT	tests/test_fl_read_v3.py 48 OK, mutants_fl_read_v3.py 51 of 51 (VM 30 Oct)
+mutants_fl_read_v3.py	dbc3e1b82984cd92	2026-10-30T09:44:45Z	DRAFT	tests/test_fl_read_v3.py 48 OK, mutants_fl_read_v3.py 51 of 51 (VM 30 Oct)
+fl_aprof_jobs_v3.py	d29abcb2951b61ab	2026-10-30T09:44:45Z	DRAFT	APROF22 jobs 20264287-20264290, 20264294-20264296
+JOB_APROF_V3.job.sh.txt	f4c4833b4d6e1834	2026-10-30T09:44:45Z	DRAFT	APROF22 jobs rc 0
+fl_aprof_jobs_v2.py	855f5e6e39f4a406	2026-10-30T09:44:45Z	DRAFT	APROF21 jobs (edition 2.1, withdrawn)
+JOB_APROF_V2.job.sh.txt	965e22cfdfc213f8	2026-10-30T09:44:45Z	DRAFT	APROF21 jobs (withdrawn edition)
+README.md	3e5f6d272c75c434	2026-10-30T09:44:45Z	DRAFT	-
+ARCHITECTURE.md	a8607b90a0b5c4e8	2026-10-30T09:44:45Z	DRAFT	-
+SCOPE.md	4e569b1b4443d368	2026-10-30T09:44:45Z	DRAFT	-
+REQUIREMENTS.md	42c9447ea2fcd8f4	2026-10-30T09:44:45Z	DRAFT	-
+fl_read_v6.py	9ffab472e65b9589	2026-10-30T14:05:21Z	TEST	tests/test_fl_read_v6.py 66 OK; 10 planted bugs in the new rule all caught (VM 30 Oct)
+mk_v6.py	50cc34431839bcdc	2026-10-30T14:05:21Z	TEST	tests/test_fl_read_v6.py 66 OK; 10 planted bugs in the new rule all caught (VM 30 Oct)
+tests/test_fl_read_v6.py	c0b7e0a1865a3ac1	2026-10-30T14:05:21Z	TEST	tests/test_fl_read_v6.py 66 OK; 10 planted bugs in the new rule all caught (VM 30 Oct)
+fl_read_v5.py	b9f2890a5b447e2e	2026-10-30T14:05:21Z	TEST	tests/test_fl_read_v5.py 52 OK (VM 30 Oct)
+mk_v5.py	d2f38e7de1016cea	2026-10-30T14:05:21Z	TEST	tests/test_fl_read_v5.py 52 OK (VM 30 Oct)
+tests/test_fl_read_v5.py	b4727540f42ae22c	2026-10-30T14:05:21Z	TEST	tests/test_fl_read_v5.py 52 OK (VM 30 Oct)
+busy_v1.py	724d6ca576b81560	2026-10-30T16:00:00Z	TEST	tests/test_busy_v1.py 22 OK; mutants_busy_v1.py 18 of 18 (VM 30 Oct); job 20264452 PROVE_BZ 24 of 24
+tests/test_busy_v1.py	2cc8a4c988a6bbcf	2026-10-30T16:00:00Z	TEST	tests/test_busy_v1.py 22 OK (VM 30 Oct)
+mutants_busy_v1.py	e377e6372712ce7e	2026-10-30T16:00:00Z	TEST	mutants_busy_v1.py 18 of 18 (container 30 Oct)
+fl_read_v7.py	ec23a57318609f11	2026-10-30T16:00:00Z	TEST	tests/test_fl_read_v7.py 87 OK (VM 30 Oct); mutants_fl_read_v7.py 29 of 29; job 20264463
+mk_v7.py	ee58534c7a0aa12a	2026-10-30T16:00:00Z	TEST	makes fl_read_v7.py ec23a57318609f11 from fl_read_v6.py 9ffab472e65b9589
+tests/test_fl_read_v7.py	b8220bae1e507c7a	2026-10-30T16:00:00Z	TEST	tests/test_fl_read_v7.py 87 OK (VM 30 Oct)
+mutants_fl_read_v7.py	69093d7d1c316a23	2026-10-30T16:00:00Z	TEST	mutants_fl_read_v7.py 29 of 29 (container 30 Oct)
+fl_read_v8.py	b18b229389c2704a	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v8.py 112 OK; mutants_fl_read_v8.py 42 of 42 (receipts/MUTANTS_FLREAD8_20261030T173525Z.txt); job 20264507 units OK on the Mac
+mk_v8.py	30bbba4429991245	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v8.py 112 OK; mutants_fl_read_v8.py 42 of 42 (receipts/MUTANTS_FLREAD8_20261030T173525Z.txt); job 20264507 units OK on the Mac
+tests/test_fl_read_v8.py	d15d22398c87e798	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v8.py 112 OK; mutants_fl_read_v8.py 42 of 42 (receipts/MUTANTS_FLREAD8_20261030T173525Z.txt); job 20264507 units OK on the Mac
+mutants_fl_read_v8.py	8f8b9004f77273b3	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v8.py 112 OK; mutants_fl_read_v8.py 42 of 42 (receipts/MUTANTS_FLREAD8_20261030T173525Z.txt); job 20264507 units OK on the Mac
+fair_v1.py	0c319811f4f62ea2	2026-10-30T18:38:26Z	TEST	tests/test_fair_v1.py 27 OK; mutants_fair_v1.py 41 of 41 (receipts/MUTANTS_FAIR1_20261030T174411Z.txt); jobs 20264507, 20264513
+tests/test_fair_v1.py	622646ddae0cb99f	2026-10-30T18:38:26Z	TEST	tests/test_fair_v1.py 27 OK; mutants_fair_v1.py 41 of 41 (receipts/MUTANTS_FAIR1_20261030T174411Z.txt); jobs 20264507, 20264513
+mutants_fair_v1.py	f87676c8bfb1b235	2026-10-30T18:38:26Z	TEST	tests/test_fair_v1.py 27 OK; mutants_fair_v1.py 41 of 41 (receipts/MUTANTS_FAIR1_20261030T174411Z.txt); jobs 20264507, 20264513
+fl_read_v9.py	8a31cd18d7874684	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v9.py 117 OK; mutants_fl_read_v9.py 13 of 13 (receipts/MUTANTS_FLREAD9_20261030T182952Z.txt); job 20264539 units OK on the Mac, FL_RULE8 equal to edition 8's
+mk_v9.py	5a6aa34eb2da57ce	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v9.py 117 OK; mutants_fl_read_v9.py 13 of 13 (receipts/MUTANTS_FLREAD9_20261030T182952Z.txt); job 20264539 units OK on the Mac, FL_RULE8 equal to edition 8's
+tests/test_fl_read_v9.py	31d25ebbc1248587	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v9.py 117 OK; mutants_fl_read_v9.py 13 of 13 (receipts/MUTANTS_FLREAD9_20261030T182952Z.txt); job 20264539 units OK on the Mac, FL_RULE8 equal to edition 8's
+mutants_fl_read_v9.py	24ee10544905caba	2026-10-30T18:38:26Z	TEST	tests/test_fl_read_v9.py 117 OK; mutants_fl_read_v9.py 13 of 13 (receipts/MUTANTS_FLREAD9_20261030T182952Z.txt); job 20264539 units OK on the Mac, FL_RULE8 equal to edition 8's
+fair_v2.py	468e190fadbd8d7a	2026-10-30T18:38:26Z	TEST	tests/test_fair_v2.py 31 OK; mutants_fair_v2.py 12 of 12 (receipts/MUTANTS_FAIR2_20261030T183110Z.txt); job 20264539
+mk_fair_v2.py	809b27e7fc3692d6	2026-10-30T18:38:26Z	TEST	tests/test_fair_v2.py 31 OK; mutants_fair_v2.py 12 of 12 (receipts/MUTANTS_FAIR2_20261030T183110Z.txt); job 20264539
+tests/test_fair_v2.py	14e431016bcb8157	2026-10-30T18:38:26Z	TEST	tests/test_fair_v2.py 31 OK; mutants_fair_v2.py 12 of 12 (receipts/MUTANTS_FAIR2_20261030T183110Z.txt); job 20264539
+mutants_fair_v2.py	8628ab72dfd9b6af	2026-10-30T18:38:26Z	TEST	tests/test_fair_v2.py 31 OK; mutants_fair_v2.py 12 of 12 (receipts/MUTANTS_FAIR2_20261030T183110Z.txt); job 20264539
+diag_size_lean_v1.py	11e92d7160acb69e	2026-10-30T18:38:26Z	TEST (paused)	tests/test_diag_size_lean_v1.py 3 OK (VM); not run on real data
+tests/test_diag_size_lean_v1.py	887e557001ea424e	2026-10-30T18:38:26Z	TEST (paused)	tests/test_diag_size_lean_v1.py 3 OK (VM); not run on real data
+README.md	72106931045a3dc5	2026-10-30T18:38:26Z	TEST	-
+ARCHITECTURE.md	666eafaf827eb0d3	2026-10-30T18:38:26Z	TEST	-
+SCOPE.md	4c34c928ba5c8005	2026-10-30T18:38:26Z	TEST	-
+REQUIREMENTS.md	de571bf57a4cbbab	2026-10-30T18:38:26Z	TEST	-
+tests/test_fl_read_v9.py	f930336a0e5071d0	2026-10-30T19:06:50Z	TEST	123 OK (VM); review A's limits and Jan-Apr rules (T26)
+mutants_fl_read_v9.py	891fa233d62f73aa	2026-10-30T19:06:50Z	TEST	23 of 23 (receipts/MUTANTS_FLREAD9_20261030T190521Z.txt f1691d3198718dc6)
+README.md	148591c3bafa14d8	2026-10-30T19:06:50Z	TEST	review A paperwork
+ARCHITECTURE.md	5540d839027ecb44	2026-10-30T19:06:50Z	TEST	review A paperwork
+REQUIREMENTS.md	80cf5c39630ad6e5	2026-10-30T19:06:50Z	TEST	review A paperwork
+fl_read_v10.py	3c6d7d90ae5396d2	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+mk_v10.py	5a6a32318ad02aca	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+tests/test_fl_read_v10.py	0ef941ef9110be68	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+mutants_fl_read_v10.py	78e9a704efe14518	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+fair_v3.py	abb8a3585408155e	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+mk_fair_v3.py	8379a76a0a37cbed	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+tests/test_fair_v3.py	0727751190b6ef5b	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+mutants_fair_v3.py	4d6052bcc29e1326	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+reviews/REVIEW_A_FL9_20261030.md	55184207820988e1	2026-10-30T20:06:15Z	TEST (current)	review B answer: edition 10 and ladder v3 (job 20264593)
+reviews/REVIEW_B_FAIR2_20261030.md	d0ef21a90c495e82	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+results/FAIR3_FL1_20264593/FAIR_SUMMARY.tsv	af4bd575990274fa	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+results/FAIR3_FL1_20264593/FAIR_CALIB.tsv	d0041d61ae7195e3	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+results/FAIR3_FL2_20264593/FAIR_SUMMARY.tsv	e2553b463998f700	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+README.md	a7f163c9679f342e	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+ARCHITECTURE.md	f0db3833b03fa7fe	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+SCOPE.md	934e75c472394c6c	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+REQUIREMENTS.md	ab9983750d4d0c87	2026-10-30T20:06:15Z	TEST	review B answer: edition 10 and ladder v3 (job 20264593)
+fl_read_v11.py	a2e764accef55078	2026-10-30T20:26:10Z	TEST (current)	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+mk_v11.py	343e0ab3d37ddcf5	2026-10-30T20:26:10Z	TEST (current)	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+tests/test_fl_read_v11.py	28e0ec0ae9b653c3	2026-10-30T20:26:10Z	TEST	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+mutants_fl_read_v11.py	cf2e564ba7f93feb	2026-10-30T20:26:10Z	TEST (current)	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+fair_v4.py	d491536c6718e494	2026-10-30T20:26:10Z	TEST (current)	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+mk_fair_v4.py	70d0608ac623c814	2026-10-30T20:26:10Z	TEST (current)	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+tests/test_fair_v4.py	7c101295cc1c9ccf	2026-10-30T20:26:10Z	TEST	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+mutants_fair_v4.py	769b7b9ca34e67cc	2026-10-30T20:26:10Z	TEST	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+receipts/MUTANTS_FLREAD11_20261030T202134Z.txt	945177e7a9d90d80	2026-10-30T20:26:10Z	TEST	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+receipts/MUTANTS_FAIR4_20261030T202259Z.txt	bd07025955db591a	2026-10-30T20:26:10Z	TEST	edition 11 (30 min waves, the owner 21:11 Berlin) and ladder v4; job 20264600
+results/TRY4_FL1_20264600/FL_RULE9.tsv	dbe4f2d4927c398b	2026-10-30T20:29:45Z	TEST (current)	edition 11 and ladder v4 (job 20264600)
+results/TRY4_FL2_20264600/FL_RULE9.tsv	ee92064488c832a1	2026-10-30T20:29:45Z	TEST (current)	edition 11 and ladder v4 (job 20264600)
+results/FAIR4_FL1_20264600/FAIR_SUMMARY.tsv	ec8cc1d57a43317e	2026-10-30T20:29:45Z	TEST (current)	edition 11 and ladder v4 (job 20264600)
+results/FAIR4_FL1_20264600/FAIR_CALIB.tsv	1d0ae290f3a5e8da	2026-10-30T20:29:45Z	TEST (current)	edition 11 and ladder v4 (job 20264600)
+results/FAIR4_FL2_20264600/FAIR_SUMMARY.tsv	8fab94202f38ef17	2026-10-30T20:29:45Z	TEST (current)	edition 11 and ladder v4 (job 20264600)
+README.md	b44b81f0654e3202	2026-10-30T20:29:45Z	TEST	edition 11 and ladder v4 (job 20264600)
+ARCHITECTURE.md	99005a46495fd859	2026-10-30T20:29:45Z	TEST	edition 11 and ladder v4 (job 20264600)
+SCOPE.md	d8912329cd51e1f1	2026-10-30T20:29:45Z	TEST	edition 11 and ladder v4 (job 20264600)
+REQUIREMENTS.md	dcf2bf379ba79f28	2026-10-30T20:29:45Z	TEST	edition 11 and ladder v4 (job 20264600)
+tests/test_fair_v4.py	5b923209422ca2d2	2026-10-30T21:06:27Z	TEST (current)	54 OK (VM, and the Mac copy run from the VM); review C fault 2: T17ReviewC, T18ReviewCFiles
+mutants_fair_v4.py	e5374f2906c1bcc4	2026-10-30T21:06:27Z	TEST (current)	79 of 79 (review C's 10 added): receipts/MUTANTS_FAIR4_20261030T205622Z.txt
+receipts/MUTANTS_FAIR4_20261030T205622Z.txt	b7cc2433e5466d2b	2026-10-30T21:06:27Z	TEST (current)	fair_v4 d491536c6718e494 under tests/test_fair_v4.py 5b923209422ca2d2: 79 of 79
+tests/test_fl_read_v11.py	d5c4bd7865e0c4c8	2026-10-30T21:06:27Z	TEST (current)	132 OK; review D F1: T29UnitWorld
+receipts/MUTANTS_FLREAD11_20261030T205907Z.txt	74c4b5fcbb16d8a8	2026-10-30T21:06:27Z	TEST (current)	fl_read_v11 a2e764accef55078 under tests/test_fl_read_v11.py d5c4bd7865e0c4c8: 29 of 29
+reviews/REVIEW_B_FAIR2_20261030.md	03dc246f96f38f37	2026-10-30T21:06:27Z	TEST (current)	SCOUT's answers header edited 20:06:37Z, after its earlier row (review C)
+reviews/REVIEW_C_FL10_FAIR3_20261030.md	3ed932701d5ae874	2026-10-30T21:06:27Z	TEST (current)	review C (code, edition 10 and ladder v3): PASS WITH ITEMS; SCOUT's answers
+reviews/REVIEW_D_FAIR3_20261030.md	a4d34ca488d0734d	2026-10-30T21:06:27Z	TEST (current)	review D (statistics, ladder v3): FAIL on one claim, fixed by edition 11; SCOUT's answers
+README.md	ec746cbb50250e5c	2026-10-30T21:06:27Z	TEST (current)	reviews C and D: faults 1 and 3, bounds, eligible runs, calibration notes
+ARCHITECTURE.md	33f1aef5be303a33	2026-10-30T21:06:27Z	TEST (current)	review C fault 3: four files; the open list
+SCOPE.md	30ae9529df4123c6	2026-10-30T21:06:27Z	TEST (current)	review C fault 1
+REQUIREMENTS.md	9157d64830a4c438	2026-10-30T21:06:27Z	TEST (current)	review C fault 3; E9 (T29), L10 (T17, T18)
+bar_v1.py	4d5fb6b22bf27b8a	2026-11-02T10:26:07Z	TEST (edition 12)	the bar B per moment; job 20266502
+fl_read_v12.py	20fd9d56a0a22ff8	2026-11-02T10:26:07Z	TEST (edition 12)	reader edition 12; job 20266502
+fair_v5.py	dec0f07ffab2a9a3	2026-11-02T10:26:07Z	TEST (edition 12)	ladder for SIZE at B; job 20266502
+check_fl12_v1.py	13c0292d8dbd7153	2026-11-02T10:26:07Z	TEST (edition 12)	real-data checks inside the job; job 20266502
+tests/test_fl12_v1.py	8fe2f5afc20a0ebd	2026-11-02T10:26:07Z	TEST (edition 12)	tests; job 20266502
+mutants_fl12_v1.py	93fe2a80869c1b3a	2026-11-02T10:26:07Z	TEST (edition 12)	planted bugs; job 20266502
+README.md	2bb64f269b46b05e	2026-11-02T10:26:07Z	TEST (edition 12)	doc; job 20266502
+ARCHITECTURE.md	aaf68ed47f5f1de9	2026-11-02T10:26:07Z	TEST (edition 12)	doc; job 20266502
+REQUIREMENTS.md	8b6439b113f341ca	2026-11-02T10:26:07Z	TEST (edition 12)	doc; job 20266502
+FL12_FILES.tsv	119c179d9a2cfcb7	2026-11-02T10:26:07Z	TEST (edition 12)	list for release; job 20266502
