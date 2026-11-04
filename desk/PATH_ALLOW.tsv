@@ -25,14 +25,14 @@ alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v*.py	SEAT_REQ	DSK	advice
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/queue_job_v4.py	SEAT_REQ	DSK	archived queue, never run
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/*	SEAT_REQ	DSK	tests that check the released queue prints its advice text
 alarm/cards/queue_job_v*	SEAT_REQ	DSK	card of a past queue edition (documents its advice text)
-alarm/cards/first_look.md	SEAT_REQ	DSK	card text on the disk sweep of the lab; README says it does not exist here
-alarm/AGENTS.md	SEAT_REQ	DSK	released agent page: never delete scratch (the rule holds; the seat does not exist here, README says so)
+alarm/cards/first_look.md	SEAT_REQ	DSK	card text on the disk sweep of the lab; docs/DESK_REFERENCE.md says it does not exist here
+alarm/AGENTS.md	SEAT_REQ	DSK	released agent page: never delete scratch (the rule holds; the seat does not exist here, docs/DESK_REFERENCE.md says so)
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v3.py	SEAT_REQ	no START line on hb/	audit message: the run log line (BOARD/<run prefix>.txt; desk sets BOARD to OUTPUT_ROOT/runlog)
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/audit_run_v2.py	SEAT_REQ	hb/	archived code, never run
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/test_kit5_tools_v2.py	SEAT_REQ	hb/AD1.txt	test of the audit message above
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/test_job_entry_v6.py	SEAT_REQ	SEAT =	a test variable: the run prefix of a planted run
 alarm/Agentic/*	SEAT_REQ	<SEAT>	run-prefix placeholder of the kit pages (the part of the run tag before _); the board is the run log
-alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPT_V5.md	SEAT_REQ	hb/DSK	released kit launch prompt (lab history); the desk start page is README.md
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPT_V5.md	SEAT_REQ	hb/DSK	released kit launch prompt (lab history); the desk start page is README.md, the desk steps docs/DESK_REFERENCE.md
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/PROCESS_V7.md	SEAT_REQ	hb/DSK	released kit process page (lab history)
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/skills/alarm-design-v5/SKILL.md	SEAT_REQ	hb/DSK	released kit skill (lab history)
 alarm/Agentic/tree/ALARM_DESIGN/KIT_V6/*	SEAT_REQ	hb/SCOUT	released kit pages (lab history): the kit owner board; not needed in local mode

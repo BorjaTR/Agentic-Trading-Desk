@@ -8,7 +8,7 @@ description: Use before any work on an alarm in the Crypto Alarm Desk repo - wha
 The repo root holds `desk/desk.py`, `alarm/` (the engine) and `loop/` (the learning loop). Pages of `alarm/` that name the lab's FOUND list, scoreboard, registry index or other seats' material describe the lab: those files are
 not shipped, so skip those reads; the desk's registry starts empty (made by `desk.py setup`), and every copy or novelty check is relative
 to this desk's own registry, claims and logged tries only. Read, in this order, before your first try:
-`README.md`, `CLAIMS.md`, `alarm/AGENTS.md` (the step table; where it names lab seats, boards or the lab disk keeper, the desk words below
+`docs/DESK_REFERENCE.md`, `CLAIMS.md`, `alarm/AGENTS.md` (the step table; where it names lab seats, boards or the lab disk keeper, the desk words below
 apply), `loop/LESSONS_GENERAL_V1.tsv` (G rows hold anywhere, M rows are alarm method), `alarm/playbook/ALARM_GOALS_V1.md`,
 `alarm/playbook/PLAYBOOK.md`. Then load the learning-loop skill.
 

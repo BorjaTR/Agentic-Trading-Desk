@@ -9,7 +9,7 @@ why you chose it).
 Load the skills alarm-desk and learning-loop first and follow them. The engine in `alarm/` is read-only: verdicts come only from its
 tools, run through `python3 -B desk/desk.py` from the repo root. If a step needs a tool that is not in the repo, say so and stop.
 
-1. Read README.md, CLAIMS.md, alarm/AGENTS.md, loop/LESSONS_GENERAL_V1.tsv, alarm/playbook/ALARM_GOALS_V1.md and PLAYBOOK.md.
+1. Read docs/DESK_REFERENCE.md, CLAIMS.md, alarm/AGENTS.md, loop/LESSONS_GENERAL_V1.tsv, alarm/playbook/ALARM_GOALS_V1.md and PLAYBOOK.md.
 2. Before any data: search what was tried (loop_find, then tried_search_v1 on your words). Start your thought file. Write your claim:
    which moment; whether it claims SIZE only or SIDE too; who must trade now and why; what is measured and what is inferred; what
    would prove it wrong; the closest existing idea or alarm.
