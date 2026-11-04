@@ -1,0 +1,60 @@
+{
+ "id": "DESKSAMPLE_HOURDROP",
+ "family": "PLUMBING_TEST",
+ "version": "1",
+ "claim": {
+  "one_line": "TEST FIXTURE, not an idea: a coin whose 1 hour price change is below -2 percent",
+  "side_meaning": "+1 = the price was pushed up, -1 = pushed down (here always -1: a drop)",
+  "type": "PREDICT",
+  "footprint_s": 3600,
+  "note": "the sample-data test of the hand check: price only, a fixed line so no history before the sample days is needed"
+ },
+ "window": {
+  "first": "20250901",
+  "last": "20260430"
+ },
+ "grid_s": 60,
+ "inputs": {
+  "px": {
+   "op": "price"
+  },
+  "move": {
+   "op": "change",
+   "of": "px",
+   "w_s": 3600
+  },
+  "side": {
+   "op": "sign",
+   "of": "move"
+  }
+ },
+ "conditions": [
+  {
+   "name": "the 1 hour price change (fraction) is below -0.02",
+   "lhs": "move",
+   "cmp": "<",
+   "rhs": -0.02,
+   "role": "claim"
+  }
+ ],
+ "fire": {
+  "onset": true,
+  "refractory_s": 3600,
+  "side": {
+   "input": "side",
+   "sign": 1
+  }
+ },
+ "truth": [
+  {
+   "name": "forced_after_60m",
+   "kind": "forced_usd",
+   "start_s": 0,
+   "end_s": 3600,
+   "dir": "opp",
+   "floor_usd": 20000
+  }
+ ],
+ "primary": "forced_after_60m",
+ "base": {}
+}
