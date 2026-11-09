@@ -7,15 +7,15 @@
  "files": {
   "team/RESEARCH/tools/alarm_process/event_outcomes_aw1.py": {
    "role": "event_outcomes V3 with the alarm kit window classes (aw1)",
-   "sha16": "a66240b3332ddf00"
+   "sha16": "76adc225ef3bc102"
   },
   "team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv": {
    "role": "the alarm kit window table read by event_outcomes_aw1",
    "schema_sha16": "a89a97ec67af40b0",
-   "sha16": "37decf0075649f69"
+   "sha16": "69c3327ebf4e15a1"
   }
  },
  "releases": {
-  "team/RESEARCH/tools/event_outcomes/RELEASE_event_outcomes_V3_CANDIDATE.json": "2dd498a3b2c1a61e"
+  "team/RESEARCH/tools/event_outcomes/RELEASE_event_outcomes_V3_CANDIDATE.json": "17104e5d1f26e6ee"
  }
 }

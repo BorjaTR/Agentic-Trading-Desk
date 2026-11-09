@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# queue_job_v14.py (SCOUT 2 Nov 2026, V1_19_FIRSTLOOK; TEST, NOT REVIEWED): queue_job_v12.py b851c845508bf1b1 (ALARM_V1_16) plus KIND FIRSTLOOK, nothing else: COUNT, GRADE, ENTRY and MONTH keep their templates, checks and sizes.
+# queue_job_v14.py (SCOUT 2 Nov 2026, V1_19_FIRSTLOOK; TEST, NOT REVIEWED): queue_job_v12.py 7530e9ee597c5bb1 (ALARM_V1_16) plus KIND FIRSTLOOK, nothing else: COUNT, GRADE, ENTRY and MONTH keep their templates, checks and sizes.
 #   queue_job_v14.py --settings S <RUN> FIRSTLOOK <IDEA> <V> --from-job <GRADE job> [--month-job <MONTH job>] [--reader v11|v12] [--unsealed-source] [--dry]
 # GPT HOLD 1 (09:57:42Z): a look's source is bound to its job, digest and period before anything is copied (fl_source); GRADE and MONTH on V14: V13 plus PERFIRE_SEAL.tsv. Edited by hand since make_editions_v1 (twins beside).
 # ALARM_V1_19_1 (GPT HOLD d7f4868861ae2366): one read of the source carries its digest through the job; rows before the look's first day refused; a job that had a seal needs it, whatever the flag; the variant, definition and lean bound to the job's twin; --reader v11|v12, default in the settings, v12's chain builds its BAR tables.
@@ -14,35 +14,35 @@ queue_job_v11.py plus three things, nothing else (same templates, MEM_MB, checks
     the queue copies the card byte for byte to ALARM_CARD.md (opened 'x') after every check passed and before it claims a number
     (--dry says it would); with neither file it refuses NO ALARM CARD as v11.
 The usage line names v12. v11's text follows; where it says queue_job_v11 read queue_job_v14.
-queue_job_v11.py (SCOUT, ALARM_V1_12, by make_v1_12_v1.py from queue_job_v10.py 1b44788a3c484259): the fixes templates JOB_COUNT_V7, JOB_GRADE_V13, JOB_ENTRY_V7, JOB_MONTH_V13 (each ends with its first failed stage's code; a FEED_GATE naming a
+queue_job_v11.py (SCOUT, ALARM_V1_12, by make_v1_12_v1.py from queue_job_v10.py def6c938c345899d): the fixes templates JOB_COUNT_V7, JOB_GRADE_V13, JOB_ENTRY_V7, JOB_MONTH_V13 (each ends with its first failed stage's code; a FEED_GATE naming a
 missing file stops at once; ENTRY reads its own chain folder) and MONTH's MEM_MB 3813 (job 20265358 m12 tree peak 3177 MB + 20 percent).
-Nothing else. queue_job_v10.py (BUILD5, ALARM_V1_10; made by team/BUILD5/proposals/v1_10/jobs/make_jobs_v12.py from queue_job_v9.py 74ca3cebd6664073):
+Nothing else. queue_job_v10.py (BUILD5, ALARM_V1_10; made by team/BUILD5/proposals/v1_10/jobs/make_jobs_v12.py from queue_job_v9.py 17ecac047554fc2a):
 GRADE and MONTH on their V12 templates (chains v2_0_7 / v2_2_7: gm editions, evt1 store); nothing else. The text of queue_job_v9.py follows.
-queue_job_v9.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 2 D1; TEST, NOT REVIEWED): queue_job_v8.py 33384e4c0c541015 with
-only GRADE on JOB_GRADE_V11 (38cc8726273bfd67: chain v2_0_6, ONE process from Outcomes to the reports, perfire and the hand-off from the kept
-rows, 3 cores) and MONTH on JOB_MONTH_V11 (e35a16147513f492: chain v2_2_6, the same, perfire from the kept rows), and GRADE's MEM_MB 2879 for 1
+queue_job_v9.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 2 D1; TEST, NOT REVIEWED): queue_job_v8.py 970df4adfac333e1 with
+only GRADE on JOB_GRADE_V11 (81c9edda5ab18760: chain v2_0_6, ONE process from Outcomes to the reports, perfire and the hand-off from the kept
+rows, 3 cores) and MONTH on JOB_MONTH_V11 (d5b2a44b8ed98e75: chain v2_2_6, the same, perfire from the kept rows), and GRADE's MEM_MB 2879 for 1
 variant and 3000 for 2 or 3 (job 20265194: the measured tree peaks + 20 percent), MONTH's 3758 (job 20265289: its tree peak 3131 MB + 20
 percent; DSK's review M1, team/DSK/notes/reviews/REVIEW_SCOUT_S2_D1_DSK.md 84f086e7ee1bba3b); team/SCOUT/D1_BUILD_PLAN_V1.md. The rest of this text is
 queue_job_v8.py's, with its own name in the usage line and the refusals:
-queue_job_v8.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): queue_job_v7.py eb939ea8df0e1cd4 with only GRADE
-on JOB_GRADE_V10 (a55a4d3f6841919d: chain v2_0_5, the Outcomes runs and then the menu and the card at the same time, each perfire beside the next
-step, 6 cores declared) and MONTH on JOB_MONTH_V10 (ea6615240f713e14: chain v2_2_5, its Outcomes runs and then its menu and card at the same
+queue_job_v8.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): queue_job_v7.py 5f9a50a3c5f525a7 with only GRADE
+on JOB_GRADE_V10 (35ff1397e19ab0a9: chain v2_0_5, the Outcomes runs and then the menu and the card at the same time, each perfire beside the next
+step, 6 cores declared) and MONTH on JOB_MONTH_V10 (9e4b771485b43cd5: chain v2_2_5, its Outcomes runs and then its menu and card at the same
 time); team/SCOUT/SPEED_V2_0_DESIGN_V1.md Q1-Q3; GRADE's MEM_MB 2710 for 1 variant (job 20265150: tree peak 2253 MB + 20 percent) and 2931 for 2 or 3 (job 20265156: tree peak 2442 MB + 20 percent; CONDUCTOR's design review M1). The rest of this text is queue_job_v7.py's:
-queue_job_v7.py: queue_job_v6.py 4d75cfc98d5ad34e with only
-GRADE and MONTH on their V9 templates and MONTH's MEM_MB changed: JOB_GRADE_V9 (44f978cbd45ff83e: chain v2_0_4, Outcomes in 3 worker
-processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (b59f63f7d2d6ff16: chain v2_2_4, the detection parts by the chain's
+queue_job_v7.py: queue_job_v6.py d4477631c22b027a with only
+GRADE and MONTH on their V9 templates and MONTH's MEM_MB changed: JOB_GRADE_V9 (cf0baab20d828d61: chain v2_0_4, Outcomes in 3 worker
+processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (fe73a394772eb046: chain v2_2_4, the detection parts by the chain's
 rule, 3 cores declared, one du at the end), K16 T5, T6 and T8; MONTH's MEM_MB 4030, the measured peak + 20 percent (WORKING_SESSION_V16
 section 0.7; job 20264959 x1: a 2-part tree up to 3,355,115,520 bytes, DETECT_RUN_B.json sum_peak_rss_bytes; was 8000). SCOUT, 31 Oct 2026 (the owner 10:51 Berlin, of CLEAN: "remove it"; scratch cleanup is DSK's, on
 the owner's word): KIND CLEAN is refused (CLEAN REMOVED) and is in no table; a finished job's scratch counts in the disk budget only while
 its folder is on SCRATCH_DISK (DSK's sweep frees it); GRADE's MEM_MB 2710, the measured V9 peak + 20 percent (job 20265002: the detection
 part tree 2,255,994,880 bytes, the two parts one after the other; was 6000). The docstring of queue_job_v6.py follows.
-queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only
-GRADE and MONTH moved to JOB_GRADE_V8 (e4a9c7555c17879e) and JOB_MONTH_V8 (54cf0fa5f92fcfd3), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
+queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only
+GRADE and MONTH moved to JOB_GRADE_V8 (bde3b7d82e6ce7f7) and JOB_MONTH_V8 (7779de8ad87bffee), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
 stop gate from FEED_GATE and the research days from RESEARCH_STORE, and the job path placeholder @@RESEARCH_STORE@@ (the settings key
 RESEARCH_STORE of the machine that runs the job: now one of the keys --job-settings must have). The rest of this text is
 queue_job_v5.py's.
 queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED). The only way a KIT_V5 agent queues a job, run from the
-Alarm package. queue_job_v4.py (dc19a63f01c4e8fe) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
+Alarm package. queue_job_v4.py (3d5abaea8c3cbe33) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
 Berlin: "Let's make sure everything can run from the release folder"):
   - code only from the Alarm folder that holds this file (settings_v1.alarm_root): the job templates TEMPLATE_NAME (JOB_<KIND>_V6,
     GRADE and MONTH V7: Agentic/tree/ALARM_DESIGN/KIT_V5/jobs, pinned by TEMPLATE_SHA) and the register writer reg_append_v1.py
@@ -135,8 +135,8 @@ CFG = {
     'now': lambda: datetime.datetime.now(datetime.timezone.utc),     # the clock tests plant; no rule reads it since the quiet window went
     'free_mb': None,          # tests set a function; None = statvfs of CFG['WDB']
 }
-TEMPLATE_SHA = {'COUNT': '9acb9c0c2b241320', 'GRADE': '068508343ac4dbc9', 'MONTH': '5404a0c5f7676417',
-                'ENTRY': 'fdc51e1f114f4906', 'FIRSTLOOK': '395f8aaf5a1f432c'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
+TEMPLATE_SHA = {'COUNT': 'ac237070224af425', 'GRADE': '8910f9ec0728be8b', 'MONTH': '09a83bf3ab337c3b',
+                'ENTRY': 'aa3101178ff59030', 'FIRSTLOOK': '395f8aaf5a1f432c'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
 # the store runner v11 and the grader rel1, by SCOUT K6, 31 Oct; GRADE V7: chain v2_0_2 with the grader rel1 and its relative pins, and
 # MONTH V7: chain v2_2_2 with the aw1 rel1 editions and their relative pins, by SCOUT K12, 31 Oct, after round 7 found every V6 GRADE
 # refused UNPINNED_MODULE; GRADE V8 and MONTH V8: chains v2_0_3 and v2_2_3, Outcomes with the gate from FEED_GATE and the research

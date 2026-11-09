@@ -114,12 +114,12 @@
  },
  "release": "idea_to_grade_V2_1_CANDIDATE",
  "releases": {
-  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_6.json": "2379f904369c0250",
+  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_6.json": "df94e173dbb3a626",
   "team/RESEARCH/tools/alarm_match/RELEASE_alarm_match_V3_6.json": "77dc35bec287ab4d",
   "team/RESEARCH/tools/event_profile/RELEASE_event_profile_V2_CANDIDATE.json": "9435b78d1e883b7c",
   "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_6.json": "1485fb4a4c44e599"
  },
- "replaces": "RELEASE_idea_to_grade_V2_CANDIDATE.json (74469f7f6c4bb389)",
+ "replaces": "RELEASE_idea_to_grade_V2_CANDIDATE.json (aefb7b31d2739b74)",
  "run_time_pins": {
   "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json",
   "files": 39,

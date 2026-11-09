@@ -1,7 +1,7 @@
 {
  "tool": "queue_job_v6",
  "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v6.py",
- "file_sha16": "4d75cfc98d5ad34e",
+ "file_sha16": "d4477631c22b027a",
  "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
  "step": "steps 6 GRADE and 10 MONTH of AGENTS.md: GRADE on JOB_GRADE_V8 and MONTH on JOB_MONTH_V8 (since ALARM_V1_6, Outcomes with the feed gate from FEED_GATE and the research days from RESEARCH_STORE); COUNT, ENTRY and CLEAN the same jobs as queue_job_v5 queues",
  "question": "How do I queue my GRADE job, or the MONTH job of a decided variant, so that the runner runs it from the release folder?",
@@ -456,15 +456,15 @@
  "reads": [
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V6.job.sh.txt",
-   "sha16": "57b5c18ed82061f6"
+   "sha16": "ff3455fd96087ed7"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V8.job.sh.txt",
-   "sha16": "e4a9c7555c17879e"
+   "sha16": "bde3b7d82e6ce7f7"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V8.job.sh.txt",
-   "sha16": "54cf0fa5f92fcfd3"
+   "sha16": "7779de8ad87bffee"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py",

@@ -1,5 +1,5 @@
 # idea_to_grade_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED; the owner 30 Oct 2026 23:07 Berlin: "All alarm tools should work from
-# the release folder only"): a new edition for the clean release. Old file: alarm_process/idea_to_grade_aw1.py e35b17019a3d34f6, never
+# the release folder only"): a new edition for the clean release. Old file: alarm_process/idea_to_grade_aw1.py 1f0c7a2f04e32d12, never
 # edited. It is idea_to_grade_rel1.py edee6bbe51a2bbde (SCOUT K6: idea_to_grade.py V2.3.1 with its paths changed: the tree root from its
 # file, --lab-root and --pins required, --gate, the kernels i2g_engine_rel1, i2g_grade_rel1, detect_v2) with idea_to_grade_aw1.py's aw1
 # changes and nothing else: (1) the research window CLASSES from alarm_process/WINDOWS_ALARM_V1.tsv (sha16 checked); (2) the original
@@ -58,7 +58,7 @@ US = 1_000_000
 DIRECTIONS = ('FOLLOW', 'FADE')
 
 
-WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 PINS_FILE = None                                                    # rel1: no default; aw1's run gives --pins I2G_PINS_AW1_REL1.json beside this file
 RUN_SCHEMA = 'I2G_RUN_V2'
 # the exact file inventory of a published run (A54-F3): verify_run refuses a manifest that names more or fewer files than this

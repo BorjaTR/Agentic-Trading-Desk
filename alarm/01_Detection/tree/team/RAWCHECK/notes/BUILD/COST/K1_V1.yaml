@@ -312,7 +312,7 @@ implementation:
 data_checks:
   - what: the share of coin-minutes where S01 is exactly one price step, and each coin's step (one read-only runner job)
     who: TREE
-  - what: "the CARRY of the first year day: is 9 Sep 2025's book_ticker file on the Expansion for every roster coin"
+  - what: "the CARRY of the first year day: is 9 Sep 2025's book_ticker file on the ARCHIVE_DISK2 for every roster coin"
     who: TREE (a read-only runner job)
   - what: the Hyperliquid book source (ADDON_ARCHITECTURE_V3 section 12, question 2); until then K1 is Binance's
     who: the owner

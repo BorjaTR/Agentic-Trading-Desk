@@ -44,9 +44,9 @@
   "RET_180M"
  ],
  "months": {
-  "design_last": "20251231",
+  "design_last": "20260331",
   "first": "20250910",
-  "full_last": "20260430",
+  "full_last": "20260331",
   "run_first": "20250901"
  },
  "pins": [
@@ -68,7 +68,7 @@
   },
   {
    "rel": "01_Detection/tree/team/LAB3/code/lab3/law.py",
-   "sha16": "f777c329396b6190"
+   "sha16": "0802358832de2b23"
   },
   {
    "rel": "01_Detection/tree/team/LAB3/code/lab3/days.py",
@@ -130,7 +130,7 @@
   },
   "outcomes": {
    "rel": "01_Detection/tree/team/RESEARCH/tools/alarm_process/event_outcomes_aw1_rel1.py",
-   "sha16": "3dff0aa8fdda0d75"
+   "sha16": "fc1fb81710a44342"
   },
   "profile": {
    "rel": "05_Profile/tree/tools/alarm_profile_v2/alarm_profile_v2_3.py",

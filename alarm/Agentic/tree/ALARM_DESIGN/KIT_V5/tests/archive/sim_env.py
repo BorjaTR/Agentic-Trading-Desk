@@ -88,7 +88,7 @@ def build(root):
         w(path, body, mode); shamap[real] = sha16(path)
     tool(os.path.join(AP, 'alarm_grade_chain_v2_0_to20251231.sh'), STUB_CHAIN, '94273faf1e927ddc', 0o755)
     tool(os.path.join(AP, 'alarm_grade_chain_v2_1_to20260430.sh'), STUB_CHAIN.replace('#!/bin/bash', '#!/bin/bash\n# v2_1'), '99e8a229617cb2e2', 0o755)
-    tool(os.path.join(R, 'tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh'), STUB_CHAIN.replace('#!/bin/bash', '#!/bin/bash\n# v2_2 (26 coin parts; PARTS from the env)'), 'c24bd949b32c8e24', 0o755)
+    tool(os.path.join(R, 'tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh'), STUB_CHAIN.replace('#!/bin/bash', '#!/bin/bash\n# v2_2 (26 coin parts; PARTS from the env)'), 'fc167d9273d172ab', 0o755)
     tool(os.path.join(AP, 'alarm_card_v1_2.py'), '# card 1_2\n', 'c3172f94e389cadb'); tool(os.path.join(AP, 'alarm_card_v1_3.py'), '# card 1_3\n', 'a616c4378a02852b')
     tool(os.path.join(T1, 'perfire_v1_to20260430.py'), STUB_PERFIRE, '59a865d0127d1482'); tool(os.path.join(T1, 'test_perfire_v1.py'), STUB_OK, '12996df3af189030')
     tool(os.path.join(T1, 'lead_null_v1_to20251231.py'), STUB_LEADNULL, '63fe4fbdd283a777')

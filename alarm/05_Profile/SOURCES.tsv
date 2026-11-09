@@ -25,9 +25,9 @@ tree/tools/alarm_profile/RELEASE_profile_V1_2.json	team/RESEARCH/tools/alarm_pro
 tree/tools/alarm_profile/RELEASE_profile_V1_3.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_3.json	038ae99c0eafc5c3	3129	edition 1 release _3
 tree/tools/alarm_profile/RELEASE_profile_V1_4.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_4.json	412fd6bb85b54d5d	4669	edition 1 release _4
 tree/tools/alarm_profile/RELEASE_profile_V1_5.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_5.json	e0b27a3703d4029e	4762	edition 1 release _5
-tree/tools/alarm_profile/RELEASE_profile_V1_6.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_6.json	c34c99b0bec9a123	4634	edition 1 release _6
-tree/tools/alarm_profile/RELEASE_profile_V1_7.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_7.json	0f9d6046c4a9dcd1	4562	edition 1 release _7
-tree/tools/alarm_profile/RELEASE_profile_V1_8.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/05_Profile/tree/tools/alarm_profile/RELEASE_profile_V1_8.json	eca2c8a125d24283	4949	edition 1 release _8
+tree/tools/alarm_profile/RELEASE_profile_V1_6.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_6.json	a678b73696456208	4634	edition 1 release _6
+tree/tools/alarm_profile/RELEASE_profile_V1_7.json	team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_7.json	d765a12354771181	4562	edition 1 release _7
+tree/tools/alarm_profile/RELEASE_profile_V1_8.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/05_Profile/tree/tools/alarm_profile/RELEASE_profile_V1_8.json	6992baf727bb0604	4949	edition 1 release _8
 tree/tools/alarms/a01_onset_v2.py	team/RESEARCH/tools/alarms/a01_onset_v2.py	ffe90db285aa85c5	9601	A01 onset definition (episode_blocks imports it)
 tree/tools/alarms/a02_climax_v3.py	team/RESEARCH/tools/alarms/a02_climax_v3.py	ded5b36195f4b1b5	9863	A02 climax definition (episode_blocks imports it)
 tree/tools/alarm_context/alarm_context.py	team/RESEARCH/tools/alarm_context/alarm_context.py	38bdf42a6bdae4cb	21728	context values (the profile command reads them)
@@ -43,9 +43,9 @@ tree/tools/alarm_context/RELEASE_context_V1_1.json	team/RESEARCH/tools/alarm_con
 tree/tools/alarm_context/RELEASE_context_V1_2.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_2.json	866f2e53c8fefaa2	3491	alarm_context release
 tree/tools/alarm_context/RELEASE_context_V1_3.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_3.json	0502a07143f81678	4585	alarm_context release
 tree/tools/alarm_context/RELEASE_context_V1_4.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_4.json	87f3c60f29048b06	4594	alarm_context release
-tree/tools/alarm_context/RELEASE_context_V1_5.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_5.json	4f9700923b5b03af	4467	alarm_context release
-tree/tools/alarm_context/RELEASE_context_V1_6.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_6.json	ed721f0f40242c93	4395	alarm_context release
-tree/tools/alarm_context/RELEASE_context_V1_7.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/05_Profile/tree/tools/alarm_context/RELEASE_context_V1_7.json	789a9a01eb4d5cea	4782	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_5.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_5.json	5a6657754ff57747	4467	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_6.json	team/RESEARCH/tools/alarm_context/RELEASE_context_V1_6.json	cae71f9609aa14ba	4395	alarm_context release
+tree/tools/alarm_context/RELEASE_context_V1_7.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/05_Profile/tree/tools/alarm_context/RELEASE_context_V1_7.json	759e7fe9c1332ea1	4782	alarm_context release
 tree/tools/alarms/alarm_view_v1.py	team/RESEARCH/tools/alarms/alarm_view_v1.py	6e25ccaf52f736c8	17723	alarm view (alarm_context imports it)
 tree/QUANT/receipts/COSTS_PER_COIN_V4.tsv	team/RESEARCH/QUANT/receipts/COSTS_PER_COIN_V4.tsv	7c393e6b5e8505f7	37646	cost per coin (alarm_context reads ../../QUANT/receipts)
 tree/tools/alarm_context/CTX_OUTPUT_PROOFS_V1.tsv	team/RESEARCH/tools/alarm_context/CTX_OUTPUT_PROOFS_V1.tsv	ddb8e15f943f1672	5025	context output proof cards (test_ctx_output_proofs reads them)

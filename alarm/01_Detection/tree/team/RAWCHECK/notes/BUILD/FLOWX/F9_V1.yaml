@@ -63,7 +63,7 @@ inputs:
     exists: false
     stream: 'Binance USD-M aggTrades (data.binance.vision archive)'
     data_check: >-
-      D4: which days are held (HANDOVER_EDGE1_V103 901368a5 says the Expansion holds aggtrades to 1 Aug 2026; BUILD_LIST_V4 03c7ed28
+      D4: which days are held (HANDOVER_EDGE1_V103 901368a5 says the ARCHIVE_DISK2 holds aggtrades to 1 Aug 2026; BUILD_LIST_V4 03c7ed28
       line 42 says 113 coin-days held); the header row and column order; it refuses JUL_UNSEEN and every day from 1 Aug 2026
     rule_in_force: through F6
     stale_rule: through F6 (B1 rule 22 on its empty rows)

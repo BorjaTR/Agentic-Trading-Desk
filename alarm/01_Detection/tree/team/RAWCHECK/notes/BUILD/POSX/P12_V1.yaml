@@ -50,7 +50,7 @@ inputs:
     ref: prod_reader_binance_metrics_v1
     exists: false
     data_check: >-
-      the new reader over Expansion volat_archive/metrics_um (5 minute rows, 2022 to 31 Jul 2026, HANDOVER_EDGE1_V103 line 41):
+      the new reader over ARCHIVE_DISK2 volat_archive/metrics_um (5 minute rows, 2022 to 31 Jul 2026, HANDOVER_EDGE1_V103 line 41):
       columns create_time, symbol, count_toptrader_long_short_ratio, sum_toptrader_long_short_ratio, count_long_short_ratio;
       the timestamp test and the coverage (data checks 1 and 3 below; the column mapping is the owner's ruling, not a data check, EDGE1 20:47:25Z)
     stream: Binance metrics_um daily files per symbol (1000x symbols by their Binance names, 1000PEPEUSDT)
@@ -198,5 +198,5 @@ data_checks:
     who: the builder, a read-only runner job
   - what: 'the column mapping is NOT checked by data: the owner ruled sum_toptrader_long_short_ratio = positions, count_toptrader_long_short_ratio = accounts, by the columns'' names (EDGE1 20:47:25Z, option 1 of 3); the archive ends 31 Jul 2026, Binance REST keeps 30 days, and nothing is fetched from 1 Aug 2026 on'
     who: the owner (ruled 18 Oct 2026); the card says so
-  - what: 'coverage: metrics files per coin and day for 10 Sep 2025 to 9 Mar 2026 on the Expansion, and the file day layout in 2026 (HANDOVER_EDGE1_V103 line 89 names 2025)'
+  - what: 'coverage: metrics files per coin and day for 10 Sep 2025 to 9 Mar 2026 on the ARCHIVE_DISK2, and the file day layout in 2026 (HANDOVER_EDGE1_V103 line 89 names 2025)'
     who: the builder, a read-only runner job

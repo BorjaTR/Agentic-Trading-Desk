@@ -7,7 +7,7 @@
 group: NAUTILUS
 name: volatility and volume (nautilus, built on our 1-minute candles, the volume from the candle base)
 summary: 'Eight numbers of NautilusTrader 1.231.0: atr (a simple mean of 14 true ranges), rvi (the share of volatility on up closes), vr (the 30-candle mean true range over the 10-candle one), kp (the close in Keltner half-widths), and four volume numbers on the candle''s open and volume (the shared base): obv over 1,440 candles signed by close against open, kvo (a volume MACD by typical-price direction), pressure and its 1,440-candle sum. Six RENAMED (RULING 3): atr (SMA_14, not Wilder), rvi (EMA_10, not Wilder 14), vr, obv, kvo and pressure.value_cumulative say other formulas than their names.'
-read_as: 'How big the minutes are and whether volume backs the move, on one coin. The four price settings equal the card''s formula on the year''s C13 candles at every coin-minute of two days (J15975, J15976: 0 MISS); the four volume settings equal it on 8 Mar with the candle base''s open and volume (J15975: 299,520 values, 0 MISS); on 24 Sep they differ wherever the base''s volume does (the Expansion trades copy lacks rows the year read after 08:03 and on 23 Sep: METRIC_AUDIT2 J15958): an open of the base, not of the formula. atr is a simple mean, 0.9850 of Wilder''s ATR(14) at the median (p10 0.8720, p90 1.1261; corr 0.9900). vr is slow over fast, not Schwager''s TR / ATR (corr 0.6834 even with its own Wilder form). obv signs by the candle''s close against its OPEN, Granville by the previous close: the signs differ on 10561 of 74880 minutes; and it is a 1,440-candle window, not cumulative. kvo is not Klinger''s volume force. On Binance''s own klines our formulas give the same numbers (corr 0.9995 to 1.0000, J15978).'
+read_as: 'How big the minutes are and whether volume backs the move, on one coin. The four price settings equal the card''s formula on the year''s C13 candles at every coin-minute of two days (J15975, J15976: 0 MISS); the four volume settings equal it on 8 Mar with the candle base''s open and volume (J15975: 299,520 values, 0 MISS); on 24 Sep they differ wherever the base''s volume does (the ARCHIVE_DISK2 trades copy lacks rows the year read after 08:03 and on 23 Sep: METRIC_AUDIT2 J15958): an open of the base, not of the formula. atr is a simple mean, 0.9850 of Wilder''s ATR(14) at the median (p10 0.8720, p90 1.1261; corr 0.9900). vr is slow over fast, not Schwager''s TR / ATR (corr 0.6834 even with its own Wilder form). obv signs by the candle''s close against its OPEN, Granville by the previous close: the signs differ on 10561 of 74880 minutes; and it is a 1,440-candle window, not cumulative. kvo is not Klinger''s volume force. On Binance''s own klines our formulas give the same numbers (corr 0.9995 to 1.0000, J15978).'
 conclude:
   may:
   - 'the usual size of a candle''s move (atr, USDT) and whether the last 10 candles are calmer (vr above 1) than the last 30'
@@ -177,7 +177,7 @@ settings:
   renamed_from: obv.value
   computation:
     status: RELIABLE
-    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 11,637, MISS 61,803 where the base''s volume differs from the year''s input (the Expansion trades copy, METRIC_AUDIT2 J15958): an open of the base'
+    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 11,637, MISS 61,803 where the base''s volume differs from the year''s input (the ARCHIVE_DISK2 trades copy, METRIC_AUDIT2 J15958): an open of the base'
   meaning:
     status: DEFINED_WITH_OPEN
     proof: 'our formula on Binance klines: corr 1.0000, Spearman 0.9998, |gap| median 1125 p90 2.531e+05 max 1.693e+07, same sign 99.94% at 74,880 coin-minutes (per coin corr lowest 0.9763, median 1.0000) (J15978); name test: the two signs differ on 10561 of 74880 kline minutes with volume (J15977 name)'
@@ -196,7 +196,7 @@ settings:
   renamed_from: kvo.value
   computation:
     status: RELIABLE
-    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 34,793, MISS 38,647 where the base''s volume differs from the year''s input (the Expansion trades copy, METRIC_AUDIT2 J15958): an open of the base'
+    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 34,793, MISS 38,647 where the base''s volume differs from the year''s input (the ARCHIVE_DISK2 trades copy, METRIC_AUDIT2 J15958): an open of the base'
   meaning:
     status: DEFINED_WITH_OPEN
     proof: 'our formula on Binance klines: corr 0.9999, Spearman 0.9934, |gap| median 10.54 p90 918.2 max 6.328e+05, same sign 99.12% at 74,880 coin-minutes (per coin corr lowest 0.9907, median 0.9996) (J15978)'
@@ -214,7 +214,7 @@ settings:
   name: 'pressure (Nautilus)'
   computation:
     status: RELIABLE
-    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 59,011, MISS 14,429 where the base''s volume differs from the year''s input (the Expansion trades copy, METRIC_AUDIT2 J15958): an open of the base'
+    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 59,011, MISS 14,429 where the base''s volume differs from the year''s input (the ARCHIVE_DISK2 trades copy, METRIC_AUDIT2 J15958): an open of the base'
   meaning:
     status: DEFINED_WITH_OPEN
     proof: 'our formula on Binance klines: corr 0.9999, Spearman 0.9986, |gap| median 1.292e-12 p90 1.963e-05 max 3.627, same sign 93.37% at 74,880 coin-minutes (per coin corr lowest 0.9977, median 1.0000) (J15978); Nautilus''s own indicator, no textbook form'
@@ -233,7 +233,7 @@ settings:
   renamed_from: pressure.value_cumulative
   computation:
     status: RELIABLE
-    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 8,513, MISS 64,927 where the base''s volume differs from the year''s input (the Expansion trades copy, METRIC_AUDIT2 J15958): an open of the base'
+    proof: 'J15975: equal to the formula on the year''s C13 candles with the base''s open and volume at 74,880 of 74,880 coin-minutes of 8 Mar 2026 (every minute end, 52 coins), 0 MISS; 24 Sep 2025 (J15976): MATCH 8,513, MISS 64,927 where the base''s volume differs from the year''s input (the ARCHIVE_DISK2 trades copy, METRIC_AUDIT2 J15958): an open of the base'
   meaning:
     status: DEFINED_WITH_OPEN
     proof: 'our formula on Binance klines: corr 0.9998, Spearman 0.9995, |gap| median 0.2576 p90 1.912 max 42.93, same sign 99.87% at 74,880 coin-minutes (per coin corr lowest 0.9693, median 1.0000) (J15978); Nautilus''s own indicator, windowed by the owner''s O5 A'

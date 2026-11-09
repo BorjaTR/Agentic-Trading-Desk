@@ -2,7 +2,7 @@
  "schema": "DECIDE_ADMITTED_V1",
  "note": "which input files decide_v1 may read: each must be named (by sha16) in its library's signed release record, or in a receipt that release names. A field's library status column, where the library has one, must hold an admitted status. Context V4.1: CANDIDATE fields are the ones its release admits for research; NOT_PROVEN and RETROSPECTIVE_METADATA are refused. Profile V5.1 and pre-move V1.2 cards carry no field status column.",
  "libraries": {
-  "universe": {"release": "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json", "sha16": "69df7350a98e9681", "receipts": []},
+  "universe": {"release": "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json", "sha16": "9313e71aa3176240", "receipts": []},
   "ctx.": {"release": "team/RESEARCH/LIBRARY/context_split/RELEASE_CONTEXT_LIBRARY_V4_1.json", "sha16": "7cf0e70df34d3e5d", "receipts": []},
   "prof.": {"release": "team/RESEARCH/LIBRARY/RELEASE_PROFILE_LIBRARY_V5_1.json", "sha16": "3ec68bf6416c3b3e", "receipts": [
     {"path": "<SCRATCH>/work_PROFLIB/cards_v5_1/a/RUN_RECEIPT.json", "sha16": "0c7ca9f814b77298"},

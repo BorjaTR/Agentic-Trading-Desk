@@ -53,7 +53,7 @@ CFG = {
     'now': lambda: datetime.datetime.now(datetime.timezone.utc),
     'free_mb': None,          # tests set a function; None = statvfs of CFG['WDB']
 }
-TEMPLATE_SHA = {'COUNT': '66e9ae3038160241', 'GRADE': '4a28c8ba3a23347a', 'ENTRY': 'c36ac948e53ea3b1', 'MONTH': '4835bdfb4a20f665', 'CLEAN': 'a6c3c57bd394159e'}
+TEMPLATE_SHA = {'COUNT': '66e9ae3038160241', 'GRADE': '4a28c8ba3a23347a', 'ENTRY': 'c36ac948e53ea3b1', 'MONTH': '3f041130ce77b1e2', 'CLEAN': 'a6c3c57bd394159e'}
 KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH', 'CLEAN')
 WORK = ('COUNT', 'GRADE', 'ENTRY', 'MONTH')
 JOBNAME = re.compile(r'^[0-9]+_(COUNT|GRADE|ENTRY|MONTH)_[A-Z][A-Z0-9]{0,23}$')

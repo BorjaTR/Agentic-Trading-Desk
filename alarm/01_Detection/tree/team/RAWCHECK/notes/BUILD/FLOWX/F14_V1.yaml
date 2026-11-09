@@ -282,7 +282,7 @@ real_check:
       why: 5 s points that are not minute ends (which rows enter and leave the 60 bars)
     - point: 2025-09-24, BTCUSDT and the thin coin, the 5 s points 00:00:00, 00:00:05, 12:00:00 and 23:59:55
       why: >-
-        the year's checked day, a second day; the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's
+        the year's checked day, a second day; the 12 minutes of 22 to 24 Sep 2025 where the ARCHIVE_DISK2 copy lacks taker rows the year's
         B1 has (ADDON_ARCHITECTURE_V4 section 6, V3 section 6 standing) are found before the job
     - point: 2025-10-10 evening, BTCUSDT and the thin coin, 3 minute ends the tester picks before the job
       why: the crash (large flows and moves)

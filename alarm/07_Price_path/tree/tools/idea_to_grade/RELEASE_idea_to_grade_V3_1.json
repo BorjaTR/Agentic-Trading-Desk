@@ -62,8 +62,8 @@
   "real": "13/13 passed (independent reviewer, Mac, 14.9 s)"
  },
  "v2_release_unchanged": {
-  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json": "7be3186f7957dde7",
-  "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json": "7b001bf565d45378"
+  "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V2.json": "0127d655ccffe185",
+  "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json": "1ceb661d66eb4d46"
  },
  "written_utc": "2026-10-25T21:52:11Z"
 }

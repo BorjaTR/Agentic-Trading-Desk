@@ -27,13 +27,13 @@ JM8, JM9 = J(KIT, 'jobs', 'JOB_MONTH_V8.job.sh.txt'), J(KIT, 'jobs', 'JOB_MONTH_
 Q6, Q7 = J(KIT, 'tools', 'queue_job_v6.py'), J(KIT, 'tools', 'queue_job_v7.py')
 TG8, TG9 = J(KIT, 'tests', 'test_job_grade_v8.py'), J(KIT, 'tests', 'test_job_grade_v9.py')
 TM8, TM9 = J(KIT, 'tests', 'test_job_month_v8.py'), J(KIT, 'tests', 'test_job_month_v9.py')
-PARENTS = {CH4: (CH3, 'a454510a574b830c'), CM4: (CM3, 'b6329f781acd749d'), JG9: (JG8, 'e4a9c7555c17879e'),
-           JM9: (JM8, '54cf0fa5f92fcfd3'), Q7: (Q6, '4d75cfc98d5ad34e'), TG9: (TG8, 'b462750e4c831eeb'), TM9: (TM8, 'fe30bb7cf5e44318')}
+PARENTS = {CH4: (CH3, 'bb1d5af53b2f42fc'), CM4: (CM3, '54ae483e8498908c'), JG9: (JG8, 'bde3b7d82e6ce7f7'),
+           JM9: (JM8, '7779de8ad87bffee'), Q7: (Q6, 'd4477631c22b027a'), TG9: (TG8, 'c9b72aeac00eba82'), TM9: (TM8, 'bd7d224d88b79304')}
 ORDER = (CH4, CM4, JG9, JM9, Q7, TG9, TM9)
 TOKEN = re.compile(r'<<SHA16:([^>]+)>>')
 
 HDR_CH4 = r"""# alarm_grade_chain_v2_0_4_to20251231.sh (SCOUT K16, 31 Oct 2026, home team/RESEARCH/tools/alarm_process; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_0_3_to20251231.sh a454510a574b830c with only Outcomes (step 5) changed (K16 T5; SCOUT 31 Oct: "T5 goes back into
+# alarm_grade_chain_v2_0_3_to20251231.sh aa8ea2e5c86d5a70 with only Outcomes (step 5) changed (K16 T5; SCOUT 31 Oct: "T5 goes back into
 # V1_7, for GRADE only"): event_outcomes_rel1.py runs in 3 worker processes (run 3) in place of 1 (run 1), on the alarm list and on the
 # random list; the job declares 3 cores (JOB_GRADE_V9; WORKING_SESSION_V16 section 0.7: a job declares its cores). Why: job 20264959 x2
 # (team/SCOUT/receipts/20264959_K16PROF/x2/PARTS_EQUAL.txt 23b6b94481fa2cfa): one Outcomes root in 24.2 s against 34.6 s (its worker
@@ -45,7 +45,7 @@ HDR_CH4 = r"""# alarm_grade_chain_v2_0_4_to20251231.sh (SCOUT K16, 31 Oct 2026, 
 """
 
 HDR_CM4 = r"""# alarm_grade_chain_v2_2_4_to20260430.sh (SCOUT K16, 31 Oct 2026, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d with only the detection (step 1) changed (K16 T6; SCOUT 31 Oct, with the fixes
+# alarm_grade_chain_v2_2_3_to20260430.sh 5895b8034a46b55d with only the detection (step 1) changed (K16 T6; SCOUT 31 Oct, with the fixes
 # of the reviews REV1 and REV2): the part count is the chain's rule, never the job's: 2 parts, or 26 up front for a SERIAL_FORCED
 # definition (detect_aw1_rel1.py's own parallel_mode: one process for all days; LG4's halves, see v2_2's header below); a part the
 # detector refuses with WORKER_RSS_CAP is re-split alone into new folders, its own folder kept and never merged; a coin census before
@@ -159,7 +159,7 @@ EDITS = {
           ('(alarm_grade_chain_v2_0_3_to20251231: v2_0_2 with Outcomes event_outcomes_rel1,',
            '(alarm_grade_chain_v2_0_4_to20251231: v2_0_3 with Outcomes in 3 worker processes; v2_0_3: v2_0_2 with Outcomes event_outcomes_rel1,', 1),
           CORES,
-          ('ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh a454510a574b830c', 'ck $CH/alarm_grade_chain_v2_0_4_to20251231.sh <<SHA16:%s>>' % CH4, 1),
+          ('ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh bb1d5af53b2f42fc', 'ck $CH/alarm_grade_chain_v2_0_4_to20251231.sh <<SHA16:%s>>' % CH4, 1),
           ('bash $CH/alarm_grade_chain_v2_0_3_to20251231.sh $V $D $W', 'bash $CH/alarm_grade_chain_v2_0_4_to20251231.sh $V $D $W', 1),
           ('"chain v2_0_3 Sep-Dec, lean $L"', '"chain v2_0_4 Sep-Dec, lean $L"', 1),
           (DU_OLD, DU_NEW, 1), (END_OLD, END_NEW, 1)],
@@ -170,7 +170,7 @@ EDITS = {
            '(# CORES 3), MEM_MB the measured peak + 20 percent (queue_job_v7) and one du at the end (K16 T8), SCOUT K16, 31 Oct; chain '
            'v2_2_3: v2_2_2 with', 1),
           CORES,
-          ('ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d', 'ck $MP/alarm_grade_chain_v2_2_4_to20260430.sh <<SHA16:%s>>' % CM4, 1),
+          ('ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh 54ae483e8498908c', 'ck $MP/alarm_grade_chain_v2_2_4_to20260430.sh <<SHA16:%s>>' % CM4, 1),
           ('PARTS=26 LEAN=$L bash $MP/alarm_grade_chain_v2_2_3_to20260430.sh $V $D $W', 'PARTS= LEAN=$L bash $MP/alarm_grade_chain_v2_2_4_to20260430.sh $V $D $W', 1),
           ('  st grade_$V $r $(( $(date +%s)-t0 )) "chain v2_2_3 Sep-Apr in 26 coin parts, lean $L"',
            "  NPM=$(tail -n +2 $W/DETECT_PARTS_$V.tsv 2>/dev/null | cut -f5 | grep -c '^merged$'); "
@@ -179,19 +179,19 @@ EDITS = {
            '  for h in $(tail -n +2 $W/DETECT_PARTS_$V.tsv 2>/dev/null | cut -f1); do [ -f $W/det_${V}_v1_$h/DETECT_RUN.json ]', 1),
           ('  for x in CARD_$V.txt SUM_$V.tsv STATUS_$V.tsv INPUTS_$V.txt', '  for x in CARD_$V.txt SUM_$V.tsv STATUS_$V.tsv DETECT_PARTS_$V.tsv INPUTS_$V.txt', 1),
           (DU_OLD, DU_NEW, 1), (END_OLD, END_NEW, 1)],
-    Q7: [('"""queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only',
-          '"""queue_job_v7.py (SCOUT K16 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v6.py 4d75cfc98d5ad34e with only\n'
+    Q7: [('"""queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only',
+          '"""queue_job_v7.py (SCOUT K16 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v6.py d4477631c22b027a with only\n'
           'GRADE and MONTH on their V9 templates and MONTH\'s MEM_MB changed: JOB_GRADE_V9 (<<SHA16:%s>>: chain v2_0_4, Outcomes in 3 worker\n'
           'processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (<<SHA16:%s>>: chain v2_2_4, the detection parts by the chain\'s\n'
           'rule, 3 cores declared, one du at the end), K16 T5, T6 and T8; MONTH\'s MEM_MB 4030, the measured peak + 20 percent (WORKING_SESSION_V16\n'
           'section 0.7; job 20264959 x1: a 2-part tree up to 3,355,115,520 bytes, DETECT_RUN_B.json sum_peak_rss_bytes; was 8000). The docstring\n'
           'of queue_job_v6.py follows.\n'
-          'queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only' % (JG9, JM9), 1),
+          'queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only' % (JG9, JM9), 1),
          ('python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v6.py --settings', 'python3 -B <Alarm>/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v7.py --settings', 1),
          ('(run queue_job_v6.py from the Alarm folder)', '(run queue_job_v7.py from the Alarm folder)', 1),
          ("'settings_v1_of_queue_job_v6'", "'settings_v1_of_queue_job_v7'", 1),
          ("'USAGE queue_job_v6.py --settings", "'USAGE queue_job_v7.py --settings", 1),
-         ("'GRADE': 'e4a9c7555c17879e', 'MONTH': '54cf0fa5f92fcfd3',", "'GRADE': '<<SHA16:%s>>', 'MONTH': '<<SHA16:%s>>'," % (JG9, JM9), 1),
+         ("'GRADE': 'bde3b7d82e6ce7f7', 'MONTH': '7779de8ad87bffee',", "'GRADE': '<<SHA16:%s>>', 'MONTH': '<<SHA16:%s>>'," % (JG9, JM9), 1),
          ('# days from RESEARCH_STORE, SCOUT K12, 31 Oct); a KIND without one is NOT CLEAN YET',
           '# days from RESEARCH_STORE, SCOUT K12, 31 Oct; GRADE V9 and MONTH V9: chains v2_0_4 (Outcomes in 3 worker processes) and v2_2_4 (the\n'
           "# detection parts by the chain's rule), 3 cores declared, one du at the end, SCOUT K16, 31 Oct); a KIND without one is NOT CLEAN YET", 1),
@@ -235,9 +235,9 @@ EDITS[TG9] = [('"""test_job_grade_v8.py (SCOUT K12', DOC_G + 'test_job_grade_v8.
               ("if 'chain v2_0_3 Sep-Dec' not in st: fails.append('%s the grade stage does not name the chain v2_0_3' % v)",
                "if 'chain v2_0_4 Sep-Dec' not in st: fails.append('%s the grade stage does not name the chain v2_0_4' % v)", 1),
               ("'the template pins %s, the package chain v2_0_3 is %s'", "'the template pins %s, the package chain v2_0_4 is %s'", 1),
-              ("('ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh a454510a574b830c', 'ck $CH/alarm_grade_chain_v2_0_2_to20251231.sh 3628339f9fefb7cd'),",
-               "('ck $CH/alarm_grade_chain_v2_0_4_to20251231.sh <<SHA16:%s>>', 'ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh a454510a574b830c')," % CH4, 1),
-              ("('alarm_grade_chain_v2_0_3_to20251231.sh a454510a574b830c', 'alarm_grade_chain_v2_0_3_to20251231.sh 0000000000000000'),",
+              ("('ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh bb1d5af53b2f42fc', 'ck $CH/alarm_grade_chain_v2_0_2_to20251231.sh 5c11b3230cee0b8c'),",
+               "('ck $CH/alarm_grade_chain_v2_0_4_to20251231.sh <<SHA16:%s>>', 'ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh bb1d5af53b2f42fc')," % CH4, 1),
+              ("('alarm_grade_chain_v2_0_3_to20251231.sh bb1d5af53b2f42fc', 'alarm_grade_chain_v2_0_3_to20251231.sh 0000000000000000'),",
                "('alarm_grade_chain_v2_0_4_to20251231.sh <<SHA16:%s>>', 'alarm_grade_chain_v2_0_4_to20251231.sh 0000000000000000')," % CH4, 1),
               ("('bash $CH/alarm_grade_chain_v2_0_3_to20251231.sh $V', 'bash $CH/alarm_grade_chain_v2_0_2_to20251231.sh $V'),",
                "('bash $CH/alarm_grade_chain_v2_0_4_to20251231.sh $V', 'bash $CH/alarm_grade_chain_v2_0_3_to20251231.sh $V'),", 1),
@@ -255,9 +255,9 @@ EDITS[TM9] = [('"""test_job_month_v8.py (SCOUT K12', DOC_M + 'test_job_month_v8.
                "if not re.search(r'chain v2_2_4 Sep-Apr in \\d+ coin parts', st): fails.append('%s the grade stage does not name the chain v2_2_4' % v)", 1),
               ("or cs.get('PARTS') != '26' or cs.get('w') != W", "or cs.get('PARTS') != '' or cs.get('w') != W", 1),
               ("'the template pins %s, the package chain v2_2_3 is %s'", "'the template pins %s, the package chain v2_2_4 is %s'", 1),
-              ("('ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d', 'ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4'),",
-               "('ck $MP/alarm_grade_chain_v2_2_4_to20260430.sh <<SHA16:%s>>', 'ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d')," % CM4, 1),
-              ("('alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d', 'alarm_grade_chain_v2_2_3_to20260430.sh 0000000000000000'),",
+              ("('ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh 54ae483e8498908c', 'ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh ed76a39ed96d562a'),",
+               "('ck $MP/alarm_grade_chain_v2_2_4_to20260430.sh <<SHA16:%s>>', 'ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh 54ae483e8498908c')," % CM4, 1),
+              ("('alarm_grade_chain_v2_2_3_to20260430.sh 54ae483e8498908c', 'alarm_grade_chain_v2_2_3_to20260430.sh 0000000000000000'),",
                "('alarm_grade_chain_v2_2_4_to20260430.sh <<SHA16:%s>>', 'alarm_grade_chain_v2_2_4_to20260430.sh 0000000000000000')," % CM4, 1),
               ("('bash $MP/alarm_grade_chain_v2_2_3_to20260430.sh $V', 'bash $MP/alarm_grade_chain_v2_2_2_to20260430.sh $V'),",
                "('bash $MP/alarm_grade_chain_v2_2_4_to20260430.sh $V', 'bash $MP/alarm_grade_chain_v2_2_3_to20260430.sh $V'),", 1),
@@ -287,7 +287,7 @@ EDITS[Q7] += [
     ('RUN_BUDGET_MB of its own uncleaned scratch (measured from finished receipts, declared for the rest); CLEAN your decided jobs to go on.\n',
      'RUN_BUDGET_MB of its own scratch on SCRATCH_DISK (measured from finished receipts while the job\'s scratch folder is there, declared for the\n'
      'rest); scratch cleanup is DSK\'s (the owner 31 Oct 2026 10:51 Berlin).\n', 1),
-    ("TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', 'CLEAN': '604cbe0b9254a8b1', ", "TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', ", 1),
+    ("TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', 'CLEAN': '604cbe0b9254a8b1', ", "TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', ", 1),
     ("TEMPLATE_NAME = {'COUNT': 'JOB_COUNT_V6.job.sh.txt', 'CLEAN': 'JOB_CLEAN_V6.job.sh.txt', ", "TEMPLATE_NAME = {'COUNT': 'JOB_COUNT_V6.job.sh.txt', ", 1),
     ("KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH', 'CLEAN')\n",
      "KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH')\nCLEAN_REMOVED = %r   # SCOUT, 31 Oct 2026: KIND CLEAN is refused by name\n" % SCOUT_CLEAN, 1),

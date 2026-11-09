@@ -17,7 +17,7 @@ st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> 
 ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
 fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
 isdone(){ awk -F'\t' '$1=="done" && $2=="0" {f=1} END {exit !f}' $W/STATUS_$1.tsv 2>/dev/null; }
-ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d; ck $AP/alarm_card_v1_3_1.py 3c496708f9d44651
+ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh 54ae483e8498908c; ck $AP/alarm_card_v1_3_1.py 3c496708f9d44651
 ck $T/perfire_v1_1_to20260430.py 4e77b228d71bdae4; ck $T/test_perfire_v1.py 12996df3af189030
 ck $T/month_read_v3.py b3480cfd670b28f4; ck $T/conditions_v1.py 2f4aaebe1f259278; ck $T/split_v1.py e481ca008c72d6f5
 ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@

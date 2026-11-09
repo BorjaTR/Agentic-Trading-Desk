@@ -117,8 +117,8 @@ NEW_MUTANTS = [('--research-window 20250901:$LAST --lab-root "$LAB_DAYS" --gate=
                ('I2G=$AP/idea_to_grade_aw1_rel1.py;', 'I2G=$AP/idea_to_grade_aw1.py;'), ('[ "${FEED_GATE+set}" = set ] ||', 'true ||'),
                ('[ -z "$FEED_GATE" ] || [ "${FEED_GATE#/}" != "$FEED_GATE" ] ||', 'true ||'),
                ('ckf detect_aw1_rel1.py $DET_SHA; ', ''), ('ckf idea_to_grade_aw1_rel1.py $I2G_SHA; ', ''), ('; ckf I2G_PINS_AW1_REL1.json $PINS_SHA', ''),
-               ('DET_SHA=52fa253a619cf205;', 'DET_SHA=228630e3d0c30b20;'), ('I2G_SHA=64d3fbb8006a8261;', 'I2G_SHA=e35b17019a3d34f6;'),
-               ('PINS_SHA=fedbc866b0ec0963;', 'PINS_SHA=6f167df21c7fae32;'), ('export METRICS_V1=$F/team/LAB3/METRICS_V1.tsv ', 'export '),
+               ('DET_SHA=932bd2957cd3592d;', 'DET_SHA=482a4a1eaf1faff5;'), ('I2G_SHA=d50d277f44aad95f;', 'I2G_SHA=a98936da5aaf93b4;'),
+               ('PINS_SHA=82a0d10372bbe744;', 'PINS_SHA=c0c523ed00403f58;'), ('export METRICS_V1=$F/team/LAB3/METRICS_V1.tsv ', 'export '),
                ("printf 'gate\\t%s\\n' \"${FEED_GATE:-none}\" >> \"$W/INPUTS_${V}.txt\"\n", ''), ('"$PINS_SHA" "$PINS" "$EO_SHA"', '"$PINS_SHA" "$AP/I2G_PINS_AW1.json" "$EO_SHA"')]
 
 

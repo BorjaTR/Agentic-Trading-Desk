@@ -16,7 +16,7 @@ printf 'stage\trc\tseconds\tutc\tnote\n' > $ST
 st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
 ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
 fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
-ck $CH 632e0846f8009260; ck $X/markout_v1_2.py 0b432134d1d943d5; ck $X/test_markout_v1_2.py 5761f7ebc6894264; ck $X/test_markout_v1_2_base.py 986b5b1df66c29f7
+ck $CH c2928a0bbd6a0024; ck $X/markout_v1_2.py 0b432134d1d943d5; ck $X/test_markout_v1_2.py 5761f7ebc6894264; ck $X/test_markout_v1_2_base.py 986b5b1df66c29f7
 ck $X/settings/SETTINGS_V1.json 495b6e45b8fa7a81; ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@; [ -f $RR/$CARDREL ] || { st pin 3 0 "NO CARD $CARDREL"; st end 3 0 "pins"; exit 3; }
 for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; ck ${SRCS[$i]} ${SRCSHAS[$i]}; done
 f=$(fmb); st start 0 0 "SCRATCH_DISK free ${f} MB"

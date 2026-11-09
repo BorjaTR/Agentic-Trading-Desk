@@ -1,20 +1,20 @@
 #!/bin/bash
 # alarm_grade_chain_v2_2_6_to20260430.sh (SCOUT, 31 Oct 2026, V2_0 stage 2 D1; TEST, NOT REVIEWED): alarm_grade_chain_v2_2_5_to20260430.sh
-# e4ef76a9592ebd79 with only steps 5-7 changed (the owner 31 Oct 2026 13:34 Berlin: GRADE and MONTH under 60 s; team/SCOUT/D1_BUILD_PLAN_V1.md): ONE
+# 7e99c6c084469162 with only steps 5-7 changed (the owner 31 Oct 2026 13:34 Berlin: GRADE and MONTH under 60 s; team/SCOUT/D1_BUILD_PLAN_V1.md): ONE
 # process, d1_reports_v2.py chain, runs both Outcomes runs (event_outcomes_aw1_rel1 run(0), each in its own process, its rows kept as they are
 # written, beside the root as <root>.mem.pkl), then the menu and the card (alarm_card_v1_3_1) in its process from those rows (event_outcomes.read
 # answered from memory, checked against the store's subject, days and coins); step 0 job 20265186: 338 of 338 columns equal, the
 # reports byte for byte. The STATUS lines come from its steps file in the old order; an Outcomes failure exits 6 as before. The rest
 # of this header is the parent's:
 # alarm_grade_chain_v2_2_5_to20260430.sh (SCOUT, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): alarm_grade_chain_v2_2_4_to20260430.sh
-# f4a114ed16e3ea13 with only the order of steps 5-7 changed (the owner 31 Oct 2026 12:37 Berlin: "agents need to run tools as fast as
+# 756c52a6a515bf1c with only the order of steps 5-7 changed (the owner 31 Oct 2026 12:37 Berlin: "agents need to run tools as fast as
 # possible"; team/SCOUT/SPEED_V2_0_DESIGN_V1.md Q1, Q2): the Outcomes runs on the alarm and the random lists work at the same time
 # (two roots, no shared write), then the menu and the card at the same time (both only read the two roots). Each waits for its own
 # process; the STATUS lines are written after the waits, in v2_2_4's order; on a failure every started run ends first, then the
 # first failure in v2_2_4's order exits with v2_2_4's code. The tools, their arguments, inputs and outputs are v2_2_4's.
 # The rest of this header is v2_2_4's:
 # alarm_grade_chain_v2_2_4_to20260430.sh (SCOUT K16, 31 Oct 2026, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_3_to20260430.sh b6329f781acd749d with only the detection (step 1) changed (K16 T6; SCOUT 31 Oct, with the fixes
+# alarm_grade_chain_v2_2_3_to20260430.sh 5895b8034a46b55d with only the detection (step 1) changed (K16 T6; SCOUT 31 Oct, with the fixes
 # of the reviews REV1 and REV2): the part count is the chain's rule, never the job's: 2 parts, or 26 up front for a SERIAL_FORCED
 # definition (detect_aw1_rel1.py's own parallel_mode: one process for all days; LG4's halves, see v2_2's header below); a part the
 # detector refuses with WORKER_RSS_CAP is re-split alone into new folders, its own folder kept and never merged; a coin census before
@@ -25,21 +25,21 @@
 # not depend on the parts (v2_2's header). INPUTS_<V>.txt is unchanged. The rest of this header is v2_2_3's.
 #   AL=<Alarm> PY=<python> LAB_DAYS=<lab days> FEED_GATE=<gate file or empty> RESEARCH_STORE=<research days> [PARTS=2..26] [LEAN=..] [BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_2_4_to20260430.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]
 # alarm_grade_chain_v2_2_3_to20260430.sh (SCOUT K12, 31 Oct 2026, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4 with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev
-# path out of GRADE and MONTH"): event_outcomes_aw1_rel1.py (3dff0aa8fdda0d75: event_outcomes_aw1.py with the feed's stop gate from
+# alarm_grade_chain_v2_2_2_to20260430.sh dd8859721c66b4ed with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev
+# path out of GRADE and MONTH"): event_outcomes_aw1_rel1.py (60da1138b40b24c0: event_outcomes_aw1.py with the feed's stop gate from
 # FEED_GATE, never labcore.jobgate's built-in dev-tree GATE, and the research days from RESEARCH_STORE; run 0 as before) with its
-# release record RELEASE_event_outcomes_AW1_REL1.json (e3f6041e789978a8); both checked by sha16 and named in INPUTS_<V>.txt, which also gets a
+# release record RELEASE_event_outcomes_AW1_REL1.json (d137f9c224e34bac); both checked by sha16 and named in INPUTS_<V>.txt, which also gets a
 # research line; the caller gives RESEARCH_STORE (the settings key: an absolute path) as it gives FEED_GATE, and the chain exports
 # both to Outcomes. The rest of this header is v2_2_2's.
 #   AL=<Alarm> PY=<python> LAB_DAYS=<lab days> FEED_GATE=<gate file or empty> RESEARCH_STORE=<research days> [PARTS=2..26] [LEAN=..] [BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_2_3_to20260430.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]
 # alarm_grade_chain_v2_2_2_to20260430.sh (SCOUT 31 Oct 2026, K12, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_1_to20260430.sh 093be8f399d1b0d4 (SCOUT K4, 30 Oct) with only the aw1 grader and detector changed to their clean
+# alarm_grade_chain_v2_2_1_to20260430.sh 2c7adbe6921e6cf9 (SCOUT K4, 30 Oct) with only the aw1 grader and detector changed to their clean
 # editions (CLEAN_RELEASE_V1; the owner 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the release folder only"). Why: from the
 # install, idea_to_grade_aw1.py refuses UNPINNED_MODULE as idea_to_grade.py did in GRADE job 20264797 (its pins I2G_PINS_AW1.json name the
 # dev tree's absolute paths; its code loads its kernels from the dev tree). Changed, nothing else:
-#   step 1: detect_aw1_rel1.py (52fa253a619cf205: detect_v2 with detect_aw1's window classes) with --gate="$FEED_GATE";
-#   step 3: idea_to_grade_aw1_rel1.py (64d3fbb8006a8261: idea_to_grade_rel1 with idea_to_grade_aw1's changes) with --gate="$FEED_GATE" and
-#           --pins I2G_PINS_AW1_REL1.json (fedbc866b0ec0963: the same 39 files as I2G_PINS_AW1.json, the clean editions in place of the old,
+#   step 1: detect_aw1_rel1.py (b1894b3bade40fa2: detect_v2 with detect_aw1's window classes) with --gate="$FEED_GATE";
+#   step 3: idea_to_grade_aw1_rel1.py (f1e881d598ae8155: idea_to_grade_rel1 with idea_to_grade_aw1's changes) with --gate="$FEED_GATE" and
+#           --pins I2G_PINS_AW1_REL1.json (9faa1dc1f753a47a: the same 39 files as I2G_PINS_AW1.json, the clean editions in place of the old,
 #           paths relative to the tree);
 #   the caller gives FEED_GATE in the environment (the settings key FEED_GATE; set and empty: no gate, a machine without the feed);
 #   METRICS_V1 is exported beside METRIC_TRAPS and CATALOGS (the lab tree's team/LAB3/METRICS_V1.tsv: the detector's metric gate read the
@@ -47,7 +47,7 @@
 # Parts, window, steps, other tools, arguments and outputs otherwise unchanged. v2_2_1's header follows.
 #   AL=<Alarm> PY=<python> LAB_DAYS=<lab days> FEED_GATE=<gate file or empty> [PARTS=2..26] [LEAN=..] [BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_2_2_to20260430.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]
 # alarm_grade_chain_v2_2_1_to20260430.sh (SCOUT 30 Oct 2026, K4, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_to20260430.sh c24bd949b32c8e24 (SCOUT 29 Oct, released) with only its paths changed (CLEAN_RELEASE_V1; the owner
+# alarm_grade_chain_v2_2_to20260430.sh 64b42a022bb8e3bd (SCOUT 29 Oct, released) with only its paths changed (CLEAN_RELEASE_V1; the owner
 # 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the release folder only"): the caller gives AL, PY and LAB_DAYS in the
 # environment (below); every step tool and table comes from the lab tree <AL>/01_Detection/tree (the dev layout), never the dev tree;
 # the lab days go to detect_aw1, the grade and Outcomes as an argument (detect_aw1 and idea_to_grade_aw1 had the Mac's as their
@@ -82,13 +82,13 @@
 # as an argument (default OUTCOMES_MENU_ALARM_V1.json = loop 2's labels + a race grid) + step 7 (BASE=<variant> in the env: paired read).
 #   bash alarm_grade_chain_v1_1.sh <V> <DEFINITION.json | FIRES.tsv> <W_ROOT> [MENU.json]      V: letters and digits only
 # Window (v1_3's was 20250910..20251231): this version's FIRST and LAST below. Never deletes. One worker after detection.
-# v2_2_7 (BUILD5, ALARM_V1_10; made by team/BUILD5/proposals/v1_10/chains/make_chain_v2_2_7.py from v2_2_6 e6e78f00938377c6): the gm
+# v2_2_7 (BUILD5, ALARM_V1_10; made by team/BUILD5/proposals/v1_10/chains/make_chain_v2_2_7.py from v2_2_6 ed8023af74fa2335): the gm
 # editions with the window MONTH (G1 D4) and the Outcomes store in evt1 (D2 step 3); nothing else changed.
 set -uo pipefail
 export EO_WINDOWS=MONTH   # v2_2_7: the window of every gm edition this chain runs (children inherit it)
 FIRST=20250910; LAST=20260430   # this version's hardcoded date range (UTC days): never a setting
 D1_SHA=0b1717ba35a12b95; MEM_SHA=3cd95039ba6e1a70   # V2_0 stage 2 D1: d1_reports_v2.py and d1_mem_v2.py, in ../alarm_process
-CARD_SHA=e71a0241a147f497; DET_SHA=5f04e8d5abae77ed; I2G_SHA=426c071c2a0f1f44; PINS_SHA=30313959f61e9443; EO_SHA=545458cc01e62c83; REL_SHA=1a55c5b220671568; WIN_SHA=37decf0075649f69
+CARD_SHA=e71a0241a147f497; DET_SHA=ad3708259c8fcc38; I2G_SHA=49684513485c868f; PINS_SHA=a78e8319465fcfe4; EO_SHA=cd502f49fe16415e; REL_SHA=f9f48f316aaac747; WIN_SHA=69c3327ebf4e15a1
 V=$1; DEF=$2; W=$3
 [[ "$V" =~ ^[A-Za-z0-9]+$ ]] || { echo "BAD_VARIANT $V"; exit 2; }
 [ -f "$DEF" ] || { echo "NO_DEFINITION $DEF"; exit 2; }

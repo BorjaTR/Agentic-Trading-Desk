@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only
-GRADE and MONTH moved to JOB_GRADE_V8 (e4a9c7555c17879e) and JOB_MONTH_V8 (54cf0fa5f92fcfd3), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
+"""queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only
+GRADE and MONTH moved to JOB_GRADE_V8 (bde3b7d82e6ce7f7) and JOB_MONTH_V8 (7779de8ad87bffee), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
 stop gate from FEED_GATE and the research days from RESEARCH_STORE, and the job path placeholder @@RESEARCH_STORE@@ (the settings key
 RESEARCH_STORE of the machine that runs the job: now one of the keys --job-settings must have). The rest of this text is
 queue_job_v5.py's.
 queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED). The only way a KIT_V5 agent queues a job, run from the
-Alarm package. queue_job_v4.py (dc19a63f01c4e8fe) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
+Alarm package. queue_job_v4.py (3d5abaea8c3cbe33) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
 Berlin: "Let's make sure everything can run from the release folder"):
   - code only from the Alarm folder that holds this file (settings_v1.alarm_root): the job templates TEMPLATE_NAME (JOB_<KIND>_V6,
     GRADE and MONTH V7: Agentic/tree/ALARM_DESIGN/KIT_V5/jobs, pinned by TEMPLATE_SHA) and the register writer reg_append_v1.py
@@ -97,8 +97,8 @@ CFG = {
     'now': lambda: datetime.datetime.now(datetime.timezone.utc),     # the clock tests plant; no rule reads it since the quiet window went
     'free_mb': None,          # tests set a function; None = statvfs of CFG['WDB']
 }
-TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', 'CLEAN': '604cbe0b9254a8b1', 'GRADE': 'e4a9c7555c17879e', 'MONTH': '54cf0fa5f92fcfd3',
-                'ENTRY': '67a51907a5a930e3'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
+TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', 'CLEAN': '604cbe0b9254a8b1', 'GRADE': 'bde3b7d82e6ce7f7', 'MONTH': '7779de8ad87bffee',
+                'ENTRY': '2d55b4788a059d10'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
 # the store runner v11 and the grader rel1, by SCOUT K6, 31 Oct; GRADE V7: chain v2_0_2 with the grader rel1 and its relative pins, and
 # MONTH V7: chain v2_2_2 with the aw1 rel1 editions and their relative pins, by SCOUT K12, 31 Oct, after round 7 found every V6 GRADE
 # refused UNPINNED_MODULE; GRADE V8 and MONTH V8: chains v2_0_3 and v2_2_3, Outcomes with the gate from FEED_GATE and the research

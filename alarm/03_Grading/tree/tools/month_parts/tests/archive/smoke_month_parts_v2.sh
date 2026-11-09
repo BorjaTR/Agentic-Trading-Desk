@@ -12,7 +12,7 @@ DET=$R/tools/alarm_process/detect_aw1.py; ROSTER=$F/team/OUTSIDE/COORD/developme
 CH=$R/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
 export METRIC_TRAPS=$R/LEAD/loop2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv CATALOGS=$R/tools/alarm_context/CTX_CATALOG_V1.tsv:$R/tools/alarm_profile/EPI_CATALOG_V1.tsv:$F/team/LAB3/METRICS_HL_ADD_V1.tsv:$R/LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv
-[ "$(shasum -a 256 $DET | cut -c1-16)" = 228630e3d0c30b20 ] || { echo "SHA_MISMATCH detect_aw1.py"; exit 2; }
+[ "$(shasum -a 256 $DET | cut -c1-16)" = 482a4a1eaf1faff5 ] || { echo "SHA_MISMATCH detect_aw1.py"; exit 2; }
 [ "$(shasum -a 256 $CH | cut -c1-16)" = 86ff2af4f2318b6f ] || { echo "SHA_MISMATCH chain"; exit 2; }
 [ "$(shasum -a 256 $DEF | cut -c1-16)" = 94c2d5188ef9d715 ] || { echo "SHA_MISMATCH definition"; exit 2; }
 [ ! -e "$W" ] && [ ! -e "$OUT/S1.tsv" ] || { echo "USED W or OUT"; exit 2; }

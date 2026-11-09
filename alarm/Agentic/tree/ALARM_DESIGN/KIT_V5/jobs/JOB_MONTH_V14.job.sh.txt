@@ -19,7 +19,7 @@ ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED
 fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
 isdone(){ awk -F'\t' '$1=="done" && $2=="0" {f=1} END {exit !f}' $W/STATUS_$1.tsv 2>/dev/null; }
 seal(){ local P=$W/PERFIRE_$1.tsv x; x=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++){if($i=="kind")k=i;if($i=="t")c=i};next}{n[$k]++;v=$c+0;if(a==""||v<a)a=v;if(v>b)b=v}END{printf "%d\t%d\t%d\t%d\t%d",n["A"],n["R"],a,b,NR-1}' $P) && printf '%s\t%s\t%s\t%s\n' $1 "$(shasum -a 256 $P | cut -c1-16)" "$x" $J >> $DV/PERFIRE_SEAL.tsv; }
-ck $MP/alarm_grade_chain_v2_2_7_to20260430.sh 69525b582a2067cb; ck $CH/d1_reports_v3.py 0b1717ba35a12b95; ck $CH/d1_mem_v2.py 3cd95039ba6e1a70; ck $AP/alarm_card_gm1.py e71a0241a147f497
+ck $MP/alarm_grade_chain_v2_2_7_to20260430.sh d6356f75262e5ee8; ck $CH/d1_reports_v3.py 0b1717ba35a12b95; ck $CH/d1_mem_v2.py 3cd95039ba6e1a70; ck $AP/alarm_card_gm1.py e71a0241a147f497
 ck $T/perfire_v1_1_to20260430.py 4e77b228d71bdae4; ck $T/test_perfire_v1.py 12996df3af189030
 ck $T/month_read_v3.py b3480cfd670b28f4; ck $T/conditions_v1.py 2f4aaebe1f259278; ck $T/split_v1.py e481ca008c72d6f5
 ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@

@@ -1,0 +1,131 @@
+{
+ "kit": "SCO-A182 learning series V2 config (SCOUT; PROOF_RULES_V2.md 34192fee92adf4f5). The ONE place the V26 windows, yardstick, paths and limits live; HUNTER_PROMPT_TEMPLATE_V2.md is never edited when V26 lands, only this file (twin first).",
+ "status": "READY",
+ "status_rule": "build_run_v2.py build and part_a_v2.sh refuse unless status is READY (a dry test passes --dry-test with a planted config). SCOUT sets READY (twin first) only when ALARM_BUILD_V26 and ALARM_PIPELINE_V1_4 are current, every value SET_AT_V26 is replaced and every path below exists.",
+ "pack_version": "V27",
+ "pack_dir": "@R@/Alarm/alarm_design/ALARM_BUILD_V27",
+ "pack_start": "START_V27.md",
+ "pack_questions": "QUESTIONS_V27.md",
+ "pack_manifest": "MANIFEST_V27.tsv",
+ "pack_rules_check": "rules_check_v27.py",
+ "pipe_settings_template": "@R@/Alarm/alarm_design/ALARM_BUILD_V27/PIPE_SETTINGS_V3_TEMPLATE.json",
+ "pipeline_edition": "ALARM_PIPELINE_V1_4_2",
+ "pipev": "@R@/Alarm/alarm_pipeline/ALARM_PIPELINE_V1_4_2/tree/team/SCOUT/pack_kit/alarm_pipeline_v1/alarm_pipeline_v1_4.py",
+ "run_kit": "@R@/Learning_Loop/run_kit/RUN_KIT_V3_9/tree/team/SCOUT/pack_kit/run_kit_v3_1/run_kit_v3_1.py",
+ "launch_v1": "@R@/Learning_Loop/loop_gates/current/tree/team/RESEARCH/PLAYGROUND/tools/PG20261105_loop_v3/code/launch_v1.py",
+ "start_run": "@R@/Alarm/alarm/current/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/start_run_v1.py",
+ "seat_settings": "@FR@/team/SCOUT/loop_day_20261105/drills/drillK/ops/SETTINGS_SCOUT_MAC.env",
+ "know": "@FR@/team/RESEARCH/KNOWLEDGE/ALARM/KNOWLEDGE_SCOUT_V1.tsv",
+ "holdout_tool": "@R@/Alarm/holdout_month/current",
+ "windows": {
+  "design_label": "Sep 2025 to Mar 2026",
+  "design_months": 7,
+  "design_gate": "2025-09-10:2026-03-31",
+  "design_input": "20250910:20260331",
+  "design_block": "SEPMAR",
+  "look_note": "the one-look window (later months, opened once by SCOUT after the close for the best round with its rule frozen; never named in any hunter file)",
+  "never_note": "the never-seen window (opened once by the owner for the single best alarm of the block)",
+  "scout_only_look": "Apr 2026 to Jul 2026",
+  "scout_only_never": "Aug 2026 to Nov 2026",
+  "scout_only_rule": "scout_only_* values never enter a hunter prompt (build_run_v2 refuses a part that names them)",
+  "design_block_note": "alarm_pipeline_v1_4.py BLOCKS: SEPMAR = 20250910..20260331, graded (step 01 INPUT)",
+  "def_last_day": "20260731",
+  "def_last_day_rule": "SCOUT ruling SCO-A184: holdout_month V1_1 refuses a DEF whose window.last is before this day (DEF_WINDOW_SHORT; detect refuses days after the DEF last day), so build_run_v2 fills slot {DEF_LAST_DAY} in the DEF instruction and the closed-month scan allows exactly this value as the DEF field \"last\" (blindfold_scan_k.py --allow-def-last). A tool-required value, not a read: lab3/law.py 099d649e still refuses research reads after 2026-03-31 and grading stays on design_input"
+ },
+ "yardstick_sepmar_file": {
+  "path": "@FR@/team/SCOUT/receipts/SEPMAR_YARDSTICK_V1.json",
+  "sha16": "36de05123cacb687",
+  "note": "C225: orchestrator only (pooled Sep-Mar, window includes held-out Feb-Mar); build_run_v2 reads it for its forbidden-number scan, bar_check_v2 for the B4 look; assessors, curators and hunters never open it; the design yardsticks are yardstick_design_sepjan and yardstick_design_sepjan_up"
+ },
+ "yardstick_design_sepjan": {
+  "name": "FDONLY",
+  "window": "20250910:20260131",
+  "lead15": 8.0895,
+  "t15": 3.6988,
+  "lead1h": 8.3035,
+  "t1h": 3.4607,
+  "waves": 1235,
+  "months_pass": 4,
+  "months": 5,
+  "R1": "PASS",
+  "R2": "PASS",
+  "real_sha16_note": "HANDOFF_SEPJAN/REAL_SEALED",
+  "receipt": "@FR@/team/SCOUT/receipts/20270734_YARD_BLOCKS/YARDSTICK_FDONLY_BLOCKS.tsv",
+  "job": "20270734_judge_SCOUT_YARD_BLOCKS",
+  "tool": "@FR@/team/SCOUT/sco_yb/yardstick_blocks_v1.py fc4c576f73eb5a44",
+  "method": "the grade hand-off itself (d1_reports_v3 handoff + lead_null_v1_1 with only FIRST/LAST and GATE_MONTHS set to the block), same read folder PGJM11 as job 20270531; the same tool reproduced the Sep-Mar yardstick (numbers in its receipt, orchestrator only) exactly",
+  "t_min_better": 3
+ },
+ "yardstick_heldout_file": {
+  "path": "@FR@/team/SCOUT/receipts/HELDOUT_YARDSTICK_FEBMAR_V1.json",
+  "sha16": "e8cd95b36e7eac9d",
+  "note": "C95: orchestrator only; build_run_v2 reads it to refuse held-out numbers in prompts; assessors, curators and hunters never open it"
+ },
+ "state_split": {
+  "release_dir": "@R@/Alarm/state_split/current",
+  "cmd": "Mac runner job from @LS@/STATE_SPLIT_JOB_TEMPLATE_V2.sh: $PY -B <RELEASE_ROOT>/Alarm/state_split/current/tree/team/SCOUT/pack_kit/state_split_v1/state_split_v1.py run <PIPE> --out <new folder> --reading CTX.<code> --yardstick15 <Y15> --yardstick1h <Y1H> --yardstick-name FDONLY",
+  "owner": "SCOUT SCO-A181",
+  "board_ref": "coordinator 2026-11-07 (SCO-A181 job 20270610: STATE_SPLIT_V1_0 current, reproduces STEP_11 to every digit)",
+  "rule": "when cmd is SET_WHEN_RELEASED or release_dir is absent, the build writes NOT CURRENT into the prompt and the hunter files one NO TOOL line per FEEDBACK; never an own split script",
+  "job_template": "@LS@/STATE_SPLIT_JOB_TEMPLATE_V2.sh",
+  "edition": "STATE_SPLIT_V1_0"
+ },
+ "job_limit": {
+  "alarm_current": "@R@/Alarm/alarm/current",
+  "marker": "ALARM_V1_22_0",
+  "marker_rule": "current holds RELEASE_ALARM_V1_22_0.json, or its link target names ALARM_V1_22_0",
+  "limit_before": 2,
+  "limit_after": 12,
+  "limit_after_behind": 14,
+  "slots_per_run": 2,
+  "slots_rule": "one hunter pipe_mac job plus one inner kit job at a time per run (both named _judge_SCOUT_)",
+  "job_roots": [
+   "@FR@/orch1_20260817/runner",
+   "@HOME@/mnt/dev/TradingPlatform/volat-agent/forensics/orch1_20260817/runner"
+  ]
+ },
+ "run_key": {
+  "pattern": "SCOUT_<YYYYMMDD from date -u at Part A>",
+  "shared": true,
+  "why": "start_run_v1 (AGENTS.md line 20, TOOLS_V25 T01-02 note): one RUN per seat per day; queue_job_v10+ reads the seat from the RUN tag and counts the seat job budget and the 10,000 MB RUN disk budget by it, so one RUN key per day is shared by every V2 run of that day and each idea name ends with the arm letter and run number (IDEA_SUFFIX, e.g. WAVEFLUSHL03)",
+  "disk_budget_mb": 10000
+ },
+ "arms": {
+  "L": {
+   "task_base": 300
+  },
+  "C": {
+   "task_base": 400
+  }
+ },
+ "order": {
+  "alternate": true,
+  "alternate_rule": "launch order L1, C1, L2, C2 ...: C<n> needs L<n> prepared; L<n> (n>1) needs C<n-1> prepared",
+  "l_waits_prev_l_curated": true,
+  "l_wait_rule": "L<n> (n>1) needs the SERIES_V2 RUN row of L<n-1> (the curator ran): learning across L runs needs the knowledge of the run before"
+ },
+ "tasks_rule": "L run n: SCT-A(300+n); C run n: SCT-A(400+n); run folder runs_v2/<arm><nn>; idea suffix <arm><nn>",
+ "job_alloc": {
+  "vm": "@HOME@/mnt/dev/TradingPlatform/volat-agent/forensics/tools/job_alloc.py",
+  "mac": "<RUNNER_TREE>/forensics/tools/job_alloc.py",
+  "why": "SCO-A181 reports the repo allocator (TradingPlatform_repo/.../tools/job_alloc.py) hands out numbers already used; the two copies are byte-equal code (9bc402792f558a92) with separate counters; every V2 job number comes from this one"
+ },
+ "pipev_note": "ALARM_PIPELINE_V1_4_2 (SCO-A184: pipe_mac_v3 INSTALL ALARM_V1_22_2, the COUNT and MONTH templates without the forbidden word) keeps the file name alarm_pipeline_v1_4.py; the path names the edition folder",
+ "status_set": "SCOUT SCO-A184 2026-11-07 (ALARM_BUILD_V26, ALARM_PIPELINE_V1_4_1, HOLDOUT_MONTH_V1_1, RUN_KIT_V3_8 current, job 20270612); SCO-A184 job 20270619: pack V27, pipeline V1_4_2, Alarm ALARM_V1_22_2, run_kit RUN_KIT_V3_9",
+ "run_kit_note": "SCO-A184: the held RUN_KIT_V3_9 edition path (register V27), on the owner 13:13 Berlin: runs never wait for a release",
+ "yardstick_design_sepjan_up": {
+  "name": "FUONLY",
+  "window": "20250910:20260131",
+  "lead15": 10.9949,
+  "t15": 5.3,
+  "lead1h": 12.01,
+  "t1h": 5.64,
+  "waves": 1382,
+  "months_pass": 5,
+  "months": 5,
+  "receipt": "@FR@/team/SCOUT/receipts/20270844_YARD_FUONLY/YARDSTICK_FUONLY_SEPJAN.tsv",
+  "job": "20270844",
+  "note": "C58: up-side same-side yardstick (knowledge_v1 E0051)",
+  "t_min_better": 3
+ }
+}

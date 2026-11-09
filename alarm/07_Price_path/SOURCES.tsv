@@ -17,11 +17,11 @@ tree/tools/idea_to_grade/README_V3.md	team/RESEARCH/tools/idea_to_grade/README_V
 tree/tools/idea_to_grade/README_V3_2.md	team/RESEARCH/tools/idea_to_grade/README_V3_2.md	2266bbda5d1e2f72	11534	grader manual
 tree/tools/idea_to_grade/ARCHITECTURE.md	team/RESEARCH/tools/idea_to_grade/ARCHITECTURE.md	01054dd1d5adf0e7	6606	grader manual
 tree/tools/idea_to_grade/INTERFACE_V1.md	team/RESEARCH/tools/idea_to_grade/INTERFACE_V1.md	22a6e6a7a9ce8fbc	5176	grader manual
-tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_2.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_2.json	f9e6c8c3ca6446dc	4773	grader release record
-tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3.json	04e4a3090c1e7070	4773	grader release record
-tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json	7b001bf565d45378	4777	grader release record
-tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json	69df7350a98e9681	3139	grader release record
-tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_2.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_2.json	4f630d728a62abfe	4224	grader release record
+tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_2.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_2.json	c0f2bc1a28c14b7c	4773	grader release record
+tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3.json	ef41bdc072a6daa6	4773	grader release record
+tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V2_3_1.json	1ceb661d66eb4d46	4777	grader release record
+tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json	9313e71aa3176240	3139	grader release record
+tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_2.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/RELEASE_idea_to_grade_V3_2.json	43e1618353274c9b	4224	grader release record
 tree/tools/alarm_match/draw_v3.py	team/RESEARCH/tools/alarm_match/draw_v3.py	91279359fb4a0815	20332	grader V3.2 kernel, pinned in I2G_PINS_V3_2.json at 91279359fb4a0815; loaded by i2g_engine K.load(): import draw_v3 (the matcher of record, matched calm moments)
 tree/tools/alarm_match/README.md	team/RESEARCH/tools/alarm_match/README.md	946a032de201b9e3	1210	alarm_match manual (draw_v3, the matcher)
 tree/tools/alarm_stamp/alarm_stamp.py	team/RESEARCH/tools/alarm_stamp/alarm_stamp.py	5dfc98dd92bbecf4	22466	grader V3.2 kernel, pinned in I2G_PINS_V3_2.json at 5dfc98dd92bbecf4; loaded by alarm_stamp_projection_v1 (from alarm_stamp import *): the 55 STAMP fields
@@ -58,7 +58,7 @@ tree/_team/OUTSIDE/COORD/development/DEV1/opportunity_compare_v1/README.md	team/
 tree/_team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/performance/fast_compare.py	team/RESEARCH/tools/alarm_package/_kept/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/performance/fast_compare.py	eec15093614540d5	10422	grader V3.2 kernel, pinned in I2G_PINS_V3_2.json at eec15093614540d5; loaded by i2g_grade.py G.load() with load_path (the per-month summary)
 tree/_team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json	team/RESEARCH/tools/alarm_package/_kept/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json	b93de33b2a73a56e	123344	the 52-coin roster the store passes as --roster (same file as ../03_Grading/_team and ../01_Detection/team)
 tree/tools/idea_to_grade/release_pins_v3_2.py	team/RESEARCH/tools/idea_to_grade/release_pins_v3_2.py	e9067752ca5fbb93	2364	the pins maker base that make_pins_s6.py imports (its census warm() is swapped by S6); not executed by a store run
-tree/tools/idea_to_grade/I2G_PINS_V3_2.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/I2G_PINS_V3_2.json	4000a8e47b6847ee	6235	V3.2 release pins (8d46fbaa9b791f34): the 46 executed files and sha16s every V3.2 run checks (--pins)
+tree/tools/idea_to_grade/I2G_PINS_V3_2.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/tools/idea_to_grade/I2G_PINS_V3_2.json	04876ac001bccb2c	6235	V3.2 release pins (8d46fbaa9b791f34): the 46 executed files and sha16s every V3.2 run checks (--pins)
 tree/tools/idea_to_grade/full_population_v3_2.sh	team/RESEARCH/tools/idea_to_grade/full_population_v3_2.sh	31eeebde7689002e	2737	V3.2 release: the full population store run recipe (31eeebde7689002e)
 tree/tools/idea_to_grade/regress_v3_2_ext.py	team/RESEARCH/tools/idea_to_grade/regress_v3_2_ext.py	3c2e28475a645c8a	8675	V3.2 release: the regression check of the two blocker fixes on a real store (real data)
 tree/tools/idea_to_grade/test_i2g_v3_2_real.py	team/RESEARCH/tools/idea_to_grade/test_i2g_v3_2_real.py	c05ae44994d93f5b	19886	V3.2 release: real-data tests (lab days)
@@ -84,7 +84,7 @@ tree/team/LAB3/code/lab3/binfmt.py	team/LAB3/code/lab3/binfmt.py	ebc5f60e969069e
 tree/team/LAB3/code/lab3/bins.py	team/LAB3/code/lab3/bins.py	f5c0f9a5f9cb8537	13092	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
 tree/team/LAB3/code/lab3/days.py	team/LAB3/code/lab3/days.py	ecf85ffb7bc0fa69	22087	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
 tree/team/LAB3/code/lab3/labgroups.py	team/LAB3/code/lab3/labgroups.py	6d59a8d98274ef2f	1150	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
-tree/team/LAB3/code/lab3/law.py	team/LAB3/code/lab3/law.py	f777c329396b6190	5633	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
+tree/team/LAB3/code/lab3/law.py	team/LAB3/code/lab3/law.py	0802358832de2b23	5633	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
 tree/team/LAB3/code/lab3/rows.py	team/LAB3/code/lab3/rows.py	747414c711bbd499	6871	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
 tree/team/LAB3/code/lab3/write.py	team/LAB3/code/lab3/write.py	99e43dc0bc01f55a	28273	code the ENTRY chain runs (UNCHANGED; owner LAB1; K6)
 tree/team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/heat_offer_projection_v1.py	team/RESEARCH/tools/alarm_package/_kept/team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/heat_offer_projection_v1.py	6bef437137369208	1800	code the ENTRY chain runs (UNCHANGED; owner OUTSIDE (COORD); K6)
@@ -146,8 +146,8 @@ tree/team/RESEARCH/tools/idea_to_grade/idea_to_grade_v3_2_s3_rel1.py	team/RESEAR
 tree/team/RESEARCH/tools/idea_to_grade/idea_to_grade_v3_2_s6_rel1.py	team/RESEARCH/tools/idea_to_grade/idea_to_grade_v3_2_s6_rel1.py	33832d574b3b7449	2134	code the ENTRY chain runs (NEW; owner STRATEGY/LEAD; K6)
 tree/team/RESEARCH/tools/idea_to_grade/release_pins_v3_2_rel1.py	team/RESEARCH/tools/idea_to_grade/release_pins_v3_2_rel1.py	7ce4920222aa0abf	3381	code the ENTRY chain runs (NEW; owner STRATEGY/LEAD; K6)
 tree/team/RESEARCH/tools/idea_to_grade/make_pins_s6_rel1.py	team/RESEARCH/tools/idea_to_grade/make_pins_s6_rel1.py	cd2ffe40c51a2791	1875	code the ENTRY chain runs (NEW; owner STRATEGY/LEAD; K6)
-tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_S6_REL1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_S6_REL1.json	a1ec98395a62de77	4725	pins (paths relative to the tree root) (NEW; owner STRATEGY/LEAD; K6)
-tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_REL1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_REL1.json	095ca8f9eb036e18	3587	pins (paths relative to the tree root) (NEW; owner STRATEGY/LEAD; K6)
+tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_S6_REL1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_S6_REL1.json	b9491290b0930399	4725	pins (paths relative to the tree root) (NEW; owner STRATEGY/LEAD; K6)
+tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_REL1.json	team/RESEARCH/tools/alarm_package/V2_0_S3_D2D4/07_Price_path/tree/team/RESEARCH/tools/idea_to_grade/I2G_PINS_V3_2_REL1.json	ecefedb3880de71f	3587	pins (paths relative to the tree root) (NEW; owner STRATEGY/LEAD; K6)
 tree/team/RESEARCH/tools/idea_to_grade/test_i2g_v3_2_rel1.py	team/RESEARCH/tools/idea_to_grade/test_i2g_v3_2_rel1.py	5c165d5477f09ae3	39689	test (NEW; owner STRATEGY/LEAD; K6)
 tree/team/RESEARCH/tools/idea_to_grade/test_patch_s6_rel1.py	team/RESEARCH/tools/idea_to_grade/test_patch_s6_rel1.py	fd9a5d44e598e096	2853	test (NEW; owner STRATEGY/LEAD; K6)
 tree/team/RESEARCH/tools/idea_to_grade/test_patch_s4_rel1.py	team/RESEARCH/tools/idea_to_grade/test_patch_s4_rel1.py	82583789da3e55f5	4893	test (NEW; owner STRATEGY/LEAD; K6)
@@ -160,5 +160,5 @@ tree/team/RESEARCH/LIBRARY/alarm_library/alarm_core_v1_1.py	team/RESEARCH/LIBRAR
 tree/team/RESEARCH/LIBRARY/alarm_library/alarm_core_v1_2.py	team/RESEARCH/LIBRARY/alarm_library/alarm_core_v1_2.py	c052d1b6d33e310d	16938	code the ENTRY chain runs (UNCHANGED; owner the alarm library (STRATEGY/LEAD); K6)
 tree/team/RESEARCH/tools/idea_to_grade/test_rel1_paths.py	team/RESEARCH/tools/idea_to_grade/test_rel1_paths.py	b5cf64dbc6a804bb	14934	test (NEW; owner STRATEGY/LEAD; K6)
 tree/team/RESEARCH/tools/idea_to_grade/mutants_rel1.py	team/RESEARCH/tools/idea_to_grade/mutants_rel1.py	ecee0d5f29ba2bff	18944	test (NEW; owner STRATEGY/LEAD; K6)
-MACHINE_PATHS_KNOWN.tsv	team/RESEARCH/tools/alarm_package/parts/07_Price_path/MACHINE_PATHS_KNOWN.tsv	1d9af2e1b4daaae3	143905	the part's kept machine paths, each with its reason (machine_paths_v2 reads it; SCOUT V1_5, team/SCOUT/devpaths)
+MACHINE_PATHS_KNOWN.tsv	team/RESEARCH/tools/alarm_package/parts/07_Price_path/MACHINE_PATHS_KNOWN.tsv	7ce093264ff2a285	143905	the part's kept machine paths, each with its reason (machine_paths_v2 reads it; SCOUT V1_5, team/SCOUT/devpaths)
 tree/team/LAB3/code/lab3/evt.py	team/LAB3/code/lab3/evt.py	e371b1f812d51889	11623	lab3 evt1 layout (D2)

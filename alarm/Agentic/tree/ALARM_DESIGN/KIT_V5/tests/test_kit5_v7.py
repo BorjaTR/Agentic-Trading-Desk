@@ -1,4 +1,4 @@
-"""test_kit5_v7.py (SCOUT, 31 Oct 2026; edition 7 of test_kit5_v6.py 2c738d97f8a9c0d7 for ALARM_V1_8; TEST, NOT REVIEWED): tests of
+"""test_kit5_v7.py (SCOUT, 31 Oct 2026; edition 7 of test_kit5_v6.py d677b857a22b9e50 for ALARM_V1_8; TEST, NOT REVIEWED): tests of
 queue_job_v5.py and JOB_COUNT_V6, and that CLEAN is gone (the owner 31 Oct 2026 10:51 Berlin: "remove it"; UI review 0a123faee4315eaf
 must-fix 1): JOB_CLEAN_V6 and clean_scratch_v2.py are in archive/, so queue_job_v5 and queue_job_v6 refuse CLEAN with NO TEMPLATE
 (TestCleanArchived; the CLEAN tests of edition 6 went to archive/ with it). The KIT_V5 queue and its COUNT job run from the Alarm
@@ -34,7 +34,7 @@ PINS = {
     'team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv': 'd133fea9c7935857',
     'team/LAB3/METRICS_HL_ADD_V1.tsv': 'd81727de54e5a5db',
     'team/RESEARCH/LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv': 'f19ccfbf08c9a5b4',
-    'team/LAB3/METRICS_V1.tsv': '85b14987d2059cd6',
+    'team/LAB3/METRICS_V1.tsv': 'c2335f86987c5045',
 }
 STUB_DETECT = r'''import sys, os, json
 a = sys.argv[1:]; out = a[a.index('--out') + 1]; coins = a[a.index('--coins') + 1].split(',')

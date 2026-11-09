@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""test_queue_job_v11_clean_v1.py (SCOUT, ALARM_V1_12, from test_queue_job_v10_clean_v1.py ffb96687c0dc7b54: queue_job_v11, MONTH 3813). test_queue_job_v10_clean_v1.py (BUILD5 for ALARM_V1_10, by make_jobs_v12.py from test_queue_job_v9_clean_v1.py 58d71ae6: queue_job_v10, MONTH 3758, load() checks its spec; the rest is SCOUT's text): test_queue_job_v8_clean_v1.py 64da7d0316f7f11f on queue_job_v10.py (ALARM_V1_9 D1; v8's: ALARM_V1_8,
+"""test_queue_job_v11_clean_v1.py (SCOUT, ALARM_V1_12, from test_queue_job_v10_clean_v1.py e56e895b13940738: queue_job_v11, MONTH 3813). test_queue_job_v10_clean_v1.py (BUILD5 for ALARM_V1_10, by make_jobs_v12.py from test_queue_job_v9_clean_v1.py 58d71ae6: queue_job_v10, MONTH 3758, load() checks its spec; the rest is SCOUT's text): test_queue_job_v8_clean_v1.py 169d154962affa63 on queue_job_v10.py (ALARM_V1_9 D1; v8's: ALARM_V1_8,
 speed stage 1), Q5 with GRADE's two measured values. v7's tests: its changes after the owner 31 Oct
 2026 10:51 Berlin (of CLEAN: "remove it"; scratch cleanup is DSK's, on the owner's word):
   Q1  KIND CLEAN is refused by name: exit 2, stderr 'REFUSED: CLEAN REMOVED: the owner 31 Oct 2026 10:51 Berlin; ...', nothing on stdout,
@@ -98,7 +98,7 @@ def suite(qfile):
 PLANTS = [
     ("    if kind == 'CLEAN':\n        raise Refused(CLEAN_REMOVED)\n", ""),
     ("KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH')\n", "KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH', 'CLEAN')\n"),
-    ("TEMPLATE_SHA = {'COUNT': '9acb9c0c2b241320', ", "TEMPLATE_SHA = {'COUNT': '9acb9c0c2b241320', 'CLEAN': '604cbe0b9254a8b1', "),
+    ("TEMPLATE_SHA = {'COUNT': 'ac237070224af425', ", "TEMPLATE_SHA = {'COUNT': 'ac237070224af425', 'CLEAN': '604cbe0b9254a8b1', "),
     ("    return bool(w) and os.path.isdir(w) and not os.path.isdir(", "    return False and not os.path.isdir("),
     ("    return bool(w) and os.path.isdir(w) and not os.path.isdir(", "    return bool(w) and not os.path.isdir("),
     ("                                                                       os.path.basename(d.rstrip('/'))))",

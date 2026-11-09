@@ -81,8 +81,8 @@ def all_tests(text):
 
 MUTANTS = [   # (the text, the bug planted)
     ('FEED_GATE=@@FEED_GATE@@ ', ''), ('FEED_GATE=@@FEED_GATE@@ ', 'FEED_GATE= '), ('FEED_GATE=@@FEED_GATE@@ ', 'FEED_GATE=@@LAB_DAYS@@ '),
-    ('ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4', 'ck $MP/alarm_grade_chain_v2_2_1_to20260430.sh 093be8f399d1b0d4'),
-    ('alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4', 'alarm_grade_chain_v2_2_2_to20260430.sh 0000000000000000'),
+    ('ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh ed76a39ed96d562a', 'ck $MP/alarm_grade_chain_v2_2_1_to20260430.sh a5f5a659e6eac716'),
+    ('alarm_grade_chain_v2_2_2_to20260430.sh ed76a39ed96d562a', 'alarm_grade_chain_v2_2_2_to20260430.sh 0000000000000000'),
     ('bash $MP/alarm_grade_chain_v2_2_2_to20260430.sh $V', 'bash $MP/alarm_grade_chain_v2_2_1_to20260430.sh $V'),
     ('"chain v2_2_2 Sep-Apr in 26 coin parts, lean $L"', '"chain v2_2_1 Sep-Apr in 26 coin parts, lean $L"'),
     ('PARTS=26 LEAN=$L', 'PARTS=8 LEAN=$L'), ('\ncd $AL\n', '\ncd /\n'), ('AL=$AL PY=$PY LAB_DAYS=@@LAB_DAYS@@ FEED_GATE', 'AL=$AL PY=$PY FEED_GATE'),

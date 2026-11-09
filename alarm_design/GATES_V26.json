@@ -1,0 +1,155 @@
+{
+ "task_type": "ALARM_BUILD",
+ "version": 26,
+ "owner": "SCOUT",
+ "stage": "2_ALARMS",
+ "stage_source": "FORMAT_V1.md f9b457eeb9d4361e stages; PROMPTS_V1.tsv 3c3c8c85c656974a line 20 process 2_ALARMS",
+ "reference_run": {
+  "name": "D1.5 trial 3, 5 Nov 2026, 04:26Z START to 05:40Z DONE",
+  "seconds": 4440,
+  "source": "team/SCOUT/desk_mvp/D15TRIAL3_TRANSCRIPT_20261105.md 2f9e4be0e2e8b194 lines 4 and 22"
+ },
+ "audit_fast_share": 0.25,
+ "audit_fast_share_source": "OPINION SCT-A30: plan d1d8fc035b3f84ca line 241 (14.4) asks for 'a set share' and names no number",
+ "allowed_window": {
+  "window": "2025-09-10:2026-03-31",
+  "source": "the owner 7 Nov 2026 08:51-08:54 and 09:13 Berlin (SCO-A176 law 0802358832de2b23): the design window; was 20250901 to 20260430"
+ },
+ "holdout": [
+  {
+   "window": "2026-04-01:2026-07-31",
+   "source": "law OUT_OF_SAMPLE: one look per alarm through holdout_month only (machine guard; prose never names these months)"
+  },
+  {
+   "window": "2026-08-01:2026-10-31",
+   "source": "law NEVER_SEEN: refused by name to every purpose (machine guard; prose never names these months). The never-seen span runs to 20261130 in the law; its last month stays out of this guard because every pack date is written in that month (rule CLOSED_MONTHS), and allowed_window already keeps a gate window before 20260401"
+  }
+ ],
+ "questions": {
+  "file": "QUESTIONS_V26.md",
+  "sha256": "184cb125242b76dd6b2bc0759fc21b90668e8c5bdbfe963f84fa36594a78481a",
+  "source": "SCO-A153: QUESTIONS_V26.md is the V17 question file with only the file names made V18 (no question changed, 47 qids); the questions of the V17 data steps are answered at ANALYZE from the STEP jsons. SCO-A147 (brief 44c35d69292da688): QUESTIONS_V26.md is the V16 question file with only lines 1 and 3 changed (no question changed, 47 qids). Before it: SCO-A137 (brief 6586bc82e5031556): QUESTIONS_V26.md is the V15 question file with only lines 1 and 3 changed (no question changed, 47 qids). Before it: SCO-A134 (brief f75e0e41ed7dd13a): QUESTIONS_V26.md is the V14 question file with only lines 1 and 3 changed (no question changed, 47 qids). Before it: SCO-A100 (brief f36edd8d963d467f): the V14 file was the V10 question file of SCO-A95 with only lines 1 and 3 changed, byte equal from ## Q01 to the end of Q45, and Q46 to Q48 appended by V14 (SCO-A121, CURATED_GH.tsv 8ac1e5981bf5a064); the V10 body was accepted by the unchanged loopgates_common_v5.py 92aeec8178e3838e questions() reader with 44 ids (format only, on V10; not rerun on V14)",
+  "history": "V17 bound QUESTIONS_V17.md d71701f17b5d6eaf (SCO-A147); V16 bound QUESTIONS_V16.md 49a79948c22f91b7 (SCO-A137); V15 bound QUESTIONS_V15.md 30253c8f25f1151e (SCO-A134); V14 bound QUESTIONS_V14.md 7df992b97ff9065b (SCO-A121); V10 bound QUESTIONS_V10.md f8a1e6bfa34b0840 (SCO-A95); V9 bound QUESTIONS_V9.md 745f641a8d519e88 (SCO-A61); V8 bound QUESTIONS_V8.md 4c9f88f7d692cd4a, a lossless render of QUESTIONS_V7.tsv b807f58efb2e8a9c (SCO-A58, brief 577879ef3b9564c5); V7 bound the pre-edit twin of QUESTIONS_V7.tsv (O8-01)"
+ },
+ "launch_requires": [],
+ "time_log": {
+  "tool": "team/SCOUT/tools/time_log_v3/time_log_v3.py",
+  "sha16": "a1d24faf3bc0bdf3",
+  "per_step": true,
+  "source": "GPT2 scoped PASS cbcfa4d969114f29; the owner D202611052213_5cf7 and STRATEGY D202611052212_599b (every loop names its slowdowns)"
+ },
+ "rounds": {
+  "cap": 1,
+  "answer_budget_per_round": 62,
+  "answers_initial": 47,
+  "answers_per_round": 15,
+  "stuck_check_per_round": 15,
+  "source": "SCO-A100 (brief f36edd8d963d467f): cap 1, one alarm per task, as every trial A to F ran; answers_initial = 47 questions answered once and answers_per_round = 0 EVERY questions + 15 STUCK_CHECK questions (START section 5 item 1), both counted by command (CHANGES_V14.tsv rows K10b-01 and K10b-02); answer_budget_per_round = their sum"
+ },
+ "steps": [
+  {
+   "id": "QUESTIONS",
+   "needs": [],
+   "data": false,
+   "receipt": "answers to QUESTIONS_V<n>.md and the 15 STUCK_CHECK questions, one line each",
+   "receipt_must_contain": [
+    "Q01",
+    "STUCK"
+   ],
+   "source": "the owner 2026-11-05T11:39Z; pro-practice-first 1b; START_V<n>.md section 5"
+  },
+  {
+   "id": "CLAIM",
+   "needs": [
+    "QUESTIONS"
+   ],
+   "data": false,
+   "receipt": "the claim card, DEF.json, sealed TRUE claim, mechanism hypothesis and INPUT_<IDEA>_<V>.json with their sha16",
+   "receipt_must_contain": [
+    "SIZE",
+    "wrong",
+    "mechanism",
+    "INPUT"
+   ],
+   "source": "SCO-A153 (brief team/SCOUT/loop_day_20261105/briefs/SCO-A153_V18_PIPELINE_CARD.md fbe63a7455ee4876): the owner 2026-11-06 ~14:40Z: \"Tools can run the whole process and agents only need to analyze it\""
+  },
+  {
+   "id": "RUN",
+   "needs": [
+    "CLAIM"
+   ],
+   "data": true,
+   "receipt": "alarm_pipeline_v1 status table with 22 DONE rows and the run folder",
+   "receipt_must_contain": [
+    "DONE ALL",
+    "STEP_22_HANDOFF"
+   ],
+   "source": "SCO-A153 (brief team/SCOUT/loop_day_20261105/briefs/SCO-A153_V18_PIPELINE_CARD.md fbe63a7455ee4876): the owner 2026-11-06 ~14:40Z: \"Tools can run the whole process and agents only need to analyze it\""
+  },
+  {
+   "id": "ANALYZE",
+   "needs": [
+    "RUN"
+   ],
+   "data": false,
+   "receipt": "one line per STEP json from its numbers",
+   "receipt_must_contain": [
+    "STEP_01",
+    "STEP_22"
+   ],
+   "source": "SCO-A153 (brief team/SCOUT/loop_day_20261105/briefs/SCO-A153_V18_PIPELINE_CARD.md fbe63a7455ee4876): the owner 2026-11-06 ~14:40Z: \"Tools can run the whole process and agents only need to analyze it\""
+  },
+  {
+   "id": "CARD_REVIEW",
+   "needs": [
+    "ANALYZE"
+   ],
+   "data": false,
+   "receipt": "ACCEPT or the wrong row, with the card, HANDOFF.json and INDEX.tsv row sha16",
+   "receipt_must_contain": [
+    "ALARM_CARD_",
+    "HANDOFF.json",
+    "INDEX.tsv"
+   ],
+   "source": "SCO-A153 (brief team/SCOUT/loop_day_20261105/briefs/SCO-A153_V18_PIPELINE_CARD.md fbe63a7455ee4876): the owner 2026-11-06 ~14:40Z: \"Tools can run the whole process and agents only need to analyze it\""
+  },
+  {
+   "id": "PROPOSE",
+   "needs": [
+    "CARD_REVIEW"
+   ],
+   "data": false,
+   "receipt": "process_change, better_questions, think_better, slowdowns",
+   "receipt_must_contain": [
+    "process_change",
+    "better_questions",
+    "think_better",
+    "slowdowns"
+   ],
+   "source": "SCO-A153 (brief team/SCOUT/loop_day_20261105/briefs/SCO-A153_V18_PIPELINE_CARD.md fbe63a7455ee4876): the owner 2026-11-06 ~14:40Z: \"Tools can run the whole process and agents only need to analyze it\""
+  }
+ ],
+ "close_requires": [
+  "QUESTIONS",
+  "CLAIM",
+  "RUN",
+  "ANALYZE",
+  "CARD_REVIEW",
+  "PROPOSE"
+ ],
+ "close_if": [],
+ "close_requires_outputs": {
+  "card": "team/RESEARCH/LEAD/ALARM_CARDS/<MECHANISM>/<ALARM>/ALARM_CARD_<ALARM>.md",
+  "handoff": "team/RESEARCH/LEAD/ALARM_CARDS/<MECHANISM>/<ALARM>/HANDOFF.json",
+  "index": "team/RESEARCH/LEAD/ALARM_CARDS/INDEX.tsv (one row: alarm, mechanism, card_sha16, utc)",
+  "source": "SCO-A153 (brief team/SCOUT/loop_day_20261105/briefs/SCO-A153_V18_PIPELINE_CARD.md fbe63a7455ee4876): the owner 2026-11-06 ~14:40Z: \"Tools can run the whole process and agents only need to analyze it\""
+ },
+ "v19_source": "SCO-A154 brief team/SCOUT/loop_day_20261105/briefs/SCO-A154_MECHANISM_V2_V19.md 83c4afbdc4703301: the V18 gates, steps unchanged",
+ "v20_source": "SCO-A157 brief team/SCOUT/loop_day_20261105/briefs/SCO-A157_RELEASE_PACK.md e767efa5f00ffd93; SCO-A156 brief team/SCOUT/loop_day_20261105/briefs/SCO-A156_TIDY_ONE_PROCESS.md 7a7c4b4c1ee46013 item 1: the V19 gates, steps unchanged",
+ "v21_source": "SCO-A160 brief team/SCOUT/loop_day_20261105/briefs/SCO-A160_V20_FIXES.md 365d6368e9967078; GPT REVIEW 79f65b1023788453 R2, R3: the V20 gates, steps unchanged",
+ "v22_source": "SCO-A163 brief team/SCOUT/loop_day_20261105/briefs/SCO-A163_V21_CURRENT.md e36b953e388c8f0a step 4: the V21 gates, steps unchanged",
+ "v23_source": "SCO-A162 brief team/SCOUT/loop_day_20261105/briefs/SCO-A162_RELEASE_FAST.md 135b75c83b3f361b step 3: the V22 gates, steps unchanged",
+ "v24_source": "SCO-A169: SCOUT answer hb/SCOUT.txt 2026-11-07T00:48:05Z (F1 pin fault, SCO-A168P 00:43:53Z, learning_series/dry_test/run_0/ops/PACK_CHECK.txt f54cae45dc49473c) and SCOUT 01:28Z (base V23: its PIPE_SETTINGS_V3_TEMPLATE.json and HOW TO LAUNCH section 3): the V23 gates, steps unchanged",
+ "v25_source": "SCO-A171: SCOUT brief 2026-11-07 and scope change ~04:53Z (SCOUT MISTAKE hb/SCOUT.txt 2026-11-07T03:04:04Z: a tool edition the pack pins goes current only with the pack edition that pins it; ALARM_PIPELINE_V1_3_3 = V1_3_2 (SCO-A170 job 20270457, card CLAIM hypothesis fix R1-11) + SCO-A172 mechanism_v2 kitq binding fix): the V24 gates, steps unchanged",
+ "v26_source": "SCO-A183: SCOUT brief 2026-11-07 (the owner 7 Nov 08:51-08:54 and 09:13 Berlin: research reads to 20260331, the out-of-sample months one look per alarm, the never-seen months refused; goal today: the PROOF_RULES_V2 measured block starts when this set is current): the V25 gates, steps unchanged; allowed_window and holdout on the new law"
+}

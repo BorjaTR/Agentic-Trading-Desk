@@ -48,7 +48,7 @@
   },
   "team/RESEARCH/tools/alarm_design/test_alarm_design_v2.py": {
    "role": "planted tests (32)",
-   "sha16": "377e971b9c034797"
+   "sha16": "bc9c40a838f40329"
   },
   "team/RESEARCH/tools/alarm_design/test_grade_edges_v1.py": {
    "role": "grade_edges tests (7)",

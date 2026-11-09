@@ -64,7 +64,7 @@ WAIT_S = 60                       # the factory's entry rule (factory_v2.trade):
 TOUCH_RTOL = 1e-9                 # a price level counts as touched within 1e-9 relative (float noise of p0 x (1 + x); far below a tick)
 MANIFEST = 'RUN_MANIFEST'
 RELEASE = os.path.join(HERE, 'RELEASE_event_outcomes_AW1.json')   # aw1
-WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 RUN_PARALLEL = os.path.join(TOOLS, 'event_profile', 'run_parallel.py')
 KINDS = {'return': ('horizon_min',), 'best': ('horizon_min',), 'worst': ('horizon_min',), 'reach': ('target', 'horizon_min'),
          'first': ('up', 'down', 'horizon_min'), 'offer_before_heat': ('offer', 'heat', 'horizon_min'), 'heat_before': ('target', 'horizon_min'),

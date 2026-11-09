@@ -31,7 +31,7 @@ PINS = {
     'team/RESEARCH/tools/alarm_profile/EPI_CATALOG_V1.tsv': 'd133fea9c7935857',
     'team/LAB3/METRICS_HL_ADD_V1.tsv': 'd81727de54e5a5db',
     'team/RESEARCH/LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv': 'f19ccfbf08c9a5b4',
-    'team/LAB3/METRICS_V1.tsv': '85b14987d2059cd6',
+    'team/LAB3/METRICS_V1.tsv': 'c2335f86987c5045',
 }
 STUB_DETECT = r'''import sys, os, json
 a = sys.argv[1:]; out = a[a.index('--out') + 1]; coins = a[a.index('--coins') + 1].split(',')

@@ -1,11 +1,11 @@
 """event_outcomes_gm1.py: new edition by BUILD5 for SCOUT (G1 D4, 31 Oct 2026; TEST, NOT REVIEWED): ONE edition for GRADE and MONTH,
 the window table an argument (the owner 31 Oct 13:28 Berlin: "Their tools need to be fast and refactored properly"). Made by
 team/BUILD5/proposals/event_outcomes_gm1/make_gm1.py from event_outcomes_rel1.py 7c35f72782745b9c (GRADE) and event_outcomes_aw1_rel1.py
-3dff0aa8fdda0d75 (MONTH), both never edited. Changed, nothing else:
+fc1fb81710a44342 (MONTH), both never edited. Changed, nothing else:
   - the window choice is the environment EO_WINDOWS = GRADE or MONTH (the command line --windows sets it, an importer calls use_windows();
     unset or any other word is refused NO_WINDOWS); child processes (fresh_inventory, the run_parallel workers) inherit it;
   - GRADE is event_outcomes_rel1.py exactly (WINDOWS_V1 classes, 0 to 8 workers), release record RELEASE_event_outcomes_GM1.json;
-  - MONTH is event_outcomes_aw1_rel1.py exactly: the outcome window classes from alarm_process/WINDOWS_ALARM_V1.tsv (sha16 37decf0075649f69
+  - MONTH is event_outcomes_aw1_rel1.py exactly: the outcome window classes from alarm_process/WINDOWS_ALARM_V1.tsv (sha16 69c3327ebf4e15a1
     checked) in authorize and in the configured files, run 0 only (WORKERS_AW1), release record
     alarm_process/RELEASE_event_outcomes_GM1_MONTH.json (the window table + RELEASE_event_outcomes_GM1.json);
   - RELEASE is release_path() (the module attribute RELEASE is kept for importers); RUN_PARALLEL is event_profile/run_parallel_gm1.py (its
@@ -76,7 +76,7 @@ MANIFEST = 'RUN_MANIFEST'
 RELEASES = {'GRADE': os.path.join(HERE, 'RELEASE_event_outcomes_GM1.json'),                           # gm1: each window's release record
             'MONTH': os.path.join(TOOLS, 'alarm_process', 'RELEASE_event_outcomes_GM1_MONTH.json')}
 WINDOWS_ENV = 'EO_WINDOWS'                                                     # gm1: the window choice, GRADE or MONTH (windows())
-WINDOWS_ALARM = os.path.join(TOOLS, 'alarm_process', 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = os.path.join(TOOLS, 'alarm_process', 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 RUN_PARALLEL = os.path.join(TOOLS, 'event_profile', 'run_parallel_gm1.py')   # gm1: its outcomes workers run this edition
 KINDS = {'return': ('horizon_min',), 'best': ('horizon_min',), 'worst': ('horizon_min',), 'reach': ('target', 'horizon_min'),
          'first': ('up', 'down', 'horizon_min'), 'offer_before_heat': ('offer', 'heat', 'horizon_min'), 'heat_before': ('target', 'horizon_min'),

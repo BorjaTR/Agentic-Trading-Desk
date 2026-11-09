@@ -1,12 +1,12 @@
 #!/bin/bash
 # alarm_grade_chain_v2_2_2_to20260430.sh (SCOUT 31 Oct 2026, K12, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_1_to20260430.sh 093be8f399d1b0d4 (SCOUT K4, 30 Oct) with only the aw1 grader and detector changed to their clean
+# alarm_grade_chain_v2_2_1_to20260430.sh 2c7adbe6921e6cf9 (SCOUT K4, 30 Oct) with only the aw1 grader and detector changed to their clean
 # editions (CLEAN_RELEASE_V1; the owner 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the release folder only"). Why: from the
 # install, idea_to_grade_aw1.py refuses UNPINNED_MODULE as idea_to_grade.py did in GRADE job 20264797 (its pins I2G_PINS_AW1.json name the
 # dev tree's absolute paths; its code loads its kernels from the dev tree). Changed, nothing else:
-#   step 1: detect_aw1_rel1.py (52fa253a619cf205: detect_v2 with detect_aw1's window classes) with --gate="$FEED_GATE";
-#   step 3: idea_to_grade_aw1_rel1.py (64d3fbb8006a8261: idea_to_grade_rel1 with idea_to_grade_aw1's changes) with --gate="$FEED_GATE" and
-#           --pins I2G_PINS_AW1_REL1.json (fedbc866b0ec0963: the same 39 files as I2G_PINS_AW1.json, the clean editions in place of the old,
+#   step 1: detect_aw1_rel1.py (b1894b3bade40fa2: detect_v2 with detect_aw1's window classes) with --gate="$FEED_GATE";
+#   step 3: idea_to_grade_aw1_rel1.py (f1e881d598ae8155: idea_to_grade_rel1 with idea_to_grade_aw1's changes) with --gate="$FEED_GATE" and
+#           --pins I2G_PINS_AW1_REL1.json (9faa1dc1f753a47a: the same 39 files as I2G_PINS_AW1.json, the clean editions in place of the old,
 #           paths relative to the tree);
 #   the caller gives FEED_GATE in the environment (the settings key FEED_GATE; set and empty: no gate, a machine without the feed);
 #   METRICS_V1 is exported beside METRIC_TRAPS and CATALOGS (the lab tree's team/LAB3/METRICS_V1.tsv: the detector's metric gate read the
@@ -14,7 +14,7 @@
 # Parts, window, steps, other tools, arguments and outputs otherwise unchanged. v2_2_1's header follows.
 #   AL=<Alarm> PY=<python> LAB_DAYS=<lab days> FEED_GATE=<gate file or empty> [PARTS=2..26] [LEAN=..] [BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_2_2_to20260430.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]
 # alarm_grade_chain_v2_2_1_to20260430.sh (SCOUT 30 Oct 2026, K4, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_to20260430.sh c24bd949b32c8e24 (SCOUT 29 Oct, released) with only its paths changed (CLEAN_RELEASE_V1; the owner
+# alarm_grade_chain_v2_2_to20260430.sh 64b42a022bb8e3bd (SCOUT 29 Oct, released) with only its paths changed (CLEAN_RELEASE_V1; the owner
 # 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the release folder only"): the caller gives AL, PY and LAB_DAYS in the
 # environment (below); every step tool and table comes from the lab tree <AL>/01_Detection/tree (the dev layout), never the dev tree;
 # the lab days go to detect_aw1, the grade and Outcomes as an argument (detect_aw1 and idea_to_grade_aw1 had the Mac's as their
@@ -51,7 +51,7 @@
 # Window (v1_3's was 20250910..20251231): this version's FIRST and LAST below. Never deletes. One worker after detection.
 set -uo pipefail
 FIRST=20250910; LAST=20260430   # this version's hardcoded date range (UTC days): never a setting
-CARD_SHA=3c496708f9d44651; DET_SHA=52fa253a619cf205; I2G_SHA=64d3fbb8006a8261; PINS_SHA=fedbc866b0ec0963; EO_SHA=a66240b3332ddf00; REL_SHA=0de68ccfca3a7376; WIN_SHA=37decf0075649f69
+CARD_SHA=3c496708f9d44651; DET_SHA=932bd2957cd3592d; I2G_SHA=d50d277f44aad95f; PINS_SHA=82a0d10372bbe744; EO_SHA=76adc225ef3bc102; REL_SHA=7ca10b08f1254a69; WIN_SHA=69c3327ebf4e15a1
 V=$1; DEF=$2; W=$3
 [[ "$V" =~ ^[A-Za-z0-9]+$ ]] || { echo "BAD_VARIANT $V"; exit 2; }
 [ -f "$DEF" ] || { echo "NO_DEFINITION $DEF"; exit 2; }

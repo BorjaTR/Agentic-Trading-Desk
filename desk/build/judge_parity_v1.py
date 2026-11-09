@@ -24,6 +24,7 @@ JUDGE = [
     ('decide_v6', 'Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v6.py'),
     ('audit_run_v5', 'Agentic/tree/ALARM_DESIGN/KIT_V5/tools/audit_run_v5.py'),
     ('true_gate_v3', '03_Grading/tree/tools/true_gate/true_gate_v3.py'),
+    ('true_gate_v4', '03_Grading/tree/tools/true_gate/true_gate_v4.py'),          # the TRUE gate of JOB_TRUE_V2 since ALARM_V1_22_0
     ('menu_gate_v1', 'Agentic/tree/ALARM_DESIGN/KIT_V5/tools/menu_gate_v1.py'),
     ('tried_search_v1', '08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py'),
     ('wave_gap_v1', 'Agentic/tree/ALARM_DESIGN/KIT_V5/tools/wave_gap_v1.py'),

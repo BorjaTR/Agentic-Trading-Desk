@@ -1,0 +1,6 @@
+round	utc	p_beat_yardstick	forecast_net15	low80_net15	high80_net15	forecast_t	forecast_months_up	gain_vs_r1	low80_gain	high80_gain	reading	pred_better_state	pred_gap_t	note
+# one row per forecast, sealed before the round's first job; rows starting # are notes, the scorer skips them; keep the column order (the scorer reads by position)
+# R1 (select round): columns 1-8; p_beat_yardstick (name kept for the scorer) = p that the round passes every part of the pack's R1 pass rule; *_net15 = the pack's measure (alarm: lead15); a pass part with no column goes in note as "<part> <value>"; note names the start (the brief's finding or move the round builds on, else the yardstick) and, for p, the parts that start failed
+# split round (alarm R2): one row per split reading: round, utc, reading, pred_better_state (high or low), pred_gap_t (signed: high minus low); columns 3-11 empty
+# fitted-change round and placebo (alarm R3, R3P; the pack's round map may number them otherwise): columns 1-8 (p = p of passing R1's rule) plus gain_vs_r1 with its 80 pct interval; note "gain from <start> toward move mean <m> (n <k>)": start 0 or your last sealed forecast of this move, never past the mean
+# a placebo round that did not run: one row with round and utc, numbers empty, note "not run: no placebo"; a pack with no placebo round writes no such row

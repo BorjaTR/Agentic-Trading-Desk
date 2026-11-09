@@ -256,7 +256,7 @@ class Releases(unittest.TestCase):
                 self.assertTrue(refusal(G.check_closure, bad).startswith('CLOSURE'), w)
 
     def test_month_closure_walks_the_month_record(self):
-        inv = {'team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv': '37decf0075649f69'}   # pinned only by the MONTH record
+        inv = {'team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv': '69c3327ebf4e15a1'}   # pinned only by the MONTH record
         with Env('MONTH'):
             G.check_closure(inv)
         with Env('GRADE'):
@@ -264,7 +264,7 @@ class Releases(unittest.TestCase):
 
     def test_month_record_pins_the_table_and_grade_record(self):
         m = json.load(open(os.path.join(T, 'alarm_process', 'RELEASE_event_outcomes_GM1_MONTH.json')))
-        self.assertEqual(m['files']['team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv']['sha16'], '37decf0075649f69')
+        self.assertEqual(m['files']['team/RESEARCH/tools/alarm_process/WINDOWS_ALARM_V1.tsv']['sha16'], '69c3327ebf4e15a1')
         self.assertEqual(list(m['releases']), ['team/RESEARCH/tools/event_outcomes/RELEASE_event_outcomes_GM1.json'])
         g = json.load(open(os.path.join(T, 'event_outcomes', 'RELEASE_event_outcomes_GM1.json')))
         self.assertNotIn('team/RESEARCH/tools/event_outcomes/event_outcomes_rel1.py', g['files'])

@@ -1,0 +1,59 @@
+{
+ "folder": "generic/tools/knowledge_v2",
+ "edition": "LEARNING_LOOP_V1",
+ "generated_from": "the code (docstring, --help, os.environ reads, sha256)",
+ "tools": [
+  {
+   "tool": "build_knowledge_v2.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "30ad1aa1fddf3c0a",
+   "docstring": [
+    "build_knowledge_v2.py - generic knowledge store of a learning loop; every seat-only setting comes from a pack file.",
+    "why: the owner 2026-11-08 16:31Z \"let's then start making the generic version\" (playground, no release); P35 SPLIT.tsv D20-D22, D25.",
+    "v2 = build_knowledge_v1.py with every alarm-only constant moved to --pack <file.json> (README.md: the contract, every key).",
+    "packs/alarm.json reproduces v1 byte for byte (golden test). Same store format as v1: a store written by v1 is read by v2.",
+    "commands (each needs --pack <file.json> and --dir <store folder>):",
+    "  init                       write empty store files (headers only) where missing",
+    "  check                      schema, eids exist, no control (arm C) eid in findings, statuses recomputed vs stored",
+    "  brief                      write KNOWLEDGE_BRIEF.md (deterministic: same inputs -> same bytes)",
+    "  op --who W --op OP ...     apply one delta op and log it in OPS_LOG.tsv",
+    "     OP = ADD --set k=v ...            (new finding; fid given or next free; status computed)",
+    "          UPDATE --target F --set k=v  (status_rule/status/n_* recomputed after)",
+    "          MERGE --target F --into G    (F RETIRED, superseded_by G; F eids appended to G)",
+    "          RETIRE --target F --into G   (F RETIRED, superseded_by G)",
+    "          EVIDENCE --set k=v ...       (append one EVIDENCE row; append only)",
+    "          HOLDOUT_SAME_SIGN --target F (orchestrator: held-out read same sign; word only, no numbers)",
+    "          QUESTION --set action=ADD --set question=... --set would_move_fid=F --set priority=1|2|3 ...",
+    "          QUESTION --target Q --set action=TAKE",
+    "          QUESTION --target Q --set action=ANSWER --set answered_by_eid=E  (eid must exist)",
+    "          MOVE --target <move> --set mechanism=M --set eid=E --set beat_r1=1|0 --set gain_vs_r1=x",
+    "               --set gain_vs_forecast=y --set fail=1|0 [--set note=...]",
+    "mechanism names: only the pack's (mechanisms list or mechanisms_file); check and every op refuse any other",
+    "  name (UNKNOWN_MECHANISM). A new mechanism is a line in the pack's list or file, never a code edit.",
+    "sides: the pack's sides; each side has its yardstick name; a mechanism belongs to the side that lists it, else",
+    "  to the side with mechanisms \"*\". BEST SO FAR: per side the eligible VARIANT row with the largest margin",
+    "  (minus_fdonly15 as stored, i.e. measure minus the side's yardstick; wrong_yardstick_note rows skipped).",
+    "status rules (numbers from the pack's status_bars; TB = t_bar):",
+    "  eligible evidence: arm != C, notes without outside_window_note, window inside design_window.",
+    "  eff_t: SPLIT_STATE -> t; VARIANT -> t, but 0 when minus_fdonly15 <= 0; YARDSTICK -> not used;",
+    "         VARIANT with wrong_yardstick_note -> unknown (None).",
+    "  RETIRED  T1 superseded_by set",
+    "  REFUTED  R1 any eligible eff_t <= -TB",
+    "  CONFIRMED C1 eff_t >= TB in >= confirmed_min_runs runs AND >= confirmed_min_mechanisms mechanisms AND (when",
+    "           confirmed_needs_holdout) a HOLDOUT_SAME_SIGN op in OPS_LOG (else SUPPORTED, rule S1+C1WAIT)",
+    "  SUPPORTED S1 eff_t >= TB and waves >= supported_min_waves in one run; S2 (when s2_fitted_beats_select) a fitted-round",
+    "           variant beats its run's select-round variant and the yardstick",
+    "  REFUTED  R2 >= refuted_min_runs runs with a known eff_t and none |eff_t| >= TB",
+    "  HYPOTHESIS H1 otherwise",
+    "A status bar set to \"TODO\" in the pack: check, brief and finding ops are refused until the owner sets it."
+   ],
+   "argparse_help": "usage: build_knowledge_v2.py [-h] --pack PACK --dir DIR [--who WHO] [--op OP]\n                             [--target TARGET] [--into INTO] [--set SET]\n                             [--reason REASON]\n                             {check,brief,op,init}\n\npositional arguments:\n  {check,brief,op,init}\n\noptions:\n  -h, --help            show this help message and exit\n  --pack PACK           pack settings JSON (README.md: the --pack contract)\n  --dir DIR             the seat's own store folder\n  --who WHO\n  --op OP\n  --target TARGET\n  --into INTO\n  --set SET\n  --reason REASON",
+   "env": [],
+   "exit_and_output": "CHECK PASS needed from check (exit 0); a refusal exits nonzero with its reason (UNKNOWN_MECHANISM, CONTROL_EVIDENCE, DUP_MOVE_EID, TODO value(s) ...)",
+   "tests": [
+    "test_build_knowledge_v2.py",
+    "test_knowledge_v2_c218.py"
+   ]
+  }
+ ]
+}

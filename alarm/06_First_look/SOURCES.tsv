@@ -23,7 +23,7 @@ tree/tools/alarm_first_look/reviews/REVIEW_A_FL9_20261030.md	team/RESEARCH/tools
 tree/tools/alarm_first_look/reviews/REVIEW_B_FAIR2_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_B_FAIR2_20261030.md	03dc246f96f38f37	12284	review B (ladder v2), with SCOUT's answers
 tree/tools/alarm_first_look/reviews/REVIEW_C_FL10_FAIR3_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_C_FL10_FAIR3_20261030.md	3ed932701d5ae874	8845	review C (edition 10, ladder v3: code), with SCOUT's answers
 tree/tools/alarm_first_look/reviews/REVIEW_D_FAIR3_20261030.md	team/RESEARCH/tools/alarm_first_look/reviews/REVIEW_D_FAIR3_20261030.md	a4d34ca488d0734d	10702	review D (ladder v3: statistics), with SCOUT's answers
-FIRSTLOOK_SETTINGS_V1.json	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/FIRSTLOOK_SETTINGS_V1.json	02a2fac433aab727	3860	the reader and tools, as a setting (ALARM_V1_19_1)
+FIRSTLOOK_SETTINGS_V1.json	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/FIRSTLOOK_SETTINGS_V1.json	d37c851af620a1b1	3860	the reader and tools, as a setting (ALARM_V1_19_1)
 tree/tools/alarm_first_look/fl_lists_v3.py	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/tree/tools/alarm_first_look/fl_lists_v3.py	f8e9ba0cab345c13	5727	one variant, two lists (ALARM_V1_19_1)
 tree/tools/alarm_first_look/fl_receipt_v1.py	team/RESEARCH/tools/alarm_package/V1_19_1_FIXES/06_First_look/tree/tools/alarm_first_look/fl_receipt_v1.py	beefdcca7110d23f	4923	the receipt row and page (ALARM_V1_19_1)
 tree/tools/alarm_first_look/busy_v2.py	team/RESEARCH/tools/alarm_package/V1_19_FIRSTLOOK/06_First_look/tree/tools/alarm_first_look/busy_v2.py	fa844bfbad7e7e92	13975	busy_v1 with the package place

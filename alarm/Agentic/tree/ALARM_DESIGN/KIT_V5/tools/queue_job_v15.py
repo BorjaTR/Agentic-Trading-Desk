@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-# queue_job_v15.py (SCOUT 3 Nov 2026, V1_21 fixes, playground; TEST, NOT REVIEWED): queue_job_v14.py 1615a9bf538b4dbe plus KIND TRUE, nothing else: COUNT, GRADE, ENTRY, MONTH and FIRSTLOOK keep their templates, checks and sizes.
+# queue_job_v15.py, ALARM_V1_22_0 (SCOUT SCO-A179, 7 Nov 2026; the owner 7 Nov 08:54 "yes", 09:13 "I allow the months", 09:37 the job budget): the SEP-MAR KINDS:
+#   GRADE = JOB_GRADE_V15 (the MONTH chain stopped at 20260331 + the Sep-Mar hand-off), MONTH = JOB_MONTH_V15 (2601-2603, no April), COUNT = JOB_COUNT_V8
+#   (detect_gm1 MONTH to 20260331), TRUE = JOB_TRUE_V2 (true_gate_v4), FIRSTLOOK full_last at most 20260331; a definition window must hold
+#   20250910 to 20260331; the per-seat job budget 6, or 8 with --behind (SCO-A176). April 2026 and later: never read by any kind.
+# queue_job_v15.py (SCOUT 3 Nov 2026, V1_21 fixes, playground; TEST, NOT REVIEWED): queue_job_v14.py 11c797f6e92b0505 plus KIND TRUE, nothing else: COUNT, GRADE, ENTRY, MONTH and FIRSTLOOK keep their templates, checks and sizes.
 #   queue_job_v15.py --settings S <RUN> TRUE <IDEA> <V>=ideas/<IDEA>/TRUE_<V>_<LABEL>.json --from-job <GRADE job> [--dry]
 # Why: AGENTS.md step 5c TRUE had no queue kind, so agents wrote the job by hand and audit A16 failed ('has no RUNS row'; run SCOUTR12_20261103). KIND TRUE takes the same claim
 # (the IDEAS_CLAIMED file), the same twin (jobs/, opened 'x') and the same RUNS row (reg_append_v1.py) as every kind, and runs the released true_gate_v3 check, then run, in JOB_TRUE_V1.
@@ -7,7 +11,7 @@
 # the claim (ideas/<IDEA>/TRUE_<V>_<LABEL>.json) names this idea, variant, lean and definition (path as the runner sees it, sha16 = VARIANTS), the lab days of --job-settings, the GRADE
 # job's PERFIRE (path as the runner sees it; its sha16 = this variant's row of the job's PERFIRE_SEAL.tsv, the seal SHA16.txt recorded; the file there now has it), first and last real days, first <= last;
 # the sealed card carries the claim's true_label= and true_mirror= digests; no TRUE job of this variant from this GRADE is queued, running or ended well. A bad run tag says the rule (no underscore in the seat).
-# queue_job_v14.py (SCOUT 2 Nov 2026, V1_19_FIRSTLOOK; TEST, NOT REVIEWED): queue_job_v12.py b851c845508bf1b1 (ALARM_V1_16) plus KIND FIRSTLOOK, nothing else: COUNT, GRADE, ENTRY and MONTH keep their templates, checks and sizes.
+# queue_job_v14.py (SCOUT 2 Nov 2026, V1_19_FIRSTLOOK; TEST, NOT REVIEWED): queue_job_v12.py 7530e9ee597c5bb1 (ALARM_V1_16) plus KIND FIRSTLOOK, nothing else: COUNT, GRADE, ENTRY and MONTH keep their templates, checks and sizes.
 #   queue_job_v14.py --settings S <RUN> FIRSTLOOK <IDEA> <V> --from-job <GRADE job> [--month-job <MONTH job>] [--reader v11|v12] [--unsealed-source] [--dry]
 # GPT HOLD 1 (09:57:42Z): a look's source is bound to its job, digest and period before anything is copied (fl_source); GRADE and MONTH on V14: V13 plus PERFIRE_SEAL.tsv. Edited by hand since make_editions_v1 (twins beside).
 # ALARM_V1_19_1 (GPT HOLD d7f4868861ae2366): one read of the source carries its digest through the job; rows before the look's first day refused; a job that had a seal needs it, whatever the flag; the variant, definition and lean bound to the job's twin; --reader v11|v12, default in the settings, v12's chain builds its BAR tables.
@@ -22,35 +26,35 @@ queue_job_v11.py plus three things, nothing else (same templates, MEM_MB, checks
     the queue copies the card byte for byte to ALARM_CARD.md (opened 'x') after every check passed and before it claims a number
     (--dry says it would); with neither file it refuses NO ALARM CARD as v11.
 The usage line names v12. v11's text follows; where it says queue_job_v11 read queue_job_v14.
-queue_job_v11.py (SCOUT, ALARM_V1_12, by make_v1_12_v1.py from queue_job_v10.py 1b44788a3c484259): the fixes templates JOB_COUNT_V7, JOB_GRADE_V13, JOB_ENTRY_V7, JOB_MONTH_V13 (each ends with its first failed stage's code; a FEED_GATE naming a
+queue_job_v11.py (SCOUT, ALARM_V1_12, by make_v1_12_v1.py from queue_job_v10.py def6c938c345899d): the fixes templates JOB_COUNT_V7, JOB_GRADE_V13, JOB_ENTRY_V7, JOB_MONTH_V13 (each ends with its first failed stage's code; a FEED_GATE naming a
 missing file stops at once; ENTRY reads its own chain folder) and MONTH's MEM_MB 3813 (job 20265358 m12 tree peak 3177 MB + 20 percent).
-Nothing else. queue_job_v10.py (BUILD5, ALARM_V1_10; made by team/BUILD5/proposals/v1_10/jobs/make_jobs_v12.py from queue_job_v9.py 74ca3cebd6664073):
+Nothing else. queue_job_v10.py (BUILD5, ALARM_V1_10; made by team/BUILD5/proposals/v1_10/jobs/make_jobs_v12.py from queue_job_v9.py 17ecac047554fc2a):
 GRADE and MONTH on their V12 templates (chains v2_0_7 / v2_2_7: gm editions, evt1 store); nothing else. The text of queue_job_v9.py follows.
-queue_job_v9.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 2 D1; TEST, NOT REVIEWED): queue_job_v8.py 33384e4c0c541015 with
-only GRADE on JOB_GRADE_V11 (38cc8726273bfd67: chain v2_0_6, ONE process from Outcomes to the reports, perfire and the hand-off from the kept
-rows, 3 cores) and MONTH on JOB_MONTH_V11 (e35a16147513f492: chain v2_2_6, the same, perfire from the kept rows), and GRADE's MEM_MB 2879 for 1
+queue_job_v9.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 2 D1; TEST, NOT REVIEWED): queue_job_v8.py 970df4adfac333e1 with
+only GRADE on JOB_GRADE_V11 (81c9edda5ab18760: chain v2_0_6, ONE process from Outcomes to the reports, perfire and the hand-off from the kept
+rows, 3 cores) and MONTH on JOB_MONTH_V11 (d5b2a44b8ed98e75: chain v2_2_6, the same, perfire from the kept rows), and GRADE's MEM_MB 2879 for 1
 variant and 3000 for 2 or 3 (job 20265194: the measured tree peaks + 20 percent), MONTH's 3758 (job 20265289: its tree peak 3131 MB + 20
 percent; DSK's review M1, team/DSK/notes/reviews/REVIEW_SCOUT_S2_D1_DSK.md 84f086e7ee1bba3b); team/SCOUT/D1_BUILD_PLAN_V1.md. The rest of this text is
 queue_job_v8.py's, with its own name in the usage line and the refusals:
-queue_job_v8.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): queue_job_v7.py eb939ea8df0e1cd4 with only GRADE
-on JOB_GRADE_V10 (a55a4d3f6841919d: chain v2_0_5, the Outcomes runs and then the menu and the card at the same time, each perfire beside the next
-step, 6 cores declared) and MONTH on JOB_MONTH_V10 (ea6615240f713e14: chain v2_2_5, its Outcomes runs and then its menu and card at the same
+queue_job_v8.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): queue_job_v7.py 5f9a50a3c5f525a7 with only GRADE
+on JOB_GRADE_V10 (35ff1397e19ab0a9: chain v2_0_5, the Outcomes runs and then the menu and the card at the same time, each perfire beside the next
+step, 6 cores declared) and MONTH on JOB_MONTH_V10 (9e4b771485b43cd5: chain v2_2_5, its Outcomes runs and then its menu and card at the same
 time); team/SCOUT/SPEED_V2_0_DESIGN_V1.md Q1-Q3; GRADE's MEM_MB 2710 for 1 variant (job 20265150: tree peak 2253 MB + 20 percent) and 2931 for 2 or 3 (job 20265156: tree peak 2442 MB + 20 percent; CONDUCTOR's design review M1). The rest of this text is queue_job_v7.py's:
-queue_job_v7.py: queue_job_v6.py 4d75cfc98d5ad34e with only
-GRADE and MONTH on their V9 templates and MONTH's MEM_MB changed: JOB_GRADE_V9 (44f978cbd45ff83e: chain v2_0_4, Outcomes in 3 worker
-processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (b59f63f7d2d6ff16: chain v2_2_4, the detection parts by the chain's
+queue_job_v7.py: queue_job_v6.py d4477631c22b027a with only
+GRADE and MONTH on their V9 templates and MONTH's MEM_MB changed: JOB_GRADE_V9 (cf0baab20d828d61: chain v2_0_4, Outcomes in 3 worker
+processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (fe73a394772eb046: chain v2_2_4, the detection parts by the chain's
 rule, 3 cores declared, one du at the end), K16 T5, T6 and T8; MONTH's MEM_MB 4030, the measured peak + 20 percent (WORKING_SESSION_V16
 section 0.7; job 20264959 x1: a 2-part tree up to 3,355,115,520 bytes, DETECT_RUN_B.json sum_peak_rss_bytes; was 8000). SCOUT, 31 Oct 2026 (the owner 10:51 Berlin, of CLEAN: "remove it"; scratch cleanup is DSK's, on
 the owner's word): KIND CLEAN is refused (CLEAN REMOVED) and is in no table; a finished job's scratch counts in the disk budget only while
 its folder is on SCRATCH_DISK (DSK's sweep frees it); GRADE's MEM_MB 2710, the measured V9 peak + 20 percent (job 20265002: the detection
 part tree 2,255,994,880 bytes, the two parts one after the other; was 6000). The docstring of queue_job_v6.py follows.
-queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only
-GRADE and MONTH moved to JOB_GRADE_V8 (e4a9c7555c17879e) and JOB_MONTH_V8 (54cf0fa5f92fcfd3), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
+queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only
+GRADE and MONTH moved to JOB_GRADE_V8 (bde3b7d82e6ce7f7) and JOB_MONTH_V8 (7779de8ad87bffee), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
 stop gate from FEED_GATE and the research days from RESEARCH_STORE, and the job path placeholder @@RESEARCH_STORE@@ (the settings key
 RESEARCH_STORE of the machine that runs the job: now one of the keys --job-settings must have). The rest of this text is
 queue_job_v5.py's.
 queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED). The only way a KIT_V5 agent queues a job, run from the
-Alarm package. queue_job_v4.py (dc19a63f01c4e8fe) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
+Alarm package. queue_job_v4.py (3d5abaea8c3cbe33) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
 Berlin: "Let's make sure everything can run from the release folder"):
   - code only from the Alarm folder that holds this file (settings_v1.alarm_root): the job templates TEMPLATE_NAME (JOB_<KIND>_V6,
     GRADE and MONTH V7: Agentic/tree/ALARM_DESIGN/KIT_V5/jobs, pinned by TEMPLATE_SHA) and the register writer reg_append_v1.py
@@ -82,13 +86,13 @@ Reads no market data. Never deletes; never overwrites (twin opened 'x', IN via .
                   VARIANTS reason 'FORWARD ONLY OF V0', never graded itself); --from-job is V0's GRADE job; only Jan-Apr decides
                   (decide_forward_v1.py: month_read_v3 HELD or STRONGER in 3 or more of 4 months).
     --queue   a Q_V queue (default: the first empty one of Q_V1..Q_V21)
-    --behind  allow a queue that holds only your own jobs (your 3rd job then waits there)
+    --behind  allow a queue that holds only your own jobs (your 7th and 8th jobs then wait there)
     --dry     every check, then print the filled job; claims, writes and queues nothing (bash -n reads the job from its input)
 
 What it checks (KIT_V5 LEARNINGS_V5 rows in brackets): names in capitals and digits (V5-39); the idea's claim file; the try budget, at
 most 3 graded variants an idea, each in VARIANTS before its job (V5-07, V5-20); definition and PREREG files unchanged since VARIANTS
 (V5-20); for ENTRY the hand-off R1 of each variant, for MONTH the decision and the sealed Jan-Apr forecasts (V5-16); your own jobs
-(at most 2, or 3 with --behind) (V5-22); an empty queue (V5-19); SCRATCH_DISK (SCRATCH) free at
+(at most 6, or 8 with --behind; the owner 7 Nov 2026 09:37 Berlin, SCO-A176: was 2 or 3) (V5-22); an empty queue (V5-19); SCRATCH_DISK (SCRATCH) free at
 least 60,000 MB plus the job's WRITES_MB (V5-21); the template's sha16; no placeholder left; no refused word in the job's own text (the
 settings' paths go in after that check: a path such as <install>/Alarm/alarm/<RELEASE> is not a command); each settings path it fills
 set and plain (letters, digits, _ . / -); bash -n (V5-29). Then it
@@ -143,15 +147,15 @@ CFG = {
     'now': lambda: datetime.datetime.now(datetime.timezone.utc),     # the clock tests plant; no rule reads it since the quiet window went
     'free_mb': None,          # tests set a function; None = statvfs of CFG['WDB']
 }
-TEMPLATE_SHA = {'COUNT': '9acb9c0c2b241320', 'GRADE': '068508343ac4dbc9', 'MONTH': '5404a0c5f7676417',
-                'ENTRY': 'fdc51e1f114f4906', 'FIRSTLOOK': '395f8aaf5a1f432c', 'TRUE': '5a0e5d360602a4a2'}   # the templates (v15: TRUE, JOB_TRUE_V1) (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
+TEMPLATE_SHA = {'COUNT': 'c522c948f7579fdc', 'GRADE': '5e1d9d60c9a7c076', 'MONTH': 'af8bd1b40b55f84e',
+                'ENTRY': 'aa3101178ff59030', 'FIRSTLOOK': '395f8aaf5a1f432c', 'TRUE': '6bbef3d68463a268'}   # the templates (v15: TRUE, JOB_TRUE_V1) (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
 # the store runner v11 and the grader rel1, by SCOUT K6, 31 Oct; GRADE V7: chain v2_0_2 with the grader rel1 and its relative pins, and
 # MONTH V7: chain v2_2_2 with the aw1 rel1 editions and their relative pins, by SCOUT K12, 31 Oct, after round 7 found every V6 GRADE
 # refused UNPINNED_MODULE; GRADE V8 and MONTH V8: chains v2_0_3 and v2_2_3, Outcomes with the gate from FEED_GATE and the research
 # days from RESEARCH_STORE, SCOUT K12, 31 Oct; GRADE V9 and MONTH V9: chains v2_0_4 (Outcomes in 3 worker processes) and v2_2_4 (the
 # detection parts by the chain's rule), 3 cores declared, one du at the end, SCOUT K16, 31 Oct); a KIND without one is NOT CLEAN YET
-TEMPLATE_NAME = {'COUNT': 'JOB_COUNT_V7.job.sh.txt', 'GRADE': 'JOB_GRADE_V14.job.sh.txt',
-                 'MONTH': 'JOB_MONTH_V14.job.sh.txt', 'ENTRY': 'JOB_ENTRY_V7.job.sh.txt', 'FIRSTLOOK': 'JOB_FIRSTLOOK_V1.job.sh.txt', 'TRUE': 'JOB_TRUE_V1.job.sh.txt'}   # each KIND's template file in KIT_V5/jobs
+TEMPLATE_NAME = {'COUNT': 'JOB_COUNT_V8.job.sh.txt', 'GRADE': 'JOB_GRADE_V15.job.sh.txt',
+                 'MONTH': 'JOB_MONTH_V15.job.sh.txt', 'ENTRY': 'JOB_ENTRY_V7.job.sh.txt', 'FIRSTLOOK': 'JOB_FIRSTLOOK_V1.job.sh.txt', 'TRUE': 'JOB_TRUE_V2.job.sh.txt'}   # each KIND's template file in KIT_V5/jobs
 KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH', 'FIRSTLOOK', 'TRUE')
 CLEAN_REMOVED = "CLEAN REMOVED: the owner 31 Oct 2026 10:51 Berlin; scratch cleanup is DSK's, on the owner's word"   # SCOUT, 31 Oct 2026: KIND CLEAN is refused by name
 WORK = ('COUNT', 'GRADE', 'ENTRY', 'MONTH', 'FIRSTLOOK')
@@ -161,7 +165,7 @@ RUNTAG = re.compile(r'^([A-Z][A-Z0-9]{0,11})_([0-9]{8})$')
 SAFE = re.compile(r'^[A-Za-z0-9_./-]+$')
 WORDS = re.compile(r'(?<![A-Za-z0-9_])(rm|dd|git|sudo|sleep|timeout|alarm)(?![A-Za-z0-9_])')
 TOKEN = re.compile(r'@@[A-Z_]+@@')
-MONTHS = ('2601', '2602', '2603', '2604')
+MONTHS = ('2601', '2602', '2603')        # SCO-A179: April 2026 is out of sample (was 2601-2604)
 NEED = ('RESEARCH_ROOT', 'RUNNER_QUEUES', 'RUNNER_ALLOC', 'SCRATCH')         # the keys of --settings this tool uses (its own paths)
 JOB_NEED = ('PYTHON', 'LAB_DAYS', 'SCRATCH', 'RESEARCH_ROOT', 'RESEARCH_STORE')                 # the keys of --job-settings that go into the job
 PATHS = ('ALARM', 'PYTHON', 'RESEARCH_ROOT', 'SCRATCH', 'LAB_DAYS', 'FEED_GATE', 'RESEARCH_STORE')               # the job's path placeholders @@<KEY>@@
@@ -280,13 +284,13 @@ def receipts_done(run, job):
 
 
 def check_window(path, v):
-    """one definition serves the Sep-Dec grade and the Sep-Apr MONTH job: its window must cover 20250910 to 20260430"""
+    """one definition serves the Sep-Mar grade and the Jan-Mar MONTH job: its window must cover 20250910 to 20260331 (SCO-A179; was 20260430)"""
     try:
         w = json.load(open(path)).get('window') or {}
     except ValueError as e:
         raise Refused('DEFINITION NOT JSON %s: %s' % (path, e))
-    if not (str(w.get('first', '99999999')) <= '20250910' and str(w.get('last', '0')) >= '20260430'):
-        raise Refused('DEFINITION WINDOW OF %s IS %s: it must hold 20250910 to 20260430: write first 20250901, last 20260430 (AGENTS.md, the months rule); the chain decides the months read' % (v, w))
+    if not (str(w.get('first', '99999999')) <= '20250910' and str(w.get('last', '0')) >= '20260331'):
+        raise Refused('DEFINITION WINDOW OF %s IS %s: it must hold 20250910 to 20260331: write first 20250901, last 20260331 (AGENTS.md, the months rule); the chain decides the months read' % (v, w))
 
 
 def bash_array(name, vals):
@@ -332,7 +336,7 @@ def plan(run, kind, idea, items, from_job, forward_only=False):
             vs.append(v); defs.append(rel); shas.append(sha16(p))
         block = '\n'.join([bash_array('VS', vs), bash_array('DEFS', defs), bash_array('DSHAS', shas)])
         n = len(vs)
-        sub.update({'@@WMB@@': str(300 * n), '@@MMB@@': '6000', '@@MINUTES@@': str(10 * n)})
+        sub.update({'@@WMB@@': str(600 * n), '@@MMB@@': '6000', '@@MINUTES@@': str(20 * n)})   # SCO-A179: seven months, about twice V7's days
         row = {'prereg_rel': '-', 'prereg_sha16': '-'}
         return seat, vs, block, sub, row
     claim_rel = None
@@ -383,7 +387,7 @@ def plan(run, kind, idea, items, from_job, forward_only=False):
             raise Refused('TRY BUDGET: %d graded variants for %s (at most 3): %s' % (len(tries), idea, sorted(tries)))
         block = '\n'.join([bash_array('VS', vs), bash_array('DEFS', defs), bash_array('DSHAS', dshas), bash_array('LEANS', leans)])
         n = len(vs)
-        sub.update({'@@WMB@@': str(1800 * n), '@@MMB@@': '2879' if n == 1 else '3000', '@@MINUTES@@': str(30 * n + 10)})   # SCOUT: MEM_MB = the measured peak + 20 percent (V11, job 20265194); V10's: 1 variant 2253 MB (job 20265150), 2 or 3 variants 2442 MB (job 20265156)
+        sub.update({'@@WMB@@': str(3000 * n), '@@MMB@@': '4600', '@@MINUTES@@': str(60 * n + 10)})   # SCO-A179 (JOB_GRADE_V15, the MONTH chain): MONTH's 3813 (job 20265205) plus the hand-off beside the last perfire, not measured yet: the first job measures it   # SCOUT: MEM_MB = the measured peak + 20 percent (V11, job 20265194); V10's: 1 variant 2253 MB (job 20265150), 2 or 3 variants 2442 MB (job 20265156)
         return seat, vs, block, sub, row
     if not from_job or not re.match(r'^[0-9]+_GRADE_%s$' % idea, from_job):
         raise Refused('%s NEEDS --from-job <the GRADE job of %s, e.g. 20263700_GRADE_%s>' % (kind, idea, idea))
@@ -461,7 +465,7 @@ def plan(run, kind, idea, items, from_job, forward_only=False):
             for mth in MONTHS:
                 fr = latest(regs['FORECASTS'], idea=idea, V=v, scope=mth)
                 if fr is None:
-                    raise Refused('%s: NO SEALED FORECAST FOR %s IN FORECASTS (seal all of Jan-Apr first)' % (v, mth))
+                    raise Refused('%s: NO SEALED FORECAST FOR %s IN FORECASTS (seal all of Jan-Mar first)' % (v, mth))
                 rel = fr.get('file_rel', '')
                 if not SAFE.match(rel) or '..' in rel or not os.path.isfile(os.path.join(run, rel)):
                     raise Refused('%s %s: FORECAST FILE MISSING %r' % (v, mth, rel))
@@ -528,8 +532,8 @@ def fl_settings():
             raise bad('reader extra_args')
     s['reader'] = dict(s['readers'][name], name=name)
     m = s['months']
-    if not all(re.fullmatch(r'[0-9]{8}', m.get(k, '')) for k in ('run_first', 'first', 'design_last', 'full_last')) or m['full_last'] > '20260430' or m['design_last'] > m['full_last']:
-        raise bad('months: Sep 2025 to Apr 2026 only')
+    if not all(re.fullmatch(r'[0-9]{8}', m.get(k, '')) for k in ('run_first', 'first', 'design_last', 'full_last')) or m['full_last'] > '20260331' or m['design_last'] > m['full_last']:
+        raise bad('months: Sep 2025 to Mar 2026 only')
     if not all(re.fullmatch(r'[A-Z0-9_]+', x) for x in s['labels']):
         raise bad('labels')
     return s
@@ -751,7 +755,7 @@ def plan_firstlook(run, idea, v, var, grade, runs, seat, row):
             raise Refused('--month-job MUST BE <the MONTH job of %s, e.g. 20263700_MONTH_%s>' % (idea, idea))
         receipts_done(run, month)
         if not fl_stages_ok(run, month, v, True):
-            raise Refused('NO GOOD MONTH OF %s IN %s: grade_%s, perfire_%s, perfire_test_%s and month_%s_2601 to 2604 must each end rc 0' % (v, month, v, v, v, v))
+            raise Refused('NO GOOD MONTH OF %s IN %s: grade_%s, perfire_%s, perfire_test_%s and month_%s_2601 to 2603 must each end rc 0' % (v, month, v, v, v, v))
         mr = fl_run_row(runs, run, 'MONTH', idea, v, month, var)
         if mr.get('from_job') != grade:
             raise Refused('SOURCE MONTH %s CAME FROM %s, NOT FROM %s' % (month, mr.get('from_job'), grade))
@@ -784,7 +788,7 @@ def plan_firstlook(run, idea, v, var, grade, runs, seat, row):
 
 
 TRUE_CLAIM = lambda idea, v: re.compile(r'^ideas/%s/TRUE_%s_([A-Z][A-Z0-9]{0,23})\.json$' % (re.escape(idea), re.escape(v)))
-TRUE_PINS = ('true_gate_v1.py', 'true_gate_v2.py', 'true_gate_v3.py')     # true_gate_v3 loads v2, v2 loads v1: all three pinned in the job
+TRUE_PINS = ('true_gate_v1.py', 'true_gate_v2.py', 'true_gate_v3.py', 'true_gate_v4.py')     # true_gate_v4 = v3 with events to 20260331 (SCO-A179); v3 loads v2, v2 loads v1: all pinned in the job
 TRUE_DIR = os.path.join('03_Grading', 'tree', 'tools', 'true_gate')
 TRUE_MEM_MB = 3000      # not measured yet: the hand-written TRUE job 20267312 declared it (38 s, run SCOUTR12_20261103); the playground job measures it
 
@@ -969,9 +973,9 @@ def scratch_used(run, regs=None):
 
 def pick_queue(seat, q, behind, kind='GRADE'):
     mine = own_jobs(seat)
-    limit = 3 if behind else 2
+    limit = 8 if behind else 6        # SCO-A176 (the owner 7 Nov 2026 09:37 Berlin: the per-job budget raised; was 3 and 2)
     if kind != 'CLEAN' and len(mine) >= limit:
-        raise Refused('JOB BUDGET: you have %d jobs in IN or RUN (%s); at most 2, or a 3rd waiting with --behind' % (len(mine), ', '.join('%s/%s/%s' % x for x in mine)))
+        raise Refused('JOB BUDGET: you have %d jobs in IN or RUN (%s); at most 6, or up to 8 waiting with --behind' % (len(mine), ', '.join('%s/%s/%s' % x for x in mine)))
     cands = [q] if q else CFG['QUEUES']
     for c in cands:
         if c not in CFG['QUEUES']:
@@ -1076,7 +1080,7 @@ def dry_checks(runtag, kind, idea, items):
         for v in [x for x in items.split(',') if x]:
             have = [m for m in MONTHS if latest(rows, idea=idea, V=v, scope=m)]
             lack = [m for m in MONTHS if m not in have]
-            out.append(('forecasts %s' % v, not lack, ('4 rows %s' % ','.join(have)) if not lack else
+            out.append(('forecasts %s' % v, not lack, ('%d rows %s' % (len(have), ','.join(have))) if not lack else
                         'NO SEALED FORECAST FOR %s IN FORECASTS (rows needed: %s)' % (v, ','.join(lack))))
     return out
 

@@ -1,6 +1,6 @@
 # idea_to_grade_gm1.py (BUILD5 for SCOUT, G1 D4, 31 Oct 2026; TEST, NOT REVIEWED; the owner 31 Oct 13:28 Berlin: "Their tools need to be fast and
 # refactored properly"): ONE edition for GRADE and MONTH, made by team/BUILD5/proposals/idea_to_grade_gm1/make_i2g_gm1.py from
-# idea_to_grade_rel1.py edee6bbe51a2bbde (GRADE) and idea_to_grade_aw1_rel1.py 64d3fbb8006a8261 (MONTH), both never edited. Changed, nothing
+# idea_to_grade_rel1.py edee6bbe51a2bbde (GRADE) and idea_to_grade_aw1_rel1.py f1e881d598ae8155 (MONTH), both never edited. Changed, nothing
 # else: the window choice is an argument (--windows GRADE|MONTH, check_window(..., windows); missing or another word refused NO_WINDOWS):
 # GRADE reads labcore.gates' WINDOWS_V1 classes (rel1), MONTH the alarm kit's alarm_process/WINDOWS_ALARM_V1.tsv (its sha16 checked; aw1);
 # its pins file is I2G_PINS_GM1.json (rel1's pins with this file in place of idea_to_grade_rel1.py: the same for both windows). The fresh
@@ -54,7 +54,7 @@ US = 1_000_000
 DIRECTIONS = ('FOLLOW', 'FADE')
 
 
-WINDOWS_ALARM = os.path.join(os.path.dirname(HERE), 'alarm_process', 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = os.path.join(os.path.dirname(HERE), 'alarm_process', 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 WINDOWS = ('GRADE', 'MONTH')                                        # gm1: the window choice (an argument)
 PINS_FILE = None                                                    # V2.3.1's released pins name past editions: its command here needs --pins
 RUN_SCHEMA = 'I2G_RUN_V2'

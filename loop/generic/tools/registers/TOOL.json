@@ -1,0 +1,76 @@
+{
+ "folder": "generic/tools/registers",
+ "edition": "LEARNING_LOOP_V1",
+ "generated_from": "the code (docstring, --help, os.environ reads, sha256)",
+ "tools": [
+  {
+   "tool": "reg.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "8cf37ba901171c79",
+   "docstring": [
+    "reg.py (SCOUT 2026-11-08, the owner 07:41Z \"log all of this in some register\"): the one writer of the two drill registers.",
+    "  python3 -B reg.py drill  k=v ...   append one row to DRILL_RUNS.tsv   (one row per drill run: one agent, one arm, one snapshot)",
+    "  python3 -B reg.py improve k=v ...  append one row to IMPROVEMENTS.tsv (one row per process change, with the drill that found it and the drill that verified it)",
+    "  python3 -B reg.py mess k=v ...    append one row to MESSY.tsv (a contradiction, stale or unclear line any agent reported; fixed_in = the C id)",
+    "  python3 -B reg.py score k=v ...    append one score of one process part to SCORES.tsv (part_id from PARTS.tsv)",
+    "  python3 -B reg.py ledger part_id=P01 file=<path> change_id=C47 what=... found_by=... verified_by=...",
+    "                                     append one change of one file to LEDGER.tsv; sha16_before (last row of that file) and sha16_after (now) are filled",
+    "  python3 -B reg.py baseline [who=SEAT]  C218: a new seat's first ledger rows: one BASELINE row per PARTS.tsv file with no row yet;",
+    "                                     refuses (writes nothing) while any PARTS.tsv file is missing. {NAME} in a files cell = env LL_<NAME>",
+    "  python3 -B reg.py ledger-check     every file of every part in PARTS.tsv: FLAG when its bytes differ from its last LEDGER row (an unlogged change) or it has no row",
+    "  python3 -B reg.py scorecard        latest score per part",
+    "  python3 -B reg.py view [out.tsv]   the unified ledger: one row per part (level, score, drills, drill runs, median minutes, last change, open reports)",
+    "  python3 -B reg.py audit            drill LOOP_AUDIT: unverified ledger changes, proposals adopted without drills, open reports, ledger-check",
+    "  python3 -B reg.py history P01      every event of one part (scores, changes, drill runs, reports, proposals), oldest first",
+    "  python3 -B reg.py proposal k=v ... append one proposal (or its next status, prop_id P001b ...) to PROPOSALS.tsv (PROCESS_IMPROVEMENT_V1.md)",
+    "  python3 -B reg.py import-report <file> --from <id>   load an agent's REPORT block (drills_v2/REPORT_TEMPLATE_V1.md) into MESSY and PROPOSALS",
+    "  python3 -B reg.py check            every row has every field; every improvement's found_by and verified_by name a drill_id in DRILL_RUNS",
+    "Unknown or missing fields are refused; utc is filled when empty. Rows are never edited: a correction is a new row with note 'corrects <id>'."
+   ],
+   "argparse_help": null,
+   "env": [
+    "LL_REGISTERS",
+    "LL_SEAT_ROOT",
+    "LL_<NAME> for any {NAME} in a PARTS.tsv files cell (LL_GENERIC, LL_PACK, LL_SKILLS, LL_SEAT, LL_STORE)"
+   ],
+   "exit_and_output": "REFUSED <reason> on an unknown or missing field, unknown part_id, no such file, no change since the last ledger row (exit nonzero); ledger-check FLAG lines",
+   "tests": [
+    "test_reg_audit.py",
+    "test_reg_report.py",
+    "test_reg_baseline.py"
+   ]
+  },
+  {
+   "tool": "messy_triage_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "27cb9dba4a5d9e21",
+   "docstring": [
+    "messy_triage_v1.py (SCOUT 2026-11-08, C171; part P29 improvement loop). Sorts every OPEN line of MESSY.tsv into one class, so each",
+    "reported line reaches an owner and nothing is lost (scorecard \"After the 4 packets\": the improvement loop row). It changes nothing: it",
+    "writes MESSY_TRIAGE.tsv (one row per open line) and prints the class counts and the 15 largest still-open clusters.",
+    "Classes (checked in this order):",
+    "  NO_FILE         the line names no file (\"-\")",
+    "  DRILL_MATERIAL  a drill key, planted answer, planted result or planted state (drills_v2/GOLDEN/*/key|GOLD, T3_RESULTS, a planted NOW copy):",
+    "                  closed by the next key or task version, owner: the drill author",
+    "  REPLACED_FILE   the file is retired (RUN_PROMPT, HUNTER_PROMPT, *_V2 step pages, LEAN_RUN_V1): owner none, no action",
+    "  NO_LIVE_FILE    the named file does not exist (moved, renamed, never there): someone finds the file first (C218, review B3)",
+    "  QUOTE_GONE      the quoted words are no longer in the live file: likely fixed by a later change (a person or agent confirms)",
+    "  QUOTE_PRESENT   the quoted words are still in the live file: still open, owner = the live file's part",
+    "  NO_QUOTE        the live file exists but the line quotes nothing checkable",
+    "Drill copies (drills_v2/GOLDEN/K*/BASE|NEW*/, runs_v2/<run>/ops/) map to their live file by name (MAP below).",
+    "Usage: python3 -B messy_triage_v1.py [--registers DIR] [--series DIR]"
+   ],
+   "argparse_help": "usage: messy_triage_v1.py [-h] [--registers REGISTERS] [--series SERIES]\n\noptions:\n  -h, --help            show this help message and exit\n  --registers REGISTERS\n  --series SERIES",
+   "env": [
+    "LL_REGISTERS",
+    "LL_SEAT_ROOT",
+    "LL_SEAT_ROOT_NAME",
+    "LL_TRIAGE_MAP"
+   ],
+   "exit_and_output": "see the docstring",
+   "tests": [
+    "test_messy_triage_v1.py"
+   ]
+  }
+ ]
+}

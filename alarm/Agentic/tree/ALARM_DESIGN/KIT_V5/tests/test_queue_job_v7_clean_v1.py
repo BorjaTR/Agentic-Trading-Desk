@@ -97,7 +97,7 @@ def suite(qfile):
 PLANTS = [
     ("    if kind == 'CLEAN':\n        raise Refused(CLEAN_REMOVED)\n", ""),
     ("KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH')\n", "KINDS = ('COUNT', 'GRADE', 'ENTRY', 'MONTH', 'CLEAN')\n"),
-    ("TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', ", "TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', 'CLEAN': '604cbe0b9254a8b1', "),
+    ("TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', ", "TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', 'CLEAN': '604cbe0b9254a8b1', "),
     ("    return bool(w) and os.path.isdir(w) and not os.path.isdir(", "    return False and not os.path.isdir("),
     ("    return bool(w) and os.path.isdir(w) and not os.path.isdir(", "    return bool(w) and not os.path.isdir("),
     ("                                                                       os.path.basename(d.rstrip('/'))))",

@@ -5,9 +5,12 @@ PROOF_SEALED (LAB1 08:33:24Z (2); the owner 08:43 Berlin 22 Oct: Jan-Mar 2026 is
 too (10 Mar on was refused already). PROOF_OPEN: the days the 'proof' purpose of lab3.days reads besides what research reads.
 LAB1 23 Oct 2026 (the owner 05:45Z: "even if we open September to March we still have 6 months of blind data"): research reads
 Sep 2025 to 31 Mar 2026; from 1 Apr 2026 refused (BLIND). The owner 06:01Z: "they can use data from September 2025 to May 2026":
-research reads to 31 May 2026; from 1 Jun 2026 refused (BLIND)."""
+research reads to 31 May 2026; from 1 Jun 2026 refused (BLIND).
+SCO-A176 (SCOUT, 7 Nov 2026; the owner 08:51-08:54 and 09:13 Berlin): research reads to 31 Mar 2026; Apr-Jul 2026 OUT_OF_SAMPLE (one armed
+holdout look per alarm, holdout_open); Aug-Nov 2026 NEVER_SEEN (refused to every purpose); from Dec 2026 BLIND."""
 
 import datetime
+import os
 
 # BLIND RELEASE SCHEDULE (LAB1 23 Oct 2026, LEAD PROCESS_CHANGES_V1 OXP1-02; frozen BEFORE the first CHECK open; data only, it opens nothing):
 # the blind span opens ONE month at a time, in this order, and only when a frozen card's CHECK has passed and LAB1 names that card;
@@ -15,7 +18,43 @@ import datetime
 # forward record: proof only (the owner 11:16Z: 'every day there is a new day'), never find data for research.
 BLIND_SCHEDULE = ((20260601, 20260630), (20260701, 20260731), (20260801, 20260831), (20260901, 20260930), (20261001, 20261022))
 PROOF_OPEN = (0, 0)       # LAB1 23 Oct 05:5xZ: nothing open to 'proof' now; Jun-Oct 2026 opens one month at a time, only for a frozen card (LAB1 names it)
-RESEARCH_REFUSED = ((20260601, 99999999, 'BLIND (the owner 06:01Z 23 Oct: find window Sep 2025 to May 2026; Jun to Oct 2026 blind)'),)
+# SCO-A176 (SCOUT, 7 Nov 2026; the owner 7 Nov 08:51-08:54 Berlin "yes, let's do that", 09:13 "I allow the months"): THREE windows.
+#   IN SAMPLE  2025-09-01..2026-03-31: research reads (design, grade, split freely).
+#   OUT OF SAMPLE 2026-04-01..2026-07-31: refused, except inside ONE armed holdout look (holdout_open below): one look per alarm, frozen rule.
+#   NEVER SEEN 2026-08-01..2026-11-30: refused by name to every purpose, armed or not; opened once only by the owner for the final strategy test
+#   (a new law edition on his word, never an environment setting).
+#   From 2026-12-01: the forward record, refused to research.
+OUT_OF_SAMPLE = (20260401, 20260731)
+NEVER_SEEN = (20260801, 20261130)
+RESEARCH_REFUSED = ((20260401, 20260731, 'OUT_OF_SAMPLE (the owner 7 Nov 2026: Apr-Jul 2026 is the holdout, one look per alarm through the holdout route only)'),
+                    (20260801, 20261130, 'NEVER_SEEN (the owner 7 Nov 2026: Aug-Nov 2026 is never seen by agents; the owner opens it once for the final strategy test)'),
+                    (20261201, 99999999, 'BLIND (the forward record after Nov 2026: never research data)'))
+# history: until SCO-A176 the one row was (20260601, 99999999, BLIND, the owner 06:01Z 23 Oct: find window Sep 2025 to May 2026).
+HOLDOUT_ENV = 'VOLAT_HOLDOUT_OPEN'   # "<register tsv>|<job>": set only by the holdout tool inside its runner job
+_ARMED = {}
+
+
+def holdout_open():
+    """True only inside one armed holdout look: the environment names a register and a job, the register holds an OPEN row of that job
+    (event OPEN, state OPENED) and no RESULT row of it yet (the look is not spent). Any other case: False. Read once per process."""
+    v = os.environ.get(HOLDOUT_ENV, '')
+    if v in _ARMED:
+        return _ARMED[v]
+    ok = False
+    if v.count('|') == 1:
+        reg, job = v.split('|')
+        if job and os.path.isfile(reg):
+            try:
+                with open(reg) as f:
+                    rows = [l.rstrip('\n').split('\t') for l in f if l.strip()]
+                h = rows[0]; iE, iJ, iS = h.index('event'), h.index('job'), h.index('state')
+                opened = any(r[iE] == 'OPEN' and r[iJ] == job and r[iS] == 'OPENED' for r in rows[1:] if len(r) == len(h))
+                spent = any(r[iE] == 'RESULT' and r[iJ] == job for r in rows[1:] if len(r) == len(h))
+                ok = opened and not spent
+            except (OSError, ValueError, IndexError):
+                ok = False
+    _ARMED[v] = ok
+    return ok
 # 05:52Z to 06:0xZ 23 Oct the row was (20260401, on, BLIND, the owner 05:45Z); the owner widened it at 06:01Z.
 # Rows before 23 Oct (history, no longer read): (20260101, 20260309, PROOF_SEALED), (20260310, 20260405, NOT_YET_OPEN),
 # (20260406, 20260705, KEPT_ASIDE), (20260706, 20260719, JUL_UNSEEN), (20260920, 20261007, FINAL_BLOCK), (20260706, on, reading law).
@@ -33,6 +72,8 @@ def _valid_day(day):
 def research_refusal(day):
     """the first row's reason holding day, else None"""
     d = _valid_day(day)
+    if OUT_OF_SAMPLE[0] <= d <= OUT_OF_SAMPLE[1] and holdout_open():   # SCO-A176: the one armed holdout look
+        return None
     for lo, hi, why in RESEARCH_REFUSED:
         if lo <= d <= hi:
             return why
@@ -81,6 +122,8 @@ def quarantine_refusal(part, day):
 def proof_refusal(day):
     """the proof purpose: PROOF_OPEN days, else what research may read"""
     d = _valid_day(day)
+    if NEVER_SEEN[0] <= d <= NEVER_SEEN[1]:   # SCO-A176: never seen, whatever PROOF_OPEN says
+        return research_refusal(d)
     if PROOF_OPEN[0] <= d <= PROOF_OPEN[1]:
         return None
     return research_refusal(d)

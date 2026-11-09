@@ -50,7 +50,7 @@ HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent                                                    # team/RESEARCH/tools
 F_ROOT = TOOLS.parents[2]                                              # forensics
 ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v2.py'
-WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 CODE_DIR = F_ROOT / 'team' / 'LAB3' / 'code'
 LAB_ROOT = '<DATA_ROOT>/lab_days'
 VERSION = 'DETECT_V1'

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED). The only way a KIT_V5 agent queues a job, run from the
-Alarm package. queue_job_v4.py (dc19a63f01c4e8fe) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
+Alarm package. queue_job_v4.py (3d5abaea8c3cbe33) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
 Berlin: "Let's make sure everything can run from the release folder"):
   - code only from the Alarm folder that holds this file (settings_v1.alarm_root): the job templates TEMPLATE_NAME (JOB_<KIND>_V6,
     GRADE and MONTH V7: Agentic/tree/ALARM_DESIGN/KIT_V5/jobs, pinned by TEMPLATE_SHA) and the register writer reg_append_v1.py
@@ -92,8 +92,8 @@ CFG = {
     'now': lambda: datetime.datetime.now(datetime.timezone.utc),     # the clock tests plant; no rule reads it since the quiet window went
     'free_mb': None,          # tests set a function; None = statvfs of CFG['WDB']
 }
-TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', 'CLEAN': '604cbe0b9254a8b1', 'GRADE': '66d2e78a3a3b37bf', 'MONTH': '0d5038a444250202',
-                'ENTRY': '67a51907a5a930e3'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
+TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', 'CLEAN': '604cbe0b9254a8b1', 'GRADE': '20ce3daa178a0128', 'MONTH': '21157f02c635ae6f',
+                'ENTRY': '2d55b4788a059d10'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
 # the store runner v11 and the grader rel1, by SCOUT K6, 31 Oct; GRADE V7: chain v2_0_2 with the grader rel1 and its relative pins, and
 # MONTH V7: chain v2_2_2 with the aw1 rel1 editions and their relative pins, by SCOUT K12, 31 Oct, after round 7 found every V6 GRADE
 # refused UNPINNED_MODULE); a KIND without one is NOT CLEAN YET

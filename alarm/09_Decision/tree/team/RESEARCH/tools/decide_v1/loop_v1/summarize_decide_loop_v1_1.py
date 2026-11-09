@@ -16,7 +16,7 @@ import hashlib, json, os, subprocess, sys
 HERE = os.path.dirname(os.path.realpath(__file__))
 F = os.path.realpath(os.path.join(HERE, '..', '..', '..', '..', '..'))
 T = os.path.join(F, 'team/RESEARCH/tools/idea_to_grade'); LEDGER = os.path.join(F, 'team/RESEARCH/tools/ledger/ledger_add_v6.py')
-SET = os.path.join(HERE, 'DECIDE_LOOP_SETTINGS_V1.json'); RELEASE = '9c83cf0306d20410'
+SET = os.path.join(HERE, 'DECIDE_LOOP_SETTINGS_V1.json'); RELEASE = 'eb6f1020ffc3560a'
 GROUPS = ('VALUED', 'TAKE', 'SKIPRULE', 'BADDATA')
 
 

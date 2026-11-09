@@ -21,18 +21,18 @@ comments, so everything is explained here. Tests: `test_def_template_v4.py` besi
 | MB | `01_Detection/tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief.py` | 77d2f63edd3b07bf |
 | MB2 | `01_Detection/tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief_v2.py` | cfb953391141d77e |
 | HC | `01_Detection/tree/team/RESEARCH/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/hc_defs_v2_to20251231.py` | 4ec448aa6688cf36 |
-| LAW | `01_Detection/tree/team/LAB3/code/lab3/law.py` | c54e24bdd9b0debe |
+| LAW | `01_Detection/tree/team/LAB3/code/lab3/law.py` | 099d649e603074e1 |
 | DAYS | `01_Detection/tree/team/LAB3/code/lab3/days.py` | ecf85ffb7bc0fa69 |
 | CARD | `01_Detection/tree/team/RESEARCH/tools/alarm_process/alarm_card_v1_2_1.py` | e0f8ae68ac20ab32 |
 | MENU | `01_Detection/tree/team/RESEARCH/tools/alarm_process/menu_v2_1.py` | f74706414c0a55c5 |
 | M2 | `01_Detection/tree/team/LAB3/METRICS_V2.tsv` | 0e7caa99fa654672 |
-| Q | `Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v5.py` | 55ad02cf0356bcc7 |
+| Q | `Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v5.py` | 5d81d8bfd7acc0c1 |
 | JC | `Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V6.job.sh.txt` | 020c3e8192c0fe36 |
-| JG | `Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V7.job.sh.txt` | dd8cfceb81f3e9bf |
-| CG | `03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_2_to20251231.sh` | 702987b96f7c3f57 |
-| CM | `03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_2_to20260430.sh` | dd8859721c66b4ed |
-| JM | `Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V7.job.sh.txt` | 658a3063f420a052 |
-| DA | `01_Detection/tree/team/RESEARCH/tools/alarm_process/detect_aw1_rel1.py` | b1894b3bade40fa2 |
+| JG | `Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V7.job.sh.txt` | dae2af2611323c93 |
+| CG | `03_Grading/tree/tools/alarm_process/alarm_grade_chain_v2_0_2_to20251231.sh` | 2b355d4636d3c9a5 |
+| CM | `03_Grading/tree/tools/month_parts/alarm_grade_chain_v2_2_2_to20260430.sh` | 5e0ddb2066c520cd |
+| JM | `Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V7.job.sh.txt` | fe88b8fb467ec811 |
+| DA | `01_Detection/tree/team/RESEARCH/tools/alarm_process/detect_aw1_rel1.py` | 5f1d9cd702e05a80 |
 
 ## How to fill it, in order
 1. Copy the JSON to your run: `ideas/<IDEA>/defs/<V>.json`.

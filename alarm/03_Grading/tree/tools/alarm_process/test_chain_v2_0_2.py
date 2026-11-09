@@ -47,7 +47,7 @@ PATH_MUTANTS = [
     ('[ "${FEED_GATE+set}" = set ] ||', 'true ||'),
     ('[ -z "$FEED_GATE" ] || [ "${FEED_GATE#/}" != "$FEED_GATE" ] ||', 'true ||'),
     ('ckf $DET $DET_SHA; ', ''), ('ckf $I2G $I2G_SHA; ', ''), ('ckf $DET $DET_SHA; ckf $I2G $I2G_SHA; ckf $PINS $PINS_SHA', 'ckf $DET $DET_SHA; ckf $I2G $I2G_SHA'),
-    ('DET_SHA=97a822a20e08088d;', 'DET_SHA=5ced7c1a40356a7f;'), ('PINS_SHA=17f89bef42400d38', 'PINS_SHA=7be3186f7957dde7'),
+    ('DET_SHA=97a822a20e08088d;', 'DET_SHA=5ced7c1a40356a7f;'), ('PINS_SHA=e1fd76627604332c', 'PINS_SHA=0127d655ccffe185'),
     ('export METRICS_V1=$F/team/LAB3/METRICS_V1.tsv ', 'export '),
     ('"$PINS_SHA" "$PINS" "${FEED_GATE:-none}" >>', '"$PINS_SHA" "$PINS" "${FEED_GATE:-none}" >/dev/null; : >>'),
     ('"$DET_SHA" "$DET" "$I2G_SHA" "$I2G"', '"$DET_SHA" "$DET" "$I2G_SHA" "$DET"'),

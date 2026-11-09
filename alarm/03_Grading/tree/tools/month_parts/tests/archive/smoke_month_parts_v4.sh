@@ -15,7 +15,7 @@ set -uo pipefail
 DEF=$1; GL=$2; W=$3; OUT=$4
 PY=<PYTHON>; F=<LAB_REPO>/forensics; R=$F/team/RESEARCH
 CH=$R/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh; CAP=2147483648; JAN=1767225600
-[ "$(shasum -a 256 $CH | cut -c1-16)" = c24bd949b32c8e24 ] || { echo "SHA_MISMATCH chain"; exit 2; }
+[ "$(shasum -a 256 $CH | cut -c1-16)" = fc167d9273d172ab ] || { echo "SHA_MISMATCH chain"; exit 2; }
 [ "$(shasum -a 256 $DEF | cut -c1-16)" = 94c2d5188ef9d715 ] || { echo "SHA_MISMATCH definition"; exit 2; }
 [ "$(shasum -a 256 $GL | cut -c1-16)" = 97635b1e0f18a17a ] || { echo "SHA_MISMATCH grade list"; exit 2; }
 [ ! -e "$W" ] && [ ! -e "$OUT/S1.tsv" ] || { echo "USED W or OUT"; exit 2; }

@@ -225,5 +225,5 @@ implementation:
 data_checks:
   - what: the noise check of meaning_check line 1 (a read-only runner job before the build)
     who: METRIC_AUDIT
-  - what: "the CARRY of the first year day: is 9 Sep 2025's book_ticker file on the Expansion for every roster coin (TREE's K1 data check)"
+  - what: "the CARRY of the first year day: is 9 Sep 2025's book_ticker file on the ARCHIVE_DISK2 for every roster coin (TREE's K1 data check)"
     who: TREE

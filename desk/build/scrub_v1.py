@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""scrub_v1.py: how alarm/ was made from the released Alarm package (edition ALARM_V1_21_16 since 3 Nov 2026; the first slice used ALARM_V1_21_1).
+"""scrub_v1.py: how alarm/ and loop/ were made from the released editions (since 9 Nov 2026: ALARM_V1_22_1 with ALARM_BUILD_V26 and
+ALARM_PIPELINE_V1_4_1 inside alarm/, and LEARNING_LOOP_V1_1 in loop/; ALARM_V1_21_16 from 3 Nov 2026; the first slice used ALARM_V1_21_1).
 
-  python3 -B desk/build/scrub_v1.py <release folder> <alarm folder> [--write]
+  python3 -B desk/build/scrub_v1.py <release folder> <alarm folder> [--write] [--map <PIN_MAP file name>]
+  (the 9 Nov build: once on <staging>/alarm, default map PIN_MAP.tsv; once on <staging>/loop with --map PIN_MAP_LOOP.tsv)
 
 1. Every text file of <alarm folder> (already copied from the release by copy_v1.py with the exclusions of EXCLUDES.tsv) is rewritten with the
    RULES below: machine paths, disk names, machine names and VM mounts of the lab that built the release become placeholders
@@ -11,7 +13,7 @@
    full sha256 gets the new one (pages, .md, keep the release's numbers as records: two pages that name each other never settle),
    and this repeats until nothing changes (pins form a chain: a template pins a table, the queue pins
    the template). So every `ck <file> <sha16>` and every pin table still matches the bytes in this repo.
-3. PIN_MAP.tsv (file, release sha16, repo sha16) is written beside this script: the record of every changed file.
+3. PIN_MAP.tsv (or the --map name: file, release sha16, repo sha16) is written beside this script: the record of every changed file.
 No file is deleted; only files inside <alarm folder> are written; --write is needed to write anything (else a dry report).
 The patterns are spelled out here on purpose: this file is the one place that names them (desk/PATH_ALLOW.tsv lists it)."""
 import hashlib, os, re, sys
@@ -19,6 +21,10 @@ import hashlib, os, re, sys
 # 3 Nov 2026 (ALARM_V1_21_16 copy): the '<LAB_TREE>' rule is gone, so the lab tree reads '<LAB_REPO>/forensics' and pin records that
 # split paths at '/forensics/' still parse; the '~/mnt', '$HOME/mnt' and '/mnt/dev' rules are gone: they name no person or machine, and
 # the path checkers' own tests plant exactly those texts.
+# 9 Nov 2026 (ALARM_V1_22_1, ALARM_BUILD_V26, ALARM_PIPELINE_V1_4_1, LEARNING_LOOP_V1_1 copy): '~/volat_release' and
+# '~/Documents/GitHub/Trading' (the lab's release root and public copy written with a tilde), the archive disk named in prose
+# ('Expansion', 'SEAGATE') and the Mac's shared folder ('/Users/Shared') are replaced too. '~/mnt' and '$HOME/mnt' stay (a VM mount, no person or machine; the path checkers' tests
+# plant them), and '~/.claude/skills' stays (the standard Claude Code skills folder of any user).
 RULES = [
     (r'/Users/borja/dev/TradingPlatform_repo/volat-agent', '<LAB_REPO>'),
     (r'/Users/borja/dev/TradingPlatform_repo', '<LAB_REPO_ROOT>'),
@@ -30,6 +36,9 @@ RULES = [
     (r'/Users/borja/Documents/GitHub/Trading', '<PUBLIC_COPY>'),
     (r'/Users/borja/dev', '<DEV>'),
     (r'/Users/borja', '<HOME>'),
+    (r'/Users/Shared', '<SHARED>'),
+    (r'~/volat_release', '<RELEASE_ROOT>'),
+    (r'~/Documents/GitHub/Trading', '<PUBLIC_COPY>'),
     (r'/Volumes/WDBLACK/judge_scratch', '<SCRATCH>'),
     (r'/Volumes/WDBLACK', '<SCRATCH_DISK>'),
     (r'/Volumes/SEAGATE8', '<ARCHIVE_DISK>'),
@@ -43,6 +52,8 @@ RULES = [
     (r'[Mm]ac [Mm]ini', 'lab machine'),
     (r'\bWDBLACK\b', 'SCRATCH_DISK'),
     (r'\bSEAGATE8\b', 'ARCHIVE_DISK'),
+    (r'\bSEAGATE\b', 'ARCHIVE_DISK'),
+    (r'\bExpansion\b', 'ARCHIVE_DISK2'),
     (r'borja', 'owner'),
     (r'Borja', 'the owner'),
 ]
@@ -106,8 +117,10 @@ def main(argv):
                 with open(p, 'w', encoding='utf-8') as f:
                     f.write(new[p])
         here = os.path.dirname(os.path.abspath(__file__))
-        with open(os.path.join(here, 'PIN_MAP.tsv'), 'w') as f:
-            f.write('# PIN_MAP.tsv (scrub_v1.py): every file of alarm/ whose bytes differ from the release %s\n' % os.path.basename(os.path.abspath(rel_root)))
+        name = argv[argv.index('--map') + 1] if '--map' in argv else 'PIN_MAP.tsv'
+        with open(os.path.join(here, os.path.basename(name)), 'w') as f:
+            f.write('# %s (scrub_v1.py): every file of %s/ whose bytes differ from the release %s\n' % (
+                os.path.basename(name), os.path.basename(os.path.abspath(root)), os.path.basename(os.path.abspath(rel_root))))
             f.write('file\trelease_sha16\trepo_sha16\n')
             for r in rows:
                 f.write('\t'.join(r) + '\n')

@@ -1,34 +1,42 @@
-# EXCLUDES.tsv: what copy_v1.py leaves out of the released Alarm package when it makes alarm/. pattern = fnmatch on the path relative to the release folder ('*' crosses '/').
+# EXCLUDES.tsv: what copy_v2.py leaves out of the released editions when it makes alarm/, alarm/alarm_design/, alarm/alarm_pipeline/ and loop/. pattern = fnmatch on the path in the repo ('*' crosses '/'). Files matching the never-open words of copy_v2.py (held-out and look paths) are left out unread before these rules.
 # board_line_v2.py is kept: audit_run_v5 (through v4 and v3) needs a START line in BOARD/<run prefix>.txt; with the desk settings BOARD is OUTPUT_ROOT/runlog, a local run log, not a seat board.
-pattern	category	reason
-RELEASE_*.json	release_history	the lab's release records: they pin our install and name our reviewers
-RELEASE_NOTES_*.md	release_history	the lab's release history: seat names, results and found alarms by name
+alarm/RELEASE_*.json	release_history	the lab's release records: they pin our install and name our reviewers
+alarm/RELEASE_NOTES_*.md	release_history	the lab's release history: seat names, results and found alarms by name
 */reviews/*	release_history	review reports of the lab's seats
-settings/SETTINGS_MAC_MINI.env	settings_of_ours	the lab machine's own settings file
-playbook/FOUND.tsv	found_alarms	the list of alarms the lab found
-playbook/CONTRADICTIONS.md	found_alarms	notes on the lab's found alarms
-playbook/LESSONS_ALARM_V1.md	ours_only_lessons	the lab's own lesson page; the general lessons ship reworded in loop/LESSONS_GENERAL.tsv
-01_Detection/tree/team/RESEARCH/alarms/*	found_alarms	the lab's alarm cards and their status table (ALARMS_V1.tsv)
+alarm/settings/SETTINGS_MAC_MINI.env	settings_of_ours	the lab machine's own settings file
+alarm/playbook/FOUND.tsv	found_alarms	the list of alarms the lab found
+alarm/playbook/CONTRADICTIONS.md	found_alarms	notes on the lab's found alarms
+alarm/playbook/LESSONS_ALARM_V1.md	ours_only_lessons	the lab's own lesson page (not shipped since 9 Nov 2026: loop/ is now the generic learning loop and its alarm pack)
+alarm/01_Detection/tree/team/RESEARCH/alarms/*	found_alarms	the lab's alarm cards and their status table (ALARMS_V1.tsv)
 */LIBRARY/alarm_library/ALARM_REGISTRY_V1.tsv	registry	the lab's alarm registry rows
-08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/data_tried_search_v1/*	registry	test data copied from the lab's registry and claims, with found alarm definitions
-08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/registry_build_v2.py	registry	builds the lab's registry from its run folders
-08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/scoreboard_v2.py	scoreboard	the lab's scoreboard
-08_Registry/tree/ALARM_DESIGN/REGISTRY/index_v2.py	scoreboard	writes the lab's registry index through scoreboard_v2
-08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/test_registry_v2.py	registry	tests of registry_build_v2 (left out)
-08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/mutants_registry_v2.py	registry	mutants of registry_build_v2 (left out)
-cards/registry_build_v2.*	registry	card of a tool left out
-cards/scoreboard_v2.*	scoreboard	card of a tool left out
-cards/index_v2.*	scoreboard	card of a tool left out
-dictionaries/registry_build_v2_COLUMNS.tsv	registry	dictionary of a tool left out
-dictionaries/scoreboard_v2_COLUMNS.tsv	scoreboard	dictionary of a tool left out
-dictionaries/index_v2_COLUMNS.tsv	scoreboard	dictionary of a tool left out
+alarm/08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/data_tried_search_v1/*	registry	test data copied from the lab's registry and claims, with found alarm definitions
+alarm/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/registry_build_v2.py	registry	builds the lab's registry from its run folders
+alarm/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/scoreboard_v2.py	scoreboard	the lab's scoreboard
+alarm/08_Registry/tree/ALARM_DESIGN/REGISTRY/index_v2.py	scoreboard	writes the lab's registry index through scoreboard_v2
+alarm/08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/test_registry_v2.py	registry	tests of registry_build_v2 (left out)
+alarm/08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/mutants_registry_v2.py	registry	mutants of registry_build_v2 (left out)
+alarm/cards/registry_build_v2.*	registry	card of a tool left out
+alarm/cards/scoreboard_v2.*	scoreboard	card of a tool left out
+alarm/cards/index_v2.*	scoreboard	card of a tool left out
+alarm/dictionaries/registry_build_v2_COLUMNS.tsv	registry	dictionary of a tool left out
+alarm/dictionaries/scoreboard_v2_COLUMNS.tsv	scoreboard	dictionary of a tool left out
+alarm/dictionaries/index_v2_COLUMNS.tsv	scoreboard	dictionary of a tool left out
 */receipts_kit_v1/*	receipts	the lab's test receipts of decide_v1
 */team/BED/seats/*	seat_machinery	a seat's private notes folder
-Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/board_line_v1.py	seat_machinery	posts lines on the lab's seat boards (old edition)
-Agentic/tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPTS_29OCT.md	seat_machinery	launch prompts for the lab's seats and outside model rounds
-Agentic/tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_*.md	seat_machinery	launch prompts for the lab's seats and outside model rounds
-Agentic/tree/ALARM_DESIGN/KIT_V5/LEARNINGS_V5.tsv	ours_only_lessons	the lab's round-by-round learnings, with alarm and seat names; a reworded copy ships as loop/KIT_LEARNINGS_V5.tsv or _V6.tsv (reword_learnings_v1.py)
-Agentic/tree/ALARM_DESIGN/KIT_V6/LEARNINGS_V6.tsv	ours_only_lessons	the lab's round-by-round learnings, with alarm and seat names; a reworded copy ships as loop/KIT_LEARNINGS_V5.tsv or _V6.tsv (reword_learnings_v1.py)
-Agentic/tree/ALARM_DESIGN/KIT_V6/ROUNDS.tsv	found_alarms	the lab's rounds and what each found
-Agentic/tree/ALARM_DESIGN/KIT_V5/tests/repro_gpt_v119_v1.py	gpt_exchange	reproduces a finding of an outside model's review round
-.gitignore	release_history	the lab repo's ignore file
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/archive/board_line_v1.py	seat_machinery	posts lines on the lab's seat boards (old edition)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/LAUNCH_PROMPTS_29OCT.md	seat_machinery	launch prompts for the lab's seats and outside model rounds
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V6/LAUNCH_PROMPTS_*.md	seat_machinery	launch prompts for the lab's seats and outside model rounds
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/LEARNINGS_V5.tsv	ours_only_lessons	the lab's round-by-round learnings, with alarm and seat names (not shipped, reworded or not, since 9 Nov 2026)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V6/LEARNINGS_V6.tsv	ours_only_lessons	the lab's round-by-round learnings, with alarm and seat names (not shipped, reworded or not, since 9 Nov 2026)
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V6/ROUNDS.tsv	found_alarms	the lab's rounds and what each found
+alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/tests/repro_gpt_v119_v1.py	gpt_exchange	reproduces a finding of an outside model's review round
+*.gitignore	release_history	the lab repo's ignore file
+alarm/alarm_design/RELEASE_*.json	release_history	the lab's release record of the design pack: pins our install and names our reviewers
+alarm/alarm_pipeline/RELEASE_*.json*	release_history	the lab's release records of the pipeline (and one .pre_ backup): pin our install and name our reviewers
+alarm/alarm_pipeline/tree/team/SCOUT/pack_kit/alarm_pipeline_v1/tests/receipts/*	receipts	the lab's test and mutant receipts of the pipeline
+alarm/alarm_pipeline/*/tests/TESTS_RED_*.log	receipts	the lab's red-test logs (receipts)
+alarm/alarm_pipeline/tree/team/RESEARCH/PLAYGROUND/tools/PG20261105_alarm_understand/config/ALARMS_FORCED_OUT*.tsv	found_alarms	the lab's found alarms with their bundle folders
+alarm/alarm_pipeline/tree/team/SCOUT/pack_kit/alarm_pipeline_v1/e2e/matrix_v1/*	found_alarms	end-to-end cases that replay the lab's graded alarms (ideas, claims, job ids); they run only on the lab runner
+alarm/alarm_pipeline/tree/team/SCOUT/pack_kit/alarm_pipeline_v1/e2e/INPUT_*_REPLAY.json	found_alarms	the two replay cases of the lab's graded alarms (E2E_RUN.sh inputs)
+loop/packs/strategy_draft/*	not_this_release	the strategy pack draft: the owner adds the strategy design later (9 Nov 2026); today the repo ships the generic loop and the alarm pack
+loop/ARCHIVE_PLAN.tsv	seat_machinery	the lab's plan to archive its own old loop folders (lab paths only)

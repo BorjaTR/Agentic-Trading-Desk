@@ -149,7 +149,7 @@
  "reads": [
   {
    "path": "01_Detection/tree/team/LAB3/METRICS_V1.tsv",
-   "sha16": "85b14987d2059cd6"
+   "sha16": "c2335f86987c5045"
   },
   {
    "path": "01_Detection/tree/team/LAB3/METRICS_HL_CANDIDATE_V2.tsv",
@@ -177,7 +177,7 @@
   },
   {
    "path": "01_Detection/tree/team/LAB3/METRICS_V2.tsv",
-   "sha16": "9f24433b1b768afa"
+   "sha16": "99ce6c5241e56744"
   }
  ],
  "dry_run_data": "planted by _tools/tests/test_agent_docs_v1.py: {SETTINGS} its settings file; the metric tables are this Alarm folder's own"

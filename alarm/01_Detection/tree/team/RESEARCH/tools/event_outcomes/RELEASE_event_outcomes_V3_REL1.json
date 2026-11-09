@@ -46,14 +46,14 @@
  "open_findings": [
   "see team/RESEARCH/tools/event_outcomes/A51_ANSWERS_V3.md"
  ],
- "reason": "the clean release (K12, SCOUT 31 Oct: the feed-gate dev path out of GRADE and MONTH): RELEASE_event_outcomes_V3_CANDIDATE.json 2dd498a3b2c1a61e with event_outcomes_rel1.py and run_parallel_rel1.py in place of event_outcomes.py and run_parallel.py; every other file, release, runtime and finding the same",
+ "reason": "the clean release (K12, SCOUT 31 Oct: the feed-gate dev path out of GRADE and MONTH): RELEASE_event_outcomes_V3_CANDIDATE.json 17104e5d1f26e6ee with event_outcomes_rel1.py and run_parallel_rel1.py in place of event_outcomes.py and run_parallel.py; every other file, release, runtime and finding the same",
  "release": "event_outcomes_V3_REL1",
  "releases": {
-  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "eca2c8a125d24283",
-  "team/RESEARCH/tools/bucket_proof/RELEASE_label_ewsd_V2_6.json": "c257b3111351a28d",
-  "team/RESEARCH/tools/exit_engine/RELEASE_exit_engine_V1_7.json": "9d359a7034e5d7c5",
-  "team/RESEARCH/tools/factory/RELEASE_factory_V7.json": "2d7e3657ebb9de76",
-  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "3cd411844dd24562"
+  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "6992baf727bb0604",
+  "team/RESEARCH/tools/bucket_proof/RELEASE_label_ewsd_V2_6.json": "ce5892992c04d0f4",
+  "team/RESEARCH/tools/exit_engine/RELEASE_exit_engine_V1_7.json": "238fd70a89ac3d89",
+  "team/RESEARCH/tools/factory/RELEASE_factory_V7.json": "dd0d87ad92cb2b0c",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "04b819e912820eae"
  },
  "replaces": "none (V3_CANDIDATE stays for the chains that run event_outcomes.py)",
  "runtime": {

@@ -1,0 +1,188 @@
+{
+ "folder": "packs/alarm/tools",
+ "edition": "LEARNING_LOOP_V1",
+ "generated_from": "the code (docstring, --help, os.environ reads, sha256)",
+ "tools": [
+  {
+   "tool": "bar_check_v2.py",
+   "edition": "LEARNING_LOOP_V1",
+   "sha16": "6a947c23396659b2",
+   "docstring": [
+    "bar_check_v2.py (SCO-A182 for SCOUT; PLAYGROUND, TEST). The ONE computation of the PROOF_RULES_V2 bars (34192fee92adf4f5) and of the",
+    "SERIES_V2.tsv rows they read: both use the same ASSESS.tsv parser, so a SERIES_V2 number and a bar number are never computed two ways.",
+    "  bars  --series SERIES_V2.tsv [--config SERIES_V2_CONFIG.json]      B1 to B4 (B5 is a person's check), the kill rule; exit 0, 3 on MISMATCH",
+    "  bars  --block L12,C06,... | <file of ids> [--reasoning A.tsv,B.tsv] [--heldout-same k]   C216, PROOF_RUNS_V1 section 3: only the",
+    "        block's RUN rows; halves by block order among memory runs; B1, B2a-c, B3a-d, B4 each with measure, value, bar; exact permutation",
+    "        over C(n_L + n_C, n_C) splits (210 for 6 vs 4); B3c reads blind-scoring result files, B3d takes the orchestrator's count only",
+    "  row   --runf <run folder> --series SERIES_V2.tsv [--config F] [--write]   the RUN row of one run from its ASSESS.tsv (curator V2)",
+    "  look  --run-id L03 --series F --by-month a,b,c,d --t-pooled x --receipt \"<file sha16>\" [--write]   the LOOK row (SCOUT, after the one look)",
+    "Bars as PROOF_RULES_V2 says (runs = SERIES_V2 rows kind RUN, the measured block; numbers re-read from each run's ASSESS.tsv):",
+    " B1 5 consecutive runs (either arm, by utc_launch) with hand 0, tool_stops 0, blindfold 0 (ASSESS B1_CLEAN) and reproducible (every",
+    "    number of every item in both ASSESS.tsv and ASSESS_REPRO.tsv equal; ASSESSOR and TIME rows excluded; no REPRO file = not shown).",
+    " B2 arm L runs 1-10: (a) best round beats round 1 at 15 min (best_round > 1 and best_lead15 > r1_lead15) in at least 6 of 10;",
+    "    (b) mean best margin over the yardstick, L6-10 minus L1-5, at least 2; (c) mean forecast abs error L6-10 below L1-5, and the",
+    "    predicted better state matches the state split tool's in at least 6 of 10 (READING: the rule's words \"6 of 10 L runs 6-10\" cannot",
+    "    hold for 5 runs; computed over L runs 1-10, the best round's match; the L6-10 count is printed beside it; NA counts as no).",
+    " B3 over the block (at least 10 runs per arm): mean margin L minus C at least 2, AND mean repeated mistakes (M1) L below C, AND a",
+    "    one-sided permutation test of the margin difference across runs (labels L/C shuffled; exact when at most 200,000 splits, else",
+    "    100,000 random splits with seed 20261107) at p below 0.10.",
+    " B4 at least 3 runs with rediscovery no (wave overlap below 50 with any earlier alarm) whose LOOK row beats the yardstick's look figure",
+    "    month by month in at least 3 of 4 months with pooled t at least 2 (yardstick.look_lead15_by_month in the orchestrator-only file named by config yardstick_sepmar_file, C225; null: PENDING).",
+    " KILL after 10 L runs: B2(b) and B3 both fail -> the learning design is changed (PROOF_RULES_V2 kill rule).",
+    "A run whose best round was not graded (MISSING) has no margin: it is left out of the margin means and counted in the line."
+   ],
+   "argparse_help": "usage: bar_check_v2.py [-h] [--series SERIES] [--config CONFIG] [--runf RUNF]\n                       [--write] [--replace] [--reason REASON]\n                       [--run-id RUN_ID] [--by-month BY_MONTH]\n                       [--t-pooled T_POOLED] [--receipt RECEIPT]\n                       [--block BLOCK] [--reasoning REASONING]\n                       [--heldout-same HELDOUT_SAME]\n                       {bars,row,look}\n\npositional arguments:\n  {bars,row,look}\n\noptions:\n  -h, --help            show this help message and exit\n  --series SERIES\n  --config CONFIG\n  --runf RUNF\n  --write\n  --replace\n  --reason REASON\n  --run-id RUN_ID\n  --by-month BY_MONTH\n  --t-pooled T_POOLED\n  --receipt RECEIPT\n  --block BLOCK\n  --reasoning REASONING\n  --heldout-same HELDOUT_SAME",
+   "env": [],
+   "exit_and_output": "0 done; 3 MISMATCH (bars)",
+   "tests": [
+    "test_bar_check_v2.py"
+   ]
+  },
+  {
+   "tool": "forecast_score.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "c2ce0516ca0c0921",
+   "docstring": [
+    "Score hunter forecasts: Brier (p_beat_yardstick vs the pass rule: +2 over the same-side yardstick, t >= 3, 3 of 5 months; C50) + 80 pct coverage, per run.",
+    "Usage: python3 forecast_score.py [L02 L03 ...]  (default: every runs_v2/L* with work/FORECASTS.tsv)",
+    "Reads runs_v2/<L>/work/FORECASTS.tsv, pipe_r1/pipe_r3/pipe_r3p STEP_11_GRADE.json (the actual lead15, t, months; C145) or else runs_v2/<L>/CARD.md, SERIES_V2_CONFIG.json (yardstick_design_sepjan, _up). Writes FORECAST_SCORES.tsv here; with --print it writes nothing and prints the rows (assessors)."
+   ],
+   "argparse_help": null,
+   "env": [
+    "ALARM_SERIES_DIR"
+   ],
+   "exit_and_output": "writes FORECAST_SCORES.tsv beside itself (or prints only); run ids as arguments",
+   "tests": [
+    "test_forecast_score.py"
+   ]
+  },
+  {
+   "tool": "pool_splits_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "a7311ddf9129f4d6",
+   "docstring": [
+    "pool_splits_v1.py (SCOUT 2026-11-08, the owner 08:08Z \"yes, let's do the pooling and see if that improves\").",
+    "Why: 0 of 26 round 2 splits reached t 2.5 alone (drills_v2/R2_POWER_CHECK_20261108.md): each sharpened alarm leaves 50-300 waves a state.",
+    "What: for each CTX reading, the gap (highest-reading state minus lowest-reading state, lead at 15 min) from every memory run's state_split",
+    "receipt (runs_v2/L*/split*/STATE_SPLIT_*.tsv; one split per run and reading: the one with most waves), pooled by inverse variance:",
+    "  gap_pooled = sum(g_i / v_i) / sum(1 / v_i), v_i = se_hi^2 + se_lo^2, se_pooled = sqrt(1 / sum(1 / v_i)), t = gap_pooled / se_pooled;",
+    "plus sign agreement, Cochran Q and I^2 (do the runs disagree?), and a dependence-adjusted t: runs share market days, so their gaps are",
+    "not independent; t_adj = t / sqrt(1 + (k - 1) * RHO) with RHO = 0.5 (assumed correlation between runs; written down, not fitted).",
+    "Reads design-month receipts only (Sep-Jan); arm C (control) runs are never read. Writes one TSV (stdout or --out).",
+    "  python3 -B pool_splits_v1.py [--runs runs_v2] [--out FILE] [--rho 0.5] [--horizon 15m]"
+   ],
+   "argparse_help": "usage: pool_splits_v1.py [-h] [--runs RUNS] [--out OUT] [--rho RHO]\n                         [--horizon HORIZON]\n\noptions:\n  -h, --help         show this help message and exit\n  --runs RUNS\n  --out OUT\n  --rho RHO\n  --horizon HORIZON",
+   "env": [
+    "ALARM_RUNS_DIR"
+   ],
+   "exit_and_output": "0 done; one TSV to stdout or --out",
+   "tests": [
+    "test_pool_splits_v1.py"
+   ]
+  },
+  {
+   "tool": "check_round_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC4",
+   "sha16": "fbd7e57c0e60ab1c",
+   "docstring": [
+    "check_round_v1.py (SCOUT 2026-11-08; the owner 08:38Z \"how are we making sure the agents in each part of the process are doing the",
+    "correct thing?\"): the orchestrator runs it on a live run folder after each round; it flags a missing step while the run goes on.",
+    "Checks (from lean_v1/HUNTER_RULES_V2.md):",
+    "  R0  step 0 block in CLAIMS before the R1 line (pro-practice + stuck check + \"without step 0 I would pick\")",
+    "  per round k with a job in work/MAC_JOBS.tsv: a CLAIMS line \"R<k> |\" and a FORECASTS row R<k>, both timed before the round's first job",
+    "  R2  a power line (the words \"gap needed\" or \"power\") and, when the gap needed is over 10, a broad parent split",
+    "  R3  a placebo R3P CLAIMS line and FORECASTS row (from L09)",
+    "  C152: card lead15 cells equal their STEP_11 receipts (same variant); CARD.md equals the sha16 RESULT quotes; FORECASTS row(s) equal",
+    "  the sha16 each MAC_JOBS row quotes (C219: the round's own rows, as JOB_SHEET_V1 (b); old '(file X)' quotes: a start of the file)",
+    "  card (when CARD.md exists): NEXT TESTS, CAUSES block (from L10), held-out left \"<filled by orchestrator>\", no Feb/Mar 2026 number words",
+    "Prints one line per check: OK or MISSING <what>; exit 0 when nothing is missing, 3 otherwise.",
+    "  python3 -B check_round_v1.py <RUNF> [--run-number 9]"
+   ],
+   "argparse_help": "usage: check_round_v1.py [-h] [--run-number RUN_NUMBER] runf\n\npositional arguments:\n  runf\n\noptions:\n  -h, --help            show this help message and exit\n  --run-number RUN_NUMBER",
+   "env": [],
+   "exit_and_output": "0 nothing missing; 3 a step missing (one OK or MISSING line per check)",
+   "tests": [
+    "test_check_round_v1.py"
+   ]
+  },
+  {
+   "tool": "build_run_v2.py",
+   "edition": "LEARNING_LOOP_V1",
+   "sha16": "18dae16a4739062a",
+   "docstring": [
+    "build_run_v2.py (SCO-A182 for SCOUT, learning series V2; PLAYGROUND, TEST). From build_run_v1.py (twin build_run_v1.py.pre_SCO-A182_*).",
+    "Builds the hunter prompt of one V2 run = the launch_v1 brief word for word + the SERIES RUN PART of HUNTER_PROMPT_TEMPLATE_V2.md with",
+    "its {SLOTS} filled from SERIES_V2_CONFIG.json (windows, yardstick, paths, state split) and from the arm:",
+    "  L (learning): the KNOWLEDGE page, the adopted PROMPT_ADD rows (V1 file, then PROMPT_ADD_V2.tsv), earlier L runs, series views with no C row.",
+    "  C (control):  the same text, an EMPTY knowledge page (ops/KNOWLEDGE_EMPTY_V1.tsv, header only; loop_check needs the KNOWLEDGE_<SEAT>_V<n> name and prints VERDICT FAIL 'no live rows' by design), no PROMPT_ADD rows, no earlier runs, no",
+    "                series files, no TRIED grep and no loop_find (the tried table only through the pipeline's own copy search).",
+    "Subcommands:",
+    "  build --arm L|C --run N --task SCT-A<300+N|400+N> --brief <BRIEF.md> --out <HUNTER_PROMPT.md> [--runf D] [--config F] [--dry-test]",
+    "  fill --file <text with slots> --config F [--dry-test]           prints the text with the config slots filled (GOAL/PASS_RULE V2)",
+    "  env --arm L|C --run N --config F [--dry-test]                    prints shell lines TASK= RUN_ID= RUNF= RK= ... for part_a_v2.sh",
+    "  check-launch --arm L|C --run N --config F [--behind] [--dry-test] the order rule and the seat job limit (exit 0 GO, 2 STOP)",
+    "Build checks (any failure: REFUSED <word>, exit 2, nothing written): config READY (or --dry-test); task id of the arm; every slot filled;",
+    "no em or en dash; every absolute path exists (except what the run makes); the closed-month scan (drill K blindfold_scan_k.py) on the part,",
+    "with --allow-def-last <windows.def_last_day> (SCO-A184: that one value passes only as the DEF field \"last\"; DEF_LAST_DAY refuses a",
+    "missing or malformed value or a part that does not carry it in that field);",
+    "no scout_only window words in the part; FORECAST_R1, FORECAST_R2, FORECAST_R3 and the sealing line present; arm C: no knowledge (no K1- kid,",
+    "no KNOWLEDGE table, series file, tried table path, PROMPT_ADD row id or earlier run path in the part or the brief: C_LEAK); writes O_EXCL."
+   ],
+   "argparse_help": null,
+   "env": [
+    "SERIES_RUN_KEY"
+   ],
+   "exit_and_output": "the alarm run builder (called by part_a_v2.sh); its tests live with the alarm seat",
+   "tests": []
+  },
+  {
+   "tool": "combine_readings_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "b2a7d4963b860611",
+   "docstring": [
+    "combine_readings_v1.py (SCOUT 2026-11-08; drill H05: both agents asked for a two-reading split; the owner 3 Nov: never test one reading alone).",
+    "Adds ONE combined reading to a copy of a card's READINGS file, for state_split --readings:",
+    "  CTX.combo_<A>__<B> = z(A) + sign * z(B) over the FIRE rows (z = (x - median) / MAD-based scale, robust), known_at = the later of the two.",
+    "Two readings become one score, split into halves at its wave first-fire median by state_split (--cuts), so every wave stays in the test",
+    "(a 2 x 2 grid would quarter the waves and lose power). sign (+1 or -1) is the hunter's stated hypothesis, written BEFORE the split.",
+    "Writes a new file (never edits the card's READINGS). Rows missing either reading get no combined value (state_split: no_reading).",
+    "  python3 -B combine_readings_v1.py <READINGS.tsv> <out.tsv> --a CTX.basis_push_bp --b CTX.oi_chg_10m --sign 1"
+   ],
+   "argparse_help": null,
+   "env": [],
+   "exit_and_output": "round 2 reading combiner; no test in this release",
+   "tests": []
+  },
+  {
+   "tool": "speed_report_v1.py",
+   "edition": "LEARNING_LOOP_V1",
+   "sha16": "3d7867785e406571",
+   "docstring": [
+    "speed_report_v1.py (SCOUT 2026-11-08; drill SPEED for part P34; why: team/RESEARCH/plans/PLAN_PROCESS_QUALITY_SYSTEM_20261108.md,",
+    "the owner 09:19Z \"speed should be in the scorecard\"). Reads only logs that already exist:",
+    "  runs: runs_v2/<run>/ops/LAUNCH_UTC.txt (launch) and the first line of work/RESULT_<run>.md (\"DONE <utc>\") -> run minutes; MAC_JOBS rows",
+    "  drills: drills_v2/registers/DRILL_RUNS.tsv minutes per drill_id -> median per drill and per part (PARTS.tsv drills + DRILLS.tsv parts)",
+    "  steps (C230, L11 K41): per run, launch -> R1 seal (R0) and each round from its first sealed FORECASTS utc to the next round's (R3 and R3P sealed together: one step), the last to DONE",
+    "Targets (PROCESS_IMPROVEMENT and the Process quality system doc): run <= 40 min, round <= 10 min, drill <= 5 min.",
+    "C230: a drill, part or step with no numeric minutes prints \"no data\" (was a crash: no median for empty data, L11).",
+    "Writes --out TSV (kind, id, n, median_min, target_min, within) and prints a summary.  python3 -B speed_report_v1.py --out <tsv> [--runs L07,L08,L09] [--root <series folder>]"
+   ],
+   "argparse_help": [
+    "usage: speed_report_v1.py [-h] --out OUT [--runs RUNS] [--root ROOT]",
+    "",
+    "options:",
+    "  -h, --help   show this help message and exit",
+    "  --out OUT",
+    "  --runs RUNS",
+    "  --root ROOT"
+   ],
+   "env": [],
+   "exit_and_output": [
+    "exit 0; writes --out TSV (kind, id, n, median_min, target_min, within) and prints a summary; no numeric minutes: \"no data\""
+   ],
+   "tests": [
+    "test_speed_report_v1.py (3)"
+   ]
+  }
+ ]
+}

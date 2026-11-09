@@ -8,7 +8,7 @@ PY=<PYTHON>; F=<LAB_REPO>/forensics; R=$F/team/RESEARCH
 DET=$R/tools/alarm_process/detect_aw1.py; ROSTER=$F/team/OUTSIDE/COORD/development/DEV2/a02p_chain_v1/full_population/ROSTER_BUILD.json
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
 export METRIC_TRAPS=$R/LEAD/loop2/defs/METRIC_TRAPS_PLUS_HL_OWNER_LOOP2_V1.tsv CATALOGS=$R/tools/alarm_context/CTX_CATALOG_V1.tsv:$R/tools/alarm_profile/EPI_CATALOG_V1.tsv:$F/team/LAB3/METRICS_HL_ADD_V1.tsv:$R/LEAD/loop2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv
-[ "$(shasum -a 256 $DET | cut -c1-16)" = 228630e3d0c30b20 ] && [ "$(shasum -a 256 $DEF | cut -c1-16)" = 94c2d5188ef9d715 ] || { echo SHA_MISMATCH; exit 2; }
+[ "$(shasum -a 256 $DET | cut -c1-16)" = 482a4a1eaf1faff5 ] && [ "$(shasum -a 256 $DEF | cut -c1-16)" = 94c2d5188ef9d715 ] || { echo SHA_MISMATCH; exit 2; }
 [ ! -e "$W" ] && [ ! -e "$OUT/S4.tsv" ] || { echo "USED W or OUT"; exit 2; }
 mkdir -p "$W" "$OUT" || exit 2
 mem(){ $PY -c "import json,sys;m=json.load(open(sys.argv[1]));mm=m.get('memory',{});print(m.get('status'),max(mm.get('worker_peak_rss_bytes') or [0]),m.get('events'),sep=chr(9))" "$1/DETECT_RUN.json" 2>&1; }

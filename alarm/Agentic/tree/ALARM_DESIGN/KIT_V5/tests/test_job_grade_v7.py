@@ -80,8 +80,8 @@ def all_tests(text):
 
 MUTANTS = [   # (the text, the bug planted)
     ('FEED_GATE=@@FEED_GATE@@ ', ''), ('FEED_GATE=@@FEED_GATE@@ ', 'FEED_GATE= '), ('FEED_GATE=@@FEED_GATE@@ ', 'FEED_GATE=@@LAB_DAYS@@ '),
-    ('ck $CH/alarm_grade_chain_v2_0_2_to20251231.sh 3628339f9fefb7cd', 'ck $CH/alarm_grade_chain_v2_0_1_to20251231.sh 43d6ce6aa4be89b5'),
-    ('alarm_grade_chain_v2_0_2_to20251231.sh 3628339f9fefb7cd', 'alarm_grade_chain_v2_0_2_to20251231.sh 0000000000000000'),
+    ('ck $CH/alarm_grade_chain_v2_0_2_to20251231.sh 5c11b3230cee0b8c', 'ck $CH/alarm_grade_chain_v2_0_1_to20251231.sh 43d6ce6aa4be89b5'),
+    ('alarm_grade_chain_v2_0_2_to20251231.sh 5c11b3230cee0b8c', 'alarm_grade_chain_v2_0_2_to20251231.sh 0000000000000000'),
     ('bash $CH/alarm_grade_chain_v2_0_2_to20251231.sh $V', 'bash $CH/alarm_grade_chain_v2_0_1_to20251231.sh $V'),
     ('"chain v2_0_2 Sep-Dec, lean $L"', '"chain v2_0_1 Sep-Dec, lean $L"'),
     ('\ncd $AL\n', '\ncd /\n'), ('AL=$AL PY=$PY LAB_DAYS=@@LAB_DAYS@@ FEED_GATE', 'AL=$AL PY=$PY FEED_GATE'), ('AL=$AL PY=$PY LAB_DAYS', 'PY=$PY LAB_DAYS'),

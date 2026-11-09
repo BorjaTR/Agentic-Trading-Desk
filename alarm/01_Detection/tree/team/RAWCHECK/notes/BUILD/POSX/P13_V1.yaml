@@ -47,7 +47,7 @@ inputs:
     ref: prod_reader_binance_metrics_v1
     exists: false
     data_check: >-
-      P12's new reader over Expansion volat_archive/metrics_um (5 minute rows, 2022 to 31 Jul 2026, HANDOVER_EDGE1_V103 line 41),
+      P12's new reader over ARCHIVE_DISK2 volat_archive/metrics_um (5 minute rows, 2022 to 31 Jul 2026, HANDOVER_EDGE1_V103 line 41),
       column sum_taker_long_short_vol_ratio; the timestamp test, the coverage and how a period with no sells is written (data_checks
       2 to 4) before the card signs
     stream: Binance metrics_um daily files per symbol (1000x symbols by their Binance names)

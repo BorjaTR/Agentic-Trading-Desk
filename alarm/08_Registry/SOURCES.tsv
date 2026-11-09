@@ -11,7 +11,7 @@ tree/ALARM_DESIGN/REGISTRY/tests/mutants_inputs_read_v1.py	team/RESEARCH/ALARM_D
 tree/ALARM_DESIGN/REGISTRY/tools/novelty_v3.py	team/RESEARCH/ALARM_DESIGN/REGISTRY/tools/novelty_v3.py	bf1db72ae4817535	17804	the copy check, v3: excess over baseline, --show (SCOUT 1 Nov, ALARM_V1_16)
 tree/ALARM_DESIGN/REGISTRY/tests/test_novelty_v3.py	team/RESEARCH/ALARM_DESIGN/REGISTRY/tests/test_novelty_v3.py	377b2a33e54e9e02	6024	novelty_v3 tests (SCOUT 1 Nov, ALARM_V1_16)
 tree/ALARM_DESIGN/REGISTRY/tests/mutants_novelty_v3.py	team/RESEARCH/ALARM_DESIGN/REGISTRY/tests/mutants_novelty_v3.py	d130adea4f4424e7	2413	novelty_v3 planted bugs (SCOUT 1 Nov, ALARM_V1_16)
-README.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/08_Registry/README.md	1af26883570829b4	5673	replaces the part page
+README.md	team/RESEARCH/tools/alarm_package/V1_19_DOCS/08_Registry/README.md	1433e2a488016301	5673	replaces the part page
 tree/ALARM_DESIGN/REGISTRY/tools/novelty_v4.py	team/RESEARCH/tools/alarm_package/V1_18_FIXES/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/novelty_v4.py	24a4cabe2b5197e7	19412	the copy check, v4: --show by a fire list path (SCOUT 2 Nov, ALARM_V1_19)
 tree/ALARM_DESIGN/REGISTRY/tests/test_novelty_v4.py	team/RESEARCH/tools/alarm_package/V1_18_FIXES/08_Registry/tree/ALARM_DESIGN/REGISTRY/tests/test_novelty_v4.py	bc3b0c5d3dbc1aed	4742	novelty_v4 tests (SCOUT 2 Nov, ALARM_V1_19)
 tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py	team/RESEARCH/tools/alarm_package/V1_21_15_FIXES/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py	03ba1ace716fcf0d	21512	step 1 copy search: words and definition, COPY or NEAR before COUNT (NEW; SCOUT, ALARM_V1_21_13) (SCOUT 3 Nov, ALARM_V1_21_15)

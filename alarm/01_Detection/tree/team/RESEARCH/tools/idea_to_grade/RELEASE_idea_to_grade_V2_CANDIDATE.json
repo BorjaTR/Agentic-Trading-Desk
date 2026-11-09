@@ -131,12 +131,12 @@
  "previous_record_format": "RELEASE_idea_to_grade_V2_CANDIDATE.json.pre_LEAD_20261025T134500Z (0d22f2f8d4369d6b, not labcore format)",
  "release": "idea_to_grade_V2_CANDIDATE",
  "releases": {
-  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_6.json": "2379f904369c0250",
+  "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_6.json": "df94e173dbb3a626",
   "team/RESEARCH/tools/alarm_match/RELEASE_alarm_match_V3_6.json": "77dc35bec287ab4d",
   "team/RESEARCH/tools/event_profile/RELEASE_event_profile_V2_CANDIDATE.json": "9435b78d1e883b7c",
   "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_6.json": "1485fb4a4c44e599"
  },
- "replaces": "RELEASE_idea_to_grade_V1_CANDIDATE.json (a7a7e4a2c7f934b9)",
+ "replaces": "RELEASE_idea_to_grade_V1_CANDIDATE.json (b3fbc51f617a9476)",
  "run_time_pins": {
   "file": "team/RESEARCH/tools/idea_to_grade/I2G_PINS_V1.json",
   "files": 39,

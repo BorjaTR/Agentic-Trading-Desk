@@ -12,13 +12,15 @@ Status: **V1 draft, not released.** What runs and what does not is in STATUS.md 
 ## What is in the folder
 | folder | what it is |
 |---|---|
-| `alarm/` | the alarm engine, a copy of a released edition (ALARM_V1_21_16) with the lab's own material left out and machine paths replaced (desk/build). Start inside it with `alarm/AGENTS.md`: it names every step and tool. |
+| `alarm/` | the alarm engine, a copy of a released edition (ALARM_V1_22_1) with the lab's own material left out and machine paths replaced (desk/build). Start inside it with `alarm/AGENTS.md`: it names every step and tool. |
+| `alarm_design/` | the alarm design pack ALARM_BUILD_V26 (process, flowchart, prompt, questions, gates, tools table), a scrubbed copy of the lab's release; it names lab tools that are not shipped |
+| `alarm_pipeline/` | ALARM_PIPELINE_V1_4_1, the whole alarm design process from one input, a scrubbed copy of the lab's release; it runs on the lab runner and names lab tools that are not shipped |
 | `desk/desk.py` | the one command of the desk (local mode, standard Python only) |
 | `desk/local_alloc.py` | the job number allocator of local mode |
 | `desk/data/` | the data side: the test sample manifest and its checker; a public-data downloader (not used in V1) |
-| `desk/build/` | how `alarm/` was made, and the checks that prove it (copy, scrub, path scan, judge parity, known tests) |
+| `desk/build/` | how `alarm/`, `alarm_design/`, `alarm_pipeline/` and `loop/` were made, and the checks that prove it (copy, scrub, path scan, judge parity, known tests) |
 | `desk/tests/` | the desk's own tests |
-| `loop/` | the learning loop: one row format for every stage, the lessons it starts with, and its scripts |
+| `loop/` | the learning loop LEARNING_LOOP_V1_1: `loop/generic/` (the loop for any research) and `loop/packs/alarm/` (the alarm pack) |
 | `plugin/` | the Claude Code plugin: skills (alarm-desk, learning-loop, desk-setup), commands `/new-alarm` and `/desk-setup`, the `alarm-reviewer` agent (plugin/README.md); `.claude-plugin/marketplace.json` lists it |
 | `settings/desk.env.example` | the one settings file to copy |
 | `out/`, `data/` | outputs and data (never part of the code; the scans skip them) |
@@ -64,11 +66,11 @@ check, trading style, data and register, fit: GO, GO WITH GAPS or STOP) and `/ne
 `alarm-reviewer` agent is the default second reviewer: must-fix only, read-only.
 
 ## The learning loop
-Every try of every stage gets one row in `loop/<n>_<STAGE>/TRIED_<STAGE>_V1.tsv`, written only with
-`python3 -B loop/scripts/add_row.py <file> key=value ...`, after a thought file in that stage's `thoughts/`. Check the loop with
-`python3 -B loop/scripts/loop_check.py loop --accept` (FULL_PASS or a list of problems). It starts with the lab's lessons, reworded:
-`loop/LESSONS_GENERAL_V1.tsv` (G rows hold anywhere, M rows are alarm method) and `loop/KIT_LEARNINGS_V5.tsv`, `_V6.tsv` (the kit's
-rules with their evidence, reworded by machine).
+The loop is `loop/generic/LOOP.md` with the alarm pack `loop/packs/alarm/` (rules page `RULES.md`, rounds, card template, pack file
+`alarm.json`). Each run takes one idea through fixed rounds with a sealed forecast before each, writes a card with a receipt for every
+number, then an assessor scores it and a curator turns it into knowledge only through
+`python3 -B loop/generic/tools/knowledge_v2/build_knowledge_v2.py <init|op|check|brief> --pack loop/packs/alarm/alarm.json --dir <store>`.
+Setup and commands: `loop/README.md` ("How a seat starts") and the learning-loop skill; tests: `loop/TEST.md`.
 
 ## Checks that this repo is clean
 | check | command |

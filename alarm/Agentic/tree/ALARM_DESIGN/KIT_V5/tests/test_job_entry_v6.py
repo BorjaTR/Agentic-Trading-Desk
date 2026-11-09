@@ -353,7 +353,7 @@ MUTANTS = [   # (file, the text, the bug planted)
     ('RUN', '--pins $T/I2G_PINS_V3_2_S6_REL1.json \\', '--pins $T/I2G_PINS_V3_2_S6.json \\'),
     ('RUN', '[ "$AL" != / ] || { echo "REFUSED: NOT INSIDE', 'AL=$HERE; [ "$AL" != / ] || { echo "REFUSED: NOT INSIDE'),
     ('RUN', '    --*) echo "REFUSED: unknown option $1" >&2; exit 2;;\n', ''),
-    ('RUN', '= a1ec98395a62de77 ]', '= 75aee82e3ab5f99d ]'),
+    ('RUN', '= b9491290b0930399 ]', '= 75aee82e3ab5f99d ]'),
 ]
 
 

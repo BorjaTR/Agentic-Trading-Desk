@@ -35,7 +35,7 @@ conclude:
 where:
   card: testbed/value_audit/code/L0_y52f12/value_audit/registers/CARD_C6_V5.md 961767ab40b1bd39 (rules 1 to 6, 9, 11 to 13, 19 to 21; edge cases E4, E21, E28, E30, E38, E60, E64, E72, E81 to E85, E87, E100, E103 to E118)
   settings_register: testbed/value_audit/code/L0_y52f12/value_audit/registers/SETTINGS_C6_V2.tsv ca847d981b0838f6
-  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml b2e20a666f08f5ce (C6 S02 accel's rule and S07 heat: basic, LIMITS; BED's book base MID_1S, KILL proven); team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05, the mid of the top in force: raw, LIMITS); team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml 7be2f177208996c1 (C7 S07 dial_2h); no input renamed"
+  built_on_register: "team/RAWCHECK/notes/BASIC/BASIC_C6_V4.yaml b2e20a666f08f5ce (C6 S02 accel's rule and S07 heat: basic, LIMITS; BED's book base MID_1S, KILL proven); team/RAWCHECK/notes/MEANING/MEANING_C13_V4.yaml fe5df65ba7680fc8 (C13 S05, the mid of the top in force: raw, LIMITS); team/RAWCHECK/notes/BASIC/BASIC_C7_V3.yaml 59543e19d848965f (C7 S07 dial_2h); no input renamed"
   layer_list: "team/RAWCHECK/notes/RAWCHECK/LAYER_REGISTER_V32.tsv e249ce941c5cdb16 (C6 S03, S04, S08 to S12 our_rule)"
   producer: "testbed/value_audit/code (C6's producer of CARD_C6_V5), reading book_ticker and C7's rows of D, and the built days for S11, S12"
   year_output: <DATA_ROOT>/l0bin_y52/day=<YYYYMMDD>/C6.parquet

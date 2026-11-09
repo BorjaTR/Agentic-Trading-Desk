@@ -1,0 +1,81 @@
+{
+ "folder": "generic/tools/drills",
+ "edition": "LEARNING_LOOP_V1",
+ "generated_from": "the code (docstring, --help, os.environ reads, sha256)",
+ "tools": [
+  {
+   "tool": "blind_kit_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC4",
+   "sha16": "36b53ec512c352ad",
+   "docstring": [
+    "blind_kit_v1.py (SCOUT 2026-11-08; why: team/RESEARCH/plans/PLAN_PROCESS_QUALITY_SYSTEM_20261108.md, fairness rules:",
+    "blind scorers, gold items, two scorers, scorer never the author). Builds a blind scoring kit for one judged drill:",
+    "  make:  copies the outputs to score and the gold items into <kit>/items/ under random names (I01, I02, ...), writes",
+    "         <kit>/SCORER_TASK.md (key + rubric + items, one TSV out per scorer) and a PRIVATE map <kit>/../<kit name>_MAP.tsv",
+    "         (outside the kit folder: scorers never read it). Order is shuffled with a seed from the kit name (sorted, stable).",
+    "         C223: refuses with REFUSED NO_GOLD (no --gold) or REFUSED BAD_GOLD (a --gold without =<known total>), exit 2.",
+    "  score: after the scorers ran: agreement (build/agreement_v1.py) + gold check (each scorer within --gold-tol of each gold's",
+    "         known total) + de-blinded totals per original output (mean of scorers, adjudication list). C223: a map with no gold row",
+    "         prints GOLD NONE and GOLD_CHECK FAIL, exit 3.",
+    "  python3 -B blind_kit_v1.py make --kit <dir> --key <KEY.md> [--rubric <file>] --item <path> ... --gold <path>=<known total> ...",
+    "  python3 -B blind_kit_v1.py score --kit <dir> --scorers <A.tsv> <B.tsv> [--gold-tol 1]"
+   ],
+   "argparse_help": "usage: blind_kit_v1.py [-h] {make,score} ...\n\npositional arguments:\n  {make,score}\n\noptions:\n  -h, --help    show this help message and exit",
+   "env": [
+    "LL_REPORT_TEMPLATE"
+   ],
+   "exit_and_output": "make writes the kit and SCORER_TASK.md, exit 0; REFUSED NO_GOLD (no --gold) or REFUSED BAD_GOLD (a --gold without =<known total>), exit 2, nothing written (C223); score: GOLD_CHECK PASS exit 0, GOLD_CHECK FAIL exit 3 (GOLD NONE, NO_SCORES, SCORER_OFF)",
+   "tests": [
+    "test_blind_kit_v1.py"
+   ]
+  },
+  {
+   "tool": "agreement_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "3212febee700d0a1",
+   "docstring": [
+    "agreement_v1.py (SCOUT 2026-11-08; why: team/RESEARCH/plans/PLAN_PROCESS_QUALITY_SYSTEM_20261108.md, fairness rule",
+    "\"agreement is measured and must reach 0.80\"). Agreement of 2 or more scorers on the same items.",
+    "Input: scorer TSVs with columns <unit cols...> and a points column (default: run, item, points). Rows whose item is TOTAL or",
+    "MESSY, or whose points are not numbers, are skipped. Units = the join of the unit columns.",
+    "Prints per scorer pair and overall: units, exact agreement, within-1 agreement, Krippendorff alpha (ordinal and interval),",
+    "and the units where scorers differ by more than --adjudicate points (they go to a third scorer).",
+    "Reading (content-analysis convention): alpha >= 0.80 reliable; 0.667-0.80 tentative; below 0.667 fix the scale first.",
+    "  python3 -B agreement_v1.py A.tsv B.tsv [--units run,item] [--points points] [--adjudicate 1] [--self-test]"
+   ],
+   "argparse_help": "usage: agreement_v1.py [-h] [--units UNITS] [--points POINTS]\n                       [--adjudicate ADJUDICATE] [--self-test]\n                       [files ...]\n\npositional arguments:\n  files\n\noptions:\n  -h, --help            show this help message and exit\n  --units UNITS\n  --points POINTS\n  --adjudicate ADJUDICATE\n  --self-test",
+   "env": [],
+   "exit_and_output": "0 done; 2 NO COMMON UNITS; exit with a message when fewer than 2 files",
+   "tests": [
+    "test_agreement_v1.py"
+   ]
+  },
+  {
+   "tool": "leak_scan_v1.py",
+   "edition": "LEARNING_LOOP_V1_RC3",
+   "sha16": "e1ff24a2f7cffe1a",
+   "docstring": [
+    "leak_scan_v1.py (SCOUT 2026-11-08, drill LEAK_SCAN, part P33; C104). Is any held-out (Feb-Mar 2026) marker or number in a file that a",
+    "hunter, assessor or curator reads? Orchestrator only: it reads the held-out results itself and never prints them.",
+    "  python3 -B leak_scan_v1.py --pattern-file <the pack's held-out pattern file> --secrets <orchestrator-only files ...> --targets <files or dirs ...> [--out report.tsv]",
+    "- secrets: every signed number with 2 decimals (e.g. +1.84, -0.52) and every 'n waves' in the given held-out files (T8_RESULT.md,",
+    "  HELDOUT_YARDSTICK_FEBMAR_V1.json ...). Unsigned JSON values are read from keys lead15 / lead1h / waves.",
+    "- allow: files of design-month numbers (knowledge_v1/EVIDENCE.tsv, SERIES_V2.tsv, SERIES_V2_CONFIG.json): a secret that also appears",
+    "  there is a Sep-Jan number quoted beside the held-out one (the T8 page repeats them), not a held-out number, and is dropped.",
+    "- targets: files, or folders scanned for .md .tsv .json .txt (no other files; folders named jobs, pipe*, split*, library, root, prep,",
+    "  setup are skipped: they are tool output, not reading material).",
+    "- a hit = the pack's held-out marker regex (--pattern-file; alarm pack HELDOUT_PATTERN.txt = build_run_v2 HELDOUT_RX: lead_2602, yardstick_heldout_febmar, 'Feb-Mar ... +n.nn' ...) or a secret number",
+    "  with its sign at a word boundary. The report gives file, line number and the KIND of hit only (MARKER or NUMBER), never the number.",
+    "Exit 0 = no hit, 3 = hits, 2 = refused (no pattern file and no build_run_v2.py beside the tool) (each to be opened by hand: a number can match by chance)."
+   ],
+   "argparse_help": "usage: leak_scan_v1.py [-h] --secrets SECRETS [SECRETS ...]\n                       --targets TARGETS [TARGETS ...] [--allow [ALLOW ...]]\n                       [--out OUT] [--pattern-file PATTERN_FILE]\n\noptions:\n  -h, --help            show this help message and exit\n  --secrets SECRETS [SECRETS ...]\n  --targets TARGETS [TARGETS ...]\n  --allow [ALLOW ...]\n  --out OUT\n  --pattern-file PATTERN_FILE",
+   "env": [
+    "LEAK_SCAN_PATTERN_FILE"
+   ],
+   "exit_and_output": "0 no hit; 3 hits (file, line, kind only, never the number); 2 REFUSED NO_PATTERN",
+   "tests": [
+    "test_leak_scan_v1.py"
+   ]
+  }
+ ]
+}

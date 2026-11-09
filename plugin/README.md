@@ -6,7 +6,7 @@ repo's fixed engine and to learn from every try. It ships no engine, no data and
 | part | what it does |
 |---|---|
 | `skills/alarm-desk` | what an alarm is, the loop from idea to an audited decision (desk.py commands), the honesty rules, mistakes already made |
-| `skills/learning-loop` | find what was tried, the thought file, one row per try with add_row.py, lessons with evidence, loop_check |
+| `skills/learning-loop` | the generic learning loop (loop/generic) with its alarm pack (loop/packs/alarm): brief, sealed forecasts, card, assessor, curator |
 | `skills/desk-setup` | install check, trading style, data and register, fit, GO / GO WITH GAPS / STOP |
 | `commands/new-alarm.md` | `/new-alarm <idea>`: one idea end to end, logged |
 | `commands/desk-setup.md` | `/desk-setup [data folder]`: the setup above |

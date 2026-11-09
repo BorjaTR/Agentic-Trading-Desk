@@ -3,10 +3,11 @@
 
   python3 -B desk/build/path_scan_v1.py [<repo folder>] [--allow <PATH_ALLOW.tsv>] [--show N]
 
-Every text file of the repo (out/ and data/ are outputs and .twins/ the never-shipped copies, never scanned; .DS_Store and desk/PATH_ALLOW.tsv itself are skipped) is searched, line by line, for:
+Every text file of the repo (out/ and data/ are outputs, .twins/ the never-shipped copies and .git/ the git metadata, never scanned; .DS_Store,
+*.pre_* copies (ignored by .gitignore, never shipped) and desk/PATH_ALLOW.tsv itself are skipped) is searched, line by line, for:
   OWNER      the owner's name, any case
   USER_PATH  a home folder /Users/<name> (a placeholder such as <HOME> never matches)
-  MACHINE    the lab's machine and disk names (mac mini, the scratch and archive disk names)
+  MACHINE    the lab's machine and disk names (mac mini, the scratch and archive disk names, 'Expansion' with a capital E)
   HOST       an internal host name or address: <name>.local / .lan / .internal / .ts.net, tailscale, 10.x, 192.168.x, 172.16-31.x
   SEAT_REQ   a lab seat named as something the user must do or have: a board path hb/..., 'ask <SEAT>', a SEAT(S)= list
 Each hit is allowed only when a row of PATH_ALLOW.tsv (default desk/PATH_ALLOW.tsv) names its file (fnmatch, '*' crosses '/'),
@@ -18,11 +19,11 @@ SEATS = r'(?:LAB[1-4]|SCOUT|QUANT|DSK|LEAD|STRATEGY|LAYERS|LIVE[45]|BUILD[1-5]|T
 KINDS = [
     ('OWNER', re.compile(r'(?i)borja')),
     ('USER_PATH', re.compile(r'/Users/[A-Za-z0-9_.-]+')),
-    ('MACHINE', re.compile(r'(?i)mac[ _-]?mini|WDBLACK|SEAGATE8|/Volumes/Expansion')),
+    ('MACHINE', re.compile(r'(?i)mac[ _-]?mini|WDBLACK|SEAGATE|/Volumes/Expansion|(?-i:\bExpansion\b)')),
     ('HOST', re.compile(r'(?i)\b[a-z0-9-]+\.(?:local|lan|internal|ts\.net)\b(?<!threading\.local)|tailscale|\b10\.\d{1,3}\.\d{1,3}\.\d{1,3}\b|\b192\.168\.\d{1,3}\.\d{1,3}\b|\b172\.(?:1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}\b')),
     ('SEAT_REQ', re.compile(r'\bhb/|\bask (?:the )?' + SEATS + r'\b|\bSEATS? ?=')),
 ]
-SKIP_DIRS = ('out', 'data', '.twins')                # .twins: the build's own copies before each edit, never shipped
+SKIP_DIRS = ('out', 'data', '.twins', '.git')        # .twins: the build's own copies before each edit, never shipped; .git: git's own metadata
 ALLOW_REL = os.path.join('desk', 'PATH_ALLOW.tsv')   # the allow list quotes the texts it allows: it is not scanned itself
 
 
@@ -48,7 +49,7 @@ def scan(repo, rows):
         ds.sort()
         for f in sorted(fs):
             p = os.path.join(d, f); rp = os.path.relpath(p, repo)
-            if f == '.DS_Store' or rp == ALLOW_REL:
+            if f == '.DS_Store' or rp == ALLOW_REL or '.pre_' in f:     # *.pre_*: edit copies, ignored by .gitignore
                 continue
             try:
                 text = open(p, encoding='utf-8').read()

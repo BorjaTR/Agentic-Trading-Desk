@@ -280,7 +280,7 @@ settings:
   computation:
     status: RELIABLE
     proof: 'J15946 (nautilus_levels a325b47e with the candle base, CANDLES_20260308): every roster coin x 5 minute ends of 8 Mar 2026: 260 of 260 MATCH exact; J15958 (24 Sep 2025): 105
-      MATCH exact (every coin at 01:00, 04:00; ICP at every minute end), 150 MISS (the other coins at the later minute ends) where our Expansion trades copy lacks rows the year read
+      MATCH exact (every coin at 01:00, 04:00; ICP at every minute end), 150 MISS (the other coins at the later minute ends) where our ARCHIVE_DISK2 trades copy lacks rows the year read
       (the base against B1: S01 73231 of 73335, S02 73243 of 73335 equal to the dollar; the minutes of METRIC_AUDIT J15943, J15945 id gaps): our input, not the year'
   meaning:
     status: DEFINED_WITH_OPEN

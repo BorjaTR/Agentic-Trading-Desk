@@ -1,0 +1,6 @@
+SPLIT_1	runs_v2/L08/split_pipe_r1_CTX_alarms_all_24h
+SPLIT_2	runs_v2/L08/split_pipe_r1_CTX_basis_push_bp
+SPLIT_3	runs_v2/L08/split_pipe_r1_CTX_market_hot_rank_30d
+SPLIT_4	runs_v2/L08/split_pipe_r1_CTX_oi_chg_10m
+SPLIT_5	drills_v2/R2_TOOL/out_plant_null
+SPLIT_6	drills_v2/R2_TOOL/out_plant_pos

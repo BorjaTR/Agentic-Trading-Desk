@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-"""queue_job_v8.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): queue_job_v7.py eb939ea8df0e1cd4 with only GRADE
-on JOB_GRADE_V10 (a55a4d3f6841919d: chain v2_0_5, the Outcomes runs and then the menu and the card at the same time, each perfire beside the next
-step, 6 cores declared) and MONTH on JOB_MONTH_V10 (ea6615240f713e14: chain v2_2_5, its Outcomes runs and then its menu and card at the same
+"""queue_job_v8.py (SCOUT for ALARM_DESIGN KIT_V5, 31 Oct 2026, V2_0 stage 1; TEST, NOT REVIEWED): queue_job_v7.py 5f9a50a3c5f525a7 with only GRADE
+on JOB_GRADE_V10 (35ff1397e19ab0a9: chain v2_0_5, the Outcomes runs and then the menu and the card at the same time, each perfire beside the next
+step, 6 cores declared) and MONTH on JOB_MONTH_V10 (9e4b771485b43cd5: chain v2_2_5, its Outcomes runs and then its menu and card at the same
 time); team/SCOUT/SPEED_V2_0_DESIGN_V1.md Q1-Q3; GRADE's MEM_MB 2710 for 1 variant (job 20265150: tree peak 2253 MB + 20 percent) and 2931 for 2 or 3 (job 20265156: tree peak 2442 MB + 20 percent; CONDUCTOR's design review M1). The rest of this text is queue_job_v7.py's:
-queue_job_v7.py: queue_job_v6.py 4d75cfc98d5ad34e with only
-GRADE and MONTH on their V9 templates and MONTH's MEM_MB changed: JOB_GRADE_V9 (44f978cbd45ff83e: chain v2_0_4, Outcomes in 3 worker
-processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (b59f63f7d2d6ff16: chain v2_2_4, the detection parts by the chain's
+queue_job_v7.py: queue_job_v6.py d4477631c22b027a with only
+GRADE and MONTH on their V9 templates and MONTH's MEM_MB changed: JOB_GRADE_V9 (cf0baab20d828d61: chain v2_0_4, Outcomes in 3 worker
+processes, 3 cores declared, one du at the end) and JOB_MONTH_V9 (fe73a394772eb046: chain v2_2_4, the detection parts by the chain's
 rule, 3 cores declared, one du at the end), K16 T5, T6 and T8; MONTH's MEM_MB 4030, the measured peak + 20 percent (WORKING_SESSION_V16
 section 0.7; job 20264959 x1: a 2-part tree up to 3,355,115,520 bytes, DETECT_RUN_B.json sum_peak_rss_bytes; was 8000). SCOUT, 31 Oct 2026 (the owner 10:51 Berlin, of CLEAN: "remove it"; scratch cleanup is DSK's, on
 the owner's word): KIND CLEAN is refused (CLEAN REMOVED) and is in no table; a finished job's scratch counts in the disk budget only while
 its folder is on SCRATCH_DISK (DSK's sweep frees it); GRADE's MEM_MB 2710, the measured V9 peak + 20 percent (job 20265002: the detection
 part tree 2,255,994,880 bytes, the two parts one after the other; was 6000). The docstring of queue_job_v6.py follows.
-queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only
-GRADE and MONTH moved to JOB_GRADE_V8 (e4a9c7555c17879e) and JOB_MONTH_V8 (54cf0fa5f92fcfd3), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
+queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only
+GRADE and MONTH moved to JOB_GRADE_V8 (bde3b7d82e6ce7f7) and JOB_MONTH_V8 (7779de8ad87bffee), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed's
 stop gate from FEED_GATE and the research days from RESEARCH_STORE, and the job path placeholder @@RESEARCH_STORE@@ (the settings key
 RESEARCH_STORE of the machine that runs the job: now one of the keys --job-settings must have). The rest of this text is
 queue_job_v5.py's.
 queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED). The only way a KIT_V5 agent queues a job, run from the
-Alarm package. queue_job_v4.py (dc19a63f01c4e8fe) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
+Alarm package. queue_job_v4.py (3d5abaea8c3cbe33) with only its paths changed (CLEAN_RELEASE_V1 sections 1 and 6; the owner 30 Oct 2026 22:21
 Berlin: "Let's make sure everything can run from the release folder"):
   - code only from the Alarm folder that holds this file (settings_v1.alarm_root): the job templates TEMPLATE_NAME (JOB_<KIND>_V6,
     GRADE and MONTH V7: Agentic/tree/ALARM_DESIGN/KIT_V5/jobs, pinned by TEMPLATE_SHA) and the register writer reg_append_v1.py
@@ -109,8 +109,8 @@ CFG = {
     'now': lambda: datetime.datetime.now(datetime.timezone.utc),     # the clock tests plant; no rule reads it since the quiet window went
     'free_mb': None,          # tests set a function; None = statvfs of CFG['WDB']
 }
-TEMPLATE_SHA = {'COUNT': '57b5c18ed82061f6', 'GRADE': 'a55a4d3f6841919d', 'MONTH': 'ea6615240f713e14',
-                'ENTRY': '67a51907a5a930e3'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
+TEMPLATE_SHA = {'COUNT': 'ff3455fd96087ed7', 'GRADE': '35ff1397e19ab0a9', 'MONTH': '9e4b771485b43cd5',
+                'ENTRY': '2d55b4788a059d10'}   # the templates (COUNT runs detect_v2 with --gate, 31 Oct; MONTH by SCOUT K4, 30 Oct; ENTRY,
 # the store runner v11 and the grader rel1, by SCOUT K6, 31 Oct; GRADE V7: chain v2_0_2 with the grader rel1 and its relative pins, and
 # MONTH V7: chain v2_2_2 with the aw1 rel1 editions and their relative pins, by SCOUT K12, 31 Oct, after round 7 found every V6 GRADE
 # refused UNPINNED_MODULE; GRADE V8 and MONTH V8: chains v2_0_3 and v2_2_3, Outcomes with the gate from FEED_GATE and the research

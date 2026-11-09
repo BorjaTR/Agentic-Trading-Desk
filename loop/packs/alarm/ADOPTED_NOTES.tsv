@@ -1,0 +1,4 @@
+add_id	note	why
+A2-01	[PAGE WINS on the Mac: the VM path and $HOME/SETTINGS_SCOUT.env do not exist; the brief's TRIED lines and the rules page's copy check replace it]	K1 baseline: VM-era command
+A2-02	[PAGE WINS: the first job is --until 6 (rules page); read STEP_04 HC_FIRES after it]	K1 baseline s_b WASTE: three first-job readings
+A4-03	[VM only: a lean run on the Mac has no device_commit_files; skip]	K1 baseline: VM-era step

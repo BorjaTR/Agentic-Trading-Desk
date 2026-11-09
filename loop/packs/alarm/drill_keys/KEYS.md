@@ -1,0 +1,2 @@
+# drill_keys: the alarm pack's drill answer keys (orchestrator and scorers only)
+Each kit's key sits here as drill_keys/<kit>/ (H01 H03 H04 H05 H06 H08), apart from its task in packs/alarm/drills/<kit>/. Give a drill agent only its kit folder under drills/, never this folder; a scorer gets the key from here (generic/DRILLS.md, Frame). A seat that makes its own kits keeps the keys the same way: one folder for tasks, one for keys.

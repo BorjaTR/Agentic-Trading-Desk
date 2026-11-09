@@ -1,5 +1,5 @@
 # MANIFEST_SHA16 of ALARM_DESIGN KIT_V5 (SCOUT, 2026-10-29T14:18:33Z from the clock). TEST, NOT REVIEWED. Twins (.pre_*) are not listed.
-# Updated 2026-10-30T00:23:54Z by SCOUT: the MONTH template calls team/RESEARCH/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh (c24bd949b32c8e24, 26 coin parts; per-part memory, data and code sha16 in DETECT_MEM_<V>.tsv, the fire list kept); smoke v4 job 20264083 ok 1 rc 0 (S1 Sep-Dec EXACT; S2 26 parts under the cap, max 1780858880 bytes, one data and code version, Sep-Dec EXACT); review 1 delta PASS, review 2 final PASS 00:24Z, review 1B PASS 23:58Z; old manifest 3087f5a0237f62f0 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261030T002354Z.
+# Updated 2026-10-30T00:23:54Z by SCOUT: the MONTH template calls team/RESEARCH/tools/month_parts/alarm_grade_chain_v2_2_to20260430.sh (64b42a022bb8e3bd, 26 coin parts; per-part memory, data and code sha16 in DETECT_MEM_<V>.tsv, the fire list kept); smoke v4 job 20264083 ok 1 rc 0 (S1 Sep-Dec EXACT; S2 26 parts under the cap, max 1780858880 bytes, one data and code version, Sep-Dec EXACT); review 1 delta PASS, review 2 final PASS 00:24Z, review 1B PASS 23:58Z; old manifest 3087f5a0237f62f0 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261030T002354Z.
 # Updated 2026-10-29T21:11:42Z by SCOUT: forward-only route (the owner 29 Oct 22:02 Berlin): queue_job_v4.py MONTH --forward-only, new tools/decide_forward_v1.py, audit A6 recomputes FORWARD rows; 59 tests pass; old manifest 79cea10ea93c3c38 kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T2112Z.
 # Updated 2026-10-29T20:56:16Z by SCOUT: audit A6 recomputes a NO ENTRY row with --entry-too-big (AD8 audit 20:51Z); old manifest b63cceb7d563f27d kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T2058Z.
 # Updated 2026-10-29T20:35:08Z by SCOUT: decide_v1.py --entry-too-big writes NO ENTRY for an R1 variant whose ENTRY can never fit the run budget, so its GRADE job can be cleaned (AD8 20263926, V6-41; 56 tests pass); old manifest 153084bd3e9170cb kept as MANIFEST_SHA16.txt.pre_SCOUT_20261029T2040Z.
@@ -29,9 +29,9 @@ ac4bfd7a1c3deaba  templates/FINDINGS_V5.md
 66e9ae3038160241  jobs/JOB_COUNT_V5.job.sh.txt
 4a28c8ba3a23347a  jobs/JOB_GRADE_V5.job.sh.txt
 c36ac948e53ea3b1  jobs/JOB_ENTRY_V5.job.sh.txt
-4835bdfb4a20f665  jobs/JOB_MONTH_V5.job.sh.txt
+277cb9236b8663ef  jobs/JOB_MONTH_V5.job.sh.txt
 a6c3c57bd394159e  jobs/JOB_CLEAN_V5.job.sh.txt
-dc19a63f01c4e8fe  tools/queue_job_v4.py
+4b441e2aa3038907  tools/queue_job_v4.py
 7a127fe63e199eec  tools/decide_v1.py
 ea7b62eb1437170d  tools/board_line_v1.py
 7e533d36e0dd9132  tools/audit_run_v2.py
@@ -46,6 +46,6 @@ d3e98152ed88f391  runs/TEMPLATE_V3/registers/VARIANTS.tsv
 e10901b9b6648570  runs/TEMPLATE_V3/registers/PROBLEMS.tsv
 cc2024d6d2b6dc55  runs/TEMPLATE_V3/registers/TOOLS_BUILT.tsv
 52897128a1751f40  tests/test_kit5_tools.py
-b6a8776317127542  tests/sim_env.py
+e273e9d298031595  tests/sim_env.py
 482bfe42036382f5  tests/mutants_v1.py
 bee5a79a5546b7cd  tools/decide_forward_v1.py

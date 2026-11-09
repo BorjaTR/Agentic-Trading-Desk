@@ -1,4 +1,4 @@
-# event_outcomes_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED): event_outcomes_aw1.py a66240b3332ddf00, never edited, with
+# event_outcomes_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED): event_outcomes_aw1.py e4a4792db69e71fb, never edited, with
 # event_outcomes_rel1.py's changes and nothing else: the feed's stop gate is the environment FEED_GATE (must be set: unset refused
 # NO_FEED_GATE; empty = no gate), never labcore.jobgate's built-in dev-tree GATE; the research days are RESEARCH_STORE when set;
 # RUN_PARALLEL is run_parallel_rel1.py (only named in the code inventory: aw1 runs Outcomes in its own process, run 0); its release
@@ -69,7 +69,7 @@ WAIT_S = 60                       # the factory's entry rule (factory_v2.trade):
 TOUCH_RTOL = 1e-9                 # a price level counts as touched within 1e-9 relative (float noise of p0 x (1 + x); far below a tick)
 MANIFEST = 'RUN_MANIFEST'
 RELEASE = os.path.join(HERE, 'RELEASE_event_outcomes_AW1_REL1.json')   # aw1; K12 rel1: this edition's release record
-WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 RUN_PARALLEL = os.path.join(TOOLS, 'event_profile', 'run_parallel_rel1.py')   # K12 rel1 (only in the code inventory: run 0)
 KINDS = {'return': ('horizon_min',), 'best': ('horizon_min',), 'worst': ('horizon_min',), 'reach': ('target', 'horizon_min'),
          'first': ('up', 'down', 'horizon_min'), 'offer_before_heat': ('offer', 'heat', 'horizon_min'), 'heat_before': ('target', 'horizon_min'),

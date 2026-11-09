@@ -1,0 +1,44 @@
+{
+ "add_row": "@HOME@/mnt/volat_release/Learning_Loop/add_row/current/tree/team/RESEARCH/PLAYGROUND/tools/PG20261105_add_row_vm_fix/code/add_row.py",
+ "alloc": [
+  "/usr/bin/python3",
+  "-B",
+  "@HOME@/mnt/dev/TradingPlatform/volat-agent/forensics/tools/job_alloc.py"
+ ],
+ "alloc_cwd": "@HOME@/mnt/dev/TradingPlatform/volat-agent/forensics",
+ "au_code": "@HOME@/mnt/volat_release/Alarm/alarm_understand/current/tree/team/RESEARCH/PLAYGROUND/tools/PG20261105_alarm_understand/code",
+ "bridge": "@HOME@/mnt/volat_release/Learning_Loop/mac_desk/current/tree/team/SCOUT/loop_day_20261105/str_gap4/c_bridge/mac_desk_v49.py",
+ "card_job_template": "# JOB {NAME} -- alarm_pipeline_v1 step 17 CARD for {ALARM} (task {TASK}; CARD_JOB_TEMPLATE_V3, SCO-A162 SCOUT 6 Nov 2026, ALARM_UNDERSTAND_V1_1; the owner 6 Nov 20:37 Berlin \"fast version released\"): CARD_JOB_TEMPLATE_V2 (6f54d24f71262b84) with only mech_cards_run_v2 (readings_builder_v2, 8 worker processes by day ranges of 10 event days; job 20270270: READINGS, FORCED, cards byte-equal, 434 s -> 112 s) and the job's CORES 8 and MEM_MB 12000 (peak 9.2 GB summed RSS + 20 percent); everything else is V2: alarm_understand bundle --from-job the GRADE job, the one-alarm config, mechanism_v2.\n# WRITES {OUT}/\n# QUEUE {QUEUE} (declared minutes: 15)\n# WRITES_MB: 800\n# MEM_MB: 12000\n# CORES 8\n# TASK: {TASK}\nset -u\nPY={PY}\nexport PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1\nR={OUT}; [ -e $R ] && { echo \"RECEIPTS EXIST $R\"; exit 4; }; mkdir -p $R || exit 4\nexport AU_SCRATCH=$R/scratch\ndate -u +%FT%TZ > $R/STAMP.txt\ncase {BLOCK} in SEPMAR) FIRST=20250910; LAST=20260331;; SEPDEC) FIRST=20250910; LAST=20251231;; JANMAR) FIRST=20260101; LAST=20260331;; *) echo \"STOP block\" >> $R/STAMP.txt; exit 5;; esac\n$PY -B {AU}/alarm_understand_v1.py bundle $R/BUNDLE --from-job {GRADE_NUM} --runner {RN} --alarm {ALARM} --block {BLOCK} --true-row {TRUE_ROW} --def-sha16 {DEF_SHA16} > $R/BUNDLE.txt 2>&1 || { echo \"STOP bundle\" | tee -a $R/STAMP.txt; exit 6; }\ngrep -v '^#' $R/BUNDLE/FIRES.tsv > $R/FIRES_LIST.tsv\nprintf 'alarm\\tblock\\tbundle\\tfires_list\\tdraw\\tdef\\tdef_sha16\\tgrade_key\\n{ALARM}\\t{BLOCK}\\t%s\\t%s\\tNEW\\t{DEF}\\t{DEF_SHA16}\\t{ALARM}\\n' $R/BUNDLE $R/FIRES_LIST.tsv > $R/CONFIG.tsv\ncp {GRADES} $R/GRADES.tsv\n$PY -B {AU}/mech_cards_run_v2.py $R/CARDS --mechanism {ALARM} --config $R/CONFIG.tsv --grades $R/GRADES.tsv --rb-workers 8 --rb-chunk-days 10 > $R/CARDS.txt 2>&1 || { echo \"STOP cards\" | tee -a $R/STAMP.txt; exit 7; }\n$PY -B {PIPE}/mechanism_v2.py $R/MECHANISM.json --bundle $R/BUNDLE --def {DEF} --readings $R/CARDS/RD_{ALARM}_{BLOCK} --first $FIRST --last $LAST --lean {LEAN} --map {MAP} --card-tsv $R/CARDS/ALARM_CARDS_{ALARM}.tsv --card-alarm {ALARM} > $R/MECHANISM.txt 2>&1 || { echo \"STOP mechanism\" | tee -a $R/STAMP.txt; exit 8; }\n(cd $R && shasum -a 256 *.txt *.tsv *.json BUNDLE/* CARDS/*.tsv CARDS/*.md CARDS/*.txt) > $R/SHA16.txt 2>/dev/null\necho \"END $(date -u +%FT%TZ)\" >> $R/STAMP.txt\nexit 0\n",
+ "card_queue": "Q_V18",
+ "card_v1": "@HOME@/mnt/volat_release/Alarm/alarm_pipeline/current/tree/team/SCOUT/pack_kit/alarm_pipeline_v1/card_v2.py",
+ "cards_root": "@HOME@/mnt/dev/TradingPlatform_repo/volat-agent/forensics/team/RESEARCH/LEAD/ALARM_CARDS",
+ "claim_fill": "@HOME@/mnt/volat_release/Alarm/claim_fill/current/tree/team/SCOUT/pack_kit/claim_fill_v1/claim_fill_v1.py",
+ "classify": "@HOME@/mnt/volat_release/Learning_Loop/classify_line/current/tree/team/SCOUT/pack_kit/classify_line_v2/classify_line_v2.py",
+ "close_lib": "@HOME@/mnt/volat_release/Learning_Loop/run_kit/current/tree/team/SCOUT/loop_day_20261105/bridge_v44/close_lib",
+ "decide": "@HOME@/mnt/volat_release/Alarm/alarm/ALARM_V1_22_1/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/decide_v6.py",
+ "forensics_root": "@HOME@/mnt/dev/TradingPlatform_repo/volat-agent/forensics",
+ "mac_map": [
+  [
+   "@HOME@/mnt/dev",
+   "<DEV>"
+  ],
+  [
+   "@HOME@/mnt/volat_release",
+   "<RELEASE_ROOT>"
+  ]
+ ],
+ "mac_python": "<PYTHON>",
+ "mechanism_map": "@HOME@/mnt/volat_release/Alarm/alarm_pipeline/current/tree/team/RESEARCH/LEAD/MECHANISM_20261106/MECHANISM_MAP_V1.md",
+ "mechanism_map_sha16": "2f1131b39bd554a5",
+ "menu_gate": "@HOME@/mnt/volat_release/Alarm/alarm/ALARM_V1_22_1/Agentic/tree/ALARM_DESIGN/KIT_V5/tools/menu_gate_v1.py",
+ "ops_jobs": "@HOME@/mnt/volat_release/Learning_Loop/ops_jobs/current/tree/team/SCOUT/pack_kit/ops_jobs_v2_1/ops_jobs_v2_1.py",
+ "python": "/usr/bin/python3",
+ "reg_append": "@HOME@/mnt/volat_release/Alarm/alarm/ALARM_V1_22_1/Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py",
+ "rootq": "@HOME@/mnt/dev/TradingPlatform/volat-agent/forensics/orch1_20260817/runner",
+ "scratch_mac": "<SCRATCH>",
+ "settings_env": "@HOME@/SETTINGS_@SEAT@.env",
+ "tried_file": "@HOME@/mnt/dev/TradingPlatform_repo/volat-agent/forensics/team/RESEARCH/PROCESS/2_ALARMS/TRIED_ALARMS_V1.tsv",
+ "tried_search": "@HOME@/mnt/volat_release/Alarm/alarm/ALARM_V1_22_1/08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py",
+ "tries_ledger": "@HOME@/mnt/dev/TradingPlatform_repo/volat-agent/forensics/team/RESEARCH/TRIES_LEDGER_V1.tsv",
+ "note_v3": "PIPE_SETTINGS_V3_TEMPLATE (SCO-A162, ALARM_BUILD_V23, 6 Nov 2026): no session path. Fill it once per run with sed -e \"s#@HOME@#$HOME#g\" -e \"s#@SEAT@#<SEAT>#g\" <this file> > ${RUN}_PIPE_SETTINGS.json (START_V23 HOW TO LAUNCH section 3, TOOLS_V23 row T02-01). Made from drill K's PIPE_SETTINGS_DRILLK.json b409dbabe1c0d33d (every tool key on its released current copy, SCO-A165) with the session prefix as @HOME@, settings_env = @HOME@/SETTINGS_@SEAT@.env (the seat settings file of Alarm/alarm AGENTS.md), card_job_template = CARD_JOB_TEMPLATE_V3.sh of ALARM_UNDERSTAND_V1_1 (mech_cards_run_v2, CORES 8, MEM_MB 12000), card_queue Q_V18 (Q_V19 carries runner.stop since 27 Oct). Keys that stay on the dev tree are data and registers, not tools: forensics_root, cards_root, tried_file, tries_ledger, rootq, alloc."
+}

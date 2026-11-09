@@ -1,0 +1,7 @@
+Drill H04 (round 1: idea to claim). Paper research. Read ONLY: <LAB_REPO>/forensics/team/SCOUT/loop_day_20261105/learning_series/lean_v1/HUNTER_RULES_V2.md, <LAB_REPO>/forensics/team/SCOUT/loop_day_20261105/learning_series/drills_v2/hunter/H04/MATERIAL/EXAMPLE_DEF.json (a real alarm definition: see how inputs use "op"), and the five <LAB_REPO>/forensics/team/SCOUT/loop_day_20261105/learning_series/drills_v2/hunter/H04/MATERIAL/METRIC_*.txt files (metric meanings). No other file, no search.
+For each of the three ideas below write the round 1 claim: mechanism (FORCED_OUT, FORCED_OUT_SHORTS or CROWDED_LATE), the inputs as JSON lines in the EXAMPLE_DEF style (each with its op and code), the fire condition, why each code is right for its row (coin or market), the result that kills the idea, and anything that must be checked before GRADE.
+I1: fade a coin's sharp 15 min drop (own top 1 pct) when BTC itself fell over the last hour.
+I2: fade a coin's sharp 15 min drop when the typical coin fell over the last 5 minutes.
+I3: fade a coin's sharp 15 min drop only when the coin fell more than the market (use CTX.coin_vs_basket_15m < 0 as the condition).
+If an idea cannot be built as asked, say why and give the closest correct build.
+Write ONLY <LAB_REPO>/forensics/team/SCOUT/loop_day_20261105/learning_series/drills_v2/hunter/H04/OUT/<your id>.md with headings ## I1, ## I2, ## I3. Max 12 tool calls, 8 minutes.

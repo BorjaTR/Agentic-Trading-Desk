@@ -104,7 +104,7 @@ ASK=PREREG_I2GV31FULL_${AID}_${STAMP}
 printf '# scratch ledger of run_alarm_chain.sh\ntry_utc\task_id\tidea\tpurpose\tkind\tdays_from\tdays_to\tsetting_sha16\tstatus\n%s\t%s\t%s\tchain store run\tPREREG\t%s\t%s\t\tPREREG\n' "$STAMP" "$ASK" "$AID" "$FIRST" "$LAST" > "$D/LEDGER_FULL.tsv"
 SHA=$($PY -c "import hashlib,sys;print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest()[:16])" "$EVS")
 # v4: store by the S4b twin (grader thread, byte-equal to V3.2 on M, S3W, A02P), driver and pins sha pinned (v11: the S6 twin's rel1 edition)
-[ "$(shasum -a 256 $T/idea_to_grade_v3_2_s6_rel1.py | cut -c1-16)" = 33832d574b3b7449 ] && [ "$(shasum -a 256 $T/I2G_PINS_V3_2_S6_REL1.json | cut -c1-16)" = a1ec98395a62de77 ] || { st grader_store 4 0 "S6_NOT_PINNED"; exit 4; }
+[ "$(shasum -a 256 $T/idea_to_grade_v3_2_s6_rel1.py | cut -c1-16)" = 33832d574b3b7449 ] && [ "$(shasum -a 256 $T/I2G_PINS_V3_2_S6_REL1.json | cut -c1-16)" = b9491290b0930399 ] || { st grader_store 4 0 "S6_NOT_PINNED"; exit 4; }
 TIMEX=""; /usr/bin/time -l true > /dev/null 2>&1 && TIMEX="/usr/bin/time -l"
 ( cd "$D" && $TIMEX nice -n 10 $PY -B $T/idea_to_grade_v3_2_s6_rel1.py --events "$EVS" --events-sha16 "$SHA" $SUB \
     --roster $ROSTER \

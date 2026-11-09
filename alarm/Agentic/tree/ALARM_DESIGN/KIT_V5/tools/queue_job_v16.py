@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""queue_job_v16.py (SCOUT, 3 Nov 2026; playground PG20261103_menu_gate; TEST, NOT REVIEWED): queue_job_v15.py 6ad73bed39b150e8, loaded
+"""queue_job_v16.py (SCOUT, 3 Nov 2026; playground PG20261103_menu_gate; TEST, NOT REVIEWED): queue_job_v15.py f8833ce0e60ca874, loaded
 byte for byte from beside this file and run as it is, plus the menu gate at SEAL, nothing else.
   queue_job_v16.py --settings S <RUN> <KIND> <IDEA> <ITEMS> [the options of queue_job_v15.py]
 After every check of queue_job_v15 passed for a sealed variant (every kind but COUNT: GRADE, TRUE, ENTRY, MONTH, FIRSTLOOK) and before
@@ -14,7 +14,7 @@ queue_job_v15's byte for byte (test_menu_gate_v1 KEEP); the gate only adds a ref
 import hashlib, importlib.util, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-V15, V15_SHA = os.path.join(HERE, 'queue_job_v15.py'), '6ad73bed39b150e8'
+V15, V15_SHA = os.path.join(HERE, 'queue_job_v15.py'), 'f8833ce0e60ca874'
 MG_PATH = os.path.join(HERE, 'menu_gate_v1.py')
 GATED = ('GRADE', 'TRUE', 'ENTRY', 'MONTH', 'FIRSTLOOK')
 

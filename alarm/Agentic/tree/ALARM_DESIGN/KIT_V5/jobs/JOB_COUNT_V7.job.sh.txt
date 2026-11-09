@@ -20,7 +20,7 @@ ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED
 fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
 ck $TL/idea_to_grade/detect_v2.py 97a822a20e08088d; ck $TL/alarm_design/alarm_design_v3.py 4852c9c0f8fbf175; ck $ROSTER b93de33b2a73a56e; ck $METRIC_TRAPS 5383a6bfe4d62680
 ck $TL/alarm_context/CTX_CATALOG_V1.tsv f413906feb40c0b4; ck $TL/alarm_profile/EPI_CATALOG_V1.tsv d133fea9c7935857
-ck $F/team/LAB3/METRICS_HL_ADD_V1.tsv d81727de54e5a5db; ck $L2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv f19ccfbf08c9a5b4; ck $METRICS_V1 85b14987d2059cd6
+ck $F/team/LAB3/METRICS_HL_ADD_V1.tsv d81727de54e5a5db; ck $L2/defs/METRICS_HL_OWNER_CLEARED_LOOP2_V1.tsv f19ccfbf08c9a5b4; ck $METRICS_V1 c2335f86987c5045
 for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; done
 G8=@@FEED_GATE@@                                                    # V1_12 F4
 [ -z "$G8" ] || [ -f "$G8" ] || { st gate 8 0 "FEED_GATE $G8: no such file (gate_wait would wait forever)"; st end 8 0 "gate"; exit 8; }   # V1_12 F4

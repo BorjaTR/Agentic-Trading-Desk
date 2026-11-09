@@ -226,7 +226,7 @@ real_check:
     - point: 2026-03-08, BTCUSDT, 12:15:05 to 12:16:00 every 5 s
       why: 5 s points that are not minute ends (the change of boundary at 12:15:10 and late rows entering)
     - point: 2025-09-24, the same coins, the boundary 00:00 and 3 more the tester names, every point served, and the points 00:00:00 and 00:00:05
-      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991)
+      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the ARCHIVE_DISK2 copy lacks taker rows the year's B1 has (J15991)
     - point: 2025-10-10, BTCUSDT and the thin coin, the 4 boundaries nearest the largest A1 liquidation dollars that evening (the tester picks them from A1 before the job)
       why: the crash, one-sided bins
   pass: >-

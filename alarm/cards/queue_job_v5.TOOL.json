@@ -1,7 +1,7 @@
 {
  "tool": "queue_job_v5",
  "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v5.py",
- "file_sha16": "51864a030f5cfb20",
+ "file_sha16": "d1cf44aeb5487d50",
  "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
  "step": "step 4 COUNT of ALARM_PIPELINE_V1 section 1 (fires, waves and coins per Sep-Dec month; no outcome read), and the CLEAN of a run's decided jobs",
  "question": "How do I queue my COUNT job, or the CLEAN of my finished and decided jobs, so that the runner runs it from the release folder?",
@@ -455,7 +455,7 @@
  "reads": [
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V6.job.sh.txt",
-   "sha16": "57b5c18ed82061f6"
+   "sha16": "ff3455fd96087ed7"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py",

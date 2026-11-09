@@ -382,13 +382,13 @@ class KEEP_Fdaoi(unittest.TestCase):
             w = World().plant(dfn('E1.S01')); plant_decide(w)
             r = D_Decision.dec(None, w, tool, '--write'); self.assertEqual(r.returncode, 0, r.stderr)
             row = [{k: v for k, v in x.items() if k != 'utc'} for x in w.rows('DECISIONS')]
-            outs.append((re.sub(r'(?m)^WRITTEN \S+Z ', 'WRITTEN @ ', r.stdout), row))   # the clock stamp may cross a second between the two runs (flaky in ALARM_V1_21_16; clean repo fix, SCOUT 3 Nov 22:5xZ)
+            outs.append((r.stdout, row))
         self.assertTrue(outs[1][0].startswith(outs[0][0]), outs); self.assertEqual(outs[0][1], outs[1][1])
         self.assertTrue(all(l.startswith('MENU ') for l in outs[1][0][len(outs[0][0]):].strip().split('\n')))
 
     def test_the_wrapped_tools_and_reader_are_the_installed_bytes(self):
         Q = load(os.path.join(World().A, KIT, 'tools/queue_job_v16.py'), 'q16_keep')
-        self.assertEqual(s16(Q.V15), '6ad73bed39b150e8'); self.assertEqual(Q.V15_SHA, '6ad73bed39b150e8')
+        self.assertEqual(s16(Q.V15), 'f8833ce0e60ca874'); self.assertEqual(Q.V15_SHA, 'f8833ce0e60ca874')
         src = open(os.path.join(FIX, 'menu_gate_v1.py')).read()
         self.assertNotIn('def collect_reads', src); self.assertNotIn('def label_codes', src)          # the TRUE gate's reader, imported, not copied
         for n in NEW:                                                                              # no detection, grading or template file is opened for writing

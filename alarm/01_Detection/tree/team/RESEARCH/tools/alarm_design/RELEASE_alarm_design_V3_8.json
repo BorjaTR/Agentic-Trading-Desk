@@ -48,7 +48,7 @@
   },
   "team/RESEARCH/tools/alarm_design/test_alarm_design_v2.py": {
    "role": "planted tests (32)",
-   "sha16": "377e971b9c034797"
+   "sha16": "bc9c40a838f40329"
   },
   "team/RESEARCH/tools/alarm_design/test_grade_edges_v1.py": {
    "role": "grade_edges tests (7)",
@@ -74,8 +74,8 @@
  "landing": "A54-FINAL-01: known-false shared prefilter decides OFF; other knownness and numerical kernels unchanged",
  "release": "V3_8",
  "releases": {
-  "team/LAYERS/tools/costs_v2/RELEASE_costs_V3_8.json": "d69225297f9c7022",
-  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "3cd411844dd24562"
+  "team/LAYERS/tools/costs_v2/RELEASE_costs_V3_8.json": "c44af67252865b46",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "04b819e912820eae"
  },
  "replaces": "team/RESEARCH/tools/alarm_design/RELEASE_alarm_design_V3_7.json",
  "rule": "FROZEN: any change to a listed file is a new release; every run checks it first and records the five unbound files (STRATEGY 19:03:55Z)",

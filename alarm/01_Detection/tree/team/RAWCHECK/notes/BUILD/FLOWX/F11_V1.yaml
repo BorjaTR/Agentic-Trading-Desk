@@ -222,7 +222,7 @@ real_check:
     - point: 2026-03-08, BTCUSDT, 12:00:05 to 12:01:00 every 5 s
       why: 5 s points that are not minute ends (which rows enter by arrival)
     - point: 2025-09-24, the same three coins, all 17,280 points
-      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991)
+      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the ARCHIVE_DISK2 copy lacks taker rows the year's B1 has (J15991)
   pass: >-
     The tester recomputes F11, its empty reasons, GAPS, stale and known_at at every point from this card's words, with Fraction on the
     trades reader's rows (never the producer's code): floats equal within 1e-9 relative of the Fraction recompute, words and flags

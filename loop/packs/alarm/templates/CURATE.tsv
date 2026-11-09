@@ -1,0 +1,4 @@
+op	target	eid	why
+EVIDENCE	E00nn	E00nn	<round> grade, hand-off row <k>
+UPDATE	F00nn		<fields changed and why, one line>
+QUESTION	Q0nn		<new from NEXT TESTS line k, or answered by E00nn>

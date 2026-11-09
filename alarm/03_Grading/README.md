@@ -26,7 +26,7 @@ of the team's dev tree (`SOURCES.tsv`: each file's dev path and sha16), never ed
 What changed in each release: [CHANGELOG.md](CHANGELOG.md).
 
 ## Earlier editions in the dev tree
-State on 30 Oct 2026, kept as history; the editions in use now are in ../AGENTS.md. In ~/volat_release means released: what follows says what each piece is and what is unproven.
+State on 30 Oct 2026, kept as history; the editions in use now are in ../AGENTS.md. In <RELEASE_ROOT> means released: what follows says what each piece is and what is unproven.
 TEST editions: no RELEASE json, BASELINE row or kit manifest pin shows a review. The chains the jobs run now, v2_0_7 and v2_2_7, are here under
 tree/tools; the run tools the kit pins (the per-fire file, its check, split_v1, the hand-off test) are copied, TEST, with the kit in ../Agentic.
 | tool | where (dev tree; sha16) | status |
@@ -60,3 +60,16 @@ Still built in (`MACHINE_PATHS.tsv`, 26 rows BUILT_IN): the chain's interpreter 
 the roster, metric tables and every step tool at their dev paths (`:36-45, 59, 70, 73, 78, 81, 83`), the lab days (`:78`), and the same
 in the four small runs. The GRADE job's own paths are in ../Agentic/MACHINE_PATHS.tsv. On another machine these need new editions that
 read the settings file and take their tools from inside Alarm.
+
+## The fast grade chain v2_0_10 (ALARM_V1_21_16_6)
+the fast grade chain alarm_grade_chain_v2_0_10_to20251231.sh (c8814705a0796736; the owner 6 Nov 17:55Z "more processes ... running in parallel", 20:37 Berlin "fast version released"): v2_0_7 with idea_to_grade --workers $GRADE_WORKERS (a whole number 1 to 8, default 8) and d1_reports_v6.py (30dcf4aa30b9ab30: Outcomes run(n) from D1_EO_WORKERS, default ALARM=3,RND=5, both lists together at most 8 processes, a list with 0 workers counting 1, a non-integer refused, exit 2), the CHAIN_OUTSIDE_ALARM check kept, and the feed gate named in the STATUS file (gate FOUND <file> <word>, NONE, or MISSING and exit 8).
+Workers and the core budget (v2_0_10, as v2_0_8 plus the admission of GPT SCO-A162-REV1 B1, B2 and REV2): detect 3 workers per half (as v2_0_7); grade idea_to_grade_gm1 --workers ${GRADE_WORKERS:-8}
+(was 1); Outcomes run(3) for the alarm list and run(5) for the random list side by side (8 processes; was two run(0)); menu and card
+read the committed Outcomes store (no .mem.pkl for a run(n) root). The job declares CORES 8 (the Mac has 15; the live feed keeps at
+least 4) and MEM_MB 16000 (tree peak 5.2 GB on a month for grade 8 workers). Measured, WIDEBLOCKS V1 Sep-Dec: the chain 408 s -> 128 s
+(jobs 20270124 and 20270269); every content output byte-equal (MENU, CARD, SUM, PERFIRE, the lists, HANDOFF, 221 of 221 Outcomes parts by
+cmp_parts_v2, job 20270270's COMPARE); only times, run ids, pids, memory and worker telemetry, paths, job ids and their seals differ.
+Not switched in this edition: the kit's GRADE job (queue_job_v16 with JOB_GRADE_V14, pinned by the bridge mac_desk_v49 to the
+edition ALARM_V1_21_16) still runs v2_0_7. Using v2_0_10 from the pipeline needs a GRADE template naming v2_0_10, a queue_job that pins it,
+and the bridge re-pinned to this edition (owners: SCOUT kit, mac_desk). Until then v2_0_10 runs from a job that calls it directly.
+Tests: tree/tools/alarm_process/test_chain_v2_0_10.py (6), test_d1_v6.py (9), mutants_d1_v6.py (21 planted faults on the changed lines).

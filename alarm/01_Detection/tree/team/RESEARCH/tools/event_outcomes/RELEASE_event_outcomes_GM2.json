@@ -20,7 +20,7 @@
   },
   "team/RESEARCH/tools/event_outcomes/event_outcomes_gm2.py": {
    "role": "event_outcomes VERSION 3, edition gm2 (BUILD5 ALARM_V1_10: gm1 with the store written evt1)",
-   "sha16": "545458cc01e62c83"
+   "sha16": "cd502f49fe16415e"
   },
   "team/RESEARCH/tools/event_outcomes/release_v3.py": {
    "role": "event_outcomes VERSION 3 (own)",
@@ -46,14 +46,14 @@
  "open_findings": [
   "see team/RESEARCH/tools/event_outcomes/A51_ANSWERS_V3.md"
  ],
- "reason": "ALARM_V1_10 (D2 step 3): RELEASE_event_outcomes_GM1.json 65c167f123f7cf87 with event_outcomes_gm2.py and run_parallel_gm2.py (the store written evt1) in place of the gm1 files; every other key the same",
+ "reason": "ALARM_V1_10 (D2 step 3): RELEASE_event_outcomes_GM1.json 3d77e5c24c36bfa7 with event_outcomes_gm2.py and run_parallel_gm2.py (the store written evt1) in place of the gm1 files; every other key the same",
  "release": "event_outcomes_GM2",
  "releases": {
-  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "eca2c8a125d24283",
-  "team/RESEARCH/tools/bucket_proof/RELEASE_label_ewsd_V2_6.json": "c257b3111351a28d",
-  "team/RESEARCH/tools/exit_engine/RELEASE_exit_engine_V1_7.json": "9d359a7034e5d7c5",
-  "team/RESEARCH/tools/factory/RELEASE_factory_V7.json": "2d7e3657ebb9de76",
-  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "3cd411844dd24562"
+  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "6992baf727bb0604",
+  "team/RESEARCH/tools/bucket_proof/RELEASE_label_ewsd_V2_6.json": "ce5892992c04d0f4",
+  "team/RESEARCH/tools/exit_engine/RELEASE_exit_engine_V1_7.json": "238fd70a89ac3d89",
+  "team/RESEARCH/tools/factory/RELEASE_factory_V7.json": "dd0d87ad92cb2b0c",
+  "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_7.json": "04b819e912820eae"
  },
  "replaces": "none (GM1 stays for its chains)",
  "runtime": {

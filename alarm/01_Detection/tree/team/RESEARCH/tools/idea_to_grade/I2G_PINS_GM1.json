@@ -1,5 +1,5 @@
 {
- "by": "make_i2g_gm1.py (BUILD5 G1 D4): I2G_PINS_V2_REL1.json 17f89bef42400d38 with idea_to_grade_gm1.py in place of idea_to_grade_rel1.py",
+ "by": "make_i2g_gm1.py (BUILD5 G1 D4): I2G_PINS_V2_REL1.json e1fd76627604332c with idea_to_grade_gm1.py in place of idea_to_grade_rel1.py",
  "files": 39,
  "paths": "relative to the tree root (the folder above team/)",
  "pins": {
@@ -12,7 +12,7 @@
   "team/LAB3/code/lab3/bins.py": "f5c0f9a5f9cb8537",
   "team/LAB3/code/lab3/days.py": "ecf85ffb7bc0fa69",
   "team/LAB3/code/lab3/labgroups.py": "6d59a8d98274ef2f",
-  "team/LAB3/code/lab3/law.py": "f777c329396b6190",
+  "team/LAB3/code/lab3/law.py": "0802358832de2b23",
   "team/LAB3/code/lab3/rows.py": "747414c711bbd499",
   "team/LAB3/code/lab3/write.py": "99e43dc0bc01f55a",
   "team/OUTSIDE/COORD/development/DEV1/b2_performance_v1/alarm_stamp_projection_v2.py": "914ec6f23260940e",
@@ -34,7 +34,7 @@
   "team/RESEARCH/tools/idea_to_grade/detect_v2.py": "97a822a20e08088d",
   "team/RESEARCH/tools/idea_to_grade/i2g_engine_rel1.py": "a6e5b2bb15743a12",
   "team/RESEARCH/tools/idea_to_grade/i2g_grade_rel1.py": "ebb1307165277265",
-  "team/RESEARCH/tools/idea_to_grade/idea_to_grade_gm1.py": "426c071c2a0f1f44",
+  "team/RESEARCH/tools/idea_to_grade/idea_to_grade_gm1.py": "49684513485c868f",
   "team/RESEARCH/tools/labcore/__init__.py": "aa84aeb6a1797239",
   "team/RESEARCH/tools/labcore/briefs.py": "b1ad0fd9168649d8",
   "team/RESEARCH/tools/labcore/gates.py": "aae13278ad4f4209",

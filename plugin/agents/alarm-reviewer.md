@@ -17,13 +17,13 @@ What to check, in order, each against a file you opened (cite path and sha16):
    tools printed (re-run `desk.py run .../decide_v6.py S <RUN> <IDEA> <V> --grade <job>` and `audit_run_v5.py S <RUN>` read-only).
 3. TRUE: a TRUE row exists for each decided variant; its label reads no price and not the trigger's own source; the report does not
    call UNSURE or NOT SUPPORTED a pass.
-4. Counts in waves, never fires; build months Sep-Dec 2025 only; Jan-Feb 2026 only once, on the owner's explicit word, under a frozen
-   logged protocol, labelled EXPOSED; no MONTH (Jan-Apr) run under a Jan-Feb-only authorization; luck printed as information only; no
+4. Counts in waves, never fires; research months 10 Sep 2025 to 31 Mar 2026 only (the engine's law in ALARM_V1_22_1); no read of
+   1 Apr to 31 Jul 2026 (the holdout) or later; luck printed as information only; no
    money claim anywhere in the report or the card.
 5. Refusals: any tool refusal in the receipts is reported word for word; nothing was worked around (a sealed file changed after a
    refusal, a hand-written job, a register row by hand).
-6. The learning loop: one TRIED row for the try written by add_row.py, its thought file present, `loop_check.py loop --accept` FULL_PASS;
-   every lesson row names its evidence.
+6. The learning loop (loop/generic/LOOP.md): a CLAIMS line and a sealed FORECASTS line before every round, the card with a receipt for
+   every number, an assessor and a curator that are not the hunter, `build_knowledge_v2.py check` CHECK PASS.
 7. The report's claims do not go past the evidence (CLAIMS.md is the bar).
 
 Answer: PASS, PASS WITH ITEMS (no must-fix) or HOLD. Each must-fix as WHY (what is wrong, with its file and line), WHAT is missing, HOW

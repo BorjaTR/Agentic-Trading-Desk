@@ -37,7 +37,7 @@ proven there by job 288 (check, units, isolation OK on every run); the environme
 ## The release procedure (research-tool-design H20-H21; the owner 30 Oct 14:01)
 
 Every change to a tool, the same 7 steps. `K` = the kit's source `team/RESEARCH/tools/home_kit/home_v1.py`, `H` = the tool's dev home,
-`A` = `~/volat_release/<area>` (Strategy, Alarm, Live, ...), `R` = `~/Documents/GitHub/Trading/<area>`, `X` = an archive folder on SCRATCH_DISK.
+`A` = `<RELEASE_ROOT>/<area>` (Strategy, Alarm, Live, ...), `R` = `<PUBLIC_COPY>/<area>`, `X` = an archive folder on SCRATCH_DISK.
 
 | step | what | command |
 |---|---|---|

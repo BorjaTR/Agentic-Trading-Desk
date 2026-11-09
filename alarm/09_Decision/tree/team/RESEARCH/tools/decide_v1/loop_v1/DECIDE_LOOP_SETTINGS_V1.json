@@ -15,7 +15,7 @@
  "grader": {
   "tool": "idea_to_grade_V3_1",
   "release": "team/RESEARCH/tools/idea_to_grade/RELEASE_idea_to_grade_V3_1.json",
-  "sha16": "69df7350a98e9681"
+  "sha16": "9313e71aa3176240"
  },
  "source_list": {
   "path": "<SCRATCH>/work_LEAD/loop2/det_M_v1/EVENTS.tsv",

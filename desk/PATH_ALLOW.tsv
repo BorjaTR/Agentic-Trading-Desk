@@ -42,3 +42,8 @@ alarm/Agentic/KIT_V6/ARCHITECTURE.md	SEAT_REQ	SEAT=	idea_time option: a run pref
 desk/build/path_scan_v1.py	OWNER		the scanner's own pattern
 alarm/03_Grading/tree/tools/true_gate/SOURCE_FAMILIES_V1.tsv	SEAT_REQ	hb/	provenance column of the source-family table (true_gate reads the family, not this note)
 LICENSE	OWNER	BorjaTR	copyright holder line of the MIT license (owner: "okay, MIT", 4 Nov 2026 11:26 Berlin; holder = his GitHub name)
+desk/build/scrub_v1.py	USER_PATH	/Users/Shared	the scrub rules (patterns and their note, never opened)
+alarm_design/*	SEAT_REQ	hb/	design pack provenance: where a lab ruling or answer was posted (history lines, curated rules, question sources); the boards do not exist here and no tool opens them
+alarm_design/CURATED_V7.tsv	SEAT_REQ	ask SCOUT	a curated rule naming the lab seat that owns its map (provenance)
+alarm_pipeline/tree/team/RESEARCH/LEAD/MECHANISM_20261106/MECHANISM_MAP_V1.md	SEAT_REQ	hb/	provenance of a mechanism note (where it was posted); not opened
+loop/packs/alarm/playground/queue_job_v15_scout.py	SEAT_REQ	DSK	advice text of the alarm pack's playground queue copy (as released); the disk seat and its board (hb/DSK.txt) do not exist here; the check behind it is the disk floor

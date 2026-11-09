@@ -8,7 +8,7 @@ the package's own paths; the suite reads every other file from this package (ALA
 import hashlib, os, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__)); FIX = os.path.normpath(os.path.join(HERE, '..', '..', '..', '..', '..'))
-K = 'Agentic/tree/ALARM_DESIGN/KIT_V5'; TOOLS = K + '/tools/'; TPL = K + '/jobs/JOB_TRUE_V1.job.sh.txt'; Q = TOOLS + 'queue_job_v15.py'
+K = 'Agentic/tree/ALARM_DESIGN/KIT_V5'; TOOLS = K + '/tools/'; TPL = K + '/jobs/JOB_TRUE_V2.job.sh.txt'; Q = TOOLS + 'queue_job_v15.py'
 M = [  # (id, file, old, new)
     ('S1a', TOOLS + 'start_run_v1.py', 'DIR_MODE, FILE_MODE = 0o755, 0o644', 'DIR_MODE, FILE_MODE = 0o755, 0o444'),
     ('S1b', TOOLS + 'start_run_v1.py', 'DIR_MODE, FILE_MODE = 0o755, 0o644', 'DIR_MODE, FILE_MODE = 0o555, 0o644'),

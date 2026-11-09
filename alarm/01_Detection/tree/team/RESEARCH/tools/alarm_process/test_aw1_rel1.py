@@ -20,12 +20,12 @@ TOOLS = os.path.dirname(HERE); FO = os.path.realpath(os.path.join(HERE, '..', '.
 I2G_DIR = os.path.join(TOOLS, 'idea_to_grade')
 DET, I2G = os.path.join(HERE, 'detect_aw1_rel1.py'), os.path.join(HERE, 'idea_to_grade_aw1_rel1.py')
 K12_DET = ('# detect_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED; the owner 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the\n'
-           '# release folder only"): a new edition for the clean release. Old file: alarm_process/detect_aw1.py 228630e3d0c30b20, never edited. It is\n'
+           '# release folder only"): a new edition for the clean release. Old file: alarm_process/detect_aw1.py 482a4a1eaf1faff5, never edited. It is\n'
            '# detect_v2.py 97a822a20e08088d (detect.py with its paths changed: --lab-root required, --gate, alarm_design_v3) with detect_aw1.py\'s\n'
            '# aw1 change and nothing else (the research window CLASSES from alarm_process/WINDOWS_ALARM_V1.tsv, its sha16 checked). detect_aw1.py\'s\n'
            '# header follows, then detect_v2.py\'s text.\n')
 K12_I2G = ('# idea_to_grade_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED; the owner 30 Oct 2026 23:07 Berlin: "All alarm tools should work from\n'
-           '# the release folder only"): a new edition for the clean release. Old file: alarm_process/idea_to_grade_aw1.py e35b17019a3d34f6, never\n'
+           '# the release folder only"): a new edition for the clean release. Old file: alarm_process/idea_to_grade_aw1.py a98936da5aaf93b4, never\n'
            '# edited. It is idea_to_grade_rel1.py edee6bbe51a2bbde (SCOUT K6: idea_to_grade.py V2.3.1 with its paths changed: the tree root from its\n'
            '# file, --lab-root and --pins required, --gate, the kernels i2g_engine_rel1, i2g_grade_rel1, detect_v2) with idea_to_grade_aw1.py\'s aw1\n'
            '# changes and nothing else: (1) the research window CLASSES from alarm_process/WINDOWS_ALARM_V1.tsv (sha16 checked); (2) the original\n'
@@ -51,7 +51,7 @@ def derive_detect():
     t = open(os.path.join(I2G_DIR, 'detect_v2.py')).read(); aw = open(os.path.join(HERE, 'detect_aw1.py')).read().split('\n')
     t = rep(t, '#!/usr/bin/env python3\n', '#!/usr/bin/env python3\n' + K12_DET + aw[1] + '\n' + aw[2] + '\n')
     t = rep(t, "ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v3.py'\n", "ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v3.py'\n"
-            "WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes\n")
+            "WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes\n")
     i = [k for k, l in enumerate(aw) if 'if hashlib.sha256(WINDOWS_ALARM.read_bytes()).hexdigest()[:16] != WINDOWS_ALARM_SHA16:' in l][0]
     return rep(t, '    wins = gates.windows(); m = lo[:6]\n', '\n'.join(aw[i:i + 3]) + '\n')
 
@@ -175,7 +175,7 @@ DET_BUGS = [("WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'",
             ("wins = gates.windows(str(WINDOWS_ALARM)); m = lo[:6]", "wins = gates.windows(); m = lo[:6]"),
             ("    if hashlib.sha256(WINDOWS_ALARM.read_bytes()).hexdigest()[:16] != WINDOWS_ALARM_SHA16:   # aw1\n        raise Refusal('ALARM_WINDOWS_CHANGED',",
              "    if False:\n        raise Refusal('ALARM_WINDOWS_CHANGED',"),
-            ("WINDOWS_ALARM_SHA16 = '37decf0075649f69'", "WINDOWS_ALARM_SHA16 = 'd9c5c1a21ceea8f4'"),
+            ("WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'", "WINDOWS_ALARM_SHA16 = 'd9c5c1a21ceea8f4'"),
             ("ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v3.py'", "ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v2.py'"),
             ("    if _reader is None and (lab_root is None or str(lab_root) == ''):\n        raise Refusal('LAB_ROOT_REQUIRED'",
              "    if False:\n        raise Refusal('LAB_ROOT_REQUIRED'"),

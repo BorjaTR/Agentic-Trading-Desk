@@ -1,0 +1,35 @@
+part_id	name	category	kind	files	measure	drills	pass_bar
+P01	Hunter rules page	docs	rules	lean_v1/HUNTER_RULES_V2.md,lean_v1/HUNTER_RULES_V3_DRAFT.md,lean_v1/HUNTER_RULES_WHY.md	process drill H08: 13 questions; contradictions found (target 0); size under 8 KB	H08	13/13 and 0 contradictions
+P02	Hunter full prompt	docs	prompt	HUNTER_PROMPT_TEMPLATE_V2.md,lean_v1/LEAN_RUN_V1.md,PROMPT_ADD.tsv,lean_v1/HUNTER_LAUNCH_V1.md	H08 prompt arm vs page arm; built prompt size	H08	prompt arm = page arm; size falls
+P03	Role skills (4)	docs	skill	{SKILLS}/volat-orchestrator/SKILL.md,{SKILLS}/volat-hunter/SKILL.md,{SKILLS}/volat-assessor/SKILL.md,{SKILLS}/volat-curator/SKILL.md	takeover drill per skill (to build)	none	each skill drill passes
+P04	Assessor and curator (roles)	roles	prompt	ASSESSOR_STEP_V2.md,release_staging/LEARNING_LOOP_V2/generic/prompts/assessor.md,release_staging/LEARNING_LOOP_V2/generic/prompts/curator.md	assessor and curator drills; every card number checked	ASSESSOR,CURATOR_LIVE	all numbers checked; 0 invented names
+P05	Card template	docs	template	lean_v1/templates/CARD.md	card drill /10	H07	9/10 and 0 false words
+P06	Research step and idea choice	roles	step	drills_v2/hunter/H01/TASK_R2.md,drills_v2/hunter/H01/key/KEY.md,{GENERIC}/STUCK_CHECK.md	idea drill /6 per agent; choice without hints	H01	mean 5/6
+P07	Forecasts	predictions	step	lean_v1/templates/FORECASTS.tsv,drills_v2/hunter/H03/TASK_BASE.md	size error (points), 80 pct interval hit, Brier	H03,FORECAST_SCORE	size error under 2; hit 8 of 10
+P08	Round 1: the claim	roles	step	lean_v1/templates/CLAIMS.md,drills_v2/hunter/H04/TASK.md	round 1 drill /9; live R1 pass rate	H04	8/9
+P09	Round 2: explain	roles	step	drills_v2/hunter/H05/TASK.md,drills_v2/R2_POWER_CHECK_20261108.md	round 2 drill /26; share of splits able to pass (power)	H05,R2_POWER,R2_POOL,R2_COMBO	24/26; >= 1 split able to pass per run
+P10	Round 3: sharpen	roles	step	drills_v2/hunter/H06/TASK.md	round 3 drill /5; R3 minus R1 per run; R3 minus R3P pooled	H06	R3 minus R3P >= +1, p < 0.10
+P11	Next questions	roles	step	drills_v2/hunter/H11/TASK.md,drills_v2/hunter/H11/key/KEY.md	questions drill /6 per question	H11	mean 4.5/6; later brief >= earlier
+P12	Reasoning quality	reasoning	step	drills_v2/REASONING_QUALITY_V2.md,drills_v2/REASONING/TASK.md	/16 per run by a fresh scorer	REASONING	memory runs rise; above controls on Q1-Q4, Q6
+P13	Messy reports	improvement	step		open MESSY lines per run (target 0)	MESSY	0 open before each run
+P14	Held-out read	results	step	release_staging/LEARNING_LOOP_V2/alarm_pack/HELDOUT.md	reproduce Sep-Jan within 1 point; sign check	HELDOUT_REPRO	4/4
+P15	Scratch cleanup	tools	tool	build/scratch_clean_v1.py,build/test_scratch_clean_v1.py	cleanup drill (to build)	none	0 stores broken
+P16	Knowledge store and builder	tools	tool	{GENERIC}/tools/knowledge_v2/build_knowledge_v2.py,{GENERIC}/tools/knowledge_v2/test_build_knowledge_v2.py	unit tests; planted 3-run series; CHECK PASS	KNOW_TOOL	all tests pass
+P17	Knowledge brief	knowledge	knowledge		missing/unclear count (H02), market drill /10 (H12), quiz /18, leak scan	H02,H12,BRIEF_QUIZ5,BRIEF_REPLAY	quiz 16/18; 0 leaks
+P18	Run builder	tools	tool	build/build_run_v2.py,build/test_build_run_v2.py,prep/part_a_v2.sh,SERIES_V2_CONFIG.json	leak plants refused; adopt tests	LEAK_HELDOUT	7/7
+P19	Job template and fire cap	tools	tool	PIPE_MAC_JOB_TEMPLATE_V2.sh,STATE_SPLIT_JOB_TEMPLATE_V2.sh	fire cap drill /3	FIRE_CAP	3/3
+P20	Round checker	tools	tool	{PACK}/tools/check_round_v1.py,{PACK}/tools/test_check_round_v1.py	run on every run; flags vs assessor	none	0 missed steps
+P21	Round 2 tools	tools	tool	build/wave_median_cuts_v1.py,{PACK}/tools/pool_splits_v1.py,{PACK}/tools/combine_readings_v1.py	planted signal found, noise ignored	R2_TOOL	2/2
+P22	Proof tool	tools	tool	{PACK}/tools/bar_check_v2.py,{PACK}/tools/test_bar_check_v2.py,{PACK}/seat_pages/PROOF_RULES_V2.md	planted p < 0.01, noise p > 0.10	PROOF_TOOL	2/2
+P23	Forecast scorer	tools	tool	{PACK}/tools/forecast_score.py,{PACK}/tools/test_forecast_score.py	forecast scoring drill	FORECAST_SCORE	scores the rule's own bar
+P24	Handover and restart	roles	step	{SEAT_ROOT}/NOW_{SEAT}.md	restart drill	RESTART	1/1
+P25	Registers	scoring	register	drills_v2/registers/reg.py,drills_v2/registers/README.md	reg.py check; ledger-check	none	CHECK PASS; 0 unlogged changes
+P26	Process documents	docs	doc	LEARNING_LOOP_V3.md,lean_v1/LEARNING_LOOP_FLOW_V2.html,STRATEGY_LOOP_PROMPT_V2.md,release_staging/LEARNING_LOOP_V2/MANIFEST.md	takeover drill (to build)	none	takeover drill passes
+P27	Memory beats control	results	outcome		memory minus control, permutation p	PROOF_TOOL	+2 points, p < 0.10
+P28	Market understanding	market	outcome	drills_v2/hunter/H12/TASK.md,drills_v2/hunter/H12/QUESTIONS.md	market drill /10 per knowledge snapshot	H12	rises with the knowledge
+P29	Process improvement loop	improvement	process	drills_v2/PROCESS_IMPROVEMENT_V1.md	share of agent reports with MESSY, WASTE and PROPOSE; proposals checked; adopted only after a drill; ledger-check PASS	none	every report has the 3 sections; 0 unlogged changes; 0 adopted without a drill
+P30	Knowledge store content	knowledge	knowledge		CHECK PASS; stale next pointers; findings with metric codes; held-out numbers in text (0)	KNOW_TOOL,H02	CHECK PASS and 0 stale or leaking lines
+P31	Metric use	metrics	metrics		codes read right (op, scope, sign, empty, untested meaning): data-trap drill items; assessor STOP keys for wrong code use; FAILURES_LOG repeats	H04	0 wrong-code stops per run; drill 9/9
+P32	Drill keys and rubrics	scoring	scoring	drills_v2/HUNTER_DRILLS_V1.md,drills_v2/REASONING_QUALITY_V1.md,drills_v2/hunter/H07/key/KEY_V2.md,drills_v2/hunter/H04/key/KEY_V2.md,drills_v2/hunter/H05/key/KEY_V2.md,drills_v2/hunter/H06/key/KEY_V2.md,build/agreement_v1.py,build/blind_kit_v1.py	key written before agents run; two scorers agree; rubric not at ceiling	none	agreement >= 80 pct; no rubric at ceiling
+P33	Safety and data integrity	safety	safety		held-out leak plants refused; leak scans of brief, cards, prompts; look-ahead checks; raw data untouched; numbers trace to receipts	LEAK_HELDOUT,HELDOUT_REPRO	0 leaks found in use
+P34	Speed and cost	speed	speed	build/speed_report_v1.py	minutes per round and per run; tool calls; WASTE minutes reported; size of what agents must read	none	round <= 10 min; run <= 40 min; read <= 30 KB

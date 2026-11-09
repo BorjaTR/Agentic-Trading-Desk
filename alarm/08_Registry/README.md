@@ -12,7 +12,7 @@ The tools are under `tree/ALARM_DESIGN/REGISTRY/`: `tools/registry_build_v2.py`,
 See above and ../AGENTS.md (step 9 and the tools table). Their earlier editions: next section.
 
 ## Earlier editions in the dev tree
-State on 30 Oct 2026, kept as history; the editions in use now are in ../AGENTS.md. In ~/volat_release means released: what follows says what each piece is and what is unproven.
+State on 30 Oct 2026, kept as history; the editions in use now are in ../AGENTS.md. In <RELEASE_ROOT> means released: what follows says what each piece is and what is unproven.
 Dev tree: `<LAB_REPO>/forensics/team/RESEARCH/ALARM_DESIGN/`; sha16 read on 30 Oct 2026; the
 status is each file's own words. None has a RELEASE json, a BASELINE.tsv row or a pin in a kit manifest (`KIT_V6/MANIFEST_SHA16.txt`
 2624703457fbcec8 lists no registry tool and says TEST, NOT REVIEWED).

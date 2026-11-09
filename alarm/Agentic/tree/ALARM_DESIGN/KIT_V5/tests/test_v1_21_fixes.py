@@ -81,12 +81,14 @@ class World:
             for n in NEW_TOOLS.values():
                 cp(os.path.join(FIX, KIT, 'tools', n), KIT + '/tools/' + n)
             cp(os.path.join(FIX, KIT, 'jobs/JOB_TRUE_V1.job.sh.txt'), KIT + '/jobs/JOB_TRUE_V1.job.sh.txt')
+            cp(os.path.join(FIX, KIT, 'jobs/JOB_TRUE_V2.job.sh.txt'), KIT + '/jobs/JOB_TRUE_V2.job.sh.txt')   # SCO-A179: the TRUE kind's template
         tpl = os.path.join(INSTALL, KIT, 'runs/TEMPLATE_V4')
         shutil.copytree(tpl, os.path.join(self.A, KIT, 'runs/TEMPLATE_V4'))
         for d, ds, fs in os.walk(os.path.join(self.A, KIT, 'runs/TEMPLATE_V4')):          # the install's modes: read only
             for f in fs:
                 os.chmod(os.path.join(d, f), 0o400)
         wr(os.path.join(self.A, TGD, 'true_gate_v3.py'), STUB_TG3)
+        wr(os.path.join(self.A, TGD, 'true_gate_v4.py'), STUB_TG3)   # SCO-A179: JOB_TRUE_V2 runs v4
         for n in ('true_gate_v1.py', 'true_gate_v2.py'):
             wr(os.path.join(self.A, TGD, n), '# stub %s\n' % n)
         self.R = os.path.join(self.D, 'research'); self.SC = os.path.join(self.D, 'scratch'); self.QU = os.path.join(self.D, 'q'); self.HB = os.path.join(self.D, 'hb')

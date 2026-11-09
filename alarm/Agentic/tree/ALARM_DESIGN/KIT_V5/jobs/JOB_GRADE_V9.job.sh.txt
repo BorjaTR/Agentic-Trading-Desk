@@ -18,7 +18,7 @@ st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> 
 ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; st end 3 0 "pins"; exit 3; }; }
 fmb(){ df -m @@SCRATCH@@ | awk 'NR==2{print $4}'; }
 isdone(){ awk -F'\t' '$1=="done" && $2=="0" {f=1} END {exit !f}' $W/STATUS_$1.tsv 2>/dev/null; }
-ck $CH/alarm_grade_chain_v2_0_4_to20251231.sh f2849d7827064d26; ck $AP/alarm_card_v1_2_1.py 121304e1471d7e41
+ck $CH/alarm_grade_chain_v2_0_4_to20251231.sh 12d62995909236a3; ck $AP/alarm_card_v1_2_1.py 121304e1471d7e41
 ck $T/perfire_v1_1_to20260430.py 4e77b228d71bdae4; ck $T/test_perfire_v1.py 12996df3af189030; ck $T/lead_null_v1_1_to20251231.py fb3992d00ecfc810
 ck $RD/@@PREREG_REL@@ @@PREREG_SHA@@
 for i in "${!VS[@]}"; do ck $RD/${DEFS[$i]} ${DSHAS[$i]}; done

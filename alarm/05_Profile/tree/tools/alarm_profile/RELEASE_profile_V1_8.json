@@ -34,7 +34,7 @@
   },
   "team/LAB3/code/lab3/law.py": {
    "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
-   "sha16": "f777c329396b6190"
+   "sha16": "0802358832de2b23"
   },
   "team/LAB3/code/lab3/rows.py": {
    "role": "lab3 reader / writer this tool imports (V2_3 C1 binding)",
@@ -116,7 +116,7 @@
  "landing": "P04 + A09 + P09 (+ P03 context, P05 profile)",
  "release": "V1_8",
  "releases": {
-  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_7.json": "789a9a01eb4d5cea"
+  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_7.json": "759e7fe9c1332ea1"
  },
  "replaces": "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_7.json",
  "rule": "FROZEN until both outside approvals and STRATEGY sign-off; any change to a listed file is a new release (V1_1, V2)",

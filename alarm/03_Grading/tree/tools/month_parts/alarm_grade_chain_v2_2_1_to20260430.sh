@@ -1,6 +1,6 @@
 #!/bin/bash
 # alarm_grade_chain_v2_2_1_to20260430.sh (SCOUT 30 Oct 2026, K4, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_2_to20260430.sh c24bd949b32c8e24 (SCOUT 29 Oct, released) with only its paths changed (CLEAN_RELEASE_V1; the owner
+# alarm_grade_chain_v2_2_to20260430.sh 64b42a022bb8e3bd (SCOUT 29 Oct, released) with only its paths changed (CLEAN_RELEASE_V1; the owner
 # 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the release folder only"): the caller gives AL, PY and LAB_DAYS in the
 # environment (below); every step tool and table comes from the lab tree <AL>/01_Detection/tree (the dev layout), never the dev tree;
 # the lab days go to detect_aw1, the grade and Outcomes as an argument (detect_aw1 and idea_to_grade_aw1 had the Mac's as their
@@ -37,7 +37,7 @@
 # Window (v1_3's was 20250910..20251231): this version's FIRST and LAST below. Never deletes. One worker after detection.
 set -uo pipefail
 FIRST=20250910; LAST=20260430   # this version's hardcoded date range (UTC days): never a setting
-CARD_SHA=3c496708f9d44651; DET_SHA=228630e3d0c30b20; I2G_SHA=e35b17019a3d34f6; PINS_SHA=6f167df21c7fae32; EO_SHA=a66240b3332ddf00; REL_SHA=0de68ccfca3a7376; WIN_SHA=37decf0075649f69
+CARD_SHA=3c496708f9d44651; DET_SHA=482a4a1eaf1faff5; I2G_SHA=a98936da5aaf93b4; PINS_SHA=c0c523ed00403f58; EO_SHA=76adc225ef3bc102; REL_SHA=7ca10b08f1254a69; WIN_SHA=69c3327ebf4e15a1
 V=$1; DEF=$2; W=$3
 [[ "$V" =~ ^[A-Za-z0-9]+$ ]] || { echo "BAD_VARIANT $V"; exit 2; }
 [ -f "$DEF" ] || { echo "NO_DEFINITION $DEF"; exit 2; }

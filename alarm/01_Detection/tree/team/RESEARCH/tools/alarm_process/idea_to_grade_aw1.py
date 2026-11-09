@@ -41,7 +41,7 @@ US = 1_000_000
 DIRECTIONS = ('FOLLOW', 'FADE')
 
 
-WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = os.path.join(HERE, 'WINDOWS_ALARM_V1.tsv'); WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 PINS_FILE = os.path.join(HERE, 'I2G_PINS_AW1.json')                 # the release's pins: every forensics file a run may execute
 RUN_SCHEMA = 'I2G_RUN_V2'
 # the exact file inventory of a published run (A54-F3): verify_run refuses a manifest that names more or fewer files than this

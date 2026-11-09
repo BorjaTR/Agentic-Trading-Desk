@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """test_firstlook_v1.py (SCOUT 2 Nov 2026, V1_19_FIRSTLOOK; TEST, NOT REVIEWED): queue_job_v14's KIND FIRSTLOOK, JOB_FIRSTLOOK_V1, fl_lists_v3, fl_receipt_v1 and the
 new editions. Seconds, planted worlds, stub tools for the heavy steps; the real chain is the playground job. ALARM_BASE = the installed Alarm (default: this package when it
-holds _tools, else ~/volat_release/Alarm/alarm/current).   python3 -B test_firstlook_v1.py"""
+holds _tools, else <RELEASE_ROOT>/Alarm/alarm/current).   python3 -B test_firstlook_v1.py"""
 import csv, hashlib, json, os, re, shutil, subprocess, sys, tempfile, unittest
 
 H = os.path.dirname(os.path.abspath(__file__)); PKG = os.environ.get('FL_PKG') or os.path.normpath(os.path.join(H, '..', '..', '..', '..', '..'))
-BASE = os.environ.get('ALARM_BASE') or (PKG if os.path.isfile(os.path.join(PKG, '_tools', 'settings_v1.py')) else os.path.expanduser('~/volat_release/Alarm/alarm/current'))
+BASE = os.environ.get('ALARM_BASE') or (PKG if os.path.isfile(os.path.join(PKG, '_tools', 'settings_v1.py')) else os.path.expanduser('<RELEASE_ROOT>/Alarm/alarm/current'))
 KIT = 'Agentic/tree/ALARM_DESIGN/KIT_V5'; RUNT = 'Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools'; FLD = '06_First_look/tree/tools/alarm_first_look'
 Q14 = os.path.join(PKG, KIT, 'tools/queue_job_v14.py'); TPL = os.path.join(PKG, KIT, 'jobs/JOB_FIRSTLOOK_V1.job.sh.txt')
 LISTS = os.path.join(PKG, FLD, 'fl_lists_v3.py'); REC = os.path.join(PKG, FLD, 'fl_receipt_v1.py'); SETT = os.path.join(PKG, '06_First_look/FIRSTLOOK_SETTINGS_V1.json')
@@ -387,7 +387,7 @@ class T06Queue(unittest.TestCase):
 
     def test_other_kinds_as_v12(self):
         src = open(Q14).read()
-        for k, sha, name in (('COUNT', '9acb9c0c2b241320', 'JOB_COUNT_V7'), ('GRADE', s16(os.path.join(PKG, KIT, 'jobs/JOB_GRADE_V14.job.sh.txt')), 'JOB_GRADE_V14'), ('MONTH', s16(os.path.join(PKG, KIT, 'jobs/JOB_MONTH_V14.job.sh.txt')), 'JOB_MONTH_V14'), ('ENTRY', 'fdc51e1f114f4906', 'JOB_ENTRY_V7')):
+        for k, sha, name in (('COUNT', 'ac237070224af425', 'JOB_COUNT_V7'), ('GRADE', s16(os.path.join(PKG, KIT, 'jobs/JOB_GRADE_V14.job.sh.txt')), 'JOB_GRADE_V14'), ('MONTH', s16(os.path.join(PKG, KIT, 'jobs/JOB_MONTH_V14.job.sh.txt')), 'JOB_MONTH_V14'), ('ENTRY', 'aa3101178ff59030', 'JOB_ENTRY_V7')):
             self.assertIn("'%s': '%s'" % (k, sha), src); self.assertIn("'%s': '%s.job.sh.txt'" % (k, name), src)
         self.assertIn("MONTHS = ('2601', '2602', '2603', '2604')", src)
 

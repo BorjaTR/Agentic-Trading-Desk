@@ -1,0 +1,36 @@
+part_id	name	latest_status	latest_score	score_utc	score_evidence	evidence_in_DRILL_RUNS	evidence_missing	drill_rows_yes	drill_rows_other	proof_note
+P01	Hunter rules page	PROVEN	12/12	2026-11-08T09:39:05Z	HID-H08-a,HID-H08-b,BLIND-H08	HID-H08-a,HID-H08-b,BLIND-H08	-	BLIND-H08,HID-H08-a,HID-H08-b,K1B-o_a,K1B-o_b,K1B-s_a,K1B-s_b,K1N2-o_a,K1N2-o_b,K1N2-s_a,K1N2-s_b,K1N3-o_a,K1N3-o_b,K1N3-s_a,K1N3-s_b	K1N-o_a:no_gold_fail,K1N-o_b:no_gold_fail,K1N-s_a:no_gold_fail,K1N-s_b:no_gold_fail	receipt rows present
+P02	Hunter full prompt	WEAK	12.5/13	2026-11-08T09:10:24Z	R014,R015	R014,R015	-	R014,R015	JS-JSN_a:NA,JS-JSN_b:NA,JS-JSO_a:NA	receipt rows present
+P03	Role skills (4)	PROVEN	19/20	2026-11-08T10:58:44Z	RD6-a,RD6-b,TAKEOVER-BLIND	RD6-a,RD6-b,TAKEOVER-BLIND	-	RD6-a,RD6-b,TAKEOVER-BLIND	-	receipt rows present
+P04	Assessor and curator (roles)	PROVEN	6/6	2026-11-08T11:47:24Z	ASSESS-L10,ASSESS-C02,ASSESS-C03,ASSESS-C04,REPRO-L09,CUR-L10	ASSESS-L10,ASSESS-C02,ASSESS-C03,ASSESS-C04,REPRO-L09,CUR-L10	-	ASSESS-C03,ASSESS-C04,ASSESS-L10,CUR-L10,K2B-o_a,K2B-o_b,K2B-s_a,K2B-s_b,K2CLEAN-SCORE,K2CLEAN-SCORE-c,K3CLEAN-SCORE,RS5-a,RS5-b	ASSESS-C02:no,REPRO-L09:no,RS1-a:no,RS2-a:no,RS2-b:no,RS3-a:no,RS3-b:no,RS4-a:no,RS4-b:no	receipt rows present
+P05	Card template	PROVEN	10/10	2026-11-08T10:05:35Z	BLIND-H07	BLIND-H07	-	BLIND-H07	-	receipt rows present
+P06	Research step and idea choice	PROVEN	6/6	2026-11-08T09:10:24Z	R2-H01-L06,R2-H01-L07	R2-H01-L06,R2-H01-L07	-	R2-H01-L06,R2-H01-L07	-	receipt rows present
+P07	Forecasts	WORKS	14/19	2026-11-08T11:16:45Z	FCST-PRINT-1111	-	FCST-PRINT-1111	P07N-o_a,P07N-o_b,P07N-s_a,P07N-s_b,P07R2-pair	P07-o_a:no,P07-o_b:no,P07-s_a:no,P07-s_b:no	receipt rows present; score evidence ids not in DRILL_RUNS: FCST-PRINT-1111
+P08	Round 1: the claim	PROVEN	9/9	2026-11-08T10:14:29Z	R2-H04-BLIND	R2-H04-BLIND	-	R2-H04-BLIND	-	receipt rows present
+P09	Round 2: explain	WEAK	25/26	2026-11-08T10:18:56Z	R2-H05-BLIND	R2-H05-BLIND	-	R2-H05-BLIND	-	receipt rows present
+P10	Round 3: sharpen	WEAK	4.75/6	2026-11-08T11:16:45Z	BLIND-H06-R3v3	BLIND-H06-R3v3	-	-	BLIND-H06-R3v3:no	no passing drill row found by part id or evidence id
+P11	Next questions	WORKS	12/12	2026-11-08T09:10:24Z	H11-L05-a,H11-L09-a	H11-L05-a,H11-L09-a	-	H11-L05-a,H11-L09-a,P11N-o_a,P11N-o_b,P11N-s_a,P11N-s_b,P11R2-pair	P11-o_a:no,P11-o_b:no,P11-s_a:no,P11-s_b:no	receipt rows present
+P12	Reasoning quality	PROVEN	10.4/16	2026-11-08T11:12:51Z	REAS2,R1	REAS2	R1	P12-o_a,P12-o_b,P12-s_a,P12-s_b,REAS2	-	receipt rows present; score evidence ids not in DRILL_RUNS: R1
+P13	Messy reports	WEAK	8/0	2026-11-08T11:16:45Z	audit 11:16Z	-	audit 11:16Z	RPT1-a,RPT1-b	-	receipt rows present; score evidence ids not in DRILL_RUNS: audit 11:16Z
+P14	Held-out read	PROVEN	4/4	2026-11-08T09:10:24Z	R012	R012	-	R012	-	receipt rows present
+P15	Scratch cleanup	PROVEN	2/2	2026-11-08T10:27:07Z	CLEANUP-1	CLEANUP-1	-	CLEANUP-1	-	receipt rows present
+P16	Knowledge store and builder	PROVEN	23/23	2026-11-08T09:10:24Z	R2-KNOW_TOOL	R2-KNOW_TOOL	-	R2-KNOW_TOOL	-	receipt rows present
+P17	Knowledge brief	WORKS	2/0	2026-11-08T11:55:11Z	H02-R4a,H02-R4b	H02-R4a,H02-R4b	-	P17-o_a,P17-o_b,P17-s_a,P17-s_b	H02-R2a:no,H02-R3a:no,H02-R3b:no,H02-R4a:no,H02-R4b:no	receipt rows present
+P18	Run builder	PROVEN	7/7	2026-11-08T09:10:24Z	R008,R2-LEAK_HELDOUT	R008,R2-LEAK_HELDOUT	-	R008,R2-LEAK_HELDOUT	-	receipt rows present
+P19	Job template and fire cap	PROVEN	3/3	2026-11-08T09:10:24Z	R009,R2-FIRE_CAP	R009,R2-FIRE_CAP	-	R009,R2-FIRE_CAP	-	receipt rows present
+P20	Round checker	PROVEN	5/5	2026-11-08T10:00:46Z	CHK-1	CHK-1	-	CHK-1,CHK-L10,CHK-L10b	-	receipt rows present
+P21	Round 2 tools	PROVEN	2/2	2026-11-08T09:10:24Z	R2TOOL-POS,R2TOOL-NULL	R2TOOL-POS,R2TOOL-NULL	-	R2TOOL-NULL,R2TOOL-POS	-	receipt rows present
+P22	Proof tool	PROVEN	10/10	2026-11-08T11:16:45Z	BARS-C90	BARS-C90	-	BARS-C90	-	receipt rows present
+P23	Forecast scorer	PROVEN	3/3	2026-11-08T11:16:45Z	FCST-PRINT-1111	-	FCST-PRINT-1111	-	-	no passing drill row found by part id or evidence id; score evidence ids not in DRILL_RUNS: FCST-PRINT-1111
+P24	Handover and restart	PROVEN	6.5/7	2026-11-08T10:36:04Z	RESTART-BLIND	RESTART-BLIND	-	RESTART-BLIND	-	receipt rows present
+P25	Registers	PROVEN	3/3	2026-11-08T10:27:07Z	AUDIT-1	AUDIT-1	-	-	AUDIT-1:no	no passing drill row found by part id or evidence id
+P26	Process documents	PROVEN	1/1	2026-11-08T11:45:47Z	RDD9-a,RDD9-b	RDD9-a,RDD9-b	-	K4R2-SCORE,RDD9-a,RDD9-b	-	receipt rows present
+P27	Memory beats control	WORKS	5.17/2	2026-11-08T11:38:49Z	BARS-B3-2	BARS-B3-2	-	-	BARS-B3-1:no,BARS-B3-2:no	no passing drill row found by part id or evidence id
+P28	Market understanding	WORKS	10/10	2026-11-08T09:10:25Z	H12-NONE-a,H12-L05-a,H12-L09-a	H12-NONE-a,H12-L05-a,H12-L09-a	-	H12-L09-a,P28N-o_a,P28N-o_b,P28N-s_a,P28N-s_b,P28R2-pair	H12-L05-a:n/a,H12-NONE-a:n/a,P28-o_a:no,P28-o_b:no,P28-s_a:no,P28-s_b:no	receipt rows present
+P29	Process improvement loop	WORKS	123/143	2026-11-08T11:16:45Z	AUD1-a,audit 11:16Z	AUD1-a	audit 11:16Z	K2MIX-SCORE-v,K2MIX2-SCORE-v,K3MIX-SCORE-v,K3MIX2-SCORE-v,K4MIX-SCORE-v,P29A-chain,P29D-chain	AUD1-a:no,AUD2-a:no,AUD3-a:no,P29B-chain:no,P29C-chain:no	receipt rows present; score evidence ids not in DRILL_RUNS: audit 11:16Z
+P30	Knowledge store content	WORKS	1/1	2026-11-08T09:16:57Z	R2-KNOW_TOOL,R2-H01-L06	R2-KNOW_TOOL,R2-H01-L06	-	R2-H01-L06,R2-KNOW_TOOL	-	receipt rows present
+P31	Metric use	PROVEN	8/9	2026-11-08T11:47:24Z	R2-H04-BLIND,BLIND-H04-R1v3	R2-H04-BLIND,BLIND-H04-R1v3	-	BLIND-H04-R1v3,R2-H04-BLIND	-	receipt rows present
+P32	Drill keys and rubrics	PROVEN	3/3	2026-11-08T11:16:45Z	BLIND-H06-R3v3,BLIND-H04-R1v3,REAS2	BLIND-H06-R3v3,BLIND-H04-R1v3,REAS2	-	BLIND-H04-R1v3,K1B-SCORE,K1R2-SCORE,K2B-SCORE,K2MIX3-SCORE,K3MIX2-SCORE,K4B-SCORE,K4MIX-SCORE,REAS2	BLIND-H06-R3v3:no,K1MIX-SCORE:no,K1N-SCORE:no,K2MIX-SCORE:no,K2MIX2-SCORE:tentative,K3B-SCORE:no,K3MIX-SCORE:no	receipt rows present
+P33	Safety and data integrity	PROVEN	3/3	2026-11-08T11:35:35Z	LEAK-2,LEAK-3,R-builder	LEAK-2,LEAK-3	R-builder	LEAK-1,LEAK-2,LEAK-3	-	receipt rows present; score evidence ids not in DRILL_RUNS: R-builder
+P34	Speed and cost	WEAK	42.1/40	2026-11-08T11:16:45Z	SPEED_20261108_L10	-	SPEED_20261108_L10	-	-	no passing drill row found by part id or evidence id; score evidence ids not in DRILL_RUNS: SPEED_20261108_L10
+P35	Generic loop portability (not a PARTS.tsv row; drill P35_PORT, logged under part P26)	not in SCORES.tsv	-/-	-	-	-	-	P35V2-pair,P35V2-pair2	P35-o_a:no,P35-o_b:no,P35-s_a:no,P35-s_b:no,P35V1-rescore:no,P35V1-round:no	receipt rows present

@@ -1,9 +1,9 @@
 #!/bin/bash
 # alarm_grade_chain_v2_0_3_to20251231.sh (SCOUT K12, 31 Oct 2026, home team/RESEARCH/tools/alarm_process; TEST, NOT REVIEWED):
-# alarm_grade_chain_v2_0_2_to20251231.sh 3628339f9fefb7cd with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev
+# alarm_grade_chain_v2_0_2_to20251231.sh 702987b96f7c3f57 with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev
 # path out of GRADE and MONTH"): event_outcomes_rel1.py (7c35f72782745b9c: event_outcomes.py with the feed's stop gate from FEED_GATE, never
 # labcore.jobgate's built-in dev-tree GATE, and the research days from RESEARCH_STORE), its workers run_parallel_rel1.py (46302fd8cf630120), its
-# release record RELEASE_event_outcomes_V3_REL1.json (e9e08fbe66b6571a); the three checked by sha16 before any step and named in INPUTS_<V>.txt (4
+# release record RELEASE_event_outcomes_V3_REL1.json (da0dd8eee3d12679); the three checked by sha16 before any step and named in INPUTS_<V>.txt (4
 # lines appended: outcomes, launcher, release, research); the caller gives RESEARCH_STORE (the settings key: an absolute path) as it
 # gives FEED_GATE, and the chain exports both to Outcomes. The rest of this header is v2_0_2's.
 #   AL=<Alarm> PY=<python> LAB_DAYS=<lab days> FEED_GATE=<gate file or empty> RESEARCH_STORE=<research days> [LEAN=..] [BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_0_3_to20251231.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]
@@ -15,10 +15,10 @@
 #   step 1: detect_v2.py (97a822a20e08088d; detect.py with its paths changed, the same EVENTS) with --gate="$FEED_GATE";
 #   step 3: idea_to_grade_rel1.py (edee6bbe51a2bbde, SCOUT K6: idea_to_grade.py V2.3.1 with its paths changed: tree root from its file,
 #           kernels i2g_engine_rel1, i2g_grade_rel1 and their clean editions) with --gate="$FEED_GATE" and --pins I2G_PINS_V2_REL1.json
-#           (17f89bef42400d38: the same 39 files as I2G_PINS_V2.json, the 11 clean editions in place of the old, paths relative to the tree);
+#           (b34c5d55cfcf48de: the same 39 files as I2G_PINS_V2.json, the 11 clean editions in place of the old, paths relative to the tree);
 #   the caller gives FEED_GATE in the environment (the settings key FEED_GATE; set and empty: no gate, a machine without the feed);
 #   the three files are checked by sha16 before any step and named in INPUTS_<V>.txt (4 lines appended: detect, grade, pins, gate);
-#   METRICS_V1 is exported beside METRIC_TRAPS and CATALOGS (the lab tree's team/LAB3/METRICS_V1.tsv, 85b14987d2059cd6, the dev tree's
+#   METRICS_V1 is exported beside METRIC_TRAPS and CATALOGS (the lab tree's team/LAB3/METRICS_V1.tsv, c2335f86987c5045, the dev tree's
 #   bytes): the detector's metric gate (labcore.briefs -> metric_brief.py) read it from the dev tree by its built-in default (T1, 31 Oct).
 # Window, steps, other tools, arguments and outputs otherwise unchanged. v2_0_1's header follows.
 #   AL=<Alarm> PY=<python> LAB_DAYS=<lab days> FEED_GATE=<gate file or empty> [LEAN=..] [BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_0_2_to20251231.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]
@@ -47,8 +47,8 @@
 set -uo pipefail
 FIRST=20250910; LAST=20251231   # this version's hardcoded date range (UTC days): never a setting
 CARD_SHA=121304e1471d7e41   # K4: alarm_card_v1_2_1.py (v1_2 c3172f94e389cadb with its paths changed)
-DET_SHA=97a822a20e08088d; I2G_SHA=edee6bbe51a2bbde; PINS_SHA=17f89bef42400d38   # K12: detect_v2.py, idea_to_grade_rel1.py, I2G_PINS_V2_REL1.json
-EO_SHA=7c35f72782745b9c; RP_SHA=46302fd8cf630120; REL_SHA=e9e08fbe66b6571a   # K12 v2_0_3: event_outcomes_rel1.py, run_parallel_rel1.py, RELEASE_event_outcomes_V3_REL1.json
+DET_SHA=97a822a20e08088d; I2G_SHA=edee6bbe51a2bbde; PINS_SHA=e1fd76627604332c   # K12: detect_v2.py, idea_to_grade_rel1.py, I2G_PINS_V2_REL1.json
+EO_SHA=7c35f72782745b9c; RP_SHA=46302fd8cf630120; REL_SHA=f94f0e716aae8236   # K12 v2_0_3: event_outcomes_rel1.py, run_parallel_rel1.py, RELEASE_event_outcomes_V3_REL1.json
 V=$1; DEF=$2; W=$3
 [[ "$V" =~ ^[A-Za-z0-9]+$ ]] || { echo "BAD_VARIANT $V"; exit 2; }
 [ -f "$DEF" ] || { echo "NO_DEFINITION $DEF"; exit 2; }

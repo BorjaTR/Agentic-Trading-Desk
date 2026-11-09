@@ -1,7 +1,7 @@
 {
  "tool": "queue_job_v9",
  "file": "Agentic/tree/ALARM_DESIGN/KIT_V5/tools/queue_job_v9.py",
- "file_sha16": "74ca3cebd6664073",
+ "file_sha16": "17ecac047554fc2a",
  "archive": "archive/ holds past editions: read only, never run; to rerun one, use the old release install.",
  "step": "steps 5 COUNT, 6 GRADE, 8 ENTRY and 10 MONTH of AGENTS.md: every job since ALARM_V1_9: COUNT on JOB_COUNT_V6, GRADE on JOB_GRADE_V11, ENTRY on JOB_ENTRY_V6, MONTH on JOB_MONTH_V11; KIND CLEAN is refused (the owner 31 Oct 2026 10:51 Berlin: scratch cleanup is DSK's)",
  "question": "How do I queue my COUNT, GRADE, ENTRY or MONTH job so that the runner runs it from the release folder?",
@@ -393,15 +393,15 @@
  "reads": [
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_COUNT_V6.job.sh.txt",
-   "sha16": "57b5c18ed82061f6"
+   "sha16": "ff3455fd96087ed7"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_GRADE_V11.job.sh.txt",
-   "sha16": "38cc8726273bfd67"
+   "sha16": "81c9edda5ab18760"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/KIT_V5/jobs/JOB_MONTH_V11.job.sh.txt",
-   "sha16": "e35a16147513f492"
+   "sha16": "d5b2a44b8ed98e75"
   },
   {
    "path": "Agentic/tree/ALARM_DESIGN/runs/CLAUDE1_20261028/tools/reg_append_v1.py",

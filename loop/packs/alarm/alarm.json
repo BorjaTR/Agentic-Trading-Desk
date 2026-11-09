@@ -1,0 +1,45 @@
+{
+  "_about": "Alarm seat pack for build_knowledge_v2.py: every value is the constant or text build_knowledge_v1.py has in its code (SCOUT 2026-11-08, playground). With this pack v2 writes the same brief and check output as v1, byte for byte (test_build_knowledge_v2.py TGolden). Keys starting with _ are comments.",
+  "pack_name": "alarm",
+  "brief_title": "# KNOWLEDGE BRIEF (alarm learning series)",
+  "design_window": "20250910:20260131",
+  "window_label": "Sep-Jan",
+  "outside_window_note": "SEPMAR_ONLY",
+  "outside_window_label": "Sep-Mar",
+  "wrong_yardstick_note": "WRONG_SIDE_YARDSTICK",
+  "_mechanisms": "ids of team/RESEARCH/LEAD/MECHANISM_20261106/MECHANISM_MAP_V1.md (sha16 36faecd0eaa59b85); a new name needs a map row first, then this list (C20)",
+  "mechanisms": ["FORCED_OUT", "FORCED_OUT_SHORTS", "CROWDED_LATE"],
+  "sides": [
+    {"key": "down", "label": "down-side fades", "yardstick": "FDONLY", "mechanisms": "*"},
+    {"key": "up", "label": "up-side fades", "yardstick": "FUONLY", "mechanisms": ["FORCED_OUT_SHORTS"]}
+  ],
+  "measure_label": "lead15",
+  "rounds": {"select": "R1", "fitted": "R3", "placebo": "R3P"},
+  "status_bars": {
+    "t_bar": 2.5,
+    "supported_min_waves": 300,
+    "confirmed_min_runs": 2,
+    "confirmed_min_mechanisms": 2,
+    "confirmed_needs_holdout": true,
+    "refuted_min_runs": 2,
+    "s2_fitted_beats_select": true
+  },
+  "base_rates": {
+    "pass_margin": 2,
+    "pass_t": 3,
+    "measure_word": "lead",
+    "pass_line": "- R1 met the pass rule's margin and t parts (margin >= +2 over the same-side yardstick, t >= 3; the months part is not stored): {n} of {total} runs ({runs}); start p(R1 passes) from this share",
+    "extra_lines": [
+      "- Yardsticks by month (Sep-Jan, lead15; receipts 20270734 YARDSTICK_FDONLY_BLOCKS row SEPJAN, 20270844 YARDSTICK_FUONLY_SEPJAN): FDONLY Sep +26.02, Oct +5.62, Nov +6.68, Dec +1.82, Jan +8.27; FUONLY Sep +4.81, Oct +10.49, Nov +9.21, Dec +18.95, Jan +9.46. The R1 rule's months part compares each of your months with the one pooled number (+8.09 or +10.99), never with these per-month values, which only show which months are hard (C127, C128).",
+      "- lead15 = points: (lean win rate minus the matched random moments' win rate) x 100 at 15 min, counted per wave; se = lead / t. Power line: halves have se about se x sqrt(2) each, so the gap needed for t 2.5 is about 2.5 x 2 x se."
+    ]
+  },
+  "intro_lines": [
+    "Built by build_knowledge_v1.py brief from EVIDENCE.tsv, FINDINGS.tsv, MOVES.tsv, OPEN_QUESTIONS.tsv; do not edit by hand.",
+    "Why: team/RESEARCH/plans/PLAN_KNOWLEDGE_FORMAT_20261107.md. Numbers are Sep 2025 to Jan 2026 (design window) unless the line says otherwise; yardsticks at 15 min: FDONLY Sep-Jan +8.09 (down side, E0001), FUONLY Sep-Jan +10.99 (up side, FORCED_OUT_SHORTS, E0051).",
+    "Status by numbers only: SUPPORTED = t >= 2.5 and >= 300 waves in one run, or an R3 built on it beats R1 and FDONLY; CONFIRMED also needs >= 2 runs and >= 2 mechanisms and the orchestrator's held-out read. A mechanism is the evidence row's mechanism name, set by the side and the flow it fades: FORCED_OUT (down move), FORCED_OUT_SHORTS (up move), CROWDED_LATE; a setup without forced-flow legs takes its side's name (C48).",
+    "Cite finding ids (Fnnnn) in every claim. Each finding line leads with status, runs, mechanisms (names) and the best numbers per mechanism; only the statement is capped at {LINE_CAP} characters; full text in FINDINGS.tsv."
+  ],
+  "_intro_lines": "the Built-by line keeps the v1 name so the alarm brief stays byte-identical; change it to build_knowledge_v2.py when the alarm seat moves to v2 (the brief then differs by that one line)",
+  "definitions": {"team_up": 4, "runs_dir": "RESEARCH/ALARM_DESIGN/runs", "glob": "*/ideas/{alarm}/defs/{v}.json", "show_prefix": "team"}
+}

@@ -1,6 +1,9 @@
 # STATUS: Crypto Alarm Desk, V1 (kept current; 3 Nov 2026, 23:0xZ)
 
-Engine: ALARM_V1_21_16, copied by desk/build/copy_v1.py (116 files left out, desk/build/EXCLUDED.tsv), scrubbed by scrub_v1.py.
+Since 9 Nov 2026 (branch update-20261109): engine ALARM_V1_22_1, design pack ALARM_BUILD_V26 (alarm_design/), pipeline ALARM_PIPELINE_V1_4_1
+(alarm_pipeline/) and learning loop LEARNING_LOOP_V1_1 (loop/: generic loop and alarm pack), copied by desk/build/copy_v2.py (206 files left out,
+desk/build/EXCLUDED.tsv), scrubbed by scrub_v1.py. Tests on 9 Nov: engine 133 PASS, 19 KNOWN, 0 FAIL of 152; desk 30 passed, 5 expected failures.
+The steps below are the V1 and V2 record (ALARM_V1_21_16, the old stage-folder loop).
 Not released. No git here; publishing is the owner's.
 
 ## V2 (4 Nov 2026): conversion instructions, not a converter

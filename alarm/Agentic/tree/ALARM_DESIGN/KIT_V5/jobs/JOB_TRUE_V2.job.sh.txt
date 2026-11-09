@@ -1,0 +1,33 @@
+# JOB @@JOBNUM@@_@@SEAT@@_TRUE_@@IDEA@@ -- @@RUNTAG@@ (KIT_V5 JOB_TRUE_V2, template @@TPLSHA@@; SCO-A179, 7 Nov 2026: JOB_TRUE_V1 with true_gate_v4 (events to 20260331, the Sep-Mar grade), nothing else): AGENTS.md step 5c TRUE of variant @@ITEMS_LIST@@ after GRADE @@FROMJOB@@: the released true_gate_v3 check, then its run on the sealed claim. No outcome is read; price is never a label; print-only (the word changes no decide state). Sep-Dec 2025 only (the claim's first and last; true_gate_v3 refuses later days)
+# WRITES @@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@/receipts/@@JOBNUM@@_TRUE_@@IDEA@@/ (about 1 MB: the card, the row, the busy tables)
+# QUEUE @@QNAME@@ (declared minutes: @@MINUTES@@)
+# WRITES_MB: @@WMB@@
+# MEM_MB: @@MMB@@
+# CORES 1
+set -u
+AL=@@ALARM@@; PY=@@PYTHON@@; TGD=$AL/03_Grading/tree/tools/true_gate
+export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM_THREADS=1
+export FEED_GATE=@@FEED_GATE@@
+RD=@@RESEARCH_ROOT@@/ALARM_DESIGN/runs/@@RUNTAG@@; J=@@JOBNUM@@_TRUE_@@IDEA@@; DV=$RD/receipts/$J
+@@ITEMS_BLOCK@@
+V=${VS[0]}; CL=$RD/$CLAIM; OUT=$DV/TRUE_${V}_$LABEL
+mkdir -p $DV || exit 4
+ST=$DV/STAGES.tsv; [ -f $ST ] && { echo "RECEIPTS EXIST $DV"; exit 4; }
+printf 'stage\trc\tseconds\tutc\tnote\n' > $ST; printf 'stage\tpeak_mb\n' > $DV/PEAKS.tsv
+st(){ printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$(date -u +%FT%TZ)" "$4" >> $ST; }
+stop(){ st end $1 0 "$2"; exit $1; }
+ck(){ [ "$(shasum -a 256 $1 | cut -c1-16)" = "$2" ] || { st pin 3 0 "SHA CHANGED $1 (want $2)"; stop 3 "pins"; }; }
+one(){ S=$1; shift; t0=$(date +%s); /usr/bin/time -l "$@" < /dev/null > $DV/$S.log 2> $DV/$S.err; r=$?
+  printf '%s\t%s\n' $S "$(awk '/maximum resident/{print int($1/1048576)}' $DV/$S.err)" >> $DV/PEAKS.tsv
+  st $S $r $(( $(date +%s)-t0 )) "$(grep -E '^(OK|FOR THE CARD|VERDICT|REFUSED)' $DV/$S.log | tail -n 1 | tr '\t' ' ' | cut -c1-200)"
+  if [ $r -ne 0 ]; then stop $r "$S failed"; fi; }
+@@PINS@@
+ck $CL $CSHA
+ck $PFSRC $PFSHA
+G8=$FEED_GATE; [ -z "$G8" ] || [ -f "$G8" ] || { st gate 8 0 "FEED_GATE $G8: no such file"; stop 8 "gate"; }
+st start 0 0 "claim $CLAIM $CSHA; perfire $PFSHA; from @@FROMJOB@@"
+one check_$V $PY -B $TGD/true_gate_v4.py check $CL
+one true_$V $PY -B $TGD/true_gate_v4.py run $CL $OUT
+(cd $DV && shasum -a 256 *.tsv *.log TRUE_*/TRUE_ROW.tsv TRUE_*/TRUE_ROW.sha16 TRUE_*/TRUE_CARD.txt 2>/dev/null | grep -v ' SHA16.txt$') > $DV/SHA16.txt
+st end 0 0 "$(grep '^VERDICT' $OUT/TRUE_CARD.txt | cut -c1-200)"
+exit 0

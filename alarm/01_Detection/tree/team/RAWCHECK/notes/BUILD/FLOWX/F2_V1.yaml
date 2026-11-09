@@ -59,7 +59,7 @@ inputs:
     stream: Binance USD-M aggTrades (data.binance.vision archive)
     fields: agg id, price p, quantity q, first_trade_id, last_trade_id, transact_time T (ms), is_buyer_maker m (FLOWX_WORK_V0 common)
     data_check: >-
-      D4: which days are held (HANDOVER_EDGE1_V103 901368a5 says the Expansion holds aggtrades to 1 Aug 2026; BUILD_LIST_V4 03c7ed28 line
+      D4: which days are held (HANDOVER_EDGE1_V103 901368a5 says the ARCHIVE_DISK2 holds aggtrades to 1 Aug 2026; BUILD_LIST_V4 03c7ed28 line
       42 says 113 coin-days held); the header row and column order; it refuses JUL_UNSEEN and every day from 1 Aug 2026
     rule_in_force: every aggTrade with T in (u - 300 s, u] and arrival <= u, at the 5 s point u (the arrival from the trades reader v2)
     stale_rule: none of its own; stale comes from the seen state (B1 rule 22, output.stale_rule)

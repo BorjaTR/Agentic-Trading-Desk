@@ -5,7 +5,7 @@ counted text replacements only (test_feedgate_rel1.py re-applies the same list t
   event_outcomes_rel1.py      = event_outcomes.py 7332c1f005e958ef + the gate from FEED_GATE, the research days from RESEARCH_STORE,
                                 RUN_PARALLEL run_parallel_rel1.py, RELEASE RELEASE_event_outcomes_V3_REL1.json
   run_parallel_rel1.py        = run_parallel.py c48230fb71f55090 + EO event_outcomes_rel1.py, run_lab's gate from FEED_GATE
-  event_outcomes_aw1_rel1.py  = event_outcomes_aw1.py a66240b3332ddf00 + event_outcomes_rel1's changes, RELEASE ..._AW1_REL1.json
+  event_outcomes_aw1_rel1.py  = event_outcomes_aw1.py 76adc225ef3bc102 + event_outcomes_rel1's changes, RELEASE ..._AW1_REL1.json
   RELEASE_event_outcomes_V3_REL1.json  = V3_CANDIDATE with the two editions in place of event_outcomes.py and run_parallel.py
   RELEASE_event_outcomes_AW1_REL1.json = AW1 with event_outcomes_aw1_rel1.py in place of event_outcomes_aw1.py and V3_REL1 in place of
                                          V3_CANDIDATE
@@ -28,8 +28,8 @@ V3_OLD = os.path.join(T01, 'event_outcomes', 'RELEASE_event_outcomes_V3_CANDIDAT
 V3_NEW = os.path.join(T01, 'event_outcomes', 'RELEASE_event_outcomes_V3_REL1.json')
 AR_OLD = os.path.join(T01, 'alarm_process', 'RELEASE_event_outcomes_AW1.json')
 AR_NEW = os.path.join(T01, 'alarm_process', 'RELEASE_event_outcomes_AW1_REL1.json')
-OLD_SHA = {EO_OLD: '7332c1f005e958ef', RP_OLD: 'c48230fb71f55090', AW_OLD: 'a66240b3332ddf00', V3_OLD: '2dd498a3b2c1a61e',
-           AR_OLD: '0de68ccfca3a7376'}
+OLD_SHA = {EO_OLD: '7332c1f005e958ef', RP_OLD: 'c48230fb71f55090', AW_OLD: '76adc225ef3bc102', V3_OLD: '17104e5d1f26e6ee',
+           AR_OLD: '7ca10b08f1254a69'}
 
 HELPERS = '''
 
@@ -86,7 +86,7 @@ EO_EDITS = [
 ]
 AW_EDITS = [
     ('# event_outcomes_aw1.py, aw1 (STRATEGY 28 Oct 2026',
-     '# event_outcomes_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED): event_outcomes_aw1.py a66240b3332ddf00, never edited, with\n'
+     '# event_outcomes_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED): event_outcomes_aw1.py 76adc225ef3bc102, never edited, with\n'
      "# event_outcomes_rel1.py's changes and nothing else: the feed's stop gate is the environment FEED_GATE (must be set: unset refused\n"
      '# NO_FEED_GATE; empty = no gate), never labcore.jobgate\'s built-in dev-tree GATE; the research days are RESEARCH_STORE when set;\n'
      '# RUN_PARALLEL is run_parallel_rel1.py (only named in the code inventory: aw1 runs Outcomes in its own process, run 0); its release\n'
@@ -164,7 +164,7 @@ def v3_record(old, eo_sha, rp_sha):
     d['by'] = 'SCOUT K12 feedgate_rel1_contract.py, 31 Oct 2026'
     d['release'] = 'event_outcomes_V3_REL1'
     d['reason'] = ('the clean release (K12, SCOUT 31 Oct: the feed-gate dev path out of GRADE and MONTH): RELEASE_event_outcomes_V3_CANDIDATE.json '
-                   '2dd498a3b2c1a61e with event_outcomes_rel1.py and run_parallel_rel1.py in place of event_outcomes.py and run_parallel.py; '
+                   '17104e5d1f26e6ee with event_outcomes_rel1.py and run_parallel_rel1.py in place of event_outcomes.py and run_parallel.py; '
                    'every other file, release, runtime and finding the same')
     d['replaces'] = 'none (V3_CANDIDATE stays for the chains that run event_outcomes.py)'
     d['status'] = 'TEST, NOT REVIEWED (SCOUT K12; V3_CANDIDATE: CANDIDATE: NOT APPROVED; independent re-review of A51-01..07 pending)'
@@ -186,7 +186,7 @@ def aw1_record(old, aw_sha, v3_sha):
     d['status'] = 'TEST, NOT REVIEWED (SCOUT K12; aw1: STRATEGY, ALARM_DESIGN kit)'
     d['by'] = 'SCOUT K12 feedgate_rel1_contract.py, 31 Oct 2026'
     d['reason'] = ('the clean release (K12, SCOUT 31 Oct: the feed-gate dev path out of GRADE and MONTH): RELEASE_event_outcomes_AW1.json '
-                   '0de68ccfca3a7376 with event_outcomes_aw1_rel1.py in place of event_outcomes_aw1.py and RELEASE_event_outcomes_V3_REL1.json '
+                   '7ca10b08f1254a69 with event_outcomes_aw1_rel1.py in place of event_outcomes_aw1.py and RELEASE_event_outcomes_V3_REL1.json '
                    'in place of V3_CANDIDATE; the window table the same')
     d['replaces'] = 'none (AW1 stays for the chains that run event_outcomes_aw1.py)'
     return json.dumps(d, indent=1) + '\n'
@@ -202,7 +202,7 @@ G7, G8 = os.path.join(KJ, 'JOB_GRADE_V7.job.sh.txt'), os.path.join(KJ, 'JOB_GRAD
 M7, M8 = os.path.join(KJ, 'JOB_MONTH_V7.job.sh.txt'), os.path.join(KJ, 'JOB_MONTH_V8.job.sh.txt')
 Q5 = os.path.join('Agentic', 'tree', 'ALARM_DESIGN', 'KIT_V5', 'tools', 'queue_job_v5.py')
 Q6 = os.path.join('Agentic', 'tree', 'ALARM_DESIGN', 'KIT_V5', 'tools', 'queue_job_v6.py')
-OLD_SHA.update({C_OLD: '3628339f9fefb7cd', M_OLD: 'd2bc556e5adaa1a4', G7: '66d2e78a3a3b37bf', M7: '0d5038a444250202', Q5: '51864a030f5cfb20'})
+OLD_SHA.update({C_OLD: '5c11b3230cee0b8c', M_OLD: 'ed76a39ed96d562a', G7: '20ce3daa178a0128', M7: '21157f02c635ae6f', Q5: 'd1cf44aeb5487d50'})
 GATE_ABS = '[ -z "$FEED_GATE" ] || [ "${FEED_GATE#/}" != "$FEED_GATE" ] || { echo "NO_FEED_GATE: FEED_GATE is not an absolute path: $FEED_GATE"; exit 2; }\n'
 STORE_CHECK = ('# K12 (v2_0_3, v2_2_3): the research days (settings RESEARCH_STORE) must be set, an absolute path; Outcomes reads them and the gate\n'
                '# from the environment, so both are exported\n'
@@ -214,7 +214,7 @@ STORE_CHECK = ('# K12 (v2_0_3, v2_2_3): the research days (settings RESEARCH_STO
 def chain_edits(m):
     head = ('#!/bin/bash\n'
             '# alarm_grade_chain_v2_0_3_to20251231.sh (SCOUT K12, 31 Oct 2026, home team/RESEARCH/tools/alarm_process; TEST, NOT REVIEWED):\n'
-            '# alarm_grade_chain_v2_0_2_to20251231.sh 3628339f9fefb7cd with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev\n'
+            '# alarm_grade_chain_v2_0_2_to20251231.sh 5c11b3230cee0b8c with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev\n'
             '# path out of GRADE and MONTH"): event_outcomes_rel1.py (%s: event_outcomes.py with the feed\'s stop gate from FEED_GATE, never\n'
             '# labcore.jobgate\'s built-in dev-tree GATE, and the research days from RESEARCH_STORE), its workers run_parallel_rel1.py (%s), its\n'
             '# release record RELEASE_event_outcomes_V3_REL1.json (%s); the three checked by sha16 before any step and named in INPUTS_<V>.txt (4\n'
@@ -224,8 +224,8 @@ def chain_edits(m):
             'bash alarm_grade_chain_v2_0_3_to20251231.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]\n') % (m[EO_NEW], m[RP_NEW], m[V3_NEW])
     return [('#!/bin/bash\n', head, 1),
             (GATE_ABS, GATE_ABS + STORE_CHECK, 1),
-            ('PINS_SHA=17f89bef42400d38   # K12: detect_v2.py, idea_to_grade_rel1.py, I2G_PINS_V2_REL1.json\n',
-             'PINS_SHA=17f89bef42400d38   # K12: detect_v2.py, idea_to_grade_rel1.py, I2G_PINS_V2_REL1.json\n'
+            ('PINS_SHA=e1fd76627604332c   # K12: detect_v2.py, idea_to_grade_rel1.py, I2G_PINS_V2_REL1.json\n',
+             'PINS_SHA=e1fd76627604332c   # K12: detect_v2.py, idea_to_grade_rel1.py, I2G_PINS_V2_REL1.json\n'
              'EO_SHA=%s; RP_SHA=%s; REL_SHA=%s   # K12 v2_0_3: event_outcomes_rel1.py, run_parallel_rel1.py, RELEASE_event_outcomes_V3_REL1.json\n'
              % (m[EO_NEW], m[RP_NEW], m[V3_NEW]), 1),
             ('ckf $DET $DET_SHA; ckf $I2G $I2G_SHA; ckf $PINS $PINS_SHA\n',
@@ -242,7 +242,7 @@ def chain_edits(m):
 def month_edits(m):
     head = ('#!/bin/bash\n'
             '# alarm_grade_chain_v2_2_3_to20260430.sh (SCOUT K12, 31 Oct 2026, home team/RESEARCH/tools/month_parts; TEST, NOT REVIEWED):\n'
-            '# alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4 with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev\n'
+            '# alarm_grade_chain_v2_2_2_to20260430.sh ed76a39ed96d562a with only Outcomes (step 5) changed (SCOUT 31 Oct: "take the feed-gate dev\n'
             '# path out of GRADE and MONTH"): event_outcomes_aw1_rel1.py (%s: event_outcomes_aw1.py with the feed\'s stop gate from\n'
             '# FEED_GATE, never labcore.jobgate\'s built-in dev-tree GATE, and the research days from RESEARCH_STORE; run 0 as before) with its\n'
             '# release record RELEASE_event_outcomes_AW1_REL1.json (%s); both checked by sha16 and named in INPUTS_<V>.txt, which also gets a\n'
@@ -252,7 +252,7 @@ def month_edits(m):
             '[BASE=..] [SCREEN=1] bash alarm_grade_chain_v2_2_3_to20260430.sh <V> <DEF.json|FIRES.tsv> <W> [MENU.json]\n') % (m[AW_NEW], m[AR_NEW])
     return [('#!/bin/bash\n', head, 1),
             (GATE_ABS, GATE_ABS + STORE_CHECK, 1),
-            ('EO_SHA=a66240b3332ddf00; REL_SHA=0de68ccfca3a7376', 'EO_SHA=%s; REL_SHA=%s' % (m[AW_NEW], m[AR_NEW]), 1),
+            ('EO_SHA=76adc225ef3bc102; REL_SHA=7ca10b08f1254a69', 'EO_SHA=%s; REL_SHA=%s' % (m[AW_NEW], m[AR_NEW]), 1),
             ('EO=$AP/event_outcomes_aw1.py;', 'EO=$AP/event_outcomes_aw1_rel1.py;', 1),
             ('ckf event_outcomes_aw1.py $EO_SHA; ckf RELEASE_event_outcomes_AW1.json $REL_SHA',
              'ckf event_outcomes_aw1_rel1.py $EO_SHA; ckf RELEASE_event_outcomes_AW1_REL1.json $REL_SHA', 1),
@@ -271,7 +271,7 @@ def grade8_edits(m):
             ('the feed gate FEED_GATE included (JOB_GRADE_V6 with only its chain changed,',
              'the feed gate FEED_GATE and the research days RESEARCH_STORE included (JOB_GRADE_V7 with only its chain changed and RESEARCH_STORE '
              'given to it; V7: JOB_GRADE_V6 with only its chain changed,', 1),
-            ('ck $CH/alarm_grade_chain_v2_0_2_to20251231.sh 3628339f9fefb7cd', 'ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh %s' % m[C_NEW], 1),
+            ('ck $CH/alarm_grade_chain_v2_0_2_to20251231.sh 5c11b3230cee0b8c', 'ck $CH/alarm_grade_chain_v2_0_3_to20251231.sh %s' % m[C_NEW], 1),
             ('FEED_GATE=@@FEED_GATE@@ LEAN=$L bash $CH/alarm_grade_chain_v2_0_2_to20251231.sh',
              'FEED_GATE=@@FEED_GATE@@ RESEARCH_STORE=@@RESEARCH_STORE@@ LEAN=$L bash $CH/alarm_grade_chain_v2_0_3_to20251231.sh', 1),
             ('"chain v2_0_2 Sep-Dec, lean $L"', '"chain v2_0_3 Sep-Dec, lean $L"', 1)]
@@ -286,7 +286,7 @@ def month8_edits(m):
              'CLEAN_RELEASE_V1:', 1),
             ('every machine path from the settings file, the feed gate FEED_GATE included):',
              'every machine path from the settings file, the feed gate FEED_GATE and the research days RESEARCH_STORE included):', 1),
-            ('ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh d2bc556e5adaa1a4', 'ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh %s' % m[M_NEW], 1),
+            ('ck $MP/alarm_grade_chain_v2_2_2_to20260430.sh ed76a39ed96d562a', 'ck $MP/alarm_grade_chain_v2_2_3_to20260430.sh %s' % m[M_NEW], 1),
             ('FEED_GATE=@@FEED_GATE@@ PARTS=26 LEAN=$L bash $MP/alarm_grade_chain_v2_2_2_to20260430.sh',
              'FEED_GATE=@@FEED_GATE@@ RESEARCH_STORE=@@RESEARCH_STORE@@ PARTS=26 LEAN=$L bash $MP/alarm_grade_chain_v2_2_3_to20260430.sh', 1),
             ('"chain v2_2_2 Sep-Apr in 26 coin parts, lean $L"', '"chain v2_2_3 Sep-Apr in 26 coin parts, lean $L"', 1)]
@@ -294,13 +294,13 @@ def month8_edits(m):
 
 def queue_edits(m):
     return [('"""queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED).',
-             '"""queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py 51864a030f5cfb20 with only\n'
+             '"""queue_job_v6.py (SCOUT K12 for ALARM_DESIGN KIT_V5, 31 Oct 2026; TEST, NOT REVIEWED): queue_job_v5.py d1cf44aeb5487d50 with only\n'
              'GRADE and MONTH moved to JOB_GRADE_V8 (%s) and JOB_MONTH_V8 (%s), whose chains v2_0_3 and v2_2_3 run Outcomes with the feed\'s\n'
              'stop gate from FEED_GATE and the research days from RESEARCH_STORE, and the job path placeholder @@RESEARCH_STORE@@ (the settings key\n'
              'RESEARCH_STORE of the machine that runs the job: now one of the keys --job-settings must have). The rest of this text is\n'
              'queue_job_v5.py\'s.\n'
              'queue_job_v5.py (SCOUT for ALARM_DESIGN KIT_V5, 30 Oct 2026; TEST, NOT REVIEWED).' % (m[G8], m[M8]), 1),
-            ("'GRADE': '66d2e78a3a3b37bf', 'MONTH': '0d5038a444250202',", "'GRADE': '%s', 'MONTH': '%s'," % (m[G8], m[M8]), 1),
+            ("'GRADE': '20ce3daa178a0128', 'MONTH': '21157f02c635ae6f',", "'GRADE': '%s', 'MONTH': '%s'," % (m[G8], m[M8]), 1),
             ("'GRADE': 'JOB_GRADE_V7.job.sh.txt',", "'GRADE': 'JOB_GRADE_V8.job.sh.txt',", 1),
             ("'MONTH': 'JOB_MONTH_V7.job.sh.txt',", "'MONTH': 'JOB_MONTH_V8.job.sh.txt',", 1),
             ("# refused UNPINNED_MODULE); a KIND without one is NOT CLEAN YET",

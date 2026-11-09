@@ -80,7 +80,7 @@ external_checks:
   - {what: "field meanings", where: "Q-G1 to Q-G7 (GDELT GKG 2.1 codebook)", status: VERIFIED}
 
 tools:
-  - {what: "Z2 S01 to S04 recomputed from the pull files, against the year output", run: "python3 -B -m rawcheck.meaning_news day <D> [<D> ..]", where: "team/LAB/code (runner job: the pulls are on the Expansion drive)"}
+  - {what: "Z2 S01 to S04 recomputed from the pull files, against the year output", run: "python3 -B -m rawcheck.meaning_news day <D> [<D> ..]", where: "team/LAB/code (runner job: the pulls are on the ARCHIVE_DISK2 drive)"}
   - {what: "what the keyword filter keeps on a day", run: "python3 -B -m rawcheck.meaning_news anatomy <D>", where: team/LAB/code}
 
 used_by: "nobody yet (CARD_Z2_V3: no reader for any of the 5 metrics); PRODUCER_REGISTRY_V5 names families.py:news_row as the old consumer"

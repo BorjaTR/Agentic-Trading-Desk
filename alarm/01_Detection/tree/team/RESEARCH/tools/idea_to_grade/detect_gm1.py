@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # detect_gm1.py (BUILD5 for SCOUT, G1 D4, 31 Oct 2026; TEST, NOT REVIEWED; the owner 31 Oct 13:28 Berlin: "Their tools need to be fast and
 # refactored properly"): ONE edition for GRADE and MONTH, made by team/BUILD5/proposals/detect_gm1/make_detect_gm1.py from detect_v2.py
-# 97a822a20e08088d (GRADE) and detect_aw1_rel1.py 52fa253a619cf205 (MONTH), both never edited. Changed, nothing else: the window choice is
+# 97a822a20e08088d (GRADE) and detect_aw1_rel1.py b1894b3bade40fa2 (MONTH), both never edited. Changed, nothing else: the window choice is
 # an argument (run(windows=...), admit_research_window(..., windows), --windows GRADE|MONTH; missing or another word refused NO_WINDOWS);
 # GRADE reads freeze_judge WINDOWS_V1 classes (detect_v2.py), MONTH the alarm kit's alarm_process/WINDOWS_ALARM_V1.tsv (its sha16 checked:
 # detect_aw1_rel1.py). detect_v2.py's text follows.
@@ -68,7 +68,7 @@ HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent                                                    # team/RESEARCH/tools
 F_ROOT = TOOLS.parents[2]                                              # forensics
 ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v3.py'
-WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 WINDOWS = ('GRADE', 'MONTH')                                          # gm1: the window choice (an argument)
 CODE_DIR = F_ROOT / 'team' / 'LAB3' / 'code'
 # no LAB_ROOT: the lab days are the caller's (--lab-root, the settings key LAB_DAYS); edition 2 names no machine path

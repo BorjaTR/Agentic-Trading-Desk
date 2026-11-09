@@ -1,0 +1,14 @@
+role	file	sha16
+start	START_V26.md	3c79bba62b85b99c
+process	PROCESS_V26.md	ebf3ee066df87dce
+questions	QUESTIONS_V26.md	184cb125242b76dd
+gates	GATES_V26.json	1a823aad8724937f
+prompt	PROMPT_V26.md	d7df9d9de63e3657
+changes	CHANGES_V26.tsv	42a9111c1d0858d6
+tool	route_check_v26.py	ae3dfe1966fa3e4b
+rules	rules_check_v26.py	7244ac56da93067c
+tools	TOOLS_V26.tsv	c5cfd8f0f1b65b4e
+carried_table	CURATED_V7.tsv	064b37532a3be47e
+carried_table	DOC_CONFLICTS_V7.tsv	3e004eb003e0a319
+page	LEARNING_LOOP.md	aa96e93780aa8773
+page	FLOWCHART.html	d662141004fc56bc

@@ -28,7 +28,7 @@
 # Window (v1_3's was 20250910..20251231): this version's FIRST and LAST below. Never deletes. One worker after detection.
 set -uo pipefail
 FIRST=20250910; LAST=20260430   # this version's hardcoded date range (UTC days): never a setting
-CARD_SHA=a616c4378a02852b; DET_SHA=228630e3d0c30b20; I2G_SHA=e35b17019a3d34f6; PINS_SHA=6f167df21c7fae32; EO_SHA=a66240b3332ddf00; REL_SHA=0de68ccfca3a7376; WIN_SHA=37decf0075649f69
+CARD_SHA=a616c4378a02852b; DET_SHA=482a4a1eaf1faff5; I2G_SHA=a98936da5aaf93b4; PINS_SHA=c0c523ed00403f58; EO_SHA=76adc225ef3bc102; REL_SHA=7ca10b08f1254a69; WIN_SHA=69c3327ebf4e15a1
 V=$1; DEF=$2; W=$3
 [[ "$V" =~ ^[A-Za-z0-9]+$ ]] || { echo "BAD_VARIANT $V"; exit 2; }
 [ -f "$DEF" ] || { echo "NO_DEFINITION $DEF"; exit 2; }

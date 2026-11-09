@@ -1,0 +1,8 @@
+round	utc	p_beat_yardstick	forecast_net15	low80_net15	high80_net15	forecast_t	forecast_months_up	gain_vs_r1	low80_gain	high80_gain	reading	pred_better_state	pred_gap_t	note
+# one row per forecast, sealed before the round's first job; rows starting # are notes, the scorer skips them; keep the column order (the scorer reads by position)
+# R1: columns 1-8; p_beat_yardstick (name kept for the scorer) = p that the round passes all three parts of R1's pass rule, not p of beating the yardstick; *_net15 = lead15
+# p start (R1, R3, R3P): a counted share, k of n rounds of the brief (BASE RATES) that met the parts of the pass rule the brief gives numbers for (margin over the same-side yardstick, t; say which part it cannot show), over a set you name (all rows of that round, same-side rows, or same-move rows); then adjust, with the reason; a normal approximation from your own lead15 and interval is an adjustment, never the start; a control run starts from the yardstick
+# p note (every row with a p, R3P too; one shared line above the rows does not count): the note says what p is the probability of, with the rule's numbers, then the base: "p of lead15 >= <same-side yardstick + 2>, t >= 3, >= 3 of 5 months above <yardstick>; base k of n <set>; moved because <reason>"
+# R2: one row per split reading: round R2, utc, reading, pred_better_state (high or low), pred_gap_t (signed: high minus low); columns 3-11 empty
+# R3 and R3P: columns 1-8 (p = p of passing R1's rule, not R3's own rule; note as in "p note") plus gain_vs_r1 with its 80 pct interval, shrunk toward the MOVES mean
+# no placebo: one R3P row with round and utc, numbers empty, note "not run: no placebo"

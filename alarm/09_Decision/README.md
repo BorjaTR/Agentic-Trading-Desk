@@ -30,7 +30,7 @@ size is the strategy stage's job", PROCESS_V7 section 1), not the alarm's PASS o
 What changed in each release: [CHANGELOG.md](CHANGELOG.md).
 
 ## Earlier editions in the dev tree
-State on 30 Oct 2026, kept as history; the editions in use now are in ../AGENTS.md. In ~/volat_release means released: what follows says what each piece is and what is unproven.
+State on 30 Oct 2026, kept as history; the editions in use now are in ../AGENTS.md. In <RELEASE_ROOT> means released: what follows says what each piece is and what is unproven.
 Dev tree: `<LAB_REPO>/forensics/team/RESEARCH/ALARM_DESIGN/`. sha16 on 30 Oct 2026.
 | tool | what it does | where (dev tree) | status |
 |---|---|---|---|

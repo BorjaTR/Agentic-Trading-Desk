@@ -9,7 +9,7 @@ The repo root holds `desk/desk.py`, `alarm/` (the engine) and `loop/` (the learn
 not shipped, so skip those reads; the desk's registry starts empty (made by `desk.py setup`), and every copy or novelty check is relative
 to this desk's own registry, claims and logged tries only. Read, in this order, before your first try:
 `docs/DESK_REFERENCE.md`, `CLAIMS.md`, `alarm/AGENTS.md` (the step table; where it names lab seats, boards or the lab disk keeper, the desk words below
-apply), `loop/LESSONS_GENERAL_V1.tsv` (G rows hold anywhere, M rows are alarm method), `alarm/playbook/ALARM_GOALS_V1.md`,
+apply), `loop/packs/alarm/RULES.md` (the alarm pack's rules page) and your store's knowledge brief, `alarm/playbook/ALARM_GOALS_V1.md`,
 `alarm/playbook/PLAYBOOK.md`. Then load the learning-loop skill.
 
 ## 1. What an alarm is
@@ -30,7 +30,7 @@ An alarm is not a trade signal, is never judged on money, and a narrower version
 | step | question | command |
 |---|---|---|
 | 0 setup | is the desk ready? | `python3 -B desk/desk.py setup`, then `python3 -B desk/desk.py check` |
-| 1 IDEA | who must trade now, and was it tried? | `python3 -B desk/desk.py run 08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py S <words>` (the desk registry and claims) and `python3 -B loop/scripts/loop_find.py loop loop <words>` (the loop's TRIED rows and lessons: tried_search never reads them). On a fresh desk the registry is empty, so the copy search (and novelty, step 9) compares with nothing: `VERDICT DEF INCOMPLETE: 0 definitions could not be read and none of the 0 read ... no definition to compare` means there is nothing here to compare, not that something is wrong; read `alarm/playbook/PLAYBOOK.md`'s recipes and their Fails at lines, and run loop_find again with `--any` (without it every word must sit in one row, so HITS 0 does not mean never tried); name the closest recipe and any past try of the same moment with its verdict (or none) in your thought file, on the card as the forecast basis, and in your report; if you chose the idea yourself, a past STOP needs a new mechanism before a retry (V1.1) |
+| 1 IDEA | who must trade now, and was it tried? | `python3 -B desk/desk.py run 08_Registry/tree/ALARM_DESIGN/REGISTRY/tools/tried_search_v1.py S <words>` (the desk registry and claims) and the learning loop's knowledge brief (`build_knowledge_v2.py brief`, learning-loop skill: findings and do-not-retry; tried_search never reads them). On a fresh desk the registry is empty, so the copy search (and novelty, step 9) compares with nothing: `VERDICT DEF INCOMPLETE: 0 definitions could not be read and none of the 0 read ... no definition to compare` means there is nothing here to compare, not that something is wrong; read `alarm/playbook/PLAYBOOK.md`'s recipes and their Fails at lines, and read the brief's do-not-retry list and findings in your own words (the brief is not a word search); name the closest recipe and any past try of the same moment with its verdict (or none) in your CLAIMS line, on the card as the forecast basis, and in your report; if you chose the idea yourself, a past STOP needs a new mechanism before a retry (V1.1) |
 | start | a run folder | `python3 -B desk/desk.py start <RUN> --dry`, then without `--dry`; then `python3 -B desk/desk.py run Agentic/tree/ALARM_DESIGN/KIT_V5/tools/board_line_v2.py S <RUN> START "<idea in one line>"` |
 | 2 METRICS, CLAIM | which code says it, in which unit, known when? | read `alarm/Agentic/tree/ALARM_DESIGN/KIT_V5/FORCED_TRADE_MAP_V1.md`, `METRIC_FAMILIES_V1.md`, pick from `METRIC_MENU_V2.tsv` (pickable YES, kind CLOCK), then `desk.py run 01_Detection/tree/team/LAB3/LAB1/tools/where_v2/where_v3.py <words> --kind metric --n 50` and `desk.py run 01_Detection/tree/team/RESEARCH/LEAD/skills/reading-metrics/scripts/metric_brief_v2.py <CODE>`; claim: a one-line text in `OUTPUT_ROOT/research/ALARM_DESIGN/runs/IDEAS_CLAIMED/<RUN>_<IDEA>.txt` |
 | 3 DEFINE | the rule as a file | copy `alarm/01_Detection/tree/team/RESEARCH/ALARM_DESIGN/KIT_V2/templates/DEF_TEMPLATE_V4.json` to `<run>/ideas/<IDEA>/defs/V1.json`; the format is `DEF_TEMPLATE_V4.md` beside it |
@@ -50,9 +50,9 @@ Audit A7 (PICKUP) fails a finished job that no DECISIONS or POSTMORTEMS row name
    anything inside `alarm/`.
 2. Seal before you read: a variant's definition and reasons are sealed before any outcome of it. A changed rule is a new variant; a
    variant is graded once; at most 3 graded variants per idea.
-3. Months (this edition, on the lab's data): build on Sep-Dec 2025 only. Jan-Feb 2026 is EXPOSED: it may be read once, only on the
-   owner's explicit word, under a frozen protocol logged before the read, every number from it labelled EXPOSED. Every other date is
-   closed. MONTH reads Jan-Apr: never run it under a Jan-Feb-only authorization. A later date alone does not make a result blind.
+3. Months (this edition, ALARM_V1_22_1, by the engine's law lab3/law.py): research reads 10 Sep 2025 to 31 Mar 2026 only.
+   1 Apr to 31 Jul 2026 is the out-of-sample holdout, one look per alarm through the lab's holdout route, which is not shipped here:
+   a desk does not read it. 1 Aug to 30 Nov 2026 is NEVER_SEEN and refused by name. A later date alone does not make a result blind.
    Luck (any sign-flip or SPA print) is information only, never a bar.
 4. TRUE is required: a decision without its TRUE row is not finished (the audit says FINISHED NO). UNSURE, NOT SUPPORTED or REFUSED
    are results, never reasons to change the label after seeing them.

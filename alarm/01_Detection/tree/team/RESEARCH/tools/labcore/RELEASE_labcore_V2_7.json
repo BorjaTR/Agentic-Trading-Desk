@@ -49,7 +49,7 @@
     "name_status",
     "ext_status"
    ],
-   "value_sha16": "11e3db0928c0edfe"
+   "value_sha16": "44826b52b1d28fab"
   },
   "team/LAB3/code/lab3/__init__.py": {
    "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
@@ -81,7 +81,7 @@
   },
   "team/LAB3/code/lab3/law.py": {
    "role": "THE seal table read by labcore.gates.load_law",
-   "sha16": "f777c329396b6190"
+   "sha16": "0802358832de2b23"
   },
   "team/LAB3/code/lab3/rows.py": {
    "role": "lab3 reader loaded by labcore.prices (lab3.days / lab3.bins closure, A15-02)",
@@ -327,8 +327,8 @@
  "reason": "LAB1 V2_7 cut 25 Oct: S1 run check 1a99409b, S3 selection 8acde428, S2 quality de149c3d, lab3 fixes",
  "release": "V2_7",
  "releases": {
-  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_7.json": "789a9a01eb4d5cea",
-  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "eca2c8a125d24283"
+  "team/RESEARCH/tools/alarm_context/RELEASE_context_V1_7.json": "759e7fe9c1332ea1",
+  "team/RESEARCH/tools/alarm_profile/RELEASE_profile_V1_8.json": "6992baf727bb0604"
  },
  "replaces": "team/RESEARCH/tools/labcore/RELEASE_labcore_V2_6.json",
  "rule": "FROZEN: any change to a pinned file is labcore V3. labcore.release.check(this file) runs at the start of every labcore use and refuses on any missing file, sha16 or schema difference, or another python / numpy (OX-SKEPTIC A04-02 rule 2).",

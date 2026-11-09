@@ -1,5 +1,5 @@
 """test_alarm_design_v3.py: the tests of alarm_design_v3.py (planted, seconds). Owner ALARM. New edition by SCOUT for the clean release
-(30 Oct 2026). Old file: test_alarm_design_v2.py 377e971b9c034797 (the tests of alarm_design_v2.py), never edited. Its tests run here as
+(30 Oct 2026). Old file: test_alarm_design_v2.py bc9c40a838f40329 (the tests of alarm_design_v2.py), never edited. Its tests run here as
 written against alarm_design_v3 (only the import changed); class LabDaysFromCaller adds the new path code's tests (no machine default for
 the lab days: LabSource and the run command).
 Run: cd <this folder> && python3 -B test_alarm_design_v3.py"""
@@ -235,9 +235,9 @@ class T(unittest.TestCase):
 
     def test_seal_refused(self):
         with self.assertRaises(PermissionError):
-            AD.refuse_sealed(['20260601'], '20260601')
-        AD.refuse_sealed(['20260531'], '20260601')
-        self.assertEqual(AD.seal_day(), '20260601')        # follows LAB1's one setting (lab3.law)
+            AD.refuse_sealed(['20260401'], '20260401')
+        AD.refuse_sealed(['20260331'], '20260401')
+        self.assertEqual(AD.seal_day(), '20260401')        # follows the one setting (lab3.law 0802358832de2b23: research to 20260331, SCO-A179; was 20260601)
 
     def test_claim_type_required(self):
         p = os.path.join(tempfile.mkdtemp(), 'd.json'); d = dfn(); d.pop('_sha16'); d.pop('_path')

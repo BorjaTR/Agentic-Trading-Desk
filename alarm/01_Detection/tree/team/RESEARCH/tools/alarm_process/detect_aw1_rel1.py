@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # detect_aw1_rel1.py (SCOUT K12, 31 Oct 2026; TEST, NOT REVIEWED; the owner 30 Oct 2026 23:07 Berlin: "All alarm tools should work from the
-# release folder only"): a new edition for the clean release. Old file: alarm_process/detect_aw1.py 228630e3d0c30b20, never edited. It is
+# release folder only"): a new edition for the clean release. Old file: alarm_process/detect_aw1.py f03254fd5420e56b, never edited. It is
 # detect_v2.py 97a822a20e08088d (detect.py with its paths changed: --lab-root required, --gate, alarm_design_v3) with detect_aw1.py's
 # aw1 change and nothing else (the research window CLASSES from alarm_process/WINDOWS_ALARM_V1.tsv, its sha16 checked). detect_aw1.py's
 # header follows, then detect_v2.py's text.
@@ -69,7 +69,7 @@ HERE = Path(__file__).resolve().parent
 TOOLS = HERE.parent                                                    # team/RESEARCH/tools
 F_ROOT = TOOLS.parents[2]                                              # forensics
 ENGINE_PATH = TOOLS / 'alarm_design' / 'alarm_design_v3.py'
-WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '37decf0075649f69'   # aw1: the alarm kit's window classes
+WINDOWS_ALARM = TOOLS / 'alarm_process' / 'WINDOWS_ALARM_V1.tsv'; WINDOWS_ALARM_SHA16 = '69c3327ebf4e15a1'   # aw1: the alarm kit's window classes
 CODE_DIR = F_ROOT / 'team' / 'LAB3' / 'code'
 # no LAB_ROOT: the lab days are the caller's (--lab-root, the settings key LAB_DAYS); edition 2 names no machine path
 VERSION = 'DETECT_V1'

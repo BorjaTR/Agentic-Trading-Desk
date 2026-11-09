@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alarm design: the one flow (ONE_PROCESS_V1 draft)</title>
+<style>
+:root{--bg:#f6f7f5;--fg:#1b1e1d;--muted:#5f6764;--line:#c3cac6;
+--scout:#5a3f9e;--scoutbg:#ece8f8;--agent:#8a4a10;--agentbg:#fbeedd;--tool:#1d6a86;--toolbg:#e2f0f5;--judge:#2f6b2f;--judgebg:#e5f2e2;
+--sans:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#161918;--fg:#e9ecea;--muted:#a2aba7;--line:#46504c;
+--scout:#b9a6f0;--scoutbg:#29233d;--agent:#f0b878;--agentbg:#352616;--tool:#7cc3dd;--toolbg:#16303a;--judge:#9fd49a;--judgebg:#1d2f1c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 var(--sans)}
+main{max-width:1180px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 8px}
+p.lead{color:var(--muted);margin:0 0 14px;max-width:80ch}
+.keys{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:8px 0 14px}
+.k{display:flex;gap:6px;align-items:center}.sw{width:22px;height:14px;border-radius:3px;border:2px solid}
+.lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 12px;align-items:stretch}
+.lh{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-bottom:2px solid var(--line);padding-bottom:4px}
+.b{border:2px solid;border-radius:8px;padding:8px 10px;font-size:13.5px;position:relative}
+.b b{display:block;font-size:14px;margin-bottom:2px}
+.b code{font-family:var(--mono);font-size:12px;word-break:break-word}
+.b .f{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.scout{border-color:var(--scout);background:var(--scoutbg)}.agent{border-color:var(--agent);background:var(--agentbg)}
+.tool{border-color:var(--tool);background:var(--toolbg)}.judge{border-color:var(--judge);background:var(--judgebg)}
+.e{min-height:1px}
+.arrow{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;line-height:1}
+.loop{border-style:dashed}
+.round{grid-column:2/4;border:2px dashed var(--agent);border-radius:10px;padding:8px 10px;font-size:13.5px;background:transparent}
+table{border-collapse:collapse;width:100%;font-size:13.5px}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--toolbg)}code{font-family:var(--mono);font-size:12.5px}
+.scroll{overflow-x:auto}.grid-min{min-width:820px}
+</style>
+</head>
+<body>
+<main>
+<h1>Alarm design: the one flow, from idea to card to curator</h1>
+<p class="lead">DRAFT (ONE_PROCESS_V1, SCO-A177 for SCOUT, 7 Nov 2026) for pack ALARM_BUILD_V26. One process (PROCESS.md), one prompt (PROMPT.md), one learning loop (LEARNING_LOOP.md), one skill (volat-alarm-design, a pointer to the pack). Every box names its tool and the file it writes. The hunter thinks; the tools do every data step; three fresh agents never grade their own work.</p>
+<div class="keys">
+<span class="k"><span class="sw" style="border-color:var(--scout);background:var(--scoutbg)"></span>SCOUT (conductor)</span>
+<span class="k"><span class="sw" style="border-color:var(--agent);background:var(--agentbg)"></span>Hunter (thinks, writes)</span>
+<span class="k"><span class="sw" style="border-color:var(--tool);background:var(--toolbg)"></span>Tools (runner jobs, no hand step)</span>
+<span class="k"><span class="sw" style="border-color:var(--judge);background:var(--judgebg)"></span>Assessor and curator (judge, learn)</span>
+</div>
+
+<div class="scroll"><div class="lanes grid-min">
+<div class="lh">SCOUT</div><div class="lh">Hunter</div><div class="lh">Tools</div><div class="lh">Assessor and curator</div>
+
+<div class="b scout"><b>S1-S6 Prepare and launch</b>run_kit <code>kit_new</code>, <code>launch_v1.py</code> brief, pipeline settings, <code>build_run_v1.py</code> prompt (with adopted PROMPT_ADD rows), run_kit <code>init</code>, one Workflow agent<span class="f">RUNF/HUNTER_PROMPT.md, ops/RUN_PROMPT.md</span></div>
+<div class="b agent"><b>0 Questions</b><code>read_once_v2</code> on START and QUESTIONS; the knowledge page (<code>loop_check.py --knowledge</code>); UNTESTED, mistakes not to repeat<span class="f">work/R00_QUESTIONS.md, KNOW_PAGE.txt</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>0B Stuck and outside first (C6)</b>skills <code>stuck-check</code> and <code>pro-practice-first</code> (papers only, mapped onto our codes)<span class="f">work/STUCK_PRE.md, PLAN_PRO_PRACTICE_&lt;TASK&gt;.md</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>1 Claim (a to i)</b>who is forced and why, the map mechanism, what proves it wrong, signature table, KNOWLEDGE CITED, NEW IDEA, BAD CHECK, PRO PRACTICE; <code>metric_brief_v2</code>, <code>where_v3</code> (skill reading-metrics), <code>claim_fill_v1</code> seal, <code>true_gate_v3</code> check (C2)<span class="f">work/R01_CLAIM.md, defs/V1.json, TRUE_V1, INPUT_&lt;IDEA&gt;_V1.json</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>2 Run</b><code>alarm_pipeline_v1_4.py init</code>, <code>job_alloc.py claim</code>, one Mac job from <code>PIPE_MAC_JOB_TEMPLATE.sh</code> (first job <code>--until 3</code>: copy search)<span class="f">work/MAC_JOBS.tsv, R02_RUN.md</span></div>
+<div class="b tool"><b>22 steps in one runner job (pipe_mac_v3, ALARM_PIPELINE_V1_4_1)</b>P01 input and window; P02-P03 copy search; P04-P05 quick look; P06 COUNT; P07-P10 seal (true gate, menu gate, variants, prereg); P11 GRADE vs matched random; P12-P13 TRUE; P14 DECIDE; P15 first look; P16 novelty; P17 card job; P18 mechanism; P19 classify; P20 TRIED row; P21 ledger result; P22 ALARM CARD<span class="f">RUNF/pipe/STEP_01..22.json or STOP_nn</span></div>
+<div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>Paired control (C5)</b>V2 = V1 minus the added condition, same pipeline<span class="f">RUNF/pipe_v2 (ends STOP 20 TRIED_EXISTS by design)</span></div>
+<div class="b tool"><b>The card goes to STRATEGY</b><code>card_v2</code> files it by mechanism<span class="f">ALARM_CARDS/&lt;MECHANISM&gt;/&lt;ALARM&gt;/ALARM_CARD_&lt;ALARM&gt;.md, INDEX.tsv row</span></div>
+<div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>3 Analyze (C4 numbers rule)</b>one line per STEP json from its numbers; both numbers and field names on every comparison; <code>receipt_num_v3</code> for ratios and lead minus FDONLY<span class="f">work/R03_ANALYZE.md</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>4 Card review</b>ACCEPT or REJECT tied to a card row; low overlap flag<span class="f">work/R04_CARD_REVIEW.md</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="round"><b>Rounds 2 and 3 by the same agent (C7)</b> FEEDBACK after each round: lead minus FDONLY, why here and not there (market states, at least 50 waves each), event profile of 10 fires; then a new sealed claim and a new pipe folder (<code>pipe_r2</code>, <code>pipe_r3</code>) through steps 1 to 3 again. <span class="f">work/FEEDBACK_R&lt;k&gt;.md, R01_CLAIM_R&lt;k&gt;.md, R03_ANALYZE_R&lt;k&gt;.md</span></div>
+<div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>Best round against the yardstick</b>better moment = lead at 15 min above FDONLY (+5.88 on Sep 2025 to Mar 2026), more months passing, t at least 3<span class="f">work/BEST_ROUND.md (frozen DEF and sha16)</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>5 Stuck check and 6 Propose</b>15 answers on the three rounds; five parts with receipts: process change, better questions, think better, slowdowns, knowledge rows<span class="f">work/STUCK_CHECK.md, R05_PROPOSE.md, KNOW_PROPOSE.tsv</span></div>
+<div class="e"></div><div class="e"></div>
+
+<div class="e"></div>
+<div class="b agent"><b>Close</b><code>loop.py close</code> (TCL-01), run_kit <code>bind</code>; Mac mode skips TCL-02 and TCL-06 (C3)<span class="f">work/RESULT_&lt;TASK&gt;_LS&lt;N&gt;.md</span></div>
+<div class="e"></div>
+<div class="b judge"><b>Assessor</b>trusted close, BLINDFOLD counts (<code>blindfold_scan_k.py</code>), DRILL_GRADE A-F (<code>grade_k_parent.py</code>), mistake keys, M1-M10<span class="f">RUNF/ASSESS.tsv, MISTAKES.tsv</span></div>
+
+<div class="b scout"><b>S7 Out-of-sample look, once</b><code>holdout_month</code> check, then one job on the best round's pipe folder; one OPENS row per alarm<span class="f">HOLDOUT_&lt;IDEA&gt;_&lt;V&gt;.tsv</span></div>
+<div class="e"></div><div class="e"></div>
+<div class="b judge"><b>Curator</b>ADOPT, DEFER or REJECT from receipts; knowledge rows by <code>add_row.py</code>; PROMPT_ADD rows after pruning; <code>series_row_v1.py</code>; 3-run change rule<span class="f">CURATE.tsv, KNOWLEDGE_SCOUT_V1.tsv, PROMPT_ADD.tsv, SERIES.tsv</span></div>
+
+<div class="b scout"><b>S8 Cleanup (fixed step)</b>end-of-run rule of DISK_RETENTION_V1.md: keep receipts, STEP json, cards, ledgers; delete only this run's regenerable bulk<span class="f">RUNF/ops cleanup receipt</span></div>
+<div class="e"></div><div class="e"></div>
+<div class="b judge loop"><b>Next run starts here</b>the next prompt carries the adopted rows; pack or tool changes go as DEFER to their owner and land as a new pack edition<span class="f">back to S1</span></div>
+</div></div>
+
+<h2>Windows (the owner 7 Nov 08:54 Berlin, from run 8)</h2>
+<table>
+<tr><th>window</th><th>dates</th><th>who reads it</th><th>tool</th></tr>
+<tr><td>in sample</td><td>20250910 to 20260331</td><td>the hunter, every round</td><td>alarm_pipeline P01 (ALARM_PIPELINE_V1_4_1, block SEPMAR)</td></tr>
+<tr><td>out of sample</td><td>20260401 to 20260731</td><td>SCOUT, one look per alarm, best round, rule frozen</td><td>holdout_month (HOLDOUT_MONTH_V1_1, armed by the law's holdout look; V1_0 opened Jan to Mar 2026)</td></tr>
+<tr><td>never seen</td><td>20260801 to 20261130</td><td>nobody; the owner opens it once</td><td>refused by name (pipeline, holdout_month, the law)</td></tr>
+</table>
+
+<h2>The five documents</h2>
+<table>
+<tr><th>one</th><th>home</th></tr>
+<tr><td>process</td><td><code><RELEASE_ROOT>/Alarm/alarm_design/current/PROCESS_V26.md</code></td></tr>
+<tr><td>prompt</td><td><code><RELEASE_ROOT>/Alarm/alarm_design/current/PROMPT_V26.md</code> (the only prompt)</td></tr>
+<tr><td>learning loop</td><td><code><RELEASE_ROOT>/Alarm/alarm_design/current/LEARNING_LOOP.md</code></td></tr>
+<tr><td>flowchart</td><td><code><RELEASE_ROOT>/Alarm/alarm_design/current/FLOWCHART.html</code> (this page)</td></tr>
+<tr><td>skill</td><td><code>volat-alarm-design</code>: a pointer to the pack; with it: stuck-check, pro-practice-first, reading-metrics, research-learning-loop</td></tr>
+</table>
+<p class="lead">ALARM_BUILD_V26 carries these files; the series prompt template moves to PROMPT_V26 when build_run reads its @SLOT@ words. Everything older is HISTORY with a one-line pointer (CHANGES.md). Nothing is deleted.</p>
+</main>
+</body>
+</html>

@@ -249,7 +249,7 @@ real_check:
     - point: 2026-03-08, BTCUSDT, 12:00:05 to 12:01:00 every 5 s
       why: 5 s points that are not minute ends (a bucket closing between minute ends)
     - point: 2025-09-24, the same two coins, the points 00:00:00, 12:00:00 and 23:59:55
-      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the Expansion copy lacks taker rows the year's B1 has (J15991)
+      why: the year's other checked day and the CARRY of 23 Sep 2025; the raw check names the 12 minutes of 22 to 24 Sep 2025 where the ARCHIVE_DISK2 copy lacks taker rows the year's B1 has (J15991)
     - point: 2025-10-10, BTCUSDT and the thin coin, the 10 minute ends with the largest A1 liquidation dollars that evening (the tester picks them from A1 before the job), each with its 11 points after it
       why: the crash, one-sided buckets
     - point: 2025-10-11, BTCUSDT and the thin coin, the points 00:00:00, 06:00:00, 12:00:00 and 18:00:00
